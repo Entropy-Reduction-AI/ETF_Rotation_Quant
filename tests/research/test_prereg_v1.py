@@ -582,6 +582,10 @@ class RunnerTests(unittest.TestCase):
                 (td / "out" / "STOP").unlink()
             self.assertEqual(runner.main(["oos"] + args), 2)                # 没设计期检查不许跑
             self.assertEqual(runner.main(["design"] + args), 0)
+            design_doc = json.loads((td / "out" / "design.json").read_text(encoding="utf-8"))
+            if design_doc.get("fragile") is True:                           # 种子 5 的设计期是脆弱的；锁路径要一条不脆弱的 design
+                design_doc["fragile"] = False
+                (td / "out" / "design.json").write_text(json.dumps(design_doc, ensure_ascii=False), encoding="utf-8")
             self.assertEqual(runner.main(["oos"] + args), 0)
             self.assertEqual(runner.main(["oos"] + args), 3)                # 第二次被锁拒绝
             self.assertTrue((td / "out" / "OOS_LOCK.json").exists())
@@ -589,6 +593,31 @@ class RunnerTests(unittest.TestCase):
             self.assertEqual(lock["panel_sha256"], lock["bench_sha256"])
             from src.research.prereg_v1.panel import content_sha256
             self.assertEqual(lock["panel_content_sha256"], content_sha256(td / "panel.sqlite"))     # 跨机器可复现的数据指纹
+
+    def test_fragile_design_refuses_oos_without_lock(self):
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            dates = pd.bdate_range("2014-01-01", "2016-06-30")
+            rows = []
+            for c in ["A", "B", "C", "D", "E"]:
+                for i, d in enumerate(dates):
+                    px = 100 + i * 0.01
+                    rows.append(dict(date=d, container=c, open=px, high=px * 1.01, low=px * 0.99,
+                                     close=px, state="NEUTRAL", rs_1m=0.0, atr20=px * 0.01,
+                                     z_month=np.nan, data_hole=0))
+            df = pd.DataFrame(rows)
+            hs = np.linspace(3000, 3300, len(dates))
+            write_panel_db(td / "panel.sqlite", df, pd.DataFrame({"date": dates, "hs300": hs, "hs300_open": hs}), {})
+            out = td / "out"
+            out.mkdir()
+            (out / "characterize.json").write_text("{}\n", encoding="utf-8")
+            (out / "design.json").write_text(json.dumps({"fragile": True, "table": []}, ensure_ascii=False), encoding="utf-8")
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                code = runner.main(["oos", "--panel", str(td / "panel.sqlite"), "--out", str(out)])
+            self.assertEqual(code, 1)
+            self.assertIn("设计期判定脆弱（implementation-notes F-3）：V1 不成立，不跑冻结样本外", buf.getvalue())
+            self.assertFalse((out / "OOS_LOCK.json").exists())
 
 
 if __name__ == "__main__":

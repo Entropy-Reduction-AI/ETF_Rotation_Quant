@@ -144,7 +144,7 @@ def main(argv=None):
         base = t.loc[0, "mean_R"]
         fragile = is_fragile(base, t["mean_R"].iloc[1:])
         print(t.to_string(index=False, float_format=lambda x: f"{x:.3f}"))
-        print(f"\n脆弱（任一扰动变号或不到基准一半）：{fragile}（只报告，不阻断冻结样本外）")
+        print(f"\n脆弱（任一扰动变号或不到基准一半）：{fragile}（F-3：脆弱则 V1 不成立，不跑冻结样本外）")
         design_file.write_text(json.dumps({"table": t.to_dict("records"), "fragile": fragile}, ensure_ascii=False, indent=1, default=float))
         return 0
 
@@ -153,6 +153,10 @@ def main(argv=None):
             print(f"冻结样本外已经跑过（{lock}）。prereg-v1 §9：只跑一次，不允许重跑。"); return 3
         if not design_file.exists():
             print("先跑 design。"); return 2
+        design_doc = json.loads(design_file.read_text(encoding="utf-8"))
+        if design_doc.get("fragile") is True:
+            print("设计期判定脆弱（implementation-notes F-3）：V1 不成立，不跑冻结样本外")
+            return 1
         res = simulate(panel, p, OOS_START, OOS_END)
         rs, port = r_stats(res.trades), portfolio_stats(res, panel, hs300, p)
         acc = acceptance(res.trades, port, p)

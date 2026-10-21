@@ -23,7 +23,8 @@ EXPECTED_SHA = {
     "data/universe.csv": "cb73f8daab938cda538eab02e8ac539cba129d90672d6757b3df93f55c374178",
 }
 PANEL = {"retained", "flagged"}
-MISSING_RESEARCH = {"T16", "T36", "T38"}
+MISSING_RESEARCH = {"T36", "T38"}
+READY_PANELS = 35
 
 
 def sha256(path: Path) -> str:
@@ -56,8 +57,10 @@ def main() -> int:
         digest = sha256(path)
         size = path.stat().st_size
         same = digest == expected
-        if not same:
+        if rel == "data/universe.csv" and not same:
             problems.append(f"{rel} SHA256 {digest} != {expected}")
+        if rel == "data/market.sqlite" and same:
+            problems.append(f"{rel} 仍是 fa70cb7 的哈希，F-2 尚未写入 coverage")
         file_rows.append((rel, size, digest, "一致" if same else "不一致"))
 
     con = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
@@ -150,8 +153,8 @@ def main() -> int:
 
     if set(missing) != MISSING_RESEARCH:
         problems.append(f"缺研究序列的面板容器 {missing} != {sorted(MISSING_RESEARCH)}")
-    if len(ready) != 34:
-        problems.append(f"有研究序列的面板容器 {len(ready)} != 34")
+    if len(ready) != READY_PANELS:
+        problems.append(f"有研究序列的面板容器 {len(ready)} != {READY_PANELS}")
 
     t12 = next(row for row in universe if row["theme_id"] == "T12")
     t12_cov = coverage["T12"]
@@ -159,10 +162,19 @@ def main() -> int:
         problems.append(
             f"T12 事实不符: exec={t12['execution_fund_code']} series={t12_cov['series_code']}"
         )
-    for theme_id in ("T36", "T38", "T16"):
+    for theme_id in ("T36", "T38"):
         cov = coverage.get(theme_id)
         if cov and (cov["series_code"] or ""):
             problems.append(f"{theme_id} 不应有研究序列")
+    t16 = coverage["T16"]
+    if (t16["series_code"], t16["series_adj"], t16["route_used"]) != ("518880", "raw", "tencent_etf"):
+        problems.append(
+            f"T16 研究序列应为 518880/raw tencent_etf，实际 {t16['series_code']}/{t16['series_adj']} {t16['route_used']}"
+        )
+    if t16["error"]:
+        problems.append(f"T16 error 应为空：{t16['error'][:80]}")
+    if not str(t16["notes"]).startswith("F-2："):
+        problems.append("T16 notes 不是 F-2 说明")
 
     outside_lines = []
     for row in outside:
@@ -194,7 +206,11 @@ def main() -> int:
         "T38": "早期空窗登记为 2020-07-27 – 2021-10-11。",
     }
     gap_lines = []
-    for theme_id in ("T16", "T36", "T38"):
+    gap_lines.append(
+        f"- T16：研究序列 `{t16['series_code']}/{t16['series_adj']}`，route `{t16['route_used']}`，"
+        f"起始 {t16['first_date']}，{t16['rows']} 行。{t16['notes']}"
+    )
+    for theme_id in ("T36", "T38"):
         note = declared_gaps.get(theme_id, "")
         note = f"{note} " if note else ""
         gap_lines.append(
@@ -279,7 +295,7 @@ calendar 共 {calendar[2]} 行，起 {calendar[0]}，末日 {calendar[1]}。
 
 ## 已知空窗与身份
 
-以下日期不是从 bars 聚合出来的区间。脚本核对的事实是：T16、T36、T38 的 `series_code` 为空，bars 里没有它们的研究序列。
+以下日期不是从 bars 聚合出来的区间。脚本核对的事实是：T36、T38 的 `series_code` 为空；T16 的研究序列是 coverage 指向的 `518880/raw`。
 
 {chr(10).join(gap_lines)}
 

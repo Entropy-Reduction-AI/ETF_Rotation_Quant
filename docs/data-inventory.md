@@ -31,7 +31,7 @@
 
 | 文件 | 字节数 | SHA256 | 与 fa70cb7 |
 | --- | --- | --- | --- |
-| `data/market.sqlite` | 33648640 | `b56148daf640d4bca6bbd2856a9c36fd9a11472ea9ebe94753476e0bb02e5290` | 一致 |
+| `data/market.sqlite` | 33648640 | `499413164fdf39fd93993d382a60b92389eb5c95e281032aa75f7b6ed7a17c91` | 不一致 |
 | `data/universe.csv` | 8871 | `cb73f8daab938cda538eab02e8ac539cba129d90672d6757b3df93f55c374178` | 一致 |
 
 ## bars 与 calendar
@@ -132,7 +132,7 @@ calendar 共 5343 行，起 2005-01-04，末日 2026-12-31。
 
 ## 面板容器
 
-`universe.csv` 共 39 行。状态为 `retained` 或 `flagged` 的面板容器 37 个，其中 34 个有研究序列，缺研究序列的是 T16, T36, T38。
+`universe.csv` 共 39 行。状态为 `retained` 或 `flagged` 的面板容器 37 个，其中 35 个有研究序列，缺研究序列的是 T36, T38。
 
 研究指数代码来自 CSV 的 `research_index_code`。入库研究序列和起始日来自 `coverage_latest` 指向的 bars 序列；口径由 `price_only` 映射：`False` 为全收益，`True` 为价格，`n/a` 不是指数的价格/全收益口径。执行 ETF 代码来自 CSV 的 `execution_fund_code`。
 
@@ -153,7 +153,7 @@ calendar 共 5343 行，起 2005-01-04，末日 2026-12-31。
 | T13 | 有色 | retained | 000819 | H00819/raw | 全收益 | 2005-01-01 | 512400 |
 | T14 | 煤炭 | retained | 399998 | 399998/raw | 价格 | 2009-01-01 | 515220 |
 | T15 | 原油 | flagged | BRENT | BRENT/raw | 非指数（price_only=n/a） | 2007-07-30 | 501018 |
-| T16 | 黄金 | flagged | 518880 | — | 无研究序列 | — | 518880 |
+| T16 | 黄金 | flagged | 518880 | 518880/raw | 全收益 | 2013-07-29 | 518880 |
 | T17 | 钢铁 | retained | 930606 | H20606/raw | 全收益 | 2009-01-01 | 515210 |
 | T18 | 化工 | retained | H30187 | H20187/raw | 全收益 | 2005-01-01 | 159870 |
 | T19 | 新能源车 | retained | 930997 | H20997/raw | 全收益 | 2014-01-01 | 515030 |
@@ -187,9 +187,9 @@ calendar 共 5343 行，起 2005-01-04，末日 2026-12-31。
 
 ## 已知空窗与身份
 
-以下日期不是从 bars 聚合出来的区间。脚本核对的事实是：T16、T36、T38 的 `series_code` 为空，bars 里没有它们的研究序列。
+以下日期不是从 bars 聚合出来的区间。脚本核对的事实是：T36、T38 的 `series_code` 为空；T16 的研究序列是 coverage 指向的 `518880/raw`。
 
-- T16：没有研究序列。coverage error：eastmoney_etf_hfq: RemoteDisconnected: Remote end closed connection without response ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.518880&f...
+- T16：研究序列 `518880/raw`，route `tencent_etf`，起始 2013-07-29，3205 行。F-2：518880 不分红，不复权 = 后复权；见 docs/prereg-v1-implementation-notes.md F 节
 - T36：没有研究序列。早期空窗登记为 2019 – 2022-03。 coverage error：yahoo: 0 行; stooq: 无 NDXTMC 的代码映射
 - T38：没有研究序列。早期空窗登记为 2020-07-27 – 2021-10-11。 coverage error：yahoo: HTTPError: HTTP Error 404: Not Found ← https://query1.finance.yahoo.com/v8/finance/chart/^HSTECH?period1=946684800&period2=1790812800&interval=1d&even...
 - T12：执行基金 `159732` 身份有误。研究序列是中证 `931494`（`931494/raw`，口径为价格），不受这只执行基金的身份影响。
