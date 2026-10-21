@@ -1,0 +1,43 @@
+# Credentials and machine-local configuration
+.env
+.env.*
+!.env.example
+.pi/auth.json
+.pi/settings.local.json
+
+# Dependency caches and agent runtime
+node_modules/
+.pi/npm/
+.pi/git/
+.pi/sessions/
+.pi/subagent-runs/
+.pi/subagents/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Reference import: keep market/signal data, macOS metadata and machine-local settings out of Git
+/ref/auto_filter_stock/data/
+/ref/**/.claude/settings.local.json
+._*
+/outputs/
+/artifacts/
+*.sqlite
+*.sqlite3
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
+*.sqlite3-wal
+*.sqlite3-shm
+*.log
+.DS_Store
+
+# Versioned research inputs
+/data/*
+!/data/market.sqlite
+!/data/universe.csv

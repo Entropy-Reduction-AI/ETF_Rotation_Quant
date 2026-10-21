@@ -1,0 +1,18 @@
+{
+  "project_name": "ETF_Rotation_Quant",
+  "project_root": ".",
+  "instructions_file": "AGENTS.md",
+  "agents_doc": ".pi/agents/README.md",
+  "prompts": [
+    "prompt-templates"
+  ],
+  "skills": [
+    "skills"
+  ],
+  "enableSkillCommands": true,
+  "packages": [
+    "npm:pi-subagents",
+    "npm:@dietrichgebert/ponytail",
+    "npm:pi-web-access"
+  ]
+}
