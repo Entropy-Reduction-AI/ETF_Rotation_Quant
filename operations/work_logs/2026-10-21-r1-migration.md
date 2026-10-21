@@ -80,7 +80,7 @@
 | SHA256 `data/universe.csv` | `cb73f8daab938cda538eab02e8ac539cba129d90672d6757b3df93f55c374178` |
 | `PRAGMA integrity_check` | `ok` |
 | `git check-ignore` | 两个数据文件可入库；`outputs` 被忽略 |
-| `pi-fleet` | 全库无匹配 |
+| 旧 Fleet 包名 grep | 全库无匹配 |
 
 ## Decision / Next Steps
 

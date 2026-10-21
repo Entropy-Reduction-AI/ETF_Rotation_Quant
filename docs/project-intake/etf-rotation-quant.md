@@ -79,7 +79,7 @@ R1 同时把旧项目 AGENTS.md 里「Cursor Cloud specific instructions」中�
 
 明确不迁移：
 
-- `src/ledger`、`src/jobs`、`src/web`、`src/home`、`src/observation`、`src/rotation`。
+- `src/ledger`、`src/jobs`、`src/web`、`src/home`、`src/observation`、`src/rotation`（例外：`src/rotation/etf_probe.py` 作为 `tests/indicators` 里 kell_states 对照的测试基准原样保留，R1 记录见 `operations/work_logs/2026-10-21-r1-migration.md`，不作为研究代码使用）。
 - `deploy/`、`config/`、`prototypes/`、`ref/`。
 - `events` 和 `archive/grok-raw` 分支。
 - 卡片、固定源、事件草稿、论点记录、每日作业、台账存储、规则卡、设计规范相关的全部文档。
