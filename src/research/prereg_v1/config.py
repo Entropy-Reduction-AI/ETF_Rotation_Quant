@@ -2,7 +2,7 @@
 
 数值参数逐条对应 docs/etf-rotation-prereg-v1.md §3–§5、§7、§9；
 prereg 没有写死、由实现补充的口径（I-xx）见
-operations/planning/2026-09-27-prereg-v1-implementation-notes.md，须在接触真实数据前由 Owner 确认。
+docs/prereg-v1-implementation-notes.md，须在接触真实数据前由 Owner 确认。
 """
 from dataclasses import dataclass, field, replace
 

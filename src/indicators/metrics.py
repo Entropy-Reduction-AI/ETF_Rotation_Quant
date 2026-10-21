@@ -1,4 +1,4 @@
-"""ATR20、rs_1m、z_month。口径见 operations/planning/2026-09-27-prereg-v1-implementation-notes.md（I-02、B 节）。"""
+"""ATR20、rs_1m、z_month。口径见 docs/prereg-v1-implementation-notes.md（I-02、B 节）。"""
 from __future__ import annotations
 
 from datetime import date, timedelta
