@@ -123,3 +123,10 @@ skills 和 domain modeling 是按需能力，不是默认关卡。
 
 面向 Owner 用中文。
 <!-- PROJECT:OWNED:END -->
+
+## Cursor Cloud specific instructions
+
+- Python 3.12。默认镜像没有 `ensurepip`，直接 `python3 -m venv` 会失败。环境安装先执行 `sudo apt-get install -y python3.12-venv`，再在仓库根执行 `python3 -m venv .venv`。
+- 仓库里还没有 `requirements.txt`。该文件出现后，同一安装步骤会执行 `.venv/bin/python -m pip install -r requirements.txt`。
+- 研究时区是 `Asia/Shanghai`。纳入版本管理的数据文件只有 `data/market.sqlite` 和 `data/universe.csv`；更新 sqlite 后记录 SHA256。`.venv/` 不入库。
+- `src/` 与 `tests/` 随 R1 迁入，见 `docs/project-intake/etf-rotation-quant.md`。本项目没有常驻服务。
