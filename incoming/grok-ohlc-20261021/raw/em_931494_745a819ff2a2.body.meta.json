@@ -1,0 +1,8 @@
+{
+  "url": "https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=2.931494&ut=7eea3edcaed734bea9cbfc24409ed989&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61&klt=101&fqt=0&beg=20121231&end=20260930&lmt=100000",
+  "status": "RemoteDisconnected",
+  "fetched_at": "2026-10-21T23:51:06+08:00",
+  "sha256": "745a819ff2a23818d8ca929f70e649c6803bf241e54e161974866b2937648b09",
+  "bytes": 45,
+  "file": "em_931494_745a819ff2a2.body"
+}

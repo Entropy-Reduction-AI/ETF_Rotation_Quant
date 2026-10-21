@@ -1,0 +1,8 @@
+{
+  "url": "https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol=sz931160&scale=240&ma=no&datalen=1023",
+  "status": 200,
+  "fetched_at": "2026-10-21T23:52:14+08:00",
+  "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+  "bytes": 4,
+  "file": "sina_931160_74234e98afe7.body"
+}
