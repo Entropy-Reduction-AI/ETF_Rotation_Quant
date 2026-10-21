@@ -123,3 +123,8 @@ skills 和 domain modeling 是按需能力，不是默认关卡。
 
 面向 Owner 用中文。
 <!-- PROJECT:OWNED:END -->
+
+## Cursor Cloud specific instructions
+
+- 默认镜像要先安装 `python3.12-venv`，否则 `python3 -m venv` 因缺少 ensurepip 失败。随后在仓库根执行 `python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt`。
+- 跑测试前执行 `mkdir -p outputs`（`outputs/` 被 gitignore）。测试：`.venv/bin/python -m unittest discover -s tests -t .`。
