@@ -6,9 +6,10 @@ Quantitative research on A-share thematic ETF rotation: preregistered rules, bac
 
 ## 状态
 
-已初始化，待 R1。
+R1 已迁移，待 R2。
 
 ## 项目入口
 
 - [项目 intake](docs/project-intake/etf-rotation-quant.md)
+- [数据清单](docs/data-inventory.md)
 - [项目执行合同](AGENTS.md)
