@@ -6,7 +6,7 @@
 - Document type: other
 - Status: active
 - Owner: project owner
-- Last updated: 2026-10-21
+- Last updated: 2026-10-22
 - Source of truth: `data/market.sqlite`、`data/universe.csv`，对照来源提交 `fa70cb709738dad3ebf426a71959943abe88fd0e`
 
 ## Purpose
@@ -31,7 +31,7 @@
 
 | 文件 | 字节数 | SHA256 | 与 fa70cb7 |
 | --- | --- | --- | --- |
-| `data/market.sqlite` | 33648640 | `499413164fdf39fd93993d382a60b92389eb5c95e281032aa75f7b6ed7a17c91` | 不一致 |
+| `data/market.sqlite` | 50663424 | `e013b960b9d77cbb78a10116e3c50b61bf0b81ad63247afeb67316fa54cee961` | 不一致 |
 | `data/universe.csv` | 8871 | `cb73f8daab938cda538eab02e8ac539cba129d90672d6757b3df93f55c374178` | 一致 |
 
 ## bars 与 calendar

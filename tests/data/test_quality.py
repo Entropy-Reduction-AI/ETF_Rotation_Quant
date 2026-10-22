@@ -3,6 +3,7 @@ from datetime import date
 import contextlib
 import io
 import json
+import math
 from pathlib import Path
 import sqlite3
 import tempfile
@@ -234,8 +235,9 @@ class Quality(unittest.TestCase):
         self.mutate("UPDATE coverage SET first_date=? WHERE theme_id='T01'", (DAYS[3],))
         report = self.report()
         self.assertEqual(report["containers"]["T01"]["first"], DAYS[0])
-        self.assertEqual(report["containers"]["T01"]["missing_close_dates"], [DAYS[2]])
-        self.assertFalse(report["containers"]["T01"]["research_ready"])
+        self.assertEqual(report["containers"]["T01"]["missing_close_dates"], [DAYS[2]])  # 登记起点盖不住中间缺口
+        self.assertTrue(report["containers"]["T01"]["enters_v1"])                        # I-29(2)：一天缺口是占位，不阻断
+        self.assertEqual(report["containers"]["T01"]["i29_placeholder_rows"], 1)
 
     def test_non_trading_rows_remain_raw_but_do_not_enter_calculation(self):
         days = [d for d in DAYS if d != "2005-01-06"]
@@ -277,7 +279,13 @@ class Quality(unittest.TestCase):
                     self.change_bar(DAYS[1], open=91.0, high=111.0, low=81.0, close=101.0)
                     self.change_bar(DAYS[1], **{field: value})
                     report = self.report()
-                    self.assertFalse(report["research_ready"])
+                    # sqlite 把 NaN 存成 NULL，读回来与空着无法区分，按 I-29 缺口；0、负数、无穷大仍是无效价。
+                    stored_as_null = value is None or (isinstance(value, float) and math.isnan(value))
+                    if stored_as_null and field != "close":
+                        self.assertTrue(report["research_ready"])
+                        self.assertTrue(report["containers"]["T01"]["enters_v1"])
+                    else:
+                        self.assertFalse(report["research_ready"])
                     self.assertEqual(report["benchmark_ready"], field != "close")
 
     def test_missing_calendar_blocks_preflight_and_build(self):
@@ -349,17 +357,17 @@ class Quality(unittest.TestCase):
     def test_preflight_cli_reports_json_and_exit_status(self):
         self.fixture()
         argv = ["preflight", "--db", str(self.db), "--end", END.isoformat()]
-        for missing_ohl, expected_exit in ((False, 0), (True, 1)):
-            with self.subTest(missing_ohl=missing_ohl):
-                if missing_ohl:
-                    self.change_bar(DAYS[0], open=None)
+        for bad_open, expected_exit in ((False, 0), (True, 1)):
+            with self.subTest(bad_open=bad_open):
+                if bad_open:
+                    self.change_bar(DAYS[1], open=-1.0)
                 before = DB.sha256_file(self.db)
                 output = io.StringIO()
                 with contextlib.redirect_stdout(output):
                     self.assertEqual(main(argv), expected_exit)
                 report = json.loads(output.getvalue())
                 self.assertTrue(report["benchmark_ready"])
-                self.assertEqual(report["research_ready"], not missing_ohl)
+                self.assertEqual(report["research_ready"], not bad_open)
                 self.assertEqual(DB.sha256_file(self.db), before)
 
     def test_preflight_missing_db_is_not_created(self):
@@ -369,7 +377,7 @@ class Quality(unittest.TestCase):
 
     def test_failed_build_preserves_previous_output(self):
         self.fixture()
-        self.change_bar(DAYS[0], open=None)
+        self.change_bar(DAYS[1], open=-1.0)
         pkg = self.package()
         out = self.tmp / "existing-panel.sqlite"
         out.write_bytes(b"previous-panel")

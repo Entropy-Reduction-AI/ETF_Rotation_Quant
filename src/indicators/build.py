@@ -22,6 +22,7 @@ import pandas as pd
 from src.data import db as DB
 from src.data import runner as data_runner
 from src.data import quality
+from src.data.ohlc_rules import apply_i28, decide_i29, ohlc_state, price_book
 from .calendar import load_trading_days
 from .metrics import atr20, rs_1m, z_month
 from .states import form_states
@@ -187,38 +188,131 @@ def bar_indicators(df: pd.DataFrame) -> pd.DataFrame:
     return df.assign(state=form_states(df)["state"].to_numpy(), atr20=atr20(df).to_numpy())
 
 
+def _as_records(df: pd.DataFrame) -> list[dict]:
+    rows = []
+    for record in df.to_dict("records"):
+        item = {"date": pd.Timestamp(record["date"]).date().isoformat()}
+        for key in ("open", "high", "low", "close", "volume"):
+            value = record.get(key)
+            item[key] = None if value is None or (isinstance(value, float) and math.isnan(value)) else value
+        rows.append(item)
+    return rows
+
+
+def _price_rows(con, code: str, end: date) -> tuple[list[dict], list[dict]]:
+    bars = _as_records(read_bars(con, code, "raw", end=end)) if code else []
+    if not con.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'ohlc_supplement'").fetchone():
+        return bars, []
+    supplement = [dict(row) for row in con.execute(
+        "SELECT date, open, high, low, close FROM ohlc_supplement WHERE code = ? AND date <= ? ORDER BY date",
+        (code, end.isoformat()))]
+    return bars, supplement
+
+
+def _stitch_placeholders(real: pd.DataFrame, cal: pd.DatetimeIndex, window_start: str) -> pd.DataFrame:
+    """I-29(2)：窗口内 ≤3 个交易日的缺口写成平盘占位，data_hole = 1，不参与指标。"""
+    days = [day for day in cal if day.date().isoformat() >= window_start]
+    indexed = real.set_index("date")
+    rows, prev = [], None
+    for day in days:
+        if day in indexed.index:
+            rec = indexed.loc[day]
+            if isinstance(rec, pd.DataFrame):
+                rec = rec.iloc[-1]
+            prev = {"date": day, "open": float(rec["open"]), "high": float(rec["high"]), "low": float(rec["low"]),
+                    "close": float(rec["close"]), "volume": float(rec["volume"]) if pd.notna(rec["volume"]) else 0.0,
+                    "state": rec["state"], "atr20": rec["atr20"], "stale": 0, "data_hole": 0}
+            rows.append(prev)
+        else:
+            if prev is None:
+                raise BuildError("I-29 占位出现在第一根真实 K 线之前")
+            close = prev["close"]
+            rows.append({"date": day, "open": close, "high": close, "low": close, "close": close, "volume": 0.0,
+                         "state": prev["state"], "atr20": prev["atr20"], "stale": 1, "data_hole": 1})
+    return pd.DataFrame(rows, columns=BAR_COLUMNS + INDICATOR_COLUMNS + MARK_COLUMNS)
+
+
+def _a_share_frame(con, cov: dict, cal: pd.DatetimeIndex, *, strict: bool, start: date | None, end: date | None):
+    """A 股：I-28 补开高低，I-29 定窗口和占位，指标只在真实 K 线上算。"""
+    end_day = end or cal[-1].date()
+    start_day = start or cal[0].date()
+    calendar = [day.date().isoformat() for day in cal if start_day <= day.date() <= end_day]
+    if strict:
+        raw, rows = quality.input_rows(con, cov["series_code"], cov["series_adj"], calendar,
+                                       start=start_day, end=end_day, overseas=False)
+        frame = _bar_frame(rows)
+        dropped = len(raw) - len(rows)
+    else:
+        frame = read_bars(con, cov["series_code"], cov["series_adj"], end=end_day)
+        on = frame["date"].isin(cal)
+        dropped = int((~on).sum()) if len(frame) else 0
+        frame = frame.loc[on].reset_index(drop=True)
+    records = _as_records(frame)
+    if any(ohlc_state(row) == "invalid" for row in records):
+        raise BuildError(f"{cov['series_code']}/{cov['series_adj']}: 策略需要正值 OHLC，不允许 0、负数或非有限值")
+    price_code = cov.get("code") or cov.get("series_code") or ""
+    bars, supplement = _price_rows(con, price_code, end_day)
+    filled, ohlc_source = apply_i28(records, price_book(bars, supplement))
+    if any(ohlc_state(row) == "invalid" for row in filled):
+        raise BuildError(f"{cov['series_code']}/{cov['series_adj']}: 换算后的开高低不是正值")
+    on_dates = [row["date"] for row in records]
+    span = [day for day in calendar if on_dates and on_dates[0] <= day <= on_dates[-1]] if on_dates else []
+    present = set(on_dates)
+    # 1 月 1 日占位行不算真实 K 线（I-29(1)），即使日历把它列进来、行里有价。
+    real_rows = [row for row in filled if ohlc_state(row) == "ok" and not str(row["date"]).endswith("-01-01")]
+    decision = decide_i29([row["date"] for row in real_rows], calendar, end_day.isoformat())
+    rep = {"ohlc_source": ohlc_source, "enters_v1": decision["enters_v1"], "window_start": decision["window_start"],
+           "i29_reason": decision["reason"], "i29_placeholder_runs": decision["placeholder_runs"],
+           "i29_placeholder_rows": sum(run["rows"] for run in decision["placeholder_runs"]),
+           "excluded_reason": "" if decision["enters_v1"] else decision["reason"],
+           "calendar": "a_share", "dropped_off_calendar": dropped,
+           "missing_on_calendar": sum(day not in present for day in span),
+           "stale_runs": decision["placeholder_runs"], "data_hole_rows": sum(run["rows"] for run in decision["placeholder_runs"])}
+    empty = pd.DataFrame(columns=BAR_COLUMNS + INDICATOR_COLUMNS + MARK_COLUMNS)
+    if not decision["enters_v1"]:
+        rep.update(rows=0, dropped_missing_close=0, dropped_duplicate_dates=0, ohl_filled_from_close=0, hl_clamped=0,
+                   volume_missing_or_zero=0, volume_source="none", volume_zero_after_align=0)
+        return empty, rep
+    kept = [row for row in real_rows if row["date"] >= decision["window_start"]]
+    real = _bar_frame(kept)
+    real, load_rep = load_series(con, cov["series_code"], cov["series_adj"], frame=real, strict=False)
+    real, volume_source = borrow_volume(real, con, cov)
+    real = bar_indicators(real)
+    out = _stitch_placeholders(real, cal, decision["window_start"])
+    rep.update(load_rep)
+    rep["volume_source"] = volume_source
+    rep["volume_zero_after_align"] = int((~(out["volume"] > 0)).sum()) if len(out) else 0
+    rep["data_hole_rows"] = int(out["data_hole"].sum()) if len(out) else 0
+    return out, rep
+
+
 def research_frame(con, cov: dict, cal: pd.DatetimeIndex, *, strict=False,
                    start: date | None = None, end: date | None = None) -> tuple[pd.DataFrame, dict]:
-    """一个容器的研究序列：读取 → 借成交量（I-21）→ K 线级指标（I-24）→ 对齐 A 股日历（I-20）。数据包与每日任务共用，口径一致。
-    海外容器的指标在其本地交易日的原生 K 线上算，长假内的高低点因此进入 hi20 / lo20 / ATR，平盘行不进指标（沿用上一根）；
-    A 股容器先丢弃非日历行（那些行不是交易日）再算。"""
+    """一个容器的研究序列：读取 → 借成交量（I-21）→ K 线级指标（I-24）→ 对齐 A 股日历（I-20）。
+    A 股另按 I-28 换算开高低、按 I-29 处理缺口。海外仍只走 I-20、I-24 ~ I-27。"""
     overseas = cov.get("route_used") in OVERSEAS_ROUTES
     if cal.empty:
         raise BuildError("研究窗口没有官方交易日")
+    if not overseas:
+        return _a_share_frame(con, cov, cal, strict=strict, start=start, end=end)
     frame = None
-    dropped = 0
     if strict:
         raw, rows = quality.input_rows(con, cov["series_code"], cov["series_adj"],
                                        [d.date().isoformat() for d in cal], start=start or cal[0].date(),
-                                       end=end or cal[-1].date(), overseas=overseas)
+                                       end=end or cal[-1].date(), overseas=True)
         frame = _bar_frame(rows)
-        dropped = len(raw) - len(rows) if not overseas else 0
     else:
         # 兼容调用也先截至消费窗口，避免 D 后的缺量比例倒灌 I-21 量源选择。
         frame = read_bars(con, cov["series_code"], cov["series_adj"], end=end or cal[-1].date())
-        if overseas:
-            frame = frame[frame["date"] < cal[-1]]
+        frame = frame[frame["date"] < cal[-1]]
     df, rep = load_series(con, cov["series_code"], cov["series_adj"], frame=frame, strict=strict)
     df, vsrc = borrow_volume(df, con, cov)
     rep["volume_source"] = vsrc
-    if overseas:
-        df, arep = align_to_calendar(bar_indicators(df), cal, True)
-    else:
-        df, arep = align_to_calendar(df, cal, False)
-        df = bar_indicators(df)
+    df, arep = align_to_calendar(bar_indicators(df), cal, True)
     rep.update(arep)
-    if strict and not overseas:
-        rep["dropped_off_calendar"] = dropped
+    rep["ohlc_source"] = "self"
+    rep["enters_v1"] = True
+    rep["window_start"] = str(df["date"].min().date()) if len(df) else None
     rep["volume_zero_after_align"] = int((~(df["volume"] > 0)).sum()) if len(df) else 0
     return df, rep
 
@@ -320,11 +414,19 @@ def _build(con, package: Path, out: Path | None, log, *, start: date | None = No
                           "bench": {"code": BENCH_CODE, "first": str(bench.index.min().date()), "last": str(bench.index.max().date())},
                           "calendar": ({"days": len(trading_days), "first": str(trading_days[0].date()), "last": str(trading_days[-1].date())}
                                        if trading_days is not None else None),
-                          "input_quality": readiness, "containers": {}, "skipped": {}}
+                          "input_quality": readiness, "containers": {}, "skipped": {}, "excluded": {}}
     for c in covs:
         if c.get("status") not in ("retained", "flagged"):
             continue
         name = c["container"]
+        gate = readiness["containers"].get(c["theme_id"], {})
+        if not gate.get("enters_v1"):
+            report["excluded"][name] = {"theme_id": c["theme_id"], "enters_v1": False,
+                                        "excluded_reason": gate.get("excluded_reason") or "不进 V1",
+                                        "window_start": gate.get("window_start"), "ohlc_source": gate.get("ohlc_source"),
+                                        "i29_placeholder_rows": gate.get("i29_placeholder_rows", 0),
+                                        "i29_reason": gate.get("i29_reason")}
+            continue
         if not c.get("series_adj") or not con.execute("SELECT 1 FROM bars WHERE code = ? AND adj = ? LIMIT 1",
                                                       (c["series_code"], c["series_adj"])).fetchone():
             raise BuildError(f"{name}: 无研究序列；不自动剔除容器")

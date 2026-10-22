@@ -113,6 +113,19 @@ CREATE TABLE IF NOT EXISTS universe (
     row      TEXT NOT NULL
 ) WITHOUT ROWID;
 
+CREATE TABLE IF NOT EXISTS ohlc_supplement (
+    code        TEXT NOT NULL CHECK (length(code) > 0),
+    date        TEXT NOT NULL CHECK ({date_rule('ohlc_supplement', 'date')}),
+    open        REAL,
+    high        REAL,
+    low         REAL,
+    close       REAL,
+    volume      REAL,
+    source      TEXT NOT NULL CHECK (length(source) > 0),
+    file_sha256 TEXT NOT NULL CHECK (length(file_sha256) = 64),
+    PRIMARY KEY (code, date)
+) WITHOUT ROWID;
+
 CREATE VIEW IF NOT EXISTS coverage_latest AS
 SELECT c.* FROM coverage c
  WHERE c.run_id = (SELECT max(run_id) FROM coverage x WHERE x.theme_id = c.theme_id);

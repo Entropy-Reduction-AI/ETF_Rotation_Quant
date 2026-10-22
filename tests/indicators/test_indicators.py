@@ -209,8 +209,11 @@ class EndToEnd(unittest.TestCase):
         rows = [r for r in rows if r["theme_id"] in wanted]
         DB.load_universe(con, rows, "synthetic-end-to-end-universe")
         if calendar is None:
+            # 1 月 1 日不是交易日。工作日区间会把它算进去，I-29 则不把它当真实 K 线。
+            days = pd.bdate_range("2005-01-04", "2027-12-31")
+            days = days[days.strftime("%m-%d") != "01-01"]
             with con:
-                con.executemany("INSERT INTO calendar VALUES (?)", [(d.date().isoformat(),) for d in pd.bdate_range("2005-01-04", "2027-12-31")])
+                con.executemany("INSERT INTO calendar VALUES (?)", [(d.date().isoformat(),) for d in days])
         con.close()
         if calendar is not None:
             # load_calendar 会重新装真实 universe；这里只把已校验合成日历写入临时库。
@@ -582,9 +585,20 @@ class NativeIndicators(unittest.TestCase):
         cal = pd.bdate_range("2025-06-02", "2026-03-31").difference(SPRING)
         new, rep = self.frame(raw, route="csi", cal=cal)
         new_p = B.container_panel(new, self.bench, cal[-1].date())
-        aligned, _ = B.align_to_calendar(self._native(raw), cal, False)                      # P6a：先对齐，再在对齐后的序列上算
-        old_p = B.container_panel(aligned, self.bench, cal[-1].date(), compute_indicators=True)
-        pd.testing.assert_frame_equal(new_p, old_p)
+        hole = new_p[new_p["date"] == CAL[30]]
+        self.assertEqual(len(hole), 1)                                                       # I-29(2)：缺的那一个交易日是占位行
+        self.assertEqual(int(hole["data_hole"].iloc[0]), 1)
+        jan1 = pd.Timestamp("2026-01-01")                                                    # 这条工作日日历含 1 月 1 日；I-29 不把它当真实 K 线
+        self.assertEqual(int(new.set_index("date").loc[jan1, "data_hole"]), 1)
+        native_raw = raw[raw["date"] != jan1]
+        native = B.bar_indicators(B.align_to_calendar(self._native(native_raw), cal, False)[0])
+        got = new.set_index("date")
+        for day, row in native.set_index("date").iterrows():
+            if day == jan1 or day == CAL[30]:
+                continue
+            self.assertEqual(int(got.loc[day, "data_hole"]), 0)
+            self.assertEqual(got.loc[day, "state"], row["state"])
+            self.assertTrue((pd.isna(got.loc[day, "atr20"]) and pd.isna(row["atr20"])) or got.loc[day, "atr20"] == row["atr20"])
         self.assertEqual((rep["dropped_off_calendar"], rep["missing_on_calendar"]), (len(SPRING), 1))
 
 
@@ -675,9 +689,12 @@ class DataHoles(unittest.TestCase):
                                           part[["date", "close", "state", "atr20", "stale", "data_hole"]], obj=cut)
 
     def test_a_share_never_marked(self):
+        """A 股不走海外的 ≥5 行断档标记。这条构造序列的长缺口按 I-29(3) 把窗口推到最后一段之后，窗口内没有占位。"""
         df, rep = self.frame(self.raw(), route="csi", cal=CAL)
+        self.assertGreater(len(df), 0)
+        self.assertEqual(rep["window_start"], "2026-03-06")
         self.assertEqual((int(df["stale"].sum()), int(df["data_hole"].sum())), (0, 0))
-        self.assertNotIn("stale_runs", rep)
+        self.assertEqual(rep["stale_runs"], [])
 
     def test_panel_carries_data_hole(self):
         df, _ = self.frame(self.raw())

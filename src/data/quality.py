@@ -7,6 +7,7 @@ from datetime import date
 from pathlib import Path
 
 from . import db as DB
+from .ohlc_rules import apply_i28, decide_i29, ohlc_state, price_book
 from .universe import PANEL_STATUSES
 from src.indicators.calendar import load_trading_days
 
@@ -16,6 +17,82 @@ OVERSEAS_ROUTES = {"yahoo", "stooq", "eia"}
 
 def _positive(value) -> bool:
     return isinstance(value, (int, float)) and math.isfinite(value) and value > 0
+
+
+def _table_rows(con, sql: str, args: tuple) -> list[dict]:
+    if "ohlc_supplement" in sql and not con.execute(
+            "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'ohlc_supplement'").fetchone():
+        return []
+    return [dict(row) for row in con.execute(sql, args)]
+
+
+def _annotate_container(con, item: dict, cov: dict, window: list[str], end: date) -> None:
+    """I-28 / I-29 只改 A 股容器的开高低和缺口。无效价、来源不符、海外缺行仍阻断。"""
+    item["enters_v1"] = False
+    item["blocks_pool"] = False
+    item["window_start"] = None
+    item["ohlc_source"] = None
+    item["i29_placeholder_rows"] = 0
+    item["i29_placeholder_runs"] = []
+    item["excluded_reason"] = ""
+    if not cov or cov.get("status") not in PANEL_STATUSES:
+        item["blocks_pool"] = True
+        item["research_ready"] = False
+        item["excluded_reason"] = "缺有效研究 coverage"
+        return
+    if cov.get("error") or not cov.get("series_code"):
+        item["research_ready"] = False
+        item["excluded_reason"] = cov.get("error") or "无研究序列"
+        return
+    if item.get("source_mismatch_dates"):
+        item["blocks_pool"] = True
+        item["research_ready"] = False
+        item["excluded_reason"] = "来源不符"
+        return
+    route = cov.get("route_used") or ""
+    if route in OVERSEAS_ROUTES:
+        item["enters_v1"] = bool(item.get("research_ready"))
+        item["blocks_pool"] = not item["enters_v1"]
+        if item["enters_v1"]:
+            item["window_start"] = item.get("first")
+            item["ohlc_source"] = "self"
+        else:
+            item["excluded_reason"] = "海外容器未通过 I-20 / I-24"
+        return
+    code, adj = cov.get("series_code") or "", cov.get("series_adj") or ""
+    raw = _table_rows(con, "SELECT date, open, high, low, close, volume FROM bars WHERE code=? AND adj=? AND date<=? ORDER BY date",
+                      (code, adj, end.isoformat()))
+    on_calendar = [row for row in raw if row["date"] in set(window)]
+    if any(ohlc_state(row) == "invalid" for row in on_calendar):
+        item["blocks_pool"] = True
+        item["research_ready"] = False
+        item["excluded_reason"] = "无效开高低或收盘"
+        item["issues"].append(item["excluded_reason"])
+        return
+    price_code = cov.get("code") or code
+    price_rows = _table_rows(con, "SELECT date, open, high, low, close FROM bars WHERE code=? AND adj='raw' AND date<=? ORDER BY date",
+                             (price_code, end.isoformat()))
+    supplement = _table_rows(con, "SELECT date, open, high, low, close FROM ohlc_supplement WHERE code=? AND date<=? ORDER BY date",
+                             (price_code, end.isoformat()))
+    filled, source = apply_i28(on_calendar, price_book(price_rows, supplement))
+    if any(ohlc_state(row) == "invalid" for row in filled):
+        item["blocks_pool"] = True
+        item["research_ready"] = False
+        item["excluded_reason"] = "无效开高低或收盘"
+        item["issues"].append(item["excluded_reason"])
+        return
+    real = [row["date"] for row in filled if ohlc_state(row) == "ok"]
+    decision = decide_i29(real, window, end.isoformat())
+    item["ohlc_source"] = source
+    item["window_start"] = decision["window_start"]
+    item["i29_placeholder_runs"] = decision["placeholder_runs"]
+    item["i29_placeholder_rows"] = sum(run["rows"] for run in decision["placeholder_runs"])
+    item["enters_v1"] = decision["enters_v1"]
+    item["blocks_pool"] = decision["blocks_pool"]
+    item["excluded_reason"] = "" if decision["enters_v1"] else decision["reason"]
+    item["research_ready"] = bool(decision["enters_v1"] and not decision["blocks_pool"])
+    if decision["reason"]:
+        item["i29_reason"] = decision["reason"]
 
 
 def window_days(trading_days, start: date, end: date):
@@ -128,9 +205,11 @@ def inspect(con, end: date, *, start: date | None = None) -> dict:
         if not c or c.get("status") not in PANEL_STATUSES or c.get("error"):
             item["issues"].append(c.get("error") or "缺有效研究 coverage")
             item["research_ready"] = False
+        _annotate_container(con, item, c, window, end)
         report["containers"][tid] = item
     report["research_ready"] = (report["benchmark_ready"] and not report["issues"] and bool(required)
-                                and all(c["research_ready"] for c in report["containers"].values()))
+                                and any(c.get("enters_v1") for c in report["containers"].values())
+                                and not any(c.get("blocks_pool") for c in report["containers"].values()))
     return report
 
 

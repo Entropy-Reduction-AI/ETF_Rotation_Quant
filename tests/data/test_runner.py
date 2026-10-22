@@ -459,6 +459,29 @@ class BackfillUpdatePackage(Base):
             with self.assertRaisesRegex(SystemExit, "尚未全部收盘"):
                 self.package(date(2026, 9, 30))
 
+    def test_package_dedups_research_series_equal_to_exec(self):
+        """T16：研究序列与执行序列都是 (518880, raw) 时，bars 只收一次。补充开高低按 end 截断后带进包。"""
+        self.backfill(only=["T16"])
+        cov = dict(read_cov(self.db)["T16"])
+        cov.update(series_code="518880", series_adj="raw", route_used="eastmoney_etf", tr_code_used="", price_only="False", error="")
+        con = DB.connect(self.db)
+        run = DB.start_run(con, "probe", end=END)
+        DB.write_coverage(con, run, [cov])
+        DB.finish_run(con, run)
+        con.executemany("INSERT INTO ohlc_supplement VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+            ("000300", "2026-09-18", 1.0, 2.0, 0.5, 1.5, None, "中证指数官网", "a" * 64),
+            ("000300", "2026-09-21", 1.0, 2.0, 0.5, 1.5, None, "中证指数官网", "b" * 64),
+        ])
+        con.commit()
+        con.close()
+        end = date(2026, 9, 18)
+        src_n = query(self.db, "SELECT count(*) FROM bars WHERE code='518880' AND adj='raw' AND date<=?", end.isoformat())[0][0]
+        dest = self.package(end)
+        self.assertEqual(query(dest, "SELECT count(*) FROM bars WHERE code='518880' AND adj='raw'")[0][0], src_n)
+        self.assertEqual(query(dest, "SELECT DISTINCT code, adj FROM bars"), [("518880", "raw")])
+        self.assertEqual(query(dest, "SELECT date FROM ohlc_supplement ORDER BY date"), [("2026-09-18",)])
+        self.assertEqual(runner.verify(dest), [])
+
     def test_package_refuses_to_overwrite(self):
         self.backfill(only=["T01"])
         self.package(END)

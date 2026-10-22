@@ -471,7 +471,7 @@ def manifest_path(pkg: Path) -> Path:
 
 
 PACKAGE_CONTENT = {"meta": "key", "package": "key", "universe": "ord", "calendar": "date", "coverage": "theme_id",
-                   "bars": "code, adj, date"}           # content_sha256 的范围：包内 runs（作业时刻）不算内容
+                   "bars": "code, adj, date", "ohlc_supplement": "code, date"}  # 包内 runs（作业时刻）不算内容
 
 
 def package(end: date, *, db: Path = DB.MARKET_DB, pkg_root: Path = PKG_ROOT, force: bool = False, log=print) -> Path:
@@ -517,7 +517,9 @@ def package(end: date, *, db: Path = DB.MARKET_DB, pkg_root: Path = PKG_ROOT, fo
                     c["error"] = f"package: {c['series_code']}/{c['series_adj']} {why}（coverage 与 bars 不一致，重跑 backfill）"
                     for k in ("route_used", "series_code", "series_adj", "tr_code_used", "price_only", "first_date", "last_date", "rows"):
                         c[k] = ""
-            wanted += [(code, adj) for _, code, adj in container_series(c, uni.get(c["theme_id"], {})) if (code, adj) not in wanted]
+            for _, code, adj in container_series(c, uni.get(c["theme_id"], {})):
+                if (code, adj) not in wanted:             # 研究序列与执行序列同为 (518880, raw) 时只收一次
+                    wanted.append((code, adj))
         Path(pkg_root).mkdir(parents=True, exist_ok=True)
         try:
             n, info = _write_package(src, dest, end, covs, wanted, uni_rows, uni_sha, inconsistent,
@@ -552,6 +554,11 @@ def _write_package(src, dest: Path, end: date, covs: list[dict], wanted, uni_row
                 if rows:
                     pkg.executemany("INSERT INTO bars VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [tuple(r) for r in rows])
                     n += 1
+            if src.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'ohlc_supplement'").fetchone():
+                extra = src.execute("SELECT code, date, open, high, low, close, volume, source, file_sha256 "
+                                    "FROM ohlc_supplement WHERE date <= ? ORDER BY code, date", (end.isoformat(),)).fetchall()
+                if extra:
+                    pkg.executemany("INSERT INTO ohlc_supplement VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [tuple(r) for r in extra])
             pkg.executemany("INSERT INTO universe (ord, theme_id, row) VALUES (?, ?, ?)", uni_rows)
             pkg.execute("INSERT OR REPLACE INTO meta (key, value) VALUES ('universe_sha256', ?)", (uni_sha or "",))
             pkg.executemany("INSERT INTO calendar (date) VALUES (?)", [(r[0],) for r in src.execute("SELECT date FROM calendar ORDER BY date")])
@@ -623,6 +630,10 @@ def verify(path: Path) -> list[str]:
         late = con.execute("SELECT count(*), min(code) FROM bars WHERE date > ?", (end,)).fetchone()
         if late[0]:
             problems.append(f"有 {late[0]} 行晚于 end={end}（如 {late[1]}）")
+        if con.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'ohlc_supplement'").fetchone():
+            late_ohlc = con.execute("SELECT count(*), min(code) FROM ohlc_supplement WHERE date > ?", (end,)).fetchone()
+            if late_ohlc[0]:
+                problems.append(f"ohlc_supplement 有 {late_ohlc[0]} 行晚于 end={end}（如 {late_ohlc[1]}）")
         uni = {r["theme_id"]: json.loads(r["row"]) for r in con.execute("SELECT theme_id, row FROM universe")}
         referenced = set()
         for c in DB.read_coverage(con):
