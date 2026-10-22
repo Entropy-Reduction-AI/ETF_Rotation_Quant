@@ -22,7 +22,7 @@ import pandas as pd
 from src.data import db as DB
 from src.data import runner as data_runner
 from src.data import quality
-from src.data.ohlc_rules import apply_i28, decide_i29, ohlc_state, price_book
+from src.data.ohlc_rules import apply_i28, decide_i29, invalid_points, ohlc_state, price_book
 from .calendar import load_trading_days
 from .metrics import atr20, rs_1m, z_month
 from .states import form_states
@@ -248,20 +248,26 @@ def _a_share_frame(con, cov: dict, cal: pd.DatetimeIndex, *, strict: bool, start
         dropped = int((~on).sum()) if len(frame) else 0
         frame = frame.loc[on].reset_index(drop=True)
     records = _as_records(frame)
-    if any(ohlc_state(row) == "invalid" for row in records):
-        raise BuildError(f"{cov['series_code']}/{cov['series_adj']}: 策略需要正值 OHLC，不允许 0、负数或非有限值")
     price_code = cov.get("code") or cov.get("series_code") or ""
     bars, supplement = _price_rows(con, price_code, end_day)
     filled, ohlc_source = apply_i28(records, price_book(bars, supplement))
-    if any(ohlc_state(row) == "invalid" for row in filled):
-        raise BuildError(f"{cov['series_code']}/{cov['series_adj']}: 换算后的开高低不是正值")
     on_dates = [row["date"] for row in records]
     span = [day for day in calendar if on_dates and on_dates[0] <= day <= on_dates[-1]] if on_dates else []
     present = set(on_dates)
     # 1 月 1 日占位行不算真实 K 线（I-29(1)），即使日历把它列进来、行里有价。
     real_rows = [row for row in filled if ohlc_state(row) == "ok" and not str(row["date"]).endswith("-01-01")]
     decision = decide_i29([row["date"] for row in real_rows], calendar, end_day.isoformat())
-    rep = {"ohlc_source": ohlc_source, "enters_v1": decision["enters_v1"], "window_start": decision["window_start"],
+    start = decision["window_start"]
+    discarded = []
+    for row in filled:
+        points = invalid_points(row)
+        if not points or not start:
+            continue
+        if row["date"] >= start:
+            raise BuildError(f"{cov['series_code']}/{cov['series_adj']}: 窗口内无效价 {row['date']}")
+        discarded.extend(points)
+    rep = {"ohlc_source": ohlc_source, "enters_v1": decision["enters_v1"], "window_start": start,
+           "discarded_invalid": discarded,
            "i29_reason": decision["reason"], "i29_placeholder_runs": decision["placeholder_runs"],
            "i29_placeholder_rows": sum(run["rows"] for run in decision["placeholder_runs"]),
            "excluded_reason": "" if decision["enters_v1"] else decision["reason"],
@@ -414,7 +420,11 @@ def _build(con, package: Path, out: Path | None, log, *, start: date | None = No
                           "bench": {"code": BENCH_CODE, "first": str(bench.index.min().date()), "last": str(bench.index.max().date())},
                           "calendar": ({"days": len(trading_days), "first": str(trading_days[0].date()), "last": str(trading_days[-1].date())}
                                        if trading_days is not None else None),
-                          "input_quality": readiness, "containers": {}, "skipped": {}, "excluded": {}}
+                          "input_quality": readiness, "containers": {}, "skipped": {}, "excluded": {},
+                          "discarded_invalid_rows": [
+                              {"theme_id": tid, "container": c.get("container"), **row}
+                              for tid, c in readiness["containers"].items()
+                              for row in (c.get("discarded_invalid") or [])]}
     for c in covs:
         if c.get("status") not in ("retained", "flagged"):
             continue
@@ -425,7 +435,8 @@ def _build(con, package: Path, out: Path | None, log, *, start: date | None = No
                                         "excluded_reason": gate.get("excluded_reason") or "不进 V1",
                                         "window_start": gate.get("window_start"), "ohlc_source": gate.get("ohlc_source"),
                                         "i29_placeholder_rows": gate.get("i29_placeholder_rows", 0),
-                                        "i29_reason": gate.get("i29_reason")}
+                                        "i29_reason": gate.get("i29_reason"),
+                                        "discarded_invalid": gate.get("discarded_invalid") or []}
             continue
         if not c.get("series_adj") or not con.execute("SELECT 1 FROM bars WHERE code = ? AND adj = ? LIMIT 1",
                                                       (c["series_code"], c["series_adj"])).fetchone():

@@ -520,6 +520,62 @@ class Quality(unittest.TestCase):
         self.assertTrue(report["research_ready"])
         self.assertEqual(report["containers"]["T99"]["native_warmup_rows"], sum(d < DAYS[0] for d in native_days))
 
+    def _retarget_strategy(self, calendar, rows):
+        """H00300 保持完整，只作基准。策略序列 S 用构造行，不改已有 bars。"""
+        self.fixture(days=calendar, calendar=calendar)
+        con = DB.connect(self.db)
+        with con:
+            con.executemany("INSERT INTO bars VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                            [("S", "raw", day, open_, high, low, close, None, None, "csi",
+                              "2024-01-17T00:00:00+00:00") for day, open_, high, low, close in rows])
+            con.execute(
+                "UPDATE coverage SET series_code='S', code='S', container='合成主题', exec_code='H00300' "
+                "WHERE theme_id='T01'")
+        con.close()
+
+    def test_invalid_row_before_window_is_discarded_and_recorded(self):
+        calendar = pd.bdate_range("2024-01-02", "2024-01-16").strftime("%Y-%m-%d").tolist()
+        absent = {"2024-01-04", "2024-01-05", "2024-01-08"}
+        rows = [(day, 90.0, 110.0, 80.0, 0.0 if day == "2024-01-03" else 100.0)
+                for day in calendar if day not in absent]
+        self._retarget_strategy(calendar, rows)
+        end = date(2024, 1, 16)
+        report = self.report(end=end)
+        item = report["containers"]["T01"]
+        self.assertEqual(item["window_start"], "2024-01-09")
+        self.assertEqual(item["i29_reason"], "I-29(3)")
+        self.assertEqual(item["discarded_invalid"], [{"date": "2024-01-03", "field": "close", "value": 0.0}])
+        self.assertFalse(item["blocks_pool"])
+        self.assertTrue(item["enters_v1"])
+        self.assertTrue(item["research_ready"])
+        self.assertTrue(report["benchmark_ready"])
+        self.assertTrue(report["research_ready"])
+        out = B.build(self.package(end), self.tmp / "panel.sqlite", log=lambda *_: None)
+        built = json.loads(B.report_path(out).read_text())
+        self.assertEqual(built["discarded_invalid_rows"],
+                         [{"theme_id": "T01", "container": "合成主题", "date": "2024-01-03", "field": "close", "value": 0.0}])
+        self.assertEqual(built["containers"]["合成主题"]["window_start"], "2024-01-09")
+        with sqlite3.connect(out) as con:
+            self.assertEqual(con.execute("SELECT min(date) FROM panel WHERE container='合成主题'").fetchone()[0], "2024-01-09")
+            self.assertIsNone(con.execute("SELECT 1 FROM panel WHERE container='合成主题' AND date='2024-01-03'").fetchone())
+
+    def test_invalid_row_inside_window_still_blocks_the_pool(self):
+        calendar = pd.bdate_range("2024-01-02", "2024-01-16").strftime("%Y-%m-%d").tolist()
+        rows = [(day, 90.0, 110.0, 80.0, 0.0 if day == "2024-01-09" else 100.0) for day in calendar]
+        self._retarget_strategy(calendar, rows)
+        end = date(2024, 1, 16)
+        report = self.report(end=end)
+        item = report["containers"]["T01"]
+        self.assertEqual(item["window_start"], "2024-01-02")
+        self.assertEqual(item["discarded_invalid"], [])
+        self.assertTrue(item["blocks_pool"])
+        self.assertFalse(item["enters_v1"])
+        self.assertFalse(item["research_ready"])
+        self.assertEqual(item["excluded_reason"], "无效开高低或收盘")
+        self.assertTrue(report["benchmark_ready"])
+        self.assertFalse(report["research_ready"])
+        self.assert_build_refuses_without_outputs(self.package(end))
+
     def test_missing_pre2005_native_ohl_blocks_preflight(self):
         self.fixture()
         missing = "2004-12-15"

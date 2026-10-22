@@ -14,8 +14,29 @@ def _missing(value) -> bool:
     return value is None
 
 
+def _shown(value):
+    """写进报告的值。非有限数没有 JSON 数字，记成 nan / inf / -inf。"""
+    if isinstance(value, float) and math.isnan(value):
+        return "nan"
+    if isinstance(value, float) and math.isinf(value):
+        return "inf" if value > 0 else "-inf"
+    return value
+
+
+def invalid_points(row: dict) -> list[dict]:
+    """收盘或开高低为 0、负数、非有限数。空着不算无效，按缺口处理。"""
+    points = []
+    for field in ("open", "high", "low", "close"):
+        value = row.get(field)
+        if _missing(value) or is_positive(value):
+            continue
+        points.append({"date": row["date"], "field": field, "value": _shown(value)})
+    return points
+
+
 def ohlc_state(row: dict) -> str:
-    """ok：开高低收都是正的有限数。missing：有字段空着。invalid：字段在，但不是正的有限数。"""
+    """ok：开高低收都是正的有限数。missing：有字段空着。invalid：字段在，但不是正的有限数。
+    invalid 在 I-29 里与空缺一样，不算真实 K 线。"""
     close = row.get("close")
     if _missing(close):
         return "missing"

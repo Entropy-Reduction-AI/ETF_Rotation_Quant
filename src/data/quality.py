@@ -7,7 +7,7 @@ from datetime import date
 from pathlib import Path
 
 from . import db as DB
-from .ohlc_rules import apply_i28, decide_i29, ohlc_state, price_book
+from .ohlc_rules import apply_i28, decide_i29, invalid_points, ohlc_state, price_book
 from .universe import PANEL_STATUSES
 from src.indicators.calendar import load_trading_days
 
@@ -27,13 +27,15 @@ def _table_rows(con, sql: str, args: tuple) -> list[dict]:
 
 
 def _annotate_container(con, item: dict, cov: dict, window: list[str], end: date) -> None:
-    """I-28 / I-29 只改 A 股容器的开高低和缺口。无效价、来源不符、海外缺行仍阻断。"""
+    """I-28 / I-29 只改 A 股容器的开高低和缺口。来源不符、海外缺行仍阻断。
+    无效价先当作没有真实 K 线。只有 date ≥ window_start 的无效行才阻断全池。"""
     item["enters_v1"] = False
     item["blocks_pool"] = False
     item["window_start"] = None
     item["ohlc_source"] = None
     item["i29_placeholder_rows"] = 0
     item["i29_placeholder_runs"] = []
+    item["discarded_invalid"] = []
     item["excluded_reason"] = ""
     if not cov or cov.get("status") not in PANEL_STATUSES:
         item["blocks_pool"] = True
@@ -63,34 +65,37 @@ def _annotate_container(con, item: dict, cov: dict, window: list[str], end: date
     raw = _table_rows(con, "SELECT date, open, high, low, close, volume FROM bars WHERE code=? AND adj=? AND date<=? ORDER BY date",
                       (code, adj, end.isoformat()))
     on_calendar = [row for row in raw if row["date"] in set(window)]
-    if any(ohlc_state(row) == "invalid" for row in on_calendar):
-        item["blocks_pool"] = True
-        item["research_ready"] = False
-        item["excluded_reason"] = "无效开高低或收盘"
-        item["issues"].append(item["excluded_reason"])
-        return
     price_code = cov.get("code") or code
     price_rows = _table_rows(con, "SELECT date, open, high, low, close FROM bars WHERE code=? AND adj='raw' AND date<=? ORDER BY date",
                              (price_code, end.isoformat()))
     supplement = _table_rows(con, "SELECT date, open, high, low, close FROM ohlc_supplement WHERE code=? AND date<=? ORDER BY date",
                              (price_code, end.isoformat()))
     filled, source = apply_i28(on_calendar, price_book(price_rows, supplement))
-    if any(ohlc_state(row) == "invalid" for row in filled):
-        item["blocks_pool"] = True
-        item["research_ready"] = False
-        item["excluded_reason"] = "无效开高低或收盘"
-        item["issues"].append(item["excluded_reason"])
-        return
     real = [row["date"] for row in filled if ohlc_state(row) == "ok"]
     decision = decide_i29(real, window, end.isoformat())
+    start = decision["window_start"]
+    discarded, in_window = [], []
+    for row in filled:
+        points = invalid_points(row)
+        if not points or not start:
+            continue
+        if row["date"] >= start:
+            in_window.extend(points)
+        else:
+            discarded.extend(points)
+    item["discarded_invalid"] = discarded
     item["ohlc_source"] = source
-    item["window_start"] = decision["window_start"]
+    item["window_start"] = start
     item["i29_placeholder_runs"] = decision["placeholder_runs"]
     item["i29_placeholder_rows"] = sum(run["rows"] for run in decision["placeholder_runs"])
-    item["enters_v1"] = decision["enters_v1"]
-    item["blocks_pool"] = decision["blocks_pool"]
-    item["excluded_reason"] = "" if decision["enters_v1"] else decision["reason"]
-    item["research_ready"] = bool(decision["enters_v1"] and not decision["blocks_pool"])
+    item["enters_v1"] = bool(decision["enters_v1"] and not in_window)
+    item["blocks_pool"] = bool(decision["blocks_pool"] or in_window)
+    if in_window:
+        item["excluded_reason"] = "无效开高低或收盘"
+        item["issues"].append(item["excluded_reason"])
+    else:
+        item["excluded_reason"] = "" if decision["enters_v1"] else decision["reason"]
+    item["research_ready"] = bool(item["enters_v1"] and not item["blocks_pool"])
     if decision["reason"]:
         item["i29_reason"] = decision["reason"]
 
