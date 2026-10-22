@@ -1,0 +1,213 @@
+index_code,source,ok,gap_rows,gap_flat,gap_ranged,file_path,notes,fetched_at
+399986,akshare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+399986,cnindex,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+399986,eastmoney,False,0,0,0,,secid=0.399986 empty in gap window (full-window/yearly chunks),2026-10-22 11:22:32+0800
+399986,eastmoney_ut,False,0,0,0,,secid=0.399986 name=中证银行,2026-10-22 11:22:32+0800
+399986,ifeng,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+399986,investing,False,0,0,0,,Cloudflare/403 on home; skipped,2026-10-22 11:22:32+0800
+399986,netease,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+399986,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+399986,stooq,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+399986,tonghuashun_prior,True,358,358,0,/home/box/Downloads/jqka_399986_daily.csv,gap fully flat (open=high=low=close) for 358 bars,2026-10-22 11:22:32+0800
+399986,tushare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+399986,wallstreetcn,False,0,0,0,,no hist kline API,2026-10-22 11:22:32+0800
+930606,akshare,False,0,0,0,,"no |sh930606:err:KeyError,sz930606:err:KeyError,index_zh_a_hist:ConnectionError",2026-10-22 11:22:32+0800
+930606,cnindex,False,0,0,0,,"empty keys=['code', 'message', 'data', 'total', 'sampleDate']",2026-10-22 11:22:32+0800
+930606,eastmoney,False,0,0,0,,correct secid=2.930606 empty in gap; secid=90 returned 853 ranged but CLOSE MISMATCH vs CSI (ret_corr~0.64) → REJECTED,2026-10-22 11:22:32+0800
+930606,eastmoney_ut,False,0,0,0,,secid=2.930606 name=中证钢铁,2026-10-22 11:22:32+0800
+930606,hexin_alt,False,0,0,0,,alt endpoints checked (v4 hs_); prior jqka already scanned; hs_ HTTP404 len=0,2026-10-22 11:22:32+0800
+930606,ifeng,False,0,0,0,,"empty ConnectTimeout:HTTPConnectionPool(host='api.finance.ifeng.com', port=80): Max retries exceeded",2026-10-22 11:22:32+0800
+930606,investing,False,0,0,0,,blocked/unreachable; home HTTP403 len=3,2026-10-22 11:22:32+0800
+930606,netease,False,0,0,0,,fail HTTP502,2026-10-22 11:22:32+0800
+930606,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+930606,stooq,False,0,0,0,,930606.sz HTTP200,2026-10-22 11:22:32+0800
+930606,tonghuashun_prior,True,0,0,0,/home/box/Downloads/jqka_930606_daily.csv,series 2019-12-23~2026-10-22 starts after gap 20160614-20191210 (no bars inside gap window),2026-10-22 11:22:32+0800
+930606,tushare,False,0,0,0,,no token in env; skipped,2026-10-22 11:22:32+0800
+930606,wallstreetcn,False,0,0,0,,HTTP200 len=47 (no usable hist kline expected),2026-10-22 11:22:32+0800
+930997,akshare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+930997,cnindex,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+930997,eastmoney,True,161,161,0,/home/box/Downloads/multisource_ohlc/eastmoney_FLAT_930997.csv,secid=2.930997: 161 flat in gap; no real OHLC,2026-10-22 11:22:32+0800
+930997,eastmoney_ut,True,161,161,0,,secid=2.930997 name=新能源车,2026-10-22 11:22:32+0800
+930997,ifeng,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+930997,investing,False,0,0,0,,Cloudflare/403 on home; skipped,2026-10-22 11:22:32+0800
+930997,netease,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+930997,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+930997,stooq,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+930997,tonghuashun_prior,True,0,0,0,/home/box/Downloads/jqka_930997_daily.csv,series 2018-04-02~2026-10-22 starts after gap 20170719-20180315 (no bars inside gap window),2026-10-22 11:22:32+0800
+930997,tushare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+930997,wallstreetcn,False,0,0,0,,no hist kline API,2026-10-22 11:22:32+0800
+931151,akshare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931151,cnindex,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931151,eastmoney,False,0,0,0,,secid=2.931151 empty in gap,2026-10-22 11:22:32+0800
+931151,eastmoney_ut,False,0,0,0,,secid=2.931151 name=光伏产业,2026-10-22 11:22:32+0800
+931151,ifeng,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931151,investing,False,0,0,0,,Cloudflare/403 on home; skipped,2026-10-22 11:22:32+0800
+931151,netease,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931151,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+931151,stooq,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931151,tonghuashun_prior,True,0,0,0,/home/box/Downloads/jqka_931151_daily.csv,series 2020-12-14~2026-10-22 starts after gap 20121231-20201204 (no bars inside gap window),2026-10-22 11:22:32+0800
+931151,tushare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931151,wallstreetcn,False,0,0,0,,no hist kline API,2026-10-22 11:22:32+0800
+931152,akshare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931152,cnindex,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931152,eastmoney,False,0,0,0,,secid=2.931152 empty in gap,2026-10-22 11:22:32+0800
+931152,eastmoney_ut,False,0,0,0,,secid=2.931152 name=CS创新药,2026-10-22 11:22:32+0800
+931152,ifeng,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931152,investing,False,0,0,0,,Cloudflare/403 on home; skipped,2026-10-22 11:22:32+0800
+931152,netease,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931152,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+931152,stooq,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931152,tonghuashun_prior,True,0,0,0,/home/box/Downloads/jqka_931152_daily.csv,v4 yearly only (v6 all total=0); years_ok=6; series 2019-10-10~2026-10-22 starts after gap 20141231-20190923 (no bars inside gap window),2026-10-22 11:22:32+0800
+931152,tushare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931152,wallstreetcn,False,0,0,0,,no hist kline API,2026-10-22 11:22:32+0800
+931160,akshare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931160,cnindex,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931160,eastmoney,True,61,61,0,/home/box/Downloads/multisource_ohlc/eastmoney_FLAT_931160.csv,secid=2.931160: 61 flat in gap,2026-10-22 11:22:32+0800
+931160,eastmoney_ut,True,61,61,0,,secid=2.931160 name=通信设备,2026-10-22 11:22:32+0800
+931160,ifeng,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931160,investing,False,0,0,0,,Cloudflare/403 on home; skipped,2026-10-22 11:22:32+0800
+931160,netease,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931160,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+931160,stooq,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931160,tonghuashun_prior,True,0,0,0,/home/box/Downloads/jqka_931160_daily.csv,v6 all start=2019-06-18; v4_ok=7; series 2019-06-18~2026-10-22 starts after gap 20181228-20190605 (no bars inside gap window),2026-10-22 11:22:32+0800
+931160,tushare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931160,wallstreetcn,False,0,0,0,,no hist kline API,2026-10-22 11:22:32+0800
+931494,akshare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931494,cnindex,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931494,eastmoney,False,0,0,0,,"secid=2.931494 empty; secid=90 had 1658 ranged but CLOSE MISMATCH (ratio~0.24, ret_corr~0.59) → REJECTED",2026-10-22 11:22:32+0800
+931494,eastmoney_ut,False,0,0,0,,secid=2.931494 name=消费电子,2026-10-22 11:22:32+0800
+931494,ifeng,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931494,investing,False,0,0,0,,Cloudflare/403 on home; skipped,2026-10-22 11:22:32+0800
+931494,netease,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931494,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+931494,stooq,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931494,tonghuashun_prior,True,0,0,0,/home/box/Downloads/jqka_931494_daily.csv,series 2021-08-24~2026-10-22 starts after gap 20121231-20210818 (no bars inside gap window),2026-10-22 11:22:32+0800
+931494,tushare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931494,wallstreetcn,False,0,0,0,,no hist kline API,2026-10-22 11:22:32+0800
+931743,akshare,False,0,0,0,,"no |sh931743:err:KeyError,sz931743:err:KeyError,index_zh_a_hist:ConnectionError",2026-10-22 11:22:32+0800
+931743,cnindex,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931743,eastmoney,False,0,0,0,,secid=2.931743 empty in gap; HTTP intermittent 502/RemoteDisconnected,2026-10-22 11:22:32+0800
+931743,eastmoney_ut,False,0,0,0,,secid=2.931743 name=半导体材料设备,2026-10-22 11:22:32+0800
+931743,ifeng,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931743,investing,False,0,0,0,,Cloudflare/403 on home; skipped,2026-10-22 11:22:32+0800
+931743,netease,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931743,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+931743,stooq,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931743,tonghuashun_prior,True,0,0,0,/home/box/Downloads/jqka_931743_daily.csv,series 2023-07-19~2026-10-22 starts after gap 20181228-20230712 (no bars inside gap window),2026-10-22 11:22:32+0800
+931743,tushare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+931743,wallstreetcn,False,0,0,0,,no hist kline API,2026-10-22 11:22:32+0800
+H11077,akshare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H11077,cnindex,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H11077,eastmoney,False,0,0,0,,"NOT in EM suggest; secid=90 returned ranged but CLOSE MISMATCH (CSI~157 vs EM~1048, ret_corr~-0.15) → REJECTED; CSI excel OHL all null",2026-10-22 11:22:32+0800
+H11077,eastmoney_ut,False,0,0,0,,secid=2.H11077 name=None,2026-10-22 11:22:32+0800
+H11077,ifeng,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H11077,investing,False,0,0,0,,Cloudflare/403 on home; skipped,2026-10-22 11:22:32+0800
+H11077,netease,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H11077,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+H11077,stooq,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H11077,tonghuashun_prior,True,0,0,0,,no working prefix after retries,2026-10-22 11:22:32+0800
+H11077,tushare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H11077,wallstreetcn,False,0,0,0,,no hist kline API,2026-10-22 11:22:32+0800
+H30184,akshare,False,0,0,0,,"no |shH30184:err:KeyError,szH30184:err:KeyError,index_zh_a_hist:ConnectionError",2026-10-22 11:22:32+0800
+H30184,cnindex,False,0,0,0,,"empty keys=['code', 'message', 'data', 'total', 'sampleDate']",2026-10-22 11:22:32+0800
+H30184,eastmoney,True,1395,1395,0,/home/box/Downloads/multisource_ohlc/eastmoney_FLAT_H30184.csv,secid=2.H30184: 1395 flat bars; closes MATCH CSI; no real OHLC,2026-10-22 11:22:32+0800
+H30184,eastmoney_ut,True,1395,1395,0,,secid=2.H30184 name=半导体,2026-10-22 11:22:32+0800
+H30184,hexin_alt,False,0,0,0,,alt endpoints checked (v4 hs_); prior jqka already scanned; hs_ HTTP404 len=0,2026-10-22 11:22:32+0800
+H30184,ifeng,False,0,0,0,,"empty ConnectTimeout:HTTPConnectionPool(host='api.finance.ifeng.com', port=80): Max retries exceeded",2026-10-22 11:22:32+0800
+H30184,investing,False,0,0,0,,skipped after first reachability check,2026-10-22 11:22:32+0800
+H30184,netease,False,0,0,0,,fail HTTP502,2026-10-22 11:22:32+0800
+H30184,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+H30184,stooq,False,0,0,0,,H30184.sz HTTP200,2026-10-22 11:22:32+0800
+H30184,tonghuashun_prior,True,0,0,0,/home/box/Downloads/jqka_H30184_daily.csv,series 2019-04-17~2026-10-22 starts after gap 20130628-20190402 (no bars inside gap window),2026-10-22 11:22:32+0800
+H30184,tushare,False,0,0,0,,no token in env; skipped,2026-10-22 11:22:32+0800
+H30184,wallstreetcn,False,0,0,0,,HTTP200 len=47 (no usable hist kline expected),2026-10-22 11:22:32+0800
+H30187,akshare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30187,cnindex,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30187,eastmoney,False,0,0,0,,NOT in EM suggest API; all secids empty,2026-10-22 11:22:32+0800
+H30187,eastmoney_ut,False,0,0,0,,secid=2.H30187 name=None,2026-10-22 11:22:32+0800
+H30187,ifeng,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30187,investing,False,0,0,0,,Cloudflare/403 on home; skipped,2026-10-22 11:22:32+0800
+H30187,netease,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30187,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+H30187,stooq,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30187,tonghuashun_prior,True,0,0,0,,no working prefix after retries,2026-10-22 11:22:32+0800
+H30187,tushare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30187,wallstreetcn,False,0,0,0,,no hist kline API,2026-10-22 11:22:32+0800
+H30202,akshare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30202,cnindex,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30202,eastmoney,False,0,0,0,,secid=2.H30202 empty in gap,2026-10-22 11:22:32+0800
+H30202,eastmoney_ut,False,0,0,0,,secid=2.H30202 name=软件指数,2026-10-22 11:22:32+0800
+H30202,ifeng,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30202,investing,False,0,0,0,,Cloudflare/403 on home; skipped,2026-10-22 11:22:32+0800
+H30202,netease,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30202,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+H30202,stooq,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30202,tonghuashun_prior,True,0,0,0,/home/box/Downloads/jqka_H30202_daily.csv,series 2021-01-29~2026-10-22 starts after gap 20130628-20210125 (no bars inside gap window),2026-10-22 11:22:32+0800
+H30202,tushare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30202,wallstreetcn,False,0,0,0,,no hist kline API,2026-10-22 11:22:32+0800
+H30269,akshare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30269,cnindex,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30269,eastmoney,True,465,465,0,/home/box/Downloads/multisource_ohlc/eastmoney_FLAT_H30269.csv,secid=2.H30269: 465 flat; no real OHLC,2026-10-22 11:22:32+0800
+H30269,eastmoney_ut,True,465,465,0,,secid=2.H30269 name=红利低波,2026-10-22 11:22:32+0800
+H30269,ifeng,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30269,investing,False,0,0,0,,Cloudflare/403 on home; skipped,2026-10-22 11:22:32+0800
+H30269,netease,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30269,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+H30269,stooq,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30269,tonghuashun_prior,True,465,465,0,/home/box/Downloads/jqka_H30269_daily.csv,v6 cache /tmp + raw; gap fully flat (open=high=low=close) for 465 bars,2026-10-22 11:22:32+0800
+H30269,tushare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30269,wallstreetcn,False,0,0,0,,no hist kline API,2026-10-22 11:22:32+0800
+H30590,akshare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30590,cnindex,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30590,eastmoney,False,0,0,0,,secid=2.H30590 empty in gap,2026-10-22 11:22:32+0800
+H30590,eastmoney_ut,False,0,0,0,,secid=2.H30590 name=机器人,2026-10-22 11:22:32+0800
+H30590,ifeng,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30590,investing,False,0,0,0,,Cloudflare/403 on home; skipped,2026-10-22 11:22:32+0800
+H30590,netease,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30590,sohu,False,0,0,0,,,2026-10-22 11:22:32+0800
+H30590,stooq,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30590,tonghuashun_prior,True,1291,1291,0,/home/box/Downloads/jqka_H30590_daily.csv,gap fully flat (open=high=low=close) for 1291 bars,2026-10-22 11:22:32+0800
+H30590,tushare,False,0,0,0,,not completed in timed-out run / assumed empty after peer failures,2026-10-22 11:22:32+0800
+H30590,wallstreetcn,False,0,0,0,,no hist kline API,2026-10-22 11:22:32+0800
+930606,tencent,False,0,0,0,,empty,
+930606,sina,False,0,0,0,,empty,
+H30184,tencent,False,0,0,0,,empty,
+H30184,sina,False,0,0,0,,empty,
+931743,tencent,False,0,0,0,,empty,
+931743,sina,False,0,0,0,,empty,
+H30202,tencent,False,0,0,0,,empty,
+H30202,sina,False,0,0,0,,empty,
+H30590,tencent,False,0,0,0,,empty,
+H30590,sina,False,0,0,0,,empty,
+H30187,tencent,False,0,0,0,,empty,
+H30187,sina,False,0,0,0,,empty,
+930997,tencent,False,0,0,0,,empty,
+930997,sina,False,0,0,0,,empty,
+H30269,tencent,False,0,0,0,,empty,
+H30269,sina,False,0,0,0,,empty,
+931494,tencent,False,0,0,0,,empty,
+931494,sina,False,0,0,0,,empty,
+931151,tencent,False,0,0,0,,empty,
+931151,sina,False,0,0,0,,empty,
+931152,tencent,False,0,0,0,,empty,
+931152,sina,False,0,0,0,,empty,
+399986,tencent,False,0,0,0,,empty,
+399986,sina,False,0,0,0,,empty,
+931160,tencent,False,0,0,0,,empty,
+931160,sina,False,0,0,0,,empty,
+H11077,tencent,False,0,0,0,,empty,
+H11077,sina,False,0,0,0,,empty,
+930606,baostock,False,0,0,0,,login fail 网络接收错误。,
+H30184,baostock,False,0,0,0,,login fail 网络接收错误。,
+931743,baostock,False,0,0,0,,login fail 网络接收错误。,
+H30202,baostock,False,0,0,0,,login fail 网络接收错误。,
+H30590,baostock,False,0,0,0,,login fail 网络接收错误。,
+H30187,baostock,False,0,0,0,,login fail 网络接收错误。,
+930997,baostock,False,0,0,0,,login fail 网络接收错误。,
+H30269,baostock,False,0,0,0,,login fail 网络接收错误。,
+931494,baostock,False,0,0,0,,login fail 网络接收错误。,
+931151,baostock,False,0,0,0,,login fail 网络接收错误。,
+931152,baostock,False,0,0,0,,login fail 网络接收错误。,
+399986,baostock,False,0,0,0,,login fail 网络接收错误。,
+931160,baostock,False,0,0,0,,login fail 网络接收错误。,
+H11077,baostock,False,0,0,0,,login fail 网络接收错误。,

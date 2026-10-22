@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-21T23:53:56+08:00",
+  "generated_at": "2026-10-22T11:28:29+08:00",
   "timezone": "Asia/Shanghai",
   "needed_sha256": "3a61e5b378c496e1855d4ae908bf4144822535db179d5df5749df117605d645e",
   "files": [
@@ -810,7 +810,7 @@
     {
       "file": "399967.csv",
       "index_code": "399967",
-      "source": "中证指数官网",
+      "source": "中证指数官网；5 个缺口日为雪球",
       "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
       "params": {
         "indexCode": "399967",
@@ -829,17 +829,37 @@
         }
       ],
       "fetched_at": "2026-10-21T23:52:34+08:00",
-      "sha256": "662e80324a2ca44813c07afe8d4ba62d5e8a17c2489df28f13af41d94392ce22",
-      "rows": 5217,
+      "sha256": "a8444fd8812bc2d091f007b13c0fc5be83185419a91cc1cf66ec6bb09a6a5a2b",
+      "rows": 5222,
       "start_date": "2005-01-04",
       "end_date": "2026-09-30",
       "raw_files": [
-        "csi_399967_0533f59186d7.body"
+        "csi_399967_0533f59186d7.body",
+        "399967_xueqiu_gap_fill.csv"
       ],
-      "gap_coverage": "partial: 清单缺口覆盖 3/8",
+      "gap_coverage": "yes: 清单 8 个缺口日全部有真实 OHLC；2013-12-26、2013-12-27、2013-12-30、2013-12-31、2014-04-03 来自雪球，其余来自中证指数官网",
       "notes": [
-        "清单缺口覆盖 3/8"
-      ]
+        "主序列为中证指数官网 index-perf。",
+        "2013-12-26、2013-12-27、2013-12-30、2013-12-31 官网响应里没有这几行；2014-04-03 官网有收盘 5749.3、成交量 294605271，开高低为空。雪球这 5 日补进 CSV。2014-04-03 收盘与成交量与官网一致。",
+        "没有把雪球用到其余日期。平盘和东财 secid=90.* 未采用。"
+      ],
+      "gap_fill": {
+        "source": "雪球",
+        "dates": [
+          "2013-12-26",
+          "2013-12-27",
+          "2013-12-30",
+          "2013-12-31",
+          "2014-04-03"
+        ],
+        "request_url": "https://stock.xueqiu.com/v5/stock/chart/kline.json?symbol=SZ399967&period=day&type=before&indicator=kline",
+        "fetched_at": "2026-10-22T11:26:50+08:00",
+        "timezone": "Asia/Shanghai",
+        "rows": 5,
+        "sha256": "9a784c75e508fbc5aff03b45c2375d23b3b962a0172d882a774273b075751951",
+        "file": "raw/399967_xueqiu_gap_fill.csv",
+        "note": "批准的 5 日文件于 2026-10-22 11:26:50+08 交到本环境。本环境重拉该 URL 返回 HTTP 400，未另造响应正文。"
+      }
     },
     {
       "file": "399987.csv",
