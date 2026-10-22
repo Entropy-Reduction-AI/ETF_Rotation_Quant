@@ -1,0 +1,8 @@
+{
+  "url": "https://q.stock.sohu.com/hisHq?code=zs_H30184&start=20050104&end=20080103&stat=1&order=D&period=d",
+  "status": 200,
+  "fetched_at": "2026-10-21T23:49:51+08:00",
+  "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+  "bytes": 3,
+  "file": "sohu_H30184_ca3d163bab05.body"
+}

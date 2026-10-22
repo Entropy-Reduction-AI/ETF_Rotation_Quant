@@ -1,0 +1,8 @@
+{
+  "url": "https://q.stock.sohu.com/hisHq?code=zs_931151&start=20121231&end=20151230&stat=1&order=D&period=d",
+  "status": 200,
+  "fetched_at": "2026-10-21T23:51:19+08:00",
+  "sha256": "235840d7d282e6e3b8310a059def9390c7928676c27ac2bf8e262b90f62c7ab5",
+  "bytes": 65,
+  "file": "sohu_931151_235840d7d282.body"
+}

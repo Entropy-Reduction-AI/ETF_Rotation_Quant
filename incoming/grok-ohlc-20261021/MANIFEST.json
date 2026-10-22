@@ -1,0 +1,1222 @@
+{
+  "generated_at": "2026-10-22T11:28:29+08:00",
+  "timezone": "Asia/Shanghai",
+  "needed_sha256": "3a61e5b378c496e1855d4ae908bf4144822535db179d5df5749df117605d645e",
+  "files": [
+    {
+      "file": "000300.csv",
+      "index_code": "000300",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "000300",
+        "startDate": "19900101",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000300&startDate=19900101&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:47:49+08:00",
+          "sha256": "1d785200f1f333743892c7d58b19ee8140d65469c73763cad2e3390203ec3c5c",
+          "bytes": 2001027,
+          "file": "csi_000300_1d785200f1f3.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:47:49+08:00",
+      "sha256": "0f65093ca177ed27668d86d7ff064f544ce95d70887be790d95611887c01c024",
+      "rows": 5282,
+      "start_date": "2005-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_000300_1d785200f1f3.body"
+      ],
+      "gap_coverage": "yes: 全段 2005-01-04~2026-09-30，交易日无缺",
+      "notes": [
+        "全段 2005-01-04~2026-09-30，交易日无缺"
+      ]
+    },
+    {
+      "file": "930606.csv",
+      "index_code": "930606",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "930606",
+        "startDate": "19900101",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=930606&startDate=19900101&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:47:53+08:00",
+          "sha256": "cde59dabd197249383f3ff55e9cb93d9bde35ee29a04bedbd44d3f2ae59cec6e",
+          "bytes": 1464026,
+          "file": "csi_930606_cde59dabd197.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:47:53+08:00",
+      "sha256": "c6f795e2e5a620c366200e7dd5bcabd68759b98b363a503035f3716a24d98fc5",
+      "rows": 3458,
+      "start_date": "2009-01-05",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_930606_cde59dabd197.body"
+      ],
+      "gap_coverage": "partial: 真实起点 2009-01-05；2016-06-14~2019-12-10 开高低为空",
+      "notes": [
+        "起点 1990-01-01，仍缺 1824 个交易日",
+        "官网另有 1990-01-01 一行，开高低收与 2009-01-05 完全相同，不是交易日，未写入 CSV"
+      ]
+    },
+    {
+      "file": "000015.csv",
+      "index_code": "000015",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "000015",
+        "startDate": "19900101",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000015&startDate=19900101&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:49:43+08:00",
+          "sha256": "76fd4eb15ea82223d382b9f8adea79f0700c09d27b9b2485bbae71c481614353",
+          "bytes": 1834066,
+          "file": "csi_000015_76fd4eb15ea8.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:49:43+08:00",
+      "sha256": "f2898270a9eb8483b6b70c81ce6b21762fa568386bad7f7b1480ffeb273fd8b6",
+      "rows": 5282,
+      "start_date": "2005-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_000015_76fd4eb15ea8.body"
+      ],
+      "gap_coverage": "yes: 全段 2005-01-04~2026-09-30，交易日无缺",
+      "notes": [
+        "全段 2005-01-04~2026-09-30，交易日无缺"
+      ]
+    },
+    {
+      "file": "H30184.csv",
+      "index_code": "H30184",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "H30184",
+        "startDate": "20050104",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=H30184&startDate=20050104&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:49:47+08:00",
+          "sha256": "52591789d63d1deb2dd945cf000c0cbd5223ec6ff9191de4e333377c1f15af37",
+          "bytes": 2222787,
+          "file": "csi_H30184_52591789d63d.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:49:47+08:00",
+      "sha256": "98c5b9471109700392c48eb26aa06fc0eac8280b8b29b5241bc6baaedcc3b4ee",
+      "rows": 3876,
+      "start_date": "2005-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_H30184_52591789d63d.body"
+      ],
+      "gap_coverage": "partial: 清单缺口覆盖 4/1410",
+      "notes": [
+        "清单缺口覆盖 4/1410"
+      ]
+    },
+    {
+      "file": "931743.csv",
+      "index_code": "931743",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "931743",
+        "startDate": "20181228",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=931743&startDate=20181228&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:49:52+08:00",
+          "sha256": "0f7005dcbe2571c726b2d9e345ae6f672014c0c5f10c577bc53176166e23517e",
+          "bytes": 810876,
+          "file": "csi_931743_0f7005dcbe25.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:49:52+08:00",
+      "sha256": "25e864c5883090c75abaa3bcdf476ab780a7365c7110a053415c05bd6234d049",
+      "rows": 782,
+      "start_date": "2023-07-13",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_931743_0f7005dcbe25.body"
+      ],
+      "gap_coverage": "no: 清单 1099 个缺口日都没有真实 OHLC",
+      "notes": [
+        "清单 1099 个缺口日都没有真实 OHLC"
+      ]
+    },
+    {
+      "file": "H30202.csv",
+      "index_code": "H30202",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "H30202",
+        "startDate": "20050104",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=H30202&startDate=20050104&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:50:03+08:00",
+          "sha256": "e634e1ba851a270a6b34c2c9e973ac3a39f74ced540054cfb2f06584cd0d07d6",
+          "bytes": 1947994,
+          "file": "csi_H30202_e634e1ba851a.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:50:03+08:00",
+      "sha256": "4d924f2ff8bf1bc883aae5d0cfc206e2640d8655dc2b0f8c851ca4711b535da4",
+      "rows": 3433,
+      "start_date": "2005-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_H30202_e634e1ba851a.body"
+      ],
+      "gap_coverage": "partial: 清单缺口覆盖 4/1853",
+      "notes": [
+        "清单缺口覆盖 4/1853"
+      ]
+    },
+    {
+      "file": "H30590.csv",
+      "index_code": "H30590",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "H30590",
+        "startDate": "20110104",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=H30590&startDate=20110104&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:50:10+08:00",
+          "sha256": "00cfe454544f1576838464a9f4e4ce2fab8fae9f65c396a9b77c9d0ade7fd748",
+          "bytes": 1296591,
+          "file": "csi_H30590_00cfe454544f.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:50:10+08:00",
+      "sha256": "ee4e783c52dcd3e3825c500a317928f115bfb36f5e8d7fb2d52b9b1a499328bb",
+      "rows": 2534,
+      "start_date": "2011-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_H30590_00cfe454544f.body"
+      ],
+      "gap_coverage": "no: 清单 1291 个缺口日都没有真实 OHLC",
+      "notes": [
+        "清单 1291 个缺口日都没有真实 OHLC"
+      ]
+    },
+    {
+      "file": "H30187.csv",
+      "index_code": "H30187",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "H30187",
+        "startDate": "20050104",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=H30187&startDate=20050104&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:50:17+08:00",
+          "sha256": "931c797430778da95824781a78b5aeba54185e182c0ecb2078c695b49ee74054",
+          "bytes": 1947507,
+          "file": "csi_H30187_931c79743077.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:50:17+08:00",
+      "sha256": "d6b24089ccb4037f5816ea87753f070cd14811703d601d92a16cdcece58ebe4c",
+      "rows": 2056,
+      "start_date": "2005-01-04",
+      "end_date": "2013-06-27",
+      "raw_files": [
+        "csi_H30187_931c79743077.body"
+      ],
+      "gap_coverage": "partial: 清单缺口覆盖 4/3230",
+      "notes": [
+        "清单缺口覆盖 4/3230"
+      ]
+    },
+    {
+      "file": "930997.csv",
+      "index_code": "930997",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "930997",
+        "startDate": "20150105",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=930997&startDate=20150105&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:50:23+08:00",
+          "sha256": "40283a7f666ca447d927489f612ba1cdc4061c89164cee54b24bbf63b4af6c53",
+          "bytes": 1118713,
+          "file": "csi_930997_40283a7f666c.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:50:23+08:00",
+      "sha256": "dad46b0be56a114a6628eeb8d2fbd8aef3e5361b4adc8641bcc8239350068bd8",
+      "rows": 2694,
+      "start_date": "2015-01-05",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_930997_40283a7f666c.body"
+      ],
+      "gap_coverage": "no: 清单 161 个缺口日都没有真实 OHLC",
+      "notes": [
+        "清单 161 个缺口日都没有真实 OHLC"
+      ]
+    },
+    {
+      "file": "H30269.csv",
+      "index_code": "H30269",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "H30269",
+        "startDate": "20060104",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=H30269&startDate=20060104&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:50:35+08:00",
+          "sha256": "e662193b06b6386bf16fcf12d64696824220a425718be2ef17dc45e2fee9d42f",
+          "bytes": 1955673,
+          "file": "csi_H30269_e662193b06b6.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:50:35+08:00",
+      "sha256": "9abd2a0d19700c2866ccdba8d2b92a94be70dc8d4db016411d5a8932d25069e7",
+      "rows": 4575,
+      "start_date": "2006-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_H30269_e662193b06b6.body"
+      ],
+      "gap_coverage": "partial: 清单缺口覆盖 4/469",
+      "notes": [
+        "清单缺口覆盖 4/469"
+      ]
+    },
+    {
+      "file": "930713.csv",
+      "index_code": "930713",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "930713",
+        "startDate": "20120702",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=930713&startDate=20120702&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:50:44+08:00",
+          "sha256": "eb67122e979794c872ec30592c933a0dc1e44aecb22a304660f265e51faf7188",
+          "bytes": 1279718,
+          "file": "csi_930713_eb67122e9797.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:50:44+08:00",
+      "sha256": "04ebf4165164a87532f03e52895ea18070625adbe546e75924091c310acb7778",
+      "rows": 3464,
+      "start_date": "2012-07-02",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_930713_eb67122e9797.body"
+      ],
+      "gap_coverage": "yes: 清单无缺失段；序列 2012-07-02~2026-09-30",
+      "notes": [
+        "清单无缺失段；序列 2012-07-02~2026-09-30"
+      ]
+    },
+    {
+      "file": "000819.csv",
+      "index_code": "000819",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "000819",
+        "startDate": "20050104",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000819&startDate=20050104&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:50:48+08:00",
+          "sha256": "e23ba6e89b84ae9c0f8d435877e3169a6c870d053db20272ee1132e43b27c1d7",
+          "bytes": 1997866,
+          "file": "csi_000819_e23ba6e89b84.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:50:48+08:00",
+      "sha256": "3d9d33461a5a962c7562f7ee033d50d674195decabac46103a3703ecba12fe2d",
+      "rows": 5282,
+      "start_date": "2005-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_000819_e23ba6e89b84.body"
+      ],
+      "gap_coverage": "yes: 清单 3 个缺口日全部有真实 OHLC",
+      "notes": [
+        "清单 3 个缺口日全部有真实 OHLC"
+      ]
+    },
+    {
+      "file": "000913.csv",
+      "index_code": "000913",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "000913",
+        "startDate": "20050104",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000913&startDate=20050104&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:50:53+08:00",
+          "sha256": "16b9219bc745271ec57c9836c3238efc015954c80e03074393ed18ec41b1a2c6",
+          "bytes": 1942466,
+          "file": "csi_000913_16b9219bc745.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:50:53+08:00",
+      "sha256": "45f7250d6c244bd469b221b887c8b71bace6523756c49b11ae7d5466b5c6cf81",
+      "rows": 5282,
+      "start_date": "2005-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_000913_16b9219bc745.body"
+      ],
+      "gap_coverage": "yes: 清单 3 个缺口日全部有真实 OHLC",
+      "notes": [
+        "清单 3 个缺口日全部有真实 OHLC"
+      ]
+    },
+    {
+      "file": "000932.csv",
+      "index_code": "000932",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "000932",
+        "startDate": "20050104",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000932&startDate=20050104&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:50:58+08:00",
+          "sha256": "a7a689f50fa12a220ccb0562253eb7d607e13ec48533f1a7aecbd39e2d95fa32",
+          "bytes": 1925263,
+          "file": "csi_000932_a7a689f50fa1.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:50:58+08:00",
+      "sha256": "da717157a5558baac31edde5854d45873023853c625a40921e3986a01df12b39",
+      "rows": 5282,
+      "start_date": "2005-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_000932_a7a689f50fa1.body"
+      ],
+      "gap_coverage": "yes: 清单 3 个缺口日全部有真实 OHLC",
+      "notes": [
+        "清单 3 个缺口日全部有真实 OHLC"
+      ]
+    },
+    {
+      "file": "000949.csv",
+      "index_code": "000949",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "000949",
+        "startDate": "20050104",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000949&startDate=20050104&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:51:02+08:00",
+          "sha256": "4a87397c8ce76f65483a346bc92ac6bffa1f900f36c40f181a6eef13d23005bb",
+          "bytes": 1950492,
+          "file": "csi_000949_4a87397c8ce7.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:51:02+08:00",
+      "sha256": "89acdfb748b2c51ceaf13a38e83158fae92ea80f9519a9812717b59c625d76c5",
+      "rows": 5282,
+      "start_date": "2005-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_000949_4a87397c8ce7.body"
+      ],
+      "gap_coverage": "yes: 清单 3 个缺口日全部有真实 OHLC",
+      "notes": [
+        "清单 3 个缺口日全部有真实 OHLC"
+      ]
+    },
+    {
+      "file": "931494.csv",
+      "index_code": "931494",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "931494",
+        "startDate": "20121231",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=931494&startDate=20121231&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:51:05+08:00",
+          "sha256": "db4a92fb4cb86d41c9067f719961483715798956150df687f106131b29ba21e4",
+          "bytes": 1285696,
+          "file": "csi_931494_db4a92fb4cb8.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:51:05+08:00",
+      "sha256": "6265199d376ea856f4d08e38e8b08c3b7dea16955fd14c656bc850ba9da890e8",
+      "rows": 1240,
+      "start_date": "2021-08-19",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_931494_db4a92fb4cb8.body"
+      ],
+      "gap_coverage": "no: 清单 2099 个缺口日都没有真实 OHLC",
+      "notes": [
+        "清单 2099 个缺口日都没有真实 OHLC"
+      ]
+    },
+    {
+      "file": "931151.csv",
+      "index_code": "931151",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "931151",
+        "startDate": "20121231",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=931151&startDate=20121231&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:51:15+08:00",
+          "sha256": "60fc4bc5c04a9083468896c4891e025dc95d62f78e323ccf302ae241ca708cd5",
+          "bytes": 1242070,
+          "file": "csi_931151_60fc4bc5c04a.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:51:15+08:00",
+      "sha256": "c14f52bdf4a74cfd3b526f3cbebc94a4a2ed4f0391b6f64a3c44c79ebefce886",
+      "rows": 1412,
+      "start_date": "2020-12-07",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_931151_60fc4bc5c04a.body"
+      ],
+      "gap_coverage": "no: 清单 1927 个缺口日都没有真实 OHLC",
+      "notes": [
+        "清单 1927 个缺口日都没有真实 OHLC"
+      ]
+    },
+    {
+      "file": "931152.csv",
+      "index_code": "931152",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "931152",
+        "startDate": "20141231",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=931152&startDate=20141231&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:51:23+08:00",
+          "sha256": "b67af47e07fd45ff43ae5e61dd941b9d0a884b364254ee924092b1e3c9980ff2",
+          "bytes": 1071622,
+          "file": "csi_931152_b67af47e07fd.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:51:23+08:00",
+      "sha256": "8d3593213b5c17ac7b2e8ccbef2dc4bd37f709f6cd3d135e3b639adfa5d3543b",
+      "rows": 1702,
+      "start_date": "2019-09-24",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_931152_b67af47e07fd.body"
+      ],
+      "gap_coverage": "no: 清单 1154 个缺口日都没有真实 OHLC",
+      "notes": [
+        "清单 1154 个缺口日都没有真实 OHLC"
+      ]
+    },
+    {
+      "file": "399986.csv",
+      "index_code": "399986",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "399986",
+        "startDate": "20050104",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=399986&startDate=20050104&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:51:34+08:00",
+          "sha256": "7d49a3adc23e54c95c8e23703c9c7dde1da6cb8652c9701e155c12fb4922240d",
+          "bytes": 1806886,
+          "file": "csi_399986_7d49a3adc23e.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:51:34+08:00",
+      "sha256": "e956965194dfcdb958b1bc9b30ea118dfacf797e72b639e02a397315151a9c58",
+      "rows": 4924,
+      "start_date": "2005-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_399986_7d49a3adc23e.body"
+      ],
+      "gap_coverage": "partial: 清单缺口覆盖 3/361",
+      "notes": [
+        "清单缺口覆盖 3/361"
+      ]
+    },
+    {
+      "file": "931160.csv",
+      "index_code": "931160",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "931160",
+        "startDate": "20181228",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=931160&startDate=20181228&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:52:07+08:00",
+          "sha256": "b6ad33388b5446343d79ef549d606a779ad8122adce5d32c2b54b23443a14ede",
+          "bytes": 741948,
+          "file": "csi_931160_b6ad33388b54.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:52:07+08:00",
+      "sha256": "1761aad6bc1b97726b18367855c2d53f20384471b05d951ebfa67c8523dd22dc",
+      "rows": 1778,
+      "start_date": "2019-06-06",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_931160_b6ad33388b54.body"
+      ],
+      "gap_coverage": "no: 清单 103 个缺口日都没有真实 OHLC",
+      "notes": [
+        "清单 103 个缺口日都没有真实 OHLC"
+      ]
+    },
+    {
+      "file": "000688.csv",
+      "index_code": "000688",
+      "source": "腾讯行情",
+      "request_url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get",
+      "params": {
+        "param": "<symbol>,day,<start>,<end>,400,",
+        "symbols": [
+          "sh000688"
+        ]
+      },
+      "requests": [
+        {
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh000688%2Cday%2C2026-09-10%2C2026-09-30%2C400%2C",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:52:17+08:00",
+          "sha256": "c47a946b894b899de8fcd72411af48e66663157156097b5a921a20651a2efac1",
+          "bytes": 2524,
+          "file": "tencent_000688_c47a946b894b.body"
+        },
+        {
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh000688%2Cday%2C2019-12-31%2C2021-02-23%2C400%2C",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:52:19+08:00",
+          "sha256": "cae866df730e054a1cf0ccb477f1332e3219edaa484cbce2c70585df3fa860a4",
+          "bytes": 21654,
+          "file": "tencent_000688_cae866df730e.body"
+        },
+        {
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh000688%2Cday%2C2021-02-24%2C2022-04-20%2C400%2C",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:52:20+08:00",
+          "sha256": "f1dbd47f640444fb3e0b5a00529f66954cfd416722266bc5b7118fce3fd46516",
+          "bytes": 22071,
+          "file": "tencent_000688_f1dbd47f6404.body"
+        },
+        {
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh000688%2Cday%2C2022-04-21%2C2023-06-15%2C400%2C",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:52:21+08:00",
+          "sha256": "d74e35e9fda01b1aa8aae5536cac4113484025eefa3fb47d71bbf1f4306a59d8",
+          "bytes": 21895,
+          "file": "tencent_000688_d74e35e9fda0.body"
+        },
+        {
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh000688%2Cday%2C2023-06-16%2C2024-08-09%2C400%2C",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:52:23+08:00",
+          "sha256": "2c732f71fa5a55616fdf8b3d787c7be96c6b4f62e4e379dd0fe18bbdda63dce4",
+          "bytes": 21157,
+          "file": "tencent_000688_2c732f71fa5a.body"
+        },
+        {
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh000688%2Cday%2C2024-08-10%2C2025-10-04%2C400%2C",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:52:24+08:00",
+          "sha256": "2eba3a6affa55f59b8429572c5cb48c6508830527c7f5fe5b8b9807ce94c950d",
+          "bytes": 21452,
+          "file": "tencent_000688_2eba3a6affa5.body"
+        },
+        {
+          "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh000688%2Cday%2C2025-10-05%2C2026-09-09%2C400%2C",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:52:25+08:00",
+          "sha256": "e329ff6dcf55ea74a6a2dae2a708232e1ebbc4be88c36001a23f4b1bdcfa80a9",
+          "bytes": 18231,
+          "file": "tencent_000688_e329ff6dcf55.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:52:25+08:00",
+      "sha256": "6ae9016f6cfb25077c195f56cf809c7d4a98589643278ac03a4c9a150fc9072a",
+      "rows": 1637,
+      "start_date": "2019-12-31",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "tencent_000688_c47a946b894b.body",
+        "tencent_000688_cae866df730e.body",
+        "tencent_000688_f1dbd47f6404.body",
+        "tencent_000688_d74e35e9fda0.body",
+        "tencent_000688_2c732f71fa5a.body",
+        "tencent_000688_2eba3a6affa5.body",
+        "tencent_000688_e329ff6dcf55.body"
+      ],
+      "gap_coverage": "yes: 清单 13 个缺口日全部有真实 OHLC",
+      "notes": [
+        "同一性：重叠 1637 天，收盘相对差中位数 0，P95 1.56e-06；开高低：相对差中位数 0（1624 天）；覆盖：覆盖参考日期 1637 天",
+        "清单 13 个缺口日全部有真实 OHLC"
+      ]
+    },
+    {
+      "file": "399998.csv",
+      "index_code": "399998",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "399998",
+        "startDate": "20090105",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=399998&startDate=20090105&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:52:28+08:00",
+          "sha256": "7de1145e76df525047a71b06dd5f8fed8a9ab0c3a3b8b34a98f2bfbcbecd8560",
+          "bytes": 1549467,
+          "file": "csi_399998_7de1145e76df.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:52:28+08:00",
+      "sha256": "0487a8f98a4d1f357851bd4a125cd270794ab8a636f0379a09231e5a62d40df1",
+      "rows": 4311,
+      "start_date": "2009-01-05",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_399998_7de1145e76df.body"
+      ],
+      "gap_coverage": "yes: 清单 2 个缺口日全部有真实 OHLC",
+      "notes": [
+        "清单 2 个缺口日全部有真实 OHLC"
+      ]
+    },
+    {
+      "file": "399967.csv",
+      "index_code": "399967",
+      "source": "中证指数官网；5 个缺口日为雪球",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "399967",
+        "startDate": "20050104",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=399967&startDate=20050104&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:52:34+08:00",
+          "sha256": "0533f59186d759f403568f45085094cd4f81c7afddd518f45a7a79285d5888cb",
+          "bytes": 1958738,
+          "file": "csi_399967_0533f59186d7.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:52:34+08:00",
+      "sha256": "a8444fd8812bc2d091f007b13c0fc5be83185419a91cc1cf66ec6bb09a6a5a2b",
+      "rows": 5222,
+      "start_date": "2005-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_399967_0533f59186d7.body",
+        "399967_xueqiu_gap_fill.csv"
+      ],
+      "gap_coverage": "yes: 清单 8 个缺口日全部有真实 OHLC；2013-12-26、2013-12-27、2013-12-30、2013-12-31、2014-04-03 来自雪球，其余来自中证指数官网",
+      "notes": [
+        "主序列为中证指数官网 index-perf。",
+        "2013-12-26、2013-12-27、2013-12-30、2013-12-31 官网响应里没有这几行；2014-04-03 官网有收盘 5749.3、成交量 294605271，开高低为空。雪球这 5 日补进 CSV。2014-04-03 收盘与成交量与官网一致。",
+        "没有把雪球用到其余日期。平盘和东财 secid=90.* 未采用。"
+      ],
+      "gap_fill": {
+        "source": "雪球",
+        "dates": [
+          "2013-12-26",
+          "2013-12-27",
+          "2013-12-30",
+          "2013-12-31",
+          "2014-04-03"
+        ],
+        "request_url": "https://stock.xueqiu.com/v5/stock/chart/kline.json?symbol=SZ399967&period=day&type=before&indicator=kline",
+        "fetched_at": "2026-10-22T11:26:50+08:00",
+        "timezone": "Asia/Shanghai",
+        "rows": 5,
+        "sha256": "9a784c75e508fbc5aff03b45c2375d23b3b962a0172d882a774273b075751951",
+        "file": "raw/399967_xueqiu_gap_fill.csv",
+        "note": "批准的 5 日文件于 2026-10-22 11:26:50+08 交到本环境。本环境重拉该 URL 返回 HTTP 400，未另造响应正文。"
+      }
+    },
+    {
+      "file": "399987.csv",
+      "index_code": "399987",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "399987",
+        "startDate": "20090105",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=399987&startDate=20090105&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:53:07+08:00",
+          "sha256": "f81f431aa4178575f3d458fd6c2253aca00d356a236d4cc60e8ebb6ce517fab6",
+          "bytes": 1538746,
+          "file": "csi_399987_f81f431aa417.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:53:07+08:00",
+      "sha256": "2eaaf00bca004a2ae4479e29048c23e6ca213db1c8f4c1012c96b6eb185632ac",
+      "rows": 4311,
+      "start_date": "2009-01-05",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_399987_f81f431aa417.body"
+      ],
+      "gap_coverage": "yes: 清单 2 个缺口日全部有真实 OHLC",
+      "notes": [
+        "清单 2 个缺口日全部有真实 OHLC"
+      ]
+    },
+    {
+      "file": "399975.csv",
+      "index_code": "399975",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "399975",
+        "startDate": "20070702",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=399975&startDate=20070702&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:53:10+08:00",
+          "sha256": "a46e7ecda75de25100e18f9bd74fabf3568204b97600f075affbbbb089b24210",
+          "bytes": 1856639,
+          "file": "csi_399975_a46e7ecda75d.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:53:10+08:00",
+      "sha256": "f66290861d756f96659939b9d9189ae1776f3a0e2d25a519f5d72ded1ef81a22",
+      "rows": 4682,
+      "start_date": "2007-07-02",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_399975_a46e7ecda75d.body"
+      ],
+      "gap_coverage": "yes: 清单 3 个缺口日全部有真实 OHLC",
+      "notes": [
+        "清单 3 个缺口日全部有真实 OHLC"
+      ]
+    },
+    {
+      "file": "000852.csv",
+      "index_code": "000852",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "000852",
+        "startDate": "20050104",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000852&startDate=20050104&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:53:19+08:00",
+          "sha256": "60f63101599ad8901fccc3b2e3a672036180c081ee205c798b5eaf7835c18396",
+          "bytes": 1790680,
+          "file": "csi_000852_60f63101599a.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:53:19+08:00",
+      "sha256": "772617e32ec3de8ef856baefa1f23d6490942cd0ba8907cd6466869bd814c608",
+      "rows": 5282,
+      "start_date": "2005-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_000852_60f63101599a.body"
+      ],
+      "gap_coverage": "yes: 清单无缺失段；序列 2005-01-04~2026-09-30",
+      "notes": [
+        "清单无缺失段；序列 2005-01-04~2026-09-30"
+      ]
+    },
+    {
+      "file": "000905.csv",
+      "index_code": "000905",
+      "source": "中证指数官网",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "000905",
+        "startDate": "20050104",
+        "endDate": "20260930",
+        "segments": "一次取全段"
+      },
+      "requests": [
+        {
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000905&startDate=20050104&endDate=20260930",
+          "status": 200,
+          "fetched_at": "2026-10-21T23:53:22+08:00",
+          "sha256": "76a11921079f91e6f8d7e0172f3d56d00dc3b0d6543a6faed66e8e08cdbb3711",
+          "bytes": 1846492,
+          "file": "csi_000905_76a11921079f.body"
+        }
+      ],
+      "fetched_at": "2026-10-21T23:53:22+08:00",
+      "sha256": "28d8b7466586f065dbdbd65b50f4ffb893a2fd24b847be92fb7bc25043efcfe4",
+      "rows": 5282,
+      "start_date": "2005-01-04",
+      "end_date": "2026-09-30",
+      "raw_files": [
+        "csi_000905_76a11921079f.body"
+      ],
+      "gap_coverage": "yes: 清单无缺失段；序列 2005-01-04~2026-09-30",
+      "notes": [
+        "清单无缺失段；序列 2005-01-04~2026-09-30"
+      ]
+    },
+    {
+      "file": "tr_closes.csv",
+      "source": "按 index_code 见 series",
+      "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+      "params": {
+        "indexCode": "<各全收益代码>",
+        "startDate": "<该代码最早缺口日前>",
+        "endDate": "<该代码最晚缺口日>"
+      },
+      "fetched_at": "2026-10-21T23:53:56+08:00",
+      "sha256": "0b3f58ff164a15ee3b286d87c40dce89b43519548be0ed59961a2fb3bdf31ddc",
+      "rows": 38,
+      "start_date": "2008-12-31",
+      "end_date": "2012-12-31",
+      "series": [
+        {
+          "index_code": "H00852",
+          "source": "中证指数官网",
+          "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": {
+            "indexCode": "H00852",
+            "startDate": "20081226",
+            "endDate": "20110101"
+          },
+          "fetched_at": "2026-10-21T23:53:26+08:00",
+          "rows": 3,
+          "start_date": "2008-12-31",
+          "end_date": "2010-12-31",
+          "raw_files": [
+            "csi_H00852_07625dda4968.body"
+          ]
+        },
+        {
+          "index_code": "H20606",
+          "source": "中证指数官网",
+          "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": {
+            "indexCode": "H20606",
+            "startDate": "20091226",
+            "endDate": "20110101"
+          },
+          "fetched_at": "2026-10-21T23:53:28+08:00",
+          "rows": 2,
+          "start_date": "2009-12-31",
+          "end_date": "2010-12-31",
+          "raw_files": [
+            "csi_H20606_43bfe601ef85.body"
+          ]
+        },
+        {
+          "index_code": "H00015",
+          "source": "中证指数官网",
+          "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": {
+            "indexCode": "H00015",
+            "startDate": "20081226",
+            "endDate": "20110101"
+          },
+          "fetched_at": "2026-10-21T23:53:30+08:00",
+          "rows": 3,
+          "start_date": "2008-12-31",
+          "end_date": "2010-12-31",
+          "raw_files": [
+            "csi_H00015_97e3441cc8d5.body"
+          ]
+        },
+        {
+          "index_code": "H00905",
+          "source": "中证指数官网",
+          "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": {
+            "indexCode": "H00905",
+            "startDate": "20081226",
+            "endDate": "20110101"
+          },
+          "fetched_at": "2026-10-21T23:53:32+08:00",
+          "rows": 3,
+          "start_date": "2008-12-31",
+          "end_date": "2010-12-31",
+          "raw_files": [
+            "csi_H00905_61e289716899.body"
+          ]
+        },
+        {
+          "index_code": "H20184",
+          "source": "中证指数官网",
+          "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": {
+            "indexCode": "H20184",
+            "startDate": "20081226",
+            "endDate": "20130101"
+          },
+          "fetched_at": "2026-10-21T23:53:35+08:00",
+          "rows": 4,
+          "start_date": "2008-12-31",
+          "end_date": "2012-12-31",
+          "raw_files": [
+            "csi_H20184_7149252bec12.body"
+          ]
+        },
+        {
+          "index_code": "H20202",
+          "source": "中证指数官网",
+          "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": {
+            "indexCode": "H20202",
+            "startDate": "20081226",
+            "endDate": "20130101"
+          },
+          "fetched_at": "2026-10-21T23:53:37+08:00",
+          "rows": 4,
+          "start_date": "2008-12-31",
+          "end_date": "2012-12-31",
+          "raw_files": [
+            "csi_H20202_766995ffd005.body"
+          ]
+        },
+        {
+          "index_code": "H00819",
+          "source": "中证指数官网",
+          "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": {
+            "indexCode": "H00819",
+            "startDate": "20081226",
+            "endDate": "20110101"
+          },
+          "fetched_at": "2026-10-21T23:53:39+08:00",
+          "rows": 3,
+          "start_date": "2008-12-31",
+          "end_date": "2010-12-31",
+          "raw_files": [
+            "csi_H00819_58a53ddadbe9.body"
+          ]
+        },
+        {
+          "index_code": "H20187",
+          "source": "中证指数官网",
+          "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": {
+            "indexCode": "H20187",
+            "startDate": "20081226",
+            "endDate": "20130101"
+          },
+          "fetched_at": "2026-10-21T23:53:41+08:00",
+          "rows": 4,
+          "start_date": "2008-12-31",
+          "end_date": "2012-12-31",
+          "raw_files": [
+            "csi_H20187_92f84e498a4d.body"
+          ]
+        },
+        {
+          "index_code": "H00913",
+          "source": "中证指数官网",
+          "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": {
+            "indexCode": "H00913",
+            "startDate": "20081226",
+            "endDate": "20110101"
+          },
+          "fetched_at": "2026-10-21T23:53:48+08:00",
+          "rows": 3,
+          "start_date": "2008-12-31",
+          "end_date": "2010-12-31",
+          "raw_files": [
+            "csi_H00913_8aa4cee95c7a.body"
+          ]
+        },
+        {
+          "index_code": "H00932",
+          "source": "中证指数官网",
+          "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": {
+            "indexCode": "H00932",
+            "startDate": "20081226",
+            "endDate": "20110101"
+          },
+          "fetched_at": "2026-10-21T23:53:51+08:00",
+          "rows": 3,
+          "start_date": "2008-12-31",
+          "end_date": "2010-12-31",
+          "raw_files": [
+            "csi_H00932_e87182d05189.body"
+          ]
+        },
+        {
+          "index_code": "H00949",
+          "source": "中证指数官网",
+          "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": {
+            "indexCode": "H00949",
+            "startDate": "20081226",
+            "endDate": "20110101"
+          },
+          "fetched_at": "2026-10-21T23:53:54+08:00",
+          "rows": 3,
+          "start_date": "2008-12-31",
+          "end_date": "2010-12-31",
+          "raw_files": [
+            "csi_H00949_96d7f896cb5a.body"
+          ]
+        },
+        {
+          "index_code": "H20269",
+          "source": "中证指数官网",
+          "request_url": "https://www.csindex.com.cn/csindex-home/perf/index-perf",
+          "params": {
+            "indexCode": "H20269",
+            "startDate": "20081226",
+            "endDate": "20110101"
+          },
+          "fetched_at": "2026-10-21T23:53:56+08:00",
+          "rows": 3,
+          "start_date": "2008-12-31",
+          "end_date": "2010-12-31",
+          "raw_files": [
+            "csi_H20269_84bd84a55f19.body"
+          ]
+        }
+      ]
+    }
+  ]
+}

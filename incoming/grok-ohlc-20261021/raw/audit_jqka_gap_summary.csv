@@ -1,0 +1,16 @@
+index_code,prefix,found,total_rows,gap_rows,gap_flat,gap_ranged,file_path,notes
+930606,120_,yes,1654,0,0,0,/home/box/Downloads/jqka_930606_daily.csv,series 2019-12-23~2026-10-22 starts after gap 20160614-20191210 (no bars inside gap window)
+931743,120_,yes,789,0,0,0,/home/box/Downloads/jqka_931743_daily.csv,series 2023-07-19~2026-10-22 starts after gap 20181228-20230712 (no bars inside gap window)
+930997,120_,yes,2074,0,0,0,/home/box/Downloads/jqka_930997_daily.csv,series 2018-04-02~2026-10-22 starts after gap 20170719-20180315 (no bars inside gap window)
+931494,120_,yes,1248,0,0,0,/home/box/Downloads/jqka_931494_daily.csv,series 2021-08-24~2026-10-22 starts after gap 20121231-20210818 (no bars inside gap window)
+931151,120_,yes,1418,0,0,0,/home/box/Downloads/jqka_931151_daily.csv,series 2020-12-14~2026-10-22 starts after gap 20121231-20201204 (no bars inside gap window)
+931152,120_,yes,1221,0,0,0,/home/box/Downloads/jqka_931152_daily.csv,v4 yearly only (v6 all total=0); years_ok=6; series 2019-10-10~2026-10-22 starts after gap 20141231-20190923 (no bars inside gap window)
+931160,120_,yes,1782,0,0,0,/home/box/Downloads/jqka_931160_daily.csv,v6 all start=2019-06-18; v4_ok=7; series 2019-06-18~2026-10-22 starts after gap 20181228-20190605 (no bars inside gap window)
+399986,zs_,yes,5292,358,358,0,/home/box/Downloads/jqka_399986_daily.csv,gap fully flat (open=high=low=close) for 358 bars
+399967,zs_,yes,5292,65,0,65,/home/box/Downloads/jqka_399967_daily.csv,gap has 65 ranged + 0 flat
+H30184,120_,yes,1822,0,0,0,/home/box/Downloads/jqka_H30184_daily.csv,series 2019-04-17~2026-10-22 starts after gap 20130628-20190402 (no bars inside gap window)
+H30202,120_,yes,1385,0,0,0,/home/box/Downloads/jqka_H30202_daily.csv,series 2021-01-29~2026-10-22 starts after gap 20130628-20210125 (no bars inside gap window)
+H30590,120_,yes,2840,1291,1291,0,/home/box/Downloads/jqka_H30590_daily.csv,gap fully flat (open=high=low=close) for 1291 bars
+H30187,,no,0,0,0,0,,no working prefix after retries
+H30269,120_,yes,3116,465,465,0,/home/box/Downloads/jqka_H30269_daily.csv,v6 cache /tmp + raw; gap fully flat (open=high=low=close) for 465 bars
+H11077,,no,0,0,0,0,,no working prefix after retries
