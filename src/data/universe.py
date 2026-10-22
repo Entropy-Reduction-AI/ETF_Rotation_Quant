@@ -93,6 +93,40 @@ def fund_tencent(code: str) -> str | None:
     return None if s is None else ("sh" if s[0] == "1" else "sz") + code
 
 
+def listed_codes(row: dict) -> list[str]:
+    """一行里的执行基金：主代码，再加分号分隔的备选。去空，行内去重，保持原顺序。"""
+    out: list[str] = []
+    for part in [row.get("execution_fund_code") or "", *(row.get("execution_alternatives") or "").split(";")]:
+        code = part.strip()
+        if code and code not in out:
+            out.append(code)
+    return out
+
+
+def execution_fund_codes(rows: list[dict] | None = None) -> list[str]:
+    """全部执行基金与备选，按 universe 行序，跨行去重。"""
+    rows = load() if rows is None else rows
+    out: list[str] = []
+    for row in rows:
+        for code in listed_codes(row):
+            if code not in out:
+                out.append(code)
+    return out
+
+
+def qdii_lof_codes(rows: list[dict] | None = None) -> list[str]:
+    """`qdii_or_lof` 非空的行上的执行基金与备选。"""
+    rows = load() if rows is None else rows
+    out: list[str] = []
+    for row in rows:
+        if not (row.get("qdii_or_lof") or "").strip():
+            continue
+        for code in listed_codes(row):
+            if code not in out:
+                out.append(code)
+    return out
+
+
 def yahoo_symbol(code: str) -> str | None:
     return code if code.startswith("^") else YAHOO.get(code)
 
