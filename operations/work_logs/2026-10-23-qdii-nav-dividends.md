@@ -1,0 +1,412 @@
+# QDII 历史净值与现金分红替换
+
+## Metadata
+
+- Project: ETF_Rotation_Quant
+- Task: QDII 历史净值入库，cash_dividends 用一手公告替换，搜狐补成交额
+- Date: 2026-10-23
+- Owner: project owner
+- Route: direct-execute
+- Source of truth: 本任务说明、`operations/reviews/2026-10-23-qdii-premium-and-weight.md`、`operations/reviews/2026-10-23-grok-pit-xcheck.md`、`incoming/grok-pit-20261022/`
+
+## Goal / Summary
+
+`main` 已快进到 `1ad86ac`。开工时 `data/market.sqlite` 的 SHA256 与给定基线一致：`9bc8e74935fe34f22c254568f4b6ef284df79a97496bcc8fcd704fe58ec5d49b`。
+
+三次写入都有 `run_id`。结束后 SHA256 为 `3b9f8fb253a29de5835aa54c0b8062bbaa77ebf3f229611eb91b97a9ece155f9`。`PRAGMA integrity_check` 为 `ok`。没有 `-wal` / `-shm` / `-journal`。交易日按 Asia/Shanghai 的日历日期原样存储；`fetched_at` 沿用数据层的 UTC。
+
+没有改价格。没有计算或报告 2016-01-01 之后的策略、择时或组合收益。下面的溢价是收盘价 / 同日单位净值 − 1，用来核对净值是否入库。
+
+## Scope / Changes
+
+只动了 `src/data/`、`tests/data/`、`data/market.sqlite`、`docs/execution-inventory.md`、`results/inventory/` 和本日志。
+
+- `fund_nav`：东财 `https://api.fund.eastmoney.com/f10/lsjz`，`pageSize=20`，`Referer: https://fundf10.eastmoney.com/`。`DWJZ`→`unit_nav`，`LJJZ`→`accum_nav`，`SGZT`→`subscribe_status`，`SHZT`→`redeem_status`。同一日期保留先到的那一页。不插值。
+- `cash_dividends`：只留 `etf_events.csv` 的「现金分红」，金额 4 位小数。`511880` 三行除息日用库内价格日。README 核查后无事件的 35 只保持 0 行。其余没有一手现金分红的执行基金在 coverage 备注写「分红未知」，不写 0。删掉的旧行在 `results/inventory/cash_dividends_removed-12.csv`（19953 行）。
+- `bars.amount`：搜狐 `hisHq` 的 `hq[8]` × 10000，记成人民币元。88 只都成功返回。开高低收、成交量、`source`、`fetched_at` 未改。`source` 仍是 `tencent_etf`。腾讯增量若没有成交额，保留已写入的额。搜狐没有连续失败，没有换源。
+
+## fund_nav
+
+run_id 11，`kind=backfill`，`status=ok`。15 只，27418 行。
+
+| 代码 | 行数 | 首日 | 末日 |
+| --- | ---: | --- | --- |
+| 159509 | 782 | 2023-07-19 | 2026-10-21 |
+| 159612 | 1084 | 2022-05-09 | 2026-10-21 |
+| 159740 | 1317 | 2021-05-18 | 2026-10-22 |
+| 159866 | 1350 | 2021-03-24 | 2026-10-22 |
+| 159941 | 2734 | 2015-06-10 | 2026-10-21 |
+| 160723 | 2312 | 2017-04-20 | 2026-10-21 |
+| 161129 | 2336 | 2016-12-19 | 2026-10-21 |
+| 501018 | 2514 | 2016-06-15 | 2026-10-21 |
+| 513100 | 3236 | 2013-04-25 | 2026-10-21 |
+| 513130 | 1314 | 2021-05-24 | 2026-10-22 |
+| 513180 | 1318 | 2021-05-18 | 2026-10-22 |
+| 513300 | 1452 | 2020-10-22 | 2026-10-21 |
+| 513500 | 3032 | 2013-12-05 | 2026-10-21 |
+| 513520 | 1772 | 2019-06-12 | 2026-10-22 |
+| 513650 | 865 | 2023-03-23 | 2026-10-21 |
+
+2026 年有行情的重叠日（到 2026-09-30，各 181 天）中位溢价：`513100` +7.3%，`159941` +6.3%，`513300` +5.3%，`513500` +5.4%，`159612` +4.7%，`513650` +3.6%，`159509` +18.1%。与评审稿已公布的中位数一致。分年数字在 `results/inventory/qdii-nav-dividends.json` 的 `premium`。
+
+份额折算只标记，价格未改。抽查的开高低收与补额前相同：
+
+- `159941` 2022-07-05 开 0.601、收 0.604。前一日收盘仍约 2.384，而当日单位净值已是 0.5992：净值比价格早一天切到折算后。这一天的收盘/净值不是可交易溢价。
+- `513500` 2022-03-30 开 1.395、收 1.390。公告拆分在 2022-03-28；2017-01-03 开盘相对前收约 −9%，单位净值 1.448 与收盘 1.451 同量级，不是份额折算。
+- `513100` 2022-01-14 开 1.010、收 1.015，与当日单位净值 1.019 同量级。
+
+## cash_dividends
+
+run_id 12，`kind=update`，`status=ok`。替换前 20038 行、47 个代码。删除 19953 行，新插入 19 行（4 位小数对不上的，以及原来没有的公告行）。金额和除息日已经一致的旧行保留。替换后 104 行、17 个代码。没有 `amount <= 0` 的行。只追加触发器已装回。
+
+`511880` 2014-01-17 / 3.208、2014-12-31 / 4.228、2015-12-31 / 3.327。库里没有 Grok 写的 2014-01-16、2014-12-30、2015-12-30。
+
+10 只可信基金（510300、510880、511020、512400、515210、588080、510330、511010、511260、515100）与一手公告逐行对齐，含原先只留 3 位小数的金额。
+
+88 只执行基金：17 只有一手现金分红，35 只是 README 核查后无分红（0 行），36 只标了「分红未知」（0 行）。`518880` 的旧备注已写「不分红」，这次仍按「两边都没有一手记录」加上「分红未知」，没有写 0。
+
+| 代码 | 替换前 | 替换后 | 归类 |
+| --- | ---: | ---: | --- |
+| 510300 | 14 | 14 | 一手现金分红 |
+| 159919 | 474 | 5 | 一手现金分红 |
+| 510330 | 12 | 12 | 一手现金分红 |
+| 510500 | 1006 | 4 | 一手现金分红 |
+| 159922 | 1278 | 2 | 一手现金分红 |
+| 512500 | 0 | 0 | 分红未知 |
+| 512100 | 700 | 2 | 一手现金分红 |
+| 159845 | 236 | 0 | 分红未知 |
+| 588000 | 0 | 0 | 分红未知 |
+| 588080 | 1 | 1 | 一手现金分红 |
+| 588050 | 0 | 0 | 分红未知 |
+| 159915 | 0 | 0 | 分红未知 |
+| 159952 | 0 | 0 | 核查后无分红 |
+| 512480 | 751 | 0 | 分红未知 |
+| 159813 | 631 | 0 | 分红未知 |
+| 159516 | 322 | 0 | 分红未知 |
+| 159327 | 211 | 0 | 分红未知 |
+| 159558 | 222 | 0 | 分红未知 |
+| 560780 | 275 | 0 | 分红未知 |
+| 562590 | 290 | 0 | 分红未知 |
+| 159819 | 0 | 0 | 核查后无分红 |
+| 515070 | 689 | 0 | 分红未知 |
+| 159381 | 120 | 0 | 分红未知 |
+| 515880 | 736 | 0 | 分红未知 |
+| 159695 | 345 | 0 | 分红未知 |
+| 515230 | 0 | 0 | 核查后无分红 |
+| 159852 | 0 | 0 | 核查后无分红 |
+| 562500 | 0 | 0 | 核查后无分红 |
+| 159770 | 0 | 0 | 核查后无分红 |
+| 159732 | 0 | 0 | 核查后无分红 |
+| 561600 | 477 | 0 | 分红未知 |
+| 512400 | 3 | 3 | 一手现金分红 |
+| 159881 | 506 | 0 | 分红未知 |
+| 515220 | 448 | 5 | 一手现金分红 |
+| 501018 | 0 | 0 | 核查后无分红 |
+| 160723 | 0 | 0 | 核查后无分红 |
+| 161129 | 0 | 0 | 核查后无分红 |
+| 518880 | 0 | 0 | 分红未知 |
+| 159934 | 408 | 0 | 分红未知 |
+| 518800 | 558 | 0 | 分红未知 |
+| 515210 | 5 | 5 | 一手现金分红 |
+| 159870 | 0 | 0 | 核查后无分红 |
+| 516020 | 0 | 0 | 核查后无分红 |
+| 515030 | 0 | 0 | 核查后无分红 |
+| 159806 | 190 | 0 | 分红未知 |
+| 515700 | 0 | 0 | 核查后无分红 |
+| 515790 | 0 | 0 | 核查后无分红 |
+| 159857 | 0 | 0 | 核查后无分红 |
+| 512660 | 0 | 0 | 核查后无分红 |
+| 512810 | 887 | 0 | 分红未知 |
+| 512010 | 775 | 0 | 分红未知 |
+| 159938 | 701 | 0 | 分红未知 |
+| 512170 | 159 | 0 | 分红未知 |
+| 159992 | 0 | 0 | 核查后无分红 |
+| 515120 | 0 | 0 | 核查后无分红 |
+| 159928 | 789 | 0 | 分红未知 |
+| 510630 | 821 | 0 | 分红未知 |
+| 512690 | 187 | 1 | 一手现金分红 |
+| 159825 | 0 | 0 | 核查后无分红 |
+| 159827 | 0 | 0 | 核查后无分红 |
+| 512800 | 735 | 0 | 分红未知 |
+| 515020 | 0 | 0 | 核查后无分红 |
+| 159887 | 0 | 0 | 核查后无分红 |
+| 512880 | 0 | 0 | 核查后无分红 |
+| 512000 | 877 | 0 | 分红未知 |
+| 159841 | 0 | 0 | 核查后无分红 |
+| 512200 | 716 | 0 | 分红未知 |
+| 159707 | 0 | 0 | 核查后无分红 |
+| 510880 | 19 | 19 | 一手现金分红 |
+| 512890 | 240 | 0 | 分红未知 |
+| 515100 | 2 | 2 | 一手现金分红 |
+| 511260 | 5 | 5 | 一手现金分红 |
+| 511010 | 7 | 7 | 一手现金分红 |
+| 511020 | 4 | 4 | 一手现金分红 |
+| 511880 | 13 | 13 | 一手现金分红 |
+| 511360 | 0 | 0 | 分红未知 |
+| 513100 | 859 | 0 | 分红未知 |
+| 159941 | 659 | 0 | 分红未知 |
+| 513300 | 0 | 0 | 核查后无分红 |
+| 159509 | 0 | 0 | 核查后无分红 |
+| 513500 | 675 | 0 | 分红未知 |
+| 159612 | 0 | 0 | 核查后无分红 |
+| 513650 | 0 | 0 | 核查后无分红 |
+| 513180 | 0 | 0 | 核查后无分红 |
+| 513130 | 0 | 0 | 核查后无分红 |
+| 159740 | 0 | 0 | 核查后无分红 |
+| 513520 | 0 | 0 | 核查后无分红 |
+| 159866 | 0 | 0 | 核查后无分红 |
+
+## 成交额
+
+run_id 13，`kind=update`，`status=ok`。88 只全部拿到搜狐行情，没有失败，没有停，没有换源。写入 167211 天。`bars` 仍是 396442 行。执行基金行情 168980 天里还有 1769 天搜狐没有对应日期，额保持 NULL。空额集中在 2013 年、2018-12 至 2019-07，以及 `512690`（198）、`512480`（172）、`512170`（169）、`513520`（163）、`515880`（110）、`510330`（54）、`515020`（54）从各自早期到 2019-07-01 或 2020-02-25。其余有空额的代码都在 40 天以内。
+
+## Validation
+
+| 命令 | 退出码 | 结果 |
+| --- | ---: | --- |
+| `.venv/bin/python -m src.data fund-nav --apply` | 0 | run_id 11，15 只，integrity ok |
+| `.venv/bin/python -m src.data replace-dividends --apply` | 0 | run_id 12，integrity ok |
+| `.venv/bin/python -m src.data fill-sohu-amount --apply` | 0 | run_id 13，integrity ok |
+| `mkdir -p outputs && .venv/bin/python -m unittest discover -s tests -t .` | 0 | Ran 310 tests in 85.668s，OK |
+
+单测覆盖：净值分页与同日去重、替换后 10 只可信基金逐行对齐、`511880` 三个除息日、核查后无分红的噪声行被导出并删除、分红未知不写 0、搜狐连续失败两次即停、补额不改价格。
+
+## SHA256
+
+每次提交前后的文件哈希。与 `results/inventory/db-writes.txt` 自 `# fund-nav 11` 起的记录相同。
+
+```
+# fund-nav 11
+SHA256 BEFORE fund_nav start_run 9bc8e74935fe34f22c254568f4b6ef284df79a97496bcc8fcd704fe58ec5d49b
+SHA256 AFTER  fund_nav start_run 23960416b4a1c8fad4c0ff3c111d9494a20221f8cabe6179b19e18d5ecce8e03
+SHA256 BEFORE fund_nav 501018 23960416b4a1c8fad4c0ff3c111d9494a20221f8cabe6179b19e18d5ecce8e03
+SHA256 AFTER  fund_nav 501018 18d034ed63fdf6f413fea80e983f6c28b2644f3ff4c0a0728f43cdf3c8bb7587
+SHA256 BEFORE fund_nav 160723 18d034ed63fdf6f413fea80e983f6c28b2644f3ff4c0a0728f43cdf3c8bb7587
+SHA256 AFTER  fund_nav 160723 47689151a07b302a67e3cee832f8e31f5dc4bd60966f431810045c354b270eaa
+SHA256 BEFORE fund_nav 161129 47689151a07b302a67e3cee832f8e31f5dc4bd60966f431810045c354b270eaa
+SHA256 AFTER  fund_nav 161129 23a6267fef56610082bdb484a5d719c37869821e403fea0ac964c3a36795207d
+SHA256 BEFORE fund_nav 513100 23a6267fef56610082bdb484a5d719c37869821e403fea0ac964c3a36795207d
+SHA256 AFTER  fund_nav 513100 11f1d5be9a1d4efc7c4c4ceaf0daa4337157c6da16d97cb0eb0fce448ca45c4b
+SHA256 BEFORE fund_nav 159941 11f1d5be9a1d4efc7c4c4ceaf0daa4337157c6da16d97cb0eb0fce448ca45c4b
+SHA256 AFTER  fund_nav 159941 93c2d268a9d9bd21e7863d1b536fc65da86c12aa48ec4c26d28d2131910331e5
+SHA256 BEFORE fund_nav 513300 93c2d268a9d9bd21e7863d1b536fc65da86c12aa48ec4c26d28d2131910331e5
+SHA256 AFTER  fund_nav 513300 63d623b0f9320ac8ce9119809deb27500bbcf63eaffe61f80b198ca8d3953f26
+SHA256 BEFORE fund_nav 159509 63d623b0f9320ac8ce9119809deb27500bbcf63eaffe61f80b198ca8d3953f26
+SHA256 AFTER  fund_nav 159509 d63e8d0f371dc50ab1733aa7d4258a54f2e73e1ba8455cba3099031664d6aba5
+SHA256 BEFORE fund_nav 513500 d63e8d0f371dc50ab1733aa7d4258a54f2e73e1ba8455cba3099031664d6aba5
+SHA256 AFTER  fund_nav 513500 bf39632938d043134651c95443bad7a79d235c8876aaa8e4e03231b88c1b488d
+SHA256 BEFORE fund_nav 159612 bf39632938d043134651c95443bad7a79d235c8876aaa8e4e03231b88c1b488d
+SHA256 AFTER  fund_nav 159612 8eb5672e7be6f0faae8f07b9653f02329b757b43e5f376912dfa0d939599ec04
+SHA256 BEFORE fund_nav 513650 8eb5672e7be6f0faae8f07b9653f02329b757b43e5f376912dfa0d939599ec04
+SHA256 AFTER  fund_nav 513650 cdc6a11c413882f4e31cb46a8197c9a4dfc7cefc127c5ebbeea74700fc62c3dc
+SHA256 BEFORE fund_nav 513180 cdc6a11c413882f4e31cb46a8197c9a4dfc7cefc127c5ebbeea74700fc62c3dc
+SHA256 AFTER  fund_nav 513180 72bdd63304a106e7d348de1eb7dc59534866cea79e2b3cb8de952c3de309bd3d
+SHA256 BEFORE fund_nav 513130 72bdd63304a106e7d348de1eb7dc59534866cea79e2b3cb8de952c3de309bd3d
+SHA256 AFTER  fund_nav 513130 ac185d0308617b2a29fad894a4e29582b200a93e294706c6e5acbc29d0fd7467
+SHA256 BEFORE fund_nav 159740 ac185d0308617b2a29fad894a4e29582b200a93e294706c6e5acbc29d0fd7467
+SHA256 AFTER  fund_nav 159740 76b6288c55207157863575e84faf28a04f6aba8307d4e1dd6f896acdb9dc5911
+SHA256 BEFORE fund_nav 513520 76b6288c55207157863575e84faf28a04f6aba8307d4e1dd6f896acdb9dc5911
+SHA256 AFTER  fund_nav 513520 30257fb3bb327c11259bc4c12c18bc9756e5c336804fc21d4e88ba93a9a9e3f4
+SHA256 BEFORE fund_nav 159866 30257fb3bb327c11259bc4c12c18bc9756e5c336804fc21d4e88ba93a9a9e3f4
+SHA256 AFTER  fund_nav 159866 7097f1b97ef08f42b82bcdbb689ade1e3db96eafb1cc7ccf177f8b0e55786f83
+SHA256 BEFORE fund_nav write_requests 7097f1b97ef08f42b82bcdbb689ade1e3db96eafb1cc7ccf177f8b0e55786f83
+SHA256 AFTER  fund_nav write_requests 3464260de4525f23685e2d167263eb873049b814271bbff25a4a7884121230a1
+SHA256 BEFORE fund_nav finish_run 3464260de4525f23685e2d167263eb873049b814271bbff25a4a7884121230a1
+SHA256 AFTER  fund_nav finish_run 615b2cb24b2654e2ea87e790bcc6ebc8fcfe4c5edabcecc419cac6ce9c474720
+
+# replace-dividends 12
+SHA256 BEFORE replace_dividends start_run 615b2cb24b2654e2ea87e790bcc6ebc8fcfe4c5edabcecc419cac6ce9c474720
+SHA256 AFTER  replace_dividends start_run c0999fd7985a1aca0935eb42bf0d98165efd9ff3698d90d9f360597193e6da89
+SHA256 BEFORE replace_dividends write c0999fd7985a1aca0935eb42bf0d98165efd9ff3698d90d9f360597193e6da89
+SHA256 AFTER  replace_dividends write 3b7d899e0e8244e12a0de600cdf434c75e6e78fb81a6c50183b1ebe0406909ce
+SHA256 BEFORE replace_dividends finish_run 3b7d899e0e8244e12a0de600cdf434c75e6e78fb81a6c50183b1ebe0406909ce
+SHA256 AFTER  replace_dividends finish_run c22af7997ac91ace791c078f1d84cfd38e2bb3e3d23cbcd6a27672a108ef477a
+
+# fill-sohu-amount 13
+SHA256 BEFORE sohu_amount start_run c22af7997ac91ace791c078f1d84cfd38e2bb3e3d23cbcd6a27672a108ef477a
+SHA256 AFTER  sohu_amount start_run 0fbeb695881274f36a781e932a039836ecb5cf187874d55d0f8bd966c8e2ada0
+SHA256 BEFORE sohu_amount 510300 0fbeb695881274f36a781e932a039836ecb5cf187874d55d0f8bd966c8e2ada0
+SHA256 AFTER  sohu_amount 510300 da15093066d8f639243e331e7fb97402779abebff26e225ca80a04a1c6375ae8
+SHA256 BEFORE sohu_amount 159919 da15093066d8f639243e331e7fb97402779abebff26e225ca80a04a1c6375ae8
+SHA256 AFTER  sohu_amount 159919 792188d11fa477f5495ddf4b1dd3f69481d579399a16475aac5eb699654b1864
+SHA256 BEFORE sohu_amount 510330 792188d11fa477f5495ddf4b1dd3f69481d579399a16475aac5eb699654b1864
+SHA256 AFTER  sohu_amount 510330 a2e9c68a357fc452905388e72e1ba610c4d29020f5e6223aa0771f957c1a04cf
+SHA256 BEFORE sohu_amount 510500 a2e9c68a357fc452905388e72e1ba610c4d29020f5e6223aa0771f957c1a04cf
+SHA256 AFTER  sohu_amount 510500 26acc888fddb96d0e7d43375b1fc5d6048864f838fc05d014bf2312ff4c05d7c
+SHA256 BEFORE sohu_amount 159922 26acc888fddb96d0e7d43375b1fc5d6048864f838fc05d014bf2312ff4c05d7c
+SHA256 AFTER  sohu_amount 159922 dcba4e012716657b2f3bcd5740dc5a79a8f177afe3eee6ded17b50c997a7c4e0
+SHA256 BEFORE sohu_amount 512500 dcba4e012716657b2f3bcd5740dc5a79a8f177afe3eee6ded17b50c997a7c4e0
+SHA256 AFTER  sohu_amount 512500 b9084ce79afb95cc23d25d3cf38459f6279e2c44b1723997b3512024cfed01ac
+SHA256 BEFORE sohu_amount 512100 b9084ce79afb95cc23d25d3cf38459f6279e2c44b1723997b3512024cfed01ac
+SHA256 AFTER  sohu_amount 512100 b2fb3773f50f48b8fe1546cb619479fdafb17644a60864ab211033076e5e4159
+SHA256 BEFORE sohu_amount 159845 b2fb3773f50f48b8fe1546cb619479fdafb17644a60864ab211033076e5e4159
+SHA256 AFTER  sohu_amount 159845 ce53bc31dcf67757201bd63a0be1ae70b4b333b17d8877a10b42d6eb29fffd08
+SHA256 BEFORE sohu_amount 588000 ce53bc31dcf67757201bd63a0be1ae70b4b333b17d8877a10b42d6eb29fffd08
+SHA256 AFTER  sohu_amount 588000 f0d8a658ce9232920ec993b2d4f5932e4b95caa3c7a72e6bf0e5e2875e9de01f
+SHA256 BEFORE sohu_amount 588080 f0d8a658ce9232920ec993b2d4f5932e4b95caa3c7a72e6bf0e5e2875e9de01f
+SHA256 AFTER  sohu_amount 588080 28d6217f3e45efb44e022625e37994a571bac8fca3ed954ad9cf00f5fa0fa785
+SHA256 BEFORE sohu_amount 588050 28d6217f3e45efb44e022625e37994a571bac8fca3ed954ad9cf00f5fa0fa785
+SHA256 AFTER  sohu_amount 588050 1cb6f7f6c085fa67c4c709aaef00ac933caa9db9e6e2e614b44656c19a051728
+SHA256 BEFORE sohu_amount 159915 1cb6f7f6c085fa67c4c709aaef00ac933caa9db9e6e2e614b44656c19a051728
+SHA256 AFTER  sohu_amount 159915 fbe8a5164f3dd9f3970e1873560a8f9e829e26030c8c7cb2c67957659ccd2c61
+SHA256 BEFORE sohu_amount 159952 fbe8a5164f3dd9f3970e1873560a8f9e829e26030c8c7cb2c67957659ccd2c61
+SHA256 AFTER  sohu_amount 159952 86133ae340bc00342a97f24fc4daa96d16a5dad37a6d8062735c84445c53a351
+SHA256 BEFORE sohu_amount 512480 86133ae340bc00342a97f24fc4daa96d16a5dad37a6d8062735c84445c53a351
+SHA256 AFTER  sohu_amount 512480 a5270a25008e2006d8e65a13d54439ce2d4033d6c21842dfe34e28edd8285997
+SHA256 BEFORE sohu_amount 159813 a5270a25008e2006d8e65a13d54439ce2d4033d6c21842dfe34e28edd8285997
+SHA256 AFTER  sohu_amount 159813 ff12c64f221d16c2bc92023e81289500bbe15578b25e692c3efcaf03e80ea5f7
+SHA256 BEFORE sohu_amount 159516 ff12c64f221d16c2bc92023e81289500bbe15578b25e692c3efcaf03e80ea5f7
+SHA256 AFTER  sohu_amount 159516 6b38536aa520e12a3bc771869dea9d3223d1ab76a98d231223dfc4b6ff379cf4
+SHA256 BEFORE sohu_amount 159327 6b38536aa520e12a3bc771869dea9d3223d1ab76a98d231223dfc4b6ff379cf4
+SHA256 AFTER  sohu_amount 159327 8bd7bf74eb50979264293d8cd8986d5fafa852c23878b0b2184866caec78e189
+SHA256 BEFORE sohu_amount 159558 8bd7bf74eb50979264293d8cd8986d5fafa852c23878b0b2184866caec78e189
+SHA256 AFTER  sohu_amount 159558 c974525dcf6a3350d95457e28151c8d8ea97f77cf609bdf12d8bff6c65ec1028
+SHA256 BEFORE sohu_amount 560780 c974525dcf6a3350d95457e28151c8d8ea97f77cf609bdf12d8bff6c65ec1028
+SHA256 AFTER  sohu_amount 560780 f8e4f544c3c35be9a2e23054669b26744bf368c32c200db817280877d9dfcc4f
+SHA256 BEFORE sohu_amount 562590 f8e4f544c3c35be9a2e23054669b26744bf368c32c200db817280877d9dfcc4f
+SHA256 AFTER  sohu_amount 562590 e60dc71405f995eedcc7d9716965a2ca8c36e28c125c008d767a6b6dd2689cad
+SHA256 BEFORE sohu_amount 159819 e60dc71405f995eedcc7d9716965a2ca8c36e28c125c008d767a6b6dd2689cad
+SHA256 AFTER  sohu_amount 159819 0ae71479d21a0bb95630a303d1215f00c5c3cea27191a8b18812b7021fa9c8de
+SHA256 BEFORE sohu_amount 515070 0ae71479d21a0bb95630a303d1215f00c5c3cea27191a8b18812b7021fa9c8de
+SHA256 AFTER  sohu_amount 515070 158e5eb8f36ac22a03a6f023ba57f1f9a5b0fdad476ee18b5f05ee1f64016647
+SHA256 BEFORE sohu_amount 159381 158e5eb8f36ac22a03a6f023ba57f1f9a5b0fdad476ee18b5f05ee1f64016647
+SHA256 AFTER  sohu_amount 159381 f9e81e59a7d16dbb0ead04c9be7655c4b02c928059efa7448ad47ed3b6aa0da6
+SHA256 BEFORE sohu_amount 515880 f9e81e59a7d16dbb0ead04c9be7655c4b02c928059efa7448ad47ed3b6aa0da6
+SHA256 AFTER  sohu_amount 515880 8c6a38f9082ee8caf8d663066992ab1d530b2646cb7e080d154cf8e88f6c8754
+SHA256 BEFORE sohu_amount 159695 8c6a38f9082ee8caf8d663066992ab1d530b2646cb7e080d154cf8e88f6c8754
+SHA256 AFTER  sohu_amount 159695 6fed0f7d635839d5eaa2be8f669d63f13dc69b78c6fd6fd983cfe4c51efa9f9c
+SHA256 BEFORE sohu_amount 515230 6fed0f7d635839d5eaa2be8f669d63f13dc69b78c6fd6fd983cfe4c51efa9f9c
+SHA256 AFTER  sohu_amount 515230 f95d53e2f34459f0745e48c124a9efbfe0295c8aaa11c08231290acf4b14fbbd
+SHA256 BEFORE sohu_amount 159852 f95d53e2f34459f0745e48c124a9efbfe0295c8aaa11c08231290acf4b14fbbd
+SHA256 AFTER  sohu_amount 159852 6f8f01b355b18d4ce8b01f316281ac0e55970e1ff41629fd15069174ec9a36f7
+SHA256 BEFORE sohu_amount 562500 6f8f01b355b18d4ce8b01f316281ac0e55970e1ff41629fd15069174ec9a36f7
+SHA256 AFTER  sohu_amount 562500 0b0c8d89d09a8d804e07515d9c202f4dad8019f93233d3c5373d259bc895b081
+SHA256 BEFORE sohu_amount 159770 0b0c8d89d09a8d804e07515d9c202f4dad8019f93233d3c5373d259bc895b081
+SHA256 AFTER  sohu_amount 159770 8f2b4ce65a0c41f65169aef4e7753681e6ddfee0a1501aec541e1ac743002ce0
+SHA256 BEFORE sohu_amount 159732 8f2b4ce65a0c41f65169aef4e7753681e6ddfee0a1501aec541e1ac743002ce0
+SHA256 AFTER  sohu_amount 159732 a55d9abd3bd7a1520518b7cd93d40b123453c50838e9923b2fc14d50fc2910f9
+SHA256 BEFORE sohu_amount 561600 a55d9abd3bd7a1520518b7cd93d40b123453c50838e9923b2fc14d50fc2910f9
+SHA256 AFTER  sohu_amount 561600 2a2c30ad622bae72c6a47f95bf5b23d2c0c14d89e761e8756911bf81bde4ea0b
+SHA256 BEFORE sohu_amount 512400 2a2c30ad622bae72c6a47f95bf5b23d2c0c14d89e761e8756911bf81bde4ea0b
+SHA256 AFTER  sohu_amount 512400 67ea14890ba619ceedcb11e2963a500bb6f9e40ce644268c9ab01d65e0efd53f
+SHA256 BEFORE sohu_amount 159881 67ea14890ba619ceedcb11e2963a500bb6f9e40ce644268c9ab01d65e0efd53f
+SHA256 AFTER  sohu_amount 159881 b02ff075e69ff0ddfe0c8f7f78a5fa9dac8ad28c817f60bdd085e00a4d03a9f5
+SHA256 BEFORE sohu_amount 515220 b02ff075e69ff0ddfe0c8f7f78a5fa9dac8ad28c817f60bdd085e00a4d03a9f5
+SHA256 AFTER  sohu_amount 515220 ba66b8029e8b8870ac1e235bcce5c88a4fb4119591d8cab27f4a45d0a348c532
+SHA256 BEFORE sohu_amount 501018 ba66b8029e8b8870ac1e235bcce5c88a4fb4119591d8cab27f4a45d0a348c532
+SHA256 AFTER  sohu_amount 501018 e14a1c8bc360da3cab7a0879b48e88592781fba8e45967ada011244a98c8234c
+SHA256 BEFORE sohu_amount 160723 e14a1c8bc360da3cab7a0879b48e88592781fba8e45967ada011244a98c8234c
+SHA256 AFTER  sohu_amount 160723 112e98d9e4b8fbbea17be25b88516f95d12136795581e6465e786a875cffea6c
+SHA256 BEFORE sohu_amount 161129 112e98d9e4b8fbbea17be25b88516f95d12136795581e6465e786a875cffea6c
+SHA256 AFTER  sohu_amount 161129 52da12381b955016522955a37002addcef1260e53f2a6add39624caeb0eaf2ec
+SHA256 BEFORE sohu_amount 518880 52da12381b955016522955a37002addcef1260e53f2a6add39624caeb0eaf2ec
+SHA256 AFTER  sohu_amount 518880 71d14d77ece8a1234d86fb21c491c6cf7671e6500914fbfb148d3f9248f3c801
+SHA256 BEFORE sohu_amount 159934 71d14d77ece8a1234d86fb21c491c6cf7671e6500914fbfb148d3f9248f3c801
+SHA256 AFTER  sohu_amount 159934 a01d664666bcab5cf5de03df6f694185d1ffd69c41af27da55dbfca8f7322018
+SHA256 BEFORE sohu_amount 518800 a01d664666bcab5cf5de03df6f694185d1ffd69c41af27da55dbfca8f7322018
+SHA256 AFTER  sohu_amount 518800 73d29e840f1dc43b680dd6a5f8a5fe9bfc9ff0e7aa84b0f66dab97350eaade66
+SHA256 BEFORE sohu_amount 515210 73d29e840f1dc43b680dd6a5f8a5fe9bfc9ff0e7aa84b0f66dab97350eaade66
+SHA256 AFTER  sohu_amount 515210 696afc4fa43a807d38acc4103500584565b8a6a1b035a6885ac4a45df46b80bb
+SHA256 BEFORE sohu_amount 159870 696afc4fa43a807d38acc4103500584565b8a6a1b035a6885ac4a45df46b80bb
+SHA256 AFTER  sohu_amount 159870 66d83a39cfc15b14d7574c1dbc1ea0ea6a5a598d557319df556746633a1b4a82
+SHA256 BEFORE sohu_amount 516020 66d83a39cfc15b14d7574c1dbc1ea0ea6a5a598d557319df556746633a1b4a82
+SHA256 AFTER  sohu_amount 516020 7d469a34e8bae5ced449b89698a7bc1fe38d0282bba44e8481a89220811c7b67
+SHA256 BEFORE sohu_amount 515030 7d469a34e8bae5ced449b89698a7bc1fe38d0282bba44e8481a89220811c7b67
+SHA256 AFTER  sohu_amount 515030 ff4b47b292f23066c842679681dedc16930917d6afa908f32f457203d77b13bd
+SHA256 BEFORE sohu_amount 159806 ff4b47b292f23066c842679681dedc16930917d6afa908f32f457203d77b13bd
+SHA256 AFTER  sohu_amount 159806 0f8283a7b502c62d2f4a57fd58a2064e2e41698fd4ef7eefaebec1c01a2890ce
+SHA256 BEFORE sohu_amount 515700 0f8283a7b502c62d2f4a57fd58a2064e2e41698fd4ef7eefaebec1c01a2890ce
+SHA256 AFTER  sohu_amount 515700 43b290b2cfb291e393e02e123bd7fdd2bfddb8b28e127d1732eae453e06399bd
+SHA256 BEFORE sohu_amount 515790 43b290b2cfb291e393e02e123bd7fdd2bfddb8b28e127d1732eae453e06399bd
+SHA256 AFTER  sohu_amount 515790 8040a09452d3523aa5027ea21002578794e51d5a4443adc5fdca726e7555c9f1
+SHA256 BEFORE sohu_amount 159857 8040a09452d3523aa5027ea21002578794e51d5a4443adc5fdca726e7555c9f1
+SHA256 AFTER  sohu_amount 159857 f7e6c1f1604a036f2a7a3b3d863ef5fa36d25c4a4c3f70040874acccda4af023
+SHA256 BEFORE sohu_amount 512660 f7e6c1f1604a036f2a7a3b3d863ef5fa36d25c4a4c3f70040874acccda4af023
+SHA256 AFTER  sohu_amount 512660 d778ff22dc836d388c901818122f61d68728f62cb9f8be982728c5bda0519baa
+SHA256 BEFORE sohu_amount 512810 d778ff22dc836d388c901818122f61d68728f62cb9f8be982728c5bda0519baa
+SHA256 AFTER  sohu_amount 512810 59d683861707ba715d2210d55665259eb51a5f73b618497ce129c476077f7c52
+SHA256 BEFORE sohu_amount 512010 59d683861707ba715d2210d55665259eb51a5f73b618497ce129c476077f7c52
+SHA256 AFTER  sohu_amount 512010 0ff0d9100e0543d82ed156ac73efae9f817a426dfaafe9c4a8bab11a26d7665a
+SHA256 BEFORE sohu_amount 159938 0ff0d9100e0543d82ed156ac73efae9f817a426dfaafe9c4a8bab11a26d7665a
+SHA256 AFTER  sohu_amount 159938 2cbd7dd1968dbe256306ccc9f556320515542251c4e98f482f6d7603867054a2
+SHA256 BEFORE sohu_amount 512170 2cbd7dd1968dbe256306ccc9f556320515542251c4e98f482f6d7603867054a2
+SHA256 AFTER  sohu_amount 512170 022971ab3d57fc65c33b4065fcc40f8ab941c6ea21e1d1d7cda810bec4572b89
+SHA256 BEFORE sohu_amount 159992 022971ab3d57fc65c33b4065fcc40f8ab941c6ea21e1d1d7cda810bec4572b89
+SHA256 AFTER  sohu_amount 159992 a787495941e4624da52b2704a5daa26300ab67b0b9c9adb829d8c238a0dec804
+SHA256 BEFORE sohu_amount 515120 a787495941e4624da52b2704a5daa26300ab67b0b9c9adb829d8c238a0dec804
+SHA256 AFTER  sohu_amount 515120 ea86436799a12cc987b1e56ff8d690882f319719858b6b6527521d06519c405e
+SHA256 BEFORE sohu_amount 159928 ea86436799a12cc987b1e56ff8d690882f319719858b6b6527521d06519c405e
+SHA256 AFTER  sohu_amount 159928 78056d211bb6d4f7d2fc20dfd64789d3fd706a8480dc1dc646288806f39dc1a8
+SHA256 BEFORE sohu_amount 510630 78056d211bb6d4f7d2fc20dfd64789d3fd706a8480dc1dc646288806f39dc1a8
+SHA256 AFTER  sohu_amount 510630 9c2014befbe911fccb32a4f76a184a25379ecf3ddb5201545dfc5b746dbfb783
+SHA256 BEFORE sohu_amount 512690 9c2014befbe911fccb32a4f76a184a25379ecf3ddb5201545dfc5b746dbfb783
+SHA256 AFTER  sohu_amount 512690 5ba93acb9e0729e58870ad8ceeaaea7b65f679d2bd029fd6bc76a63882ba4f1a
+SHA256 BEFORE sohu_amount 159825 5ba93acb9e0729e58870ad8ceeaaea7b65f679d2bd029fd6bc76a63882ba4f1a
+SHA256 AFTER  sohu_amount 159825 3cea5ad8f224f37cbac26ce9d4ff6ee14b962cead3385b16d1f69f55fe718e87
+SHA256 BEFORE sohu_amount 159827 3cea5ad8f224f37cbac26ce9d4ff6ee14b962cead3385b16d1f69f55fe718e87
+SHA256 AFTER  sohu_amount 159827 ff0d7980eedab6e5c67d76ac7566daff39cad5c62877c60124892b3a6440e84d
+SHA256 BEFORE sohu_amount 512800 ff0d7980eedab6e5c67d76ac7566daff39cad5c62877c60124892b3a6440e84d
+SHA256 AFTER  sohu_amount 512800 272ea4f3afee6ce9344423e55f9d3e7585aef12b943d44de67701f03d91f8401
+SHA256 BEFORE sohu_amount 515020 272ea4f3afee6ce9344423e55f9d3e7585aef12b943d44de67701f03d91f8401
+SHA256 AFTER  sohu_amount 515020 ac6f5c49f552ff4a7794d2e8f2104234bd5638ae90c5f9f0c9aec67bacbc8758
+SHA256 BEFORE sohu_amount 159887 ac6f5c49f552ff4a7794d2e8f2104234bd5638ae90c5f9f0c9aec67bacbc8758
+SHA256 AFTER  sohu_amount 159887 5ff228eba77c4ae3acd0b1cd7d6dcebfb88b3e68d6d96e9484b4365f43ed684d
+SHA256 BEFORE sohu_amount 512880 5ff228eba77c4ae3acd0b1cd7d6dcebfb88b3e68d6d96e9484b4365f43ed684d
+SHA256 AFTER  sohu_amount 512880 dbd89cc1a67a20b02da0d8f0209fec0438647bbdc93be3136e0895097b863a95
+SHA256 BEFORE sohu_amount 512000 dbd89cc1a67a20b02da0d8f0209fec0438647bbdc93be3136e0895097b863a95
+SHA256 AFTER  sohu_amount 512000 dd83f85264c7123e94ca7a4ba3be123d7ac7c41eaca4273ca5be47e3874cb58f
+SHA256 BEFORE sohu_amount 159841 dd83f85264c7123e94ca7a4ba3be123d7ac7c41eaca4273ca5be47e3874cb58f
+SHA256 AFTER  sohu_amount 159841 d1c77f92721283f0531a1e3f293553cba04fbbb4dad4674afb7cd9c06ccb7dac
+SHA256 BEFORE sohu_amount 512200 d1c77f92721283f0531a1e3f293553cba04fbbb4dad4674afb7cd9c06ccb7dac
+SHA256 AFTER  sohu_amount 512200 9e94525561567dce03fe4450073a0b2444c56bd5b0a498ab60f09e2c57b1453d
+SHA256 BEFORE sohu_amount 159707 9e94525561567dce03fe4450073a0b2444c56bd5b0a498ab60f09e2c57b1453d
+SHA256 AFTER  sohu_amount 159707 77534cd8aaece1afdff0d3e5837ad494a8574b9b12b98ea2f7785e98f8c20841
+SHA256 BEFORE sohu_amount 510880 77534cd8aaece1afdff0d3e5837ad494a8574b9b12b98ea2f7785e98f8c20841
+SHA256 AFTER  sohu_amount 510880 771b937c625703058f7837de28049053dd438263013b7ec5614d9a7cee2f3ec1
+SHA256 BEFORE sohu_amount 512890 771b937c625703058f7837de28049053dd438263013b7ec5614d9a7cee2f3ec1
+SHA256 AFTER  sohu_amount 512890 10b53609ebb30c12a3b9bfd2bdb3990f213bb5385d62988bd676c488a87f3d03
+SHA256 BEFORE sohu_amount 515100 10b53609ebb30c12a3b9bfd2bdb3990f213bb5385d62988bd676c488a87f3d03
+SHA256 AFTER  sohu_amount 515100 5c7bcaa539206901e0b7ef206b287b78a3a13329798fa33da92711edaa688aaf
+SHA256 BEFORE sohu_amount 511260 5c7bcaa539206901e0b7ef206b287b78a3a13329798fa33da92711edaa688aaf
+SHA256 AFTER  sohu_amount 511260 30e1699c20f189b601b272a13660fd116841578e6c3d75657b68086d343bd756
+SHA256 BEFORE sohu_amount 511010 30e1699c20f189b601b272a13660fd116841578e6c3d75657b68086d343bd756
+SHA256 AFTER  sohu_amount 511010 9224cf448a30b5893350702b69288839befacb8cd6292472abbd013ece238857
+SHA256 BEFORE sohu_amount 511020 9224cf448a30b5893350702b69288839befacb8cd6292472abbd013ece238857
+SHA256 AFTER  sohu_amount 511020 792eff2c0bd7d37ae5c049478b3c89fd6ddc8e6f2e6b9184fb231ce940bab9bf
+SHA256 BEFORE sohu_amount 511880 792eff2c0bd7d37ae5c049478b3c89fd6ddc8e6f2e6b9184fb231ce940bab9bf
+SHA256 AFTER  sohu_amount 511880 99bcf601053c654c6883f2895d5843ba95cdca61b9326c662837567f2d803668
+SHA256 BEFORE sohu_amount 511360 99bcf601053c654c6883f2895d5843ba95cdca61b9326c662837567f2d803668
+SHA256 AFTER  sohu_amount 511360 508457f4b4cdcff8cf4075d73cced1e84a0ee5288943edc2c8a0c6f6ec2a894f
+SHA256 BEFORE sohu_amount 513100 508457f4b4cdcff8cf4075d73cced1e84a0ee5288943edc2c8a0c6f6ec2a894f
+SHA256 AFTER  sohu_amount 513100 58299c3aab0b16dfaabde3c37a6ba19961ca7e56271e7083f3707d58bc791c2e
+SHA256 BEFORE sohu_amount 159941 58299c3aab0b16dfaabde3c37a6ba19961ca7e56271e7083f3707d58bc791c2e
+SHA256 AFTER  sohu_amount 159941 72e58f5505971f2c2c02adb3e3aacb7c89b10cfc531be9d10ff4cde5dc4e7429
+SHA256 BEFORE sohu_amount 513300 72e58f5505971f2c2c02adb3e3aacb7c89b10cfc531be9d10ff4cde5dc4e7429
+SHA256 AFTER  sohu_amount 513300 3cb5053caa6356b10ce3c52f821f520cea043afc275bb6c4e316f247b4f5b938
+SHA256 BEFORE sohu_amount 159509 3cb5053caa6356b10ce3c52f821f520cea043afc275bb6c4e316f247b4f5b938
+SHA256 AFTER  sohu_amount 159509 71f19e1e5f450665307a9addb618e7bc9ccb8627478a98cbc8fc91a4b24228e5
+SHA256 BEFORE sohu_amount 513500 71f19e1e5f450665307a9addb618e7bc9ccb8627478a98cbc8fc91a4b24228e5
+SHA256 AFTER  sohu_amount 513500 79661c6b14c5b26c4990efe6766f42ec3ed90bf9bf62bea0317de792a03a205f
+SHA256 BEFORE sohu_amount 159612 79661c6b14c5b26c4990efe6766f42ec3ed90bf9bf62bea0317de792a03a205f
+SHA256 AFTER  sohu_amount 159612 dd414d7aa71c50f556dc0431f48a1e0d172d4d4ea7bce8e0ac32121fe7c34430
+SHA256 BEFORE sohu_amount 513650 dd414d7aa71c50f556dc0431f48a1e0d172d4d4ea7bce8e0ac32121fe7c34430
+SHA256 AFTER  sohu_amount 513650 17fe50ca6ef73d1e9080feb3c0a729deaac537b9c419f6a5c52fe973f6011d7f
+SHA256 BEFORE sohu_amount 513180 17fe50ca6ef73d1e9080feb3c0a729deaac537b9c419f6a5c52fe973f6011d7f
+SHA256 AFTER  sohu_amount 513180 a2a65aaaecee91bdd584060d5f106662ac87fdd05a7209415c28e5b491542710
+SHA256 BEFORE sohu_amount 513130 a2a65aaaecee91bdd584060d5f106662ac87fdd05a7209415c28e5b491542710
+SHA256 AFTER  sohu_amount 513130 27e8a9e38ab0a097942fd12831e879a9cf6dbc7467de8ffb22351b7e4a95ba6f
+SHA256 BEFORE sohu_amount 159740 27e8a9e38ab0a097942fd12831e879a9cf6dbc7467de8ffb22351b7e4a95ba6f
+SHA256 AFTER  sohu_amount 159740 7669de6772a858cecc4ee25e94e4b816d8d3373d7cdbf6e4b68b63e010083033
+SHA256 BEFORE sohu_amount 513520 7669de6772a858cecc4ee25e94e4b816d8d3373d7cdbf6e4b68b63e010083033
+SHA256 AFTER  sohu_amount 513520 ebef86cdb6ef202179ee39610e0d010bfa5a166a876bf96ba5e03ecb4d905f06
+SHA256 BEFORE sohu_amount 159866 ebef86cdb6ef202179ee39610e0d010bfa5a166a876bf96ba5e03ecb4d905f06
+SHA256 AFTER  sohu_amount 159866 77019e40e777d914ab357624adcafd2b63b00002d870aa9d5294ceb02302d6cb
+SHA256 BEFORE sohu_amount write_requests 77019e40e777d914ab357624adcafd2b63b00002d870aa9d5294ceb02302d6cb
+SHA256 AFTER  sohu_amount write_requests d9122086c0f9c03b949372a6bffd46230994a0649b0b5165dee3cf343408217e
+SHA256 BEFORE sohu_amount finish_run d9122086c0f9c03b949372a6bffd46230994a0649b0b5165dee3cf343408217e
+SHA256 AFTER  sohu_amount finish_run 3b9f8fb253a29de5835aa54c0b8062bbaa77ebf3f229611eb91b97a9ece155f9
+```
+
+## Decision / Next Steps
+
+分支 `cursor/qdii-nav-dividends` 留给 orchestrator 评审。不合并 main。D6 的 ff-only 合入在评审通过且测试为绿之后，且在任务 G 之前。

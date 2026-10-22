@@ -6,8 +6,8 @@
 - Document type: other
 - Status: active
 - Owner: project owner
-- Last updated: 2026-10-22
-- Source of truth: `data/market.sqlite`、`data/universe.csv`；分红推导用 `src/data/dividends.py`；假跳空阈值用该文件里的 `GAP_LIMIT`
+- Last updated: 2026-10-23
+- Source of truth: `data/market.sqlite`、`data/universe.csv`；现金分红以 `incoming/grok-pit-20261022/etf_events.csv` 的一手公告为准（`src/data/dividends.py`）；净值在 `fund_nav`；假跳空阈值用 `src/data/dividends.py` 的 `GAP_LIMIT`
 
 ## Purpose
 
@@ -19,9 +19,13 @@
 
 - 截止日：2026-09-30。近 60 个交易日取 `calendar` 里不晚于这一天的最后 60 天，即 2026-07-08 至 2026-09-30。
 - 代码范围：`data/universe.csv` 的执行基金与分号分隔的备选，共 88 只（主基金 38，备选 50）。T29 没有执行代码。
-- 库文件 SHA256（本次写入结束后）：`9bc8e74935fe34f22c254568f4b6ef284df79a97496bcc8fcd704fe58ec5d49b`。
-- 写入前 SHA256：`e013b960b9d77cbb78a10116e3c50b61bf0b81ad63247afeb67316fa54cee961`。
-- 每次写入前后的哈希在 `results/inventory/db-writes.txt`，工作日志再抄一份。
+- 库文件 SHA256（2026-10-23 三次写入结束后）：`3b9f8fb253a29de5835aa54c0b8062bbaa77ebf3f229611eb91b97a9ece155f9`。
+- 这次开工前的文件哈希与 run_id 10 结束时相同：`9bc8e74935fe34f22c254568f4b6ef284df79a97496bcc8fcd704fe58ec5d49b`。
+- run_id 10 清点自己的写入前哈希仍是 `e013b960b9d77cbb78a10116e3c50b61bf0b81ad63247afeb67316fa54cee961`。
+- run_id 11（`fund_nav`）结束后：`615b2cb24b2654e2ea87e790bcc6ebc8fcfe4c5edabcecc419cac6ce9c474720`。
+- run_id 12（`cash_dividends` 替换）结束后：`c22af7997ac91ace791c078f1d84cfd38e2bb3e3d23cbcd6a27672a108ef477a`。
+- run_id 13（搜狐成交额）结束后：`3b9f8fb253a29de5835aa54c0b8062bbaa77ebf3f229611eb91b97a9ece155f9`。
+- 每次写入前后的哈希在 `results/inventory/db-writes.txt`（`# fund-nav 11` 起是这次），工作日志再抄一份。
 
 ## 机器可读结果
 
@@ -34,6 +38,8 @@
 | `results/inventory/gaps-2026-09-30.csv` | 仍缺的项 |
 | `results/inventory/fetch-meta.json` | 50 只新写入备选的路由、行数、东财失败原因 |
 | `results/inventory/db-writes.txt` | 每次库写入前后的 SHA256 |
+| `results/inventory/cash_dividends_removed-12.csv` | 2026-10-23 从 `cash_dividends` 删掉的旧行 |
+| `results/inventory/qdii-nav-dividends.json` | 净值行数、分红替换计数、搜狐成交额计数 |
 
 `etf_path_change` 与 `index_path_change` 只用来定义 `tracking_diff = etf_path_change - index_path_change`。它们不是策略收益。
 
@@ -51,7 +57,13 @@
 
 ## 成交额
 
-88 只的 `bars.amount` 全部为 NULL，近 60 日平均成交额算不出来。
+2026-10-23 用搜狐历史行情补了 `bars.amount`。88 只执行基金的 `tencent_etf` 行共 168980 天，写入 167211 天。成交额是搜狐 `hq[8]` × 10000（源字段按万元，入库为人民币元）。开高低收、成交量、`source`、`fetched_at` 没有改。`source` 仍是 `tencent_etf`，因为一条序列不能换成另一个路由；额是后补的字段，下一次腾讯增量若没有额，会保留已写入的值。
+
+搜狐没有连续失败，没有改用别的来源。43 只仍有空额，合计 1769 天，主要是 2013 年、2018-12 至 2019-07，以及 `512690`、`512480`、`512170`、`513520`、`515880` 从上市到 2020-02-25 的一段。这些天搜狐响应里没有对应日期。没有为了填满而换源。
+
+下面这段是补额之前的状态，近 60 日平均成交额当时算不出来：
+
+88 只的 `bars.amount` 当时全部为 NULL。
 
 原因：
 
@@ -79,6 +91,14 @@
 
 ## 现金分红
 
+2026-10-23 起，`cash_dividends` 只保留 `incoming/grok-pit-20261022/etf_events.csv` 里的「现金分红」。金额用公告的 4 位小数。`511880` 的 2014-01、2014-12、2015-12 三行，Grok 把权益登记日写成了除息日，库内改为价格跳空日：2014-01-17、2014-12-31、2015-12-31，金额仍是公告上的 3.208、4.228、3.327。份额折算和拆分不进这张表。
+
+当前 104 行、17 个代码。run_id 10 的 qfq 推导有 20038 行；对不上公告的 19953 行已删除，导出在 `results/inventory/cash_dividends_removed-12.csv`。金额已经是 4 位且除息日相同的旧行留在表里，没有为了换 `run_id` 再删一次。
+
+README「核查后没有分红、折算、拆分记录」的 35 只：库内本来就没有分红行，替换后仍是 0 行，不写 0 金额。其余执行基金既没有一手现金分红、也不在这份名单里，`coverage` 备注写了「分红未知: 代码」，同样不写 0。qfq 阶跃已全部删掉，不当成分红。
+
+下面是 run_id 10 当时的推导，行已经不在表里：
+
 `dividends.sync_qfq` 对 88 只有原始行情的代码各拉了一次腾讯 qfq，用 `derive_cash_dividends` 写入 `cash_dividends`（只追加，`INSERT OR IGNORE`）。表在这次作业里新建。共 20038 行、47 个代码。
 
 qfq 结果分三档：
@@ -89,7 +109,7 @@ qfq 结果分三档：
 
 11 只稀疏代码可以当作现金分红日历来读：`510300`（14）、`510330`（12）、`588080`（1）、`512400`（3）、`515210`（5）、`510880`（19）、`515100`（2）、`511260`（5）、`511010`（7）、`511020`（4）、`511880`（13）。单笔收益率（金额 / 前收）最大是 `515100` 的 0.255，其余多在 0.05 以下。`510880` 的累计后复权因子约 1.81，和一只红利 ETF 的量级相符。
 
-36 只密集代码不是现金分红日历。`derive_cash_dividends` 把「不复权收盘 − qfq 收盘」每一次超过 0.0015 的下降都记成一笔分红。这些代码一年有几十笔，累计因子可以到几千甚至 `159922` 的约 3 万倍。大阶跃（收益率 ≥ 0.20）和当日开盘相对前收的跌幅几乎一一对应，也就是份额折算被 qfq 减法记成了分红。这些行留在 `cash_dividends` 里，跟踪差没有把它们再投进去。
+36 只密集代码不是现金分红日历。`derive_cash_dividends` 把「不复权收盘 − qfq 收盘」每一次超过 0.0015 的下降都记成一笔分红。这些代码一年有几十笔，累计因子可以到几千甚至 `159922` 的约 3 万倍。大阶跃（收益率 ≥ 0.20）和当日开盘相对前收的跌幅几乎一一对应，也就是份额折算被 qfq 减法记成了分红。这些行当时留在 `cash_dividends` 里，跟踪差没有把它们再投进去。2026-10-23 已删除并导出。
 
 ## 份额折算假跳空
 
@@ -107,9 +127,13 @@ qfq 结果分三档：
 
 ## QDII / LOF 的净值、IOPV、溢价
 
-库内没有净值、IOPV 或溢价的表或列。`src/data` 的现有路由（中证、东财、腾讯、Yahoo、stooq、EIA）都不提供这三项。没有新写抓取。
+2026-10-23 新增 `fund_nav`。来源是东财 `f10/lsjz`（`source = eastmoney_f10_lsjz`），`pageSize = 20`，字段按接口原样入库，没有插值。15 只、27418 行。单位净值是 `DWJZ`，累计净值是 `LJJZ`，申购/赎回状态是 `SGZT` / `SHZT`。没有 IOPV 列。
 
-因此下列 15 只全部记为缺口（主题上标了 `qdii_or_lof` 的主基金和备选）：
+溢价可以按同日场内收盘 / 单位净值 − 1 现算。这是数据质量，不是收益。2026 年（有行情的重叠日，到 2026-09-30）中位溢价：`513100` +7.3%，`159941` +6.3%，`513300` +5.3%，`513500` +5.4%，`159612` +4.7%，`513650` +3.6%，`159509` +18.1%。与 `operations/reviews/2026-10-23-qdii-premium-and-weight.md` 里已公布的中位数一致。
+
+份额折算造成的假跳空只标记，价格没有改。`159941` 2022-07-05、`513500` 2022-03-30、`513100` 2022-01-14 仍是原来的开高低收（`fake-gaps-2026-09-30.csv` 已记下前两只和阈值规则下的跳空）。`513500` 2017-01-03 的开盘相对前收约 −9%，单位净值与收盘同量级，不是份额折算；公告里的拆分是 2022-03-28。`159941` 在 2022-07-04 当天，收盘仍是折算前的约 2.38，单位净值已经是折算后的 0.5992，这一天的收盘/净值不是可交易溢价。
+
+下列 15 只就是 `fund_nav` 的范围（主题上标了 `qdii_or_lof` 的主基金和备选）：
 
 - T15 QDII-LOF：`501018`、`160723`、`161129`
 - T35 QDII：`513100`、`159941`、`513300`
@@ -120,7 +144,7 @@ qfq 结果分三档：
 
 ## 跟踪差
 
-比较对象是 `coverage_latest` 里的研究序列，不是 CSV 里的 `research_index_code` 原文（两者有时不同，例如 T01 研究序列是 `H00300` 而不是 `000300`）。路径见上节：份额折算跳空已按 `GAP_LIMIT` 接平；只有稀疏分红簇（11 只）把收益率低于 0.40 的现金分红再投进路径。密集阶跃和没有 qfq 的代码不做分红再投。
+这张表是 run_id 10 清点时算的，分红替换之后没有重算。比较对象是当时的 `coverage_latest` 研究序列，不是 CSV 里的 `research_index_code` 原文（两者有时不同，例如 T01 研究序列是 `H00300` 而不是 `000300`）。路径见上节：份额折算跳空已按 `GAP_LIMIT` 接平；当时只有稀疏分红簇（11 只）把收益率低于 0.40 的现金分红再投进路径。密集阶跃和没有 qfq 的代码不做分红再投。数字是路径差额，不是策略收益。
 
 年份：上一年 12 月里最后一个两边都有的交易日，到本年最后一个重叠日。没有合格锚点、锚点早于 12 月、或本年重叠在 12 月 15 日之前结束的，标 `partial`。2026 年一律 `partial`，因为截止日是 2026-09-30，不是年末。
 
@@ -181,14 +205,14 @@ qfq 结果分三档：
 
 ## 仍缺的数据
 
-1. 成交额：88 只都没有 `amount`。东财路由本次不可用，腾讯日线没有该字段。
-2. 净值 / IOPV / 溢价：上节 15 只 QDII / LOF 都没有。
-3. qfq 因而没有分红推导：35 只，见 `qfq_status = no_qfq`。
-4. 分红阶跃过密、不能当现金分红用：36 只。行还在 `cash_dividends`。
+1. 成交额：167211 天已有搜狐换算后的人民币元。仍空 1769 天，见上，没有换源补齐。东财 K 线这次没有用。
+2. IOPV：15 只 QDII / LOF 仍没有。单位净值、累计净值、申购/赎回状态已经在 `fund_nav`。
+3. qfq 因而当时没有分红推导：35 只，见 `qfq_status = no_qfq`。其中被 README 标成核查后无事件的，现在就是 0 行；没有被标成无事件、也没有一手现金分红的，备注是「分红未知」。
+4. 分红阶跃过密的 qfq 行已经从 `cash_dividends` 删除，并导出。表里不再拿它们当现金分红。
 5. 没有研究序列、没有跟踪差：T34 `511880` 与 `511360`，T36 `159509`，T38 `513180`、`513130`、`159740`。
 6. 没有 `hfq` 执行序列。schema 允许 `hfq`，这 88 只都只有 `raw`。
-7. 备选不在 `coverage_latest` 里，研究包不会自动带上它们。
-8. 低于 `GAP_LIMIT` 的三笔大幅开盘跌空没有记成份额折算，见上。
+7. 备选不在 `coverage_latest` 的执行字段里。这次给「分红未知」的主题新写了 coverage 备注，研究包若重打会带上这句备注，不会因此多带备选行情。
+8. 低于 `GAP_LIMIT` 的三笔大幅开盘跌空没有记成份额折算，见上。份额折算日的价格也没有改写。
 
 没有「库里完全没有行情」的备选。50 只都用现有退路写入了。
 
@@ -203,17 +227,24 @@ qfq 结果分三档：
 
 ## 本次没有做的事
 
+run_id 10 清点当时：
+
 - 没有改 `data/universe.csv`、`src/research/`、`src/signals/` 或预注册文档。
 - 没有新的抓取代码，没有把东财和腾讯拼进同一序列，没有补造价格。
 - 没有算或报告策略、择时、组合的收益、回撤或排名。
 - 没有改 `coverage_latest`。
+
+2026-10-23 在上面的边界内补了三件事：`fund_nav`、一手公告替换 `cash_dividends`、搜狐成交额。仍然没有改 `universe.csv`、`src/research/`、`src/signals/`、`config/`，没有改价格，没有报告 2016-01-01 之后的策略、择时或组合收益。22 个主题的 `coverage_latest` 只在备注里追加了「分红未知」。细节在 `operations/work_logs/2026-10-23-qdii-nav-dividends.md`。
 
 ## Related Files
 
 - `data/market.sqlite`
 - `data/universe.csv`
 - `src/data/dividends.py`
+- `src/data/fund_nav.py`
+- `src/data/sohu_amount.py`
 - `src/data/runner.py`
+- `operations/work_logs/2026-10-23-qdii-nav-dividends.md`
 - `results/inventory/execution-2026-09-30.csv`
 - `docs/work_logs/2026-10-22-execution-inventory.md`
 - `docs/data-layer.md`
