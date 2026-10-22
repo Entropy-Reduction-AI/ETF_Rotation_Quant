@@ -1,0 +1,118 @@
+{
+ "date": "2026-09-30",
+ "signal_date": "2026-09-30",
+ "valve": "在场",
+ "a_share_drawdown_from_high": -0.08800492011245031,
+ "qdii_premium": "未接入",
+ "pending": "待 D5 标的决定",
+ "weights": [
+  {
+   "container": "沪深300",
+   "execution_code": "510300",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "中证500",
+   "execution_code": "510500",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "中证1000",
+   "execution_code": "512100",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "创业板",
+   "execution_code": "159915",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "AI/算力",
+   "execution_code": "159819",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "有色",
+   "execution_code": "512400",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "煤炭",
+   "execution_code": "515220",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "军工",
+   "execution_code": "512660",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "医药",
+   "execution_code": "512010",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "消费",
+   "execution_code": "159928",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "白酒",
+   "execution_code": "512690",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "农业",
+   "execution_code": "159825",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "银行",
+   "execution_code": "512800",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "券商",
+   "execution_code": "512880",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "地产",
+   "execution_code": "512200",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "红利",
+   "execution_code": "510880",
+   "weight": 0.04375,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "纳指100",
+   "execution_code": "513100",
+   "weight": 0.15,
+   "qdii_premium": "未接入"
+  },
+  {
+   "container": "标普500",
+   "execution_code": "513500",
+   "weight": 0.15,
+   "qdii_premium": "未接入"
+  }
+ ]
+}

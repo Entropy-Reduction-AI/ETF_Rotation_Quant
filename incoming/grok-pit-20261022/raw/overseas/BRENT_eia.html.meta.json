@@ -1,0 +1,7 @@
+{
+  "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=D",
+  "status": 200,
+  "content_type": "text/html",
+  "sha256": "b08a5da163af25dc5c49c5549a834617fef1c0920ec30ce2cd069d35132885c8",
+  "bytes": 452765
+}

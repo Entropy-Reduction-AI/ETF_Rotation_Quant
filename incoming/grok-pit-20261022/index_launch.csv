@@ -1,0 +1,96 @@
+index_code,index_name,base_date,launch_date,source_url_1,source_url_2,note
+000300,沪深300指数,2004-12-31,2005-04-08,https://www.csindex.com.cn/zh-CN/indices/index-detail/000300,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/000300_Index_Methodology_cn.pdf,简称 沪深300
+H00300,沪深300全收益指数,2004-12-31,2005-04-08,https://www.csindex.com.cn/zh-CN/indices/index-detail/H00300,,简称 300收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+000905,中证小盘500指数,2004-12-31,2007-01-15,https://www.csindex.com.cn/zh-CN/indices/index-detail/000905,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/000905_Index_Methodology_cn.pdf,简称 中证500；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H00905,中证小盘500全收益指数,2004-12-31,2007-01-15,https://www.csindex.com.cn/zh-CN/indices/index-detail/H00905,,简称 500收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+000852,中证1000指数,2004-12-31,2014-10-17,https://www.csindex.com.cn/zh-CN/indices/index-detail/000852,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/000852_Index_Methodology_cn.pdf,简称 中证1000；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H00852,中证1000全收益指数,2004-12-31,2014-10-17,https://www.csindex.com.cn/zh-CN/indices/index-detail/H00852,,简称 中证1000全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+000688,上证科创板50成份指数,2019-12-31,2020-07-23,https://www.csindex.com.cn/zh-CN/indices/index-detail/000688,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/000688_Index_Methodology_cn.pdf,简称 科创50；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H00688,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/H00688,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+000688CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/000688CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+399006,创业板指数,2010-05-31,2010-06-01,http://www.cnindex.com.cn/module/index-detail.html?act_menu=1&indexCode=399006,http://www.cnindex.com.cn/docs/gz_399006.pdf,来源均为国证指数网：详情接口与编制方案 PDF；编制方案前 6 页未抽出基日；发布日仅见于国证 index-intro 的 fbrq，编制方案前 6 页未载明
+399606,创业板全收益指数,2010-05-31,2010-06-01,http://www.cnindex.com.cn/module/index-detail.html?act_menu=1&indexCode=399606,http://www.cnindex.com.cn/docs/gz_399606.pdf,来源均为国证指数网：详情接口与编制方案 PDF；编制方案前 6 页未抽出基日；发布日仅见于国证 index-intro 的 fbrq，编制方案前 6 页未载明
+H30184,中证全指半导体产品与设备指数,2004-12-31,2013-07-15,https://www.csindex.com.cn/zh-CN/indices/index-detail/H30184,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/H30184_Index_Methodology_cn.pdf,简称 半导体；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H20184,中证全指半导体产品与设备全收益指数,2004-12-31,2013-07-15,https://www.csindex.com.cn/zh-CN/indices/index-detail/H20184,,简称 半导体全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+931743,中证半导体材料设备主题指数,2018-12-28,2012-12-21,https://www.csindex.com.cn/zh-CN/indices/index-detail/931743,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/931743_Index_Methodology_cn.pdf,简称 半导体材料设备；发布日仅见于中证详情接口，编制方案前 6 页未载明；同一中证接口的 publishDate 早于 basicDate，两个原值都保留。
+931743CNY010,中证半导体材料设备主题全收益指数,2018-12-28,2012-12-21,https://www.csindex.com.cn/zh-CN/indices/index-detail/931743CNY010,,简称 半导体材料设备全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明；同一中证接口的 publishDate 早于 basicDate，两个原值都保留。
+930713,中证人工智能主题指数,2012-06-29,2015-07-31,https://www.csindex.com.cn/zh-CN/indices/index-detail/930713,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/930713_Index_Methodology_cn.pdf,简称 CS人工智；发布日仅见于中证详情接口，编制方案前 6 页未载明
+930713CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/930713CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+H20713,中证人工智能主题全收益指数,2012-06-29,2015-07-31,https://www.csindex.com.cn/zh-CN/indices/index-detail/H20713,,简称 CS人工智全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+931160,中证全指通信设备指数,2004-12-31,2013-07-15,https://www.csindex.com.cn/zh-CN/indices/index-detail/931160,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/931160_Index_Methodology_cn.pdf,简称 通信设备；发布日仅见于中证详情接口，编制方案前 6 页未载明
+931160CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/931160CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+H30202,中证全指软件指数,2004-12-31,2013-07-15,https://www.csindex.com.cn/zh-CN/indices/index-detail/H30202,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/H30202_Index_Methodology_cn.pdf,简称 软件指数；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H20202,中证全指软件全收益指数,2004-12-31,2013-07-15,https://www.csindex.com.cn/zh-CN/indices/index-detail/H20202,,简称 软件指数全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H30590,中证机器人指数,2010-12-31,2015-02-10,https://www.csindex.com.cn/zh-CN/indices/index-detail/H30590,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/H30590_Index_Methodology_cn.pdf,简称 机器人；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H20590,中证机器人全收益指数,2010-12-31,2015-02-10,https://www.csindex.com.cn/zh-CN/indices/index-detail/H20590,,简称 机器人全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+931494,中证消费电子主题指数,2012-12-31,2020-06-12,https://www.csindex.com.cn/zh-CN/indices/index-detail/931494,,简称 消费电子；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+931494CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/931494CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+000819,中证申万有色金属指数,2004-12-31,2012-05-09,https://www.csindex.com.cn/zh-CN/indices/index-detail/000819,,简称 有色金属；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H00819,中证申万有色金属全收益指数,2004-12-31,2012-05-09,https://www.csindex.com.cn/zh-CN/indices/index-detail/H00819,,简称 有色金属全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+000819CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/000819CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+399998,中证煤炭指数,2008-12-31,2015-02-13,https://www.csindex.com.cn/zh-CN/indices/index-detail/399998,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/399998_Index_Methodology_cn.pdf,简称 中证煤炭；发布日仅见于中证详情接口，编制方案前 6 页未载明
+399998CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/399998CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+H29998,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/H29998,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+BRENT,"Europe Brent Spot Price FOB (Dollars per Barrel) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Inser",,,https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=D,https://www.eia.gov/dnav/pet/hist/rbrteD.htm,universe 研究代码是 EIA 现货序列 RBRTE 与期货代码 BZ=F，不是指数，故 base_date/launch_date 留空。
+518880,,,,,,华安黄金ETF（universe research_index_code，不是指数）
+930606,中证钢铁指数,2008-12-31,2015-03-31,https://www.csindex.com.cn/zh-CN/indices/index-detail/930606,,简称 中证钢铁；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+930606CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/930606CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+H20606,中证钢铁全收益指数,2008-12-31,2015-03-31,https://www.csindex.com.cn/zh-CN/indices/index-detail/H20606,,简称 中证钢铁全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H30187,中证全指化工指数,2004-12-31,2013-07-15,https://www.csindex.com.cn/zh-CN/indices/index-detail/H30187,,简称 全指化工；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H20187,中证全指化工全收益指数,2004-12-31,2013-07-15,https://www.csindex.com.cn/zh-CN/indices/index-detail/H20187,,简称 全指化工全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+930997,中证新能源汽车产业指数,2014-12-31,2017-07-19,https://www.csindex.com.cn/zh-CN/indices/index-detail/930997,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/930997_Index_Methodology_cn.pdf,简称 新能源车；发布日仅见于中证详情接口，编制方案前 6 页未载明
+930997CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/930997CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+H20997,中证新能源汽车产业全收益指数,2014-12-31,2017-07-19,https://www.csindex.com.cn/zh-CN/indices/index-detail/H20997,,简称 新能源车全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+931151,中证光伏产业指数,2012-12-31,2019-04-22,https://www.csindex.com.cn/zh-CN/indices/index-detail/931151,,简称 光伏产业；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+931151CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/931151CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+399967,中证军工指数,2004-12-31,2013-12-26,https://www.csindex.com.cn/zh-CN/indices/index-detail/399967,,简称 中证军工；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+399967CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/399967CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+H29967,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/H29967,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+000913,沪深300医药卫生指数,2004-12-31,2007-07-02,https://www.csindex.com.cn/zh-CN/indices/index-detail/000913,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/000913_Index_Methodology_cn.pdf,简称 300医药；编制方案前 6 页未抽出基日或发布日。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H00913,沪深300医药卫生全收益指数,2004-12-31,2007-07-02,https://www.csindex.com.cn/zh-CN/indices/index-detail/H00913,,简称 医药收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+931152,中证创新药产业指数,2014-12-31,2019-04-22,https://www.csindex.com.cn/zh-CN/indices/index-detail/931152,,简称 CS创新药；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+931152CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/931152CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+000932,中证主要消费指数,2004-12-31,2009-07-03,https://www.csindex.com.cn/zh-CN/indices/index-detail/000932,,简称 800消费；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H00932,中证主要消费全收益指数,2004-12-31,2009-07-03,https://www.csindex.com.cn/zh-CN/indices/index-detail/H00932,,简称 800消费全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+399987,中证酒指数,2008-12-31,2014-12-10,https://www.csindex.com.cn/zh-CN/indices/index-detail/399987,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/399987_Index_Methodology_cn.pdf,简称 中证酒；发布日仅见于中证详情接口，编制方案前 6 页未载明
+399987CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/399987CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+H29987,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/H29987,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+000949,中证农业主题指数,2004-12-31,2009-10-28,https://www.csindex.com.cn/zh-CN/indices/index-detail/000949,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/000949_Index_Methodology_cn.pdf,简称 中证农业；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H00949,中证农业主题全收益指数,2004-12-31,2009-10-28,https://www.csindex.com.cn/zh-CN/indices/index-detail/H00949,,简称 中证农业全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+399986,中证银行指数,2004-12-31,2013-07-15,https://www.csindex.com.cn/zh-CN/indices/index-detail/399986,,简称 中证银行；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+399986CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/399986CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+H29986,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/H29986,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+399975,中证全指证券公司指数,2007-06-29,2013-07-15,https://www.csindex.com.cn/zh-CN/indices/index-detail/399975,,简称 证券公司；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+399975CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/399975CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+H29975,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/H29975,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+932136,中证全指保险行业指数,2021-12-31,2023-08-30,https://www.csindex.com.cn/zh-CN/indices/index-detail/932136,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/932136_Index_Methodology_cn.pdf,简称 保险行业；编制方案前 6 页未抽出基日或发布日。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+931775,中证全指房地产指数,2004-12-31,2013-07-15,https://www.csindex.com.cn/zh-CN/indices/index-detail/931775,,简称 房地产；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+931775CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/931775CNY010,,中证 index-basic-info 返回空 data。universe 若把该代码列为全收益候选，本次未能证实。
+000015,上证红利指数,2004-12-31,2005-01-04,https://www.csindex.com.cn/zh-CN/indices/index-detail/000015,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/000015_Index_Methodology_cn.pdf,简称 红利指数；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H00015,上证红利全收益指数,2004-12-31,2005-01-04,https://www.csindex.com.cn/zh-CN/indices/index-detail/H00015,,简称 红利收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H30269,中证红利低波动指数,2005-12-30,2013-12-19,https://www.csindex.com.cn/zh-CN/indices/index-detail/H30269,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/H30269_Index_Methodology_cn.pdf,简称 红利低波；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H20269,中证红利低波动全收益指数,2005-12-30,2013-12-19,https://www.csindex.com.cn/zh-CN/indices/index-detail/H20269,,简称 红利低波全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H11077,上证10年期国债指数,2008-12-31,2013-03-07,https://www.csindex.com.cn/zh-CN/indices/index-detail/H11077,,简称 10年国债；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+NDX,Nasdaq-100 Index,1985-01-31,1985-01-31,https://indexes.nasdaqomx.com/docs/Index_Versions_NDX.pdf,https://indexes.nasdaqomx.com/docs/NDX_Fundamentals.pdf,"base_date 是 Index Versions 表 Nasdaq-100 / NDX / PRICE RETURN 的 Base Value Date。launch_date 来自 NDX Fundamentals 的 “Launched on January 31, 1985”。两份文件若不一致，以各列对应的那一句为准。"
+^XNDX,Nasdaq-100 Index,1999-03-04,,https://indexes.nasdaqomx.com/docs/Index_Versions_NDX.pdf,https://indexes.nasdaqomx.com/docs/Methodology_NDX.pdf,XNDX 的 base_date 是 Index Versions 表 Nasdaq-100 Total Return / XNDX 的 Base Value Date。该行没有单独的 Launch Date，launch_date 留空。
+NDXTMC,Nasdaq-100 Technology Sector Market-Cap Weighted Index (the “Index”),,,https://indexes.nasdaqomx.com/docs/Methodology_NDXTMC.pdf,https://indexes.nasdaq.com/docs/Methodology_NDXTMC.pdf,纳斯达克科技市值加权指数只采用其方法论 PDF 里标明的 Launch Date / Base Date。
+SPX,,,,https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-us-indices.pdf,,官方页面/PDF 均未取到，基日和发布日留空
+^SP500TR,,,,https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-us-indices.pdf,,官方页面/PDF 均未取到，基日和发布日留空
+^HSTECH,Hang Seng TECH Index,2014-12-31,2020-07-27,https://www.hsi.com.hk/static/uploads/contents/en/dl_centre/methodologies/IM_hsteche.pdf,,恒生科技指数的 Launch Date / Base Date 来自恒生指数公司事实表或编制方法。
+N225,Nikkei Stock Average,1949-05-16,1950-09-07,https://indexes.nikkei.co.jp/nkave/archives/file/nikkei_stock_average_factsheet_en.pdf,https://indexes.nikkei.co.jp/en/nkave/index/profile?idx=nk225,"日经事实表小标题是 (Base date etc)。launch_date 取 commencement date of the calculation，base_date 取回溯到的 May 16, 1949。 原文：commencement date of the calculation was September 7th, 1950, which had bee n ret；to May 16th, 1949"
+932365,中证全指自由现金流指数,2013-12-31,2024-12-11,https://www.csindex.com.cn/zh-CN/indices/index-detail/932365,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/932365_Index_Methodology_cn.pdf,简称 中证现金流；发布日仅见于中证详情接口，编制方案前 6 页未载明
+932365CNY010,中证全指自由现金流全收益指数,2013-12-31,2024-12-11,https://www.csindex.com.cn/zh-CN/indices/index-detail/932365CNY010,,简称 中证现金流全收益；编制方案 PDF 未下载到。；发布日/基日的编制方案交叉核对未抽出基日，基日仅有中证详情接口；发布日仅见于中证详情接口，编制方案前 6 页未载明
+H11077CNY010,,,,https://www.csindex.com.cn/zh-CN/indices/index-detail/H11077CNY010,,探测代码 H11077CNY010：中证接口返回空 data，不能把它当成已发布的财富/全收益代码。

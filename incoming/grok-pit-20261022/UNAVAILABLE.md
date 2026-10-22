@@ -1,0 +1,1185 @@
+# UNAVAILABLE
+
+取不到的项留空，不插值、不用近似序列顶替。下面每条写明试过的来源、结果和原因。
+
+
+## index
+
+- **H00300**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **H00905**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **H00852**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **H00688**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00688
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **000688CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/000688CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **H20184**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **931743CNY010**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **930713CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/930713CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **H20713**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **931160CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/931160CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **H20202**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **H20590**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **931494**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **931494CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/931494CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **000819**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **H00819**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **000819CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/000819CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **399998CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/399998CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **H29998**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H29998
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **518880**
+  - 试过：未向指数公司查询
+  - 结果：该代码是上市基金
+  - 原因：research_index_code 指向基金本身，没有指数基日/发布日
+- **930606**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **930606CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/930606CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **H20606**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **H30187**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **H20187**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **930997CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/930997CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **H20997**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **931151**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **931151CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/931151CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **399967**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **399967CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/399967CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **H29967**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H29967
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **H00913**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **931152**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **931152CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/931152CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **000932**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **H00932**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **399987CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/399987CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **H29987**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H29987
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **H00949**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **399986**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **399986CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/399986CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **H29986**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H29986
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **399975**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **399975CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/399975CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **H29975**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H29975
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **931775**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **931775CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/931775CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+- **H00015**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **H20269**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **H11077**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **^XNDX**
+  - 试过：https://indexes.nasdaqomx.com/docs/Index_Versions_NDX.pdf | https://indexes.nasdaqomx.com/docs/Methodology_NDX.pdf
+  - 结果：未抽出 launch date
+  - 原因：原文没有可机械识别的发布日
+- **NDXTMC**
+  - 试过：https://indexes.nasdaqomx.com/docs/Methodology_NDXTMC.pdf | https://indexes.nasdaq.com/docs/Methodology_NDXTMC.pdf
+  - 结果：未抽出 base date
+  - 原因：原文没有可机械识别的基日
+- **NDXTMC**
+  - 试过：https://indexes.nasdaqomx.com/docs/Methodology_NDXTMC.pdf | https://indexes.nasdaq.com/docs/Methodology_NDXTMC.pdf
+  - 结果：未抽出 launch date
+  - 原因：原文没有可机械识别的发布日
+- **SPX**
+  - 试过：https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-us-indices.pdf
+  - 结果：下载失败
+  - 原因：海外指数官方链接无响应或被拒绝
+- **^SP500TR**
+  - 试过：https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-us-indices.pdf
+  - 结果：下载失败
+  - 原因：海外指数官方链接无响应或被拒绝
+- **^HSTECH**
+  - 试过：https://www.hsi.com.hk/static/uploads/contents/en/dl_centre/factsheets/hsteche.pdf
+  - 结果：该事实表 URL 返回 404
+  - 原因：日期已改从编制方法 PDF 写入 CSV，不另造事实表数字
+- **932365CNY010**
+  - 试过：methodology pdf
+  - 结果：无 PDF
+  - 原因：第二个来源缺失
+- **H11077CNY010**
+  - 试过：https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H11077CNY010
+  - 结果：data 字段为空
+  - 原因：中证接口没有该代码的指数身份
+
+## etf
+
+- **510300 现金分红 2014-01-20**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510300.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510300 现金分红 2012-12-17**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510300.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510300 份额折算 2012-05-11**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510300.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **159919 关于嘉实沪深300交易型开放式指数证券投资基金调整收益分配数额的确定原则并相应修**
+  - 试过：https://static.cninfo.com.cn/finalpage/2025-10-15/1224710291.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159919 关于实施基金份额折算的第二次提示性公告及份额折算比例的公告**
+  - 试过：https://static.cninfo.com.cn/finalpage/2012-11-30/61851726.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159919 关于实施基金份额折算的第一次提示性公告**
+  - 试过：https://static.cninfo.com.cn/finalpage/2012-11-29/61847529.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159919 关于份额折算的公告**
+  - 试过：https://static.cninfo.com.cn/finalpage/2012-11-27/61838745.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159919 份额折算 **
+  - 试过：https://static.cninfo.com.cn/finalpage/2019-01-14/1205767957.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159919 份额折算 **
+  - 试过：https://static.cninfo.com.cn/finalpage/2019-01-11/1205733463.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159919 份额折算 **
+  - 试过：https://static.cninfo.com.cn/finalpage/2019-01-04/1205709585.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159919 份额折算 **
+  - 试过：https://static.cninfo.com.cn/finalpage/2012-12-03/61856514.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159919 份额折算 2019-01-11**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159919.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **159919 份额折算 2012-11-30**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159919.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510330 现金分红 2025-07-11**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510330.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510330 现金分红 2025-01-10**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510330.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510330 现金分红 2023-01-13**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510330.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510330 现金分红 2022-01-14**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510330.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510330 现金分红 2021-01-22**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510330.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510330 现金分红 2020-01-13**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510330.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510330 现金分红 2018-12-10**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510330.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510330 现金分红 2018-11-07**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510330.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510330 现金分红 2014-11-27**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510330.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510330 现金分红 2014-07-10**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510330.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510330 现金分红 2014-02-13**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510330.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510330 现金分红 2013-09-05**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510330.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510330 份额折算 2013-01-09**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510330.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510500 关于中证500交易型开放式指数证券投资基金基金份额拆分结果的公告**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2022-08-29/510500_20220829_3_vscNQt4M.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **510500 关于中证500交易型开放式指数证券投资基金实施基金份额拆分并调整最小申购、赎回单**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2022-08-23/510500_20220823_1_aMMa3ZNB.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **510500 关于中证500交易型开放式指数证券投资基金实施基金份额折算及相关业务安排的第五次**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2015-04-12/510500_20150413_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **510500 关于中证500交易型开放式指数证券投资基金实施基金份额折算及相关业务安排的第四次**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2015-04-09/510500_20150410_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **510500 关于中证500交易型开放式指数证券投资基金实施基金份额折算及相关业务安排的第三次**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2015-04-08/510500_20150409_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **510500 关于中证500交易型开放式指数证券投资基金实施基金份额折算及相关业务安排的第二次**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2015-04-07/510500_20150408_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **510500 关于中证500交易型开放式指数证券投资基金实施基金份额折算及相关业务安排的第一次**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2015-04-06/510500_20150407_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **510500 关于中证500交易型开放式指数证券投资基金实施基金份额折算及相关业务安排的公告**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2015-04-03/510500_20150403_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **510500 中证500交易型开放式指数证券投资基金因份额折算暂停申购赎回业务的公告**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2015-04-03/510500_20150403_3.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **510500**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510500.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **510500 份额折算 **
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2015-04-15/510500_20150415_2.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **510500 份额折算 2015-04-14**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510500.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **159922 关于嘉实中证500交易型开放式指数证券投资基金调整收益分配数额的确定原则并相应修**
+  - 试过：https://static.cninfo.com.cn/finalpage/2025-10-15/1224710293.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159922 关于份额折算的公告**
+  - 试过：https://static.cninfo.com.cn/finalpage/2013-03-01/62166334.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159922 关于嘉实中证500交易型开放式指数证券投资基金基金份额拆分结果及恢复申购、赎回的**
+  - 试过：https://static.cninfo.com.cn/finalpage/2024-12-02/1221893545.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159922 关于嘉实中证500交易型开放式指数证券投资基金份额拆分结果及恢复申购、赎回的公告**
+  - 试过：https://static.cninfo.com.cn/finalpage/2022-02-18/1212394213.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159922**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159922.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159922**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159922.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159922 份额折算 **
+  - 试过：https://static.cninfo.com.cn/finalpage/2013-03-07/62190164.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159922 拆分 2022-02-17**
+  - 试过：https://static.cninfo.com.cn/finalpage/2022-02-14/1212351380.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159922 份额折算 2013-03-05**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159922.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **512500 华夏基金管理有限公司关于华夏中证500交易型开放式指数证券投资基金基金份额折算的**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2015-05-19/512500_20150520_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **512500 份额折算 **
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2015-05-26/512500_20150526_1.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **512500 份额折算 2015-05-22**
+  - 试过：https://fundf10.eastmoney.com/fhsp_512500.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **512100 关于南方中证1000交易型开放式指数证券投资基金调整最小申购、赎回单位及取消基金**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2022-07-30/512100_20220730_1_GNJqH93H.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **512100 拆分 2022-08-02**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2022-07-27/512100_20220727_2_64Y1Zswt.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **512100 份额折算 2022-09-02**
+  - 试过：https://fundf10.eastmoney.com/fhsp_512100.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **159845 关于基金份额折算的公告**
+  - 试过：https://static.cninfo.com.cn/finalpage/2021-03-19/1209411000.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159845 份额折算 **
+  - 试过：https://static.cninfo.com.cn/finalpage/2023-03-01/1216006925.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159845 份额折算 2023-03-01**
+  - 试过：https://static.cninfo.com.cn/finalpage/2023-02-23/1215936181.PDF | https://fundf10.eastmoney.com/fhsp_159845.html
+  - 结果：公告 0.747644145；天天基金 1:0.7476
+  - 原因：折算/拆分比例不一致，CSV 保留公告抽出的写法
+- **159845 份额折算 **
+  - 试过：https://static.cninfo.com.cn/finalpage/2022-08-02/1214191542.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159845 份额折算 2022-08-02**
+  - 试过：https://static.cninfo.com.cn/finalpage/2022-07-27/1214136133.PDF | https://fundf10.eastmoney.com/fhsp_159845.html
+  - 结果：公告 0.352275906；天天基金 1:0.3523
+  - 原因：折算/拆分比例不一致，CSV 保留公告抽出的写法
+- **159845 份额折算 **
+  - 试过：https://static.cninfo.com.cn/finalpage/2021-03-24/1209438064.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159845 份额折算 2021-03-22**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159845.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **588000 华夏基金管理有限公司关于华夏上证科创板50成份交易型开放式指数证券投资基金基金份**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2020-11-05/588000_20201105_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **588000 份额折算 **
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2020-11-11/588000_20201111_1.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **588000 份额折算 2020-11-09**
+  - 试过：https://fundf10.eastmoney.com/fhsp_588000.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **588080 易方达基金管理有限公司关于易方达上证科创板50成份交易型开放式指数证券投资基金基**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2020-11-05/588080_20201105_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **588080 份额折算 **
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2020-11-11/588080_20201111_3.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **588080 份额折算 2020-11-09**
+  - 试过：https://fundf10.eastmoney.com/fhsp_588080.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **588050 关于工银瑞信上证科创板50成份交易型开放式指数证券投资基金基金份额折算的公告**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2020-11-05/588050_20201105_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **588050 份额折算 **
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2020-11-10/588050_20201111_1.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **588050 份额折算 2020-11-09**
+  - 试过：https://fundf10.eastmoney.com/fhsp_588050.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **159915 关于基金份额折算的公告**
+  - 试过：https://static.cninfo.com.cn/finalpage/2011-11-25/60241653.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159915 份额折算 **
+  - 试过：https://static.cninfo.com.cn/finalpage/2011-12-02/60271509.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159915 份额折算 2011-11-30**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159915.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **159952 广发基金管理有限公司关于调整旗下部分开放式基金分红方式变更规则的公告**
+  - 试过：https://static.cninfo.com.cn/finalpage/2023-02-23/1215938640.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **512480 国联安基金管理有限公司关于国联安中证全指半导体产品与设备交易型开放式指数证券投资**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-07-03/512480_20260703_WPHJ.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **512480 关于国联安中证全指半导体产品与设备交易型开放式指数证券投资基金基金份额拆分结果及**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2021-03-29/512480_20210329_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **512480**
+  - 试过：https://fundf10.eastmoney.com/fhsp_512480.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **512480**
+  - 试过：https://fundf10.eastmoney.com/fhsp_512480.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **512480 拆分 2026-07-02**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-06-29/512480_20260629_CA4B.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **512480 拆分 **
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2021-03-23/512480_20210324_1.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **512480 拆分 **
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2021-03-22/512480_20210323_1.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **512480 拆分 **
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2021-03-17/512480_20210317_1.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159813 鹏华基金管理有限公司关于鹏华国证半导体芯片交易型开放式指数证券投资基金基金份额拆**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-08-03/1225452505.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159813 鹏华基金管理有限公司关于鹏华国证半导体芯片交易型开放式指数证券投资基金基金份额拆**
+  - 试过：https://static.cninfo.com.cn/finalpage/2021-09-13/1211010386.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159813**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159813.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159813**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159813.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159813 拆分 2026-07-31**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-07-28/1225442749.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159813 份额折算 2021-09-10**
+  - 试过：https://static.cninfo.com.cn/finalpage/2021-09-07/1210976152.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159516 国泰基金管理有限公司关于国泰中证半导体材料设备主题交易型开放式指数证券投资基金基**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-07-10/1225417952.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159516 国泰基金管理有限公司关于国泰中证半导体材料设备主题交易型开放式指数证券投资基金基**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-03-30/1225045464.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159516**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159516.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159516**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159516.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159516 拆分 2026-07-09**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-07-06/1225407904.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159516 拆分 2026-03-27**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-03-24/1225024265.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159327 关于万家中证半导体材料设备主题交易型开放式指数证券投资基金基金份额拆分结果及调整**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-07-18/1225431202.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159327**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159327.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159327 拆分 2026-07-17**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-07-14/1225420623.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159558 易方达基金管理有限公司关于易方达中证半导体材料设备主题交易型开放式指数证券投资基**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-07-09/1225416235.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159558**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159558.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159558 拆分 2026-07-08**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-07-03/1225404934.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **560780 关于广发中证半导体材料设备主题交易型开放式指数证券投资基金基金份额拆分结果的公告**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-06-26/560780_20260626_99CX.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **560780**
+  - 试过：https://fundf10.eastmoney.com/fhsp_560780.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **560780 拆分 2026-06-25**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-06-22/560780_20260622_NUF9.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **562590 华夏基金管理有限公司关于华夏中证半导体材料设备主题交易型开放式指数证券投资基金基**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-07-06/562590_20260706_5QUI.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **562590**
+  - 试过：https://fundf10.eastmoney.com/fhsp_562590.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **562590 拆分 2026-07-03**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-06-30/562590_20260630_ARTL.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **515070 华夏基金管理有限公司关于华夏中证人工智能主题交易型开放式指数证券投资基金基金份额**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-07-06/515070_20260706_BPJG.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **515070**
+  - 试过：https://fundf10.eastmoney.com/fhsp_515070.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **515070 拆分 2026-07-03**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-06-30/515070_20260630_T5SF.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159381 华夏基金管理有限公司关于华夏创业板人工智能交易型开放式指数证券投资基金份额拆分结**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-06-03/1225347542.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159381**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159381.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159381 拆分 2026-06-02**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-05-26/1225328122.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **515880 国泰基金管理有限公司关于国泰中证全指通信设备交易型开放式指数证券投资基金基金份额**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-07-06/515880_20260706_PYMW.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **515880 国泰基金管理有限公司关于国泰中证全指通信设备交易型开放式指数证券投资基金基金份额**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-02-03/515880_20260203_8390.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **515880**
+  - 试过：https://fundf10.eastmoney.com/fhsp_515880.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **515880**
+  - 试过：https://fundf10.eastmoney.com/fhsp_515880.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **515880 拆分 2026-07-03**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-06-30/515880_20260630_NHF1.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **515880 拆分 2026-02-02**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-01-28/515880_20260128_CJ9L.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159695 嘉实基金管理有限公司关于嘉实国证通信交易型开放式指数证券投资基金基金份额拆分结果**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-07-21/1225434345.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159695**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159695.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159695 拆分 2026-07-20**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-07-15/1225422726.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **561600 平安基金管理有限公司关于平安中证消费电子主题交易型开放式指数证券投资基金基金份额**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-07-23/561600_20260723_0GAM.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **561600**
+  - 试过：https://fundf10.eastmoney.com/fhsp_561600.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **561600 拆分 2026-07-22**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-07-17/561600_20260717_X3JE.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159881 国泰基金管理有限公司关于国泰中证有色金属交易型开放式指数证券投资基金基金份额拆分**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-06-26/1225389215.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159881**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159881.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159881 拆分 2026-06-25**
+  - 试过：https://static.cninfo.com.cn/finalpage/2026-06-22/1225377361.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **515220 国泰基金管理有限公司关于国泰中证煤炭交易型开放式指数证券投资基金基金份额拆分结果**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2024-04-12/515220_20240412_5CZN.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **515220**
+  - 试过：https://fundf10.eastmoney.com/fhsp_515220.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **515220 拆分 2024-04-11**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2024-04-08/515220_20240408_YF75.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **518880 份额折算 2013-07-24**
+  - 试过：https://fundf10.eastmoney.com/fhsp_518880.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **159934 关于基金份额折算的公告**
+  - 试过：https://static.cninfo.com.cn/finalpage/2013-12-11/63363647.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159934 份额折算 **
+  - 试过：https://static.cninfo.com.cn/finalpage/2013-12-13/63372623.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159934 份额折算 2025-09-19**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159934.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **159934 份额折算 2013-12-11**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159934.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **518800 关于国泰黄金交易型开放式证券投资基金更新招募说明书中基金份额折算与变更登记部分内**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2026-04-08/518800_20260408_9217.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **518800 份额折算 2026-04-14**
+  - 试过：https://fundf10.eastmoney.com/fhsp_518800.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **518800 份额折算 2013-07-24**
+  - 试过：https://fundf10.eastmoney.com/fhsp_518800.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **516020**
+  - 试过：最多 3 份产品资料概要
+  - 结果：未抽出上市日期
+  - 原因：不把合同生效日当作上市日
+- **516020**
+  - 试过：产品资料概要 / 公告标题
+  - 结果：未抽出上市日期
+  - 原因：不使用成立日代替上市日
+- **159806 国泰基金管理有限公司关于国泰中证新能源汽车交易型开放式指数证券投资基金基金份额拆**
+  - 试过：https://static.cninfo.com.cn/finalpage/2022-01-14/1212176434.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159806**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159806.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159806 拆分 2022-01-13**
+  - 试过：https://static.cninfo.com.cn/finalpage/2022-01-10/1212119203.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **512810 华宝基金管理有限公司关于华宝中证军工交易型开放式指数证券投资基金基金份额拆分结果**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2025-06-23/512810_20250623_MN62.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **512810**
+  - 试过：最多 3 份产品资料概要
+  - 结果：未抽出上市日期
+  - 原因：不把合同生效日当作上市日
+- **512810**
+  - 试过：产品资料概要 / 公告标题
+  - 结果：未抽出上市日期
+  - 原因：不使用成立日代替上市日
+- **512810**
+  - 试过：https://fundf10.eastmoney.com/fhsp_512810.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **512810 拆分 2025-06-20**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2025-06-17/512810_20250617_V0RQ.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **512010 易方达基金管理有限公司关于易方达沪深300医药卫生交易型开放式指数证券投资基金基**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2021-06-28/512010_20210628_1_nr47oaEW.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **512010**
+  - 试过：https://fundf10.eastmoney.com/fhsp_512010.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **512010 拆分 2021-06-24**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2021-06-24/512010_20210624_1_KeSh9ytf.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159938 广发基金管理有限公司关于调整旗下部分开放式基金分红方式变更规则的公告**
+  - 试过：https://static.cninfo.com.cn/finalpage/2023-02-23/1215938632.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159938 关于广发中证全指医药卫生交易型开放式指数证券投资基金基金份额拆分结果及恢复申购、**
+  - 试过：https://static.cninfo.com.cn/finalpage/2022-05-30/1213532126.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159938**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159938.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159938 拆分 2022-05-27**
+  - 试过：https://static.cninfo.com.cn/finalpage/2022-05-24/1213459165.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **512170 关于华宝中证医疗交易型开放式指数证券投资基金基金份额拆分结果及恢复交易和申购、赎**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2021-02-25/512170_20210225_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **512170**
+  - 试过：最多 3 份产品资料概要
+  - 结果：未抽出上市日期
+  - 原因：不把合同生效日当作上市日
+- **512170**
+  - 试过：产品资料概要 / 公告标题
+  - 结果：未抽出上市日期
+  - 原因：不使用成立日代替上市日
+- **512170**
+  - 试过：https://fundf10.eastmoney.com/fhsp_512170.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **512170 拆分 2021-02-23**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2021-02-22/512170_20210223_1.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **515120 广发基金管理有限公司关于调整旗下部分开放式基金分红方式变更规则的公告**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2023-02-23/515120_20230223_CP53.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159928 汇添富基金管理股份有限公司关于中证主要消费交易型开放式指数证券投资基金基金份额拆**
+  - 试过：https://static.cninfo.com.cn/finalpage/2021-06-25/1210330426.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159928**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159928.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159928 拆分 2021-06-24**
+  - 试过：https://static.cninfo.com.cn/finalpage/2021-06-21/1210290733.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **510630 华夏基金管理有限公司关于上证主要消费交易型开放式指数发起式证券投资基金基金份额拆**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2021-04-26/510630_20210426_2.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **510630 华夏基金管理有限公司关于上证主要消费交易型开放式指数发起式证券投资基金实施基金份**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2021-04-21/510630_20210422_1.pdf
+  - 结果：PDF 未取到
+  - 原因：有标题无正文
+- **510630 华夏基金管理有限公司关于上证主要消费交易型开放式指数发起式证券投资基金实施基金份**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2021-04-21/510630_20210422_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **510630 华夏基金管理有限公司关于上证主要消费交易型开放式指数发起式证券投资基金实施基金份**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2021-04-13/510630_20210414_1.pdf
+  - 结果：PDF 未取到
+  - 原因：有标题无正文
+- **510630 华夏基金管理有限公司关于上证主要消费交易型开放式指数发起式证券投资基金实施基金份**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2021-04-13/510630_20210414_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **510630**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510630.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **510630 拆分 2021-04-22**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2021-04-19/510630_20210419_1.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **512690**
+  - 试过：https://fundf10.eastmoney.com/fhsp_512690.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **512690 份额折算 **
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2021-05-17/512690_20210517_1.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **512690 拆分 2021-05-13**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2021-05-11/512690_20210511_1.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **512800 华宝基金管理有限公司关于华宝中证银行交易型开放式指数证券投资基金基金份额拆分结果**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2025-07-07/512800_20250707_PJ9L.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **512800**
+  - 试过：最多 3 份产品资料概要
+  - 结果：未抽出上市日期
+  - 原因：不把合同生效日当作上市日
+- **512800**
+  - 试过：产品资料概要 / 公告标题
+  - 结果：未抽出上市日期
+  - 原因：不使用成立日代替上市日
+- **512800**
+  - 试过：https://fundf10.eastmoney.com/fhsp_512800.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **512800 拆分 2025-07-04**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2025-07-01/512800_20250701_6LD2.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **512000 华宝基金管理有限公司关于华宝中证全指证券公司交易型开放式指数证券投资基金基金份额**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2025-08-04/512000_20250804_4S6G.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **512000**
+  - 试过：最多 3 份产品资料概要
+  - 结果：未抽出上市日期
+  - 原因：不把合同生效日当作上市日
+- **512000**
+  - 试过：产品资料概要 / 公告标题
+  - 结果：未抽出上市日期
+  - 原因：不使用成立日代替上市日
+- **512000**
+  - 试过：https://fundf10.eastmoney.com/fhsp_512000.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **512000 拆分 2025-08-01**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2025-07-29/512000_20250729_PP6C.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **512200 份额折算 2024-08-09**
+  - 试过：https://fundf10.eastmoney.com/fhsp_512200.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **159707**
+  - 试过：最多 3 份产品资料概要
+  - 结果：未抽出上市日期
+  - 原因：不把合同生效日当作上市日
+- **159707**
+  - 试过：产品资料概要 / 公告标题
+  - 结果：未抽出上市日期
+  - 原因：不使用成立日代替上市日
+- **510880 现金分红 2014-01-20**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510880.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510880 现金分红 2012-12-17**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510880.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510880 现金分红 2011-10-21**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510880.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510880 现金分红 2010-10-21**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510880.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510880 现金分红 2010-07-14**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510880.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510880 现金分红 2009-10-21**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510880.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510880 现金分红 2009-03-23**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510880.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **510880 份额折算 2007-01-10**
+  - 试过：https://fundf10.eastmoney.com/fhsp_510880.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **512890 华泰柏瑞基金管理有限公司关于华泰柏瑞中证红利低波动交易型开放式指数证券投资基金基**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2021-10-25/512890_20211025_1_lJ5GeyLb.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **512890**
+  - 试过：https://fundf10.eastmoney.com/fhsp_512890.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **512890 拆分 2021-10-21**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2021-10-21/512890_20211021_1_KKA0sAUQ.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **511260 国泰基金管理有限公司关于上证10年期国债交易型开放式指数证券投资基金基金份额折算**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2017-08-08/511260_20170808_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **511260 国泰基金管理有限公司关于上证10年期国债交易型开放式指数证券投资基金基金份额折算**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2017-07-28/511260_20170728_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **511260 份额折算 2017-08-04**
+  - 试过：https://fundf10.eastmoney.com/fhsp_511260.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **511010 现金分红 2013-05-31**
+  - 试过：https://fundf10.eastmoney.com/fhsp_511010.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **511010 份额折算 2013-03-05**
+  - 试过：https://fundf10.eastmoney.com/fhsp_511010.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **511020 关于平安中证5-10年期国债活跃券交易型开放式指数证券投资基金基金份额折算结果的**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2019-01-28/511020_20190126_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **511020 关于平安中证5-10年期国债活跃券交易型开放式指数证券投资基金基金份额折算的公告**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2019-01-22/511020_20190122_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **511020 份额折算 2019-01-24**
+  - 试过：https://fundf10.eastmoney.com/fhsp_511020.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **511880 份额折算 2015-12-30**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2015-12-24/511880_20151225_1.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **511880 现金分红 2015-12-30**
+  - 试过：https://fundf10.eastmoney.com/fhsp_511880.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **511880 现金分红 2014-12-30**
+  - 试过：https://fundf10.eastmoney.com/fhsp_511880.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **511880 现金分红 2014-01-16**
+  - 试过：https://fundf10.eastmoney.com/fhsp_511880.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **511880 份额折算 2013-04-03**
+  - 试过：https://fundf10.eastmoney.com/fhsp_511880.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **511360 海富通基金管理有限公司关于海富通中证短融交易型开放式指数证券投资基金基金份额折算**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2020-08-26/511360_20200826_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **511360 海富通基金管理有限公司关于海富通中证短融交易型开放式指数证券投资基金份额折算的公**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/2020-08-21/511360_20200821_1.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **511360 份额折算 2020-08-24**
+  - 试过：https://fundf10.eastmoney.com/fhsp_511360.html
+  - 结果：只有天天基金，没有对上交易所/巨潮标题
+  - 原因：source_url 留空
+- **513100 国泰基金管理有限公司关于纳斯达克100交易型开放式指数证券投资基金基金份额拆分结**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2022-01-14/513100_20220114_1_3BhgkjWG.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **513100**
+  - 试过：https://fundf10.eastmoney.com/fhsp_513100.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **513100 拆分 2022-01-12**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2022-01-12/513100_20220112_1_TXJHo3tN.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **159941 广发基金管理有限公司关于调整旗下部分开放式基金分红方式变更规则的公告**
+  - 试过：https://static.cninfo.com.cn/finalpage/2023-02-23/1215938637.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159941 关于广发纳斯达克100交易型开放式指数证券投资基金基金份额拆分结果的公告**
+  - 试过：https://static.cninfo.com.cn/finalpage/2022-07-05/1213942300.PDF
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **159941**
+  - 试过：https://fundf10.eastmoney.com/fhsp_159941.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **159941 拆分 2022-07-04**
+  - 试过：https://static.cninfo.com.cn/finalpage/2022-06-29/1213850469.PDF
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+- **513500 博时基金管理有限公司关于博时标普500交易型开放式指数证券投资基金基金份额拆分结**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2022-03-30/513500_20220330_2_VODYJTry.pdf
+  - 结果：标题命中但未抽出日期、金额或比例
+  - 原因：不写入 etf_events，避免把无关公告当成事件
+- **513500**
+  - 试过：https://fundf10.eastmoney.com/fhsp_513500.html
+  - 结果：未知拆分类型 份额分拆
+  - 原因：不映射到规定的三类
+- **513500 拆分 2022-03-28**
+  - 试过：https://www.sse.com.cn/disclosure/fund/announcement/c/new/2022-03-28/513500_20220328_1_QkaaEKYm.pdf
+  - 结果：天天基金分红页无对应日期
+  - 原因：交叉核对未命中
+
+## qdii
+
+- **jisilu E**
+  - 试过：https://www.jisilu.cn/data/qdii/qdii_list/E?___jsl=LST___t=1&rp=25&page=1
+  - 结果：rows=20 total_field=20 all_field=55
+  - 原因：匿名接口 page=2 仍返回同一页，未取得全表，也没有日频溢价历史接口
+- **jisilu A**
+  - 试过：https://www.jisilu.cn/data/qdii/qdii_list/A?___jsl=LST___t=1&rp=25&page=1
+  - 结果：rows=20 total_field=20 all_field=224
+  - 原因：匿名接口 page=2 仍返回同一页，未取得全表，也没有日频溢价历史接口
+- **jisilu C**
+  - 试过：https://www.jisilu.cn/data/qdii/qdii_list/C?___jsl=LST___t=1&rp=25&page=1
+  - 结果：rows=0 total_field=None all_field=None
+  - 原因：匿名接口 page=2 仍返回同一页，未取得全表，也没有日频溢价历史接口
+
+## etf
+
+- **501312**
+  - 试过：最多 3 份产品资料概要
+  - 结果：原文是「上市交易所及上市时间 -」
+  - 原因：没有上市日期，不用合同生效日代替
+
+## qdii
+
+- **501312**
+  - 试过：产品资料概要
+  - 结果：原文是「上市交易所及上市时间 -」
+  - 原因：留空
+
+## etf
+
+- **158042**
+  - 试过：产品资料概要
+  - 结果：原文写「上市日期 －」，另有基金合同生效日 2026-09-16
+  - 原因：概要没有上市日期，不用生效日代替
+
+## qdii
+
+- **158042**
+  - 试过：产品资料概要
+  - 结果：原文写「上市日期 －」
+  - 原因：留空；搜狐到 2026-09-30 只有 4 个交易日，60 日成交额也留空
+- **158042**
+  - 试过：https://q.stock.sohu.com/hisHq?code=cn_158042&start=20260301&end=20260930&stat=1&order=D&period=d
+  - 结果：截至 2026-09-30 只有 4 个交易日
+  - 原因：不足 60 个交易日，不计算平均成交额
