@@ -1,0 +1,7 @@
+{
+  "url": "https://q.stock.sohu.com/hisHq?code=cn_513500&start=20260301&end=20260930&stat=1&order=D&period=d",
+  "status": 200,
+  "content_type": "application/x-javascript",
+  "sha256": "8eba65d1414256b616a30737646ed83f9344591658138347a853a159cf519b04",
+  "bytes": 14568
+}
