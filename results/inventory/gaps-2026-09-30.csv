@@ -1,0 +1,146 @@
+kind,theme_id,role,code,detail
+no_turnover_amount,T01,primary,510300,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T01,alternative,159919,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T01,alternative,159919,474 derived steps; not reinvested in tracking
+no_turnover_amount,T01,alternative,510330,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T02,primary,510500,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T02,primary,510500,1006 derived steps; not reinvested in tracking
+no_turnover_amount,T02,alternative,159922,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T02,alternative,159922,1278 derived steps; not reinvested in tracking
+no_turnover_amount,T02,alternative,512500,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T03,primary,512100,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T03,primary,512100,700 derived steps; not reinvested in tracking
+no_turnover_amount,T03,alternative,159845,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T03,alternative,159845,236 derived steps; not reinvested in tracking
+no_turnover_amount,T04,primary,588000,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T04,alternative,588080,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T04,alternative,588050,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T05,primary,159915,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T05,alternative,159952,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T06,primary,512480,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T06,primary,512480,751 derived steps; not reinvested in tracking
+no_turnover_amount,T06,alternative,159813,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T06,alternative,159813,631 derived steps; not reinvested in tracking
+no_turnover_amount,T07,primary,159516,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T07,primary,159516,322 derived steps; not reinvested in tracking
+no_turnover_amount,T07,alternative,159327,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T07,alternative,159327,211 derived steps; not reinvested in tracking
+no_turnover_amount,T07,alternative,159558,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T07,alternative,159558,222 derived steps; not reinvested in tracking
+no_turnover_amount,T07,alternative,560780,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T07,alternative,560780,275 derived steps; not reinvested in tracking
+no_turnover_amount,T07,alternative,562590,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T07,alternative,562590,290 derived steps; not reinvested in tracking
+no_turnover_amount,T08,primary,159819,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T08,alternative,515070,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T08,alternative,515070,689 derived steps; not reinvested in tracking
+no_turnover_amount,T08,alternative,159381,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T08,alternative,159381,120 derived steps; not reinvested in tracking
+no_turnover_amount,T09,primary,515880,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T09,primary,515880,736 derived steps; not reinvested in tracking
+no_turnover_amount,T09,alternative,159695,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T09,alternative,159695,345 derived steps; not reinvested in tracking
+no_turnover_amount,T10,primary,515230,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T10,alternative,159852,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T11,primary,562500,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T11,alternative,159770,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T12,primary,159732,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T12,alternative,561600,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T12,alternative,561600,477 derived steps; not reinvested in tracking
+no_turnover_amount,T13,primary,512400,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T13,alternative,159881,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T13,alternative,159881,506 derived steps; not reinvested in tracking
+no_turnover_amount,T14,primary,515220,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T14,primary,515220,448 derived steps; not reinvested in tracking
+no_turnover_amount,T15,primary,501018,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T15,primary,501018,"QDII-LOF: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+no_turnover_amount,T15,alternative,160723,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T15,alternative,160723,"QDII-LOF: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+no_turnover_amount,T15,alternative,161129,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T15,alternative,161129,"QDII-LOF: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+no_turnover_amount,T16,primary,518880,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T16,alternative,159934,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T16,alternative,159934,408 derived steps; not reinvested in tracking
+no_turnover_amount,T16,alternative,518800,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T16,alternative,518800,558 derived steps; not reinvested in tracking
+no_turnover_amount,T17,primary,515210,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T18,primary,159870,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T18,alternative,516020,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T19,primary,515030,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T19,alternative,159806,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T19,alternative,159806,190 derived steps; not reinvested in tracking
+no_turnover_amount,T19,alternative,515700,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T20,primary,515790,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T20,alternative,159857,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T21,primary,512660,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T21,alternative,512810,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T21,alternative,512810,887 derived steps; not reinvested in tracking
+no_turnover_amount,T22,primary,512010,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T22,primary,512010,775 derived steps; not reinvested in tracking
+no_turnover_amount,T22,alternative,159938,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T22,alternative,159938,701 derived steps; not reinvested in tracking
+no_turnover_amount,T22,alternative,512170,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T22,alternative,512170,159 derived steps; not reinvested in tracking
+no_turnover_amount,T23,primary,159992,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T23,alternative,515120,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T24,primary,159928,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T24,primary,159928,789 derived steps; not reinvested in tracking
+no_turnover_amount,T24,alternative,510630,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T24,alternative,510630,821 derived steps; not reinvested in tracking
+no_turnover_amount,T25,primary,512690,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T25,primary,512690,187 derived steps; not reinvested in tracking
+no_turnover_amount,T26,primary,159825,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T26,alternative,159827,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T27,primary,512800,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T27,primary,512800,735 derived steps; not reinvested in tracking
+no_turnover_amount,T27,alternative,515020,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T27,alternative,159887,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T28,primary,512880,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T28,alternative,512000,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T28,alternative,512000,877 derived steps; not reinvested in tracking
+no_turnover_amount,T28,alternative,159841,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T30,primary,512200,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T30,primary,512200,716 derived steps; not reinvested in tracking
+no_turnover_amount,T30,alternative,159707,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T31,primary,510880,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T32,primary,512890,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+dense_qfq_dividend_steps,T32,primary,512890,240 derived steps; not reinvested in tracking
+no_turnover_amount,T32,alternative,515100,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T33,primary,511260,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T33,alternative,511010,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T33,alternative,511020,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_turnover_amount,T34,primary,511880,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_research_series,T34,primary,511880,coverage_latest has no research series; tracking diff not computed
+no_turnover_amount,T34,alternative,511360,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_research_series,T34,alternative,511360,coverage_latest has no research series; tracking diff not computed
+no_turnover_amount,T35,primary,513100,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T35,primary,513100,"QDII: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+dense_qfq_dividend_steps,T35,primary,513100,859 derived steps; not reinvested in tracking
+no_turnover_amount,T35,alternative,159941,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T35,alternative,159941,"QDII: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+dense_qfq_dividend_steps,T35,alternative,159941,659 derived steps; not reinvested in tracking
+no_turnover_amount,T35,alternative,513300,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T35,alternative,513300,"QDII: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+no_turnover_amount,T36,primary,159509,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T36,primary,159509,"QDII: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+no_research_series,T36,primary,159509,coverage_latest has no research series; tracking diff not computed
+no_turnover_amount,T37,primary,513500,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T37,primary,513500,"QDII: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+dense_qfq_dividend_steps,T37,primary,513500,675 derived steps; not reinvested in tracking
+no_turnover_amount,T37,alternative,159612,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T37,alternative,159612,"QDII: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+no_turnover_amount,T37,alternative,513650,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T37,alternative,513650,"QDII: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+no_turnover_amount,T38,primary,513180,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T38,primary,513180,"QDII: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+no_research_series,T38,primary,513180,coverage_latest has no research series; tracking diff not computed
+no_turnover_amount,T38,alternative,513130,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T38,alternative,513130,"QDII: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+no_research_series,T38,alternative,513130,coverage_latest has no research series; tracking diff not computed
+no_turnover_amount,T38,alternative,159740,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T38,alternative,159740,"QDII: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+no_research_series,T38,alternative,159740,coverage_latest has no research series; tracking diff not computed
+no_turnover_amount,T39,primary,513520,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T39,primary,513520,"QDII: no NAV, IOPV, or premium in market.sqlite or src/data sources"
+no_turnover_amount,T39,alternative,159866,bars.amount is NULL; tencent day array has no 成交额; eastmoney_etf route failed
+no_nav_iopv_premium,T39,alternative,159866,"QDII: no NAV, IOPV, or premium in market.sqlite or src/data sources"

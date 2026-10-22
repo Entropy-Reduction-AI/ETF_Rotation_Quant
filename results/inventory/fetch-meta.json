@@ -1,0 +1,795 @@
+{
+ "fetched": [
+  {
+   "theme_id": "T01",
+   "role": "alternative",
+   "code": "159919",
+   "route": "tencent_etf",
+   "name": "沪深300ETF嘉实",
+   "rows": 3486,
+   "first": "2012-05-28",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159919&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "5cdb1ea5f1c596499c44843ae47b95c85a8bd68ecfccf72e8049718ac2649f6e"
+  },
+  {
+   "theme_id": "T01",
+   "role": "alternative",
+   "code": "510330",
+   "route": "tencent_etf",
+   "name": "沪深300ETF华夏",
+   "rows": 3296,
+   "first": "2013-03-12",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.510330&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "7fbbc2ff77a7c235eb5b035bc71b33a2f9e18e79a3726ffef35685d5163bae15"
+  },
+  {
+   "theme_id": "T02",
+   "role": "alternative",
+   "code": "159922",
+   "route": "tencent_etf",
+   "name": "中证500ETF嘉实",
+   "rows": 3293,
+   "first": "2013-03-15",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159922&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "6a13b92571b3be0f59b59232d0a638ff0657432a37e5a02d802856973f303064"
+  },
+  {
+   "theme_id": "T02",
+   "role": "alternative",
+   "code": "512500",
+   "route": "tencent_etf",
+   "name": "中证500ETF华夏",
+   "rows": 2758,
+   "first": "2015-05-29",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.512500&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "b6e3e675a7d2b464f3399547f422a3e56d0887fa2459df66064985a6b62b626c"
+  },
+  {
+   "theme_id": "T03",
+   "role": "alternative",
+   "code": "159845",
+   "route": "tencent_etf",
+   "name": "中证1000ETF华夏",
+   "rows": 1336,
+   "first": "2021-03-31",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159845&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "776d31800f4c07258cb06d714793c1642887c3bda6f76fe906bde3108b0a895a"
+  },
+  {
+   "theme_id": "T04",
+   "role": "alternative",
+   "code": "588080",
+   "route": "tencent_etf",
+   "name": "科创50ETF易方达",
+   "rows": 1427,
+   "first": "2020-11-16",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.588080&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "42897ef863e3e5272064e39f342067f35228a20653ef3df587a406498dceb5c4"
+  },
+  {
+   "theme_id": "T04",
+   "role": "alternative",
+   "code": "588050",
+   "route": "tencent_etf",
+   "name": "科创50ETF工银",
+   "rows": 1427,
+   "first": "2020-11-16",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.588050&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "d7e8bbb2086f142c51f312b45d344bd6a0e67face7efee07d685f03037a2f595"
+  },
+  {
+   "theme_id": "T05",
+   "role": "alternative",
+   "code": "159952",
+   "route": "tencent_etf",
+   "name": "创业板ETF广发",
+   "rows": 2275,
+   "first": "2017-05-19",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159952&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "fd7c2096abf80fdbe85d00c5ae536e62965a0d076bd5d50eee2b37a411e8a4fa"
+  },
+  {
+   "theme_id": "T06",
+   "role": "alternative",
+   "code": "159813",
+   "route": "tencent_etf",
+   "name": "半导体ETF鹏华",
+   "rows": 1544,
+   "first": "2020-05-25",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159813&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "25192233d8b2bbd4f7e02acdd4772b55574cde09ab38dc4ead2a1fa37846c893"
+  },
+  {
+   "theme_id": "T07",
+   "role": "alternative",
+   "code": "159327",
+   "route": "tencent_etf",
+   "name": "半导体设备ETF万家",
+   "rows": 524,
+   "first": "2024-08-05",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159327&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "a33959506e45e1632e26837b8c93f26c42c69b86d614193ccf653e43be477250"
+  },
+  {
+   "theme_id": "T07",
+   "role": "alternative",
+   "code": "159558",
+   "route": "tencent_etf",
+   "name": "半导体设备ETF易方达",
+   "rows": 558,
+   "first": "2024-06-18",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159558&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "8329af4b97e7b6d0a2cc9d4504f24998a8529241facf3088d2465f17f5bef6c2"
+  },
+  {
+   "theme_id": "T07",
+   "role": "alternative",
+   "code": "560780",
+   "route": "tencent_etf",
+   "name": "半导体设备ETF广发",
+   "rows": 680,
+   "first": "2023-12-12",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.560780&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "3415730568e10ff4d5062004a80be0a03d479d0c555377eca54776374b893dc6"
+  },
+  {
+   "theme_id": "T07",
+   "role": "alternative",
+   "code": "562590",
+   "route": "tencent_etf",
+   "name": "半导体设备ETF华夏",
+   "rows": 719,
+   "first": "2023-10-18",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.562590&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "65b528d8e497f7d03130a6697228734a7031c4de7b386ea945575698eca305a9"
+  },
+  {
+   "theme_id": "T08",
+   "role": "alternative",
+   "code": "515070",
+   "route": "tencent_etf",
+   "name": "人工智能ETF华夏",
+   "rows": 1642,
+   "first": "2019-12-24",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.515070&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "ab3284d50195cb52bdbc6bc0289e75086a569d6b3a1d47d4c979f58d26bd49f2"
+  },
+  {
+   "theme_id": "T08",
+   "role": "alternative",
+   "code": "159381",
+   "route": "tencent_etf",
+   "name": "创业板人工智能ETF华夏",
+   "rows": 373,
+   "first": "2025-03-24",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159381&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "cb2c9c0b826795b71820aa7980c63d367acba06718af7d3b8c092756c8db0eb1"
+  },
+  {
+   "theme_id": "T09",
+   "role": "alternative",
+   "code": "159695",
+   "route": "tencent_etf",
+   "name": "通信ETF嘉实",
+   "rows": 826,
+   "first": "2023-05-10",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159695&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "e0159f37ca7d575f3e56735d78202efdf4175bce1678fd130a9372ff9236d2af"
+  },
+  {
+   "theme_id": "T10",
+   "role": "alternative",
+   "code": "159852",
+   "route": "tencent_etf",
+   "name": "软件ETF嘉实",
+   "rows": 1367,
+   "first": "2021-02-09",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159852&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "cf3da6aa859dea4546a4cfa3149bda31a4a1707eac7a1a3008a308ff445288cb"
+  },
+  {
+   "theme_id": "T11",
+   "role": "alternative",
+   "code": "159770",
+   "route": "tencent_etf",
+   "name": "机器人ETF天弘",
+   "rows": 1190,
+   "first": "2021-11-08",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159770&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "6acb1741ca1e7e744fa1168acd6832c75145c7d660c69ea80c4e6707832e9c70"
+  },
+  {
+   "theme_id": "T12",
+   "role": "alternative",
+   "code": "561600",
+   "route": "tencent_etf",
+   "name": "消费电子ETF平安",
+   "rows": 1225,
+   "first": "2021-09-09",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.561600&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "20d50a3468fe0a7c89ddba4b289326e65e4f26564f9a21a2214454082ac66429"
+  },
+  {
+   "theme_id": "T13",
+   "role": "alternative",
+   "code": "159881",
+   "route": "tencent_etf",
+   "name": "有色金属ETF国泰",
+   "rows": 1275,
+   "first": "2021-07-01",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159881&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "5948daa57a978d518942eb5c49ca8daffa4ee16a309986c12755cee329a8fbec"
+  },
+  {
+   "theme_id": "T15",
+   "role": "alternative",
+   "code": "160723",
+   "route": "tencent_etf",
+   "name": "嘉实原油LOF",
+   "rows": 2282,
+   "first": "2017-05-05",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.160723&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "16ef2ca3a7a8b4e37dddf5c453d13bd74e483a8761db7c67b139edeeb46c0af3"
+  },
+  {
+   "theme_id": "T15",
+   "role": "alternative",
+   "code": "161129",
+   "route": "tencent_etf",
+   "name": "原油LOF易方达",
+   "rows": 2338,
+   "first": "2017-02-15",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.161129&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "83433002456f635163c7ff7d246625fccd9d16aa19dd17a12de629c9a746115d"
+  },
+  {
+   "theme_id": "T16",
+   "role": "alternative",
+   "code": "159934",
+   "route": "tencent_etf",
+   "name": "黄金ETF易方达",
+   "rows": 3112,
+   "first": "2013-12-16",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159934&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "d4e353accad7bb0dfc6f2068b2495e01580e7d558f05a1045912b257f16d4061"
+  },
+  {
+   "theme_id": "T16",
+   "role": "alternative",
+   "code": "518800",
+   "route": "tencent_etf",
+   "name": "黄金ETF国泰",
+   "rows": 3205,
+   "first": "2013-07-29",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.518800&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "49c81968defbb95ce385c6f347e6f9cb272b75479411c423bb026b48de59feec"
+  },
+  {
+   "theme_id": "T18",
+   "role": "alternative",
+   "code": "516020",
+   "route": "tencent_etf",
+   "name": "化工ETF华宝",
+   "rows": 1353,
+   "first": "2021-03-08",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.516020&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "b6624b3ea7852790d5fd7fccb6401910b36893e79b6d935c627ed91c385a3a1a"
+  },
+  {
+   "theme_id": "T19",
+   "role": "alternative",
+   "code": "159806",
+   "route": "tencent_etf",
+   "name": "新能源车ETF国泰",
+   "rows": 1586,
+   "first": "2020-03-20",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159806&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "7fc859b14da228a6e2b6dcc2bb195591504cd34bd9ad405d0aea88570ded2538"
+  },
+  {
+   "theme_id": "T19",
+   "role": "alternative",
+   "code": "515700",
+   "route": "tencent_etf",
+   "name": "新能源车ETF平安",
+   "rows": 1615,
+   "first": "2020-02-10",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.515700&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "2ffc94b4276ed785915e0193b2e3d15ac4ef97b87a1feedd1c733f83214e98ca"
+  },
+  {
+   "theme_id": "T20",
+   "role": "alternative",
+   "code": "159857",
+   "route": "tencent_etf",
+   "name": "光伏ETF天弘",
+   "rows": 1361,
+   "first": "2021-02-24",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159857&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "60542b318d6e7b66c5857be827486077ecb87cc70bc91ac74b74b002ce38d0f6"
+  },
+  {
+   "theme_id": "T21",
+   "role": "alternative",
+   "code": "512810",
+   "route": "tencent_etf",
+   "name": "军工ETF华宝",
+   "rows": 2455,
+   "first": "2016-08-22",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.512810&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "c261913815204100bf880786a28c77cd2dc96d89fc3d5d5fe008032e1d21c405"
+  },
+  {
+   "theme_id": "T22",
+   "role": "alternative",
+   "code": "159938",
+   "route": "tencent_etf",
+   "name": "医药ETF广发",
+   "rows": 2852,
+   "first": "2015-01-08",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159938&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "aeb659e3ce0c6053b3e9d18eb785679ef8377a66b93ecbd5029a5aa4f0f065cd"
+  },
+  {
+   "theme_id": "T22",
+   "role": "alternative",
+   "code": "512170",
+   "route": "tencent_etf",
+   "name": "医疗ETF华宝",
+   "rows": 1771,
+   "first": "2019-06-17",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.512170&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "ab7fa91b6781fe69938a403e3c67207dc1d7b8af51c6928a7c5b8cc7be0d138d"
+  },
+  {
+   "theme_id": "T23",
+   "role": "alternative",
+   "code": "515120",
+   "route": "tencent_etf",
+   "name": "创新药ETF广发",
+   "rows": 1393,
+   "first": "2021-01-04",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.515120&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "6a71316d6372b1df5c45c5eedafaea537d5851d028449074618864d905176e12"
+  },
+  {
+   "theme_id": "T24",
+   "role": "alternative",
+   "code": "510630",
+   "route": "tencent_etf",
+   "name": "消费ETF华夏",
+   "rows": 3259,
+   "first": "2013-05-08",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.510630&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "8309133bb1720188f7e5870df8fc786989f36ffb2e5a5206e84017e4b6c9c5ca"
+  },
+  {
+   "theme_id": "T26",
+   "role": "alternative",
+   "code": "159827",
+   "route": "tencent_etf",
+   "name": "农业ETF银华",
+   "rows": 1403,
+   "first": "2020-12-18",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159827&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "aa5cd9e4f5f647b51efd55dbc0505bef79b853fb3a6987946b986a6d60ddf9c8"
+  },
+  {
+   "theme_id": "T27",
+   "role": "alternative",
+   "code": "515020",
+   "route": "tencent_etf",
+   "name": "银行ETF华夏",
+   "rows": 1657,
+   "first": "2019-12-03",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.515020&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "0824295356144c3b8048896acca52fdd4b958d65d8cdcc9ffe31b04402303661"
+  },
+  {
+   "theme_id": "T27",
+   "role": "alternative",
+   "code": "159887",
+   "route": "tencent_etf",
+   "name": "银行ETF富国",
+   "rows": 1304,
+   "first": "2021-05-20",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159887&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "ebd163c734f610e07b7d890522cbafc8018b6e43d7f4fac015fb176ca5f26b0e"
+  },
+  {
+   "theme_id": "T28",
+   "role": "alternative",
+   "code": "512000",
+   "route": "tencent_etf",
+   "name": "券商ETF华宝",
+   "rows": 2438,
+   "first": "2016-09-14",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.512000&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "87386e0b3635df510b178bf1f6d0177fca8997fd1d69dcc20b9386451be026dd"
+  },
+  {
+   "theme_id": "T28",
+   "role": "alternative",
+   "code": "159841",
+   "route": "tencent_etf",
+   "name": "证券ETF天弘",
+   "rows": 1367,
+   "first": "2021-02-09",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159841&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "4308cacf634f4f4d6610398495bdbb8e8c47dd810ff6d21d4b11470b0f9b2025"
+  },
+  {
+   "theme_id": "T30",
+   "role": "alternative",
+   "code": "159707",
+   "route": "tencent_etf",
+   "name": "地产ETF华宝",
+   "rows": 1186,
+   "first": "2021-11-12",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159707&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "33b7688f02755d9ef7936069a06cf8cb198d5deb8062802bcfb7f051eb37dbdd"
+  },
+  {
+   "theme_id": "T32",
+   "role": "alternative",
+   "code": "515100",
+   "route": "tencent_etf",
+   "name": "红利低波100ETF景顺",
+   "rows": 1517,
+   "first": "2020-07-03",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.515100&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "9693ba8a11b6e2a3ee28105627f96bb92cc7794943db458800eb7026b3ce90f1"
+  },
+  {
+   "theme_id": "T33",
+   "role": "alternative",
+   "code": "511010",
+   "route": "tencent_etf",
+   "name": "国债ETF国泰",
+   "rows": 3287,
+   "first": "2013-03-25",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.511010&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "181d749cdaa294a74d41e5570d9aecc4d9d2aeb7ba33bf98432c8fe310236e7e"
+  },
+  {
+   "theme_id": "T33",
+   "role": "alternative",
+   "code": "511020",
+   "route": "tencent_etf",
+   "name": "国债ETF平安",
+   "rows": 1752,
+   "first": "2019-02-22",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.511020&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "27bad9611f49f2acee57fb1a550ebc6df2660765ed3902b97f082cc601728cb6"
+  },
+  {
+   "theme_id": "T34",
+   "role": "alternative",
+   "code": "511360",
+   "route": "tencent_etf",
+   "name": "短融ETF海富通",
+   "rows": 1457,
+   "first": "2020-09-25",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.511360&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "4ed37ef70577f824be6c313d67649b117d697c02c28fcc745175e2507b5d1005"
+  },
+  {
+   "theme_id": "T35",
+   "role": "alternative",
+   "code": "159941",
+   "route": "tencent_etf",
+   "name": "纳指ETF广发",
+   "rows": 2728,
+   "first": "2015-07-13",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159941&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "1867fd29b31da93bfa85610ade35f4dc410d0af51389191a43ed046cf35c44e9"
+  },
+  {
+   "theme_id": "T35",
+   "role": "alternative",
+   "code": "513300",
+   "route": "tencent_etf",
+   "name": "纳斯达克ETF华夏",
+   "rows": 1434,
+   "first": "2020-11-05",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.513300&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "8376b0b54f4c23b69d36d762a337fd6a0ffc97bf111ef654f469a8a8c3eaf816"
+  },
+  {
+   "theme_id": "T37",
+   "role": "alternative",
+   "code": "159612",
+   "route": "tencent_etf",
+   "name": "标普500ETF国泰",
+   "rows": 1060,
+   "first": "2022-05-20",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159612&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "2473b666bd0dab1828aca6c9e8a226f708e24b760a30227a5985ecf6e5097216"
+  },
+  {
+   "theme_id": "T37",
+   "role": "alternative",
+   "code": "513650",
+   "route": "tencent_etf",
+   "name": "标普500ETF南方",
+   "rows": 848,
+   "first": "2023-04-04",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.513650&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "8c9062373babace4b9dfc9b3a81c4a525a318727bdec8cb62bd9d6f143b16184"
+  },
+  {
+   "theme_id": "T38",
+   "role": "alternative",
+   "code": "513130",
+   "route": "tencent_etf",
+   "name": "恒生科技ETF华泰柏瑞",
+   "rows": 1296,
+   "first": "2021-06-01",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.513130&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "e051704c50419421353e6c43c5ba03948b966a7491480cbde24da36d91051d08"
+  },
+  {
+   "theme_id": "T38",
+   "role": "alternative",
+   "code": "159740",
+   "route": "tencent_etf",
+   "name": "恒生科技ETF大成",
+   "rows": 1299,
+   "first": "2021-05-27",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159740&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "5cd5047ecdba6135be1f465d63faaa993fcec6be5d63535ebbd70008d388bf28"
+  },
+  {
+   "theme_id": "T39",
+   "role": "alternative",
+   "code": "159866",
+   "route": "tencent_etf",
+   "name": "日经ETF工银",
+   "rows": 1331,
+   "first": "2021-04-08",
+   "last": "2026-09-30",
+   "prior_errors": [
+    "eastmoney_etf: RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159866&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+   ],
+   "sha256_after": "de788f3f6d1c5f40ee5fb1e69397c5ce96dfcff31adfa1985ffa7a9e4e3b9b57"
+  }
+ ],
+ "dividend_log": [
+  "  qfq 159327: 推导 211 笔现金分红，新写入 211 笔",
+  "  qfq 159381: 推导 120 笔现金分红，新写入 120 笔",
+  "  qfq 159509: 没有前复权收盘，不推导分红",
+  "  qfq 159516: 推导 322 笔现金分红，新写入 322 笔",
+  "  qfq 159558: 推导 222 笔现金分红，新写入 222 笔",
+  "  qfq 159612: 没有前复权收盘，不推导分红",
+  "  qfq 159695: 推导 345 笔现金分红，新写入 345 笔",
+  "  qfq 159707: 没有前复权收盘，不推导分红",
+  "  qfq 159732: 没有前复权收盘，不推导分红",
+  "  qfq 159740: 没有前复权收盘，不推导分红",
+  "  qfq 159770: 没有前复权收盘，不推导分红",
+  "  qfq 159806: 推导 190 笔现金分红，新写入 190 笔",
+  "  qfq 159813: 推导 631 笔现金分红，新写入 631 笔",
+  "  qfq 159819: 没有前复权收盘，不推导分红",
+  "  qfq 159825: 没有前复权收盘，不推导分红",
+  "  qfq 159827: 没有前复权收盘，不推导分红",
+  "  qfq 159841: 没有前复权收盘，不推导分红",
+  "  qfq 159845: 推导 236 笔现金分红，新写入 236 笔",
+  "  qfq 159852: 没有前复权收盘，不推导分红",
+  "  qfq 159857: 没有前复权收盘，不推导分红",
+  "  qfq 159866: 没有前复权收盘，不推导分红",
+  "  qfq 159870: 没有前复权收盘，不推导分红",
+  "  qfq 159881: 推导 506 笔现金分红，新写入 506 笔",
+  "  qfq 159887: 没有前复权收盘，不推导分红",
+  "  qfq 159915: 推导 0 笔现金分红，新写入 0 笔",
+  "  qfq 159919: 推导 474 笔现金分红，新写入 474 笔",
+  "  qfq 159922: 推导 1278 笔现金分红，新写入 1278 笔",
+  "  qfq 159928: 推导 789 笔现金分红，新写入 789 笔",
+  "  qfq 159934: 推导 408 笔现金分红，新写入 408 笔",
+  "  qfq 159938: 推导 701 笔现金分红，新写入 701 笔",
+  "  qfq 159941: 推导 659 笔现金分红，新写入 659 笔",
+  "  qfq 159952: 没有前复权收盘，不推导分红",
+  "  qfq 159992: 没有前复权收盘，不推导分红",
+  "  qfq 160723: 没有前复权收盘，不推导分红",
+  "  qfq 161129: 没有前复权收盘，不推导分红",
+  "  qfq 501018: 没有前复权收盘，不推导分红",
+  "  qfq 510300: 推导 14 笔现金分红，新写入 14 笔",
+  "  qfq 510330: 推导 12 笔现金分红，新写入 12 笔",
+  "  qfq 510500: 推导 1006 笔现金分红，新写入 1006 笔",
+  "  qfq 510630: 推导 821 笔现金分红，新写入 821 笔",
+  "  qfq 510880: 推导 19 笔现金分红，新写入 19 笔",
+  "  qfq 511010: 推导 7 笔现金分红，新写入 7 笔",
+  "  qfq 511020: 推导 4 笔现金分红，新写入 4 笔",
+  "  qfq 511260: 推导 5 笔现金分红，新写入 5 笔",
+  "  qfq 511360: 推导 0 笔现金分红，新写入 0 笔",
+  "  qfq 511880: 推导 13 笔现金分红，新写入 13 笔",
+  "  qfq 512000: 推导 877 笔现金分红，新写入 877 笔",
+  "  qfq 512010: 推导 775 笔现金分红，新写入 775 笔",
+  "  qfq 512100: 推导 700 笔现金分红，新写入 700 笔",
+  "  qfq 512170: 推导 159 笔现金分红，新写入 159 笔",
+  "  qfq 512200: 推导 716 笔现金分红，新写入 716 笔",
+  "  qfq 512400: 推导 3 笔现金分红，新写入 3 笔",
+  "  qfq 512480: 推导 751 笔现金分红，新写入 751 笔",
+  "  qfq 512500: 推导 0 笔现金分红，新写入 0 笔",
+  "  qfq 512660: 没有前复权收盘，不推导分红",
+  "  qfq 512690: 推导 187 笔现金分红，新写入 187 笔",
+  "  qfq 512800: 推导 735 笔现金分红，新写入 735 笔",
+  "  qfq 512810: 推导 887 笔现金分红，新写入 887 笔",
+  "  qfq 512880: 没有前复权收盘，不推导分红",
+  "  qfq 512890: 推导 240 笔现金分红，新写入 240 笔",
+  "  qfq 513100: 推导 859 笔现金分红，新写入 859 笔",
+  "  qfq 513130: 没有前复权收盘，不推导分红",
+  "  qfq 513180: 没有前复权收盘，不推导分红",
+  "  qfq 513300: 没有前复权收盘，不推导分红",
+  "  qfq 513500: 推导 675 笔现金分红，新写入 675 笔",
+  "  qfq 513520: 没有前复权收盘，不推导分红",
+  "  qfq 513650: 没有前复权收盘，不推导分红",
+  "  qfq 515020: 没有前复权收盘，不推导分红",
+  "  qfq 515030: 没有前复权收盘，不推导分红",
+  "  qfq 515070: 推导 689 笔现金分红，新写入 689 笔",
+  "  qfq 515100: 推导 2 笔现金分红，新写入 2 笔",
+  "  qfq 515120: 没有前复权收盘，不推导分红",
+  "  qfq 515210: 推导 5 笔现金分红，新写入 5 笔",
+  "  qfq 515220: 推导 448 笔现金分红，新写入 448 笔",
+  "  qfq 515230: 没有前复权收盘，不推导分红",
+  "  qfq 515700: 没有前复权收盘，不推导分红",
+  "  qfq 515790: 没有前复权收盘，不推导分红",
+  "  qfq 515880: 推导 736 笔现金分红，新写入 736 笔",
+  "  qfq 516020: 没有前复权收盘，不推导分红",
+  "  qfq 518800: 推导 558 笔现金分红，新写入 558 笔",
+  "  qfq 518880: 推导 0 笔现金分红，新写入 0 笔",
+  "  qfq 560780: 推导 275 笔现金分红，新写入 275 笔",
+  "  qfq 561600: 推导 477 笔现金分红，新写入 477 笔",
+  "  qfq 562500: 没有前复权收盘，不推导分红",
+  "  qfq 562590: 推导 290 笔现金分红，新写入 290 笔",
+  "  qfq 588000: 推导 0 笔现金分红，新写入 0 笔",
+  "  qfq 588050: 推导 0 笔现金分红，新写入 0 笔",
+  "  qfq 588080: 推导 1 笔现金分红，新写入 1 笔"
+ ],
+ "errors": []
+}

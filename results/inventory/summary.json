@@ -1,0 +1,19 @@
+{
+ "asof": "2026-09-30",
+ "window_60": [
+  "2026-07-08",
+  "2026-09-30",
+  60
+ ],
+ "funds": 88,
+ "in_db": 88,
+ "missing_bars": 0,
+ "dividend_rows": 20038,
+ "dividend_codes": 47,
+ "fake_gap_rows": 39,
+ "fake_gap_down_open": 33,
+ "tracking_rows": 718,
+ "gap_limit": 0.4,
+ "fetch_errors": [],
+ "fetched_n": 50
+}
