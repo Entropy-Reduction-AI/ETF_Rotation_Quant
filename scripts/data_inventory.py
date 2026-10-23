@@ -87,10 +87,10 @@ def main() -> int:
     }
     con.close()
 
-    if len(series) != 87:
-        problems.append(f"序列数 {len(series)} != 87")
-    if bar_rows[0] != 309275:
-        problems.append(f"bars 行数 {bar_rows[0]} != 309275")
+    if len(series) != 141:
+        problems.append(f"序列数 {len(series)} != 141")
+    if bar_rows[0] != 416746:
+        problems.append(f"bars 行数 {bar_rows[0]} != 416746")
     if bar_rows[1] != "2026-09-30":
         problems.append(f"bars 末日 {bar_rows[1]} != 2026-09-30")
     if sum(row["n"] for row in series) != bar_rows[0]:
