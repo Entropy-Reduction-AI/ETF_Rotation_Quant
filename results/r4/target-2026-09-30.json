@@ -1,118 +1,227 @@
 {
  "date": "2026-09-30",
+ "decision_date": "2026-09-30",
+ "execution_date": "2026-10-08",
  "signal_date": "2026-09-30",
+ "equity": 1000000.0,
+ "holdings_in": {},
  "valve": "在场",
- "a_share_drawdown_from_high": -0.08800492011245031,
- "qdii_premium": "未接入",
- "pending": "待 D5 标的决定",
- "weights": [
+ "a_share_due": true,
+ "nav_source": "eastmoney_f10_lsjz",
+ "nav_note": "",
+ "nav_lag_trading_days": 2,
+ "nav_cutoff": "2026-09-28",
+ "band": 0.075,
+ "premium_cap": 0.1,
+ "overseas_weight_before": 0.0,
+ "rules": [
+  "overseas_rebalance",
+  "a_share_monthly",
+  "premium_cap:纳指100",
+  "park_511880",
+  "buy_lowest_premium:标普500:513650"
+ ],
+ "premiums": [
   {
-   "container": "沪深300",
-   "execution_code": "510300",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
+   "code": "513100",
+   "pool": "纳指100",
+   "close": 2.352,
+   "unit_nav": 2.0335,
+   "nav_date": "2026-09-28",
+   "premium": 0.15662651,
+   "chosen": false
   },
   {
-   "container": "中证500",
-   "execution_code": "510500",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
+   "code": "159941",
+   "pool": "纳指100",
+   "close": 1.735,
+   "unit_nav": 1.5227,
+   "nav_date": "2026-09-28",
+   "premium": 0.13942339,
+   "chosen": false
   },
   {
-   "container": "中证1000",
-   "execution_code": "512100",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
+   "code": "513300",
+   "pool": "纳指100",
+   "close": 2.818,
+   "unit_nav": 2.53,
+   "nav_date": "2026-09-28",
+   "premium": 0.11383399,
+   "chosen": false
   },
   {
-   "container": "创业板",
-   "execution_code": "159915",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
+   "code": "513500",
+   "pool": "标普500",
+   "close": 2.688,
+   "unit_nav": 2.4506,
+   "nav_date": "2026-09-28",
+   "premium": 0.09687423,
+   "chosen": false
   },
   {
-   "container": "AI/算力",
-   "execution_code": "159819",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
+   "code": "159612",
+   "pool": "标普500",
+   "close": 2.076,
+   "unit_nav": 1.9225,
+   "nav_date": "2026-09-28",
+   "premium": 0.07984395,
+   "chosen": false
   },
   {
-   "container": "有色",
-   "execution_code": "512400",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
-  },
-  {
-   "container": "煤炭",
-   "execution_code": "515220",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
-  },
-  {
-   "container": "军工",
-   "execution_code": "512660",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
-  },
-  {
-   "container": "医药",
-   "execution_code": "512010",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
-  },
-  {
-   "container": "消费",
-   "execution_code": "159928",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
-  },
-  {
-   "container": "白酒",
-   "execution_code": "512690",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
-  },
-  {
-   "container": "农业",
-   "execution_code": "159825",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
-  },
-  {
-   "container": "银行",
-   "execution_code": "512800",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
-  },
-  {
-   "container": "券商",
-   "execution_code": "512880",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
-  },
-  {
-   "container": "地产",
-   "execution_code": "512200",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
-  },
-  {
-   "container": "红利",
-   "execution_code": "510880",
-   "weight": 0.04375,
-   "qdii_premium": "未接入"
-  },
-  {
-   "container": "纳指100",
-   "execution_code": "513100",
-   "weight": 0.15,
-   "qdii_premium": "未接入"
-  },
-  {
-   "container": "标普500",
-   "execution_code": "513500",
-   "weight": 0.15,
-   "qdii_premium": "未接入"
+   "code": "513650",
+   "pool": "标普500",
+   "close": 2.004,
+   "unit_nav": 1.8658,
+   "nav_date": "2026-09-28",
+   "premium": 0.0740701,
+   "chosen": true
   }
- ]
+ ],
+ "targets": [
+  {
+   "code": "159819",
+   "name": "AI/算力",
+   "sleeve": "a_share",
+   "shares": 26300,
+   "price": 1.659,
+   "market_value": 43631.7
+  },
+  {
+   "code": "159825",
+   "name": "农业",
+   "sleeve": "a_share",
+   "shares": 60500,
+   "price": 0.722,
+   "market_value": 43681.0
+  },
+  {
+   "code": "159915",
+   "name": "创业板",
+   "sleeve": "a_share",
+   "shares": 13800,
+   "price": 3.154,
+   "market_value": 43525.2
+  },
+  {
+   "code": "159928",
+   "name": "消费",
+   "sleeve": "a_share",
+   "shares": 66400,
+   "price": 0.658,
+   "market_value": 43691.2
+  },
+  {
+   "code": "510300",
+   "name": "沪深300",
+   "sleeve": "a_share",
+   "shares": 9800,
+   "price": 4.432,
+   "market_value": 43433.6
+  },
+  {
+   "code": "510500",
+   "name": "中证500",
+   "sleeve": "a_share",
+   "shares": 5800,
+   "price": 7.472,
+   "market_value": 43337.6
+  },
+  {
+   "code": "510880",
+   "name": "红利",
+   "sleeve": "a_share",
+   "shares": 12900,
+   "price": 3.368,
+   "market_value": 43447.2
+  },
+  {
+   "code": "512010",
+   "name": "医药",
+   "sleeve": "a_share",
+   "shares": 112700,
+   "price": 0.388,
+   "market_value": 43727.6
+  },
+  {
+   "code": "512100",
+   "name": "中证1000",
+   "sleeve": "a_share",
+   "shares": 14700,
+   "price": 2.971,
+   "market_value": 43673.7
+  },
+  {
+   "code": "512200",
+   "name": "地产",
+   "sleeve": "a_share",
+   "shares": 33600,
+   "price": 1.3,
+   "market_value": 43680.0
+  },
+  {
+   "code": "512400",
+   "name": "有色",
+   "sleeve": "a_share",
+   "shares": 26900,
+   "price": 1.621,
+   "market_value": 43604.9
+  },
+  {
+   "code": "512660",
+   "name": "军工",
+   "sleeve": "a_share",
+   "shares": 39700,
+   "price": 1.101,
+   "market_value": 43709.7
+  },
+  {
+   "code": "512690",
+   "name": "白酒",
+   "sleeve": "a_share",
+   "shares": 104900,
+   "price": 0.417,
+   "market_value": 43743.3
+  },
+  {
+   "code": "512800",
+   "name": "银行",
+   "sleeve": "a_share",
+   "shares": 51200,
+   "price": 0.853,
+   "market_value": 43673.6
+  },
+  {
+   "code": "512880",
+   "name": "券商",
+   "sleeve": "a_share",
+   "shares": 42500,
+   "price": 1.029,
+   "market_value": 43732.5
+  },
+  {
+   "code": "515220",
+   "name": "煤炭",
+   "sleeve": "a_share",
+   "shares": 34800,
+   "price": 1.256,
+   "market_value": 43708.8
+  },
+  {
+   "code": "511880",
+   "name": "货币",
+   "sleeve": "haven",
+   "shares": 1400,
+   "price": 100.901,
+   "market_value": 141261.4
+  },
+  {
+   "code": "513650",
+   "name": "标普500",
+   "sleeve": "overseas",
+   "shares": 74800,
+   "price": 2.004,
+   "market_value": 149899.2
+  }
+ ],
+ "residual_cash": 10837.8
 }

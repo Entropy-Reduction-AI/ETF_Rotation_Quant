@@ -1,5 +1,4 @@
-# R4 收手版。A 股腿暂用 d2.py 的 16 个设计期容器，待 D5 标的决定后只改这个文件，不改代码。
-pending = "待 D5 标的决定"
+# R4 收手版正式配置（D5，2026-10-23）。容器仍是设计期 16 个，执行基金和备选写在下面。
 design_end = "2015-12-31"
 
 [a_share]
@@ -23,9 +22,142 @@ containers = [
   "红利",
 ]
 
+# 主基金清盘、停牌或暂停交易时，同指数备选里上市最早且仍正常交易的一只接上。
+# 上市日来自 results/inventory/execution-2026-09-30.csv 的 first_date。
+
+[[a_share.book]]
+container = "沪深300"
+primary = "510300"
+[[a_share.book.alternates]]
+code = "159919"
+list_date = "2012-05-28"
+[[a_share.book.alternates]]
+code = "510330"
+list_date = "2013-03-12"
+
+[[a_share.book]]
+container = "中证500"
+primary = "510500"
+[[a_share.book.alternates]]
+code = "159922"
+list_date = "2013-03-15"
+[[a_share.book.alternates]]
+code = "512500"
+list_date = "2015-05-29"
+
+[[a_share.book]]
+container = "中证1000"
+primary = "512100"
+[[a_share.book.alternates]]
+code = "159845"
+list_date = "2021-03-31"
+
+[[a_share.book]]
+container = "创业板"
+primary = "159915"
+[[a_share.book.alternates]]
+code = "159952"
+list_date = "2017-05-19"
+
+[[a_share.book]]
+container = "AI/算力"
+primary = "159819"
+[[a_share.book.alternates]]
+code = "515070"
+list_date = "2019-12-24"
+[[a_share.book.alternates]]
+code = "159381"
+list_date = "2025-03-24"
+
+[[a_share.book]]
+container = "有色"
+primary = "512400"
+[[a_share.book.alternates]]
+code = "159881"
+list_date = "2021-07-01"
+
+[[a_share.book]]
+container = "煤炭"
+primary = "515220"
+
+[[a_share.book]]
+container = "军工"
+primary = "512660"
+[[a_share.book.alternates]]
+code = "512810"
+list_date = "2016-08-22"
+
+[[a_share.book]]
+container = "医药"
+primary = "512010"
+[[a_share.book.alternates]]
+code = "159938"
+list_date = "2015-01-08"
+[[a_share.book.alternates]]
+code = "512170"
+list_date = "2019-06-17"
+
+[[a_share.book]]
+container = "消费"
+primary = "159928"
+[[a_share.book.alternates]]
+code = "510630"
+list_date = "2013-05-08"
+
+[[a_share.book]]
+container = "白酒"
+primary = "512690"
+
+[[a_share.book]]
+container = "农业"
+primary = "159825"
+[[a_share.book.alternates]]
+code = "159827"
+list_date = "2020-12-18"
+
+[[a_share.book]]
+container = "银行"
+primary = "512800"
+[[a_share.book.alternates]]
+code = "515020"
+list_date = "2019-12-03"
+[[a_share.book.alternates]]
+code = "159887"
+list_date = "2021-05-20"
+
+[[a_share.book]]
+container = "券商"
+primary = "512880"
+[[a_share.book.alternates]]
+code = "512000"
+list_date = "2016-09-14"
+[[a_share.book.alternates]]
+code = "159841"
+list_date = "2021-02-09"
+
+[[a_share.book]]
+container = "地产"
+primary = "512200"
+[[a_share.book.alternates]]
+code = "159707"
+list_date = "2021-11-12"
+
+[[a_share.book]]
+container = "红利"
+primary = "510880"
+
 [overseas]
 weight = 0.30
 containers = ["纳指100", "标普500"]
+excluded = ["159509"]
+
+[[overseas.pool]]
+container = "纳指100"
+codes = ["513100", "159941", "513300"]
+
+[[overseas.pool]]
+container = "标普500"
+codes = ["513500", "159612", "513650"]
 
 [valve]
 # 只在月末判定。判定用 A 股腿影子净值，不是扣掉仓位之后的净值。
@@ -38,5 +170,9 @@ cash_annual = 0.02
 
 [execution]
 rebalance = "monthly"
+band = 0.075
+premium_cap = 0.10
+nav_lag_trading_days = 2
+lot_size = 100
 cost_one_way = 0.0005
 universe = "data/universe.csv"

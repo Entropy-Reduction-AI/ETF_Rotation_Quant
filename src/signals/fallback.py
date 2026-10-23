@@ -4,8 +4,8 @@
 在场时月末距历史高点的回撤超过 out 才出场；出场后月末距出场以来最低月末的反弹超过 back 才回场，
 回场当时把高点重置为该净值。比较都是严格不等号。
 
-replicate 只用到设计期终点。晚于该日直接拒绝，不算收益。
-target 只给某一天的目标权重、阀状态和当时距高点的回撤。
+replicate 只用到设计期终点。晚于该日直接拒绝，不算收益。设计期不读基金净值和溢价。
+target 只给某一天的目标持仓：A 股按月，海外按带宽，QDII 溢价只决定买卖哪一只和要不要把应买部分留在货币 ETF。
 """
 from __future__ import annotations
 
@@ -22,6 +22,9 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CONFIG = ROOT / "config" / "r4_fallback.toml"
 TRADING_DAYS = 252
+UNAVAILABLE = frozenset({"liquidated", "suspended", "halted"})
+KNOWN_STATUS = UNAVAILABLE | {"normal"}
+HOLDINGS_FORBIDDEN = {"cagr", "max_drawdown", "vol", "return", "returns", "rank", "sharpe", "drawdown"}
 
 # d2 设计期两行（百分数已换成小数）。误差按 ±0.1 个百分点。
 D2_A_CAGR = 0.271
@@ -37,8 +40,35 @@ class FallbackError(RuntimeError):
 
 
 @dataclass(frozen=True)
+class Alternate:
+    code: str
+    list_date: pd.Timestamp
+
+
+@dataclass(frozen=True)
+class AShareBook:
+    container: str
+    primary: str
+    alternates: tuple[Alternate, ...]
+
+
+@dataclass(frozen=True)
+class OverseasPool:
+    container: str
+    codes: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class NavRow:
+    code: str
+    date: pd.Timestamp
+    unit_nav: float
+    fetched_at: str = ""
+    source: str = ""
+
+
+@dataclass(frozen=True)
 class FallbackConfig:
-    pending: str
     design_end: pd.Timestamp
     a_share: tuple[str, ...]
     a_weight: float
@@ -53,6 +83,13 @@ class FallbackConfig:
     cost_one_way: float
     universe: Path
     path: Path
+    band: float = 0.075
+    premium_cap: float = 0.10
+    nav_lag: int = 2
+    lot_size: int = 100
+    funds: tuple[AShareBook, ...] = ()
+    pools: tuple[OverseasPool, ...] = ()
+    excluded: tuple[str, ...] = ()
 
     @property
     def cash_monthly(self) -> float:
@@ -63,16 +100,42 @@ class FallbackConfig:
         return self.cash_annual / TRADING_DAYS
 
 
+def _universe_path(config_path: Path, raw: str) -> Path:
+    path = Path(raw)
+    if path.is_absolute():
+        return path
+    return (config_path.parent.parent / path).resolve()
+
+
+def _load_books(rows: list[dict]) -> tuple[AShareBook, ...]:
+    books = []
+    for row in rows:
+        alternates = tuple(
+            Alternate(str(item["code"]).strip(), pd.Timestamp(item["list_date"]))
+            for item in (row.get("alternates") or []))
+        books.append(AShareBook(str(row["container"]).strip(), str(row["primary"]).strip(), alternates))
+    return tuple(books)
+
+
+def _load_pools(rows: list[dict]) -> tuple[OverseasPool, ...]:
+    pools = []
+    for row in rows:
+        codes = tuple(str(code).strip() for code in row["codes"])
+        pools.append(OverseasPool(str(row["container"]).strip(), codes))
+    return tuple(pools)
+
+
 def load_config(path: Path | None = None) -> FallbackConfig:
     path = Path(path) if path else DEFAULT_CONFIG
     with path.open("rb") as fh:
         raw = tomllib.load(fh)
+    if "pending" in raw or any("pending" in section for section in raw.values() if isinstance(section, dict)):
+        raise FallbackError("正式配置不再保留 pending")
     a = raw["a_share"]
     o = raw["overseas"]
     v = raw["valve"]
     ex = raw["execution"]
     cfg = FallbackConfig(
-        pending=str(raw["pending"]),
         design_end=pd.Timestamp(raw["design_end"]),
         a_share=tuple(a["containers"]),
         a_weight=float(a["weight"]),
@@ -85,21 +148,62 @@ def load_config(path: Path | None = None) -> FallbackConfig:
         cash_annual=float(v["cash_annual"]),
         rebalance=str(ex["rebalance"]),
         cost_one_way=float(ex["cost_one_way"]),
-        universe=(path.parent.parent / ex["universe"]).resolve() if not Path(ex["universe"]).is_absolute()
-        else Path(ex["universe"]),
+        universe=_universe_path(path, str(ex["universe"])),
         path=path,
+        band=float(ex["band"]),
+        premium_cap=float(ex["premium_cap"]),
+        nav_lag=int(ex["nav_lag_trading_days"]),
+        lot_size=int(ex["lot_size"]),
+        funds=_load_books(list(a["book"])),
+        pools=_load_pools(list(o["pool"])),
+        excluded=tuple(str(code).strip() for code in o.get("excluded", [])),
     )
+    _validate(cfg)
+    return cfg
+
+
+def _validate(cfg: FallbackConfig) -> None:
     if cfg.judge != "month_end":
         raise FallbackError(f"慢阀只在月末判定，配置是 {cfg.judge}")
     if cfg.rebalance != "monthly":
-        raise FallbackError(f"再平衡只做月度，配置是 {cfg.rebalance}")
+        raise FallbackError(f"A 股再平衡只做月度，配置是 {cfg.rebalance}")
     if not cfg.a_share or not cfg.overseas:
         raise FallbackError("A 股腿和海外腿都不能是空的")
     if abs(cfg.a_weight + cfg.o_weight - 1) > 1e-9:
         raise FallbackError("A 股权重与海外权重之和必须是 1")
     if cfg.out <= 0 or cfg.back <= 0:
         raise FallbackError("out 和 back 必须是正数")
-    return cfg
+    if cfg.band <= 0 or cfg.premium_cap <= 0:
+        raise FallbackError("band 和 premium_cap 必须是正数")
+    if cfg.nav_lag < 1:
+        raise FallbackError("净值公布滞后至少 1 个交易日")
+    if cfg.lot_size < 1:
+        raise FallbackError("lot_size 必须是正整数")
+    if tuple(book.container for book in cfg.funds) != cfg.a_share:
+        raise FallbackError("A 股执行基金的容器顺序必须和 containers 一致")
+    if tuple(pool.container for pool in cfg.pools) != cfg.overseas:
+        raise FallbackError("海外池的顺序必须和 containers 一致")
+    primaries = [book.primary for book in cfg.funds]
+    if len(primaries) != len(set(primaries)):
+        raise FallbackError("A 股主基金代码重复")
+    pool_codes = [code for pool in cfg.pools for code in pool.codes]
+    if len(pool_codes) != len(set(pool_codes)):
+        raise FallbackError("海外池代码重复")
+    banned = set(cfg.excluded)
+    if banned & set(pool_codes):
+        raise FallbackError(f"被排除的代码进了海外池：{sorted(banned & set(pool_codes))}")
+    a_codes = set(primaries)
+    for book in cfg.funds:
+        seen = set()
+        for alt in book.alternates:
+            if alt.code == book.primary or alt.code in seen:
+                raise FallbackError(f"{book.container} 的备选 {alt.code} 重复或与主基金相同")
+            seen.add(alt.code)
+            a_codes.add(alt.code)
+    if cfg.haven_code in a_codes or cfg.haven_code in pool_codes:
+        raise FallbackError("货币 ETF 不能同时又是 A 股执行基金或海外池成员")
+    if a_codes & set(pool_codes):
+        raise FallbackError("A 股执行基金和海外池重叠")
 
 
 def execution_map(path: Path) -> dict[str, str]:
@@ -411,7 +515,6 @@ def replicate(panel: Path, end: str | pd.Timestamp, cfg: FallbackConfig,
     }
     return {
         "end": str(end_ts.date()),
-        "pending": cfg.pending,
         "monthly": monthly,
         "d2_delta_pp": d2_deltas(monthly),
         "matches_d2": within_d2(monthly),
@@ -437,6 +540,400 @@ def _month_end_on_or_before(index: pd.DatetimeIndex, as_of: pd.Timestamp) -> pd.
         prev_period = previous[-1].to_period("M")
         return previous[previous.to_period("M") == prev_period][-1]
     return last
+
+
+def _status(statuses: dict[str, str], code: str) -> str:
+    state = statuses.get(code, "normal")
+    if state not in KNOWN_STATUS:
+        raise FallbackError(f"{code} 的交易状态 {state} 无法识别")
+    return state
+
+
+def resolve_execution_fund(book: AShareBook, statuses: dict[str, str] | None = None) -> tuple[str, str | None]:
+    """主基金正常交易就用主基金。清盘、停牌或暂停交易时，取同指数里上市最早且仍正常交易的备选。"""
+    statuses = statuses or {}
+    state = _status(statuses, book.primary)
+    if state not in UNAVAILABLE:
+        return book.primary, None
+    ranked = sorted(book.alternates, key=lambda alt: (alt.list_date, alt.code))
+    for alt in ranked:
+        if _status(statuses, alt.code) not in UNAVAILABLE:
+            return alt.code, state
+    raise FallbackError(f"{book.container} 主基金 {book.primary} 为 {state}，同指数没有仍正常交易的备选")
+
+
+def published_cutoff(as_of: str | pd.Timestamp, trading_days: list, lag: int) -> pd.Timestamp:
+    """决策日 T 只能使用日期 ≤ T−lag 个交易日的净值。lag 含 T 本身往回数。"""
+    if lag < 1:
+        raise FallbackError("净值公布滞后至少 1 个交易日")
+    day = pd.Timestamp(as_of).normalize()
+    days = sorted({pd.Timestamp(item).normalize() for item in trading_days if pd.Timestamp(item).normalize() <= day})
+    if not days or days[-1] != day:
+        raise FallbackError(f"{day.date()} 不是交易日，不能定溢价")
+    if len(days) <= lag:
+        raise FallbackError("交易日不够覆盖净值公布滞后")
+    return days[-1 - lag]
+
+
+def select_nav(rows: list[NavRow], code: str, cutoff: pd.Timestamp) -> NavRow:
+    eligible = [row for row in rows if row.code == code and row.date.normalize() <= cutoff and row.unit_nav > 0]
+    if not eligible:
+        raise FallbackError(f"{code} 在 {cutoff.date()} 及之前没有已公布的单位净值")
+    eligible.sort(key=lambda row: (row.date, row.fetched_at))
+    return eligible[-1]
+
+
+def _trading_days(trading_days: list) -> list[pd.Timestamp]:
+    return sorted({pd.Timestamp(item).normalize() for item in trading_days})
+
+
+def a_share_session(as_of: str | pd.Timestamp, trading_days: list) -> bool:
+    """A 股腿只在每月第一个交易日对齐。月末出信号，当天不再调一次。"""
+    day = pd.Timestamp(as_of).normalize()
+    month = [item for item in _trading_days(trading_days) if item.to_period("M") == day.to_period("M")]
+    if day not in month:
+        raise FallbackError(f"{day.date()} 不在交易日历这个月里")
+    return day == month[0]
+
+
+def next_trading_day(day: str | pd.Timestamp, trading_days: list) -> pd.Timestamp:
+    """决策日的下一交易日。中间的休市日跳过。"""
+    current = pd.Timestamp(day).normalize()
+    days = _trading_days(trading_days)
+    if current not in days:
+        raise FallbackError(f"{current.date()} 不是交易日")
+    later = [item for item in days if item > current]
+    if not later:
+        raise FallbackError(f"{current.date()} 之后没有交易日")
+    return later[0]
+
+
+def schedule_execution(decision: str | pd.Timestamp, trading_days: list) -> dict:
+    """月末（或任一决策日）决定，下一交易日执行。A 股是否对齐看执行日是不是该月第一个交易日。"""
+    decision_ts = pd.Timestamp(decision).normalize()
+    execution = next_trading_day(decision_ts, trading_days)
+    return {
+        "decision_date": decision_ts,
+        "execution_date": execution,
+        "a_share_due": a_share_session(execution, trading_days),
+    }
+
+
+def _whole_shares(value) -> int:
+    number = float(value)
+    if abs(number - round(number)) > 1e-6:
+        raise FallbackError("持仓股数必须是整数")
+    return int(round(number))
+
+
+def _price(prices: dict[str, float], code: str) -> float:
+    if code not in prices:
+        raise FallbackError(f"{code} 没有决策日收盘价")
+    price = float(prices[code])
+    if price <= 0:
+        raise FallbackError(f"{code} 的收盘价必须是正数")
+    return price
+
+
+def _lot_floor(value: float, price: float, lot: int) -> int:
+    if value <= 0:
+        return 0
+    return int(value / price / lot) * lot
+
+
+def _market_value(shares: dict[str, int], prices: dict[str, float], codes: list[str]) -> float:
+    total = 0.0
+    for code in codes:
+        held = shares.get(code, 0)
+        if held:
+            total += held * _price(prices, code)
+    return total
+
+
+def _sell_down(shares: dict[str, int], prices: dict[str, float], premiums: dict[str, float],
+               target_value: float, lot: int) -> dict[str, int]:
+    """从溢价最高的持仓开始卖，卖到市值不再高于目标。下一手会卖穿目标时停。"""
+    out = dict(shares)
+
+    def total() -> float:
+        return sum(out[code] * prices[code] for code in out if out[code])
+
+    while total() > target_value + 1e-8:
+        held = [code for code, count in out.items() if count > 0]
+        if not held:
+            break
+        held.sort(key=lambda code: (-premiums[code], code))
+        code = held[0]
+        step = lot if out[code] >= lot else out[code]
+        if step <= 0 or total() - step * prices[code] < target_value - 1e-8:
+            break
+        out[code] -= step
+    return out
+
+
+def _outside_band(actual: float, target: float, band: float) -> bool:
+    """偏离超过 band。用百分点比较，刚好等于带宽不算超过。"""
+    return round(abs(actual - target) * 100, 6) > round(band * 100, 6)
+
+
+def _over_cap(premium: float, cap: float) -> bool:
+    return round(premium, 8) > round(cap, 8)
+
+
+def _unique(items: list[str]) -> list[str]:
+    out = []
+    for item in items:
+        if item not in out:
+            out.append(item)
+    return out
+
+
+def _check_holdings_payload(payload: dict) -> dict:
+    if HOLDINGS_FORBIDDEN & set(payload):
+        raise FallbackError("目标持仓输出含有绩效字段")
+    return payload
+
+
+def plan_targets(cfg: FallbackConfig, *, as_of: str | pd.Timestamp, equity: float,
+                 holdings: dict[str, int] | None, prices: dict[str, float],
+                 nav_rows: list[NavRow], trading_days: list,
+                 statuses: dict[str, str] | None = None, in_market: bool = True,
+                 a_share_due: bool = False, signal_date: str | pd.Timestamp | None = None,
+                 decision_date: str | pd.Timestamp | None = None,
+                 execution_date: str | pd.Timestamp | None = None,
+                 nav_source: str = "", nav_note: str = "") -> dict:
+    """执行日的目标股数。价格和溢价用决策日收盘；不返回任何区间收益或回撤。"""
+    if equity <= 0:
+        raise FallbackError("账户总权益必须是正数")
+    if cfg.lot_size < 1:
+        raise FallbackError("lot_size 必须是正整数")
+    day = pd.Timestamp(as_of).normalize()
+    decided = pd.Timestamp(decision_date).normalize() if decision_date is not None else day
+    executed = pd.Timestamp(execution_date).normalize() if execution_date is not None else None
+    statuses = statuses or {}
+    current = {str(code): _whole_shares(count) for code, count in (holdings or {}).items()}
+    lot = cfg.lot_size
+    rules: list[str] = []
+    cutoff = None
+    premium_rows = []
+    premiums: dict[str, float] = {}
+    pools = {pool.container: pool for pool in cfg.pools}
+    if cfg.pools:
+        cutoff = published_cutoff(day, trading_days, cfg.nav_lag)
+        for name in cfg.overseas:
+            pool = pools[name]
+            for code in pool.codes:
+                nav = select_nav(nav_rows, code, cutoff)
+                close = _price(prices, code)
+                premium = close / nav.unit_nav - 1
+                premiums[code] = premium
+                premium_rows.append({
+                    "code": code,
+                    "pool": name,
+                    "close": close,
+                    "unit_nav": nav.unit_nav,
+                    "nav_date": str(nav.date.date()),
+                    "premium": round(premium, 8),
+                    "chosen": False,
+                })
+    pool_codes = [code for pool in cfg.pools for code in pool.codes]
+    overseas_before = _market_value(current, prices, pool_codes) / equity if pool_codes else 0.0
+    outside = bool(pool_codes) and _outside_band(overseas_before, cfg.o_weight, cfg.band)
+    rules.append("overseas_rebalance" if outside else "overseas_inside_band")
+
+    a_codes: list[str] = []
+    for book in cfg.funds:
+        a_codes.append(book.primary)
+        a_codes.extend(alt.code for alt in book.alternates)
+    targets: dict[str, int] = {}
+    labels: dict[str, str] = {}
+    sleeves: dict[str, str] = {}
+    if a_share_due:
+        rules.append("a_share_monthly")
+        for code in a_codes:
+            targets[code] = 0
+        if in_market:
+            if not cfg.funds:
+                raise FallbackError("A 股在场但没有执行基金")
+            share = cfg.a_weight / len(cfg.funds)
+            for book in cfg.funds:
+                code, state = resolve_execution_fund(book, statuses)
+                if state:
+                    rules.append(f"primary_{state}:{book.primary}->{code}")
+                labels[code] = book.container
+                sleeves[code] = "a_share"
+                targets[code] = targets.get(code, 0) + _lot_floor(equity * share, _price(prices, code), lot)
+            haven_value = 0.0
+        else:
+            rules.append("valve_haven")
+            haven_value = equity * cfg.a_weight
+    else:
+        rules.append("a_share_hold")
+        for code in a_codes:
+            targets[code] = current.get(code, 0)
+        haven_value = None
+
+    chosen: dict[str, str] = {}
+    park = 0.0
+    if cfg.pools:
+        per = cfg.o_weight / len(cfg.overseas)
+        for name in cfg.overseas:
+            codes = list(pools[name].codes)
+            held = {code: current.get(code, 0) for code in codes}
+            current_value = _market_value(held, prices, codes)
+            target_value = equity * per
+            for code in codes:
+                labels.setdefault(code, name)
+                sleeves[code] = "overseas"
+            if not outside:
+                for code in codes:
+                    targets[code] = held[code]
+                continue
+            lowest = min(codes, key=lambda code: (premiums[code], code))
+            if _over_cap(premiums[lowest], cfg.premium_cap):
+                rules.append(f"premium_cap:{name}")
+                for code in codes:
+                    targets[code] = held[code]
+                shortfall = target_value - current_value
+                if shortfall > 1e-8:
+                    park += shortfall
+                    rules.append("park_511880")
+                continue
+            if target_value > current_value + 1e-8:
+                bought = _lot_floor(target_value - current_value, _price(prices, lowest), lot)
+                for code in codes:
+                    targets[code] = held[code]
+                if bought:
+                    targets[lowest] = held[lowest] + bought
+                    chosen[name] = lowest
+                    rules.append(f"buy_lowest_premium:{name}:{lowest}")
+            elif current_value > target_value + 1e-8:
+                reduced = _sell_down(held, prices, premiums, target_value, lot)
+                for code in codes:
+                    targets[code] = reduced[code]
+                rules.append(f"sell_highest_premium:{name}")
+            else:
+                for code in codes:
+                    targets[code] = held[code]
+
+    haven = cfg.haven_code
+    labels[haven] = "货币"
+    sleeves[haven] = "haven"
+    if a_share_due:
+        cash_value = (haven_value or 0.0) + park
+        targets[haven] = _lot_floor(cash_value, _price(prices, haven), lot) if cash_value > 1e-8 else 0
+    else:
+        extra = _lot_floor(park, _price(prices, haven), lot) if park > 1e-8 else 0
+        targets[haven] = current.get(haven, 0) + extra
+    for code, count in current.items():
+        if code not in targets:
+            targets[code] = count
+            sleeves.setdefault(code, "other")
+
+    for row in premium_rows:
+        row["chosen"] = chosen.get(row["pool"]) == row["code"]
+    positions = []
+    invested = 0.0
+    for code, count in targets.items():
+        if count <= 0:
+            continue
+        price = _price(prices, code)
+        value = count * price
+        invested += value
+        positions.append({
+            "code": code,
+            "name": labels.get(code, code),
+            "sleeve": sleeves.get(code, "other"),
+            "shares": count,
+            "price": price,
+            "market_value": round(value, 6),
+        })
+    positions.sort(key=lambda row: (row["sleeve"], row["code"]))
+    payload = {
+        "date": str(decided.date()),
+        "decision_date": str(decided.date()),
+        "execution_date": str(executed.date()) if executed is not None else None,
+        "signal_date": str(pd.Timestamp(signal_date).date()) if signal_date is not None else str(decided.date()),
+        "equity": equity,
+        "holdings_in": current,
+        "valve": "在场" if in_market else "出场",
+        "a_share_due": bool(a_share_due),
+        "nav_source": nav_source,
+        "nav_note": nav_note,
+        "nav_lag_trading_days": cfg.nav_lag,
+        "nav_cutoff": str(cutoff.date()) if cutoff is not None else None,
+        "band": cfg.band,
+        "premium_cap": cfg.premium_cap,
+        "overseas_weight_before": round(overseas_before, 8),
+        "rules": _unique(rules),
+        "premiums": premium_rows,
+        "targets": positions,
+        "residual_cash": round(equity - invested, 6),
+    }
+    return _check_holdings_payload(payload)
+
+
+def load_fund_nav(db: Path) -> list[NavRow]:
+    uri = f"{Path(db).resolve().as_uri()}?mode=ro"
+    con = sqlite3.connect(uri, uri=True)
+    try:
+        found = con.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'fund_nav'").fetchone()
+        if not found:
+            raise FallbackError(f"{db} 没有 fund_nav 表")
+        rows = con.execute(
+            "SELECT code, date, unit_nav, fetched_at, source FROM fund_nav").fetchall()
+    finally:
+        con.close()
+    out = []
+    for code, nav_date, unit_nav, fetched_at, source in rows:
+        if unit_nav is None:
+            continue
+        out.append(NavRow(str(code), pd.Timestamp(nav_date), float(unit_nav), str(fetched_at or ""), str(source or "")))
+    return out
+
+
+def load_closes(db: Path, codes: list[str], day: str) -> dict[str, float]:
+    if not codes:
+        return {}
+    uri = f"{Path(db).resolve().as_uri()}?mode=ro"
+    con = sqlite3.connect(uri, uri=True)
+    try:
+        marks = ",".join("?" for _ in codes)
+        rows = con.execute(
+            f"SELECT code, close FROM bars WHERE adj = 'raw' AND date = ? AND code IN ({marks})",
+            [day, *codes]).fetchall()
+    finally:
+        con.close()
+    return {str(code): float(close) for code, close in rows if close is not None and float(close) > 0}
+
+
+def load_calendar(db: Path) -> list[pd.Timestamp]:
+    uri = f"{Path(db).resolve().as_uri()}?mode=ro"
+    con = sqlite3.connect(uri, uri=True)
+    try:
+        rows = con.execute("SELECT date FROM calendar ORDER BY date").fetchall()
+    finally:
+        con.close()
+    if not rows:
+        raise FallbackError(f"{db} 的 calendar 是空的")
+    return [pd.Timestamp(row[0]) for row in rows]
+
+
+def decision_state(panel: Path, as_of: str | pd.Timestamp, cfg: FallbackConfig) -> dict:
+    """阀的在场/出场。回撤只留在这个字典里，调用方不要把它写进目标持仓。"""
+    as_of_ts = pd.Timestamp(as_of)
+    prices = _read_panel(panel, as_of_ts)
+    a_ret, _o_ret = monthly_legs(prices, cfg)
+    path = valve_path(a_ret, cfg.out, cfg.back)
+    wide = prices.pivot(index="date", columns="container", values="close").sort_index()
+    signal = _month_end_on_or_before(wide.index, as_of_ts)
+    signal_period = signal.to_period("M")
+    if signal_period not in {ts.to_period("M") for ts in a_ret.index}:
+        raise FallbackError(f"{signal.date()} 还没有影子月收益，不能定阀")
+    if path["as_of"].to_period("M") != signal_period:
+        raise FallbackError("目标日的信号月与影子净值的最后一月不一致")
+    return {"in_market": bool(path["in_market"]), "signal_date": signal,
+            "drawdown": path["drawdown"], "closes": wide.loc[signal]}
 
 
 def target_snapshot(panel: Path, as_of: str | pd.Timestamp, cfg: FallbackConfig) -> dict:
@@ -483,7 +980,6 @@ def target_snapshot(panel: Path, as_of: str | pd.Timestamp, cfg: FallbackConfig)
         "valve": "在场" if path["in_market"] else "出场",
         "a_share_drawdown_from_high": path["drawdown"],
         "qdii_premium": "未接入",
-        "pending": cfg.pending,
         "weights": rows,
     }
     forbidden = {"cagr", "max_drawdown", "vol", "return", "returns", "rank"}
@@ -500,7 +996,7 @@ def _print_replicate(result: dict) -> None:
     a = result["monthly"]["a_valve"]
     b = result["monthly"]["blend"]
     d = result["daily"]
-    print(f"设计期 {result['monthly']['first']} → {result['monthly']['last']}  {result['pending']}")
+    print(f"设计期 {result['monthly']['first']} → {result['monthly']['last']}")
     print(f"月频 A股等权+阀25/10  {_fmt_pct(a['cagr'])}  {_fmt_pct(a['max_drawdown'])}  切换 {a['switches']}")
     print(f"月频 A股70%(阀25/10)+海外30%  {_fmt_pct(b['cagr'])}  {_fmt_pct(b['max_drawdown'])}")
     print(f"与 d2 的差（百分点） {json.dumps(result['d2_delta_pp'], ensure_ascii=False)}")
@@ -515,6 +1011,30 @@ def _print_target(result: dict) -> None:
         print(f"{row['container']:<12} {row['execution_code']:<8} {row['weight']:10.6f}  {row['qdii_premium']}")
 
 
+def _print_holdings(result: dict) -> None:
+    print(f"决策 {result['decision_date']}  执行 {result['execution_date']}  信号日 {result['signal_date']}  "
+          f"阀 {result['valve']}  海外偏离前权重 {result['overseas_weight_before']:.4f}")
+    print(f"净值截止 {result['nav_cutoff']}  滞后 {result['nav_lag_trading_days']}  来源 {result['nav_source']}")
+    print("规则 " + ", ".join(result["rules"]))
+    print(f"{'池':<8} {'代码':<8} {'净值日':<12} {'溢价':>10}  买入")
+    for row in result["premiums"]:
+        mark = "是" if row["chosen"] else ""
+        print(f"{row['pool']:<8} {row['code']:<8} {row['nav_date']:<12} {row['premium']:10.4%}  {mark}")
+    print(f"{'代码':<8} {'名称':<10} {'腿':<10} {'股数':>10} {'价格':>10}")
+    for row in result["targets"]:
+        print(f"{row['code']:<8} {row['name']:<10} {row['sleeve']:<10} {row['shares']:10d} {row['price']:10.4f}")
+    print(f"剩余现金 {result['residual_cash']:.2f}")
+
+
+def _read_json_map(path: Path | None) -> dict:
+    if path is None:
+        return {}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise FallbackError(f"{path} 必须是对象")
+    return payload
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="python -m src.signals.fallback")
     parser.add_argument("--config", type=Path, default=None)
@@ -527,6 +1047,13 @@ def main(argv: list[str] | None = None) -> int:
     tgt = sub.add_parser("target")
     tgt.add_argument("--panel", type=Path, required=True)
     tgt.add_argument("--date", required=True)
+    tgt.add_argument("--equity", type=float, required=True)
+    tgt.add_argument("--holdings", type=Path, default=None)
+    tgt.add_argument("--nav-db", type=Path, required=True)
+    tgt.add_argument("--price-db", type=Path, default=None)
+    tgt.add_argument("--status", type=Path, default=None)
+    tgt.add_argument("--nav-source", default="fund_nav")
+    tgt.add_argument("--nav-note", default="")
     tgt.add_argument("--out", type=Path, default=None)
     args = parser.parse_args(argv)
     cfg = load_config(args.config)
@@ -543,8 +1070,31 @@ def main(argv: list[str] | None = None) -> int:
                 args.out.parent.mkdir(parents=True, exist_ok=True)
                 args.out.write_text(json.dumps(result, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
             return 0 if result["matches_d2"] else 1
-        result = target_snapshot(args.panel, args.date, cfg)
-        _print_target(result)
+        holdings = {str(code): value for code, value in _read_json_map(args.holdings).items()}
+        statuses = {str(code): str(value) for code, value in _read_json_map(args.status).items()}
+        price_db = args.price_db or (ROOT / "data" / "market.sqlite")
+        codes = [cfg.haven_code, *holdings]
+        for book in cfg.funds:
+            codes.append(book.primary)
+            codes.extend(alt.code for alt in book.alternates)
+        for pool in cfg.pools:
+            codes.extend(pool.codes)
+        trading_days = load_calendar(price_db)
+        schedule = schedule_execution(args.date, trading_days)
+        # 阀和 A 股目标用决策日（上月最后一个交易日的收盘）。溢价和带宽也用这一天的收盘：
+        # 执行日的收盘当时还没有。海外带宽和 A 股对齐写在同一张执行单上。
+        state = decision_state(args.panel, schedule["decision_date"], cfg)
+        nav_rows = load_fund_nav(args.nav_db)
+        sources = sorted({row.source for row in nav_rows if row.source})
+        nav_source = sources[0] if args.nav_source == "fund_nav" and len(sources) == 1 else args.nav_source
+        result = plan_targets(
+            cfg, as_of=schedule["decision_date"], equity=args.equity, holdings=holdings,
+            prices=load_closes(price_db, sorted(set(codes)), schedule["decision_date"].date().isoformat()),
+            nav_rows=nav_rows, trading_days=trading_days, statuses=statuses,
+            in_market=state["in_market"], a_share_due=schedule["a_share_due"],
+            signal_date=state["signal_date"], decision_date=schedule["decision_date"],
+            execution_date=schedule["execution_date"], nav_source=nav_source, nav_note=args.nav_note)
+        _print_holdings(result)
         if args.out:
             args.out.parent.mkdir(parents=True, exist_ok=True)
             args.out.write_text(json.dumps(result, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")

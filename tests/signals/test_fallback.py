@@ -28,9 +28,9 @@ def _cfg():
 
 
 class Config(unittest.TestCase):
-    def test_file_holds_the_d2_sleeves_until_d5(self):
+    def test_file_keeps_the_d2_sleeves(self):
         cfg = _cfg()
-        self.assertIn("待 D5 标的决定", cfg.pending)
+        self.assertFalse(hasattr(cfg, "pending"))
         self.assertEqual(len(cfg.a_share), 16)
         self.assertEqual(cfg.a_share[:4], ("沪深300", "中证500", "中证1000", "创业板"))
         self.assertEqual(cfg.a_share[-1], "红利")
@@ -45,6 +45,10 @@ class Config(unittest.TestCase):
         self.assertEqual(cfg.cost_one_way, 0.0005)
         self.assertEqual(cfg.rebalance, "monthly")
         self.assertEqual(cfg.design_end, pd.Timestamp("2015-12-31"))
+        self.assertEqual(cfg.nav_lag, 2)
+        self.assertEqual(cfg.lot_size, 100)
+        self.assertAlmostEqual(cfg.band, 0.075)
+        self.assertAlmostEqual(cfg.premium_cap, 0.10)
 
 
 class Valve(unittest.TestCase):
@@ -148,7 +152,7 @@ class Target(unittest.TestCase):
 def _one_name_config(tmp: str):
     cfg = _cfg()
     return cfg.__class__(
-        pending=cfg.pending, design_end=cfg.design_end,
+        design_end=cfg.design_end,
         a_share=("甲",), a_weight=0.70, overseas=("乙",), o_weight=0.30,
         out=cfg.out, back=cfg.back, judge=cfg.judge, haven_code="511880",
         cash_annual=cfg.cash_annual, rebalance=cfg.rebalance, cost_one_way=cfg.cost_one_way,
@@ -158,7 +162,7 @@ def _one_name_config(tmp: str):
 def _one_name_config_inline():
     cfg = _cfg()
     return cfg.__class__(
-        pending=cfg.pending, design_end=pd.Timestamp("2015-12-31"),
+        design_end=pd.Timestamp("2015-12-31"),
         a_share=("甲",), a_weight=1.0, overseas=(), o_weight=0.0,
         out=0.25, back=0.10, judge="month_end", haven_code="511880",
         cash_annual=0.02, rebalance="monthly", cost_one_way=0.0005,
