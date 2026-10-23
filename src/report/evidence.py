@@ -11,7 +11,7 @@ import pandas as pd
 
 from src.portfolio.config import load_config
 from src.report.blend import monthly_rebalance
-from src.report.charts import draw_nav, draw_timeline
+from src.report.charts import BENCH_LABEL, HS300_LABEL, STRATEGY_LABEL, draw_nav, draw_oos, draw_timeline
 from src.report.fx import cny_from_usd
 from src.report.metrics import (
     cagr,
@@ -609,11 +609,14 @@ def write_evidence(panel_path: Path, market_db: Path, out_dir: Path, asset_dir: 
         json.dumps(_json_ready(_representativeness(a_share, h00985)), ensure_ascii=False, indent=1) + "\n",
         encoding="utf-8")
     _write_csv(out_dir / "investable.csv", investable.to_dict("records"), ["month_end", "investable_count"])
-    draw_nav(asset_dir / "nav-vs-benchmark.png", [
-        ("策略组合", series["策略组合"]),
-        ("BM-主", series["BM-主"]),
-        ("沪深300全收益", series["H00300"]),
-    ])
+    curves = [
+        (STRATEGY_LABEL, series["策略组合"]),
+        (BENCH_LABEL, series["BM-主"]),
+        (HS300_LABEL, series["H00300"]),
+    ]
+    common_start = max(s.dropna().index[0] for _, s in curves)
+    draw_nav(asset_dir / "nav-vs-benchmark.png", curves, common_start)
+    draw_oos(asset_dir / "oos-vs-benchmark.png", curves)
     draw_timeline(
         asset_dir / "data-timeline.png",
         universe,

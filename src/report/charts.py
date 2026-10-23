@@ -9,7 +9,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
-plt.rcParams["font.family"] = "Noto Sans CJK SC"
+from src.report.metrics import cagr
+
+plt.rcParams["font.family"] = ["Noto Sans CJK SC", "Noto Sans SC", "DejaVu Sans"]
 plt.rcParams["axes.unicode_minus"] = False
 
 DESIGN_COLOR = "#f3ead7"
@@ -23,27 +25,101 @@ def _figure() -> plt.Figure:
     return plt.figure(figsize=(16, 9), dpi=100)
 
 
-def draw_nav(path: Path, curves: list[tuple[str, pd.Series]]) -> None:
-    """三条净值，对数纵轴。设计期和样本外用不同底色。"""
+STRATEGY_LABEL = "策略：A 股 16 指数等权 70% + 美股 30%"
+BENCH_LABEL = "基准：70% 沪深300 + 15% 纳指100 + 15% 标普500"
+HS300_LABEL = "沪深300 全收益"
+OOS_START = pd.Timestamp("2016-01-04")
+END = pd.Timestamp("2026-09-30")
+
+
+def _window(series: pd.Series, start: pd.Timestamp) -> pd.Series:
+    clean = series.dropna()
+    return clean[(clean.index >= start) & (clean.index <= END)]
+
+
+def _nav(series: pd.Series, start: pd.Timestamp) -> pd.Series:
+    """含起点当天的收益（与 benchmark.csv 同口径）；1 元画在起点前一天。"""
+    clean = _window(series, start)
+    nav = (1.0 + clean).cumprod()
+    return pd.concat([pd.Series([1.0], index=[clean.index[0] - pd.Timedelta(days=1)]), nav])
+
+
+def _drawdown(nav: pd.Series) -> pd.Series:
+    return nav / nav.cummax() - 1.0
+
+
+def _cagr(series: pd.Series, start: pd.Timestamp) -> float:
+    return float(cagr(_window(series, start)))
+
+
+def _two_panels() -> tuple[plt.Figure, plt.Axes, plt.Axes]:
     fig = _figure()
-    ax = fig.add_axes((0.07, 0.14, 0.88, 0.76))
-    ax.axvspan(pd.Timestamp("2005-01-04"), pd.Timestamp("2015-12-31"), color=DESIGN_COLOR, zorder=0)
-    ax.axvspan(pd.Timestamp("2016-01-04"), pd.Timestamp("2026-09-30"), color=OOS_COLOR, zorder=0)
-    for color, (label, series) in zip(LINE_COLORS, curves, strict=True):
-        clean = series.dropna()
-        nav = (1.0 + clean).cumprod()
-        ax.plot(nav.index, nav.to_numpy(), label=label, color=color, linewidth=1.6)
-    ax.set_yscale("log")
-    ax.set_xlim(pd.Timestamp("2005-01-04"), pd.Timestamp("2026-09-30"))
-    ax.set_ylabel("净值（对数）")
-    ax.set_xlabel("日期")
-    ax.set_title("策略组合、BM-主、沪深300全收益")
-    ax.legend(frameon=False, loc="upper left")
-    fig.text(
-        0.07, 0.035,
-        "人民币全收益、指数层面。浅色底为设计期，蓝色底为样本外。策略组合与 BM-主 自 2006-01 起，因为中间价从 2006-01-04 才有。基准定于 2026-10，晚于 v2 样本外运行。不扣管理费。",
-        fontsize=10,
-    )
+    top = fig.add_axes((0.07, 0.36, 0.74, 0.56))
+    bottom = fig.add_axes((0.07, 0.10, 0.74, 0.22), sharex=top)
+    for ax in (top, bottom):
+        ax.grid(True, color="#e5e7eb", linewidth=0.8)
+        ax.spines[["top", "right"]].set_visible(False)
+    top.tick_params(axis="x", labelbottom=False)
+    return fig, top, bottom
+
+
+def draw_nav(path: Path, curves: list[tuple[str, pd.Series]], start: pd.Timestamp) -> None:
+    """全程净值：共同起点 = 1 元，对数刻度但标普通数字；下方是回撤。"""
+    from matplotlib.ticker import FixedLocator, FuncFormatter, NullLocator, PercentFormatter
+
+    fig, top, bottom = _two_panels()
+    navs = [_nav(series, start) for _, series in curves]
+    for color, (label, _), nav in zip(LINE_COLORS, curves, navs, strict=True):
+        top.plot(nav.index, nav.to_numpy(), label=label, color=color, linewidth=1.7)
+        bottom.plot(nav.index, _drawdown(nav).to_numpy() * 100, color=color, linewidth=1.2)
+    top.set_yscale("log")
+    top.yaxis.set_major_locator(FixedLocator([0.5, 1, 2, 3, 4, 6, 8, 12, 16]))
+    top.yaxis.set_minor_locator(NullLocator())
+    top.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:g}"))
+    top.set_ylabel("净值（起点 1 元，对数刻度）")
+    for color, (_, series), nav in zip(LINE_COLORS, curves, navs, strict=True):
+        top.annotate(f"{nav.iloc[-1]:.2f} 元  年化 {_cagr(series, start) * 100:+.1f}%", xy=(nav.index[-1], nav.iloc[-1]),
+                     xytext=(8, 0), textcoords="offset points", va="center", fontsize=11, color=color)
+    for ax in (top, bottom):
+        ax.axvline(OOS_START, color="#6b7280", linestyle="--", linewidth=1)
+    ymax = max(float(n.max()) for n in navs)
+    top.text(start + pd.Timedelta(days=60), ymax * 1.05, "设计期（规则在这段定型）", fontsize=11, color="#374151")
+    top.text(OOS_START + pd.Timedelta(days=60), ymax * 1.05, "样本外（只跑一次）", fontsize=11, color="#374151")
+    top.set_ylim(0.6, ymax * 1.25)
+    top.legend(frameon=False, loc="upper left", bbox_to_anchor=(0.0, 0.93), fontsize=11)
+    top.set_title(f"累计净值与回撤（{start.date()} → 2026-09-30）", fontsize=14, loc="left")
+    bottom.yaxis.set_major_formatter(PercentFormatter(decimals=0))
+    bottom.set_ylabel("距前高回撤")
+    bottom.set_xlim(start - pd.Timedelta(days=1), END)
+    fig.text(0.07, 0.03, "人民币计价、全收益、指数层面，不扣管理费和交易成本。三条线从同一天起算（人民币中间价 2006-01-04 起才有）。"
+             "基准定于 2026-10，晚于样本外运行。", fontsize=10, color="#4b5563")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(path)
+    plt.close(fig)
+
+
+def draw_oos(path: Path, curves: list[tuple[str, pd.Series]]) -> None:
+    """样本外单独一张：2016-01-04 起累计收益（%，线性刻度）；下方是回撤。"""
+    from matplotlib.ticker import PercentFormatter
+
+    fig, top, bottom = _two_panels()
+    navs = [_nav(series, OOS_START) for _, series in curves]
+    for color, (label, _), nav in zip(LINE_COLORS, curves, navs, strict=True):
+        top.plot(nav.index, (nav.to_numpy() - 1.0) * 100, label=label, color=color, linewidth=1.8)
+        bottom.plot(nav.index, _drawdown(nav).to_numpy() * 100, color=color, linewidth=1.2)
+    top.axhline(0, color="#9ca3af", linewidth=0.8)
+    top.yaxis.set_major_formatter(PercentFormatter(decimals=0))
+    top.set_ylabel("累计收益")
+    navs_pct = [(n - 1.0) * 100 for n in navs]
+    for color, (_, series), pct in zip(LINE_COLORS, curves, navs_pct, strict=True):
+        top.annotate(f"{pct.iloc[-1]:+.0f}%  年化 {_cagr(series, OOS_START) * 100:+.1f}%", xy=(pct.index[-1], pct.iloc[-1]),
+                     xytext=(8, 0), textcoords="offset points", va="center", fontsize=11, color=color)
+    top.legend(frameon=False, loc="upper left", fontsize=11)
+    top.set_title("样本外 2016-01-04 → 2026-09-30：累计收益与回撤", fontsize=14, loc="left")
+    bottom.yaxis.set_major_formatter(PercentFormatter(decimals=0))
+    bottom.set_ylabel("距前高回撤")
+    bottom.set_xlim(OOS_START - pd.Timedelta(days=1), END)
+    fig.text(0.07, 0.03, "人民币计价、全收益、指数层面，不扣管理费和交易成本。基准定于 2026-10，晚于样本外运行。", fontsize=10, color="#4b5563")
     path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(path)
     plt.close(fig)
