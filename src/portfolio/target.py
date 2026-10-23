@@ -29,6 +29,13 @@ from src.portfolio.execution import (
 from src.portfolio.replicate import _available, _read_panel, _target_weights, monthly_legs
 from src.portfolio.valve import valve_path
 
+
+def valve_label(enabled: bool, in_market: bool) -> str:
+    """阀关掉之后快照写「关闭（D7）」。开着时仍是在场或出场。"""
+    if not enabled:
+        return "关闭（D7）"
+    return "在场" if in_market else "出场"
+
 HOLDINGS_FORBIDDEN = {"cagr", "max_drawdown", "vol", "return", "returns", "rank", "sharpe", "drawdown"}
 
 def _month_end_on_or_before(index: pd.DatetimeIndex, as_of: pd.Timestamp) -> pd.Timestamp:
@@ -219,7 +226,7 @@ def plan_targets(cfg: FallbackConfig, *, as_of: str | pd.Timestamp, equity: floa
         "signal_date": str(pd.Timestamp(signal_date).date()) if signal_date is not None else str(decided.date()),
         "equity": equity,
         "holdings_in": current,
-        "valve": "在场" if in_market else "出场",
+        "valve": valve_label(cfg.valve_enabled, in_market),
         "a_share_due": bool(a_share_due),
         "nav_source": nav_source,
         "nav_note": nav_note,
@@ -344,7 +351,7 @@ def target_snapshot(panel: Path, as_of: str | pd.Timestamp, cfg: FallbackConfig)
     payload = {
         "date": str(as_of_ts.date()),
         "signal_date": str(signal.date()),
-        "valve": "在场" if in_market else "出场",
+        "valve": valve_label(cfg.valve_enabled, in_market),
         "a_share_drawdown_from_high": drawdown,
         "qdii_premium": "未接入",
         "weights": rows,

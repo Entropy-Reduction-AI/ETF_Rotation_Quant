@@ -388,12 +388,12 @@ class ValveSwitch(unittest.TestCase):
 
             off_plan = plan_targets(replace(cfg_on, valve_enabled=False), **kwargs)
             off_held = _held(off_plan)
-            self.assertEqual(off_plan["valve"], "在场")
+            self.assertEqual(off_plan["valve"], "关闭（D7）")
             self.assertEqual(off_held.get("510300"), 70_000)
             self.assertNotIn("511880", off_held)
             off_shot = target_snapshot(panel, "2024-03-31", replace(cfg_on, valve_enabled=False))
             off_weights = {row["execution_code"]: row["weight"] for row in off_shot["weights"]}
-            self.assertEqual(off_shot["valve"], "在场")
+            self.assertEqual(off_shot["valve"], "关闭（D7）")
             self.assertIsNone(off_shot["a_share_drawdown_from_high"])
             self.assertAlmostEqual(off_weights["510300"], 0.70)
             self.assertNotIn("511880", off_weights)
