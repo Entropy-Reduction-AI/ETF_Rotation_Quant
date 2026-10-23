@@ -206,5 +206,5 @@ calendar 共 5343 行，起 2005-01-04，末日 2026-12-31。
 - `data/market.sqlite`
 - `data/universe.csv`
 - `scripts/data_inventory.py`
-- `docs/data-layer.md`
+- `docs/data/data-layer.md`
 - `docs/project-intake/etf-rotation-quant.md`

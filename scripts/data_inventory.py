@@ -1,4 +1,4 @@
-"""从 data/market.sqlite 与 data/universe.csv 生成 docs/data-inventory.md。
+"""从 data/market.sqlite 与 data/universe.csv 生成 docs/data/data-inventory.md。
 
 统计数字只来自这两份文件。已知空窗和 T12 身份说明是登记文本，脚本只核对库里的对应事实。
 """
@@ -15,7 +15,7 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parents[1]
 DB_PATH = ROOT / "data" / "market.sqlite"
 UNI_PATH = ROOT / "data" / "universe.csv"
-OUT_PATH = ROOT / "docs" / "data-inventory.md"
+OUT_PATH = ROOT / "docs" / "data" / "data-inventory.md"
 SOURCE_COMMIT = "fa70cb709738dad3ebf426a71959943abe88fd0e"
 
 EXPECTED_SHA = {
@@ -311,7 +311,7 @@ calendar 共 {calendar[2]} 行，起 {calendar[0]}，末日 {calendar[1]}。
 - `data/market.sqlite`
 - `data/universe.csv`
 - `scripts/data_inventory.py`
-- `docs/data-layer.md`
+- `docs/data/data-layer.md`
 - `docs/project-intake/etf-rotation-quant.md`
 """
     OUT_PATH.write_text(text, encoding="utf-8")
