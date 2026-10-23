@@ -1,7 +1,9 @@
 import sys,csv,numpy as np,pandas as pd
-sys.path.insert(0,'/data/ETF_Rotation_Quant')
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
 from src.research.prereg_v1.panel import read_table, validate_panel
-panel=validate_panel(read_table('/data/ETF_Rotation_Quant/outputs/panel-2026-09-30.sqlite','panel'))
+panel=validate_panel(read_table(str(ROOT / 'outputs/panel-2026-09-30.sqlite'),'panel'))
 A=['沪深300','中证500','中证1000','创业板','AI/算力','有色','煤炭','军工','医药','消费','白酒','农业','银行','券商','地产','红利']
 u={r['theme']:r for r in csv.DictReader(open('data/universe.csv'))}
 L={r['index_code']:r['launch_date'] for r in csv.DictReader(open('incoming/grok-pit-20261022/index_launch.csv'))}

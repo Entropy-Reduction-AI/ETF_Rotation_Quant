@@ -1,10 +1,12 @@
 # 满仓叠加：底仓 = 设计期全部容器等权（日度），交易仓位从底仓里挪出来，止损后钱回底仓而不是现金
 import sys, numpy as np, pandas as pd
-sys.path.insert(0,'/data/ETF_Rotation_Quant')
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
 from src.research.prereg_v1.panel import read_table, validate_panel
 from src.research.prereg_v1.config import DESIGN_END, Params
 from src.research.prereg_v1.engine import simulate
-panel=validate_panel(read_table('/data/ETF_Rotation_Quant/outputs/panel-2026-09-30.sqlite','panel'))
+panel=validate_panel(read_table(str(ROOT / 'outputs/panel-2026-09-30.sqlite'),'panel'))
 E=pd.Timestamp(DESIGN_END); d=panel[panel.date<=E]; p=Params(); start=d.date.min()
 px=d.pivot(index='date',columns='container',values='close').sort_index()
 hole=d.pivot(index='date',columns='container',values='data_hole').reindex_like(px)

@@ -1,10 +1,12 @@
 import sys, json, numpy as np, pandas as pd
-sys.path.insert(0, '/data/ETF_Rotation_Quant')
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
 from src.research.prereg_v1.panel import read_table, validate_panel, validate_bench
 from src.research.prereg_v1.config import DESIGN_END, Params
 from src.research.prereg_v1.engine import simulate, random_entry_null
 from src.research.prereg_v1.metrics import r_stats, portfolio_stats, r_by
-P='/data/ETF_Rotation_Quant/outputs/panel-2026-09-30.sqlite'
+P=str(ROOT / 'outputs/panel-2026-09-30.sqlite')
 E=pd.Timestamp(DESIGN_END)
 panel=validate_panel(read_table(P,'panel')); hs=validate_bench(read_table(P,'bench'))
 d=panel[panel.date<=E].copy(); hs=hs[hs.index<=E]

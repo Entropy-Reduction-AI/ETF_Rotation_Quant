@@ -10,26 +10,24 @@ import pandas as pd
 import tests  # noqa: F401
 from dataclasses import replace
 
-from src.signals.fallback import (
+from src.portfolio.config import (
     Alternate,
     AShareBook,
     FallbackConfig,
     FallbackError,
     NavRow,
     OverseasPool,
-    a_share_session,
-    decision_state,
-    load_calendar,
     load_config,
-    load_fund_nav,
-    plan_targets,
-    replicate,
+)
+from src.portfolio.execution import (
+    a_share_session,
     resolve_execution_fund,
     schedule_execution,
     select_nav,
-    target_snapshot,
 )
-from tests.signals.test_fallback import _crash_rows, _flat_rows, _one_name_config, _write_panel, _write_universe
+from src.portfolio.replicate import replicate
+from src.portfolio.target import decision_state, load_calendar, load_fund_nav, plan_targets, target_snapshot
+from tests.portfolio.test_fallback import _crash_rows, _flat_rows, _one_name_config, _write_panel, _write_universe
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -271,7 +269,7 @@ class DesignPeriod(unittest.TestCase):
             _write_panel(path, _flat_rows())
             base = _one_name_config(tmp)
             other = replace(base, band=0.01, premium_cap=0.01, nav_lag=9)
-            with patch("src.signals.fallback.plan_targets", side_effect=AssertionError("溢价规则不应进入复现")):
+            with patch("src.portfolio.target.plan_targets", side_effect=AssertionError("溢价规则不应进入复现")):
                 left = replicate(path, "2015-12-31", base, haven_db=None)
                 right = replicate(path, "2015-12-31", other, haven_db=None)
             self.assertEqual(left["monthly"], right["monthly"])
@@ -404,7 +402,7 @@ class ValveSwitch(unittest.TestCase):
 class FundNavTable(unittest.TestCase):
     def test_snapshot_fixture_has_a_later_decoy_nav(self):
         import csv
-        path = ROOT / "tests" / "signals" / "fixtures" / "fund_nav_2026-09-30.csv"
+        path = ROOT / "tests" / "portfolio" / "fixtures" / "fund_nav_2026-09-30.csv"
         with path.open(encoding="utf-8") as fh:
             raw = list(csv.DictReader(fh))
         rows = [NavRow(row["code"], pd.Timestamp(row["date"]), float(row["unit_nav"]), row["fetched_at"]) for row in raw]

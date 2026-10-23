@@ -34,9 +34,10 @@ from tests.marketdb import open_db, put, put_coverage           # noqa: E402
 
 
 def legacy_probe():
-    """src/rotation/etf_probe.py 顶层 import akshare；与 analyze.py 相同，注入伪模块后加载。"""
+    """tests/indicators/reference/etf_probe.py 顶层 import akshare；与 analyze.py 相同，注入伪模块后加载。"""
     sys.modules.setdefault("akshare", types.ModuleType("akshare"))
-    spec = importlib.util.spec_from_file_location("etf_probe_legacy", ROOT / "src" / "rotation" / "etf_probe.py")
+    spec = importlib.util.spec_from_file_location(
+        "etf_probe_legacy", ROOT / "tests" / "indicators" / "reference" / "etf_probe.py")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod

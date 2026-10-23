@@ -352,7 +352,7 @@ class RealBookVerdict(unittest.TestCase):
         self.assertTrue(all(int(year) <= 2015 for year in real["doubled_cost"]["arms"]["B1"]["yearly"]))
 
     def test_design_and_oos_wiring_read_the_real_book(self):
-        config = ROOT / "config" / "r4_fallback.toml"
+        config = ROOT / "config" / "portfolio.toml"
         with tempfile.TemporaryDirectory() as tmp:
             panel, market = self._write_fixture(Path(tmp))
             design = run_design(panel, market, config, pd.Timestamp("2015-12-31"))

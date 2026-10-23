@@ -1,8 +1,10 @@
 # 设计期：A 股 16 容器等权（日度），比较 满仓 / 慢阀 25/10（月末）/ Faber 10 月 / Qullamaggie 10-20 日线（日度）
 import sys, numpy as np, pandas as pd
-sys.path.insert(0,'/data/ETF_Rotation_Quant')
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
 from src.research.prereg_v1.panel import read_table, validate_panel
-panel=validate_panel(read_table('/data/ETF_Rotation_Quant/outputs/panel-2026-09-30.sqlite','panel'))
+panel=validate_panel(read_table(str(ROOT / 'outputs/panel-2026-09-30.sqlite'),'panel'))
 d=panel[(panel.date<='2015-12-31')]
 A=['沪深300','中证500','中证1000','创业板','AI/算力','有色','煤炭','军工','医药','消费','白酒','农业','银行','券商','地产','红利']
 px=d.pivot(index='date',columns='container',values='close').sort_index()[A]

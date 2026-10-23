@@ -21,7 +21,7 @@ etf_probe.py — A 股 ETF/LOF 轮动框架 v0 的数据探针（在 Faye 本机
   out/episodes.md                 5 个已核日期的事前(t-5)/当日容器排名
 """
 from pathlib import Path as _Path
-ROOT_S = str(_Path(__file__).resolve().parents[2])  # 仓库根目录（src/<组>/<脚本>.py 上两级）
+ROOT_S = str(_Path(__file__).resolve().parents[3])  # 仓库根目录（tests/indicators/reference/<脚本>.py 上三级）
 import argparse
 import datetime as dt
 import os

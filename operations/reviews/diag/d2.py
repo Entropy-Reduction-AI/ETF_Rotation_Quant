@@ -1,7 +1,9 @@
 import sys, numpy as np, pandas as pd
-sys.path.insert(0,'/data/ETF_Rotation_Quant')
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
 from src.research.prereg_v1.panel import read_table, validate_panel
-panel=validate_panel(read_table('/data/ETF_Rotation_Quant/outputs/panel-2026-09-30.sqlite','panel'))
+panel=validate_panel(read_table(str(ROOT / 'outputs/panel-2026-09-30.sqlite'),'panel'))
 d=panel[(panel.date<='2015-12-31')&(panel.data_hole==0)]
 px=d.pivot(index='date',columns='container',values='close').sort_index()
 m=px.resample('ME').last()

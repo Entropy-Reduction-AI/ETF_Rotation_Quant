@@ -13,7 +13,7 @@
 
 恢复 `requests` 已锚定的 CSI H00300 年度原响应。全程离线，既不重抓行情，也不计算研究收益。本命令不替换缺失年份、不用短窗补年度缺口、不补 OHLC、不启用规则。
 
-服务器已在 `main=81e101e` 完成年度恢复，见 [服务器日志](../operations/work_logs/2026-10-04-h00300-server-restore.md)。三个年末缺日由独立 [offline-supplement](h00300-year-end-supplement.md) 处理；以下年度恢复命令只核验并保留已有且有完整补录审计的额外行，不负责补录。
+服务器已在 `main=81e101e` 完成年度恢复，见服务器日志 `operations/work_logs/2026-10-04-h00300-server-restore.md`。三个年末缺日由独立 [offline-supplement](h00300-year-end-supplement.md) 处理；以下年度恢复命令只核验并保留已有且有完整补录审计的额外行，不负责补录。
 
 `offline-restore` 默认 dry-run，只读打开库；只有 `--apply` 才写入。输入包括已有行情库、原响应目录、明确的来源作业 ID。本次 S1 的 28 个成功响应属于 **probe run 1**：27 个年度窗口（2000–2026，最后一年截至 2026-09-30）和 1 个 45 天候选短窗。backfill run 2 的 H00300 请求失败，不是恢复来源。
 

@@ -9,22 +9,18 @@ from pathlib import Path
 import pandas as pd
 
 import tests  # noqa: F401
-from src.signals.fallback import (
-    FallbackError,
-    daily_book,
-    load_config,
-    main,
-    replicate,
-    slow_valve,
-    target_snapshot,
-)
+from src.portfolio.__main__ import main
+from src.portfolio.config import FallbackError, load_config
+from src.portfolio.replicate import daily_book, replicate
+from src.portfolio.target import target_snapshot
+from src.portfolio.valve import slow_valve
 
 
 ROOT = Path(__file__).resolve().parents[2]
 
 
 def _cfg():
-    return load_config(ROOT / "config" / "r4_fallback.toml")
+    return load_config(ROOT / "config" / "portfolio.toml")
 
 
 class Config(unittest.TestCase):

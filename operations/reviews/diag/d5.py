@@ -1,8 +1,10 @@
 # 设计期：板块离 252 日最高收盘的距离（George-Hwang 52 周高点）与之后 20 日对等权超额；季度块自助
 import sys, numpy as np, pandas as pd
-sys.path.insert(0,'/data/ETF_Rotation_Quant')
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
 from src.research.prereg_v1.panel import read_table, validate_panel
-panel=validate_panel(read_table('/data/ETF_Rotation_Quant/outputs/panel-2026-09-30.sqlite','panel'))
+panel=validate_panel(read_table(str(ROOT / 'outputs/panel-2026-09-30.sqlite'),'panel'))
 d=panel[panel.date<='2015-12-31']
 px=d.pivot(index='date',columns='container',values='close').sort_index()
 hole=d.pivot(index='date',columns='container',values='data_hole').reindex_like(px)

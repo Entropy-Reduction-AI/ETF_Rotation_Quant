@@ -13,7 +13,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.research.prereg_v1.panel import read_table, validate_panel
-from src.signals.fallback import slow_valve
+from src.portfolio.valve import slow_valve
 
 ROOT = Path(__file__).resolve().parents[3]
 FROZEN_SHA = "1ad86ac0150138b7284cca7566d421e63bf39032"

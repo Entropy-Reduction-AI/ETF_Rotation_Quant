@@ -33,7 +33,7 @@ from src.research.prereg_v2.engine import (
 
 DEFAULT_PANEL = ROOT / "outputs" / "panel-2026-09-30.sqlite"
 DEFAULT_MARKET = ROOT / "data" / "market.sqlite"
-DEFAULT_CONFIG = ROOT / "config" / "r4_fallback.toml"
+DEFAULT_CONFIG = ROOT / "config" / "portfolio.toml"
 DEFAULT_LOCK = ROOT / "results" / "v2" / "oos" / "LOCK"
 DESIGN_OUT = ROOT / "results" / "v2" / "design" / "summary.json"
 OOS_OUT = ROOT / "results" / "v2" / "oos" / "summary.json"

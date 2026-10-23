@@ -1,5 +1,7 @@
 import json,sqlite3,sys,pandas as pd,os
-c=sqlite3.connect('file:ETF_Rotation_Quant/data/market.sqlite?mode=ro',uri=True)
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[4]
+c=sqlite3.connect(f'file:{ROOT / "data" / "market.sqlite"}?mode=ro',uri=True)
 codes=sys.argv[1:] or [f[:6] for f in sorted(os.listdir('qdii_nav')) if f.endswith('.json')]
 for code in codes:
     nav=pd.DataFrame(json.load(open(f'qdii_nav/{code}.json')))
