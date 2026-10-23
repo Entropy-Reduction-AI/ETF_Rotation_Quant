@@ -74,3 +74,4 @@ v2 预注册：`docs/etf-timing-prereg-v2.md`（第 2 次尝试）。
 - 证据包是描述性的：没有据此改任何规则或权重。策略本身（16 个容器的选取、等权、海外比例）的重审另开讨论；若据此改配置，须登记为看过样本外之后的决定。
 - 实盘试运行（金额、可接受亏损、券商佣金、通知方式）仍待 Owner 决定。
 - 依据：`operations/work_logs/2026-10-23-readme-evidence.md`、`operations/reviews/2026-10-23-readme-evidence-review.md`。
+- 已合入：main `3aa61a7`，附注标签 `milestone/phase1-closeout`（标签对象 `b785a88`），远端只剩 main；记录见 `operations/work_logs/2026-10-23-phase1-closeout.md`。第一阶段关闭。

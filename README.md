@@ -63,9 +63,9 @@ flowchart TD
 | 1′ 停止后的诊断（[记录](operations/reviews/2026-10-22-r2-diagnostics.md)） | 为什么轮动做不成 | 用同样的离场规则配随机入场做对照；算统计力 | V1 共 275 笔，期望 +0.64R；随机入场 200 次的中位数是 +0.68R。要证明 +0.3R 的优势需要约 560 笔，也就是 22 年 | 收益来自牛市和离场规则，不来自选择 |
 | 2 防守核心（[D2、D5](operations/planning/2026-10-22-parallel-lanes.md)） | 以分散持有为主体，A 股加一个慢速保护阀 | 设计期比较；研究 QDII 溢价 | 确定 16 个 A 股指数、海外 30% 和 QDII 溢价规则 | 作为 v2 的检验对象 |
 | 2′ v2 大盘择时（[预注册](docs/prereg/etf-timing-prereg-v2.md)） | 用均线信号（Qulla 10/20）切到货币基金，能用不超过 2 个百分点的年化代价换来至少 10 个百分点更浅的回撤 | 冻结样本外，只跑一次 | 回撤只浅了 7.1 个百分点，年化少了 3.2 个百分点，成本加倍后回撤反而更深。慢阀（跌 25% 离场、回升 10% 回来）的收益和回撤都比一直满仓差 | **不通过，按预注册 §6 去掉慢阀**（D7） |
-| 3 收尾（本次） | — | 整理仓库；定基准；做归因和数据时间线（[证据包](operations/work_logs/2026-10-23-readme-evidence.md)） | 见 §5–§7 | 第一阶段结束 |
+| 3 收尾（2026-10-23，`milestone/phase1-closeout`） | — | 整理仓库；定基准；做归因和数据时间线（[证据包](operations/work_logs/2026-10-23-readme-evidence.md)） | 见 §5–§7 | 第一阶段结束 |
 
-关键节点都打了标签：`milestone/v1-code-freeze`、`milestone/v1-r2-stop`、`milestone/v2-prereg-freeze`、`milestone/v2-oos-result`、`milestone/core-portfolio-live-config`。
+关键节点都打了标签：`milestone/v1-code-freeze`、`milestone/v1-r2-stop`、`milestone/v2-prereg-freeze`、`milestone/v2-oos-result`、`milestone/core-portfolio-live-config`、`milestone/phase1-closeout`（第一阶段收尾，[记录](operations/work_logs/2026-10-23-phase1-closeout.md)）。
 
 ## 4. 现在的系统
 
