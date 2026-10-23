@@ -410,3 +410,5 @@ SHA256 AFTER  sohu_amount finish_run 3b9f8fb253a29de5835aa54c0b8062bbaa77ebf3f22
 ## Decision / Next Steps
 
 分支 `cursor/qdii-nav-dividends` 留给 orchestrator 评审。不合并 main。D6 的 ff-only 合入在评审通过且测试为绿之后，且在任务 G 之前。
+
+合入 main：`fba18d280c7e246233554fbb12683b0d78d9223a`（fast-forward，含 `94d7a2a`）。测试 310 项，OK。market.sqlite SHA256 `3b9f8fb253a29de5835aa54c0b8062bbaa77ebf3f229611eb91b97a9ece155f9`。
