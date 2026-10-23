@@ -82,9 +82,28 @@ def replace(con, code: str, route: str, rows: list[dict], fetched_at: str) -> No
 
 
 def upsert(con, code: str, route: str, rows: list[dict], fetched_at: str) -> None:
-    """按日期覆盖或新增（update 增量）；同日旧行被本次抓到的行替换，其余旧行不动。"""
+    """按日期覆盖或新增（update 增量）；同日旧行被本次抓到的行替换，其余旧行不动。
+
+    新行没有成交额时，保留库里同日已有的 amount。腾讯日线没有这个字段；
+    搜狐补进 bars.amount 之后，下一次腾讯增量不能把额抹成空。
+    """
+    adj = adj_of(route)
+    dates = [r["date"] for r in rows if _val(r.get("amount")) is None and r.get("date")]
+    kept: dict[str, float] = {}
+    if dates:
+        marks = ",".join("?" * len(dates))
+        for day, amt in con.execute(
+                f"SELECT date, amount FROM bars WHERE code = ? AND adj = ? AND amount IS NOT NULL AND date IN ({marks})",
+                (code, adj, *dates)):
+            kept[day] = amt
+    prepared = []
+    for r in rows:
+        item = dict(r)
+        if _val(item.get("amount")) is None and item.get("date") in kept:
+            item["amount"] = kept[item["date"]]
+        prepared.append(item)
     with con:
-        con.executemany(_INSERT.replace("INSERT", "INSERT OR REPLACE", 1), _rows(code, route, rows, fetched_at))
+        con.executemany(_INSERT.replace("INSERT", "INSERT OR REPLACE", 1), _rows(code, route, prepared, fetched_at))
 
 
 def _num(x):
