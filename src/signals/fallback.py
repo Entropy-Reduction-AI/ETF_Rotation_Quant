@@ -90,6 +90,8 @@ class FallbackConfig:
     funds: tuple[AShareBook, ...] = ()
     pools: tuple[OverseasPool, ...] = ()
     excluded: tuple[str, ...] = ()
+    # D7 之后生产目标不看慢阀。replicate 仍用 out/back 做设计期历史复现。
+    valve_enabled: bool = True
 
     @property
     def cash_monthly(self) -> float:
@@ -157,6 +159,7 @@ def load_config(path: Path | None = None) -> FallbackConfig:
         funds=_load_books(list(a["book"])),
         pools=_load_pools(list(o["pool"])),
         excluded=tuple(str(code).strip() for code in o.get("excluded", [])),
+        valve_enabled=bool(v["enabled"]),
     )
     _validate(cfg)
     return cfg
@@ -493,7 +496,10 @@ def load_haven_closes(db: Path, code: str, end: pd.Timestamp) -> pd.Series | Non
 
 def replicate(panel: Path, end: str | pd.Timestamp, cfg: FallbackConfig,
               haven_db: Path | None = None) -> dict:
-    """月频复现 d2，并给出扣成本的日频版。end 晚于设计期终点则拒绝，不读收益。"""
+    """月频复现 d2，并给出扣成本的日频版。end 晚于设计期终点则拒绝，不读收益。
+
+    生产开关 valve.enabled 不作用在这里。慢阀 25/10 留作设计期历史记录。
+    """
     end_ts = pd.Timestamp(end)
     if end_ts > cfg.design_end:
         raise FallbackError(
@@ -702,7 +708,12 @@ def plan_targets(cfg: FallbackConfig, *, as_of: str | pd.Timestamp, equity: floa
                  decision_date: str | pd.Timestamp | None = None,
                  execution_date: str | pd.Timestamp | None = None,
                  nav_source: str = "", nav_note: str = "") -> dict:
-    """执行日的目标股数。价格和溢价用决策日收盘；不返回任何区间收益或回撤。"""
+    """执行日的目标股数。价格和溢价用决策日收盘；不返回任何区间收益或回撤。
+
+    valve.enabled 为假时 A 股腿永远在场，不采用调用方传来的阀状态。
+    """
+    if not cfg.valve_enabled:
+        in_market = True
     if equity <= 0:
         raise FallbackError("账户总权益必须是正数")
     if cfg.lot_size < 1:
@@ -937,24 +948,29 @@ def decision_state(panel: Path, as_of: str | pd.Timestamp, cfg: FallbackConfig) 
 
 
 def target_snapshot(panel: Path, as_of: str | pd.Timestamp, cfg: FallbackConfig) -> dict:
-    """D 日目标。只含权重、阀状态、A 股腿距高点的回撤。不含任何区间收益。"""
+    """D 日目标。只含权重和阀状态。阀开着时附上 A 股腿距高点的回撤。不含任何区间收益。"""
     as_of_ts = pd.Timestamp(as_of)
     prices = _read_panel(panel, as_of_ts)
-    a_ret, _o_ret = monthly_legs(prices, cfg)
-    path = valve_path(a_ret, cfg.out, cfg.back)
     wide = prices.pivot(index="date", columns="container", values="close").sort_index()
     signal = _month_end_on_or_before(wide.index, as_of_ts)
-    # 月末当天的目标是下一交易日要成交的新状态；月中则沿用上一个完整月末已经生效的状态。
-    signal_period = signal.to_period("M")
-    if signal_period not in {ts.to_period("M") for ts in a_ret.index}:
-        raise FallbackError(f"{signal.date()} 还没有影子月收益，不能定阀")
-    # valve_path 的状态是最后一根影子月处理完之后的状态。目标日的信号月必须就是这根。
-    if path["as_of"].to_period("M") != signal_period:
-        raise FallbackError("目标日的信号月与影子净值的最后一月不一致")
+    drawdown = None
+    in_market = True
+    if cfg.valve_enabled:
+        a_ret, _o_ret = monthly_legs(prices, cfg)
+        path = valve_path(a_ret, cfg.out, cfg.back)
+        # 月末当天的目标是下一交易日要成交的新状态；月中则沿用上一个完整月末已经生效的状态。
+        signal_period = signal.to_period("M")
+        if signal_period not in {ts.to_period("M") for ts in a_ret.index}:
+            raise FallbackError(f"{signal.date()} 还没有影子月收益，不能定阀")
+        # valve_path 的状态是最后一根影子月处理完之后的状态。目标日的信号月必须就是这根。
+        if path["as_of"].to_period("M") != signal_period:
+            raise FallbackError("目标日的信号月与影子净值的最后一月不一致")
+        in_market = bool(path["in_market"])
+        drawdown = path["drawdown"]
     closes = wide.loc[signal]
     codes = execution_map(cfg.universe)
     names = code_name(cfg.universe)
-    state = 1 if path["in_market"] else 0
+    state = 1 if in_market else 0
     raw = _target_weights(state, _available(closes, cfg.a_share), _available(closes, cfg.overseas), cfg)
     rows = []
     ordered = list(cfg.a_share) + list(cfg.overseas)
@@ -977,8 +993,8 @@ def target_snapshot(panel: Path, as_of: str | pd.Timestamp, cfg: FallbackConfig)
     payload = {
         "date": str(as_of_ts.date()),
         "signal_date": str(signal.date()),
-        "valve": "在场" if path["in_market"] else "出场",
-        "a_share_drawdown_from_high": path["drawdown"],
+        "valve": "在场" if in_market else "出场",
+        "a_share_drawdown_from_high": drawdown,
         "qdii_premium": "未接入",
         "weights": rows,
     }
@@ -1004,8 +1020,10 @@ def _print_replicate(result: dict) -> None:
 
 
 def _print_target(result: dict) -> None:
+    drawdown = result["a_share_drawdown_from_high"]
+    dd = "—" if drawdown is None else _fmt_pct(drawdown)
     print(f"{result['date']}  信号日 {result['signal_date']}  阀 {result['valve']}  "
-          f"A股距高点 {_fmt_pct(result['a_share_drawdown_from_high'])}  QDII {result['qdii_premium']}")
+          f"A股距高点 {dd}  QDII {result['qdii_premium']}")
     print(f"{'容器':<12} {'代码':<8} {'权重':>10}  QDII")
     for row in result["weights"]:
         print(f"{row['container']:<12} {row['execution_code']:<8} {row['weight']:10.6f}  {row['qdii_premium']}")
@@ -1083,7 +1101,14 @@ def main(argv: list[str] | None = None) -> int:
         schedule = schedule_execution(args.date, trading_days)
         # 阀和 A 股目标用决策日（上月最后一个交易日的收盘）。溢价和带宽也用这一天的收盘：
         # 执行日的收盘当时还没有。海外带宽和 A 股对齐写在同一张执行单上。
-        state = decision_state(args.panel, schedule["decision_date"], cfg)
+        # D7 关掉慢阀后不再读阀状态，A 股腿按在场出目标。
+        if cfg.valve_enabled:
+            state = decision_state(args.panel, schedule["decision_date"], cfg)
+            in_market = state["in_market"]
+            signal_date = state["signal_date"]
+        else:
+            in_market = True
+            signal_date = schedule["decision_date"]
         nav_rows = load_fund_nav(args.nav_db)
         sources = sorted({row.source for row in nav_rows if row.source})
         nav_source = sources[0] if args.nav_source == "fund_nav" and len(sources) == 1 else args.nav_source
@@ -1091,8 +1116,8 @@ def main(argv: list[str] | None = None) -> int:
             cfg, as_of=schedule["decision_date"], equity=args.equity, holdings=holdings,
             prices=load_closes(price_db, sorted(set(codes)), schedule["decision_date"].date().isoformat()),
             nav_rows=nav_rows, trading_days=trading_days, statuses=statuses,
-            in_market=state["in_market"], a_share_due=schedule["a_share_due"],
-            signal_date=state["signal_date"], decision_date=schedule["decision_date"],
+            in_market=in_market, a_share_due=schedule["a_share_due"],
+            signal_date=signal_date, decision_date=schedule["decision_date"],
             execution_date=schedule["execution_date"], nav_source=nav_source, nav_note=args.nav_note)
         _print_holdings(result)
         if args.out:

@@ -27,8 +27,9 @@ from src.signals.fallback import (
     resolve_execution_fund,
     schedule_execution,
     select_nav,
+    target_snapshot,
 )
-from tests.signals.test_fallback import _flat_rows, _one_name_config, _write_panel
+from tests.signals.test_fallback import _crash_rows, _flat_rows, _one_name_config, _write_panel, _write_universe
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -352,6 +353,52 @@ class MonthSession(unittest.TestCase):
             self.assertEqual(result["decision_date"], "2024-02-29")
             self.assertEqual(result["execution_date"], "2024-03-01")
             self.assertEqual(result["valve"], "出场")
+
+
+class ValveSwitch(unittest.TestCase):
+    def test_disabled_stays_full_and_enabled_still_exits(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_universe(root / "universe.csv")
+            panel = root / "panel.sqlite"
+            _write_panel(panel, _crash_rows())
+            cfg_on = replace(
+                _one_name_config(tmp),
+                funds=(AShareBook("甲", "510300", ()),),
+                universe=root / "universe.csv",
+                valve_enabled=True,
+            )
+            state = decision_state(panel, "2024-03-31", cfg_on)
+            self.assertFalse(state["in_market"])
+            self.assertLess(state["drawdown"], -0.25)
+            kwargs = dict(
+                as_of="2024-03-31", equity=100_000, holdings={},
+                prices={"510300": 1.0, "511880": 1.0}, nav_rows=[],
+                trading_days=["2024-03-29"], in_market=state["in_market"],
+                a_share_due=True, decision_date="2024-03-31", execution_date="2024-04-01",
+            )
+            on_plan = plan_targets(cfg_on, **kwargs)
+            on_held = _held(on_plan)
+            self.assertEqual(on_plan["valve"], "出场")
+            self.assertEqual(on_held.get("511880"), 70_000)
+            self.assertNotIn("510300", on_held)
+            on_shot = target_snapshot(panel, "2024-03-31", cfg_on)
+            on_weights = {row["execution_code"]: row["weight"] for row in on_shot["weights"]}
+            self.assertEqual(on_shot["valve"], "出场")
+            self.assertAlmostEqual(on_weights["511880"], 0.70)
+            self.assertNotIn("510300", on_weights)
+
+            off_plan = plan_targets(replace(cfg_on, valve_enabled=False), **kwargs)
+            off_held = _held(off_plan)
+            self.assertEqual(off_plan["valve"], "在场")
+            self.assertEqual(off_held.get("510300"), 70_000)
+            self.assertNotIn("511880", off_held)
+            off_shot = target_snapshot(panel, "2024-03-31", replace(cfg_on, valve_enabled=False))
+            off_weights = {row["execution_code"]: row["weight"] for row in off_shot["weights"]}
+            self.assertEqual(off_shot["valve"], "在场")
+            self.assertIsNone(off_shot["a_share_drawdown_from_high"])
+            self.assertAlmostEqual(off_weights["510300"], 0.70)
+            self.assertNotIn("511880", off_weights)
 
 
 class FundNavTable(unittest.TestCase):

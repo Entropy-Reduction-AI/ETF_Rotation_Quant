@@ -39,6 +39,7 @@ class Config(unittest.TestCase):
         self.assertEqual(cfg.o_weight, 0.30)
         self.assertEqual(cfg.out, 0.25)
         self.assertEqual(cfg.back, 0.10)
+        self.assertFalse(cfg.valve_enabled)
         self.assertEqual(cfg.judge, "month_end")
         self.assertEqual(cfg.haven_code, "511880")
         self.assertEqual(cfg.cash_annual, 0.02)
