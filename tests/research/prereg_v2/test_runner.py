@@ -5,14 +5,18 @@ import tempfile
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
+from unittest.mock import patch
 
 import numpy as np
 import pandas as pd
 
 import tests  # noqa: F401
 from src.research.prereg_v2.engine import (
+    A_SHARE,
     DESIGN_END,
     FROZEN_SHA,
+    OVERSEAS,
+    ROOT,
     ROUND_TRIP_COST,
     ROUND_TRIP_COST_DOUBLED,
     RunnerError,
@@ -24,6 +28,8 @@ from src.research.prereg_v2.engine import (
     equal_weight_returns,
     haven_total_return,
     in_market,
+    judge_real_book,
+    ledgers,
     load_haven,
     monthly_blend,
     passes_cagr,
@@ -31,6 +37,7 @@ from src.research.prereg_v2.engine import (
     path_returns,
     qulla_signal,
     run_design,
+    run_oos,
     sha_matches,
     slow_valve_signal,
 )
@@ -221,6 +228,155 @@ class Criteria(unittest.TestCase):
         self.assertAlmostEqual(blend.iloc[0], 0.07)
         self.assertAlmostEqual(blend.iloc[1], 0.03)
         self.assertAlmostEqual(blend.iloc[2], 0.0)
+
+
+class RealBookVerdict(unittest.TestCase):
+    """§4 和 §5 读 511880 真实账本。合成数据让两本账的输赢相反。日期停在 2015-12-31。"""
+
+    def test_selector_keeps_the_real_verdict_when_the_cash_book_disagrees(self):
+        b0 = {"cagr": 0.10, "max_drawdown": -0.50}
+        cash_b1 = {"cagr": 0.09, "max_drawdown": -0.30}
+        real_b1 = {"cagr": 0.07, "max_drawdown": -0.45}
+        cash_b1_x2 = {"cagr": 0.085, "max_drawdown": -0.32}
+        real_b1_x2 = {"cagr": 0.05, "max_drawdown": -0.48}
+        cash_b2 = {"cagr": 0.11, "max_drawdown": -0.40}
+        real_b2 = {"cagr": 0.04, "max_drawdown": -0.70}
+        empty = {"B0": {}, "B1": {}, "B2": {}}
+
+        def book(b1, b2):
+            return {"arms": {"B0": b0, "B1": b1, "B2": b2}, "portfolio": empty}
+
+        cash_pass = criteria(b0, cash_b1, b0, cash_b1_x2)
+        real_pass = criteria(b0, real_b1, b0, real_b1_x2)
+        self.assertTrue(cash_pass["pass"])
+        self.assertFalse(real_pass["pass"])
+        self.assertTrue(all(cash_pass[key] and not real_pass[key] for key in (
+            "drawdown_shallower_by_10pp", "cagr_giveup_at_most_2pp", "still_holds_at_doubled_cost")))
+        self.assertFalse(b2_both_worse(b0, cash_b2))
+        self.assertTrue(b2_both_worse(b0, real_b2))
+
+        packed = ledgers(
+            book(cash_b1, cash_b2), book(cash_b1_x2, cash_b2),
+            book(real_b1, real_b2), book(real_b1_x2, real_b2),
+            design=False,
+        )
+        judge = packed["haven_511880"]["criteria"]
+        for key, value in real_pass.items():
+            self.assertEqual(judge[key], value)
+        self.assertEqual(judge["book"], "511880")
+        self.assertTrue(packed["haven_511880"]["b2_vs_b0"]["both_worse"])
+        self.assertEqual(packed["cash_assumption"]["label"], "对照，不用于判定")
+        self.assertEqual(packed["portfolio"]["cash_assumption"]["label"], "对照，不用于判定")
+        self.assertNotIn("criteria", packed["cash_assumption"])
+        self.assertNotIn("b2_vs_b0", packed["cash_assumption"])
+        self.assertEqual(packed["cash_assumption"]["arms"]["B1"], cash_b1)
+        self.assertEqual(packed["haven_511880"]["doubled_cost"]["arms"]["B1"], real_b1_x2)
+
+        designed = judge_real_book(
+            packed["haven_511880"]["arms"], packed["haven_511880"]["doubled_cost"]["arms"], design=True)
+        self.assertFalse(designed["criteria"]["pass"])
+        self.assertIn("不是 §4", designed["criteria"]["label"])
+        self.assertIn("不能当作 §4 结论", designed["criteria"]["verdict"])
+        self.assertTrue(designed["b2_vs_b0"]["both_worse"])
+
+    def _paths(self):
+        idx = pd.bdate_range("2014-01-02", "2015-12-31")
+        n = len(idx)
+        price = np.empty(n)
+        price[0] = 100.0
+        for i in range(1, n):
+            if i <= 40:
+                price[i] = price[i - 1] * 1.01
+            elif i <= 70:
+                price[i] = price[i - 1] * 0.97
+            else:
+                price[i] = price[i - 1]
+        haven = 100.0 * (0.99 ** np.arange(n))
+        return idx, price, haven
+
+    def _write_fixture(self, root: Path):
+        idx, price, haven = self._paths()
+        panel = root / "panel.sqlite"
+        market = root / "market.sqlite"
+        names = list(A_SHARE) + list(OVERSEAS)
+        rows = []
+        for day, close in zip(idx, price):
+            for name in names:
+                rows.append((day.strftime("%Y-%m-%d"), name, float(close), float(close), float(close),
+                             float(close), "NEUTRAL", 0.0, 1.0, None, 0))
+        con = sqlite3.connect(panel)
+        con.execute(
+            "CREATE TABLE panel (date TEXT, container TEXT, open REAL, high REAL, low REAL, close REAL, "
+            "state TEXT, rs_1m REAL, atr20 REAL, z_month REAL, data_hole INTEGER)")
+        con.executemany("INSERT INTO panel VALUES (?,?,?,?,?,?,?,?,?,?,?)", rows)
+        con.commit()
+        con.close()
+        con = sqlite3.connect(market)
+        con.execute("CREATE TABLE bars (code TEXT, adj TEXT, date TEXT, close REAL)")
+        con.execute("CREATE TABLE cash_dividends (code TEXT, ex_date TEXT, amount REAL, prev_close REAL)")
+        con.executemany("INSERT INTO bars VALUES (?,?,?,?)", [
+            ("511880", "raw", day.strftime("%Y-%m-%d"), float(close)) for day, close in zip(idx, haven)])
+        con.commit()
+        con.close()
+        return panel, market
+
+    def _assert_real_book(self, result):
+        real = result["haven_511880"]
+        cash = result["cash_assumption"]
+        self.assertEqual(cash["label"], "对照，不用于判定")
+        self.assertNotIn("criteria", cash)
+        self.assertNotIn("b2_vs_b0", cash)
+        self.assertGreater(cash["arms"]["B1"]["cagr"], 0.15)
+        self.assertLess(real["arms"]["B1"]["cagr"], -0.8)
+        self.assertGreater(cash["doubled_cost"]["arms"]["B1"]["cagr"], 0.15)
+        self.assertLess(real["doubled_cost"]["arms"]["B1"]["cagr"], -0.8)
+        self.assertAlmostEqual(real["arms"]["B0"]["cagr"], cash["arms"]["B0"]["cagr"])
+        expected = criteria(
+            real["arms"]["B0"], real["arms"]["B1"],
+            real["doubled_cost"]["arms"]["B0"], real["doubled_cost"]["arms"]["B1"])
+        control = criteria(
+            cash["arms"]["B0"], cash["arms"]["B1"],
+            cash["doubled_cost"]["arms"]["B0"], cash["doubled_cost"]["arms"]["B1"])
+        self.assertFalse(expected["pass"])
+        self.assertTrue(control["pass"])
+        for key in ("drawdown_shallower_by_10pp", "cagr_giveup_at_most_2pp", "still_holds_at_doubled_cost", "pass"):
+            self.assertEqual(real["criteria"][key], expected[key])
+            self.assertNotEqual(expected[key], control[key])
+        self.assertEqual(real["criteria"]["book"], "511880")
+        self.assertEqual(real["b2_vs_b0"]["book"], "511880")
+        self.assertEqual(real["b2_vs_b0"]["both_worse"], b2_both_worse(real["arms"]["B0"], real["arms"]["B2"]))
+        self.assertTrue(real["b2_vs_b0"]["both_worse"])
+        self.assertFalse(b2_both_worse(cash["arms"]["B0"], cash["arms"]["B2"]))
+        self.assertLessEqual(pd.Timestamp(real["arms"]["B1"]["last"]), pd.Timestamp("2015-12-31"))
+        self.assertTrue(all(int(year) <= 2015 for year in real["arms"]["B1"]["yearly"]))
+        self.assertTrue(all(int(year) <= 2015 for year in real["doubled_cost"]["arms"]["B1"]["yearly"]))
+
+    def test_design_and_oos_wiring_read_the_real_book(self):
+        config = ROOT / "config" / "r4_fallback.toml"
+        with tempfile.TemporaryDirectory() as tmp:
+            panel, market = self._write_fixture(Path(tmp))
+            design = run_design(panel, market, config, pd.Timestamp("2015-12-31"))
+            self._assert_real_book(design)
+            self.assertEqual(design["window"], "design")
+            self.assertEqual(design["oos"], "未运行")
+            self.assertIn("不是 §4", design["haven_511880"]["criteria"]["label"])
+            self.assertIn("不能当作 §4 结论", design["haven_511880"]["criteria"]["verdict"])
+            # 只测 run_oos 选哪本账。窗口改到设计期，避免算出 2016-01-01 及之后的收益。不走 --oos。
+            with patch("src.research.prereg_v2.engine.OOS_START", pd.Timestamp("2014-01-02")), \
+                    patch("src.research.prereg_v2.engine.OOS_END", pd.Timestamp("2015-12-31")):
+                oos = run_oos(panel, market, config)
+            self.assertEqual(oos["start"], "2014-01-02")
+            self.assertEqual(oos["end"], "2015-12-31")
+            self._assert_real_book(oos)
+            self.assertEqual(oos["haven_511880"]["criteria"]["label"], "样本外判定")
+            self.assertEqual(
+                oos["haven_511880"]["criteria"]["pass"],
+                design["haven_511880"]["criteria"]["pass"],
+            )
+            self.assertEqual(
+                oos["haven_511880"]["b2_vs_b0"]["both_worse"],
+                design["haven_511880"]["b2_vs_b0"]["both_worse"],
+            )
 
 
 class CliGuards(unittest.TestCase):

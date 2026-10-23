@@ -106,34 +106,40 @@ def _print_portfolio(title: str, arms: dict) -> None:
 
 
 def _print_design(result: dict) -> None:
+    real = result["haven_511880"]
+    print(f"设计期 → {result['end']}  判定账本 511880 真实收益  切换成本 单边 0.05%×2")
+    print(real["rule"])
+    _print_arms("A 股腿（判定账本）", real["arms"])
+    doubled = real["doubled_cost"]
+    _print_arms(f"成本加倍，判定账本（单边 0.10%，一轮 {doubled['round_trip_cost']:.3%}）", doubled["arms"])
+    judge = real["criteria"]
+    print(judge["label"])
+    print(judge["verdict"])
+    print("§4 三条："
+          f"回撤 {judge['drawdown_shallower_by_10pp']}  "
+          f"年化 {judge['cagr_giveup_at_most_2pp']}  "
+          f"成本加倍 {judge['still_holds_at_doubled_cost']}  "
+          f"同时成立 {judge['pass']}")
+    b2 = real["b2_vs_b0"]
+    print(f"§5 B2 全面劣于 B0：{b2['both_worse']}  {b2['label']}")
     cash = result["cash_assumption"]
-    print(f"设计期 → {result['end']}  避风港 {cash['haven']}  切换成本 单边 0.05%×2")
+    print(f"{cash['label']}  避风港 {cash['haven']}")
     _print_arms("A 股腿", cash["arms"])
     gate = result["d4_gate"]
-    print(f"与 d4 印刷值的差（百分点，门槛 ±{gate['tolerance_pp']}）")
+    print(f"与 d4 印刷值的差（百分点，门槛 ±{gate['tolerance_pp']}，用上面的 2% 对照复现）")
     for name, row in gate["deltas_pp"].items():
         extra = ""
         if "switches_per_year" in row:
             extra = f"  切换/年 {row['switches_per_year']:+.2f}"
         print(f"  {name}  年化 {row['cagr_pp']:+.3f}  回撤 {row['max_drawdown_pp']:+.3f}{extra}")
     print("复现门槛：" + ("通过" if gate["within"] else "未通过"))
-    real = result["haven_511880"]
-    _print_arms("511880 真实收益（无行情日仍为 2%/252）", real["arms"])
-    print("相对 2% 现金假设的差（百分点）")
+    print("511880 真实账本相对 2% 对照的差（百分点）")
     for name, row in real["vs_cash_assumption_pp"].items():
         print(f"  {name}  年化 {row['cagr_pp']:+.3f}  回撤 {row['max_drawdown_pp']:+.3f}")
-    print(real["rule"])
-    doubled = cash["doubled_cost"]
-    _print_arms(f"成本加倍（单边 0.10%，一轮 {doubled['round_trip_cost']:.3%}）", doubled["arms"])
-    judge = cash["criteria_on_design"]
-    print("§4 三条在设计期数字上的演算（不是样本外判定）："
-          f"回撤 {judge['drawdown_shallower_by_10pp']}  "
-          f"年化 {judge['cagr_giveup_at_most_2pp']}  "
-          f"成本加倍 {judge['still_holds_at_doubled_cost']}")
     print(result["portfolio"]["description"])
     print(result["portfolio"]["qdii"])
-    _print_portfolio("组合，2% 现金假设", result["portfolio"]["cash_assumption"])
     _print_portfolio("组合，511880 真实收益", result["portfolio"]["haven_511880"])
+    _print_portfolio("组合，2% 现金假设（对照，不用于判定）", result["portfolio"]["cash_assumption"]["arms"])
 
 
 def _refuse_oos(sha: str | None, lock: Path) -> str | None:

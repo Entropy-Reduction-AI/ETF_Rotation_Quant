@@ -2,6 +2,7 @@
 
 设计期函数在看到结束日晚于 2015-12-31 时直接拒绝，不算收益。
 样本外只由 run_oos 在锁文件写入之后调用。
+§4 三条和 §5 的 B2 动作只读 511880 真实账本。年化 2% 只在没有行情的日子填进这本账，整本 2% 假设另作对照。
 """
 from __future__ import annotations
 
@@ -45,6 +46,15 @@ A_SHARE = (
     "医药", "消费", "白酒", "农业", "银行", "券商", "地产", "红利",
 )
 OVERSEAS = ("纳指100", "标普500")
+CONTROL_LABEL = "对照，不用于判定"
+HAVEN_RULE = (
+    "有收盘的日子用场内收盘价收益，除息日加上 cash_dividends 的 amount/prev_close；"
+    "没有收益的日子按年化 2%/252。"
+)
+PORTFOLIO_DESCRIPTION = (
+    "A 股腿 70% + 海外 30%（纳指100 与标普500 等权），指数层面，每月第一个交易日回到目标权重，月内随收益漂移。"
+)
+QDII_NOTE = "海外 ETF 溢价、额度冻结和场内折溢价在指数层面无法体现，本表不含这些规则。"
 
 
 class RunnerError(RuntimeError):
@@ -396,10 +406,12 @@ def build(panel: pd.DataFrame, haven_closes: pd.Series, dividends: pd.DataFrame,
     cash = _assert_book(_book(asset, flat, overseas, sleeves["out"], sleeves["back"], sleeves["a_weight"], ROUND_TRIP_COST))
     cash_x2 = _assert_book(_book(asset, flat, overseas, sleeves["out"], sleeves["back"], sleeves["a_weight"], ROUND_TRIP_COST_DOUBLED))
     real_book = _assert_book(_book(asset, real, overseas, sleeves["out"], sleeves["back"], sleeves["a_weight"], ROUND_TRIP_COST))
+    real_x2 = _assert_book(_book(asset, real, overseas, sleeves["out"], sleeves["back"], sleeves["a_weight"], ROUND_TRIP_COST_DOUBLED))
     return {
         "cash": cash,
         "cash_doubled": cash_x2,
         "real": real_book,
+        "real_doubled": real_x2,
         "haven_meta": _haven_meta(haven_closes, dividends, asset.index),
     }
 
@@ -429,6 +441,67 @@ def _vs_cash(real_arms: dict, cash_arms: dict) -> dict:
     return out
 
 
+def _doubled_cost_block(arms: dict) -> dict:
+    return {
+        "round_trip_cost": ROUND_TRIP_COST_DOUBLED,
+        "one_way": 0.001,
+        "arms": arms,
+    }
+
+
+def judge_real_book(real_arms: dict, real_doubled_arms: dict, *, design: bool) -> dict:
+    """§4 三条和 §5 的 B2 动作。只接受 511880 真实账本的汇总，不读 2% 假设。"""
+    numbers = criteria(
+        real_arms["B0"], real_arms["B1"],
+        real_doubled_arms["B0"], real_doubled_arms["B1"],
+    )
+    if design:
+        label = "设计期演算，不是 §4 的样本外判定"
+        verdict = "样本外未运行。下面的 pass 只是同一套函数吃了设计期的 511880 真实账本，不能当作 §4 结论。"
+        action_label = "设计期观察。去掉或保留慢阀只在样本外按 §5 决定。"
+    else:
+        label = "样本外判定"
+        verdict = "§4 三条都在 511880 真实账本上计算，含成本加倍。"
+        action_label = "§5：年化与最大回撤都差于满仓才去掉慢阀。"
+    return {
+        "criteria": {"book": HAVEN_CODE, "label": label, "verdict": verdict, **numbers},
+        "b2_vs_b0": {
+            "book": HAVEN_CODE,
+            "label": action_label,
+            "both_worse": b2_both_worse(real_arms["B0"], real_arms["B2"]),
+        },
+    }
+
+
+def ledgers(cash: dict, cash_doubled: dict, real: dict, real_doubled: dict, *,
+            design: bool, haven_meta: dict | None = None) -> dict:
+    """判定挂在真实账本上。2% 账本整本标成对照，里面不放判据，也不放 B2 动作。"""
+    haven = {"role": "判定", "rule": HAVEN_RULE}
+    if haven_meta is not None:
+        haven["meta"] = haven_meta
+    haven["round_trip_cost"] = ROUND_TRIP_COST
+    haven["arms"] = real["arms"]
+    haven["doubled_cost"] = _doubled_cost_block(real_doubled["arms"])
+    haven.update(judge_real_book(real["arms"], real_doubled["arms"], design=design))
+    haven["vs_cash_assumption_pp"] = _vs_cash(real["arms"], cash["arms"])
+    return {
+        "haven_511880": haven,
+        "cash_assumption": {
+            "label": CONTROL_LABEL,
+            "haven": "年化 2%/252",
+            "round_trip_cost": ROUND_TRIP_COST,
+            "arms": cash["arms"],
+            "doubled_cost": _doubled_cost_block(cash_doubled["arms"]),
+        },
+        "portfolio": {
+            "description": PORTFOLIO_DESCRIPTION,
+            "qdii": QDII_NOTE,
+            "haven_511880": real["portfolio"],
+            "cash_assumption": {"label": CONTROL_LABEL, "arms": cash["portfolio"]},
+        },
+    }
+
+
 def run_design(panel_path: Path, market_db: Path, config_path: Path, end: pd.Timestamp) -> dict:
     """设计期。结束日晚于 2015-12-31 时在读完面板形状之前就拒绝后续收益计算。"""
     end = _guard_end(end, False)
@@ -438,46 +511,23 @@ def run_design(panel_path: Path, market_db: Path, config_path: Path, end: pd.Tim
     closes, dividends = load_haven(market_db, sleeves["haven_code"], end)
     built = build(panel, closes, dividends, sleeves, end)
     gate = d4_gate(built["cash"]["arms"], end)
-    for stats in list(built["cash"]["arms"].values()) + list(built["real"]["arms"].values()):
+    checked = (
+        list(built["cash"]["arms"].values())
+        + list(built["real"]["arms"].values())
+        + list(built["real_doubled"]["arms"].values())
+    )
+    for stats in checked:
         _assert_design_stats(stats)
+    packed = ledgers(
+        built["cash"], built["cash_doubled"], built["real"], built["real_doubled"],
+        design=True, haven_meta=built["haven_meta"],
+    )
     return {
         "window": "design",
         "end": str(end.date()),
         "oos": "未运行",
         "prereg_sha": FROZEN_SHA,
-        "cash_assumption": {
-            "haven": "年化 2%/252",
-            "round_trip_cost": ROUND_TRIP_COST,
-            "arms": built["cash"]["arms"],
-            "doubled_cost": {
-                "round_trip_cost": ROUND_TRIP_COST_DOUBLED,
-                "one_way": 0.001,
-                "arms": built["cash_doubled"]["arms"],
-            },
-            "criteria_on_design": {
-                "label": "设计期演算，不是 §4 的样本外判定",
-                "verdict": "样本外未运行。下面的 pass 只是同一套函数吃了设计期数字，不能当作 §4 结论。",
-                **criteria(built["cash"]["arms"]["B0"], built["cash"]["arms"]["B1"],
-                           built["cash_doubled"]["arms"]["B0"], built["cash_doubled"]["arms"]["B1"]),
-            },
-            "b2_vs_b0": {
-                "both_worse": b2_both_worse(built["cash"]["arms"]["B0"], built["cash"]["arms"]["B2"]),
-                "label": "设计期观察。去掉或保留慢阀只在样本外按 §5 决定。",
-            },
-        },
-        "haven_511880": {
-            "rule": "有收盘的日子用场内收盘价收益，除息日加上 cash_dividends 的 amount/prev_close；没有收益的日子按年化 2%/252。",
-            "meta": built["haven_meta"],
-            "round_trip_cost": ROUND_TRIP_COST,
-            "arms": built["real"]["arms"],
-            "vs_cash_assumption_pp": _vs_cash(built["real"]["arms"], built["cash"]["arms"]),
-        },
-        "portfolio": {
-            "description": "A 股腿 70% + 海外 30%（纳指100 与标普500 等权），指数层面，每月第一个交易日回到目标权重，月内随收益漂移。",
-            "qdii": "海外 ETF 溢价、额度冻结和场内折溢价在指数层面无法体现，本表不含这些规则。",
-            "cash_assumption": built["cash"]["portfolio"],
-            "haven_511880": built["real"]["portfolio"],
-        },
+        **packed,
         "d4_gate": gate,
     }
 
@@ -526,24 +576,15 @@ def run_oos(panel_path: Path, market_db: Path, config_path: Path) -> dict:
     cash = _window_book(flat_full, ROUND_TRIP_COST)
     cash_x2 = _window_book(flat_full, ROUND_TRIP_COST_DOUBLED)
     real_book = _window_book(real_full, ROUND_TRIP_COST)
+    real_x2 = _window_book(real_full, ROUND_TRIP_COST_DOUBLED)
+    packed = ledgers(
+        cash, cash_x2, real_book, real_x2,
+        design=False, haven_meta=_haven_meta(closes, dividends, asset_full.index),
+    )
     return {
         "window": "oos",
         "start": str(OOS_START.date()),
         "end": str(OOS_END.date()),
         "prereg_sha": FROZEN_SHA,
-        "cash_assumption": {
-            "haven": "年化 2%/252",
-            "round_trip_cost": ROUND_TRIP_COST,
-            "arms": cash["arms"],
-            "doubled_cost": {"round_trip_cost": ROUND_TRIP_COST_DOUBLED, "arms": cash_x2["arms"]},
-            "criteria": criteria(cash["arms"]["B0"], cash["arms"]["B1"], cash_x2["arms"]["B0"], cash_x2["arms"]["B1"]),
-            "b2_vs_b0": {"both_worse": b2_both_worse(cash["arms"]["B0"], cash["arms"]["B2"])},
-        },
-        "haven_511880": {"arms": real_book["arms"], "vs_cash_assumption_pp": _vs_cash(real_book["arms"], cash["arms"])},
-        "portfolio": {
-            "description": "A 股腿 70% + 海外 30%，指数层面，月度再平衡。",
-            "qdii": "海外 ETF 溢价规则在指数层面无法体现，本表不含这些规则。",
-            "cash_assumption": cash["portfolio"],
-            "haven_511880": real_book["portfolio"],
-        },
+        **packed,
     }
