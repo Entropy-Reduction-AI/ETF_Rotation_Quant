@@ -181,3 +181,5 @@ T = 2026-09-30 收盘。滞后 2 个交易日，净值截止 **2026-09-28**。�
 `mkdir -p outputs && .venv/bin/python -m unittest discover -s tests -t .`：退出码 0。Ran 329 tests in 86.750s，OK。
 
 新增覆盖：每月只对齐一次；月中和月末不对齐；执行日用上月最后一个交易日的阀（2 月末出场，3 月末会回到场内，执行单仍出场）；2026-09-30 的执行日是 2026-10-08。
+
+合入 main：`c091c28ea5b497ca7e5510b597de2fc5919fe775`（fast-forward，含 `cb58d5c`）。测试 343 项，OK。market.sqlite SHA256 `3b9f8fb253a29de5835aa54c0b8062bbaa77ebf3f229611eb91b97a9ece155f9`。
