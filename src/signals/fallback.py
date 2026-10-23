@@ -64,6 +64,7 @@ class NavRow:
     date: pd.Timestamp
     unit_nav: float
     fetched_at: str = ""
+    source: str = ""
 
 
 @dataclass(frozen=True)
@@ -582,14 +583,40 @@ def select_nav(rows: list[NavRow], code: str, cutoff: pd.Timestamp) -> NavRow:
     return eligible[-1]
 
 
+def _trading_days(trading_days: list) -> list[pd.Timestamp]:
+    return sorted({pd.Timestamp(item).normalize() for item in trading_days})
+
+
 def a_share_session(as_of: str | pd.Timestamp, trading_days: list) -> bool:
-    """A 股腿只在该月第一个或最后一个交易日对齐目标。月中保持现有股数。"""
+    """A 股腿只在每月第一个交易日对齐。月末出信号，当天不再调一次。"""
     day = pd.Timestamp(as_of).normalize()
-    month = [pd.Timestamp(item).normalize() for item in trading_days if pd.Timestamp(item).to_period("M") == day.to_period("M")]
-    month = sorted(set(month))
+    month = [item for item in _trading_days(trading_days) if item.to_period("M") == day.to_period("M")]
     if day not in month:
         raise FallbackError(f"{day.date()} 不在交易日历这个月里")
-    return day == month[0] or day == month[-1]
+    return day == month[0]
+
+
+def next_trading_day(day: str | pd.Timestamp, trading_days: list) -> pd.Timestamp:
+    """决策日的下一交易日。中间的休市日跳过。"""
+    current = pd.Timestamp(day).normalize()
+    days = _trading_days(trading_days)
+    if current not in days:
+        raise FallbackError(f"{current.date()} 不是交易日")
+    later = [item for item in days if item > current]
+    if not later:
+        raise FallbackError(f"{current.date()} 之后没有交易日")
+    return later[0]
+
+
+def schedule_execution(decision: str | pd.Timestamp, trading_days: list) -> dict:
+    """月末（或任一决策日）决定，下一交易日执行。A 股是否对齐看执行日是不是该月第一个交易日。"""
+    decision_ts = pd.Timestamp(decision).normalize()
+    execution = next_trading_day(decision_ts, trading_days)
+    return {
+        "decision_date": decision_ts,
+        "execution_date": execution,
+        "a_share_due": a_share_session(execution, trading_days),
+    }
 
 
 def _whole_shares(value) -> int:
@@ -672,13 +699,17 @@ def plan_targets(cfg: FallbackConfig, *, as_of: str | pd.Timestamp, equity: floa
                  nav_rows: list[NavRow], trading_days: list,
                  statuses: dict[str, str] | None = None, in_market: bool = True,
                  a_share_due: bool = False, signal_date: str | pd.Timestamp | None = None,
+                 decision_date: str | pd.Timestamp | None = None,
+                 execution_date: str | pd.Timestamp | None = None,
                  nav_source: str = "", nav_note: str = "") -> dict:
-    """当日目标股数。不计算、不返回任何区间收益或回撤。"""
+    """执行日的目标股数。价格和溢价用决策日收盘；不返回任何区间收益或回撤。"""
     if equity <= 0:
         raise FallbackError("账户总权益必须是正数")
     if cfg.lot_size < 1:
         raise FallbackError("lot_size 必须是正整数")
     day = pd.Timestamp(as_of).normalize()
+    decided = pd.Timestamp(decision_date).normalize() if decision_date is not None else day
+    executed = pd.Timestamp(execution_date).normalize() if execution_date is not None else None
     statuses = statuses or {}
     current = {str(code): _whole_shares(count) for code, count in (holdings or {}).items()}
     lot = cfg.lot_size
@@ -819,8 +850,10 @@ def plan_targets(cfg: FallbackConfig, *, as_of: str | pd.Timestamp, equity: floa
         })
     positions.sort(key=lambda row: (row["sleeve"], row["code"]))
     payload = {
-        "date": str(day.date()),
-        "signal_date": str(pd.Timestamp(signal_date).date()) if signal_date is not None else str(day.date()),
+        "date": str(decided.date()),
+        "decision_date": str(decided.date()),
+        "execution_date": str(executed.date()) if executed is not None else None,
+        "signal_date": str(pd.Timestamp(signal_date).date()) if signal_date is not None else str(decided.date()),
         "equity": equity,
         "holdings_in": current,
         "valve": "在场" if in_market else "出场",
@@ -848,14 +881,14 @@ def load_fund_nav(db: Path) -> list[NavRow]:
         if not found:
             raise FallbackError(f"{db} 没有 fund_nav 表")
         rows = con.execute(
-            "SELECT code, date, unit_nav, fetched_at FROM fund_nav").fetchall()
+            "SELECT code, date, unit_nav, fetched_at, source FROM fund_nav").fetchall()
     finally:
         con.close()
     out = []
-    for code, nav_date, unit_nav, fetched_at in rows:
+    for code, nav_date, unit_nav, fetched_at, source in rows:
         if unit_nav is None:
             continue
-        out.append(NavRow(str(code), pd.Timestamp(nav_date), float(unit_nav), str(fetched_at or "")))
+        out.append(NavRow(str(code), pd.Timestamp(nav_date), float(unit_nav), str(fetched_at or ""), str(source or "")))
     return out
 
 
@@ -979,8 +1012,8 @@ def _print_target(result: dict) -> None:
 
 
 def _print_holdings(result: dict) -> None:
-    print(f"{result['date']}  信号日 {result['signal_date']}  阀 {result['valve']}  "
-          f"海外偏离前权重 {result['overseas_weight_before']:.4f}")
+    print(f"决策 {result['decision_date']}  执行 {result['execution_date']}  信号日 {result['signal_date']}  "
+          f"阀 {result['valve']}  海外偏离前权重 {result['overseas_weight_before']:.4f}")
     print(f"净值截止 {result['nav_cutoff']}  滞后 {result['nav_lag_trading_days']}  来源 {result['nav_source']}")
     print("规则 " + ", ".join(result["rules"]))
     print(f"{'池':<8} {'代码':<8} {'净值日':<12} {'溢价':>10}  买入")
@@ -1046,14 +1079,21 @@ def main(argv: list[str] | None = None) -> int:
             codes.extend(alt.code for alt in book.alternates)
         for pool in cfg.pools:
             codes.extend(pool.codes)
-        state = decision_state(args.panel, args.date, cfg)
         trading_days = load_calendar(price_db)
+        schedule = schedule_execution(args.date, trading_days)
+        # 阀和 A 股目标用决策日（上月最后一个交易日的收盘）。溢价和带宽也用这一天的收盘：
+        # 执行日的收盘当时还没有。海外带宽和 A 股对齐写在同一张执行单上。
+        state = decision_state(args.panel, schedule["decision_date"], cfg)
+        nav_rows = load_fund_nav(args.nav_db)
+        sources = sorted({row.source for row in nav_rows if row.source})
+        nav_source = sources[0] if args.nav_source == "fund_nav" and len(sources) == 1 else args.nav_source
         result = plan_targets(
-            cfg, as_of=args.date, equity=args.equity, holdings=holdings,
-            prices=load_closes(price_db, sorted(set(codes)), args.date),
-            nav_rows=load_fund_nav(args.nav_db), trading_days=trading_days, statuses=statuses,
-            in_market=state["in_market"], a_share_due=a_share_session(args.date, trading_days),
-            signal_date=state["signal_date"], nav_source=args.nav_source, nav_note=args.nav_note)
+            cfg, as_of=schedule["decision_date"], equity=args.equity, holdings=holdings,
+            prices=load_closes(price_db, sorted(set(codes)), schedule["decision_date"].date().isoformat()),
+            nav_rows=nav_rows, trading_days=trading_days, statuses=statuses,
+            in_market=state["in_market"], a_share_due=schedule["a_share_due"],
+            signal_date=state["signal_date"], decision_date=schedule["decision_date"],
+            execution_date=schedule["execution_date"], nav_source=nav_source, nav_note=args.nav_note)
         _print_holdings(result)
         if args.out:
             args.out.parent.mkdir(parents=True, exist_ok=True)

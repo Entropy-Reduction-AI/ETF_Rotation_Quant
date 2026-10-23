@@ -17,11 +17,15 @@ from src.signals.fallback import (
     FallbackError,
     NavRow,
     OverseasPool,
+    a_share_session,
+    decision_state,
+    load_calendar,
     load_config,
     load_fund_nav,
     plan_targets,
     replicate,
     resolve_execution_fund,
+    schedule_execution,
     select_nav,
 )
 from tests.signals.test_fallback import _flat_rows, _one_name_config, _write_panel
@@ -281,6 +285,73 @@ class DesignPeriod(unittest.TestCase):
         self.assertEqual(result["monthly"]["a_valve"]["switches"], 6)
         for key in ("a_cagr_pp", "a_drawdown_pp", "blend_cagr_pp", "blend_drawdown_pp"):
             self.assertLessEqual(abs(result["d2_delta_pp"][key]), 0.04)
+
+
+class MonthSession(unittest.TestCase):
+    def test_aligns_only_on_the_first_session(self):
+        days = ["2024-02-01", "2024-02-15", "2024-02-29", "2024-03-01", "2024-03-15", "2024-03-29"]
+        flags = [(day, a_share_session(day, days)) for day in days]
+        self.assertEqual(flags, [
+            ("2024-02-01", True),
+            ("2024-02-15", False),
+            ("2024-02-29", False),
+            ("2024-03-01", True),
+            ("2024-03-15", False),
+            ("2024-03-29", False),
+        ])
+        for month in ("2024-02", "2024-03"):
+            aligned = [day for day, flag in flags if day.startswith(month) and flag]
+            self.assertEqual(len(aligned), 1)
+            self.assertTrue(aligned[0].endswith("-01"))
+
+    def test_post_holiday_execution_date(self):
+        days = load_calendar(ROOT / "data" / "market.sqlite")
+        order = schedule_execution("2026-09-30", days)
+        self.assertEqual(str(order["decision_date"].date()), "2026-09-30")
+        self.assertEqual(str(order["execution_date"].date()), "2026-10-08")
+        self.assertTrue(order["a_share_due"])
+        self.assertFalse(a_share_session("2026-09-29", days))
+        self.assertFalse(a_share_session("2026-09-30", days))
+        self.assertTrue(a_share_session("2026-10-08", days))
+        october = [day for day in days if day.strftime("%Y-%m") == "2026-10" and a_share_session(day, days)]
+        self.assertEqual(october, [pd.Timestamp("2026-10-08")])
+
+    def test_execution_day_uses_the_previous_month_end_valve(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            panel = Path(tmp) / "panel.sqlite"
+            rows = []
+            for day, price in (
+                ("2023-12-29", 100.0),
+                ("2024-01-31", 100.0),
+                ("2024-02-29", 70.0),
+                ("2024-03-01", 70.0),
+                ("2024-03-29", 100.0),
+            ):
+                rows.append((day, "甲", price, 0))
+                rows.append((day, "乙", 100.0, 0))
+            _write_panel(panel, rows)
+            cfg = _one_name_config(tmp)
+            order = schedule_execution("2024-02-29", ["2024-02-01", "2024-02-29", "2024-03-01", "2024-03-29"])
+            state = decision_state(panel, order["decision_date"], cfg)
+            later = decision_state(panel, "2024-03-29", cfg)
+            self.assertEqual(str(order["execution_date"].date()), "2024-03-01")
+            self.assertTrue(order["a_share_due"])
+            self.assertEqual(str(state["signal_date"].date()), "2024-02-29")
+            self.assertFalse(state["in_market"])
+            self.assertTrue(later["in_market"])
+            result = plan_targets(
+                cfg, as_of=order["decision_date"], equity=100_000, holdings={},
+                prices={"510300": 1.0, "511880": 1.0, "513100": 1.0},
+                nav_rows=_rows_for({"513100": 0.02}),
+                trading_days=["2024-02-27", "2024-02-28", "2024-02-29"],
+                in_market=state["in_market"], a_share_due=order["a_share_due"],
+                decision_date=order["decision_date"], execution_date=order["execution_date"])
+            held = _held(result)
+            self.assertEqual(held.get("511880"), 70_000)
+            self.assertNotIn("510300", held)
+            self.assertEqual(result["decision_date"], "2024-02-29")
+            self.assertEqual(result["execution_date"], "2024-03-01")
+            self.assertEqual(result["valve"], "出场")
 
 
 class FundNavTable(unittest.TestCase):
