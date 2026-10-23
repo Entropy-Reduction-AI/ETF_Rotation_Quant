@@ -12,6 +12,9 @@
     offline-tencent-price --recorded-dir DIR [--apply]            批准的 000852/000905 价格指数候选，默认只读
     preflight --end D [--start D]                                只读预检，默认从官方日历首日开始
     upgrade-date-constraints [--apply]                         显式升级旧 market-v1 日期约束，默认只读
+    fund-nav [--apply]                                       东财历史净值 → fund_nav，默认只列出代码
+    replace-dividends [--apply]                             一手公告替换 cash_dividends，默认只读
+    fill-sohu-amount [--apply]                              搜狐补 bars.amount，连续失败两次即停
 """
 from __future__ import annotations
 
@@ -77,6 +80,14 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--start", type=_d, default=None, help="请求窗口起点；省略时使用官方日历首日")
     p = sub.add_parser("upgrade-date-constraints", help="审计旧 market-v1 日期；显式 --apply 才升级约束")
     p.add_argument("--apply", action="store_true", help="原子追加约束，不改写历史数据")
+    p = sub.add_parser("fund-nav", help="东财 f10/lsjz 历史净值写入 fund_nav；默认不写库")
+    p.add_argument("--apply", action="store_true")
+    p = sub.add_parser("replace-dividends", help="用一手现金分红替换 cash_dividends；默认不写库")
+    p.add_argument("--apply", action="store_true")
+    p.add_argument("--events", type=Path, default=None)
+    p.add_argument("--readme", type=Path, default=None)
+    p = sub.add_parser("fill-sohu-amount", help="搜狐历史行情补 bars.amount；连续两只失败即停")
+    p.add_argument("--apply", action="store_true")
     for name, sp in sub.choices.items():
         if name != "verify":
             sp.add_argument("--db", type=Path, default=DB.MARKET_DB)
@@ -145,7 +156,53 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps({"error": str(exc)}, ensure_ascii=False), file=sys.stderr)
             return 1
         print(json.dumps(report, ensure_ascii=False, indent=1))
+    elif a.cmd == "fund-nav":
+        from .fund_nav import load as load_nav
+        report = load_nav(a.db, apply=a.apply)
+        _persist_job("fund-nav", a.db, report)
+        print(json.dumps(_public_report(report), ensure_ascii=False, indent=1))
+        return 0 if report.get("status", "ok") == "ok" else 1
+    elif a.cmd == "replace-dividends":
+        from .dividends import apply_replace
+        report = apply_replace(a.db, events_path=a.events, readme_path=a.readme, apply=a.apply)
+        _persist_job("replace-dividends", a.db, report)
+        print(json.dumps(_public_report(report), ensure_ascii=False, indent=1))
+        return 0 if report.get("status", "ok") == "ok" else 1
+    elif a.cmd == "fill-sohu-amount":
+        from .sohu_amount import fill as fill_amount
+        report = fill_amount(a.db, apply=a.apply)
+        _persist_job("fill-sohu-amount", a.db, report)
+        print(json.dumps(_public_report(report), ensure_ascii=False, indent=1))
+        if not a.apply:
+            return 0
+        return 0 if report.get("status") != "error" else 1
     return 0
+
+
+def _public_report(report: dict) -> dict:
+    """stdout 不带逐行哈希（哈希进 db-writes.txt 和工作日志）。"""
+    return {key: value for key, value in report.items() if key != "hashes"}
+
+
+def _persist_job(name: str, db: Path, report: dict) -> None:
+    if not report.get("apply") or Path(db).resolve() != DB.MARKET_DB.resolve():
+        return
+    inventory = DB.ROOT / "results" / "inventory"
+    inventory.mkdir(parents=True, exist_ok=True)
+    hashes = report.get("hashes") or []
+    if hashes:
+        with (inventory / "db-writes.txt").open("a", encoding="utf-8") as handle:
+            handle.write(f"\n# {name} {report.get('run_id', '')}\n")
+            handle.write("\n".join(hashes) + "\n")
+    slot = inventory / "qdii-nav-dividends.json"
+    current = {}
+    if slot.exists():
+        try:
+            current = json.loads(slot.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            current = {}
+    current[name] = _public_report(report)
+    slot.write_text(json.dumps(current, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":
