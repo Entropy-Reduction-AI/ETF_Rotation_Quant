@@ -12,14 +12,16 @@
 ## 1. 角色与权限
 | 角色 | 负责 | 可以 | 不可以 |
 |---|---|---|---|
-| **ETF Rotation Manager** | 拆任务、派活、追进度；维护看板 `operations/planning/phase2-board.md` 和尝试记录汇总；每天在群里发一次状态；按 §5 向 Owner 升级 | 修改看板和工作记录；重新分配开发线；暂停某条线 | 写业务代码；判定结果；改预注册；替 Owner 批准门禁 |
+| **ETF Rotation Manager** | 拆任务、派活、追进度；维护看板 `operations/planning/phase2-board.md` 和尝试记录汇总；每天在群里发一次状态；按 §5 向 Owner 升级 | 修改看板和工作记录；重新分配开发线；暂停某条线；按下方常设授权执行合入、新建 tag、删除已合入分支 | 写业务代码；判定结果；改预注册；替 Owner 批准门禁 |
 | **ETF Rotation Dev** | 取数、写代码、跑回测；可开多个并行环境，每条开发线一个分支 `dev/v3-<线名>` | 在自己的分支和自己负责的文件里自由迭代；写 `operations/work_logs/` | 判定通过；写或删 `results/v3/LOCK`；改预注册 §0–§10；修改第一阶段文件 |
 | **ETF Rotation Reviewer** | 独立复核每次合入；保管冻结与 LOCK；最后按判据出结论 | 写 `operations/reviews/`；在 `operations/reviews/diag/v3/` 写**自己的**复算脚本；给出 approve / approve_with_follow_up / return_to_planning | 改业务代码；复用 Dev 的计算代码做复算；放宽判据 |
 | Owner | 只在门禁 G1、G3、G5 拍板 | — | — |
 
-**合入 main、打 tag 由 Owner 安排执行**，三个 bot 都不自行合入、不打 tag。需要合入时，由 Manager 在群里提请 Owner。
+合入 main、新建 tag、删除已合入分支：只由 **ETF Rotation Manager** 一个代理执行。Dev 与 Reviewer 收到此类命令时只确认收到，不启动执行。
 
-**tag 与分支纪律（硬规则）**：任何 bot 都**不得删除或移动任何 tag**（含 `milestone/*`），也不得删除、强推或改写 `main` 及他人的分支。仓库未对 tag 设保护规则，这条只靠纪律执行。以往的 tag 删除都是 Owner 明确要求清理时才执行的；今后也只有 Owner 在群里明确点名要求时才可以删除，执行后写入工作记录（tag 名 + 原指向提交）。
+**Owner 2026-10-24 常设授权**：Manager 可用 `--ff-only` 合入已通过评审的 `dev/v3-*` 分支，并可在 G2 条件满足时打 `milestone/v3-code-freeze`。G3、G5、预注册 v3.1、尝试预算 >60 仍须 Owner 批准。
+
+**tag 与分支纪律（硬规则）**：任何 bot 都**不得删除或移动任何 tag**（含 `milestone/*`），也不得强推或改写 `main` 及他人的分支。仓库未对 tag 设保护规则，这条只靠纪律执行。以往的 tag 删除都是 Owner 明确要求清理时才执行的；今后也只有 Owner 在群里明确点名要求清理时才可以删除或移动 tag，执行后写入工作记录（tag 名 + 原指向提交）。不得删除 `main` 或未合入的他人分支；已合入分支只由 Manager 按上面两款删除。
 
 **独立性要求**：Reviewer 与 Dev 应使用不同的底层模型。做不到时，Reviewer 必须用独立实现（不同的代码、尽量不同的库）复算关键数字，并在评审里写明用了什么方法。
 
@@ -86,7 +88,7 @@ G2 之前只允许运行 end ≤ 2015-12-31 的回测；溢价模块可以用 20
 - **停止条件**：尝试预算用完；连续 3 天无进展；Reviewer 判定 return_to_planning。
 
 ## 6. 合入规则
-- 分支 `dev/v3-<线名>`；Reviewer 评审写入 `operations/reviews/2026-MM-DD-v3-<线名>.md`；评审通过且全量测试 0 失败后，由 Manager 提请 Owner 安排用 `--ff-only` 合入 main 并删除该开发分支（沿用 D6；删除的只是已合入的 `dev/v3-*` 分支）。合入过程中**不删除、不移动任何 tag**。
+- 分支 `dev/v3-<线名>`；Reviewer 评审写入 `operations/reviews/2026-MM-DD-v3-<线名>.md`；评审通过且全量测试 0 失败后，由 **ETF Rotation Manager** 一个代理用 `--ff-only` 合入 main，并删除该已合入的开发分支（沿用 D6；删除的只是已合入的 `dev/v3-*` 分支）。Dev 与 Reviewer 收到合入、新建 tag 或删除已合入分支的命令时只确认收到，不启动执行。G2 条件满足时，由 Manager 打 `milestone/v3-code-freeze`。合入过程中**不删除、不移动任何 tag**，不得强推或改写 `main` 及他人的分支。G3、G5、预注册 v3.1、尝试预算 >60 仍须 Owner 批准。
 - 每条线只改自己"改动面"里的文件；跨线改动先由 Manager 协调。
 - 不修改第一阶段文件：`src/portfolio/`、`src/research/`、`src/report/`、`config/portfolio.toml`、`results/` 下除 `results/v3/` 以外的已有文件、`docs/prereg/` 下 v1、v2。
 
