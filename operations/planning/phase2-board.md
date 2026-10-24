@@ -53,7 +53,7 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 | 线 | 状态 | 负责人 | 分支 | 依赖 | 最近更新 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
 | L1 数据层 | 已合入 | Dev | —（分支已删） | 无 | 2026-10-24 | ff-only 合入 `review/v3-L1-sign`。main `98117155`。PR #16、#17 已合入。无回测，无 tag 变更 |
-| L2 回测引擎 | 进行中 | Dev | `dev/v3-L2` | L1 已合入 | 2026-10-24 | 从 main `9811715` 开工。实现 §4（A/B/S1/S2，两个池）。默认 end≤2015-12-31。未合入，未改 tag |
+| L2 回测引擎 | 待评审 | Reviewer | `dev/v3-L2` | L1 已合入 | 2026-10-24 | `5dc81ff`，基线 main `9811715`。PR #18。未合入，无 tag，无 LOCK，无 2016+ 组合收益 |
 | L3 溢价模块 | 未开始 | Dev | `dev/v3-L3` | L1 QDII 数据 | — | 可与 L2 并行。2021 年起数据只做机制检验 |
 | L4 评估层 | 未开始 | Dev 实现 / Reviewer 复算 | `dev/v3-L4` | L2 | — | — |
 | L5 运行与报告 | 未开始 | Dev 运行 / Reviewer 判定 | n/a（待 G2/G3） | G2 + G3 | — | G2、G3 之前不开分支、不跑全期 |
@@ -111,7 +111,15 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 - [ ] 运行器默认 end ≤ 2015-12-31；跑全期必须带预注册冻结 SHA；检测到 `results/v3/LOCK` 后拒绝再跑
 - [ ] 四项测试通过后送审
 
-进行中。分支 `dev/v3-L2` 从 main `9811715` 拉出，正在实现 §4（A、B、S1、S2，两个池）。默认 end≤2015-12-31。未合入，未改 tag。MANIFEST 513580 漂移不在本线，仍是单独的 emit 跟进。
+待评审。
+
+- 分支 `dev/v3-L2` @ `5dc81ff`（`5dc81ffc8fe4c981d20278e74592fa116d5ffd95`），基线 main `9811715`
+- PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/18
+- 范围: `src/v3/engine/` + `config/v3/arms.toml`。默认 end≤2015-12-31
+- Dev 报告: 388 跑 / 0 失败 / 1 跳过（L2 24）。此处只登记报告，不作判定
+- 未合入，无 tag，无 `results/v3/LOCK`，无 2016 年起的组合收益
+- Reviewer 正在独立复算 A 臂设计期年化与最大回撤（判据：差距 ≤ 0.1 个百分点）
+- MANIFEST 513580 漂移不在本线，仍是单独的 emit 跟进
 
 ### L3 溢价模块
 
@@ -170,4 +178,4 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 ## 最近更新
 
-2026-10-24，Manager，L2 改为进行中：`dev/v3-L2` 从 main `9811715` 开工，实现 §4（A/B/S1/S2，两个池），默认 end≤2015-12-31。未合入，未改 tag。MANIFEST 513580 漂移仍是单独的 emit 跟进。
+2026-10-24，Manager，L2 改为待评审：`dev/v3-L2` @ `5dc81ff`（基线 main `9811715`），PR #18。未合入，无 tag，无 LOCK，无 2016+ 组合收益。Reviewer 正在独立复算 A 臂设计期年化与最大回撤。
