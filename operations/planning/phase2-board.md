@@ -54,7 +54,7 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 | --- | --- | --- | --- | --- | --- | --- |
 | L1 数据层 | 已合入 | Dev | —（分支已删） | 无 | 2026-10-24 | ff-only 合入 `review/v3-L1-sign`。main `98117155`。PR #16、#17 已合入。无回测，无 tag 变更 |
 | L2 回测引擎 | 已合入 | Dev | —（分支已删） | L1 已合入 | 2026-10-25 | ff-only 合入 `cursor/review-v3-l2-d546`。main `2b8ee0e`。PR #18、#19 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
-| L3 溢价模块 | 未开始 | Dev | `dev/v3-L3` | L1 QDII 数据 | — | 可与 L2 并行。2021 年起数据只做机制检验 |
+| L3 溢价模块 | 待评审 | Reviewer | `dev/v3-L3` | L1 QDII 数据 | 2026-10-25 | `f171e48`，基线 main `2b8ee0e`。PR #20。未合入，无 tag，无 LOCK，未接入 L2 组合收益 |
 | L4 评估层 | 未开始 | Dev 实现 / Reviewer 复算 | `dev/v3-L4` | L2 | — | — |
 | L5 运行与报告 | 未开始 | Dev 运行 / Reviewer 判定 | n/a（待 G2/G3） | G2 + G3 | — | G2、G3 之前不开分支、不跑全期 |
 
@@ -134,7 +134,14 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 - [ ] 事件清单日期与探索脚本一致
 - [ ] 两个时点人工核对后送审
 
-依赖 L1 的 QDII 数据。可与 L2 并行。2021 年起的数据只用于机制检验，不输出组合收益。
+待评审。
+
+- 分支 `dev/v3-L3` @ `f171e48`（`f171e48f4a0f302c30d8968bab4b326e429d05c7`），基线 main `2b8ee0e`
+- PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/20
+- 范围: `src/v3/premium/`
+- Dev 报告: 411 跑 / 0 失败 / 1 跳过（premium 23）。事件清单与 `prem_episodes.py` 对齐（49 段）。抽查 2025-04、2026-03 状态。此处只登记报告，不作判定
+- 未合入，无 tag，无 `results/v3/LOCK`，未接入 L2 组合收益
+- Reviewer 评审进行中
 
 ### L4 评估层
 
@@ -180,4 +187,4 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 ## 最近更新
 
-2026-10-25，Manager，L2 已合入 main `2b8ee0e02fe7eed374218994633de110d6ed6a1b`（ff-only `cursor/review-v3-l2-d546`）。PR #18、#19 已合入，分支已删。合入前测试 388 跑，0 失败，1 跳过。无 tag，无 LOCK，无 2016+ 组合收益。
+2026-10-25，Manager，L3 改为待评审：`dev/v3-L3` @ `f171e48`（基线 main `2b8ee0e`），PR #20。未合入，无 tag，无 LOCK，未接入 L2 组合收益。Reviewer 评审进行中。
