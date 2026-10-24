@@ -54,7 +54,7 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 | --- | --- | --- | --- | --- | --- | --- |
 | L1 数据层 | 已合入 | Dev | —（分支已删） | 无 | 2026-10-24 | ff-only 合入 `review/v3-L1-sign`。main `98117155`。PR #16、#17 已合入。无回测，无 tag 变更 |
 | L2 回测引擎 | 已合入 | Dev | —（分支已删） | L1 已合入 | 2026-10-25 | ff-only 合入 `cursor/review-v3-l2-d546`。main `2b8ee0e`。PR #18、#19 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
-| L3 溢价模块 | 待评审 | Reviewer | `dev/v3-L3` | L1 QDII 数据 | 2026-10-25 | `f171e48`，基线 main `2b8ee0e`。PR #20。未合入，无 tag，无 LOCK，未接入 L2 组合收益 |
+| L3 溢价模块 | 已合入 | Dev | —（分支已删） | L1 QDII 数据 | 2026-10-25 | ff-only 合入 `cursor/v3-l3-review-2249`。main `4cecfad`。PR #20、#21 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
 | L4 评估层 | 未开始 | Dev 实现 / Reviewer 复算 | `dev/v3-L4` | L2 | — | — |
 | L5 运行与报告 | 未开始 | Dev 运行 / Reviewer 判定 | n/a（待 G2/G3） | G2 + G3 | — | G2、G3 之前不开分支、不跑全期 |
 
@@ -134,14 +134,17 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 - [ ] 事件清单日期与探索脚本一致
 - [ ] 两个时点人工核对后送审
 
-待评审。
+已合入 main（`--ff-only`，来源 `cursor/v3-l3-review-2249`）:
 
-- 分支 `dev/v3-L3` @ `f171e48`（`f171e48f4a0f302c30d8968bab4b326e429d05c7`），基线 main `2b8ee0e`
-- PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/20
-- 范围: `src/v3/premium/`
-- Dev 报告: 411 跑 / 0 失败 / 1 跳过（premium 23）。事件清单与 `prem_episodes.py` 对齐（49 段）。抽查 2025-04、2026-03 状态。此处只登记报告，不作判定
-- 未合入，无 tag，无 `results/v3/LOCK`，未接入 L2 组合收益
-- Reviewer 评审进行中
+- main: `4cecfad77458daea0e780cce383bc3e659fa9f59`
+- PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/20 与 https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/21 已合入
+- 分支 `dev/v3-L3`、`cursor/v3-l3-review-2249` 已删除
+- 交付提交 `f171e48`；签收 `4cecfad`（评审 `operations/reviews/2026-10-25-v3-L3.md`，approve）
+- 基线 main `2b8ee0e`
+- 合入前测试（LFS pull 之后）: 411 跑，0 失败，1 跳过
+- 49 段事件清单与 15 项状态抽查为 Reviewer 结论。此处只登记，不作判定
+- 无 tag，无 `results/v3/LOCK`，无 2016 年起的组合收益
+- 不阻塞的后续（本合入未做）: 执行器接入 `allocate_container` / `adjust_weights`；§5.5 污染检验段比较；§7.1 归属 L4
 
 ### L4 评估层
 
@@ -187,4 +190,4 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 ## 最近更新
 
-2026-10-25，Manager，L3 改为待评审：`dev/v3-L3` @ `f171e48`（基线 main `2b8ee0e`），PR #20。未合入，无 tag，无 LOCK，未接入 L2 组合收益。Reviewer 评审进行中。
+2026-10-25，Manager，L3 `--ff-only` 合入 main `4cecfad77458daea0e780cce383bc3e659fa9f59`。PR #20、#21 已合入。分支 `dev/v3-L3`、`cursor/v3-l3-review-2249` 已删除。合入前测试 411 跑，0 失败，1 跳过。无 tag，无 LOCK，无 2016 年起的组合收益。
