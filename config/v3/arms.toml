@@ -1,0 +1,39 @@
+# v3 §4 的运行常数。规则文字以预注册为准，本文件不改候选集合。
+# 随机对照种子见 §6②。B 臂并列时取 candidates 里先写到的那一组。
+
+seed = 20261024
+design_end = "2015-12-31"
+# milestone/v3-prereg-freeze 指向的提交。全期运行必须带上这个 SHA（或不少于 7 位的同一前缀）。
+freeze_sha = "bfeb49cc65eb0ba419bc98348f1d643fac1211f6"
+lookbacks = [20, 60, 120, 250]
+ns = [3, 5, 8]
+frequencies = ["week", "month"]
+cash_id = "cash"
+cash_annual = 0.02
+trading_days = 252
+weight_eps = 1.0e-6
+trade_eps = 1.0e-12
+min_new_buy_amount = 30000000.0
+liquidity_window = 20
+stale_limit = 5
+tradable_list_lag = 60
+nav_lag = 2
+# 附录 2 在登记表里的 asset_class 是 S2。这四只按宽基档，其余 S2 名称按行业档。
+s2_broad = ["沪深300", "中证500", "中证1000", "创业板"]
+
+[b]
+first_apply_year = 2011
+train_start = "2006-01-01"
+
+# 单边费率。预注册 §4.3：宽基、债券、现金 0.05%；行业、港股、商品 0.10%；QDII 0.15%。
+# A股红利预注册没有单列，按行业档 0.10%。美股宽基按宽基档，美股和全球主题按 QDII 档。
+[fees]
+"A股宽基" = 0.0005
+"美股宽基" = 0.0005
+"债券" = 0.0005
+"现金" = 0.0005
+"A股行业" = 0.0010
+"A股红利" = 0.0010
+"港股" = 0.0010
+"商品" = 0.0010
+"美股和全球主题" = 0.0015
