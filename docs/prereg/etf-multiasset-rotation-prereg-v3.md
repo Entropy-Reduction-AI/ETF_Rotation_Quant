@@ -1,8 +1,8 @@
 # 多资产动态 topN 轮动（含现金） · 预注册 v3 · 2026-10-24
 
 ## Metadata
-- Project: ETF_Rotation_Quant · Owner: L. Loric · 起草: orchestrator（Notion AI）· 状态: **草稿，待 Owner 确认后冻结**
-- 澄清: 2026-10-24 已写入 A1–A15。同日 Owner 决定 B1–B7 与 C1，并修正 A3、A5、A6，新增 A16 与 C5 补充。冻结前本文件仍是草稿
+- Project: ETF_Rotation_Quant · Owner: L. Loric · 起草: orchestrator（Notion AI）· 状态: **已冻结（G1，2026-10-24，Owner 批准）**
+- 澄清: 2026-10-24 已写入 A1–A15。同日 Owner 决定 B1–B7 与 C1，并修正 A3、A5、A6，新增 A16 与 C5 补充。2026-10-24 冻结，此后修改须按 §9 第 5 条另立 v3.1
 - 尝试登记: 本项目第 **3** 次正式尝试（第 1 次 V1 横截面形态轮动，设计期 STOP；第 2 次 v2 A 股大盘择时，样本外不通过）
 - 依据决定: D9（`operations/planning/2026-10-24-d9-phase2-decisions.md`）；G1 Owner 决定见 `operations/reviews/2026-10-24-v3-prereg-review.md`
 - 规则: §0–§10 冻结后不改字，只追加 §11 结果。冻结 = 本文件进入 main 的提交 SHA。冻结后对规则的任何改动 = v3.x，新登记尝试次数
