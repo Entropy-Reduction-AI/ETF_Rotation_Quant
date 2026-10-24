@@ -52,7 +52,7 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 | 线 | 状态 | 负责人 | 分支 | 依赖 | 最近更新 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
-| L1 数据层 | 进行中 | Dev | `dev/v3-L1` | 无 | 2026-10-24/25 | 已对齐 main。按冻结 §3 机械填写 `universe.toml`。Reviewer 逐条冻结该文件（B1）之前禁止回测 |
+| L1 数据层 | 待评审 | Reviewer | `dev/v3-L1` | 无 | 2026-10-24 | 交付 `8a1d45e`，PR #16。未合入 main。Reviewer approve 前 Manager 不 ff-only 合入。B1 逐条签字前禁止回测 |
 | L2 回测引擎 | 未开始 | Dev | `dev/v3-L2` | L1 登记表（可并行开发） | — | 默认 end≤2015-12-31。理解已确认；代码未开始。回测须等 B1 的 `universe.toml` 逐条冻结 |
 | L3 溢价模块 | 未开始 | Dev | `dev/v3-L3` | L1 QDII 数据 | — | 可与 L2 并行。2021 年起数据只做机制检验 |
 | L4 评估层 | 未开始 | Dev 实现 / Reviewer 复算 | `dev/v3-L4` | L2 | — | — |
@@ -82,9 +82,16 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 - [ ] 中债 5 年、10 年国债财富指数
 - [ ] 全部场内 QDII ETF/LOF：名单、上市日、单位净值、收盘价、成交额、申购状态（2021 年起）
 - [ ] U-可交易各执行 ETF 的日线和成交额
-- [ ] 覆盖报告与 SHA256 登记后送审
+- [x] 覆盖报告与 SHA256 登记后送审
 
-分支 `dev/v3-L1` 继续，已对齐 main。按已冻结 §3 机械生成 `config/v3/universe.toml`。Reviewer 逐条核对并冻结该文件（B1）之前，不跑任何回测。
+交付，待 Reviewer 评审:
+
+- 分支 `dev/v3-L1` @ `8a1d45e`（`8a1d45e04f121b62ceb445b2ffb85b30846d4f77`，含冻结 `bfeb49c`）
+- PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/16
+- `config/v3/universe.toml` SHA256 `693b7d4dff91dff4b9bac4a0c1241eb4692f6b3cbd444965440a265ffa32aaff`
+- 数据库文件使用 Git LFS
+- 覆盖: 研究 137（ok 131 / partial 1 / gap 5），执行 153（ok 151 / gap 2）
+- 未合入 main，未动 tag。Reviewer 逐条签字冻结 `universe.toml`（B1）之前不跑回测。Manager 在 Reviewer approve 之前不做 `--ff-only` 合入。
 
 ### L2 回测引擎
 
@@ -159,4 +166,4 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 ## 最近更新
 
-2026-10-24/25，Manager，G1 完成：预注册冻结于 `milestone/v3-prereg-freeze`（`bfeb49cc65eb0ba419bc98348f1d643fac1211f6`）；main 为授权提交 `52a3aa861e4428cc1fcb343b5adcafb023782098`；`review/v3-prereg` 已在 ff-only 合入后删除。L1 继续在 `dev/v3-L1`，回测等待 B1 登记表逐条冻结。
+2026-10-24，Manager，L1 改为待评审：`dev/v3-L1` @ `8a1d45e`，PR #16。未合入 main，未动 tag。Reviewer approve 前不 ff-only 合入；B1 逐条签字前禁止回测。
