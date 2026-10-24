@@ -1,0 +1,18 @@
+{
+  "reviewer_segments": 49,
+  "fixture_segments": 49,
+  "exact_match": true,
+  "crude_161129_2025": [
+    {
+      "code": "161129",
+      "start": "2025-04-10",
+      "peak": "2025-04-23",
+      "peak_prem": 70,
+      "base": 11,
+      "rise_days": 13,
+      "half_revert_days": 5.0,
+      "px_chg": -20.7,
+      "nav_chg": 0.3
+    }
+  ]
+}
