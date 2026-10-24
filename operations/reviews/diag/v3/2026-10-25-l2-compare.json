@@ -1,0 +1,24 @@
+{
+  "task": "v3-L2 A-arm U-指数 design period (end<=2015-12-31)",
+  "universe_sha256": "693b7d4dff91dff4b9bac4a0c1241eb4692f6b3cbd444965440a265ffa32aaff",
+  "dev": {
+    "source": "black-box: .venv/bin/python -m src.v3.engine --arm A --pool index --debug",
+    "branch": "dev/v3-L2",
+    "start": "2005-01-04",
+    "end": "2015-12-31",
+    "n_days": 2671,
+    "cagr_decimal": 0.09682387826997108,
+    "max_drawdown_decimal": -0.4304145335241989
+  },
+  "reviewer": {
+    "source": "operations/reviews/diag/v3/2026-10-25-l2-recompute.py",
+    "cagr_decimal": 0.09682387826997108,
+    "max_drawdown_decimal": -0.4304145335241989
+  },
+  "gaps_pp": {
+    "cagr": 0.0,
+    "max_drawdown": 0.0
+  },
+  "gate_pp": 0.1,
+  "pass": true
+}
