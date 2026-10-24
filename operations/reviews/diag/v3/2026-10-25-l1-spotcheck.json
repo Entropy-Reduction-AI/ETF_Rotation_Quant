@@ -1,0 +1,233 @@
+{
+  "sqlite_spotcheck_n": 30,
+  "sqlite_all_pass": true,
+  "manifest_sample_n": 5,
+  "manifest_all_pass": false,
+  "artifact_publish_checks": [
+    {
+      "id": "csi300",
+      "artifact_publish": "2005-04-08",
+      "toml": "2005-04-08",
+      "ok": true
+    },
+    {
+      "id": "csi-dividend",
+      "artifact_publish": "2008-05-26",
+      "toml": "2008-05-26",
+      "ok": true
+    },
+    {
+      "id": "star50",
+      "artifact_publish": "2020-07-23",
+      "toml": "2020-07-23",
+      "ok": true
+    }
+  ],
+  "market_sqlite_sha256": "d0fd3a86785705a90688715d54120f063acf76c00fda7b5338817a47c1919b81",
+  "details": {
+    "sqlite": [
+      {
+        "container_id": "star50",
+        "role": "research",
+        "code": "000688",
+        "ok": true
+      },
+      {
+        "container_id": "gold",
+        "role": "research",
+        "code": "Au99.99",
+        "ok": true
+      },
+      {
+        "container_id": "s2-医药",
+        "role": "research",
+        "code": "H00913",
+        "ok": true
+      },
+      {
+        "container_id": "allshare-healthcare",
+        "role": "research",
+        "code": "H00991",
+        "ok": true
+      },
+      {
+        "container_id": "spx",
+        "role": "research",
+        "code": "^SP500TR",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-159607",
+        "role": "research",
+        "code": "中证海外中国互联网30人民币指数",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-159747",
+        "role": "research",
+        "code": "中证香港科技指数指数",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-520830",
+        "role": "research",
+        "code": "富时沙特阿拉伯指数",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-520500",
+        "role": "research",
+        "code": "恒生创新药指数",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-520520",
+        "role": "research",
+        "code": "恒生消费指数",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-513010",
+        "role": "research",
+        "code": "恒生科技指数",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-520920",
+        "role": "research",
+        "code": "恒生科技指数",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-161126",
+        "role": "research",
+        "code": "标普500医疗保健等权重指数",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-513080",
+        "role": "research",
+        "code": "法国CAC40指数",
+        "ok": true
+      },
+      {
+        "container_id": "hstech",
+        "role": "execution",
+        "code": "158042",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-159519",
+        "role": "execution",
+        "code": "159519",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-159655",
+        "role": "execution",
+        "code": "159655",
+        "ok": true
+      },
+      {
+        "container_id": "hstech",
+        "role": "execution",
+        "code": "159741",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-159850",
+        "role": "execution",
+        "code": "159850",
+        "ok": true
+      },
+      {
+        "container_id": "allshare-financials-re",
+        "role": "execution",
+        "code": "159940",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-160717",
+        "role": "execution",
+        "code": "160717",
+        "ok": true
+      },
+      {
+        "container_id": "crude-oil",
+        "role": "execution",
+        "code": "161129",
+        "ok": true
+      },
+      {
+        "container_id": "s2-沪深300",
+        "role": "execution",
+        "code": "510300",
+        "ok": true
+      },
+      {
+        "container_id": "s2-医药",
+        "role": "execution",
+        "code": "512010",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-513000",
+        "role": "execution",
+        "code": "513000",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-513110",
+        "role": "execution",
+        "code": "513110",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-513210",
+        "role": "execution",
+        "code": "513210",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-513330",
+        "role": "execution",
+        "code": "513330",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-513530",
+        "role": "execution",
+        "code": "513530",
+        "ok": true
+      },
+      {
+        "container_id": "qdii-513880",
+        "role": "execution",
+        "code": "513880",
+        "ok": true
+      }
+    ],
+    "manifest": [
+      {
+        "path": "raw/jbgk/513580.html.gz",
+        "ok": false
+      },
+      {
+        "path": "raw/csi-perf/fa7260d24089.body",
+        "ok": true
+      },
+      {
+        "path": "raw/csi/000905.json",
+        "ok": true
+      },
+      {
+        "path": "raw/csi-perf/54d000e94201.body",
+        "ok": true
+      },
+      {
+        "path": "raw/csi-perf/2011927f0f9e.body",
+        "ok": true
+      }
+    ]
+  }
+}
