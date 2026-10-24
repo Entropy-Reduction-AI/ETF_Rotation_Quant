@@ -19,37 +19,32 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 - 规则写在预注册里。实现可以迭代。未经 Owner，不改规则。
 - G3 之前：不计算、不输出截止日晚于 2015-12-31 的组合收益。溢价模块可以用 2021 年起的数据做机制检验，仍然不输出任何 2016 年起的组合收益。
-- 三个 bot 不合入 main，不创建、不删除、不移动任何 tag。合入与 tag 由 Owner 安排。
+- 任何回测（含设计期）须等 Reviewer 逐条核对并冻结 `config/v3/universe.toml`（Owner B1）之后。在此之前只按已冻结的 §3 机械填写登记表。
+- 合入 main、新建 tag、删除已合入分支只由 Manager 执行（任务清单 §1，Owner 2026-10-24 常设授权）。Manager 可用 `--ff-only` 合入已通过评审的 `dev/v3-*`，并在 G2 条件满足时打 `milestone/v3-code-freeze`。G3、G5、预注册 v3.1、尝试预算 >60 仍须 Owner。不得删除或移动任何 tag，不得强推或改写 main。
 
 ## 门禁
 
 | 门禁 | 内容 | 谁批准 | 状态 |
 | --- | --- | --- | --- |
 | G0 | 第一阶段封存、合同修订、D9 与预注册草稿入库 | Owner | 已完成 |
-| G1 | 预注册冻结。修订在 `review/v3-prereg`；Owner 确认后打 `milestone/v3-prereg-freeze` | Owner | 待批准 |
-| G2 | 代码冻结：各开发线评审通过、全量测试 0 失败，打 `milestone/v3-code-freeze` | Reviewer | 未开始 |
+| G1 | 预注册已冻结。`milestone/v3-prereg-freeze` → `bfeb49cc65eb0ba419bc98348f1d643fac1211f6` | Owner | 已完成（2026-10-24/25） |
+| G2 | 代码冻结：各开发线评审通过、全量测试 0 失败。Reviewer 批准后，Manager 打 `milestone/v3-code-freeze` | Reviewer | 未开始 |
 | G3 | 跑全期（含 2016 后），写 `results/v3/LOCK` | Owner 批准，Reviewer 执行 | 未开始 |
 | G4 | 按 v3 §6、§7.3 出结论 | Reviewer | 未开始 |
 | G5 | 是否进入前向模拟盘、是否上真钱 | Owner | 未开始 |
 
-## G1 前：预注册修订轨
+## G1 预注册修订与冻结
 
-Owner 开工说明。G1 冻结之前走这条轨。
+已完成（2026-10-24/25）。预注册状态行：已冻结（G1，2026-10-24，Owner 批准）。
 
-- 分支: `review/v3-prereg`
-- 流转: Reviewer 提出 → Dev 回应 → Manager 推进
-- 歧义、实现细节、边界情况: 取更保守的读法，改预注册，并在评审文件记下「问题 → 决定 → 理由」
-- 若改动改变 §3–§7 的规则、门槛、候选或预算: 列入下方「待 Owner 决定」，写明选项和推荐；不单独拍板
-- 修订结束后，Manager 向 Owner 提交 G1 请求: 分支、最新 SHA、变更摘要、待 Owner 决定清单
-- G1 之前: Dev 可以在 `dev/v3-L1` 上开始取数（L1 与规则无关），不得运行任何回测结果
-
-评审指针:
-
-- 评审文件: `operations/reviews/2026-10-24-v3-prereg-review.md`
-- 分支: `review/v3-prereg`
-- 提交: `6f07a0f`
-- 草稿 PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/15 （勿合入）
-- 状态: Dev 已全部同意 A1–A15；Reviewer 已锁定；Manager 正在 `review/v3-prereg` 推进预注册正文澄清（B1–B7 仍仅待 Owner）
+- 冻结提交: `bfeb49cc65eb0ba419bc98348f1d643fac1211f6`（`prereg: freeze v3 at G1`）
+- tag: `milestone/v3-prereg-freeze` → 该提交
+- main: Manager 授权提交 `52a3aa861e4428cc1fcb343b5adcafb023782098`（父提交即冻结提交）
+- `review/v3-prereg` 已 `--ff-only` 合入后删除
+- 冻结时测试: 351 跑，350 过，0 失败，1 跳过
+- 评审文件: `operations/reviews/2026-10-24-v3-prereg-review.md`（起点 `6f07a0f`；Owner 决定写入 `89d18be`）
+- 过程 PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/15 （分支已删除）
+- 此后改 §3–§7 的规则、门槛、候选或预算即 v3.1，须 Owner。B1–B7 的决定见下方，已无待决项。B1 的登记表冻结尚未发生。
 
 ## 开发线
 
@@ -57,8 +52,8 @@ Owner 开工说明。G1 冻结之前走这条轨。
 
 | 线 | 状态 | 负责人 | 分支 | 依赖 | 最近更新 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
-| L1 数据层 | 进行中 | Dev | `dev/v3-L1` | 无 | 2026-10-24 | G1 前可取数，禁止跑回测结果。Dev 已开 `dev/v3-L1` 取数（云代理进行中）；仍禁止回测 |
-| L2 回测引擎 | 未开始 | Dev | `dev/v3-L2` | L1 登记表（可并行开发） | — | 默认 end≤2015-12-31。理解已确认；代码未开始 |
+| L1 数据层 | 进行中 | Dev | `dev/v3-L1` | 无 | 2026-10-24/25 | 已对齐 main。按冻结 §3 机械填写 `universe.toml`。Reviewer 逐条冻结该文件（B1）之前禁止回测 |
+| L2 回测引擎 | 未开始 | Dev | `dev/v3-L2` | L1 登记表（可并行开发） | — | 默认 end≤2015-12-31。理解已确认；代码未开始。回测须等 B1 的 `universe.toml` 逐条冻结 |
 | L3 溢价模块 | 未开始 | Dev | `dev/v3-L3` | L1 QDII 数据 | — | 可与 L2 并行。2021 年起数据只做机制检验 |
 | L4 评估层 | 未开始 | Dev 实现 / Reviewer 复算 | `dev/v3-L4` | L2 | — | — |
 | L5 运行与报告 | 未开始 | Dev 运行 / Reviewer 判定 | n/a（待 G2/G3） | G2 + G3 | — | G2、G3 之前不开分支、不跑全期 |
@@ -89,7 +84,7 @@ Owner 开工说明。G1 冻结之前走这条轨。
 - [ ] U-可交易各执行 ETF 的日线和成交额
 - [ ] 覆盖报告与 SHA256 登记后送审
 
-G1 前只取数。不跑回测结果。
+分支 `dev/v3-L1` 继续，已对齐 main。按已冻结 §3 机械生成 `config/v3/universe.toml`。Reviewer 逐条核对并冻结该文件（B1）之前，不跑任何回测。
 
 ### L2 回测引擎
 
@@ -150,18 +145,18 @@ G1 前只取数。不跑回测结果。
 
 ## 阻塞 / 待 Owner 决定
 
-来源: `operations/reviews/2026-10-24-v3-prereg-review.md`（`6f07a0f`）。Manager 不代 Owner 决定。改动预注册 §3–§7 的规则、门槛、候选或预算时，写在这里：事项、选项、推荐。
+无。B1–B7 已由 Owner 于 2026-10-24 决定，写入冻结预注册与 `operations/reviews/2026-10-24-v3-prereg-review.md`（`89d18be`）。Manager 不代决 v3.1、G3、G5，也不代决尝试预算超过 60。
 
-| # | 问题摘要 | 选项 | 建议 |
-| --- | --- | --- | --- |
-| B1 | 冻结时 §3.2 若无完整代码与发布日表，G1 后补代码是否算改候选集合 | (a) G1 前完整冻结 universe<br>(b) G1 只冻规则文字 | (a) |
-| B2 | 「跟踪单一海外指数的场内 QDII ETF/LOF」没有可执行的纳入判定 | (a) 判定清单按季更新<br>(b) 静态名单到 v3.1 | (a) + 排除表，更新不计尝试 |
-| B3 | 6 个子组合与 A 臂「无待选参数」并列表述，60 次预算和判据⑤可能不一致 | (a) 诊断子组合不计 60 与⑤<br>(b) ledger 均计入 | (b) |
-| B4 | 设计期 ≤2015 时 60 个月窗口起点很少，同一门槛波动大 | (a) 同门槛<br>(b) 设计期只报告 | (a)，并写明正式判定时点 = G3 后 |
-| B5 | U-可交易上①或②「明显不成立」则结论降一级，没有量化标准 | (a) 量化阈值（①的 60 个月中位超额 ≤0，或②分位 >20%）<br>(b) G4 主观 | (a) |
-| B6 | S2 的「第一阶段 16 容器」没有权威列表指针 | (a) 附录列名单<br>(b) 引用 phase1-archive SHA | (b) + 附录抄录 |
-| B7 | 合同要求人民币中间价，v3 未指定来源与时点 | (a) 沿用第一阶段实现<br>(b) 指定中汇中间价 | (a) |
+| # | Owner 决定 |
+| --- | --- |
+| B1 | 修改后的 (b)。G1 只冻结规则文字。`config/v3/universe.toml` 由 L1 按 §3 机械生成；每条含代码、发布日、口径、来源。Reviewer 逐条核对并记录 SHA 之后，才允许任何回测（含设计期）。冻结后只允许附录 1 的机械更新 |
+| B2 | (a)。附录给出纳入程序和排除表：排除多资产 QDII、债券基金、货币基金、REITs；跨境商品归入商品大类。名单更新不计尝试，留下 inventory |
+| B3 | (b)。写入 trial-ledger 的每一行都计入 60，也计入判据⑤。诊断走 debug 通道，debug 的 end 只允许 ≤ 2015-12-31 |
+| B4 | (a)。①②③⑤ 的正式通过与否只在 G3 全期跑完之后判定。G2 之前的设计期数字只作工程核对 |
+| B5 | (a)。U-可交易上①的 60 个月中位超额 ≤ 0，或②的分位 > 20%，则结论降一级 |
+| B6 | (b)，并在附录抄录名单。引用 `config/portfolio.toml` 于 `milestone/phase1-archive`（`0dd93fa`） |
+| B7 | (a)。与第一阶段 BM-主实现使用同一汇率序列 |
 
 ## 最近更新
 
-2026-10-24，Manager，同步修订轨：Dev 已全部同意 A1–A15，Reviewer 已锁定；正文澄清在 `review/v3-prereg` 推进，B1–B7 仍仅待 Owner。
+2026-10-24/25，Manager，G1 完成：预注册冻结于 `milestone/v3-prereg-freeze`（`bfeb49cc65eb0ba419bc98348f1d643fac1211f6`）；main 为授权提交 `52a3aa861e4428cc1fcb343b5adcafb023782098`；`review/v3-prereg` 已在 ff-only 合入后删除。L1 继续在 `dev/v3-L1`，回测等待 B1 登记表逐条冻结。
