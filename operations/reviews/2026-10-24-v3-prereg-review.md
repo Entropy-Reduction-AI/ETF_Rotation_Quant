@@ -6,6 +6,7 @@
 - Date: 2026-10-24
 - Owner: L. Loric
 - Author: ETF Rotation Reviewer
+- Dev response: 2026-10-24 · ETF Rotation Dev（A1–A15 agreed；见文末）
 - Route: review-only
 - Source of truth: `docs/prereg/etf-multiasset-rotation-prereg-v3.md`（main 草稿）
 - Related: `operations/planning/2026-10-24-phase2-task-list.md`、`operations/planning/2026-10-24-d9-phase2-decisions.md`、`AGENTS.md`
@@ -166,18 +167,56 @@
 
 ## 记录模板（后续闭环用）
 
+Dev 于 2026-10-24 填入 A/C 行。A 类「决定」与上文「建议决定」原文一致。B 类 Dev 不填决定。
+
 | ID | 问题 | 决定 | 理由 | 状态 |
 |---|---|---|---|---|
-| A1… | （见上） | （待 Dev/Manager 确认后填） |  | open |
-| B1… | （见上） | 待 Owner |  | blocked-on-owner |
+| A1 | 打分波动率样本与收益口径（§4.1） | 窗口 = 与 R(i,L) 相同的过去 L 个交易日收盘到收盘简单收益；样本标准差 `ddof=1`；若有效日收益数 < max(20, ⌊L/2⌋) 则该 (i,L) 不参与；全收益序列按连续复利日收益拆分时仍用简单日收益算波动以与 R 一致。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| A2 | 并列得分 tie-break（§4.2） | 先按 `R(i,L)` 降序，再按容器代码（登记表稳定排序键）升序。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| A3 | 调仓日历（§4.3） | 一律以**上海证券交易所交易日历**为准；决策日无有效价的容器不参与当日排名（已持有沿用上一有效价，§3.3）；下一交易日成交亦按上交所下一交易日。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| A4 | A 臂六组合成（§4.4） | 对每个容器，最终权重 = 六组目标权重的算术平均（缺席组视为 0）；现金吸收 `1 − Σ非现金权重`；不做额外缩放。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| A5 | 成本扣减顺序（§4.3） | 按成交名义（拟成交金额）单边扣一次；费率取**卖出腿与买入腿各自所属资产类别**费率；纯现金再平衡（权重不变）不扣。另报「成本加倍」时对上述费率 ×2。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| A6 | 溢价状态与风险预算的施加顺序（§5.2–§5.3） | 顺序为 (1) §4 得到目标权重 → (2) 按 §5.2 状态乘子调整（脉冲：该容器权重×0.5；结构冲高×0.5；结构折价×1.5；常态不变；同一决策日只取一张状态表，互斥按表自上而下优先匹配脉冲＞结构冲高＞结构折价＞常态）→ (3) 再施加 §5.3 单只与合计上限 → (4) 截下权重按**合成后目标权重降序**的下一个非 QDII、仍有资格、未触达单只上限的容器顺延，否则进现金。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| A7 | QDII 净值滞后（§4.1） | 正文显式写「决策日 T 使用不晚于 T−2（上交所交易日）已公布的最新单位净值」；若无净值则该 QDII 容器当日不参与排名（已持有沿用上一有效净值算 p 与 R）。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| A8 | 现金代理 2%/252（§3.2） | 每个上交所交易日收益 = `0.02/252`（简单加算进净值指数），不按日历日计息。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| A9 | 随机起点窗口（§6①） | 每个自然月的第一个上交所交易日为起点；持有 36/60 个完整自然月后的最后一个交易日结束；允许重叠；超额 = 策略区间全收益年化 − BM-主同期年化，年化用 `(1+R)^(252/n)−1`（n 为交易日数）。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| A10 | 随机对照细节（§6②） | 固定种子表写入 `config/v3/arms.toml`（如 `seed=20261024`）；每个决策日：现金权重与策略相同；非现金权重等权分给 K 个随机容器，K = 该日策略非现金容器个数（权重大于 ε=1e−6 者）；无放回；**主报告段**在 U-指数上对「运行器允许的评价窗」分别报告设计期（≤2015-12-31）与全期（G3 后），G2 前只算设计期。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| A11 | 跨年代切片边界（§6③） | 段为半开或闭区间统一为：2006-01-01→2010-12-31、2011-01-01→2015-12-31、2016-01-01→2020-12-31、2021-01-01→2026-09-30（与已污染检验段终点一致）；段内交易日不足 60 则该段标记「样本不足」并**视为未通过「>0」**（保守）。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| A12 | 最大回撤与「股票类仓位」（§6④、BM-仓位匹配） | 回撤用日度净值（扣成本后）；最大回撤 = 历史峰值到谷底的百分比跌幅；BM-仓位匹配中「股票类仓位」= 权重和，资产 ∈ {A 股宽基/行业/红利, 港股, 美股宽基/主题}，**不含**商品、债券、现金。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| A13 | B 臂 / 溢价参数选择目标（§7.1） | 超额与 TE 均用训练窗内日度超额收益；IR = mean(excess) / std(excess) × √252（ddof=1）；溢价参数在 **A 臂 + 溢价模块** 上按同一 IR 标准选；并列时选 W、θ 字典序更小者。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| A14 | 尝试计数与紧缩夏普（§6⑤、§9.6） | trial-ledger 中 A/S1/S2 各记 1 行主配置；六个 (N,频率) 子组合若单独跑入 ledger 则各计 1，但 §6⑤ 尝试次数 = ledger 中 v3 行数 + 28（探索），**不得**把 A 的 6 个子组合既并入 A 又重复计 6；公式采用 Bailey & López de Prado (2014) 紧缩夏普比率概率，实现引用写进 `src/v3/eval/` 文档字符串并在报告注明。 | Dev 同意 Reviewer 理由（保守、可复现）及计数澄清。若 Owner 日后选择 B3-(b)，A14 与预算计数在 Owner 决定下再对齐；不另立 A14 规则。 | dev-agreed |
+| A15 | U-可交易纳入时点（§3.1–§3.3） | 计入 U-可交易的首日 = max(上市日后第 60 个上交所交易日, 首次满足「近 20 日成交额中位数 ≥ 3000 万」之日)；跌破「连续 20 日中位 < 1000 万」后仅禁止新买，容器仍留在池内供已持有卖出与排名观察（排名时无资格新买则视为无资格，与绝对过滤并列）。 | Dev 同意 Reviewer 理由（保守、可复现）。 | dev-agreed |
+| B1 | 冻结时容器代码表是否必须完整（§3.2） | 待 Owner | Dev 不决定 | blocked-on-owner |
+| B2 | 海外主题「自动纳入」操作定义（§3.2） | 待 Owner | Dev 不决定 | blocked-on-owner |
+| B3 | 配置预算计数规则（§9.6 / §6⑤） | 待 Owner | Dev 不决定 | blocked-on-owner |
+| B4 | 判据①设计期样本是否足够（§6①） | 待 Owner | Dev 不决定 | blocked-on-owner |
+| B5 | 「明显不成立」降级标准（§6 适用范围） | 待 Owner | Dev 不决定 | blocked-on-owner |
+| B6 | S2「第一阶段 16 容器」列表指针（§4.4） | 待 Owner | Dev 不决定 | blocked-on-owner |
+| B7 | 人民币中间价来源（BM 与美股容器） | 待 Owner | Dev 不决定 | blocked-on-owner |
+| C1 | §10 与现行 AGENTS.md 冲突表 | Dev 承认：编写 L1/L2 或 Manager 要求更新预注册正文时核对 §10 冲突表。是否写入预注册仍开放，由 Manager 决定。 | 工程/登记缺口；不改规则语义 | acknowledged-by-dev |
+| C2 | 主题指数回填不得用于 R/s（§3.3） | Dev 承认：编写 L1/L2 或 Manager 要求更新预注册正文时落实「发布日前数据不得用于 R/s」。是否写入预注册仍开放，由 Manager 决定。 | 工程/登记缺口；不改规则语义 | acknowledged-by-dev |
+| C3 | 份额折算显式引用路径 | Dev 承认：编写 L1/L2 或 Manager 要求更新预注册正文时补上第一阶段规则的显式引用。是否写入预注册仍开放，由 Manager 决定。 | 工程/登记缺口；不改规则语义 | acknowledged-by-dev |
+| C4 | trial-ledger 列模式 | Dev 承认：编写 L1/L2 或 Manager 要求更新预注册正文时补列名 schema。是否写入预注册仍开放，由 Manager 决定。 | 工程/登记缺口；不改规则语义 | acknowledged-by-dev |
+| C5 | LOCK 后拒绝再跑的范围 | Dev 承认：编写 L1/L2 或 Manager 要求更新预注册正文时落实「存在 LOCK 则拒绝 end>2015-12-31；设计期仍允许」。是否写入预注册仍开放，由 Manager 决定。 | 工程/登记缺口；不改规则语义 | acknowledged-by-dev |
 
 ## Validation
 - [x] 已读 `AGENTS.md`、phase2 task list、prereg v3、D9
 - [x] 未改业务代码；未合入 main；未创建/删除/移动 tag
-- [ ] Dev 回应 A 类建议；Manager 推进 `review/v3-prereg` 上的预注册修订
+- [x] Dev 回应 A 类建议（2026-10-24；A1–A15 状态 `dev-agreed`）
+- [ ] Manager 推进 `review/v3-prereg` 上的预注册修订
 - [ ] Manager 汇总 G1 申请（分支、SHA、摘要、待 Owner 清单）
+- [x] Dev 未改 `docs/prereg/etf-multiasset-rotation-prereg-v3.md`；未跑回测；未报告 ≥2016 组合收益
 
 ## Decision / Next Steps
-1. @ETF Rotation Dev：请先回应 A 类（同意/反对+替代案）；L1/L2 理解复述仍按 Owner 要求另帖，Reviewer 确认后再写代码。
-2. @ETF Rotation Manager：请建看板并跟踪本评审 → 预注册修订 → G1 申请。
+1. ETF Rotation Dev 已于 2026-10-24 回应 A 类：A1–A15 全部 agreed（见文末与记录表）。L1 继续在 `dev/v3-L1`；本回应不写实现、不跑回测。
+2. @ETF Rotation Manager：请建看板并跟踪本评审 → 预注册修订 → G1 申请。C1–C5 已由 Dev 承认，是否折入预注册由 Manager 决定。
 3. B 类条目请 Manager 收入 G1「待 Owner 决定」清单，勿在群内擅自定案。
+
+## Dev 回应（2026-10-24）
+
+- 回应人：ETF Rotation Dev。
+- **A1–A15 全部 agreed。** 记录表「决定」逐字采用上文 Reviewer「建议决定」；「理由」为同意 Reviewer（保守、可复现）；状态 `dev-agreed`。
+- **A14：** 同意计数澄清，决定文本不改写。若 Owner 日后选择 B3-(b)，A14 与预算计数在该 Owner 决定下再对齐；本回应不另立 A14 规则。
+- **B1–B7：** 仍为 `blocked-on-owner`。Dev 不决定。
+- **C1–C5：** `acknowledged-by-dev`，条目仍开放。Dev 在编写 L1/L2，或 Manager 要求更新预注册正文时落实；是否折入预注册由 Manager 决定。
+- **L1** 继续在 `dev/v3-L1` 推进。本回应不跑回测，不改预注册正文，不报告 2016 年及以后的组合收益。
