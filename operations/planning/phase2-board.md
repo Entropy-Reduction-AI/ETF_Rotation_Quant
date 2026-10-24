@@ -49,7 +49,7 @@ Owner 开工说明。G1 冻结之前走这条轨。
 - 分支: `review/v3-prereg`
 - 提交: `6f07a0f`
 - 草稿 PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/15 （勿合入）
-- 状态: Reviewer 已交付；等 Dev 回应 A1–A15；B1–B7 已收入下方「待 Owner 决定」；Manager 推进预注册修订与 G1 申请
+- 状态: Dev 已全部同意 A1–A15；Reviewer 已锁定；Manager 正在 `review/v3-prereg` 推进预注册正文澄清（B1–B7 仍仅待 Owner）
 
 ## 开发线
 
@@ -164,4 +164,4 @@ G1 前只取数。不跑回测结果。
 
 ## 最近更新
 
-2026-10-24，Manager，挂接 v3 预注册评审 PR#15，B1–B7 收入 G1 待 Owner 清单。
+2026-10-24，Manager，同步修订轨：Dev 已全部同意 A1–A15，Reviewer 已锁定；正文澄清在 `review/v3-prereg` 推进，B1–B7 仍仅待 Owner。
