@@ -19,7 +19,7 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 - 规则写在预注册里。实现可以迭代。未经 Owner，不改规则。
 - G3 之前：不计算、不输出截止日晚于 2015-12-31 的组合收益。溢价模块可以用 2021 年起的数据做机制检验，仍然不输出任何 2016 年起的组合收益。
-- 任何回测（含设计期）须等 Reviewer 逐条核对并冻结 `config/v3/universe.toml`（Owner B1）之后。在此之前只按已冻结的 §3 机械填写登记表。
+- `config/v3/universe.toml` 已在 main 冻结，SHA256 `693b7d4dff91dff4b9bac4a0c1241eb4692f6b3cbd444965440a265ffa32aaff`。设计期回测 end≤2015-12-31 可以开始。本次 L1 合入没有跑回测，也没有改 tag。
 - 合入 main、新建 tag、删除已合入分支只由 Manager 执行（任务清单 §1，Owner 2026-10-24 常设授权）。Manager 可用 `--ff-only` 合入已通过评审的 `dev/v3-*`，并在 G2 条件满足时打 `milestone/v3-code-freeze`。G3、G5、预注册 v3.1、尝试预算 >60 仍须 Owner。不得删除或移动任何 tag，不得强推或改写 main。
 
 ## 门禁
@@ -44,7 +44,7 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 - 冻结时测试: 351 跑，350 过，0 失败，1 跳过
 - 评审文件: `operations/reviews/2026-10-24-v3-prereg-review.md`（起点 `6f07a0f`；Owner 决定写入 `89d18be`）
 - 过程 PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/15 （分支已删除）
-- 此后改 §3–§7 的规则、门槛、候选或预算即 v3.1，须 Owner。B1–B7 的决定见下方，已无待决项。B1 的登记表冻结尚未发生。
+- 此后改 §3–§7 的规则、门槛、候选或预算即 v3.1，须 Owner。B1–B7 的决定见下方，已无待决项。登记表已随 L1 冻结在 main。
 
 ## 开发线
 
@@ -52,8 +52,8 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 | 线 | 状态 | 负责人 | 分支 | 依赖 | 最近更新 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
-| L1 数据层 | 待评审 | Reviewer | `dev/v3-L1` | 无 | 2026-10-24 | 交付 `8a1d45e`，PR #16。未合入 main。Reviewer approve 前 Manager 不 ff-only 合入。B1 逐条签字前禁止回测 |
-| L2 回测引擎 | 未开始 | Dev | `dev/v3-L2` | L1 登记表（可并行开发） | — | 默认 end≤2015-12-31。理解已确认；代码未开始。回测须等 B1 的 `universe.toml` 逐条冻结 |
+| L1 数据层 | 已合入 | Dev | —（分支已删） | 无 | 2026-10-24 | ff-only 合入 `review/v3-L1-sign`。main `98117155`。PR #16、#17 已合入。无回测，无 tag 变更 |
+| L2 回测引擎 | 未开始 | Dev | `dev/v3-L2` | L1 已合入 | 2026-10-24 | 可开工。设计期 end≤2015-12-31。代码尚未开始 |
 | L3 溢价模块 | 未开始 | Dev | `dev/v3-L3` | L1 QDII 数据 | — | 可与 L2 并行。2021 年起数据只做机制检验 |
 | L4 评估层 | 未开始 | Dev 实现 / Reviewer 复算 | `dev/v3-L4` | L2 | — | — |
 | L5 运行与报告 | 未开始 | Dev 运行 / Reviewer 判定 | n/a（待 G2/G3） | G2 + G3 | — | G2、G3 之前不开分支、不跑全期 |
@@ -84,14 +84,18 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 - [ ] U-可交易各执行 ETF 的日线和成交额
 - [x] 覆盖报告与 SHA256 登记后送审
 
-交付，待 Reviewer 评审:
+已合入 main（`--ff-only`，来源 `review/v3-L1-sign`）:
 
-- 分支 `dev/v3-L1` @ `8a1d45e`（`8a1d45e04f121b62ceb445b2ffb85b30846d4f77`，含冻结 `bfeb49c`）
-- PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/16
-- `config/v3/universe.toml` SHA256 `693b7d4dff91dff4b9bac4a0c1241eb4692f6b3cbd444965440a265ffa32aaff`
+- main: `98117155785124a45e67c8a93cdbd6e329c4d37b`
+- PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/16 与 https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/17 已合入
+- 分支 `dev/v3-L1`、`review/v3-L1-sign` 已删除
+- 交付提交 `8a1d45e`（含冻结 `bfeb49c`）
+- main 上 `config/v3/universe.toml` SHA256 `693b7d4dff91dff4b9bac4a0c1241eb4692f6b3cbd444965440a265ffa32aaff`
 - 数据库文件使用 Git LFS
 - 覆盖: 研究 137（ok 131 / partial 1 / gap 5），执行 153（ok 151 / gap 2）
-- 未合入 main，未动 tag。Reviewer 逐条签字冻结 `universe.toml`（B1）之前不跑回测。Manager 在 Reviewer approve 之前不做 `--ff-only` 合入。
+- 合入前测试（LFS pull 之后）: 351 跑，350 过，0 失败，1 跳过
+- 无回测，无 tag 变更
+- [ ] Dev 跟进: MANIFEST 513580，只走 emit
 
 ### L2 回测引擎
 
@@ -107,7 +111,7 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 - [ ] 运行器默认 end ≤ 2015-12-31；跑全期必须带预注册冻结 SHA；检测到 `results/v3/LOCK` 后拒绝再跑
 - [ ] 四项测试通过后送审
 
-依赖 L1 登记表，可与取数并行开发。默认样本截止 2015-12-31。
+L1 登记表已在 main。可以开工。设计期 end≤2015-12-31。代码尚未开始。
 
 ### L3 溢价模块
 
@@ -166,4 +170,4 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 ## 最近更新
 
-2026-10-24，Manager，L1 改为待评审：`dev/v3-L1` @ `8a1d45e`，PR #16。未合入 main，未动 tag。Reviewer approve 前不 ff-only 合入；B1 逐条签字前禁止回测。
+2026-10-24，Manager，L1 已合入 main `98117155785124a45e67c8a93cdbd6e329c4d37b`（ff-only `review/v3-L1-sign`）。PR #16、#17 已合入，分支已删。无回测，无 tag 变更。L2 可按设计期 end≤2015-12-31 开工。Dev 跟进 MANIFEST 513580，只走 emit。
