@@ -4,12 +4,14 @@
 
 - Project: ETF_Rotation_Quant
 - Document type: reference / reusable skill specification
-- Status: content ready; Notion Skill storage/registration pending
+- Status: registered in private Notion My skills; cross-task validation in progress
 - Owner: L. Loric
 - Maintainer: Orchestrator（Notion AI）
 - Last updated: 2026-10-25
 - Description: 围绕用户任务、证据与认知/判断/行动闭环，设计和审查信息架构、卡片、图表、表格及交互。用于Owner看板、研究报告、前端和Web页面的新建、改版、开发验收、UX Review与持续更新；不是单纯美化排版，也不替代数据与平台工具规范。
 - Source: Owner本轮确认；`docs/reference/task-complete-framework.md`
+- Notion Skill: https://app.notion.com/p/65c7e4c9fcbd4f17b6852941ce6bc522
+- Storage: private My skills；已核对isSkill=true；自动发现/启用仍受各客户端能力与用户配置限制。
 
 ## 目标
 
