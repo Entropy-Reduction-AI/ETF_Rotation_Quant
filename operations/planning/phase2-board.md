@@ -55,7 +55,7 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 | L1 数据层 | 已合入 | Dev | —（分支已删） | 无 | 2026-10-24 | ff-only 合入 `review/v3-L1-sign`。main `98117155`。PR #16、#17 已合入。无回测，无 tag 变更 |
 | L2 回测引擎 | 已合入 | Dev | —（分支已删） | L1 已合入 | 2026-10-25 | ff-only 合入 `cursor/review-v3-l2-d546`。main `2b8ee0e`。PR #18、#19 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
 | L3 溢价模块 | 已合入 | Dev | —（分支已删） | L1 QDII 数据 | 2026-10-25 | ff-only 合入 `cursor/v3-l3-review-2249`。main `4cecfad`。PR #20、#21 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
-| L4 评估层 | 进行中 | Dev 实现 / Reviewer 复算 | `dev/v3-L4` | L2 | 2026-10-25 | 从 main `4cecfad` 开出。§6 判据 + §7 滚动前推/过拟合/稳健性；设计期 end≤2015。未合入 main，无 tag，无 LOCK |
+| L4 评估层 | 待评审 | Reviewer | `dev/v3-L4` | L2 | 2026-10-25 | `9ad9e6a`，基线 main `4cecfad`。PR #22。未合入，无 tag，无 LOCK |
 | L5 运行与报告 | 未开始 | Dev 运行 / Reviewer 判定 | n/a（待 G2/G3） | G2 + G3 | — | G2、G3 之前不开分支、不跑全期 |
 
 ## 子任务
@@ -158,7 +158,15 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 - [ ] 随机游走、噪声候选集、公开示例三项核对
 - [ ] 设计期 ①②③ 交 Reviewer 独立复算
 
-进行中。分支 `dev/v3-L4` 从 main `4cecfad` 开出。§6 判据 + §7 滚动前推/过拟合/稳健性；设计期 end≤2015。未合入 main，无 tag，无 LOCK。依赖 L2。
+待评审。
+
+- 分支 `dev/v3-L4` @ `9ad9e6a`（`9ad9e6afbcf99353202776ca5e0e12c0171cab6f`），基线 main `4cecfad`
+- PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/22
+- 范围: §6 五条判据 + §7.1/§7.2（滚动前推/过拟合/稳健性）。设计期 end≤2015。设计期不判 `formal_pass`。收益日 >2015-12-31 拒绝
+- 复核入口: `criterion_1` / `criterion_2` / `criterion_3`
+- Dev 报告: 439 跑 / 0 失败 / 1 跳过（L4 28）。此处只登记报告，不作判定
+- 未合入 main，无 tag，无 `results/v3/LOCK`
+- 合入等 Reviewer 独立复算设计期 ①②③ 通过后，由 Manager `--ff-only`
 
 ### L5 运行与报告
 
@@ -190,4 +198,4 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 ## 最近更新
 
-2026-10-25，Manager，L4 改为进行中：`dev/v3-L4` 从 main `4cecfad` 开出。§6 判据 + §7 滚动前推/过拟合/稳健性；设计期 end≤2015。未合入 main，无 tag，无 LOCK。
+2026-10-25，Manager，L4 改为待评审：`dev/v3-L4` @ `9ad9e6a`（基线 main `4cecfad`），PR #22。未合入 main，无 tag，无 LOCK。合入等 Reviewer 独立复算设计期 ①②③ 通过后由 Manager ff-only。
