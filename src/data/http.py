@@ -84,6 +84,35 @@ def get(url: str, params: dict | None = None, *, timeout: int = DEFAULT_TIMEOUT,
     raise FetchError(f"{msg}  ← {redact(url)[:160]}")
 
 
+def post(url: str, body: bytes = b"", *, timeout: int = DEFAULT_TIMEOUT, headers: dict | None = None,
+         retries: int = RETRIES, backoff: float = 1.5) -> bytes:
+    """POST。失败至多重试一次，和 get 同一条记录。"""
+    last: Exception | None = None
+    for attempt in range(retries + 1):
+        try:
+            req = Request(url, data=body, method="POST", headers={
+                "User-Agent": UA, "Accept": "*/*", "Accept-Encoding": "gzip", **(headers or {})})
+            with urlopen(req, timeout=timeout) as r:
+                raw = r.read()
+                if r.headers.get("Content-Encoding") == "gzip":
+                    raw = gzip.decompress(raw)
+            _record(url, raw, None)
+            return raw
+        except HTTPError as e:
+            last = e
+            if e.code in (400, 401, 403, 404):
+                break
+        except (URLError, TimeoutError, OSError, http.client.HTTPException) as e:
+            last = e
+            if "Tunnel connection failed: 403" in str(e):
+                break
+        if attempt < retries:
+            time.sleep(backoff * (attempt + 1))
+    msg = redact(f"{type(last).__name__}: {str(last)[:160]}")
+    _record(url, None, msg)
+    raise FetchError(f"{msg}  ← {redact(url)[:160]}")
+
+
 def get_json(url: str, params: dict | None = None, **kw) -> Any:
     raw = get(url, params, **kw)
     text = raw.decode("utf-8", "ignore").strip()

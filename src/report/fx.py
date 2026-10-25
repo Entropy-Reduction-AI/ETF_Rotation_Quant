@@ -1,6 +1,7 @@
 """海外点位换成人民币：沿用面板构造器的 D−1 对齐，再乘对齐日当天或之前的最近中间价。"""
 from __future__ import annotations
 
+import numpy as np
 import pandas as pd
 
 from src.indicators.build import align_to_calendar
@@ -19,12 +20,22 @@ def latest_on_or_before(fx: pd.Series, days: pd.DatetimeIndex) -> pd.Series:
     return out.reindex(pd.DatetimeIndex(pd.to_datetime(days)))
 
 
+def usable_closes(frame: pd.DataFrame) -> pd.DataFrame:
+    """收盘必须是正的有限数。休市日被写成 0 时丢掉，对齐再沿用最近一个有效收盘。"""
+    if frame.empty or "close" not in frame.columns:
+        return frame.iloc[0:0].copy()
+    close = pd.to_numeric(frame["close"], errors="coerce")
+    keep = close.gt(0) & np.isfinite(close.to_numpy(dtype=float))
+    return frame.loc[keep].copy()
+
+
 def cny_from_usd(usd: pd.DataFrame, fx: pd.Series, calendar: pd.DatetimeIndex) -> pd.DataFrame:
     """A 股交易日 D 使用日期严格早于 D 的最后一根美元 K 线，再乘 D 当天或之前的中间价。
 
     返回列含 date、close（美元）、close_cny、data_hole。中间价还没有的日子 close_cny 为空。
+    收盘不是正数的行先丢掉，避免把休市占位 0 当成暴跌。
     """
-    frame = usd.sort_values("date").reset_index(drop=True)
+    frame = usable_closes(usd).sort_values("date").reset_index(drop=True)
     aligned, _meta = align_to_calendar(frame, pd.DatetimeIndex(pd.to_datetime(calendar)), True)
     if aligned.empty:
         return aligned.assign(close_cny=pd.Series(dtype=float))

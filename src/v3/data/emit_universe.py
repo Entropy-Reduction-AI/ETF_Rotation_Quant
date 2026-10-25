@@ -28,6 +28,14 @@ PHASE1_UNIVERSE = ROOT / "data" / "universe.csv"
 PORTFOLIO = ROOT / "config" / "portfolio.toml"
 CATALOG = artifacts.INCOMING / "raw" / "qdii" / "fundcode_search.js"
 HSTECH_CSV = LAUNCH_CSV
+DEFENSIVE = ROOT / "incoming" / "2026-10-25-v3-defensive"
+BOND_DIR = DEFENSIVE / "chinabond"
+GOLD_META = DEFENSIVE / "gold.json"
+# 编制说明里的中文名称正好落在 §3.2 的两只债券容器上才写入。其余财富指数只作参考，不进池。
+BOND_CONTAINER = {
+    "中债-10年期国债指数": "cgb-10y",
+    "中债-5年期国债指数": "cgb-5y",
+}
 
 # §3.2 的容器名和要查找的指数全称。全称用于在中证身份原件里检索，不是手写代码。
 # 执行代码来自预注册表里的举例，元数据仍从概况页和深交所列表读。
@@ -377,10 +385,48 @@ def _hstech(con) -> dict:
     }
 
 
+def load_bond_methods(directory: Path = BOND_DIR) -> list[dict]:
+    """编制说明的 pdftotext 正文。代码和基准日只从正文里的句子来。"""
+    if not directory.exists():
+        return []
+    out = []
+    for path in sorted(directory.glob("*.txt")):
+        ident = parse.parse_chinabond_method(path.read_text(encoding="utf-8"))
+        if not ident.get("wealth_code") or not ident.get("index_name"):
+            continue
+        try:
+            rel = str(path.relative_to(ROOT))
+        except ValueError:
+            rel = path.name
+        ident["text_path"] = rel
+        pdf = path.with_suffix(".pdf")
+        ident["pdf_path"] = str(pdf.relative_to(ROOT)) if pdf.exists() else ""
+        out.append(ident)
+    return out
+
+
+def _gold_meta() -> dict:
+    if not GOLD_META.exists():
+        return {}
+    try:
+        return json.loads(GOLD_META.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+
+
 def build_commodities(con, jbgk, szse) -> list[dict]:
     gold_span = _bar(con, "Au99.99")
-    holes = "partial" if gold_span["rows"] and gold_span["first"] and gold_span["last"] and gold_span["rows"] < 400 else (
-        "in_db" if gold_span["rows"] else "取不到")
+    if not gold_span["rows"]:
+        holes = "取不到"
+    elif (gold_span["first"] or "9999") > "2006-01-04":
+        holes = "partial"
+    else:
+        holes = "in_db"
+    meta = _gold_meta()
+    labels = meta.get("labels") or {}
+    label_note = ""
+    if labels:
+        label_note = " 历史行情页合约写法：" + "、".join(f"{name} {n} 行" for name, n in sorted(labels.items())) + "。"
     gold = {
         "id": "gold", "asset_class": "商品", "name": "黄金", "arm": "main",
         "research": {
@@ -392,11 +438,15 @@ def build_commodities(con, jbgk, szse) -> list[dict]:
             "series_code": "Au99.99" if gold_span["rows"] else "",
             "series_source": gold_span["source"],
             "series_status": holes,
-            "source_url": "https://www.sge.com.cn/sjzx/quotation_daily_new",
+            "source_url": "https://www.sge.com.cn/graph/Dailyhq?instid=Au99.99",
             "note": (
-                "预注册写上金所 Au9999。日行情页面的合约字段是 Au99.99，研究序列只用这个字段。"
-                "发布日和基日页面没有给出。部分月份请求失败或页面分页，序列不完整时 status=partial。"
+                "预注册写上金所 Au9999。Dailyhq 与 2024 年后日行情的合约字段是 Au99.99；更早的历史行情文章写成 Au9999。"
+                "两处都是同一只 99.99 现货，重叠日收盘一致，研究序列只用 Au99.99。"
+                "发布日和基日页面没有给出。"
+                f"{label_note}"
                 f" 行情 {gold_span['rows']} 行 {gold_span['first']}→{gold_span['last']}。"
+                + (f" {meta.get('archive_gap')}" if meta.get("archive_gap") else "")
+                + "首日晚于 2006-01-04 时 status=partial：这一天之前的设计期没有黄金。"
             ),
         },
         "execution": [],
@@ -448,19 +498,68 @@ def build_commodities(con, jbgk, szse) -> list[dict]:
     return [gold, soy, crude]
 
 
-def build_bonds_cash(con, jbgk, szse) -> list[dict]:
+def _bond_research(con, cid: str, name: str, identities: list[dict]) -> dict:
+    matched = [row for row in identities if BOND_CONTAINER.get(row.get("index_name") or "") == cid]
+    if len(matched) != 1:
+        why = "编制说明没有同名财富指数。" if not matched else "同名编制说明多于一份，不挑选。"
+        return {
+            "index_code": "取不到", "index_name": f"中债{name}财富指数", "return_basis": "wealth",
+            "publish_date": "取不到", "publish_date_source": "",
+            "base_date": "取不到", "base_date_source": "",
+            "series_code": "", "series_source": "", "series_status": "取不到",
+            "source_url": "https://indices.chinabond.com.cn/cbweb-mn/indices/single_index_query?locale=zh_CN",
+            "note": why + "不用上证国债指数或 ETF 行情顶替。",
+        }
+    ident = matched[0]
+    code = ident["wealth_code"]
+    span = _bar(con, code)
+    base = ident.get("base_date") or "取不到"
+    return {
+        "index_code": code,
+        "index_name": ident["index_name"],
+        "return_basis": "wealth",
+        "publish_date": "取不到",
+        "publish_date_source": ident.get("text_path") or "",
+        "base_date": base,
+        "base_date_source": ident.get("text_path") or "",
+        "series_code": code if span["rows"] else "",
+        "series_source": span["source"],
+        "series_status": "in_db" if span["rows"] else "取不到",
+        "source_url": "https://indices.chinabond.com.cn/cbweb-mn/indices/single_index_query?locale=zh_CN",
+        "note": (
+            f"编制说明中文名称「{ident['index_name']}」，财富指数代码 {code}，基准日 {base}。"
+            "正文没有单列首次发布日，发布日记取不到，引擎因此不按发布日截断。"
+            f" 行情 {span['rows']} 行 {span['first']}→{span['last']}，来源 {span['source'] or '无'}。"
+            "查询的是财富指标、待偿期总值。"
+        ),
+    }
+
+
+def bond_references(con, identities: list[dict] | None = None) -> list[str]:
+    """没有落到 10 年或 5 年容器上、但库里已有的财富指数。不进入池。"""
+    identities = load_bond_methods() if identities is None else identities
+    lines = []
+    for ident in identities:
+        if ident.get("index_name") in BOND_CONTAINER:
+            continue
+        code = ident.get("wealth_code") or ""
+        span = _bar(con, code)
+        if not span["rows"]:
+            continue
+        lines.append(
+            f"# 参考序列 {code} {ident.get('index_name')} 财富 {span['rows']} 行 "
+            f"{span['first']}→{span['last']}。不是预注册 §3.2 的 10 年或 5 年容器，不进入池。"
+        )
+    return lines
+
+
+def build_bonds_cash(con, jbgk, szse, identities: list[dict] | None = None) -> list[dict]:
+    identities = load_bond_methods() if identities is None else identities
     bonds = []
     for cid, name, code in (("cgb-10y", "10年国债", "511260"), ("cgb-5y", "5年国债", "511010")):
         box = {
             "id": cid, "asset_class": "债券", "name": name, "arm": "main",
-            "research": {
-                "index_code": "取不到", "index_name": f"中债{name}财富指数", "return_basis": "wealth",
-                "publish_date": "取不到", "publish_date_source": "",
-                "base_date": "取不到", "base_date_source": "",
-                "series_code": "", "series_source": "", "series_status": "取不到",
-                "source_url": "https://www.chinabond.com.cn/",
-                "note": "中国债券信息网本次只打开了首页，没有财富指数日频文件。不用上证国债指数或 ETF 行情顶替。",
-            },
+            "research": _bond_research(con, cid, name, identities),
             "execution": [],
         }
         row = _execution(code, jbgk, szse)
@@ -781,7 +880,7 @@ def build_s2(con, launch: dict) -> list[dict]:
     return out
 
 
-def render(containers: list[dict], excluded: list[dict]) -> str:
+def render(containers: list[dict], excluded: list[dict], references: list[str] | None = None) -> str:
     head = (
         "# 机械生成。来源：docs/prereg/etf-multiasset-rotation-prereg-v3.md §3 与附录 1–2。\n"
         "# 不要手改。更新用 python -m src.v3.data emit。\n"
@@ -795,6 +894,8 @@ def render(containers: list[dict], excluded: list[dict]) -> str:
             f'# {row.get("code","")} {_q(row.get("name",""))} {row.get("decision","")} '
             f'track={_q(row.get("track",""))} list={row.get("list_date","")}'
         )
+    if references:
+        lines += ["", "# 已入库、但名称对不上 §3.2 容器的序列（不进入 U-指数 / U-可交易）", *references]
     return head + body + "\n".join(lines) + "\n"
 
 
@@ -803,9 +904,10 @@ def emit(con=None, path: Path = UNIVERSE_OUT) -> dict:
     jbgk = load_jbgk()
     szse = load_szse()
     launch = load_launch()
+    identities = load_bond_methods()
     containers = build_main(csi, jbgk, szse, con)
     containers += build_commodities(con, jbgk, szse)
-    containers += build_bonds_cash(con, jbgk, szse)
+    containers += build_bonds_cash(con, jbgk, szse, identities)
     qdii, excluded = build_qdii(jbgk, szse, con)
     themes = attach_qdii(containers, qdii)
     containers += themes
@@ -813,7 +915,7 @@ def emit(con=None, path: Path = UNIVERSE_OUT) -> dict:
     dup = duplicate_execution_errors(containers)
     if dup:
         raise RuntimeError("执行代码在主臂重复，拒绝写出 universe.toml:\n" + "\n".join(dup))
-    text = render(containers, excluded)
+    text = render(containers, excluded, bond_references(con, identities))
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
     return {

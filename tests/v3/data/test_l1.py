@@ -208,6 +208,57 @@ class Emit(unittest.TestCase):
 
 
 class Parse(unittest.TestCase):
+    def test_sge_history_reads_headers_not_column_order(self):
+        early = """
+        <table><tr><td>品 种</td><td>开盘 价</td><td>收盘 价</td><td>最高 价</td><td>最低 价</td>
+        <td>成交 量</td><td>成交 金额</td></tr>
+        <tr><td>Au99.95</td><td>83.6</td><td>83.66</td><td>83.8</td><td>83.55</td><td>44</td><td>100</td></tr>
+        <tr><td>Au99.99</td><td>83.9</td><td>83.91</td><td>83.92</td><td>83.9</td><td>66</td><td>200</td></tr>
+        </table>
+        """
+        later = """
+        <table><tr><td>合约</td><td>开盘价</td><td>最高价</td><td>最低价</td><td>收盘价</td><td>成交量</td><td>成交金额</td></tr>
+        <tr><td>Au9999</td><td>257.30</td><td>257.45</td><td>256.60</td><td>257.38</td><td>3,514</td><td>900</td></tr>
+        <tr><td>iAu99.99</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+        </table>
+        """
+        early_rows = parse.parse_sge_history(early)
+        later_rows = parse.parse_sge_history(later)
+        self.assertEqual(early_rows[0]["close"], 83.91)
+        self.assertEqual(early_rows[0]["high"], 83.92)
+        self.assertEqual(early_rows[0]["contract"], "Au99.99")
+        self.assertEqual(later_rows[0]["contract"], "Au9999")
+        self.assertEqual(later_rows[0]["close"], 257.38)
+        self.assertEqual(later_rows[0]["volume"], 3514)
+        self.assertEqual(len(later_rows), 1)
+        page = '<a href="/sjzx/mrhqsj/509625"><span>上海黄金交易所2003年1月23日交易行情</span></a>'
+        self.assertEqual(parse.parse_sge_index_page(page), [{"path": "/sjzx/mrhqsj/509625", "date": "2003-01-23"}])
+
+    def test_dailyhq_order_is_open_close_low_high(self):
+        rows = parse.parse_sge_dailyhq({"time": [["2023-12-29", 480.5, 479.59, 471.9, 486.0], ["2023-12-30", 1, 0, 1, 1]]})
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["close"], 479.59)
+        self.assertEqual(rows[0]["low"], 471.9)
+        self.assertEqual(rows[0]["high"], 486.0)
+
+    def test_chinabond_wealth_uses_shanghai_date_and_exact_names(self):
+        rows = parse.parse_chinabond_wealth({"CFZS_00": {"1010073600000": 99.9987, "1010332800000": 100.0381}})
+        self.assertEqual([row["date"] for row in rows], ["2002-01-04", "2002-01-07"])
+        text = """
+        中文名称：中债-10 年期国债指数
+        英文名称：ChinaBond 10-year Treasury Bond Index
+        财富指数代码：CBA04501
+        2. 样本选取方法
+        基准日
+        2007 年 12 月 29 日，基点值为 100
+        """
+        ident = parse.parse_chinabond_method(text)
+        self.assertEqual(ident["index_name"], "中债-10年期国债指数")
+        self.assertEqual(ident["wealth_code"], "CBA04501")
+        self.assertEqual(ident["base_date"], "2007-12-29")
+        bucket = parse.parse_chinabond_method("中文名称：中债-3-5年期国债指数\n英文名称：X\n财富指数代码：CBA04601\n基准日为2006年12月31日")
+        self.assertNotEqual(bucket["index_name"], "中债-5年期国债指数")
+
     def test_sge_keeps_au9999_apart_from_au99_99(self):
         rows = parse.parse_sge_daily(SGE_HTML)
         self.assertEqual(sorted(r["contract"] for r in rows), ["Au99.99", "Au9999"])
@@ -277,6 +328,24 @@ class WriteSeries(unittest.TestCase):
         self.assertEqual(result["status"], "appended")
         closes = list(self.con.execute("SELECT date, close FROM bars WHERE code = 'Au99.99' ORDER BY date"))
         self.assertEqual([tuple(r) for r in closes], [("2024-06-06", 1), ("2024-06-07", 2)])
+
+    def test_bond_wealth_lands_only_on_the_exact_container(self):
+        from src.data import store as bars
+        bars.replace(self.con, "CBA04501", "chinabond", [{"date": "2008-01-02", "close": 101.2}], "t")
+        bars.replace(self.con, "CBA00601", "chinabond", [{"date": "2002-01-04", "close": 100.0}], "t")
+        identities = [
+            {"index_name": "中债-10年期国债指数", "wealth_code": "CBA04501", "base_date": "2007-12-29", "text_path": "a.txt"},
+            {"index_name": "中债-3-5年期国债指数", "wealth_code": "CBA04601", "base_date": "2006-12-31", "text_path": "b.txt"},
+            {"index_name": "中债-国债总指数", "wealth_code": "CBA00601", "base_date": "2001-12-31", "text_path": "c.txt"},
+        ]
+        boxes = {row["id"]: row for row in emit_universe.build_bonds_cash(self.con, {}, {}, identities)}
+        self.assertEqual(boxes["cgb-10y"]["research"]["series_code"], "CBA04501")
+        self.assertEqual(boxes["cgb-10y"]["research"]["base_date"], "2007-12-29")
+        self.assertEqual(boxes["cgb-10y"]["research"]["publish_date"], "取不到")
+        self.assertEqual(boxes["cgb-5y"]["research"]["series_status"], "取不到")
+        refs = emit_universe.bond_references(self.con, identities)
+        self.assertTrue(any("CBA00601" in line and "不进入池" in line for line in refs))
+        self.assertFalse(any("CBA04501" in line for line in refs))
 
     def test_coverage_marks_gap_without_prices(self):
         doc = {"container": [{

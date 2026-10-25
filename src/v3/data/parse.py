@@ -2,9 +2,14 @@
 from __future__ import annotations
 
 import re
+from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
 
 _DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+_SGE_ARTICLE = re.compile(
+    r'href="(/sjzx/mrhqsj/\d+)"[\s\S]{0,500}?'
+    r"上海黄金交易所(\d{4})年(\d{1,2})月(\d{1,2})日交易行情"
+)
 
 
 class _Table(HTMLParser):
@@ -18,12 +23,12 @@ class _Table(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if tag == "tr":
             self._row = []
-        elif tag == "td":
+        elif tag in {"td", "th"}:
             self._in = True
             self._buf = ""
 
     def handle_endtag(self, tag):
-        if tag == "td" and self._in:
+        if tag in {"td", "th"} and self._in:
             self._row.append(re.sub(r"\s+", " ", self._buf).strip())
             self._in = False
         elif tag == "tr" and self._row:
@@ -47,6 +52,15 @@ def _num(text: str) -> float | None:
     if value != value:
         return None
     return value
+
+
+def _label(text: str) -> str:
+    return re.sub(r"\s+", "", text or "")
+
+
+def contract_key(text: str) -> str:
+    """Au99.99 与 Au9999 都收成 AU9999。带前缀的 iAu99.99 不会并进来。"""
+    return re.sub(r"[^A-Za-z0-9]", "", text or "").upper()
 
 
 def parse_sge_daily(html: str) -> list[dict]:
@@ -73,6 +87,131 @@ def parse_sge_daily(html: str) -> list[dict]:
             "amount": _num(row[10]),
         })
     return out
+
+
+def _header_index(header: list[str], name: str) -> int | None:
+    if name in header:
+        return header.index(name)
+    for i, label in enumerate(header):
+        if label.startswith(name):
+            return i
+    return None
+
+
+def _cell(row: list[str], index: int | None):
+    if index is None or index >= len(row):
+        return None
+    return _num(row[index])
+
+
+def parse_sge_index_page(html: str) -> list[dict]:
+    """历史行情列表页。返回文章路径和标题里的交易日。"""
+    out = []
+    seen = set()
+    for path, year, month, day in _SGE_ARTICLE.findall(html):
+        date = f"{int(year):04d}-{int(month):02d}-{int(day):02d}"
+        if path in seen:
+            continue
+        seen.add(path)
+        out.append({"path": path, "date": date})
+    return out
+
+
+def parse_sge_history(html: str) -> list[dict]:
+    """历史行情文章里的表。按表头取列，不按列号。只留 Au99.99 / Au9999。"""
+    parser = _Table()
+    parser.feed(html)
+    header_at = None
+    header: list[str] = []
+    for i, row in enumerate(parser.rows):
+        labels = [_label(cell) for cell in row]
+        if "收盘价" in labels:
+            header_at = i
+            header = labels
+            break
+    if header_at is None:
+        return []
+    i_open = _header_index(header, "开盘价")
+    i_high = _header_index(header, "最高价")
+    i_low = _header_index(header, "最低价")
+    i_close = _header_index(header, "收盘价")
+    i_volume = _header_index(header, "成交量")
+    i_amount = _header_index(header, "成交金额")
+    out = []
+    for row in parser.rows[header_at + 1:]:
+        if not row or contract_key(row[0]) != "AU9999":
+            continue
+        close = _cell(row, i_close)
+        if close is None or close <= 0:
+            continue
+        out.append({
+            "contract": re.sub(r"\s+", "", row[0]),
+            "open": _cell(row, i_open),
+            "high": _cell(row, i_high),
+            "low": _cell(row, i_low),
+            "close": close,
+            "volume": _cell(row, i_volume),
+            "amount": _cell(row, i_amount),
+        })
+    return out
+
+
+def parse_sge_dailyhq(payload: dict) -> list[dict]:
+    """/graph/Dailyhq?instid=Au99.99。数组是开盘、收盘、最低、最高。"""
+    out = []
+    for rec in payload.get("time") or []:
+        if not isinstance(rec, (list, tuple)) or len(rec) < 5:
+            continue
+        if not _DATE.match(str(rec[0])):
+            continue
+        close = _num(str(rec[2]))
+        if close is None or close <= 0:
+            continue
+        out.append({
+            "date": str(rec[0]),
+            "contract": "Au99.99",
+            "open": _num(str(rec[1])),
+            "close": close,
+            "low": _num(str(rec[3])),
+            "high": _num(str(rec[4])),
+        })
+    return out
+
+
+def chinabond_day(millis: int | str) -> str:
+    """查询结果的键是 UTC 毫秒。页面按北京时间的日期展示，16:00Z 是次日。"""
+    stamp = datetime.fromtimestamp(int(millis) / 1000, timezone.utc)
+    return stamp.astimezone(timezone(timedelta(hours=8))).date().isoformat()
+
+
+def parse_chinabond_wealth(payload: dict) -> list[dict]:
+    """单指数查询的财富（总值）序列。同一天留最后一笔。"""
+    series = payload.get("CFZS_00") or {}
+    by_date = {}
+    for key, value in series.items():
+        close = _num(str(value) if value is not None else "")
+        if close is None or close <= 0:
+            continue
+        by_date[chinabond_day(key)] = close
+    return [{"date": day, "close": by_date[day]} for day in sorted(by_date)]
+
+
+def parse_chinabond_method(text: str) -> dict:
+    """编制说明正文。去掉空白后再取名称、财富代码和基准日。没有首次发布日就不填。"""
+    compact = re.sub(r"\s+", "", text or "")
+    name = ""
+    found = re.search(r"中文名称[:：](.+?)英文名称", compact)
+    if found:
+        name = found.group(1)
+    code = ""
+    found = re.search(r"财富指数代码[:：](CBA\d{5})", compact)
+    if found:
+        code = found.group(1)
+    base = ""
+    found = re.search(r"基准日(?:为)?(\d{4})年(\d{1,2})月(\d{1,2})日", compact)
+    if found:
+        base = f"{int(found.group(1)):04d}-{int(found.group(2)):02d}-{int(found.group(3)):02d}"
+    return {"index_name": name, "wealth_code": code, "base_date": base}
 
 
 def parse_fund_catalog(text: str) -> list[dict]:
