@@ -2,6 +2,8 @@
 
 Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只做协调。
 
+备注：Manager 状态汇报固定五段：本周完成 / 能做什么不能做什么 / 设计期业务信号 / 风险卡点 / 需要 Owner 的事。
+
 ## Metadata
 
 - Project: ETF_Rotation_Quant
@@ -28,12 +30,12 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 | --- | --- | --- | --- |
 | G0 | 第一阶段封存、合同修订、D9 与预注册草稿入库 | Owner | 已完成 |
 | G1 | 预注册已冻结。`milestone/v3-prereg-freeze` → `bfeb49cc65eb0ba419bc98348f1d643fac1211f6` | Owner | 已完成（2026-10-24/25） |
-| G2 | 代码冻结：各开发线评审通过、全量测试 0 失败。Reviewer 批准后，Manager 打 `milestone/v3-code-freeze` | Reviewer | 未开始 |
+| G2 | 代码冻结：各开发线评审通过、全量测试 0 失败。Reviewer 批准后，Manager 打 `milestone/v3-code-freeze`；打 tag 前 Owner 须已看过业务体检（第 6 项，开放，未完成） | Reviewer | 未开始 |
 | G3 | 跑全期（含 2016 后），写 `results/v3/LOCK` | Owner 批准，Reviewer 执行 | 未开始 |
 | G4 | 按 v3 §6、§7.3 出结论 | Reviewer | 未开始 |
 | G5 | 是否进入前向模拟盘、是否上真钱 | Owner | 未开始 |
 
-G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 G2 前置第 1–4 项。L5 仍等待 G2 与 G3，此前不开分支、不跑全期。
+G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 G2 前置第 1–4 项，并在 L1 返工完成且 Reviewer 重签收之后完成业务体检（第 6 项，开放，未完成）。G2 tag 等 Owner 看过体检报告后再打。L5 仍等待 G2 与 G3，此前不开分支、不跑全期。
 
 ## G1 预注册修订与冻结
 
@@ -188,21 +190,27 @@ G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 
 
 依赖 G2 与 G3。2026-10-25 复核后仍然如此：L5 继续等待 G2 与 G3。分支在这两道门通过前为 n/a。
 
-## G2 前置（Owner/Orchestrator 2026-10-25，群内闭环，无需再批）
+## G2 前置（Owner/Orchestrator 2026-10-25；第 1–4 项群内闭环，无需再批；第 6 项 Owner 要看）
 
-来源：Owner 2026-10-25（Asia/Taipei）对 main `2f29d4066709b8f8958164bba7c9098cba2803e9` 的 Orchestrator 复核。第 1–4 项是 `milestone/v3-code-freeze` 之前的开放阻塞，群内闭环，无需再批。登记不等于完成：这四项都还没做完。G2 仍是未开始。L5 仍等待 G2 与 G3。本看板不打 tag，不写 `results/v3/LOCK`，不改业务代码，不改预注册正文。
+来源：Owner 2026-10-25（Asia/Taipei）对 main `2f29d4066709b8f8958164bba7c9098cba2803e9` 的 Orchestrator 复核。第 1–4 项是 `milestone/v3-code-freeze` 之前的开放阻塞，群内闭环，无需再批。登记不等于完成：这四项都还没做完。同日 Owner 追加第 6 项业务体检：G2 前必须，现为开放、未完成；不并入第 1–4 项的群内闭环。L1 返工完成且 Reviewer 重签收之后才出具，G2 tag 等 Owner 看过报告后再打。G2 仍是未开始。L5 仍等待 G2 与 G3。本看板不打 tag，不写 `results/v3/LOCK`，不改业务代码，不改预注册正文。
 
 1. **L1 返工（阻塞）** — 开放，未完成。Dev：改 emit，按跟踪指数归并容器（一容器 = 一底层指数，§3.2）。同指数 ETF 合并到同一容器的 execution。港股指数 QDII 并入港股大类对应容器。同一 ETF 不得出现在两个容器。不得手改 toml。已知重复例：`qdii-159741` / `513130` / `158042` / `513260` 相对 `hstech`；`qdii-164705` 相对 `hsi`；`159660` / `160213` / `513870` 应归 `ndx100`。Reviewer 重签收：按指数归并后的容器清单、各大类容器数、「任意代码只出现一次」检查；并说明 89 个缺失上市日的执行代码下 §3.3 可交易首日如何确定。L2–L4 依赖旧容器表的测试与设计期数字，用新表重跑核对。
 2. **L3 遗留 1** — 开放，未完成。Dev：`allocate_container` / `adjust_weights` 接入 U-可交易执行链。
 3. **数据** — 开放，未完成。Dev：修 `ndx100` 2012-11-01 的 inf 及所有非有限日收益（数据层或引擎层保证有限值；禁止评估层填 0）。补齐 2006–2010 覆盖。补齐中债财富、黄金、美股人民币全收益、创业板指。补不齐则写明「缺失 → 对判定的影响」。
 4. **「B 不差于 A」（§7.1）解释** — 开放，未完成。写入 G2 签收文件，预注册正文不改。须在 G3 前写定：① 的 36/60 月两个比例都 ≥ A；③ 通过段数 ≥ A 且最差一段超额 ≥ A。负责人：Reviewer 起草进 G2 签收，Manager 登记。
 5. **看板 PR #14** — Manager 按授权合入（本任务完成项）。https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/14 。本文件即该 PR 的看板更新；合入 main 后本项关闭。优先 `--ff-only`。不打 tag，不写 LOCK。
+6. **业务体检（G2 前必须，Owner 要看）** — 开放，未完成。
+   - 时机：L1 返工完成且 Reviewer 重签收之后
+   - 负责人：Dev 出具 `operations/reports/v3-design-period-brief.md`（附图）
+   - 范围：设计期 end≤2015-12-31；**不得**含 2016 年起组合收益；数字只作参考不作判定
+   - 内容（大白话）：A 臂 vs BM-主净值图 + 逐年收益；持仓面积图（大类/主要容器）+ 平均现金占比 + 年换手；2008 与 2015 大跌期间持仓与回撤；相对 BM-主归因（时期/大类）；判据①③④设计期数字（仅参考）
+   - 完成后：Manager 在群里提请 Owner 查看；**G2 tag 等 Owner 看过体检报告后再打**
 
 ## 阻塞 / 待 Owner 决定
 
 待 Owner 决定：无。B1–B7 已由 Owner 于 2026-10-24 决定，写入冻结预注册与 `operations/reviews/2026-10-24-v3-prereg-review.md`（`89d18be`）。Manager 不代决 v3.1、G3、G5，也不代决尝试预算超过 60。
 
-G2 前的开放事项不是新的 Owner 待决，见「G2 前置」。第 1–4 项仍未完成，所以 G2 仍是未开始。
+G2 前的开放事项见「G2 前置」。第 1–4 项与业务体检（第 6 项）仍未完成，所以 G2 仍是未开始。体检报告尚未出具，此刻无待 Owner 决定的新项；报告完成后由 Manager 在群里提请 Owner 查看，G2 tag 等 Owner 看过后再打。
 
 | # | Owner 决定 |
 | --- | --- |
@@ -216,4 +224,4 @@ G2 前的开放事项不是新的 Owner 待决，见「G2 前置」。第 1–4 
 
 ## 最近更新
 
-2026-10-25（Asia/Taipei），Manager。Owner / Orchestrator 复核 main `2f29d4066709b8f8958164bba7c9098cba2803e9`（L4 已合入）后下令：登记 G2 前置（第 1–4 项仍开放，未完成），并按常设授权合入看板 PR #14。G2 仍是未开始。L5 仍等待 G2 与 G3。不打 tag，不写 LOCK，不改业务代码与预注册。
+2026-10-25（Asia/Taipei），Manager。登记 Owner 方向：业务体检为 G2 前必须项（第 6 项），状态开放、未完成。时机是 L1 返工完成且 Reviewer 重签收之后；Dev 出具 `operations/reports/v3-design-period-brief.md`（附图）；范围是设计期 end≤2015-12-31，不得含 2016 年起组合收益，数字只作参考不作判定。G2 tag 等 Owner 看过体检报告后再打。Manager 状态汇报改为业务固定五段（见文首备注）。G2 仍是未开始。L5 仍等待 G2 与 G3。基线 main `a86dba0e15201d6cc58e235faf0e427e3fe9e1d8`。本更新不打 tag，不写 LOCK，不改业务代码与预注册。
