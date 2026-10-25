@@ -62,7 +62,12 @@ class Boundaries(unittest.TestCase):
 
     def test_which_containers_have_a_premium(self):
         by_id = {row["id"]: row for row in containers()}
-        for name in ("ndx100", "spx", "hsi", "hstech", "crude-oil", "qdii-159509"):
+        theme = next(
+            row["id"] for row in containers()
+            if any(ex.get("code") == "159509" for ex in row.get("execution") or [])
+        )
+        self.assertEqual(theme, "theme-纳斯达克科技市值加权指数")
+        for name in ("ndx100", "spx", "hsi", "hstech", "crude-oil", theme):
             self.assertTrue(subject_to_premium(by_id[name]), name)
         for name in ("csi300", "gold", "soymeal", "cash"):
             self.assertFalse(subject_to_premium(by_id[name]), name)

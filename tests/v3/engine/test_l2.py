@@ -29,7 +29,8 @@ from src.v3.engine.benchmark import bm_main
 from src.v3.engine.book import RunnerError
 
 ROOT = Path(__file__).resolve().parents[3]
-UNIVERSE_SHA = "693b7d4dff91dff4b9bac4a0c1241eb4692f6b3cbd444965440a265ffa32aaff"
+# `python -m src.v3.data emit` 写出的登记表。手改 toml 会让这行失败。Reviewer 重签之前，这不是冻结 SHA。
+UNIVERSE_SHA = "96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a"
 FREEZE = "bfeb49cc65eb0ba419bc98348f1d643fac1211f6"
 CASH = 0.02 / 252
 
@@ -343,7 +344,12 @@ class Membership(unittest.TestCase):
         self.assertNotIn("s2-煤炭", main_ids)
         for row in rows:
             fee_for(row, spec)
-        qdii = next(row for row in rows if row["id"] == "qdii-159509")
+        qdii = next(
+            row for row in rows
+            if any(ex.get("code") == "159509" for ex in row.get("execution") or [])
+        )
+        self.assertEqual(qdii["id"], "theme-纳斯达克科技市值加权指数")
+        self.assertEqual(qdii["asset_class"], "美股和全球主题")
         self.assertEqual(signal_kinds(qdii, "A", "index"), ("nav", "nav"))
         self.assertEqual(signal_kinds(qdii, "S1", "index"), ("price", "nav"))
         self.assertEqual(signal_kinds(qdii, "A", "tradable"), ("nav", "price"))

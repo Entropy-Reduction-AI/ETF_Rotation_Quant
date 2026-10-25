@@ -54,6 +54,23 @@ class UniverseFile(unittest.TestCase):
         self.assertIn('series_status = "TBD"', energy)
 
 
+def _shell(cid: str, codes: list[str] | None = None) -> dict:
+    return {
+        "id": cid, "asset_class": "港股", "name": cid, "arm": "main",
+        "in_pool_index": True, "in_pool_tradable": True,
+        "research": {"note": "原注记。"},
+        "execution": [{"code": code, "list_date": "取不到", "track": ""} for code in (codes or [])],
+    }
+
+
+def _etf(code: str, track: str, listed: str, nav_rows: int = 3) -> dict:
+    return {
+        "code": code, "name": code, "list_date": listed, "list_date_source": "src",
+        "bars_status": "in_db", "track": track, "track_source": "jbgk",
+        "note": "附录 1 纳入。", "nav_rows": nav_rows,
+    }
+
+
 class Emit(unittest.TestCase):
     def test_code_comes_from_identity_file(self):
         tmp = Path(tempfile.mkdtemp())
@@ -65,6 +82,129 @@ class Emit(unittest.TestCase):
         got = emit_universe.load_csi(tmp)
         self.assertEqual(got["中证全指能源全收益指数"]["code"], "H00986")
         self.assertEqual(got["中证全指能源全收益指数"]["publish_date"], "2011-08-02")
+
+    def test_same_index_merges_and_keeps_the_prereg_example_first(self):
+        containers = [
+            _shell("hsi", ["159920"]),
+            _shell("hstech"),
+            _shell("ndx100", ["513100", "159941"]),
+            _shell("spx"),
+        ]
+        included = [
+            _etf("164705", "恒生指数", "2015-04-13"),
+            _etf("159920", "恒生指数", "2012-10-22"),
+            _etf("159501", "纳斯达克100指数", "2023-06-14"),
+            _etf("513870", "纳斯达克100指数", "取不到"),
+            _etf("159660", "纳斯达克100指数", "2023-04-17"),
+            _etf("159509", "纳斯达克科技市值加权指数", "2023-08-08", nav_rows=9),
+            _etf("513290", "纳斯达克生物科技指数", "取不到"),
+            _etf("159605", "中证海外中国互联网30人民币指数", "2021-12-02"),
+            _etf("159607", "中证海外中国互联网30人民币指数", "2021-12-02"),
+        ]
+        themes = emit_universe.attach_qdii(containers, included)
+        by_id = {row["id"]: row for row in containers}
+        self.assertEqual([ex["code"] for ex in by_id["hsi"]["execution"]], ["159920", "164705"])
+        self.assertEqual(
+            [ex["code"] for ex in by_id["ndx100"]["execution"]],
+            ["513100", "159941", "159660", "159501", "513870"],
+        )
+        self.assertNotIn("纳斯达克生物科技指数", by_id["ndx100"]["research"]["note"])
+        ids = [row["id"] for row in themes]
+        self.assertEqual(ids, [
+            "theme-中证海外中国互联网30人民币指数",
+            "theme-纳斯达克生物科技指数",
+            "theme-纳斯达克科技市值加权指数",
+        ])
+        nasdaq = next(row for row in themes if row["id"] == "theme-纳斯达克科技市值加权指数")
+        self.assertEqual(nasdaq["research"]["series_code"], "159509")
+        self.assertEqual(nasdaq["research"]["publish_date"], "2023-08-08")
+        self.assertEqual(nasdaq["research"]["series_status"], "in_db")
+        internet = next(row for row in themes if "互联网30" in row["id"])
+        self.assertEqual([ex["code"] for ex in internet["execution"]], ["159605", "159607"])
+        self.assertEqual(internet["asset_class"], "美股和全球主题")
+        held = {}
+        for row in containers + themes:
+            for ex in row["execution"]:
+                self.assertNotIn(ex["code"], held)
+                held[ex["code"]] = row["id"]
+
+    def test_refuses_to_put_one_code_on_two_main_containers(self):
+        containers = [
+            _shell("hsi"), _shell("hstech"), _shell("ndx100"),
+            _shell("spx", ["513500"]),
+        ]
+        with self.assertRaises(RuntimeError):
+            emit_universe.attach_qdii(containers, [_etf("513500", "恒生指数", "2013-01-01")])
+
+    def test_static_file_is_one_index_per_container(self):
+        errors = U.validate()
+        self.assertEqual(errors, [])
+        rows = U.containers()
+        by_id = {row["id"]: row for row in rows}
+
+        def codes(cid: str) -> list[str]:
+            return [ex["code"] for ex in by_id[cid]["execution"]]
+
+        self.assertIn("159660", codes("ndx100"))
+        self.assertIn("160213", codes("ndx100"))
+        self.assertIn("513870", codes("ndx100"))
+        self.assertEqual(codes("ndx100")[:3], ["513100", "159941", "513300"])
+        self.assertIn("164705", codes("hsi"))
+        self.assertIn("159920", codes("hsi"))
+        for code in ("513130", "159741", "158042", "513260"):
+            self.assertIn(code, codes("hstech"))
+        for code in ("159655", "161125"):
+            self.assertIn(code, codes("spx"))
+        self.assertEqual(by_id["ndx100"]["research"]["series_code"], "XNDX")
+        self.assertEqual(by_id["hsi"]["asset_class"], "港股")
+        self.assertEqual(by_id["hstech"]["asset_class"], "港股")
+        self.assertNotIn("qdii-159741", by_id)
+        self.assertNotIn("qdii-164705", by_id)
+        self.assertNotIn("qdii-513100", by_id)
+        holders = [
+            row["id"] for row in rows
+            if any(ex["code"] == "159509" for ex in row.get("execution") or [])
+        ]
+        self.assertEqual(holders, ["theme-纳斯达克科技市值加权指数"])
+        self.assertNotIn("513290", codes("ndx100"))
+        self.assertIn("theme-纳斯达克生物科技指数", by_id)
+        seen: dict[str, str] = {}
+        for row in rows:
+            if row.get("arm") != "main":
+                continue
+            for ex in row.get("execution") or []:
+                self.assertNotIn(ex["code"], seen, ex["code"])
+                seen[ex["code"]] = row["id"]
+        whole: dict[str, list[str]] = {}
+        for row in rows:
+            for ex in row.get("execution") or []:
+                code = ex.get("code") or ""
+                if code in {"", "取不到", "TBD"}:
+                    continue
+                whole.setdefault(code, []).append(row["id"])
+        overlap = {code: ids for code, ids in whole.items() if len(ids) > 1}
+        self.assertEqual(overlap, {
+            "510300": ["csi300", "s2-沪深300"],
+            "510500": ["csi500", "s2-中证500"],
+            "512100": ["csi1000", "s2-中证1000"],
+            "159915": ["chinext", "s2-创业板"],
+            "510880": ["csi-dividend", "s2-红利"],
+        })
+
+    def test_validate_rejects_the_same_code_on_two_main_containers(self):
+        research = {key: "" for key in U.RESEARCH_FIELDS}
+        def box(cid: str, code: str, arm: str = "main") -> dict:
+            execution = {key: "" for key in U.EXEC_FIELDS}
+            execution["code"] = code
+            return {
+                "id": cid, "asset_class": "港股", "name": cid, "arm": arm,
+                "in_pool_index": True, "in_pool_tradable": True,
+                "research": dict(research), "execution": [execution],
+            }
+        dup = U.validate({"container": [box("hsi", "159920"), box("qdii-159920", "159920")]})
+        self.assertTrue(any("159920" in item for item in dup))
+        twin = U.validate({"container": [box("csi300", "510300"), box("s2-沪深300", "510300", "S2")]})
+        self.assertEqual(twin, [])
 
 
 class Parse(unittest.TestCase):

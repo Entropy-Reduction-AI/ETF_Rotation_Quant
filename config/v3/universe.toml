@@ -1,6 +1,7 @@
 # 机械生成。来源：docs/prereg/etf-multiasset-rotation-prereg-v3.md §3 与附录 1–2。
 # 不要手改。更新用 python -m src.v3.data emit。
 # 冻结预注册 B1：每条都有代码、发布日、口径、来源；缺失写「取不到」。
+# §3.2：一个容器一个底层指数。同一指数的 ETF 只写在该容器的 execution。
 
 [[container]]
 id = "csi300"
@@ -474,7 +475,7 @@ series_code = "HSI"
 series_source = "tencent_hk_index"
 series_status = "in_db"
 source_url = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
-note = "腾讯行情名称是恒生指数。恒生公司事实表 URL 返回 404，发布日和基日记取不到。hkHSITR 本次 day 为空，全收益取不到。 行情 6592 行 2000-01-03→2026-09-30。"
+note = "腾讯行情名称是恒生指数。恒生公司事实表 URL 返回 404，发布日和基日记取不到。hkHSITR 本次 day 为空，全收益取不到。 行情 6592 行 2000-01-03→2026-09-30。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。"
 
 [[container.execution]]
 code = "159920"
@@ -536,7 +537,7 @@ series_code = "HSTECH"
 series_source = "tencent_hk_index"
 series_status = "in_db"
 source_url = "https://www.hsi.com.hk/static/uploads/contents/en/dl_centre/methodologies/IM_hsteche.pdf"
-note = "发布日和基日读自仓库里已有的 index_launch.csv（来源 URL 见 source_url）。本次没有 pdftotext，没有重抽编制方案正文。行情来自腾讯 hkHSTECH。 1522 行 2020-07-27→2026-09-30。"
+note = "发布日和基日读自仓库里已有的 index_launch.csv（来源 URL 见 source_url）。本次没有 pdftotext，没有重抽编制方案正文。行情来自腾讯 hkHSTECH。 1522 行 2020-07-27→2026-09-30。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。"
 
 [[container.execution]]
 code = "513130"
@@ -698,7 +699,7 @@ series_code = "XNDX"
 series_source = "nasdaq"
 series_status = "in_db"
 source_url = "https://indexes.nasdaqomx.com/Index/ExportHistory/XNDX"
-note = "库内序列是美元全收益，来源 nasdaq，5470 行 2005-01-04→2026-09-30。预注册写人民币全收益。没有单独的人民币发布序列，不把该序列与 USDCNY 乘成新序列。发布日本次没有指数公司原件。"
+note = "库内序列是美元全收益，来源 nasdaq，5470 行 2005-01-04→2026-09-30。预注册写人民币全收益。没有单独的人民币发布序列，不把该序列与 USDCNY 乘成新序列。发布日本次没有指数公司原件。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。"
 
 [[container.execution]]
 code = "513100"
@@ -730,6 +731,106 @@ track = "纳斯达克100指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513300.html.gz"
 note = "预注册举例。 bars 1434 行，来源 tencent_etf。 跟踪标的「纳斯达克100指数」与研究指数「Nasdaq-100 Total Return」不一致。"
 
+[[container.execution]]
+code = "159632"
+name = "华安纳斯达克100交易型开放式指数证券投资基金(QDII)"
+list_date = "2022-08-03"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "纳斯达克100指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159632.html.gz"
+note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 1030 行。收盘价 1010 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "159660"
+name = "汇添富纳斯达克100交易型开放式指数证券投资基金(QDII)"
+list_date = "2023-04-17"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "纳斯达克100指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159660.html.gz"
+note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 859 行。收盘价 840 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "159659"
+name = "招商纳斯达克100交易型开放式指数证券投资基金(QDII)"
+list_date = "2023-04-25"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "纳斯达克100指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159659.html.gz"
+note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 852 行。收盘价 834 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "159501"
+name = "嘉实纳斯达克100交易型开放式指数证券投资基金(QDII)"
+list_date = "2023-06-14"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "纳斯达克100指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159501.html.gz"
+note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 819 行。收盘价 801 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "159513"
+name = "大成纳斯达克100交易型开放式指数证券投资基金(QDII)"
+list_date = "2023-07-28"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "纳斯达克100指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159513.html.gz"
+note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 789 行。收盘价 771 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "159696"
+name = "易方达纳斯达克100交易型开放式指数证券投资基金(QDII)"
+list_date = "2023-08-25"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "纳斯达克100指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159696.html.gz"
+note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 770 行。收盘价 751 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "160213"
+name = "国泰纳斯达克100指数证券投资基金"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160213.html.gz"
+bars_status = "取不到"
+track = "纳斯达克100指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160213.html.gz"
+note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 0 行，来源 无。"
+
+[[container.execution]]
+code = "513110"
+name = "华泰柏瑞纳斯达克100交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513110.html.gz"
+bars_status = "in_db"
+track = "纳斯达克100指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513110.html.gz"
+note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 878 行。收盘价 859 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "513390"
+name = "博时纳斯达克100交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513390.html.gz"
+bars_status = "in_db"
+track = "纳斯达克100指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513390.html.gz"
+note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 846 行。收盘价 828 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "513870"
+name = "富国纳斯达克100交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513870.html.gz"
+bars_status = "in_db"
+track = "纳斯达克100指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513870.html.gz"
+note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 725 行。收盘价 708 行，来源 tencent_etf。"
+
 [[container]]
 id = "spx"
 asset_class = "美股宽基"
@@ -750,7 +851,7 @@ series_code = "^SP500TR"
 series_source = "yahoo"
 series_status = "in_db"
 source_url = "https://query1.finance.yahoo.com/v8/finance/chart/%5ESP500TR"
-note = "库内序列是美元全收益，来源 yahoo，6726 行 2000-01-03→2026-09-30。预注册写人民币全收益。没有单独的人民币发布序列，不把该序列与 USDCNY 乘成新序列。发布日本次没有指数公司原件。"
+note = "库内序列是美元全收益，来源 yahoo，6726 行 2000-01-03→2026-09-30。预注册写人民币全收益。没有单独的人民币发布序列，不把该序列与 USDCNY 乘成新序列。发布日本次没有指数公司原件。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。"
 
 [[container.execution]]
 code = "513500"
@@ -781,6 +882,26 @@ bars_status = "in_db"
 track = "标准普尔500指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513650.html.gz"
 note = "预注册举例。 bars 848 行，来源 tencent_etf。 跟踪标的「标准普尔500指数」与研究指数「S&P 500 (TR)」不一致。"
+
+[[container.execution]]
+code = "161125"
+name = "易方达标普500指数证券投资基金(LOF)"
+list_date = "2016-12-14"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "标准普尔500指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161125.html.gz"
+note = "附录 1：跟踪标的「标准普尔500指数」与容器 spx 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2377 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "159655"
+name = "华夏标普500交易型开放式指数证券投资基金(QDII)"
+list_date = "2022-10-25"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "标准普尔500指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159655.html.gz"
+note = "附录 1：跟踪标的「标准普尔500指数」与容器 spx 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 976 行。收盘价 957 行，来源 tencent_etf。"
 
 [[container]]
 id = "gold"
@@ -995,969 +1116,9 @@ track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/511880.html.gz"
 note = "预注册举例。"
 
 [[container]]
-id = "qdii-158042"
+id = "theme-东京日经225指数"
 asset_class = "美股和全球主题"
-name = "富国恒生科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
-return_basis = "unit_nav"
-publish_date = "2026-09-24"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "158042"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/158042.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 19 行。收盘价 4 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "158042"
-name = "富国恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "2026-09-24"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/158042.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159202"
-asset_class = "美股和全球主题"
-name = "万家恒生互联网科技业交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生互联网科技业指数"
-index_name = "恒生互联网科技业指数"
-return_basis = "unit_nav"
-publish_date = "2025-04-16"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159202"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159202.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 373 行。收盘价 357 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159202"
-name = "万家恒生互联网科技业交易型开放式指数证券投资基金(QDII)"
-list_date = "2025-04-16"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生互联网科技业指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159202.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159303"
-asset_class = "美股和全球主题"
-name = "大成恒生医疗保健交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生医疗保健指数"
-index_name = "恒生医疗保健指数"
-return_basis = "unit_nav"
-publish_date = "2024-06-27"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159303"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159303.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 567 行。收盘价 550 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159303"
-name = "大成恒生医疗保健交易型开放式指数证券投资基金(QDII)"
-list_date = "2024-06-27"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生医疗保健指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159303.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159329"
-asset_class = "美股和全球主题"
-name = "南方基金南方东英沙特阿拉伯交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "富时沙特阿拉伯指数"
-index_name = "富时沙特阿拉伯指数"
-return_basis = "unit_nav"
-publish_date = "2024-07-16"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159329"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159329.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 553 行。收盘价 534 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159329"
-name = "南方基金南方东英沙特阿拉伯交易型开放式指数证券投资基金(QDII)"
-list_date = "2024-07-16"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "富时沙特阿拉伯指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159329.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159501"
-asset_class = "美股和全球主题"
-name = "嘉实纳斯达克100交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克100指数"
-index_name = "纳斯达克100指数"
-return_basis = "unit_nav"
-publish_date = "2023-06-14"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159501"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159501.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 819 行。收盘价 801 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159501"
-name = "嘉实纳斯达克100交易型开放式指数证券投资基金(QDII)"
-list_date = "2023-06-14"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "纳斯达克100指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159501.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159502"
-asset_class = "美股和全球主题"
-name = "嘉实标普生物科技精选行业交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标普生物科技精选行业指数"
-index_name = "标普生物科技精选行业指数"
-return_basis = "unit_nav"
-publish_date = "2024-01-10"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159502"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159502.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 677 行。收盘价 660 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159502"
-name = "嘉实标普生物科技精选行业交易型开放式指数证券投资基金(QDII)"
-list_date = "2024-01-10"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "标普生物科技精选行业指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159502.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159509"
-asset_class = "美股和全球主题"
-name = "景顺长城纳斯达克科技市值加权交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克科技市值加权指数"
-index_name = "纳斯达克科技市值加权指数"
-return_basis = "unit_nav"
-publish_date = "2023-08-08"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159509"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159509.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 782 行。收盘价 764 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159509"
-name = "景顺长城纳斯达克科技市值加权交易型开放式指数证券投资基金(QDII)"
-list_date = "2023-08-08"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "纳斯达克科技市值加权指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159509.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159513"
-asset_class = "美股和全球主题"
-name = "大成纳斯达克100交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克100指数"
-index_name = "纳斯达克100指数"
-return_basis = "unit_nav"
-publish_date = "2023-07-28"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159513"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159513.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 789 行。收盘价 771 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159513"
-name = "大成纳斯达克100交易型开放式指数证券投资基金(QDII)"
-list_date = "2023-07-28"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "纳斯达克100指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159513.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159519"
-asset_class = "美股和全球主题"
-name = "国泰中证香港内地国有企业交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "中证香港内地国有企业港元指数"
-index_name = "中证香港内地国有企业港元指数"
-return_basis = "unit_nav"
-publish_date = "2023-08-31"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159519"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159519.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 765 行。收盘价 747 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159519"
-name = "国泰中证香港内地国有企业交易型开放式指数证券投资基金(QDII)"
-list_date = "2023-08-31"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "中证香港内地国有企业港元指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159519.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159529"
-asset_class = "美股和全球主题"
-name = "景顺长城标普消费精选交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标普500消费精选指数"
-index_name = "标普500消费精选指数"
-return_basis = "unit_nav"
-publish_date = "2024-02-02"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159529"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159529.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 659 行。收盘价 639 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159529"
-name = "景顺长城标普消费精选交易型开放式指数证券投资基金(QDII)"
-list_date = "2024-02-02"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "标普500消费精选指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159529.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159561"
-asset_class = "美股和全球主题"
-name = "嘉实德国DAX交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "法兰克福DAX指数"
-index_name = "法兰克福DAX指数"
-return_basis = "unit_nav"
-publish_date = "2024-04-30"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159561"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159561.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 606 行。收盘价 584 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159561"
-name = "嘉实德国DAX交易型开放式指数证券投资基金(QDII)"
-list_date = "2024-04-30"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "法兰克福DAX指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159561.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159605"
-asset_class = "美股和全球主题"
-name = "广发中证海外中国互联网30交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "中证海外中国互联网30人民币指数"
-index_name = "中证海外中国互联网30人民币指数"
-return_basis = "unit_nav"
-publish_date = "2021-12-02"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159605"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159605.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1191 行。收盘价 1172 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159605"
-name = "广发中证海外中国互联网30交易型开放式指数证券投资基金(QDII)"
-list_date = "2021-12-02"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "中证海外中国互联网30人民币指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159605.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159607"
-asset_class = "美股和全球主题"
-name = "嘉实中证海外中国互联网30交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "中证海外中国互联网30人民币指数"
-index_name = "中证海外中国互联网30人民币指数"
-return_basis = "unit_nav"
-publish_date = "2021-12-02"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159607"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159607.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1190 行。收盘价 1172 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159607"
-name = "嘉实中证海外中国互联网30交易型开放式指数证券投资基金(QDII)"
-list_date = "2021-12-02"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "中证海外中国互联网30人民币指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159607.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159612"
-asset_class = "美股和全球主题"
-name = "国泰标普500交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标准普尔500指数"
-index_name = "标准普尔500指数"
-return_basis = "unit_nav"
-publish_date = "2022-05-20"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159612"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159612.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1084 行。收盘价 1060 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159612"
-name = "国泰标普500交易型开放式指数证券投资基金(QDII)"
-list_date = "2022-05-20"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "标准普尔500指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159612.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159615"
-asset_class = "美股和全球主题"
-name = "南方恒生生物科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生生物科技指数"
-index_name = "恒生生物科技指数"
-return_basis = "unit_nav"
-publish_date = "2022-06-28"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159615"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159615.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1055 行。收盘价 1036 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159615"
-name = "南方恒生生物科技交易型开放式指数证券投资基金(QDII)"
-list_date = "2022-06-28"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生生物科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159615.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159632"
-asset_class = "美股和全球主题"
-name = "华安纳斯达克100交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克100指数"
-index_name = "纳斯达克100指数"
-return_basis = "unit_nav"
-publish_date = "2022-08-03"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159632"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159632.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1030 行。收盘价 1010 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159632"
-name = "华安纳斯达克100交易型开放式指数证券投资基金(QDII)"
-list_date = "2022-08-03"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "纳斯达克100指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159632.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159655"
-asset_class = "美股和全球主题"
-name = "华夏标普500交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标准普尔500指数"
-index_name = "标准普尔500指数"
-return_basis = "unit_nav"
-publish_date = "2022-10-25"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159655"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159655.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 976 行。收盘价 957 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159655"
-name = "华夏标普500交易型开放式指数证券投资基金(QDII)"
-list_date = "2022-10-25"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "标准普尔500指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159655.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159659"
-asset_class = "美股和全球主题"
-name = "招商纳斯达克100交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克100指数"
-index_name = "纳斯达克100指数"
-return_basis = "unit_nav"
-publish_date = "2023-04-25"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159659"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159659.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 852 行。收盘价 834 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159659"
-name = "招商纳斯达克100交易型开放式指数证券投资基金(QDII)"
-list_date = "2023-04-25"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "纳斯达克100指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159659.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159660"
-asset_class = "美股和全球主题"
-name = "汇添富纳斯达克100交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克100指数"
-index_name = "纳斯达克100指数"
-return_basis = "unit_nav"
-publish_date = "2023-04-17"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159660"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159660.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 859 行。收盘价 840 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159660"
-name = "汇添富纳斯达克100交易型开放式指数证券投资基金(QDII)"
-list_date = "2023-04-17"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "纳斯达克100指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159660.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159687"
-asset_class = "美股和全球主题"
-name = "南方基金南方东英富时亚太精选交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "富时亚太低碳精选指数"
-index_name = "富时亚太低碳精选指数"
-return_basis = "unit_nav"
-publish_date = "2022-12-30"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159687"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159687.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 927 行。收盘价 906 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159687"
-name = "南方基金南方东英富时亚太精选交易型开放式指数证券投资基金(QDII)"
-list_date = "2022-12-30"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "富时亚太低碳精选指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159687.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159688"
-asset_class = "美股和全球主题"
-name = "华安恒生互联网科技业交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生互联网科技业指数"
-index_name = "恒生互联网科技业指数"
-return_basis = "unit_nav"
-publish_date = "2023-02-15"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159688"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159688.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 902 行。收盘价 882 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159688"
-name = "华安恒生互联网科技业交易型开放式指数证券投资基金(QDII)"
-list_date = "2023-02-15"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生互联网科技业指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159688.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159696"
-asset_class = "美股和全球主题"
-name = "易方达纳斯达克100交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克100指数"
-index_name = "纳斯达克100指数"
-return_basis = "unit_nav"
-publish_date = "2023-08-25"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159696"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159696.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 770 行。收盘价 751 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159696"
-name = "易方达纳斯达克100交易型开放式指数证券投资基金(QDII)"
-list_date = "2023-08-25"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "纳斯达克100指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159696.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159699"
-asset_class = "美股和全球主题"
-name = "广发恒生消费交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生消费指数"
-index_name = "恒生消费指数"
-return_basis = "unit_nav"
-publish_date = "2023-08-23"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159699"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159699.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 772 行。收盘价 753 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159699"
-name = "广发恒生消费交易型开放式指数证券投资基金(QDII)"
-list_date = "2023-08-23"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生消费指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159699.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159740"
-asset_class = "美股和全球主题"
-name = "大成恒生科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
-return_basis = "unit_nav"
-publish_date = "2021-05-27"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159740"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159740.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1317 行。收盘价 1299 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159740"
-name = "大成恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "2021-05-27"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159740.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159741"
-asset_class = "美股和全球主题"
-name = "嘉实恒生科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
-return_basis = "unit_nav"
-publish_date = "2021-06-03"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159741"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159741.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1313 行。收盘价 1294 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159741"
-name = "嘉实恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "2021-06-03"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159741.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159742"
-asset_class = "美股和全球主题"
-name = "博时恒生科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
-return_basis = "unit_nav"
-publish_date = "2021-05-25"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159742"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159742.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1320 行。收盘价 1301 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159742"
-name = "博时恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "2021-05-25"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159742.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159747"
-asset_class = "美股和全球主题"
-name = "南方中证香港科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "中证香港科技指数指数"
-index_name = "中证香港科技指数指数"
-return_basis = "unit_nav"
-publish_date = "2021-07-14"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159747"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159747.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1285 行。收盘价 1266 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159747"
-name = "南方中证香港科技交易型开放式指数证券投资基金(QDII)"
-list_date = "2021-07-14"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "中证香港科技指数指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159747.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159750"
-asset_class = "美股和全球主题"
-name = "招商中证香港科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "中证香港科技指数指数"
-index_name = "中证香港科技指数指数"
-return_basis = "unit_nav"
-publish_date = "2022-02-14"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159750"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159750.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1145 行。收盘价 1125 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159750"
-name = "招商中证香港科技交易型开放式指数证券投资基金(QDII)"
-list_date = "2022-02-14"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "中证香港科技指数指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159750.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159822"
-asset_class = "美股和全球主题"
-name = "银华工银南方东英标普中国新经济行业交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标普中国新经济行业指数"
-index_name = "标普中国新经济行业指数"
-return_basis = "unit_nav"
-publish_date = "2020-10-23"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159822"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159822.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1328 行。收盘价 1443 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159822"
-name = "银华工银南方东英标普中国新经济行业交易型开放式指数证券投资基金(QDII)"
-list_date = "2020-10-23"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "标普中国新经济行业指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159822.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159850"
-asset_class = "美股和全球主题"
-name = "华夏恒生中国企业交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生中国企业指数"
-index_name = "恒生中国企业指数"
-return_basis = "unit_nav"
-publish_date = "2021-02-19"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159850"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159850.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1383 行。收盘价 1364 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159850"
-name = "华夏恒生中国企业交易型开放式指数证券投资基金(QDII)"
-list_date = "2021-02-19"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生中国企业指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159850.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159866"
-asset_class = "美股和全球主题"
-name = "工银瑞信大和日经225交易型开放式指数证券投资基金(QDII)"
+name = "东京日经225指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
@@ -1974,7 +1135,7 @@ series_code = "159866"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159866.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1350 行。收盘价 1331 行，来源 tencent_etf。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159866 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159866、513000、513520、513880。净值 1350 行。"
 
 [[container.execution]]
 code = "159866"
@@ -1984,669 +1145,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "东京日经225指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159866.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159892"
-asset_class = "美股和全球主题"
-name = "华夏恒生生物科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生生物科技指数"
-index_name = "恒生生物科技指数"
-return_basis = "unit_nav"
-publish_date = "2021-10-19"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159892"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159892.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1225 行。收盘价 1204 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159892"
-name = "华夏恒生生物科技交易型开放式指数证券投资基金(QDII)"
-list_date = "2021-10-19"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生生物科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159892.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159920"
-asset_class = "美股和全球主题"
-name = "恒生交易型开放式指数证券投资基金"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生指数"
-index_name = "恒生指数"
-return_basis = "unit_nav"
-publish_date = "2012-10-22"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159920"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159920.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1408 行。收盘价 3389 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159920"
-name = "恒生交易型开放式指数证券投资基金"
-list_date = "2012-10-22"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159920.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-159941"
-asset_class = "美股和全球主题"
-name = "广发纳斯达克100交易型开放式指数证券投资基金"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克100指数"
-index_name = "纳斯达克100指数"
-return_basis = "unit_nav"
-publish_date = "2015-07-13"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159941"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159941.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 2734 行。收盘价 2728 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "159941"
-name = "广发纳斯达克100交易型开放式指数证券投资基金"
-list_date = "2015-07-13"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "纳斯达克100指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159941.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-160140"
-asset_class = "美股和全球主题"
-name = "南方道琼斯美国精选REIT指数证券投资基金(QDII-LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "道琼斯美国精选REIT指数"
-index_name = "道琼斯美国精选REIT指数"
-return_basis = "unit_nav"
-publish_date = "2017-11-24"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "160140"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/160140.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1407 行。收盘价 2141 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "160140"
-name = "南方道琼斯美国精选REIT指数证券投资基金(QDII-LOF)"
-list_date = "2017-11-24"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "道琼斯美国精选REIT指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160140.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-160141"
-asset_class = "美股和全球主题"
-name = "南方道琼斯美国精选REIT指数证券投资基金(QDII-LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "道琼斯美国精选REIT指数"
-index_name = "道琼斯美国精选REIT指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160141.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "160141"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/160141.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1407 行。收盘价 0 行，来源 无。"
-
-[[container.execution]]
-code = "160141"
-name = "南方道琼斯美国精选REIT指数证券投资基金(QDII-LOF)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160141.html.gz"
-bars_status = "取不到"
-track = "道琼斯美国精选REIT指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160141.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-160213"
-asset_class = "美股和全球主题"
-name = "国泰纳斯达克100指数证券投资基金"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克100指数"
-index_name = "纳斯达克100指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160213.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "160213"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/160213.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1407 行。收盘价 0 行，来源 无。"
-
-[[container.execution]]
-code = "160213"
-name = "国泰纳斯达克100指数证券投资基金"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160213.html.gz"
-bars_status = "取不到"
-track = "纳斯达克100指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160213.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-160416"
-asset_class = "美股和全球主题"
-name = "华安标普全球石油指数证券投资基金(LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标普全球石油指数"
-index_name = "标普全球石油指数"
-return_basis = "unit_nav"
-publish_date = "2012-05-02"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "160416"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/160416.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1407 行。收盘价 3342 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "160416"
-name = "华安标普全球石油指数证券投资基金(LOF)"
-list_date = "2012-05-02"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "标普全球石油指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160416.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-160717"
-asset_class = "美股和全球主题"
-name = "嘉实恒生中国企业指数证券投资基金(QDII-LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生中国企业指数"
-index_name = "恒生中国企业指数"
-return_basis = "unit_nav"
-publish_date = "2010-10-28"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "160717"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/160717.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1408 行。收盘价 3826 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "160717"
-name = "嘉实恒生中国企业指数证券投资基金(QDII-LOF)"
-list_date = "2010-10-28"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生中国企业指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160717.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-160924"
-asset_class = "美股和全球主题"
-name = "大成恒生指数证券投资基金(LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生指数"
-index_name = "恒生指数"
-return_basis = "unit_nav"
-publish_date = "2017-08-28"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "160924"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/160924.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1408 行。收盘价 1920 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "160924"
-name = "大成恒生指数证券投资基金(LOF)"
-list_date = "2017-08-28"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160924.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-161124"
-asset_class = "美股和全球主题"
-name = "易方达香港恒生综合小型股指数证券投资基金(LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生综合小型股指数"
-index_name = "恒生综合小型股指数"
-return_basis = "unit_nav"
-publish_date = "2016-11-10"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "161124"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161124.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1408 行。收盘价 2137 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "161124"
-name = "易方达香港恒生综合小型股指数证券投资基金(LOF)"
-list_date = "2016-11-10"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生综合小型股指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161124.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-161125"
-asset_class = "美股和全球主题"
-name = "易方达标普500指数证券投资基金(LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标准普尔500指数"
-index_name = "标准普尔500指数"
-return_basis = "unit_nav"
-publish_date = "2016-12-14"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "161125"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161125.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1407 行。收盘价 2377 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "161125"
-name = "易方达标普500指数证券投资基金(LOF)"
-list_date = "2016-12-14"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "标准普尔500指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161125.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-161126"
-asset_class = "美股和全球主题"
-name = "易方达标普医疗保健指数证券投资基金(LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标普500医疗保健等权重指数"
-index_name = "标普500医疗保健等权重指数"
-return_basis = "unit_nav"
-publish_date = "2016-12-14"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "161126"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161126.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1407 行。收盘价 2336 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "161126"
-name = "易方达标普医疗保健指数证券投资基金(LOF)"
-list_date = "2016-12-14"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "标普500医疗保健等权重指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161126.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-161127"
-asset_class = "美股和全球主题"
-name = "易方达标普生物科技指数证券投资基金(LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标普生物科技精选行业指数"
-index_name = "标普生物科技精选行业指数"
-return_basis = "unit_nav"
-publish_date = "2016-12-27"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "161127"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161127.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1407 行。收盘价 2369 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "161127"
-name = "易方达标普生物科技指数证券投资基金(LOF)"
-list_date = "2016-12-27"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "标普生物科技精选行业指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161127.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-161128"
-asset_class = "美股和全球主题"
-name = "易方达标普信息科技指数证券投资基金(LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标普500信息科技指数"
-index_name = "标普500信息科技指数"
-return_basis = "unit_nav"
-publish_date = "2016-12-27"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "161128"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161128.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1408 行。收盘价 2361 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "161128"
-name = "易方达标普信息科技指数证券投资基金(LOF)"
-list_date = "2016-12-27"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "标普500信息科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161128.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-161831"
-asset_class = "美股和全球主题"
-name = "银华恒生中国企业指数证券投资基金(QDII-LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生中国企业指数"
-index_name = "恒生中国企业指数"
-return_basis = "unit_nav"
-publish_date = "2015-04-13"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "161831"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161831.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1365 行。收盘价 2762 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "161831"
-name = "银华恒生中国企业指数证券投资基金(QDII-LOF)"
-list_date = "2015-04-13"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生中国企业指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161831.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-162415"
-asset_class = "美股和全球主题"
-name = "华宝标普美国品质消费股票指数证券投资基金(LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标普美国品质消费股票指数"
-index_name = "标普美国品质消费股票指数"
-return_basis = "unit_nav"
-publish_date = "2016-04-06"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "162415"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/162415.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1407 行。收盘价 2546 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "162415"
-name = "华宝标普美国品质消费股票指数证券投资基金(LOF)"
-list_date = "2016-04-06"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "标普美国品质消费股票指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/162415.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-162719"
-asset_class = "美股和全球主题"
-name = "广发道琼斯美国石油开发与生产指数证券投资基金(QDII-LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "道琼斯美国石油开发与生产指数"
-index_name = "道琼斯美国石油开发与生产指数"
-return_basis = "unit_nav"
-publish_date = "2017-03-17"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "162719"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/162719.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1407 行。收盘价 2311 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "162719"
-name = "广发道琼斯美国石油开发与生产指数证券投资基金(QDII-LOF)"
-list_date = "2017-03-17"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "道琼斯美国石油开发与生产指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/162719.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-164705"
-asset_class = "美股和全球主题"
-name = "汇添富恒生指数型证券投资基金(QDII-LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生指数"
-index_name = "恒生指数"
-return_basis = "unit_nav"
-publish_date = "2015-04-13"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "164705"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/164705.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1408 行。收盘价 2730 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "164705"
-name = "汇添富恒生指数型证券投资基金(QDII-LOF)"
-list_date = "2015-04-13"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "恒生指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/164705.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-164906"
-asset_class = "美股和全球主题"
-name = "交银施罗德中证海外中国互联网指数型证券投资基金(LOF)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "中证海外中国互联网指数"
-index_name = "中证海外中国互联网指数"
-return_basis = "unit_nav"
-publish_date = "2015-07-10"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "164906"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/164906.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1407 行。收盘价 2729 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "164906"
-name = "交银施罗德中证海外中国互联网指数型证券投资基金(LOF)"
-list_date = "2015-07-10"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "中证海外中国互联网指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/164906.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-510900"
-asset_class = "美股和全球主题"
-name = "易方达恒生中国企业交易型开放式指数证券投资基金"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生中国企业指数"
-index_name = "恒生中国企业指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/510900.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "510900"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/510900.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1408 行。收盘价 3388 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "510900"
-name = "易方达恒生中国企业交易型开放式指数证券投资基金"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/510900.html.gz"
-bars_status = "in_db"
-track = "恒生中国企业指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/510900.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513000"
-asset_class = "美股和全球主题"
-name = "易方达奥明日经225交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "东京日经225指数"
-index_name = "东京日经225指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513000.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513000"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513000.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1408 行。收盘价 1766 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1350 行。收盘价 1331 行，来源 tencent_etf。"
 
 [[container.execution]]
 code = "513000"
@@ -2656,829 +1155,7 @@ list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513000.html.gz"
 bars_status = "in_db"
 track = "东京日经225指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513000.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513010"
-asset_class = "美股和全球主题"
-name = "易方达恒生科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513010.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513010"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513010.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1320 行。收盘价 1301 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513010"
-name = "易方达恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513010.html.gz"
-bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513010.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513030"
-asset_class = "美股和全球主题"
-name = "华安国际龙头(DAX)交易型开放式指数证券投资基金"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "法兰克福DAX指数"
-index_name = "法兰克福DAX指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513030.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513030"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513030.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1407 行。收盘价 2932 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513030"
-name = "华安国际龙头(DAX)交易型开放式指数证券投资基金"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513030.html.gz"
-bars_status = "in_db"
-track = "法兰克福DAX指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513030.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513050"
-asset_class = "美股和全球主题"
-name = "易方达中证海外中国互联网50交易型开放式指数证券投资基金"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "中证海外中国互联网50人民币指数"
-index_name = "中证海外中国互联网50人民币指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513050"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1407 行。收盘价 2356 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513050"
-name = "易方达中证海外中国互联网50交易型开放式指数证券投资基金"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
-bars_status = "in_db"
-track = "中证海外中国互联网50人民币指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513060"
-asset_class = "美股和全球主题"
-name = "博时恒生医疗保健交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生医疗保健指数"
-index_name = "恒生医疗保健指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513060.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513060"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513060.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1357 行。收盘价 1338 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513060"
-name = "博时恒生医疗保健交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513060.html.gz"
-bars_status = "in_db"
-track = "恒生医疗保健指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513060.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513080"
-asset_class = "美股和全球主题"
-name = "华安法国CAC40交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "法国CAC40指数"
-index_name = "法国CAC40指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513080"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1407 行。收盘价 1529 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513080"
-name = "华安法国CAC40交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
-bars_status = "in_db"
-track = "法国CAC40指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513100"
-asset_class = "美股和全球主题"
-name = "纳斯达克100交易型开放式指数证券投资基金"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克100指数"
-index_name = "纳斯达克100指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513100.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513100"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513100.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 3236 行。收盘价 3254 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513100"
-name = "纳斯达克100交易型开放式指数证券投资基金"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513100.html.gz"
-bars_status = "in_db"
-track = "纳斯达克100指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513100.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513110"
-asset_class = "美股和全球主题"
-name = "华泰柏瑞纳斯达克100交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克100指数"
-index_name = "纳斯达克100指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513110.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513110"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513110.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 878 行。收盘价 859 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513110"
-name = "华泰柏瑞纳斯达克100交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513110.html.gz"
-bars_status = "in_db"
-track = "纳斯达克100指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513110.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513120"
-asset_class = "美股和全球主题"
-name = "广发中证香港创新药交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "中证香港创新药港币指数"
-index_name = "中证香港创新药港币指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513120.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513120"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513120.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1045 行。收盘价 1026 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513120"
-name = "广发中证香港创新药交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513120.html.gz"
-bars_status = "in_db"
-track = "中证香港创新药港币指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513120.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513130"
-asset_class = "美股和全球主题"
-name = "华泰柏瑞南方东英恒生科技指数交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513130.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513130"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513130.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1314 行。收盘价 1296 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513130"
-name = "华泰柏瑞南方东英恒生科技指数交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513130.html.gz"
-bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513130.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513140"
-asset_class = "美股和全球主题"
-name = "华泰柏瑞中证港股通金融服务交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "中证港股通金融服务指数"
-index_name = "中证港股通金融服务指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513140.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513140"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513140.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 921 行。收盘价 901 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513140"
-name = "华泰柏瑞中证港股通金融服务交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513140.html.gz"
-bars_status = "in_db"
-track = "中证港股通金融服务指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513140.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513170"
-asset_class = "美股和全球主题"
-name = "鹏华恒生中国央企交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生中国央企指数"
-index_name = "恒生中国央企指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513170.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513170"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513170.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 612 行。收盘价 596 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513170"
-name = "鹏华恒生中国央企交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513170.html.gz"
-bars_status = "in_db"
-track = "恒生中国央企指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513170.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513180"
-asset_class = "美股和全球主题"
-name = "华夏恒生科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513180.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513180"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513180.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1318 行。收盘价 1301 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513180"
-name = "华夏恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513180.html.gz"
-bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513180.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513210"
-asset_class = "美股和全球主题"
-name = "易方达恒生交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生指数"
-index_name = "恒生指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513210.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513210"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513210.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 613 行。收盘价 595 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513210"
-name = "易方达恒生交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513210.html.gz"
-bars_status = "in_db"
-track = "恒生指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513210.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513220"
-asset_class = "美股和全球主题"
-name = "招商中证全球中国互联网交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "中证全球中国互联网人民币指数"
-index_name = "中证全球中国互联网人民币指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513220.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513220"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513220.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1041 行。收盘价 1023 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513220"
-name = "招商中证全球中国互联网交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513220.html.gz"
-bars_status = "in_db"
-track = "中证全球中国互联网人民币指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513220.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513260"
-asset_class = "美股和全球主题"
-name = "汇添富恒生科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513260.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513260"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513260.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1001 行。收盘价 982 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513260"
-name = "汇添富恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513260.html.gz"
-bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513260.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513280"
-asset_class = "美股和全球主题"
-name = "汇添富恒生生物科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生生物科技指数"
-index_name = "恒生生物科技指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513280.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513280"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513280.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1040 行。收盘价 1022 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513280"
-name = "汇添富恒生生物科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513280.html.gz"
-bars_status = "in_db"
-track = "恒生生物科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513280.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513290"
-asset_class = "美股和全球主题"
-name = "汇添富纳斯达克生物科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克生物科技指数"
-index_name = "纳斯达克生物科技指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513290.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513290"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513290.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1010 行。收盘价 992 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513290"
-name = "汇添富纳斯达克生物科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513290.html.gz"
-bars_status = "in_db"
-track = "纳斯达克生物科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513290.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513300"
-asset_class = "美股和全球主题"
-name = "华夏纳斯达克100交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克100指数"
-index_name = "纳斯达克100指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513300.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513300"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513300.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1452 行。收盘价 1434 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513300"
-name = "华夏纳斯达克100交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513300.html.gz"
-bars_status = "in_db"
-track = "纳斯达克100指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513300.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513310"
-asset_class = "美股和全球主题"
-name = "华泰柏瑞中证韩交所中韩半导体交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "中证韩交所中韩半导体指数"
-index_name = "中证韩交所中韩半导体指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513310.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513310"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513310.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 940 行。收盘价 915 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513310"
-name = "华泰柏瑞中证韩交所中韩半导体交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513310.html.gz"
-bars_status = "in_db"
-track = "中证韩交所中韩半导体指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513310.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513330"
-asset_class = "美股和全球主题"
-name = "华夏恒生互联网科技业交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生互联网科技业指数"
-index_name = "恒生互联网科技业指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513330.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513330"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513330.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1387 行。收盘价 1368 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513330"
-name = "华夏恒生互联网科技业交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513330.html.gz"
-bars_status = "in_db"
-track = "恒生互联网科技业指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513330.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513360"
-asset_class = "美股和全球主题"
-name = "博时中证全球中国教育主题交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "中证全球中国教育主题人民币指数"
-index_name = "中证全球中国教育主题人民币指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513360.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513360"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513360.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1294 行。收盘价 1284 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513360"
-name = "博时中证全球中国教育主题交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513360.html.gz"
-bars_status = "in_db"
-track = "中证全球中国教育主题人民币指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513360.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513380"
-asset_class = "美股和全球主题"
-name = "广发恒生科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513380.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513380"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513380.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1088 行。收盘价 1068 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513380"
-name = "广发恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513380.html.gz"
-bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513380.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513390"
-asset_class = "美股和全球主题"
-name = "博时纳斯达克100交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "纳斯达克100指数"
-index_name = "纳斯达克100指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513390.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513390"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513390.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 846 行。收盘价 828 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513390"
-name = "博时纳斯达克100交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513390.html.gz"
-bars_status = "in_db"
-track = "纳斯达克100指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513390.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513400"
-asset_class = "美股和全球主题"
-name = "鹏华道琼斯工业平均交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "道琼斯工业平均指数"
-index_name = "道琼斯工业平均指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513400.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513400"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513400.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 660 行。收盘价 643 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513400"
-name = "鹏华道琼斯工业平均交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513400.html.gz"
-bars_status = "in_db"
-track = "道琼斯工业平均指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513400.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513500"
-asset_class = "美股和全球主题"
-name = "博时标普500交易型开放式指数证券投资基金"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标准普尔500指数"
-index_name = "标准普尔500指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513500.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513500"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513500.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 3032 行。收盘价 3090 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513500"
-name = "博时标普500交易型开放式指数证券投资基金"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513500.html.gz"
-bars_status = "in_db"
-track = "标准普尔500指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513500.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513520"
-asset_class = "美股和全球主题"
-name = "华夏野村日经225交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "东京日经225指数"
-index_name = "东京日经225指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513520.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513520"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513520.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1772 行。收盘价 1766 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 1766 行，来源 tencent_etf。"
 
 [[container.execution]]
 code = "513520"
@@ -3488,140 +1165,22 @@ list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513520.html.gz"
 bars_status = "in_db"
 track = "东京日经225指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513520.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513530"
-asset_class = "美股和全球主题"
-name = "华泰柏瑞中证港股通高股息投资交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "中证港股通高股息投资港元指数"
-index_name = "中证港股通高股息投资港元指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513530.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513530"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513530.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1097 行。收盘价 1078 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1772 行。收盘价 1766 行，来源 tencent_etf。"
 
 [[container.execution]]
-code = "513530"
-name = "华泰柏瑞中证港股通高股息投资交易型开放式指数证券投资基金(QDII)"
+code = "513880"
+name = "华安三菱日联日经225交易型开放式指数证券投资基金(QDII)"
 list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513530.html.gz"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513880.html.gz"
 bars_status = "in_db"
-track = "中证港股通高股息投资港元指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513530.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+track = "东京日经225指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513880.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 1766 行，来源 tencent_etf。"
 
 [[container]]
-id = "qdii-513580"
+id = "theme-东证指数"
 asset_class = "美股和全球主题"
-name = "华安恒生科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513580.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513580"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513580.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1317 行。收盘价 1299 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513580"
-name = "华安恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513580.html.gz"
-bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513580.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513650"
-asset_class = "美股和全球主题"
-name = "南方标普500交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标准普尔500指数"
-index_name = "标准普尔500指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513650.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513650"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513650.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 865 行。收盘价 848 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513650"
-name = "南方标普500交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513650.html.gz"
-bars_status = "in_db"
-track = "标准普尔500指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513650.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513730"
-asset_class = "美股和全球主题"
-name = "华泰柏瑞南方东英新交所泛东南亚科技交易型开放式指数证券投资基金(QDII)"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "新交所泛东南亚科技指数"
-index_name = "新交所泛东南亚科技指数"
-return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513730.html.gz"
-base_date = "取不到"
-base_date_source = ""
-series_code = "513730"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513730.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 705 行。收盘价 687 行，来源 tencent_etf。"
-
-[[container.execution]]
-code = "513730"
-name = "华泰柏瑞南方东英新交所泛东南亚科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513730.html.gz"
-bars_status = "in_db"
-track = "新交所泛东南亚科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513730.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
-
-[[container]]
-id = "qdii-513800"
-asset_class = "美股和全球主题"
-name = "南方顶峰TOPIX交易型开放式指数证券投资基金(QDII)"
+name = "东证指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
@@ -3638,7 +1197,7 @@ series_code = "513800"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513800.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1408 行。收盘价 1766 行，来源 tencent_etf。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513800 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513800。净值 1408 行。"
 
 [[container.execution]]
 code = "513800"
@@ -3648,12 +1207,278 @@ list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513800.html.gz"
 bars_status = "in_db"
 track = "东证指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513800.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 1766 行，来源 tencent_etf。"
 
 [[container]]
-id = "qdii-513810"
+id = "theme-中证全球中国互联网人民币指数"
 asset_class = "美股和全球主题"
-name = "华夏中证香港内地国有企业交易型开放式指数证券投资基金(QDII)"
+name = "中证全球中国互联网人民币指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证全球中国互联网人民币指数"
+index_name = "中证全球中国互联网人民币指数"
+return_basis = "unit_nav"
+publish_date = "取不到"
+publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513220.html.gz"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513220"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513220.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513220 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513220。净值 1041 行。"
+
+[[container.execution]]
+code = "513220"
+name = "招商中证全球中国互联网交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513220.html.gz"
+bars_status = "in_db"
+track = "中证全球中国互联网人民币指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513220.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1041 行。收盘价 1023 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-中证全球中国教育主题人民币指数"
+asset_class = "美股和全球主题"
+name = "中证全球中国教育主题人民币指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证全球中国教育主题人民币指数"
+index_name = "中证全球中国教育主题人民币指数"
+return_basis = "unit_nav"
+publish_date = "取不到"
+publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513360.html.gz"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513360"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513360.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513360 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513360。净值 1294 行。"
+
+[[container.execution]]
+code = "513360"
+name = "博时中证全球中国教育主题交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513360.html.gz"
+bars_status = "in_db"
+track = "中证全球中国教育主题人民币指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513360.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1294 行。收盘价 1284 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-中证海外中国互联网30人民币指数"
+asset_class = "美股和全球主题"
+name = "中证海外中国互联网30人民币指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证海外中国互联网30人民币指数"
+index_name = "中证海外中国互联网30人民币指数"
+return_basis = "unit_nav"
+publish_date = "2021-12-02"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "159605"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159605.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159605 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159605、159607。净值 1191 行。"
+
+[[container.execution]]
+code = "159605"
+name = "广发中证海外中国互联网30交易型开放式指数证券投资基金(QDII)"
+list_date = "2021-12-02"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "中证海外中国互联网30人民币指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159605.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1191 行。收盘价 1172 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "159607"
+name = "嘉实中证海外中国互联网30交易型开放式指数证券投资基金(QDII)"
+list_date = "2021-12-02"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "中证海外中国互联网30人民币指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159607.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1190 行。收盘价 1172 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-中证海外中国互联网50人民币指数"
+asset_class = "美股和全球主题"
+name = "中证海外中国互联网50人民币指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证海外中国互联网50人民币指数"
+index_name = "中证海外中国互联网50人民币指数"
+return_basis = "unit_nav"
+publish_date = "取不到"
+publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513050"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513050 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513050。净值 1407 行。"
+
+[[container.execution]]
+code = "513050"
+name = "易方达中证海外中国互联网50交易型开放式指数证券投资基金"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
+bars_status = "in_db"
+track = "中证海外中国互联网50人民币指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2356 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-中证海外中国互联网指数"
+asset_class = "美股和全球主题"
+name = "中证海外中国互联网指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证海外中国互联网指数"
+index_name = "中证海外中国互联网指数"
+return_basis = "unit_nav"
+publish_date = "2015-07-10"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "164906"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/164906.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 164906 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 164906。净值 1407 行。"
+
+[[container.execution]]
+code = "164906"
+name = "交银施罗德中证海外中国互联网指数型证券投资基金(LOF)"
+list_date = "2015-07-10"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "中证海外中国互联网指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/164906.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2729 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-中证港股通金融服务指数"
+asset_class = "美股和全球主题"
+name = "中证港股通金融服务指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证港股通金融服务指数"
+index_name = "中证港股通金融服务指数"
+return_basis = "unit_nav"
+publish_date = "取不到"
+publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513140.html.gz"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513140"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513140.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513140 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513140。净值 921 行。"
+
+[[container.execution]]
+code = "513140"
+name = "华泰柏瑞中证港股通金融服务交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513140.html.gz"
+bars_status = "in_db"
+track = "中证港股通金融服务指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513140.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 921 行。收盘价 901 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-中证港股通高股息投资港元指数"
+asset_class = "美股和全球主题"
+name = "中证港股通高股息投资港元指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证港股通高股息投资港元指数"
+index_name = "中证港股通高股息投资港元指数"
+return_basis = "unit_nav"
+publish_date = "取不到"
+publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513530.html.gz"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513530"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513530.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513530 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513530。净值 1097 行。"
+
+[[container.execution]]
+code = "513530"
+name = "华泰柏瑞中证港股通高股息投资交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513530.html.gz"
+bars_status = "in_db"
+track = "中证港股通高股息投资港元指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513530.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1097 行。收盘价 1078 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-中证韩交所中韩半导体指数"
+asset_class = "美股和全球主题"
+name = "中证韩交所中韩半导体指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证韩交所中韩半导体指数"
+index_name = "中证韩交所中韩半导体指数"
+return_basis = "unit_nav"
+publish_date = "取不到"
+publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513310.html.gz"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513310"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513310.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513310 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513310。净值 940 行。"
+
+[[container.execution]]
+code = "513310"
+name = "华泰柏瑞中证韩交所中韩半导体交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513310.html.gz"
+bars_status = "in_db"
+track = "中证韩交所中韩半导体指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513310.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 940 行。收盘价 915 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-中证香港内地国有企业港元指数"
+asset_class = "美股和全球主题"
+name = "中证香港内地国有企业港元指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
@@ -3662,15 +1487,25 @@ in_pool_tradable = true
 index_code = "中证香港内地国有企业港元指数"
 index_name = "中证香港内地国有企业港元指数"
 return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513810.html.gz"
+publish_date = "2023-08-31"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 base_date = "取不到"
 base_date_source = ""
-series_code = "513810"
+series_code = "159519"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513810.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 763 行。收盘价 746 行，来源 tencent_etf。"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159519.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159519 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159519、513810。净值 765 行。"
+
+[[container.execution]]
+code = "159519"
+name = "国泰中证香港内地国有企业交易型开放式指数证券投资基金(QDII)"
+list_date = "2023-08-31"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "中证香港内地国有企业港元指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159519.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 765 行。收盘价 747 行，来源 tencent_etf。"
 
 [[container.execution]]
 code = "513810"
@@ -3680,172 +1515,306 @@ list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513810.html.gz"
 bars_status = "in_db"
 track = "中证香港内地国有企业港元指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513810.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 763 行。收盘价 746 行，来源 tencent_etf。"
 
 [[container]]
-id = "qdii-513870"
+id = "theme-中证香港创新药港币指数"
 asset_class = "美股和全球主题"
-name = "富国纳斯达克100交易型开放式指数证券投资基金(QDII)"
+name = "中证香港创新药港币指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
 
 [container.research]
-index_code = "纳斯达克100指数"
-index_name = "纳斯达克100指数"
+index_code = "中证香港创新药港币指数"
+index_name = "中证香港创新药港币指数"
 return_basis = "unit_nav"
 publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513870.html.gz"
+publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513120.html.gz"
 base_date = "取不到"
 base_date_source = ""
-series_code = "513870"
+series_code = "513120"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513870.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 725 行。收盘价 708 行，来源 tencent_etf。"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513120.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513120 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513120。净值 1045 行。"
 
 [[container.execution]]
-code = "513870"
-name = "富国纳斯达克100交易型开放式指数证券投资基金(QDII)"
+code = "513120"
+name = "广发中证香港创新药交易型开放式指数证券投资基金(QDII)"
 list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513870.html.gz"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513120.html.gz"
 bars_status = "in_db"
-track = "纳斯达克100指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513870.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+track = "中证香港创新药港币指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513120.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1045 行。收盘价 1026 行，来源 tencent_etf。"
 
 [[container]]
-id = "qdii-513880"
+id = "theme-中证香港科技指数指数"
 asset_class = "美股和全球主题"
-name = "华安三菱日联日经225交易型开放式指数证券投资基金(QDII)"
+name = "中证香港科技指数指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
 
 [container.research]
-index_code = "东京日经225指数"
-index_name = "东京日经225指数"
+index_code = "中证香港科技指数指数"
+index_name = "中证香港科技指数指数"
 return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513880.html.gz"
+publish_date = "2021-07-14"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 base_date = "取不到"
 base_date_source = ""
-series_code = "513880"
+series_code = "159747"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513880.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1408 行。收盘价 1766 行，来源 tencent_etf。"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159747.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159747 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159747、159750。净值 1285 行。"
 
 [[container.execution]]
-code = "513880"
-name = "华安三菱日联日经225交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513880.html.gz"
+code = "159747"
+name = "南方中证香港科技交易型开放式指数证券投资基金(QDII)"
+list_date = "2021-07-14"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 bars_status = "in_db"
-track = "东京日经225指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513880.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+track = "中证香港科技指数指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159747.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1285 行。收盘价 1266 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "159750"
+name = "招商中证香港科技交易型开放式指数证券投资基金(QDII)"
+list_date = "2022-02-14"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "中证香港科技指数指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159750.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1145 行。收盘价 1125 行，来源 tencent_etf。"
 
 [[container]]
-id = "qdii-513890"
+id = "theme-富时亚太低碳精选指数"
 asset_class = "美股和全球主题"
-name = "摩根恒生科技交易型开放式指数证券投资基金(QDII)"
+name = "富时亚太低碳精选指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
 
 [container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
+index_code = "富时亚太低碳精选指数"
+index_name = "富时亚太低碳精选指数"
 return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513890.html.gz"
+publish_date = "2022-12-30"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 base_date = "取不到"
 base_date_source = ""
-series_code = "513890"
+series_code = "159687"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513890.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 1158 行。收盘价 1137 行，来源 tencent_etf。"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159687.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159687 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159687。净值 927 行。"
 
 [[container.execution]]
-code = "513890"
-name = "摩根恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513890.html.gz"
+code = "159687"
+name = "南方基金南方东英富时亚太精选交易型开放式指数证券投资基金(QDII)"
+list_date = "2022-12-30"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513890.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+track = "富时亚太低碳精选指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159687.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 927 行。收盘价 906 行，来源 tencent_etf。"
 
 [[container]]
-id = "qdii-513950"
+id = "theme-富时沙特阿拉伯指数"
 asset_class = "美股和全球主题"
-name = "富国恒生港股通红利低波动交易型开放式指数证券投资基金(QDII)"
+name = "富时沙特阿拉伯指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
 
 [container.research]
-index_code = "恒生港股通红利低波动指数"
-index_name = "恒生港股通红利低波动指数"
+index_code = "富时沙特阿拉伯指数"
+index_name = "富时沙特阿拉伯指数"
 return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513950.html.gz"
+publish_date = "2024-07-16"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 base_date = "取不到"
 base_date_source = ""
-series_code = "513950"
+series_code = "159329"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513950.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 848 行。收盘价 831 行，来源 tencent_etf。"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159329.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159329 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159329、520830。净值 553 行。"
 
 [[container.execution]]
-code = "513950"
-name = "富国恒生港股通红利低波动交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513950.html.gz"
+code = "159329"
+name = "南方基金南方东英沙特阿拉伯交易型开放式指数证券投资基金(QDII)"
+list_date = "2024-07-16"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 bars_status = "in_db"
-track = "恒生港股通红利低波动指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513950.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+track = "富时沙特阿拉伯指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159329.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 553 行。收盘价 534 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "520830"
+name = "华泰柏瑞南方东英沙特阿拉伯交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520830.html.gz"
+bars_status = "in_db"
+track = "富时沙特阿拉伯指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520830.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 552 行。收盘价 537 行，来源 tencent_etf。"
 
 [[container]]
-id = "qdii-513970"
+id = "theme-恒生中国企业指数"
 asset_class = "美股和全球主题"
-name = "景顺长城恒生消费交易型开放式指数证券投资基金(QDII)"
+name = "恒生中国企业指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
 
 [container.research]
-index_code = "恒生消费指数"
-index_name = "恒生消费指数"
+index_code = "恒生中国企业指数"
+index_name = "恒生中国企业指数"
 return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513970.html.gz"
+publish_date = "2010-10-28"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 base_date = "取不到"
 base_date_source = ""
-series_code = "513970"
+series_code = "160717"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513970.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 853 行。收盘价 836 行，来源 tencent_etf。"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/160717.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 160717 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 160717、161831、159850、510900。净值 1408 行。"
 
 [[container.execution]]
-code = "513970"
-name = "景顺长城恒生消费交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513970.html.gz"
+code = "160717"
+name = "嘉实恒生中国企业指数证券投资基金(QDII-LOF)"
+list_date = "2010-10-28"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 bars_status = "in_db"
-track = "恒生消费指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513970.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+track = "恒生中国企业指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160717.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 3826 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "161831"
+name = "银华恒生中国企业指数证券投资基金(QDII-LOF)"
+list_date = "2015-04-13"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "恒生中国企业指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161831.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1365 行。收盘价 2762 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "159850"
+name = "华夏恒生中国企业交易型开放式指数证券投资基金(QDII)"
+list_date = "2021-02-19"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "恒生中国企业指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159850.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1383 行。收盘价 1364 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "510900"
+name = "易方达恒生中国企业交易型开放式指数证券投资基金"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/510900.html.gz"
+bars_status = "in_db"
+track = "恒生中国企业指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/510900.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 3388 行，来源 tencent_etf。"
 
 [[container]]
-id = "qdii-520500"
+id = "theme-恒生中国央企指数"
 asset_class = "美股和全球主题"
-name = "华泰柏瑞恒生创新药交易型开放式指数证券投资基金(QDII)"
+name = "恒生中国央企指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "恒生中国央企指数"
+index_name = "恒生中国央企指数"
+return_basis = "unit_nav"
+publish_date = "取不到"
+publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513170.html.gz"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513170"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513170.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513170 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513170。净值 612 行。"
+
+[[container.execution]]
+code = "513170"
+name = "鹏华恒生中国央企交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513170.html.gz"
+bars_status = "in_db"
+track = "恒生中国央企指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513170.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 612 行。收盘价 596 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-恒生互联网科技业指数"
+asset_class = "美股和全球主题"
+name = "恒生互联网科技业指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "恒生互联网科技业指数"
+index_name = "恒生互联网科技业指数"
+return_basis = "unit_nav"
+publish_date = "2023-02-15"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "159688"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159688.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159688 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159688、159202、513330。净值 902 行。"
+
+[[container.execution]]
+code = "159688"
+name = "华安恒生互联网科技业交易型开放式指数证券投资基金(QDII)"
+list_date = "2023-02-15"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "恒生互联网科技业指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159688.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 902 行。收盘价 882 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "159202"
+name = "万家恒生互联网科技业交易型开放式指数证券投资基金(QDII)"
+list_date = "2025-04-16"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "恒生互联网科技业指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159202.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 373 行。收盘价 357 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "513330"
+name = "华夏恒生互联网科技业交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513330.html.gz"
+bars_status = "in_db"
+track = "恒生互联网科技业指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513330.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1387 行。收盘价 1368 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-恒生创新药指数"
+asset_class = "美股和全球主题"
+name = "恒生创新药指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
@@ -3862,7 +1831,7 @@ series_code = "520500"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/520500.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 442 行。收盘价 427 行，来源 tencent_etf。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 520500 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 520500。净值 442 行。"
 
 [[container.execution]]
 code = "520500"
@@ -3872,12 +1841,54 @@ list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520500.html.gz"
 bars_status = "in_db"
 track = "恒生创新药指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520500.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 442 行。收盘价 427 行，来源 tencent_etf。"
 
 [[container]]
-id = "qdii-520520"
+id = "theme-恒生医疗保健指数"
 asset_class = "美股和全球主题"
-name = "华泰柏瑞恒生消费交易型开放式指数证券投资基金(QDII)"
+name = "恒生医疗保健指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "恒生医疗保健指数"
+index_name = "恒生医疗保健指数"
+return_basis = "unit_nav"
+publish_date = "2024-06-27"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "159303"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159303.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159303 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159303、513060。净值 567 行。"
+
+[[container.execution]]
+code = "159303"
+name = "大成恒生医疗保健交易型开放式指数证券投资基金(QDII)"
+list_date = "2024-06-27"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "恒生医疗保健指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159303.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 567 行。收盘价 550 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "513060"
+name = "博时恒生医疗保健交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513060.html.gz"
+bars_status = "in_db"
+track = "恒生医疗保健指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513060.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1357 行。收盘价 1338 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-恒生消费指数"
+asset_class = "美股和全球主题"
+name = "恒生消费指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
@@ -3886,15 +1897,35 @@ in_pool_tradable = true
 index_code = "恒生消费指数"
 index_name = "恒生消费指数"
 return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520520.html.gz"
+publish_date = "2023-08-23"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 base_date = "取不到"
 base_date_source = ""
-series_code = "520520"
+series_code = "159699"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/520520.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 482 行。收盘价 467 行，来源 tencent_etf。"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159699.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159699 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159699、513970、520520。净值 772 行。"
+
+[[container.execution]]
+code = "159699"
+name = "广发恒生消费交易型开放式指数证券投资基金(QDII)"
+list_date = "2023-08-23"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "恒生消费指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159699.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 772 行。收盘价 753 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "513970"
+name = "景顺长城恒生消费交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513970.html.gz"
+bars_status = "in_db"
+track = "恒生消费指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513970.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 853 行。收盘价 836 行，来源 tencent_etf。"
 
 [[container.execution]]
 code = "520520"
@@ -3904,135 +1935,633 @@ list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520520.html.gz"
 bars_status = "in_db"
 track = "恒生消费指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520520.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 482 行。收盘价 467 行，来源 tencent_etf。"
 
 [[container]]
-id = "qdii-520570"
+id = "theme-恒生港股通红利低波动指数"
 asset_class = "美股和全球主题"
-name = "南方恒生科技交易型开放式指数证券投资基金(QDII)"
+name = "恒生港股通红利低波动指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
 
 [container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
+index_code = "恒生港股通红利低波动指数"
+index_name = "恒生港股通红利低波动指数"
 return_basis = "unit_nav"
 publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520570.html.gz"
+publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513950.html.gz"
 base_date = "取不到"
 base_date_source = ""
-series_code = "520570"
+series_code = "513950"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/520570.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 230 行。收盘价 214 行，来源 tencent_etf。"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513950.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513950 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513950。净值 848 行。"
 
 [[container.execution]]
-code = "520570"
-name = "南方恒生科技交易型开放式指数证券投资基金(QDII)"
+code = "513950"
+name = "富国恒生港股通红利低波动交易型开放式指数证券投资基金(QDII)"
 list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520570.html.gz"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513950.html.gz"
 bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520570.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+track = "恒生港股通红利低波动指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513950.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 848 行。收盘价 831 行，来源 tencent_etf。"
 
 [[container]]
-id = "qdii-520590"
+id = "theme-恒生生物科技指数"
 asset_class = "美股和全球主题"
-name = "鹏华恒生科技交易型开放式指数证券投资基金(QDII)"
+name = "恒生生物科技指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
 
 [container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
+index_code = "恒生生物科技指数"
+index_name = "恒生生物科技指数"
 return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520590.html.gz"
+publish_date = "2021-10-19"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 base_date = "取不到"
 base_date_source = ""
-series_code = "520590"
+series_code = "159892"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/520590.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 219 行。收盘价 204 行，来源 tencent_etf。"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159892.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159892 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159892、159615、513280。净值 1225 行。"
 
 [[container.execution]]
-code = "520590"
-name = "鹏华恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520590.html.gz"
+code = "159892"
+name = "华夏恒生生物科技交易型开放式指数证券投资基金(QDII)"
+list_date = "2021-10-19"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520590.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+track = "恒生生物科技指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159892.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1225 行。收盘价 1204 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "159615"
+name = "南方恒生生物科技交易型开放式指数证券投资基金(QDII)"
+list_date = "2022-06-28"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "恒生生物科技指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159615.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1055 行。收盘价 1036 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "513280"
+name = "汇添富恒生生物科技交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513280.html.gz"
+bars_status = "in_db"
+track = "恒生生物科技指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513280.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1040 行。收盘价 1022 行，来源 tencent_etf。"
 
 [[container]]
-id = "qdii-520830"
+id = "theme-恒生综合小型股指数"
 asset_class = "美股和全球主题"
-name = "华泰柏瑞南方东英沙特阿拉伯交易型开放式指数证券投资基金(QDII)"
+name = "恒生综合小型股指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
 
 [container.research]
-index_code = "富时沙特阿拉伯指数"
-index_name = "富时沙特阿拉伯指数"
+index_code = "恒生综合小型股指数"
+index_name = "恒生综合小型股指数"
 return_basis = "unit_nav"
-publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520830.html.gz"
+publish_date = "2016-11-10"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 base_date = "取不到"
 base_date_source = ""
-series_code = "520830"
+series_code = "161124"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/520830.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 552 行。收盘价 537 行，来源 tencent_etf。"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161124.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 161124 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 161124。净值 1408 行。"
 
 [[container.execution]]
-code = "520830"
-name = "华泰柏瑞南方东英沙特阿拉伯交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520830.html.gz"
+code = "161124"
+name = "易方达香港恒生综合小型股指数证券投资基金(LOF)"
+list_date = "2016-11-10"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
 bars_status = "in_db"
-track = "富时沙特阿拉伯指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520830.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+track = "恒生综合小型股指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161124.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 2137 行，来源 tencent_etf。"
 
 [[container]]
-id = "qdii-520920"
+id = "theme-新交所泛东南亚科技指数"
 asset_class = "美股和全球主题"
-name = "天弘恒生科技交易型开放式指数证券投资基金(QDII)"
+name = "新交所泛东南亚科技指数"
 arm = "main"
 in_pool_index = true
 in_pool_tradable = true
 
 [container.research]
-index_code = "恒生科技指数"
-index_name = "恒生科技指数"
+index_code = "新交所泛东南亚科技指数"
+index_name = "新交所泛东南亚科技指数"
 return_basis = "unit_nav"
 publish_date = "取不到"
-publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520920.html.gz"
+publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513730.html.gz"
 base_date = "取不到"
 base_date_source = ""
-series_code = "520920"
+series_code = "513730"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
-source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/520920.html.gz"
-note = "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。 净值 257 行。收盘价 242 行，来源 tencent_etf。"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513730.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513730 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513730。净值 705 行。"
 
 [[container.execution]]
-code = "520920"
-name = "天弘恒生科技交易型开放式指数证券投资基金(QDII)"
+code = "513730"
+name = "华泰柏瑞南方东英新交所泛东南亚科技交易型开放式指数证券投资基金(QDII)"
 list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520920.html.gz"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513730.html.gz"
 bars_status = "in_db"
-track = "恒生科技指数"
-track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520920.html.gz"
-note = "同一只 ETF 既是研究净值容器也是执行代码。"
+track = "新交所泛东南亚科技指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513730.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 705 行。收盘价 687 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-标普500信息科技指数"
+asset_class = "美股和全球主题"
+name = "标普500信息科技指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "标普500信息科技指数"
+index_name = "标普500信息科技指数"
+return_basis = "unit_nav"
+publish_date = "2016-12-27"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "161128"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161128.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 161128 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 161128。净值 1408 行。"
+
+[[container.execution]]
+code = "161128"
+name = "易方达标普信息科技指数证券投资基金(LOF)"
+list_date = "2016-12-27"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "标普500信息科技指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161128.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 2361 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-标普500医疗保健等权重指数"
+asset_class = "美股和全球主题"
+name = "标普500医疗保健等权重指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "标普500医疗保健等权重指数"
+index_name = "标普500医疗保健等权重指数"
+return_basis = "unit_nav"
+publish_date = "2016-12-14"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "161126"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161126.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 161126 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 161126。净值 1407 行。"
+
+[[container.execution]]
+code = "161126"
+name = "易方达标普医疗保健指数证券投资基金(LOF)"
+list_date = "2016-12-14"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "标普500医疗保健等权重指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161126.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2336 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-标普500消费精选指数"
+asset_class = "美股和全球主题"
+name = "标普500消费精选指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "标普500消费精选指数"
+index_name = "标普500消费精选指数"
+return_basis = "unit_nav"
+publish_date = "2024-02-02"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "159529"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159529.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159529 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159529。净值 659 行。"
+
+[[container.execution]]
+code = "159529"
+name = "景顺长城标普消费精选交易型开放式指数证券投资基金(QDII)"
+list_date = "2024-02-02"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "标普500消费精选指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159529.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 659 行。收盘价 639 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-标普中国新经济行业指数"
+asset_class = "美股和全球主题"
+name = "标普中国新经济行业指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "标普中国新经济行业指数"
+index_name = "标普中国新经济行业指数"
+return_basis = "unit_nav"
+publish_date = "2020-10-23"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "159822"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159822.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159822 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159822。净值 1328 行。"
+
+[[container.execution]]
+code = "159822"
+name = "银华工银南方东英标普中国新经济行业交易型开放式指数证券投资基金(QDII)"
+list_date = "2020-10-23"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "标普中国新经济行业指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159822.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1328 行。收盘价 1443 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-标普全球石油指数"
+asset_class = "美股和全球主题"
+name = "标普全球石油指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "标普全球石油指数"
+index_name = "标普全球石油指数"
+return_basis = "unit_nav"
+publish_date = "2012-05-02"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "160416"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/160416.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 160416 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 160416。净值 1407 行。"
+
+[[container.execution]]
+code = "160416"
+name = "华安标普全球石油指数证券投资基金(LOF)"
+list_date = "2012-05-02"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "标普全球石油指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160416.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 3342 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-标普生物科技精选行业指数"
+asset_class = "美股和全球主题"
+name = "标普生物科技精选行业指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "标普生物科技精选行业指数"
+index_name = "标普生物科技精选行业指数"
+return_basis = "unit_nav"
+publish_date = "2016-12-27"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "161127"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161127.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 161127 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 161127、159502。净值 1407 行。"
+
+[[container.execution]]
+code = "161127"
+name = "易方达标普生物科技指数证券投资基金(LOF)"
+list_date = "2016-12-27"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "标普生物科技精选行业指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161127.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2369 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "159502"
+name = "嘉实标普生物科技精选行业交易型开放式指数证券投资基金(QDII)"
+list_date = "2024-01-10"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "标普生物科技精选行业指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159502.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 677 行。收盘价 660 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-标普美国品质消费股票指数"
+asset_class = "美股和全球主题"
+name = "标普美国品质消费股票指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "标普美国品质消费股票指数"
+index_name = "标普美国品质消费股票指数"
+return_basis = "unit_nav"
+publish_date = "2016-04-06"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "162415"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/162415.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 162415 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 162415。净值 1407 行。"
+
+[[container.execution]]
+code = "162415"
+name = "华宝标普美国品质消费股票指数证券投资基金(LOF)"
+list_date = "2016-04-06"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "标普美国品质消费股票指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/162415.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2546 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-法兰克福DAX指数"
+asset_class = "美股和全球主题"
+name = "法兰克福DAX指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "法兰克福DAX指数"
+index_name = "法兰克福DAX指数"
+return_basis = "unit_nav"
+publish_date = "2024-04-30"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "159561"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159561.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159561 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159561、513030。净值 606 行。"
+
+[[container.execution]]
+code = "159561"
+name = "嘉实德国DAX交易型开放式指数证券投资基金(QDII)"
+list_date = "2024-04-30"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "法兰克福DAX指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159561.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 606 行。收盘价 584 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "513030"
+name = "华安国际龙头(DAX)交易型开放式指数证券投资基金"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513030.html.gz"
+bars_status = "in_db"
+track = "法兰克福DAX指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513030.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2932 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-法国CAC40指数"
+asset_class = "美股和全球主题"
+name = "法国CAC40指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "法国CAC40指数"
+index_name = "法国CAC40指数"
+return_basis = "unit_nav"
+publish_date = "取不到"
+publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513080"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513080 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513080。净值 1407 行。"
+
+[[container.execution]]
+code = "513080"
+name = "华安法国CAC40交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
+bars_status = "in_db"
+track = "法国CAC40指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 1529 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-纳斯达克生物科技指数"
+asset_class = "美股和全球主题"
+name = "纳斯达克生物科技指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "纳斯达克生物科技指数"
+index_name = "纳斯达克生物科技指数"
+return_basis = "unit_nav"
+publish_date = "取不到"
+publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513290.html.gz"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513290"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513290.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513290 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513290。净值 1010 行。"
+
+[[container.execution]]
+code = "513290"
+name = "汇添富纳斯达克生物科技交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513290.html.gz"
+bars_status = "in_db"
+track = "纳斯达克生物科技指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513290.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1010 行。收盘价 992 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-纳斯达克科技市值加权指数"
+asset_class = "美股和全球主题"
+name = "纳斯达克科技市值加权指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "纳斯达克科技市值加权指数"
+index_name = "纳斯达克科技市值加权指数"
+return_basis = "unit_nav"
+publish_date = "2023-08-08"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "159509"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159509.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159509 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159509。净值 782 行。"
+
+[[container.execution]]
+code = "159509"
+name = "景顺长城纳斯达克科技市值加权交易型开放式指数证券投资基金(QDII)"
+list_date = "2023-08-08"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "纳斯达克科技市值加权指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159509.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 782 行。收盘价 764 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-道琼斯工业平均指数"
+asset_class = "美股和全球主题"
+name = "道琼斯工业平均指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "道琼斯工业平均指数"
+index_name = "道琼斯工业平均指数"
+return_basis = "unit_nav"
+publish_date = "取不到"
+publish_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513400.html.gz"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513400"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513400.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513400 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513400。净值 660 行。"
+
+[[container.execution]]
+code = "513400"
+name = "鹏华道琼斯工业平均交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513400.html.gz"
+bars_status = "in_db"
+track = "道琼斯工业平均指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513400.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 660 行。收盘价 643 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-道琼斯美国石油开发与生产指数"
+asset_class = "美股和全球主题"
+name = "道琼斯美国石油开发与生产指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "道琼斯美国石油开发与生产指数"
+index_name = "道琼斯美国石油开发与生产指数"
+return_basis = "unit_nav"
+publish_date = "2017-03-17"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "162719"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/162719.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 162719 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 162719。净值 1407 行。"
+
+[[container.execution]]
+code = "162719"
+name = "广发道琼斯美国石油开发与生产指数证券投资基金(QDII-LOF)"
+list_date = "2017-03-17"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "道琼斯美国石油开发与生产指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/162719.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2311 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-道琼斯美国精选REIT指数"
+asset_class = "美股和全球主题"
+name = "道琼斯美国精选REIT指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "道琼斯美国精选REIT指数"
+index_name = "道琼斯美国精选REIT指数"
+return_basis = "unit_nav"
+publish_date = "2017-11-24"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "160140"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/160140.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 160140 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 160140、160141。净值 1407 行。"
+
+[[container.execution]]
+code = "160140"
+name = "南方道琼斯美国精选REIT指数证券投资基金(QDII-LOF)"
+list_date = "2017-11-24"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "道琼斯美国精选REIT指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160140.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2141 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "160141"
+name = "南方道琼斯美国精选REIT指数证券投资基金(QDII-LOF)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160141.html.gz"
+bars_status = "取不到"
+track = "道琼斯美国精选REIT指数"
+track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160141.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 0 行，来源 无。"
 
 [[container]]
 id = "s2-沪深300"

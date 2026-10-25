@@ -14,6 +14,7 @@ from src.data import store as bars
 from src.data import universe as phase1
 
 from . import artifacts
+from . import emit_universe
 from . import parse
 from . import store
 from . import universe as U
@@ -356,46 +357,6 @@ def _toml_quote(text: str) -> str:
     return (text or "").replace('"', "'").replace("\n", " ")
 
 
-def _member_toml(row: dict) -> str:
-    research_status = "fetched" if row["nav_rows"] else "取不到"
-    bars_status = row["bars_status"]
-    lines = [
-        "[[container]]",
-        f'id = "qdii-{row["code"]}"',
-        'asset_class = "美股和全球主题"',
-        f'name = "{_toml_quote(row["name"])}"',
-        f'in_pool_index = {"true" if row["single_index"] == "single_index" else "false"}',
-        "in_pool_tradable = true",
-        'generated = "qdii"',
-        "",
-        "[container.research]",
-        f'index_code = "{_toml_quote(row["track"] or "TBD")}"',
-        f'index_name = "{_toml_quote(row["track"] or row["name"])}"',
-        'return_basis = "unit_nav"',
-        'publish_date = "TBD"',
-        'publish_date_source = ""',
-        'base_date = "TBD"',
-        'base_date_source = ""',
-        f'series_code = "{row["code"]}"',
-        'series_source = "eastmoney_f10_lsjz"',
-        f'series_status = "{research_status}"',
-        f'source_url = "https://fundf10.eastmoney.com/jbgk_{row["code"]}.html"',
-        f'note = "{_toml_quote(row["note"])}"',
-        "",
-        "[[container.execution]]",
-        f'code = "{row["code"]}"',
-        f'name = "{_toml_quote(row["name"])}"',
-        f'list_date = "{row["list_date"] or "TBD"}"',
-        f'list_date_source = "{_toml_quote(row["list_date_source"])}"',
-        f'bars_status = "{bars_status}"',
-        f'track = "{_toml_quote(row["track"] or "TBD")}"',
-        f'track_source = "https://fundf10.eastmoney.com/jbgk_{row["code"]}.html"',
-        'note = "场内 QDII。收盘价在 bars，单位净值和申购状态在 fund_nav。"',
-        "",
-    ]
-    return "\n".join(lines)
-
-
 def discover_industry_etfs(log: list[str]) -> None:
     for cid, (key, must) in INDUSTRY_SEARCH.items():
         try:
@@ -528,9 +489,9 @@ def fetch_qdii(con, run_id: int, log: list[str], end: date) -> None:
             "note": note,
         })
         time.sleep(0.05)
-    body = "".join(_member_toml(row) for row in members)
-    U.replace_generated(body)
-    _log(log, f"qdii members written {len(members)} single={sum(1 for r in members if r['single_index']=='single_index')}")
+    summary = emit_universe.emit(con)
+    _log(log, f"qdii members fetched {len(members)} single={sum(1 for r in members if r['single_index']=='single_index')}")
+    _log(log, f"emit {summary}")
 
 
 def fill_amounts(con, log: list[str]) -> None:
@@ -702,8 +663,9 @@ def supplement_exchange_qdii(end: date = END, log: list[str] | None = None) -> d
                 "list_date_source": list_src, "nav_rows": nav_rows, "bars_status": bars_status, "note": note,
             })
             time.sleep(0.05)
-        U.replace_generated("".join(_member_toml(row) for row in members))
-        _log(log, f"qdii members written {len(members)} single={sum(1 for r in members if r['single_index']=='single_index')}")
+        summary = emit_universe.emit(con)
+        _log(log, f"qdii members fetched {len(members)} single={sum(1 for r in members if r['single_index']=='single_index')}")
+        _log(log, f"emit {summary}")
         fill_amounts(con, log)
         DB.write_requests(con, run_id, http.LOG)
         DB.finish_run(con, run_id, "ok")

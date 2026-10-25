@@ -16,6 +16,7 @@ from src.data import store as bars
 
 from . import artifacts
 from . import parse
+from .universe import duplicate_execution_errors
 
 ROOT = Path(__file__).resolve().parents[3]
 UNIVERSE_OUT = ROOT / "config" / "v3" / "universe.toml"
@@ -30,6 +31,14 @@ HSTECH_CSV = LAUNCH_CSV
 
 # §3.2 的容器名和要查找的指数全称。全称用于在中证身份原件里检索，不是手写代码。
 # 执行代码来自预注册表里的举例，元数据仍从概况页和深交所列表读。
+# 概况页「跟踪标的」与下表全称逐字相同，才并入该容器。不做子串匹配：
+# 「纳斯达克生物科技指数」「标普500信息科技指数」都不是纳指100或标普500。
+UNDERLYING_TRACKS = {
+    "hsi": ("恒生指数",),
+    "hstech": ("恒生科技指数",),
+    "ndx100": ("纳斯达克100指数",),
+    "spx": ("标准普尔500指数",),
+}
 MAIN = [
     ("csi300", "A股宽基", "沪深300", "沪深300全收益指数", "沪深300指数", ["510300"]),
     ("csi500", "A股宽基", "中证500", "中证小盘500全收益指数", "中证小盘500指数", ["510500"]),
@@ -493,8 +502,183 @@ def _artifact(path: Path) -> Path | None:
     return gz if gz.exists() else None
 
 
+_MISSING_DATE = {"", "取不到", "TBD"}
+_MERGE_NOTE = " 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。"
+
+
+def execution_sort_key(row: dict) -> tuple:
+    """已知上市日在前，早的在前；上市日取不到的不参与最早日比较。同日按代码。"""
+    listed = str(row.get("list_date") or "")
+    missing = listed in _MISSING_DATE
+    return (1 if missing else 0, "9999-99-99" if missing else listed, str(row.get("code") or ""))
+
+
+def _nav_rows(con, code: str) -> int:
+    if con is None or not code:
+        return 0
+    have = con.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='fund_nav'").fetchone()
+    if not have:
+        return 0
+    return int(con.execute("SELECT count(*) FROM fund_nav WHERE code=?", (code,)).fetchone()[0])
+
+
+def _exec_fields(raw: dict, note: str) -> dict:
+    return {
+        "code": raw.get("code") or "",
+        "name": raw.get("name") or "",
+        "list_date": raw.get("list_date") or "取不到",
+        "list_date_source": raw.get("list_date_source") or "",
+        "bars_status": raw.get("bars_status") or "取不到",
+        "track": raw.get("track") or "取不到",
+        "track_source": raw.get("track_source") or "",
+        "note": note,
+    }
+
+
+def _main_codes(containers: list[dict]) -> dict[str, str]:
+    found: dict[str, str] = {}
+    for box in containers:
+        if str(box.get("arm") or "main") != "main":
+            continue
+        for ex in box.get("execution") or []:
+            code = str(ex.get("code") or "")
+            if code and code not in _MISSING_DATE:
+                found[code] = str(box.get("id") or "")
+    return found
+
+
+def index_owners(containers: list[dict]) -> dict[str, dict]:
+    """跟踪标的全称 → 已有的 §3.2 容器。全称冲突则拒绝写出。"""
+    by_id = {box["id"]: box for box in containers}
+    owners: dict[str, dict] = {}
+    for cid, names in UNDERLYING_TRACKS.items():
+        box = by_id.get(cid)
+        if box is None:
+            raise KeyError(cid)
+        for name in names:
+            prev = owners.get(name)
+            if prev is not None and prev["id"] != cid:
+                raise RuntimeError(f"跟踪标的「{name}」同时对应 {prev['id']} 和 {cid}")
+            owners[name] = box
+    return owners
+
+
+def theme_container(track: str, rows: list[dict]) -> dict:
+    """一个未点名的海外指数。研究净值用已知上市日最早的那只 ETF。"""
+    ordered = sorted(rows, key=execution_sort_key)
+    uniq = []
+    seen: set[str] = set()
+    for row in ordered:
+        code = str(row.get("code") or "")
+        if not code or code in seen:
+            continue
+        seen.add(code)
+        uniq.append(row)
+    if not uniq:
+        raise RuntimeError(f"跟踪标的「{track}」没有执行代码")
+    rep = uniq[0]
+    listed = str(rep.get("list_date") or "")
+    if listed in _MISSING_DATE:
+        listed = "取不到"
+    nav_n = int(rep.get("nav_rows") or 0)
+    execution = [
+        _exec_fields(
+            row,
+            "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 " + (row.get("note") or ""),
+        )
+        for row in uniq
+    ]
+    codes = "、".join(row["code"] for row in execution)
+    return {
+        "id": f"theme-{track}",
+        "asset_class": "美股和全球主题",
+        "name": track,
+        "arm": "main",
+        "in_pool_index": True,
+        "in_pool_tradable": True,
+        "research": {
+            "index_code": track,
+            "index_name": track,
+            "return_basis": "unit_nav",
+            "publish_date": listed,
+            "publish_date_source": rep.get("list_date_source") or "",
+            "base_date": "取不到",
+            "base_date_source": "",
+            "series_code": rep["code"],
+            "series_source": "eastmoney_f10_lsjz",
+            "series_status": "in_db" if nav_n else "取不到",
+            "source_url": rep.get("track_source") or "",
+            "note": (
+                "附录 1：同一跟踪标的的场内 ETF 合成一个容器。"
+                f"U-指数从执行名单第一只 {rep['code']} 的上市日起，研究净值用这一只。"
+                "上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。"
+                "不用上市前的海外指数。指数公司发布日取不到。"
+                f"执行代码 {codes}。净值 {nav_n} 行。"
+            ),
+        },
+        "execution": execution,
+    }
+
+
+def attach_qdii(containers: list[dict], included: list[dict]) -> list[dict]:
+    """把附录 1 的 ETF 按跟踪标的并入已有容器，其余每只指数一个主题容器。"""
+    owners = index_owners(containers)
+    occupied = _main_codes(containers)
+    pending: dict[str, list[dict]] = {}
+    touched: dict[str, str] = {}
+    groups: dict[str, list[dict]] = {}
+    for raw in included:
+        track = str(raw.get("track") or "").strip()
+        code = str(raw.get("code") or "")
+        if not code or code in _MISSING_DATE:
+            raise RuntimeError("附录 1 纳入记录缺少代码")
+        if not track or track in _MISSING_DATE:
+            raise RuntimeError(f"{code} 已纳入但跟踪标的为空")
+        owner = owners.get(track)
+        if owner is not None:
+            holder = occupied.get(code)
+            if holder and holder != owner["id"]:
+                raise RuntimeError(f"{code} 已在主臂容器 {holder}，不能再并入 {owner['id']}")
+            touched[owner["id"]] = track
+            have = {str(ex.get("code") or "") for ex in owner.get("execution") or []}
+            queued = {str(ex.get("code") or "") for ex in pending.get(owner["id"], [])}
+            if code in have or code in queued:
+                continue
+            pending.setdefault(owner["id"], []).append(_exec_fields(
+                raw,
+                f"附录 1：跟踪标的「{track}」与容器 {owner['id']} 是同一底层指数，并入执行名单。{raw.get('note') or ''}",
+            ))
+            occupied[code] = owner["id"]
+            continue
+        holder = occupied.get(code)
+        if holder:
+            if holder == f"theme-{track}":
+                continue
+            raise RuntimeError(f"{code} 跟踪「{track}」，但代码已在主臂容器 {holder}")
+        groups.setdefault(track, []).append(raw)
+        occupied[code] = f"theme-{track}"
+    by_id = {box["id"]: box for box in containers}
+    for cid, rows in pending.items():
+        box = by_id[cid]
+        box.setdefault("execution", []).extend(sorted(rows, key=execution_sort_key))
+    for cid in touched:
+        research = by_id[cid].setdefault("research", {})
+        note = research.get("note") or ""
+        if _MERGE_NOTE.strip() not in note:
+            research["note"] = note + _MERGE_NOTE
+    themes = []
+    used = {box["id"] for box in containers}
+    for track in sorted(groups):
+        box = theme_container(track, groups[track])
+        if box["id"] in used:
+            raise RuntimeError(f"容器 id 冲突 {box['id']}")
+        used.add(box["id"])
+        themes.append(box)
+    return themes
+
+
 def build_qdii(jbgk: dict, szse: dict, con, catalog_path: Path = CATALOG) -> tuple[list[dict], list[dict]]:
-    """附录 1。返回 (纳入的容器, 排除记录)。"""
+    """附录 1。返回 (纳入的执行记录, 排除记录)。不按基金代码拆容器。"""
     found = _artifact(catalog_path)
     if found is None:
         return [], [{"code": "", "decision": "取不到", "name": "", "track": "", "list_date": "", "note": "没有 fundcode_search.js 原件"}]
@@ -516,34 +700,21 @@ def build_qdii(jbgk: dict, szse: dict, con, catalog_path: Path = CATALOG) -> tup
             excluded.append(record)
             continue
         span = _bar(con, code)
-        research = {
-            "index_code": profile.get("track") or "取不到",
-            "index_name": profile.get("track") or row["name"],
-            "return_basis": "unit_nav",
-            "publish_date": listed if listed != "取不到" else "取不到",
-            "publish_date_source": list_src,
-            "base_date": "取不到", "base_date_source": "",
-            "series_code": code, "series_source": "eastmoney_f10_lsjz",
-            "series_status": "TBD", "source_url": profile.get("path") or str(catalog_path.relative_to(ROOT)),
-            "note": "附录 1：单一海外指数。U-指数从上市日起，不用上市前的海外指数。发布日字段这里放上市日；指数公司发布日取不到。",
-        }
-        nav_n = 0
-        if con is not None:
-            have = con.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='fund_nav'").fetchone()
-            if have:
-                nav_n = con.execute("SELECT count(*) FROM fund_nav WHERE code=?", (code,)).fetchone()[0]
-        research["series_status"] = "in_db" if nav_n else "取不到"
-        research["note"] += f" 净值 {nav_n} 行。收盘价 {span['rows']} 行，来源 {span['source'] or '无'}。"
+        nav_n = _nav_rows(con, code)
         included.append({
-            "id": f"qdii-{code}", "asset_class": "美股和全球主题", "name": record["name"], "arm": "main",
-            "in_pool_index": True, "in_pool_tradable": True,
-            "research": research,
-            "execution": [{
-                "code": code, "name": record["name"], "list_date": listed, "list_date_source": list_src,
-                "bars_status": "in_db" if span["rows"] else "取不到",
-                "track": profile.get("track") or "取不到", "track_source": profile.get("path") or "",
-                "note": "同一只 ETF 既是研究净值容器也是执行代码。",
-            }],
+            "code": code,
+            "name": record["name"],
+            "list_date": listed,
+            "list_date_source": list_src,
+            "bars_status": "in_db" if span["rows"] else "取不到",
+            "track": profile.get("track") or "",
+            "track_source": profile.get("path") or "",
+            "note": (
+                "附录 1 纳入。同一跟踪标的只占一个容器。"
+                f"净值 {nav_n} 行。收盘价 {span['rows']} 行，来源 {span['source'] or '无'}。"
+            ),
+            "nav_rows": nav_n,
+            "catalog_source": str(catalog_path.relative_to(ROOT)),
         })
     return included, excluded
 
@@ -614,7 +785,8 @@ def render(containers: list[dict], excluded: list[dict]) -> str:
     head = (
         "# 机械生成。来源：docs/prereg/etf-multiasset-rotation-prereg-v3.md §3 与附录 1–2。\n"
         "# 不要手改。更新用 python -m src.v3.data emit。\n"
-        "# 冻结预注册 B1：每条都有代码、发布日、口径、来源；缺失写「取不到」。\n\n"
+        "# 冻结预注册 B1：每条都有代码、发布日、口径、来源；缺失写「取不到」。\n"
+        "# §3.2：一个容器一个底层指数。同一指数的 ETF 只写在该容器的 execution。\n\n"
     )
     body = "".join(_block(box) for box in containers)
     lines = ["# 附录 1 排除（不进入海外主题）", ""]
@@ -635,9 +807,19 @@ def emit(con=None, path: Path = UNIVERSE_OUT) -> dict:
     containers += build_commodities(con, jbgk, szse)
     containers += build_bonds_cash(con, jbgk, szse)
     qdii, excluded = build_qdii(jbgk, szse, con)
-    containers += qdii
+    themes = attach_qdii(containers, qdii)
+    containers += themes
     containers += build_s2(con, launch)
+    dup = duplicate_execution_errors(containers)
+    if dup:
+        raise RuntimeError("执行代码在主臂重复，拒绝写出 universe.toml:\n" + "\n".join(dup))
     text = render(containers, excluded)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
-    return {"containers": len(containers), "qdii": len(qdii), "excluded": len(excluded), "path": str(path)}
+    return {
+        "containers": len(containers),
+        "qdii_etf": len(qdii),
+        "theme": len(themes),
+        "excluded": len(excluded),
+        "path": str(path),
+    }

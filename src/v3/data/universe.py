@@ -133,12 +133,43 @@ def replace_generated(body: str, path: Path = UNIVERSE) -> None:
     path.write_text(text[:i + len(begin)] + body + text[j:], encoding="utf-8")
 
 
+def _execution_codes(row: dict) -> list[str]:
+    codes = []
+    for ex in row.get("execution") or []:
+        code = str(ex.get("code") or "")
+        if code and code not in {"取不到", "TBD"}:
+            codes.append(code)
+    return codes
+
+
+def duplicate_execution_errors(rows: list[dict]) -> list[str]:
+    """主臂里同一执行代码只能出现一次。附录 2 的 S2 与主臂不在同一个池，不在这里报。"""
+    errors = []
+    seen: dict[str, str] = {}
+    for row in rows:
+        cid = str(row.get("id") or "")
+        local: set[str] = set()
+        for code in _execution_codes(row):
+            if code in local:
+                errors.append(f"{cid}: 执行代码 {code} 在本容器重复")
+            local.add(code)
+            if str(row.get("arm") or "main") != "main":
+                continue
+            prev = seen.get(code)
+            if prev and prev != cid:
+                errors.append(f"{code}: 同时出现在主臂容器 {prev} 和 {cid}")
+            else:
+                seen[code] = cid
+    return errors
+
+
 def validate(doc: dict | None = None) -> list[str]:
     """缺字段才报。取不到 / TBD 是合法取值，不算缺。"""
     doc = load() if doc is None else doc
     errors = []
     seen = set()
-    for i, row in enumerate(doc.get("container") or []):
+    rows = list(doc.get("container") or [])
+    for i, row in enumerate(rows):
         cid = row.get("id") or f"#{i}"
         if cid in seen:
             errors.append(f"{cid}: id 重复")
@@ -157,4 +188,5 @@ def validate(doc: dict | None = None) -> list[str]:
             for key in EXEC_FIELDS:
                 if key not in ex or ex.get(key) is None:
                     errors.append(f"{cid}: execution[{j}] 缺 {key}")
+    errors.extend(duplicate_execution_errors(rows))
     return errors
