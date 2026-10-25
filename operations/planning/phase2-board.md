@@ -22,7 +22,7 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 - 规则写在预注册里。实现可以迭代。未经 Owner，不改规则。
 - G3 之前：不计算、不输出截止日晚于 2015-12-31 的组合收益。溢价模块可以用 2021 年起的数据做机制检验，仍然不输出任何 2016 年起的组合收益。
 - `config/v3/universe.toml` 在 main 上的登记表 SHA256 现为 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`（L1 返工重签；上一版 `693b7d4dff91dff4b9bac4a0c1241eb4692f6b3cbd444965440a265ffa32aaff`）。设计期回测 end≤2015-12-31 可以开始。本次合入没有打 tag，也没有写 `results/v3/LOCK`。
-- 合入 main、新建 tag、删除已合入分支只由 Manager 执行（任务清单 §1，Owner 2026-10-24 常设授权）。Manager 可用 `--ff-only` 合入已通过评审的 `dev/v3-*`，并在 G2 条件满足时打 `milestone/v3-code-freeze`。G3、G5、预注册 v3.1、尝试预算 >60 仍须 Owner。不得删除或移动任何 tag，不得强推或改写 main。
+- 合入 main、新建 tag、删除已合入分支只由 Manager 执行（任务清单 §1，Owner 2026-10-24 常设授权）。Manager 可用 `--ff-only` 合入已通过评审的 `dev/v3-*`。`milestone/v3-code-freeze` 仍由 Manager 打，但 Owner 已看过 Orchestrator 设计期复诊结果之前不打；Owner 看过业务体检仍然必要。G3、G5、预注册 v3.1、尝试预算 >60 仍须 Owner。不得删除或移动任何 tag，不得强推或改写 main。
 
 ## 门禁
 
@@ -30,12 +30,12 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 | --- | --- | --- | --- |
 | G0 | 第一阶段封存、合同修订、D9 与预注册草稿入库 | Owner | 已完成 |
 | G1 | 预注册已冻结。`milestone/v3-prereg-freeze` → `bfeb49cc65eb0ba419bc98348f1d643fac1211f6` | Owner | 已完成（2026-10-24/25） |
-| G2 | 代码冻结：各开发线评审通过、全量测试 0 失败。Reviewer 批准后，Manager 打 `milestone/v3-code-freeze`；打 tag 前 Owner 须已看过业务体检（第 6 项，开放，未完成） | Reviewer | 未开始 |
+| G2 | 代码冻结：各开发线评审通过、全量测试 0 失败。Reviewer 批准后，Manager 打 `milestone/v3-code-freeze`。打 tag 前两条都要满足：Owner 已看过业务体检（第 6 项，未开始）；Owner 已看过 Orchestrator 设计期复诊结果。后者是更强门禁。此前不进入代码冻结 | Reviewer | 未开始 |
 | G3 | 跑全期（含 2016 后），写 `results/v3/LOCK` | Owner 批准，Reviewer 执行 | 未开始 |
 | G4 | 按 v3 §6、§7.3 出结论 | Reviewer | 未开始 |
 | G5 | 是否进入前向模拟盘、是否上真钱 | Owner | 未开始 |
 
-G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 G2 前置第 2–4 项（第 1 项 L1 返工已合入），并完成业务体检（第 6 项，开放，未完成）。Reviewer 已重签收，Dev 可以出具 `operations/reports/v3-design-period-brief.md`。G2 tag 等 Owner 看过体检报告后再打。L5 仍等待 G2 与 G3，此前不开分支、不跑全期。
+G2 仍是未开始。不进入代码冻结，也不打 `milestone/v3-code-freeze`，直到 Owner 已看过 Orchestrator 设计期复诊结果。Owner 须看过业务体检这一条仍然有效；更强的门是 Owner 已看过复诊。工作顺序见下方 G2 前置：先做第 7 项长历史防御资产和第 8 项假期类修复（均未开始），再清仍未开始的第 2–4 项（第 1 项 L1 返工已合入，不重开）。第 6 项业务体检未开始，必含内容已扩充。工作顺序 1–3 步完成前，不为冻结新增 Owner 决定。L5 仍等待 G2 与 G3，此前不开分支、不跑全期。
 
 ## G1 预注册修订与冻结
 
@@ -58,8 +58,8 @@ G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 
 | --- | --- | --- | --- | --- | --- | --- |
 | L1 数据层 | 已合入 | Dev | —（分支已删） | 无 | 2026-10-25 | ff-only 合入 `cursor/v3-l1-rework-review-37d1`。main `05d8476`。PR #25、#26 已合入。无 tag，无 LOCK |
 | L2 回测引擎 | 已合入 | Dev | —（分支已删） | L1 已合入 | 2026-10-25 | ff-only 合入 `cursor/review-v3-l2-d546`。main `2b8ee0e`。PR #18、#19 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
-| L3 溢价模块 | 已合入 | Dev | —（分支已删） | L1 QDII 数据 | 2026-10-25 | ff-only 合入 `cursor/v3-l3-review-2249`。main `4cecfad`。PR #20、#21 已合入。无 tag，无 LOCK，无 2016+ 组合收益。`allocate_container` / `adjust_weights` 接入仍开放，见 G2 前置 |
-| L4 评估层 | 已合入 | Dev | —（分支已删） | L2 | 2026-10-25 | ff-only 合入 `cursor/v3-l4-review-4337`。main `2f29d40`。PR #22、#23 已合入。无 tag，无 LOCK，无 2016+ 组合收益。非有限收益、覆盖缺口与「B 不差于 A」解释改为 G2 前置，仍开放 |
+| L3 溢价模块 | 已合入 | Dev | —（分支已删） | L1 QDII 数据 | 2026-10-25 | ff-only 合入 `cursor/v3-l3-review-2249`。main `4cecfad`。PR #20、#21 已合入。无 tag，无 LOCK，无 2016+ 组合收益。`allocate_container` / `adjust_weights` 接入未开始，见 G2 前置第 2 项 |
+| L4 评估层 | 已合入 | Dev | —（分支已删） | L2 | 2026-10-25 | ff-only 合入 `cursor/v3-l4-review-4337`。main `2f29d40`。PR #22、#23 已合入。无 tag，无 LOCK，无 2016+ 组合收益。非有限收益、覆盖缺口与「B 不差于 A」解释改为 G2 前置，未开始 |
 | L5 运行与报告 | 未开始 | Dev 运行 / Reviewer 判定 | n/a（待 G2/G3） | G2 + G3 | 2026-10-25 | 仍等待 G2 + G3。此前不开分支、不跑全期 |
 
 ## 子任务
@@ -114,7 +114,7 @@ G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 
 - 库与 sqlite 未改。合入前测试（LFS pull 之后）: 443 跑，0 失败，1 跳过
 - 无 tag，无 `results/v3/LOCK`。此处只登记 Reviewer 结论，不作判定
 - 非阻塞 follow-up（只登记、不判定）：全文件 5 个代码也在对应 S2 容器。字面「任意代码只一次」不完全一致；主臂唯一成立
-- 第 6 项业务体检仍开放、未完成。Reviewer 已重签收，Dev 可以出具 `operations/reports/v3-design-period-brief.md`
+- 第 6 项业务体检未开始。必含内容已按 2026-10-25 Owner 方向扩充。出具排在 G2 阻塞工作顺序第 1–3 步之后，再由 Orchestrator 做设计期复诊。范围仍 end≤2015-12-31
 
 ### L2 回测引擎
 
@@ -164,7 +164,7 @@ G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 
 - 49 段事件清单与 15 项状态抽查为 Reviewer 结论。此处只登记，不作判定
 - 无 tag，无 `results/v3/LOCK`，无 2016 年起的组合收益
 - 合入当时不阻塞的后续（本合入未做）: 执行器接入 `allocate_container` / `adjust_weights`；§5.5 污染检验段比较；§7.1 归属 L4
-- 2026-10-25 Owner/Orchestrator 复核后：`allocate_container` / `adjust_weights` 接入 U-可交易执行链改为 G2 前置，仍开放，未完成。见下方专节。此处不改 L3 签收结论
+- 2026-10-25 Owner/Orchestrator 复核后：`allocate_container` / `adjust_weights` 接入 U-可交易执行链改为 G2 前置，未开始。同日优先级重排后，它落在工作顺序第 3 步（第 7、第 8 项之后）。见下方专节。此处不改 L3 签收结论
 
 ### L4 评估层
 
@@ -189,7 +189,7 @@ G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 
 - 设计期 ①②③ 为 Reviewer 工程核对。此处只登记，不作判定
 - 无 tag，无 `results/v3/LOCK`，无 2016 年起的组合收益
 - 合入当时不阻塞的后续（本合入未做，只登记、不判定）: (1) `criterion_2` 原始 pnl 含 NaN/inf、`book.net` 为 NaN；(2) 2006–2010 段未覆盖全段；(3) G3 全池 1,000 次随机对照；(4) B 臂相对 A 不自动判定
-- 2026-10-25 Owner/Orchestrator 复核后：非有限日收益、2006–2010 覆盖，以及「B 不差于 A」的解释，改为 G2 前置，仍开放，未完成。见下方专节。此处不改 L4 签收结论
+- 2026-10-25 Owner/Orchestrator 复核后：非有限日收益、2006–2010 覆盖，以及「B 不差于 A」的解释，改为 G2 前置，未开始。见下方专节。此处不改 L4 签收结论
 
 ### L5 运行与报告
 
@@ -203,29 +203,55 @@ G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 
 - [ ] 按 §12 写报告与图：一页结论、判据记分卡、6 类图、归因、逐年收益、尝试记录摘要、四项数据陷阱
 - [ ] Reviewer 复算记分卡、检查尝试记录，结论写入预注册 §11
 
-依赖 G2 与 G3。2026-10-25 复核后仍然如此：L5 继续等待 G2 与 G3。分支在这两道门通过前为 n/a。
+依赖 G2 与 G3。2026-10-25 优先级重排后仍然如此：L5 继续等待 G2 与 G3。G2 在 Owner 看过设计期复诊结果之前不进入。分支在这两道门通过前为 n/a。
 
-## G2 前置（Owner/Orchestrator 2026-10-25；第 1–4 项群内闭环，无需再批；第 6 项 Owner 要看）
+## G2 前置（Owner/Orchestrator 2026-10-25；同日诊断与阻塞工作顺序重排）
 
-来源：Owner 2026-10-25（Asia/Taipei）对 main `2f29d4066709b8f8958164bba7c9098cba2803e9` 的 Orchestrator 复核。第 2–4 项仍是 `milestone/v3-code-freeze` 之前的开放项，群内闭环，无需再批。第 1 项 L1 返工已合入。同日 Owner 追加第 6 项业务体检：G2 前必须，现为开放、未完成；不并入第 2–4 项的群内闭环。Reviewer 已重签收，Dev 可以出具 `operations/reports/v3-design-period-brief.md`。G2 tag 等 Owner 看过报告后再打。G2 仍是未开始。L5 仍等待 G2 与 G3。本看板不打 tag，不写 `results/v3/LOCK`，不改业务代码，不改预注册正文。
+来源：Owner 2026-10-25（Asia/Taipei）对 main `2f29d4066709b8f8958164bba7c9098cba2803e9` 的 Orchestrator 复核；同日 Owner 方向把设计期诊断与 G2 阻塞工作顺序写入本看板。登记时 main 尖端 `cff054b696e39a19884a08ab176e3bc7f402f280`。第 1 项 L1 返工已合入，不重开。第 2–4 项与第 6–8 项未开始。第 5 项看板 PR #14 已合入。
+
+诊断（Orchestrator 事实，Manager 只登记，不判定）：
+
+- 2011-08 之前只有 4–6 个可选标的
+- 设计期全程缺少黄金、债券、商品
+- 多资产轮动在设计期几乎无法检验
+
+G2 阻塞工作顺序（Owner 2026-10-25）：
+
+1. 最高 — 第 7 项长历史防御资产。Dev → Reviewer。
+2. 第 8 项：2012-10-30 美国休市被当成 NDX 单日暴跌。修好后审计全部海外底层的同类假期/零缺口。Dev → Reviewer。
+3. 宇宙去重与溢价控制接线，并保持既有第 2–4 项。第 1 项 L1 返工（按底层指数归并）已合入，不重开。非阻塞 follow-up（5 个代码也出现在对应 S2 容器）仍只登记，不升为阻塞。第 2 项 `allocate_container` / `adjust_weights` 接入 U-可交易仍未开始。第 3 项剩余的数据工作，以及第 4 项「B 不差于 A」解释，仍未开始。
+4. 上述 1–3 步完成后：Manager 提请 Owner，Orchestrator 做设计期复诊。在此之前不为代码冻结新增 Owner 决定。
+
+代码冻结：不得进入 `milestone/v3-code-freeze`，直到 Owner 已看过 Orchestrator 复诊结果。先前「Owner 须看过业务体检」仍然有效；更强的门是 Owner 已看过复诊。第 6 项不并入第 2–4 项的群内闭环。第 7、第 8 项与第 2–4 项先由 Dev → Reviewer 做完，再进入工作顺序第 4 步。G2 仍是未开始。L5 仍等待 G2 与 G3。本看板不打 tag，不写 `results/v3/LOCK`，不改业务代码，不改预注册正文。
 
 1. **L1 返工** — 已合入。`--ff-only` 合入评审尖端 `cursor/v3-l1-rework-review-37d1` @ `05d84760ece060c757008cb359b791cef51c2995`（rebase 到当时 main `a3811b98a80bf5e364a3aae1ffa1526d9b60fa73`；交付原 `7f055a18d7124e9dc91f884ffd53f37c3333ed1a` → `c5d5cb29bc51e61a0b3e1e31ac337c998464e95a`，评审原 `adbc20c1f5e9238bf9d2d78d967ffd1ec31aa4ad` → `05d8476`）。PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/25 与 https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/26 已 MERGED。分支 `dev/v3-L1-rework`、`cursor/v3-l1-rework-review-37d1` 已删除。容器 137→81；`universe.toml` SHA256 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`。无 tag，无 `results/v3/LOCK`。非阻塞 follow-up（只登记、不判定）：全文件 5 个代码也在对应 S2 容器。字面「任意代码只一次」不完全一致；主臂唯一成立。
-2. **L3 遗留 1** — 开放，未完成。Dev：`allocate_container` / `adjust_weights` 接入 U-可交易执行链。
-3. **数据** — 开放，未完成。Dev：修 `ndx100` 2012-11-01 的 inf 及所有非有限日收益（数据层或引擎层保证有限值；禁止评估层填 0）。补齐 2006–2010 覆盖。补齐中债财富、黄金、美股人民币全收益、创业板指。补不齐则写明「缺失 → 对判定的影响」。
-4. **「B 不差于 A」（§7.1）解释** — 开放，未完成。写入 G2 签收文件，预注册正文不改。须在 G3 前写定：① 的 36/60 月两个比例都 ≥ A；③ 通过段数 ≥ A 且最差一段超额 ≥ A。负责人：Reviewer 起草进 G2 签收，Manager 登记。
-5. **看板 PR #14** — Manager 按授权合入（本任务完成项）。https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/14 。本文件即该 PR 的看板更新；合入 main 后本项关闭。优先 `--ff-only`。不打 tag，不写 LOCK。
-6. **业务体检（G2 前必须，Owner 要看）** — 开放，未完成。
-   - 时机：L1 返工已合入，Reviewer 已重签收；Dev 现在可以出具
+2. **L3 遗留 1** — 未开始。工作顺序第 3 步。Dev：`allocate_container` / `adjust_weights` 接入 U-可交易执行链。
+3. **数据** — 未开始。工作顺序第 3 步。长历史黄金、中债国债总财富在第 7 项；2012-10-30 假期误记在第 8 项。本项仍留：修 `ndx100` 2012-11-01 的 inf 及所有非有限日收益（数据层或引擎层保证有限值；禁止评估层填 0）。补齐 2006–2010 覆盖。补齐美股人民币全收益、创业板指。补不齐则写明「缺失 → 对判定的影响」。
+4. **「B 不差于 A」（§7.1）解释** — 未开始。工作顺序第 3 步。写入 G2 签收文件，预注册正文不改。须在 G3 前写定：① 的 36/60 月两个比例都 ≥ A；③ 通过段数 ≥ A 且最差一段超额 ≥ A。负责人：Reviewer 起草进 G2 签收，Manager 登记。
+5. **看板 PR #14** — 已合入。https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/14 。不打 tag，不写 LOCK。
+6. **业务体检（G2 前必须，Owner 要看）** — 未开始。
+   - 时机：工作顺序第 1–3 步完成之后，Dev 出具，随后 Orchestrator 做设计期复诊
    - 负责人：Dev 出具 `operations/reports/v3-design-period-brief.md`（附图）
-   - 范围：设计期 end≤2015-12-31；**不得**含 2016 年起组合收益；数字只作参考不作判定
-   - 内容（大白话）：A 臂 vs BM-主净值图 + 逐年收益；持仓面积图（大类/主要容器）+ 平均现金占比 + 年换手；2008 与 2015 大跌期间持仓与回撤；相对 BM-主归因（时期/大类）；判据①③④设计期数字（仅参考）
-   - 完成后：Manager 在群里提请 Owner 查看；**G2 tag 等 Owner 看过体检报告后再打**
+   - 范围：设计期 end≤2015-12-31；不得含 2016 年起组合收益；数字只作参考不作判定
+   - 内容（大白话）：A 臂 vs BM-主净值图 + 逐年收益；持仓面积图（大类/主要容器）+ 平均现金占比 + 年换手；仓位效应与选择效应拆分；各期可选标的数量；2008 与 2015 的持仓，以及这两段大跌期间的持仓与回撤；相对 BM-主归因（时期/大类）；判据①③④设计期数字（仅参考）
+   - 完成后：Manager 提请 Owner。Orchestrator 做设计期复诊。Owner 看过业务体检仍然必要。代码冻结还要等 Owner 看过复诊结果
+7. **长历史防御资产（最高优先级）** — 未开始。工作顺序第 1 步。负责人：Dev → Reviewer。
+   - 纳入黄金（例如上金所 Au9999，自 2002）与中债国债总财富
+   - 按预注册 §3 发布日规则机械纳入：发布日前的数据不得用于 R 或 s。登记表更新只走 `python -m src.v3.data emit`，不得手改 `config/v3/universe.toml`
+   - emit 之后由 Reviewer 签收
+   - 预注册 §3 现写的债券容器是 10 年国债、5 年国债（中债财富指数），商品里的黄金是上金所 Au9999。名称落在这些冻结容器上则机械补序列。对不上、因而要新容器或改规则时停手，由 Manager 升级 Owner（v3.1）。本项不改预注册正文
+   - 与诊断事实对齐：设计期缺黄金、债券、商品。本项派活是黄金与中债国债总财富
+8. **海外假期 / 零缺口** — 未开始。工作顺序第 2 步。负责人：Dev → Reviewer。
+   - 事实：2012-10-30 美国休市被当成 NDX 暴跌（单日 -16.5%）
+   - 先修这一处。修法沿用已冻结的 §3.3：容器当日无有效收盘价时，用最近一个有效收盘价（例如美股或港股休市）。不改预注册
+   - 修好后审计全部海外底层，查同类假期/零缺口
+   - 第 3 项的 `ndx100` 2012-11-01 inf 与全部非有限日收益仍单独登记，状态未开始
 
 ## 阻塞 / 待 Owner 决定
 
-待 Owner 决定：无。B1–B7 已由 Owner 于 2026-10-24 决定，写入冻结预注册与 `operations/reviews/2026-10-24-v3-prereg-review.md`（`89d18be`）。Manager 不代决 v3.1、G3、G5，也不代决尝试预算超过 60。
+待 Owner 决定：无。工作顺序第 1–3 步完成之前，不为代码冻结新增 Owner 决定。这三步完成后，Manager 提请 Owner，由 Orchestrator 做设计期复诊。B1–B7 已由 Owner 于 2026-10-24 决定，写入冻结预注册与 `operations/reviews/2026-10-24-v3-prereg-review.md`（`89d18be`）。Manager 不代决 v3.1、G3、G5，也不代决尝试预算超过 60。
 
-G2 前的开放事项见「G2 前置」。第 1 项已合入。第 2–4 项与业务体检（第 6 项）仍未完成，所以 G2 仍是未开始。体检报告尚未出具；Reviewer 重签收已完成，Dev 可以出具 `operations/reports/v3-design-period-brief.md`。报告完成后由 Manager 在群里提请 Owner 查看，G2 tag 等 Owner 看过后再打。
+G2 前的事项见「G2 前置」。第 1 项已合入，不重开。第 7 项长历史防御资产、第 8 项假期/零缺口、第 2–4 项、第 6 项业务体检均为未开始。代码冻结还要等 Owner 看过复诊结果；Owner 看过业务体检仍然必要。这两条满足之前，G2 保持未开始。
 
 | # | Owner 决定 |
 | --- | --- |
@@ -239,4 +265,4 @@ G2 前的开放事项见「G2 前置」。第 1 项已合入。第 2–4 项与�
 
 ## 最近更新
 
-2026-10-25（Asia/Taipei），Manager。L1 返工已合入：评审尖端 `--ff-only` 到 main `05d84760ece060c757008cb359b791cef51c2995`（rebase 自 `adbc20c1f5e9238bf9d2d78d967ffd1ec31aa4ad`，交付 rebase 自 `7f055a18d7124e9dc91f884ffd53f37c3333ed1a` 到 `c5d5cb29bc51e61a0b3e1e31ac337c998464e95a`，基线当时 main `a3811b98a80bf5e364a3aae1ffa1526d9b60fa73`）。PR #25、#26 已 MERGED。分支 `dev/v3-L1-rework`、`cursor/v3-l1-rework-review-37d1` 已删除。无 tag，无 `results/v3/LOCK`。G2 前置第 1 项已合入；第 2–4 项仍开放；第 6 项业务体检仍开放、未完成。Reviewer 已重签收，Dev 可以出具 `operations/reports/v3-design-period-brief.md`，G2 tag 仍等 Owner 看过该报告。非阻塞 follow-up（不判定）：全文件 5 个代码也在对应 S2 容器，字面「任意代码只一次」不完全一致，主臂唯一成立。G2 仍是未开始。L5 仍等待 G2 与 G3。
+2026-10-25（Asia/Taipei），Manager。登记 Owner 方向：Orchestrator 设计期诊断与 G2 阻塞工作顺序重排。诊断只作事实登记，不是判定：2011-08 之前可选标的只有 4–6 个；设计期全程缺少黄金、债券、商品；多资产轮动在设计期几乎无法检验。工作顺序：① 最高，第 7 项长历史防御资产（黄金，例如上金所 Au9999 自 2002；中债国债总财富），按 §3 发布日规则经 emit 机械纳入，Reviewer 签收，Dev → Reviewer，未开始；② 第 8 项，2012-10-30 美国休市被当成 NDX 单日 -16.5%，修好后审计全部海外底层的同类假期/零缺口，Dev → Reviewer，未开始；③ 宇宙去重与溢价接线沿用既有项，L1 返工已合入且不重开，第 2 项 L3 接入与第 3–4 项未开始；④ ①–③完成后 Manager 提请 Owner，Orchestrator 做设计期复诊。第 6 项业务体检未开始，须含仓位效应与选择效应拆分、各期可选标的数量、2008 与 2015 持仓；范围仍 ≤2015-12-31，不含 2016 年起组合收益。不进入 `milestone/v3-code-freeze`，直到 Owner 看过复诊结果；看过业务体检仍然必要。①–③完成前不为冻结新增 Owner 决定。登记时 main `cff054b696e39a19884a08ab176e3bc7f402f280`。L1 返工仍是已合入（main `05d84760ece060c757008cb359b791cef51c2995`）。无 tag，无 `results/v3/LOCK`。G2 仍是未开始。L5 仍等待 G2 与 G3。
