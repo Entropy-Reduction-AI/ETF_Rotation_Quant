@@ -56,7 +56,7 @@ G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 
 
 | 线 | 状态 | 负责人 | 分支 | 依赖 | 最近更新 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
-| L1 数据层 | 已合入 | Dev | —（分支已删） | 无 | 2026-10-25 | ff-only 合入 `review/v3-L1-sign`。main `98117155`。PR #16、#17 已合入。无回测，无 tag 变更。按指数归并的返工仍开放，阻塞 G2，见 G2 前置 |
+| L1 数据层 | 待评审 | Reviewer | `dev/v3-L1-rework` | 无 | 2026-10-25 | 返工 `7f055a1`，基线 main `a86dba0`。PR #25。按指数 emit，容器 137→81。未合入，等 Reviewer 重签收。无 tag，无 LOCK |
 | L2 回测引擎 | 已合入 | Dev | —（分支已删） | L1 已合入 | 2026-10-25 | ff-only 合入 `cursor/review-v3-l2-d546`。main `2b8ee0e`。PR #18、#19 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
 | L3 溢价模块 | 已合入 | Dev | —（分支已删） | L1 QDII 数据 | 2026-10-25 | ff-only 合入 `cursor/v3-l3-review-2249`。main `4cecfad`。PR #20、#21 已合入。无 tag，无 LOCK，无 2016+ 组合收益。`allocate_container` / `adjust_weights` 接入仍开放，见 G2 前置 |
 | L4 评估层 | 已合入 | Dev | —（分支已删） | L2 | 2026-10-25 | ff-only 合入 `cursor/v3-l4-review-4337`。main `2f29d40`。PR #22、#23 已合入。无 tag，无 LOCK，无 2016+ 组合收益。非有限收益、覆盖缺口与「B 不差于 A」解释改为 G2 前置，仍开放 |
@@ -100,6 +100,17 @@ G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 
 - 合入前测试（LFS pull 之后）: 351 跑，350 过，0 失败，1 跳过
 - 无回测，无 tag 变更
 - [ ] Dev 跟进（与 L2 分开）: MANIFEST 513580 漂移，只走 emit
+
+返工待评审（未合入）:
+
+- 分支 `dev/v3-L1-rework` @ `7f055a18d7124e9dc91f884ffd53f37c3333ed1a`（`7f055a1`），基线 main `a86dba0`
+- PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/25
+- emit 按跟踪指数归并容器（一容器 = 一底层指数）。容器 137→81
+- `config/v3/universe.toml` SHA256 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`
+- 库与 sqlite 未改
+- 等 Reviewer 重签收：按指数归并后的容器清单、各大类容器数、「任意代码只出现一次」，以及 §3.3 可交易首日 / 上市日说明
+- 未合入 main，无 tag，无 `results/v3/LOCK`。此处只登记，不作判定
+- 第 6 项业务体检仍开放、未完成，须等本次重签收之后
 
 ### L2 回测引擎
 
@@ -194,7 +205,7 @@ G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 
 
 来源：Owner 2026-10-25（Asia/Taipei）对 main `2f29d4066709b8f8958164bba7c9098cba2803e9` 的 Orchestrator 复核。第 1–4 项是 `milestone/v3-code-freeze` 之前的开放阻塞，群内闭环，无需再批。登记不等于完成：这四项都还没做完。同日 Owner 追加第 6 项业务体检：G2 前必须，现为开放、未完成；不并入第 1–4 项的群内闭环。L1 返工完成且 Reviewer 重签收之后才出具，G2 tag 等 Owner 看过报告后再打。G2 仍是未开始。L5 仍等待 G2 与 G3。本看板不打 tag，不写 `results/v3/LOCK`，不改业务代码，不改预注册正文。
 
-1. **L1 返工（阻塞）** — 开放，未完成。Dev：改 emit，按跟踪指数归并容器（一容器 = 一底层指数，§3.2）。同指数 ETF 合并到同一容器的 execution。港股指数 QDII 并入港股大类对应容器。同一 ETF 不得出现在两个容器。不得手改 toml。已知重复例：`qdii-159741` / `513130` / `158042` / `513260` 相对 `hstech`；`qdii-164705` 相对 `hsi`；`159660` / `160213` / `513870` 应归 `ndx100`。Reviewer 重签收：按指数归并后的容器清单、各大类容器数、「任意代码只出现一次」检查；并说明 89 个缺失上市日的执行代码下 §3.3 可交易首日如何确定。L2–L4 依赖旧容器表的测试与设计期数字，用新表重跑核对。
+1. **L1 返工（阻塞）** — 待评审，未完成。Dev 已交付 `dev/v3-L1-rework` @ `7f055a18d7124e9dc91f884ffd53f37c3333ed1a`（`7f055a1`），基线 main `a86dba0`。PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/25 。未合入。emit 按跟踪指数归并；容器 137→81；`universe.toml` SHA256 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`；库与 sqlite 未改。等 Reviewer 重签收：按指数归并后的容器清单、各大类容器数、「任意代码只出现一次」，以及 §3.3 可交易首日 / 上市日说明。登记不等于完成。签收前第 6 项业务体检仍等待。原要求仍在：同指数 ETF 合并到同一容器的 execution；港股指数 QDII 并入港股大类对应容器；同一 ETF 不得出现在两个容器；不得手改 toml。已知重复例：`qdii-159741` / `513130` / `158042` / `513260` 相对 `hstech`；`qdii-164705` 相对 `hsi`；`159660` / `160213` / `513870` 应归 `ndx100`。L2–L4 依赖旧容器表的测试与设计期数字，用新表重跑核对。
 2. **L3 遗留 1** — 开放，未完成。Dev：`allocate_container` / `adjust_weights` 接入 U-可交易执行链。
 3. **数据** — 开放，未完成。Dev：修 `ndx100` 2012-11-01 的 inf 及所有非有限日收益（数据层或引擎层保证有限值；禁止评估层填 0）。补齐 2006–2010 覆盖。补齐中债财富、黄金、美股人民币全收益、创业板指。补不齐则写明「缺失 → 对判定的影响」。
 4. **「B 不差于 A」（§7.1）解释** — 开放，未完成。写入 G2 签收文件，预注册正文不改。须在 G3 前写定：① 的 36/60 月两个比例都 ≥ A；③ 通过段数 ≥ A 且最差一段超额 ≥ A。负责人：Reviewer 起草进 G2 签收，Manager 登记。
@@ -224,4 +235,4 @@ G2 前的开放事项见「G2 前置」。第 1–4 项与业务体检（第 6 �
 
 ## 最近更新
 
-2026-10-25（Asia/Taipei），Manager。登记 Owner 方向：业务体检为 G2 前必须项（第 6 项），状态开放、未完成。时机是 L1 返工完成且 Reviewer 重签收之后；Dev 出具 `operations/reports/v3-design-period-brief.md`（附图）；范围是设计期 end≤2015-12-31，不得含 2016 年起组合收益，数字只作参考不作判定。G2 tag 等 Owner 看过体检报告后再打。Manager 状态汇报改为业务固定五段（见文首备注）。G2 仍是未开始。L5 仍等待 G2 与 G3。基线 main `a86dba0e15201d6cc58e235faf0e427e3fe9e1d8`。本更新不打 tag，不写 LOCK，不改业务代码与预注册。
+2026-10-25（Asia/Taipei），Manager。L1 返工改为待评审：`dev/v3-L1-rework` @ `7f055a1`（基线 main `a86dba0`），PR #25。按指数 emit，容器 137→81，`universe.toml` SHA256 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`，库与 sqlite 未改。未合入，等 Reviewer 重签收（清单 + §3.3 上市日）。第 6 项业务体检仍开放、未完成。不打 tag，不写 LOCK，不改业务代码与预注册。
