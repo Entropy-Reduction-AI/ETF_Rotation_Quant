@@ -33,6 +33,8 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 | G4 | 按 v3 §6、§7.3 出结论 | Reviewer | 未开始 |
 | G5 | 是否进入前向模拟盘、是否上真钱 | Owner | 未开始 |
 
+G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 G2 前置第 1–4 项。L5 仍等待 G2 与 G3，此前不开分支、不跑全期。
+
 ## G1 预注册修订与冻结
 
 已完成（2026-10-24/25）。预注册状态行：已冻结（G1，2026-10-24，Owner 批准）。
@@ -52,11 +54,11 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 | 线 | 状态 | 负责人 | 分支 | 依赖 | 最近更新 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
-| L1 数据层 | 已合入 | Dev | —（分支已删） | 无 | 2026-10-24 | ff-only 合入 `review/v3-L1-sign`。main `98117155`。PR #16、#17 已合入。无回测，无 tag 变更 |
+| L1 数据层 | 已合入 | Dev | —（分支已删） | 无 | 2026-10-25 | ff-only 合入 `review/v3-L1-sign`。main `98117155`。PR #16、#17 已合入。无回测，无 tag 变更。按指数归并的返工仍开放，阻塞 G2，见 G2 前置 |
 | L2 回测引擎 | 已合入 | Dev | —（分支已删） | L1 已合入 | 2026-10-25 | ff-only 合入 `cursor/review-v3-l2-d546`。main `2b8ee0e`。PR #18、#19 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
-| L3 溢价模块 | 已合入 | Dev | —（分支已删） | L1 QDII 数据 | 2026-10-25 | ff-only 合入 `cursor/v3-l3-review-2249`。main `4cecfad`。PR #20、#21 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
-| L4 评估层 | 已合入 | Dev | —（分支已删） | L2 | 2026-10-25 | ff-only 合入 `cursor/v3-l4-review-4337`。main `2f29d40`。PR #22、#23 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
-| L5 运行与报告 | 未开始 | Dev 运行 / Reviewer 判定 | n/a（待 G2/G3） | G2 + G3 | — | G2、G3 之前不开分支、不跑全期 |
+| L3 溢价模块 | 已合入 | Dev | —（分支已删） | L1 QDII 数据 | 2026-10-25 | ff-only 合入 `cursor/v3-l3-review-2249`。main `4cecfad`。PR #20、#21 已合入。无 tag，无 LOCK，无 2016+ 组合收益。`allocate_container` / `adjust_weights` 接入仍开放，见 G2 前置 |
+| L4 评估层 | 已合入 | Dev | —（分支已删） | L2 | 2026-10-25 | ff-only 合入 `cursor/v3-l4-review-4337`。main `2f29d40`。PR #22、#23 已合入。无 tag，无 LOCK，无 2016+ 组合收益。非有限收益、覆盖缺口与「B 不差于 A」解释改为 G2 前置，仍开放 |
+| L5 运行与报告 | 未开始 | Dev 运行 / Reviewer 判定 | n/a（待 G2/G3） | G2 + G3 | 2026-10-25 | 仍等待 G2 + G3。此前不开分支、不跑全期 |
 
 ## 子任务
 
@@ -144,7 +146,8 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 - 合入前测试（LFS pull 之后）: 411 跑，0 失败，1 跳过
 - 49 段事件清单与 15 项状态抽查为 Reviewer 结论。此处只登记，不作判定
 - 无 tag，无 `results/v3/LOCK`，无 2016 年起的组合收益
-- 不阻塞的后续（本合入未做）: 执行器接入 `allocate_container` / `adjust_weights`；§5.5 污染检验段比较；§7.1 归属 L4
+- 合入当时不阻塞的后续（本合入未做）: 执行器接入 `allocate_container` / `adjust_weights`；§5.5 污染检验段比较；§7.1 归属 L4
+- 2026-10-25 Owner/Orchestrator 复核后：`allocate_container` / `adjust_weights` 接入 U-可交易执行链改为 G2 前置，仍开放，未完成。见下方专节。此处不改 L3 签收结论
 
 ### L4 评估层
 
@@ -168,7 +171,8 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 - 合入前测试（评审记录）: 439 跑，0 失败，1 跳过（L4 28）
 - 设计期 ①②③ 为 Reviewer 工程核对。此处只登记，不作判定
 - 无 tag，无 `results/v3/LOCK`，无 2016 年起的组合收益
-- 不阻塞的后续（本合入未做，只登记、不判定）: (1) `criterion_2` 原始 pnl 含 NaN/inf、`book.net` 为 NaN；(2) 2006–2010 段未覆盖全段；(3) G3 全池 1,000 次随机对照；(4) B 臂相对 A 不自动判定
+- 合入当时不阻塞的后续（本合入未做，只登记、不判定）: (1) `criterion_2` 原始 pnl 含 NaN/inf、`book.net` 为 NaN；(2) 2006–2010 段未覆盖全段；(3) G3 全池 1,000 次随机对照；(4) B 臂相对 A 不自动判定
+- 2026-10-25 Owner/Orchestrator 复核后：非有限日收益、2006–2010 覆盖，以及「B 不差于 A」的解释，改为 G2 前置，仍开放，未完成。见下方专节。此处不改 L4 签收结论
 
 ### L5 运行与报告
 
@@ -182,11 +186,23 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 - [ ] 按 §12 写报告与图：一页结论、判据记分卡、6 类图、归因、逐年收益、尝试记录摘要、四项数据陷阱
 - [ ] Reviewer 复算记分卡、检查尝试记录，结论写入预注册 §11
 
-依赖 G2 与 G3。分支在这两道门通过前为 n/a。
+依赖 G2 与 G3。2026-10-25 复核后仍然如此：L5 继续等待 G2 与 G3。分支在这两道门通过前为 n/a。
+
+## G2 前置（Owner/Orchestrator 2026-10-25，群内闭环，无需再批）
+
+来源：Owner 2026-10-25（Asia/Taipei）对 main `2f29d4066709b8f8958164bba7c9098cba2803e9` 的 Orchestrator 复核。第 1–4 项是 `milestone/v3-code-freeze` 之前的开放阻塞，群内闭环，无需再批。登记不等于完成：这四项都还没做完。G2 仍是未开始。L5 仍等待 G2 与 G3。本看板不打 tag，不写 `results/v3/LOCK`，不改业务代码，不改预注册正文。
+
+1. **L1 返工（阻塞）** — 开放，未完成。Dev：改 emit，按跟踪指数归并容器（一容器 = 一底层指数，§3.2）。同指数 ETF 合并到同一容器的 execution。港股指数 QDII 并入港股大类对应容器。同一 ETF 不得出现在两个容器。不得手改 toml。已知重复例：`qdii-159741` / `513130` / `158042` / `513260` 相对 `hstech`；`qdii-164705` 相对 `hsi`；`159660` / `160213` / `513870` 应归 `ndx100`。Reviewer 重签收：按指数归并后的容器清单、各大类容器数、「任意代码只出现一次」检查；并说明 89 个缺失上市日的执行代码下 §3.3 可交易首日如何确定。L2–L4 依赖旧容器表的测试与设计期数字，用新表重跑核对。
+2. **L3 遗留 1** — 开放，未完成。Dev：`allocate_container` / `adjust_weights` 接入 U-可交易执行链。
+3. **数据** — 开放，未完成。Dev：修 `ndx100` 2012-11-01 的 inf 及所有非有限日收益（数据层或引擎层保证有限值；禁止评估层填 0）。补齐 2006–2010 覆盖。补齐中债财富、黄金、美股人民币全收益、创业板指。补不齐则写明「缺失 → 对判定的影响」。
+4. **「B 不差于 A」（§7.1）解释** — 开放，未完成。写入 G2 签收文件，预注册正文不改。须在 G3 前写定：① 的 36/60 月两个比例都 ≥ A；③ 通过段数 ≥ A 且最差一段超额 ≥ A。负责人：Reviewer 起草进 G2 签收，Manager 登记。
+5. **看板 PR #14** — Manager 按授权合入（本任务完成项）。https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/14 。本文件即该 PR 的看板更新；合入 main 后本项关闭。优先 `--ff-only`。不打 tag，不写 LOCK。
 
 ## 阻塞 / 待 Owner 决定
 
-无。B1–B7 已由 Owner 于 2026-10-24 决定，写入冻结预注册与 `operations/reviews/2026-10-24-v3-prereg-review.md`（`89d18be`）。Manager 不代决 v3.1、G3、G5，也不代决尝试预算超过 60。
+待 Owner 决定：无。B1–B7 已由 Owner 于 2026-10-24 决定，写入冻结预注册与 `operations/reviews/2026-10-24-v3-prereg-review.md`（`89d18be`）。Manager 不代决 v3.1、G3、G5，也不代决尝试预算超过 60。
+
+G2 前的开放事项不是新的 Owner 待决，见「G2 前置」。第 1–4 项仍未完成，所以 G2 仍是未开始。
 
 | # | Owner 决定 |
 | --- | --- |
@@ -200,4 +216,4 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 ## 最近更新
 
-2026-10-25，Manager，L4 `--ff-only` 合入 main `2f29d4066709b8f8958164bba7c9098cba2803e9`。PR #22、#23 已合入。Reviewer 结论 approve_with_follow_up（只登记，不判定）。分支 `dev/v3-L4`、`cursor/v3-l4-review-4337` 已删除。无 tag，无 LOCK，无 2016 年起的组合收益。
+2026-10-25（Asia/Taipei），Manager。Owner / Orchestrator 复核 main `2f29d4066709b8f8958164bba7c9098cba2803e9`（L4 已合入）后下令：登记 G2 前置（第 1–4 项仍开放，未完成），并按常设授权合入看板 PR #14。G2 仍是未开始。L5 仍等待 G2 与 G3。不打 tag，不写 LOCK，不改业务代码与预注册。
