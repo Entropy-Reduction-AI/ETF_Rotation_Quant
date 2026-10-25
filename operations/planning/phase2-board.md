@@ -1,6 +1,6 @@
 # 第二阶段看板 · 三 bot 协作
 
-Phase 2 看板。Manager、Dev、Reviewer 按已冻结的预注册 v3 执行。v3.1 已由 D10 批准，待 Reviewer 核对后冻结。本文件只做协调。
+Phase 2 看板。Manager、Dev、Reviewer 按已冻结的预注册 v3 执行。v3.1 内容已由 D10 批准。Reviewer 于 2026-10-25 退回该文本（待补字）。补字并复签之前不冻结。本文件只做协调。
 
 备注：Manager 状态汇报固定五段：本周完成 / 能做什么不能做什么 / 设计期业务信号 / 风险卡点 / 需要 Owner 的事。
 
@@ -17,7 +17,8 @@ Phase 2 看板。Manager、Dev、Reviewer 按已冻结的预注册 v3 执行。v
 - D9: `operations/planning/2026-10-24-d9-phase2-decisions.md`
 - D10: 本文件「D10」节。全文在 PR #32 的 `operations/planning/2026-10-25-d10-v3.1-approval.md`（尚未在 main）
 - 预注册 v3: `docs/prereg/etf-multiasset-rotation-prereg-v3.md`
-- 预注册 v3.1: PR #32 的 `docs/prereg/etf-multiasset-rotation-prereg-v3.1.md`（待评审，未冻结）
+- 预注册 v3.1: PR #32 的 `docs/prereg/etf-multiasset-rotation-prereg-v3.1.md`（退回 / 待补字，未冻结）
+- v3.1 评审: PR #33 的 `operations/reviews/2026-10-25-v3.1-prereg-review.md` @ `fa825b7beccacda24004fdb52f48b3073fddf052`（尚未在 main）。结论 return。所评父提交 `a5bf56a06e4a7ba25b1615792cdbb902a4fde0eb`
 - 新会话: 先读 `docs/project-intake/owner-vision-and-principles.md`（在 PR #32，随 v3.1 冻结合入 main）
 
 ## 硬规则
@@ -25,7 +26,7 @@ Phase 2 看板。Manager、Dev、Reviewer 按已冻结的预注册 v3 执行。v
 - 规则写在预注册里。实现可以迭代。未经 Owner，不改规则。
 - G3 之前：不计算、不输出截止日晚于 2015-12-31 的组合收益。溢价模块可以用 2021 年起的数据做机制检验，仍然不输出任何 2016 年起的组合收益。
 - `config/v3/universe.toml` 在 main 上的登记表 SHA256 现为 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`（L1 返工重签；上一版 `693b7d4dff91dff4b9bac4a0c1241eb4692f6b3cbd444965440a265ffa32aaff`）。设计期回测 end≤2015-12-31 可以开始。本次合入没有打 tag，也没有写 `results/v3/LOCK`。
-- 合入 main、新建 tag、删除已合入分支只由 Manager 执行（任务清单 §1，Owner 2026-10-24 常设授权）。Manager 可用 `--ff-only` 合入已通过评审的 `dev/v3-*`。D10（2026-10-25）已批准预注册 v3.1 的内容。Reviewer 核对文本可执行、无歧义并批准后，Manager `--ff-only` 合入 PR #32，并打 `milestone/v3.1-prereg-freeze`（D10 已授权）。批准前不合入 #32，不打该 tag。`milestone/v3-code-freeze` 仍由 Manager 打，但 Owner 已看过 Orchestrator 设计期复诊结果之前不打；Owner 看过业务体检仍然必要。D10 执行顺序第 4 步另写：Owner 看过正式引擎设计期复跑结果之后，才进入代码冻结。G2 仍是未开始。G3、G5、v3.1 冻结后再改规则、尝试预算 >60 仍须 Owner。不得删除或移动任何 tag，不得强推或改写 main。
+- 合入 main、新建 tag、删除已合入分支只由 Manager 执行（任务清单 §1，Owner 2026-10-24 常设授权）。Manager 可用 `--ff-only` 合入已通过评审的 `dev/v3-*`。D10（2026-10-25）已批准预注册 v3.1 的内容。Reviewer 已退回（2026-10-25，PR #33，结论 return）。v3.1 正文按退回项补字，且 Reviewer 复签为 `approve` 或 `approve_with_follow_up` 之后，Manager 才 `--ff-only` 合入 PR #32，并打 `milestone/v3.1-prereg-freeze`（D10 已授权这一步）。此前不合入 #32，不打该 tag，也不合入 #33。`milestone/v3-code-freeze` 仍由 Manager 打，但 Owner 已看过 Orchestrator 设计期复诊结果之前不打；Owner 看过业务体检仍然必要。D10 执行顺序第 4 步另写：Owner 看过正式引擎设计期复跑结果之后，才进入代码冻结。G2 仍是未开始。G3、G5、v3.1 冻结后再改规则、尝试预算 >60 仍须 Owner。不得删除或移动任何 tag，不得强推或改写 main。
 
 ## 门禁
 
@@ -37,9 +38,9 @@ Phase 2 看板。Manager、Dev、Reviewer 按已冻结的预注册 v3 执行。v
 | G3 | 跑全期（含 2016 后），写 `results/v3/LOCK` | Owner 批准，Reviewer 执行 | 未开始 |
 | G4 | 按 v3 §6、§7.3 出结论 | Reviewer | 未开始 |
 | G5 | 是否进入前向模拟盘、是否上真钱 | Owner | 未开始 |
-| v3.1 文本 | Reviewer 核对 `docs/prereg/etf-multiasset-rotation-prereg-v3.1.md` 可执行、无歧义。批准后 Manager `--ff-only` 合入 PR #32，并打 `milestone/v3.1-prereg-freeze`（D10 已授权内容与该 tag） | Owner 已批准内容；Reviewer 核对文本 | 待评审 |
+| v3.1 文本 | Reviewer 核对 `docs/prereg/etf-multiasset-rotation-prereg-v3.1.md` 可执行、无歧义。结论 return（PR #33）。补字并复签为 `approve` 或 `approve_with_follow_up` 之后，Manager 才 `--ff-only` 合入 PR #32，并打 `milestone/v3.1-prereg-freeze`（D10 已授权内容与该 tag）。此前不合入、不打该 tag | Owner 已批准内容；Reviewer 核对文本 | 退回 / 待补字 |
 
-G2 仍是未开始。不进入代码冻结，也不打 `milestone/v3-code-freeze`，直到 Owner 已看过 Orchestrator 设计期复诊结果。Owner 须看过业务体检这一条仍然有效。D10 文档执行顺序第 4 步写的是：Owner 看过正式引擎复跑结果，然后代码冻结，然后一次性检验（Owner 批准）。本看板只登记该句，G2 保持未开始。现行顺序见「D10」节：v3.1 文本待评审（PR #32）；冻结后的 Dev 工作未开始；PR #29 长历史防御资产与假期修复仍待评审，v3.1 冻结后再与 D10 对齐。本登记不合入 #29。`CBA00601` 名称对不上 v3 §3.2 的升级仍在「阻塞 / 待 Owner 决定」；D10 与 v3.1 文本都未点名该代码。L5 仍等待 G2 与 G3，此前不开分支、不跑全期。
+G2 仍是未开始。不进入代码冻结，也不打 `milestone/v3-code-freeze`，直到 Owner 已看过 Orchestrator 设计期复诊结果。Owner 须看过业务体检这一条仍然有效。D10 文档执行顺序第 4 步写的是：Owner 看过正式引擎复跑结果，然后代码冻结，然后一次性检验（Owner 批准）。本看板只登记该句，G2 保持未开始。现行顺序见「D10」节：v3.1 文本退回 / 待补字（评审 PR #33，所评为 PR #32）；冻结后的 Dev 工作在冻结之前保持阻塞；PR #29 长历史防御资产与假期修复仍待评审，v3.1 冻结后再与 D10 对齐。本登记不合入 #29，也不合入 #32、#33。`CBA00601` 名称对不上 v3 §3.2 的升级仍在「阻塞 / 待 Owner 决定」；D10 与 v3.1 文本都未点名该代码。L5 仍等待 G2 与 G3，此前不开分支、不跑全期。
 
 ## G1 预注册修订与冻结
 
@@ -52,20 +53,22 @@ G2 仍是未开始。不进入代码冻结，也不打 `milestone/v3-code-freeze
 - 冻结时测试: 351 跑，350 过，0 失败，1 跳过
 - 评审文件: `operations/reviews/2026-10-24-v3-prereg-review.md`（起点 `6f07a0f`；Owner 决定写入 `89d18be`）
 - 过程 PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/15 （分支已删除）
-- v3 冻结后，改 §3–§7 的规则、门槛、候选或预算即新版本，须 Owner。Owner 已于 2026-10-25 以 D10 批准 v3.1（补全标的池 + 单只 10% 离场）。文本待 Reviewer 核对，尚未冻结。见「D10」节。B1–B7 的决定见下方。登记表已随 L1 冻结在 main。
+- v3 冻结后，改 §3–§7 的规则、门槛、候选或预算即新版本，须 Owner。Owner 已于 2026-10-25 以 D10 批准 v3.1（补全标的池 + 单只 10% 离场）。Reviewer 已退回该文本，待补字，尚未冻结。见「D10」节。B1–B7 的决定见下方。登记表已随 L1 冻结在 main。
 
 ## D10 · 预注册 v3.1（Owner 2026-10-25，Asia/Taipei）
 
-Owner 批准预注册 v3.1。内容是：补全标的池（官方回溯历史在可得处可用）+ 单只 10% 离场。其他规则不变。本看板只登记。不改预注册正文，不改业务代码，不写 `results/v3/LOCK`，不打 tag，不合入 PR #32，也不合入 PR #29。
+Owner 批准预注册 v3.1。内容是：补全标的池（官方回溯历史在可得处可用）+ 单只 10% 离场。其他规则不变。Reviewer 已退回文本，状态为退回 / 待补字。本看板只登记。不改预注册正文，不改业务代码，不写 `results/v3/LOCK`，不打 tag，不合入 PR #32，不合入 PR #33，也不合入 PR #29。
 
 | 项 | 登记 |
 | --- | --- |
 | 决定 | D10，2026-10-25（Asia/Taipei）。v3.1 = 补全标的池（指数公司自己发布的回溯历史，可得则用，各容器一视同仁）+ 单只从持有期高点回撤 10% 离场，下一交易日收盘卖出，权重进现金。打分、N、频率、空位放现金、五条判据、预算 60，以及 v3.1 文本未改的条款，沿用 v3 |
 | 全文 | PR #32 的 `operations/planning/2026-10-25-d10-v3.1-approval.md`。尝试次数如何加上 Orchestrator 的 29 个诊断变体，以该记录和同 PR 的 v3.1 §6 为准 |
 | 文本 | PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/32 。分支 `cursor/v3.1-owner-context` @ `a5bf56a06e4a7ba25b1615792cdbb902a4fde0eb`。基线 main `1d8155bce361d6c09b248cd6497d83dc4bbd73d2`。范围是文档、SVG 和诊断脚本，无业务代码。规则文件 `docs/prereg/etf-multiasset-rotation-prereg-v3.1.md` |
-| 门 | Reviewer 核对上述 v3.1 文件可执行、无歧义。状态：待评审。批准前 Manager 不合入 #32，不打 `milestone/v3.1-prereg-freeze` |
-| 批准之后 | Manager `--ff-only` 合入 #32，并打 `milestone/v3.1-prereg-freeze`。D10 已授权这一步 |
-| 冻结之后的 Dev | 未开始。顺序：官方回溯历史，并保留发布日口径开关；2012-10-30 假期修复；v3.1 §4.5 单只离场；溢价接入执行链。然后 Reviewer 签收。再由正式引擎重跑设计期，对照 Orchestrator E2（A 臂、U-指数，设计期年化约 26.0%），差异须解释 |
+| 门 | Reviewer 已核对上述 v3.1 文件。结论 return。状态：退回 / 待补字。v3.1 正文补字，且 Reviewer 复签为 `approve` 或 `approve_with_follow_up` 之前，Manager 不对 #32 做 `--ff-only`，不打 `milestone/v3.1-prereg-freeze` |
+| 评审 | PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/33 。分支 `cursor/v3.1-prereg-review-7a9f` @ `fa825b7beccacda24004fdb52f48b3073fddf052`。基线 `cursor/v3.1-owner-context`（PR #32）。评审文件 `operations/reviews/2026-10-25-v3.1-prereg-review.md`。所评父提交 `a5bf56a06e4a7ba25b1615792cdbb902a4fde0eb`。本看板登记不合入 #33 |
+| 评审阻塞 | 升级 Owner / Orchestrator，在 v3.1 增量落字。Manager 不代决，也不改下方 2026-10-24 Owner 决定表。评审阻塞 B1：§3.1 U-指数「发布日起计入」与 §3.3 官方回溯进入池、R、s（E1 完整宇宙语义）。评审阻塞 B2：§4.5 每个 (N, 频率) 独立离场，与 §4.4 A 臂六组合成后的单一成交路径（E2 验收语义） |
+| 批准之后 | 尚未到达。补字且 Reviewer 复签之后，Manager `--ff-only` 合入 #32，并打 `milestone/v3.1-prereg-freeze`。D10 已授权这一步。现在不执行 |
+| 冻结之后的 Dev | 未开始，且在冻结之前保持阻塞。顺序仍是：官方回溯历史，并保留发布日口径开关；2012-10-30 假期修复；v3.1 §4.5 单只离场；溢价接入执行链。然后 Reviewer 签收。再由正式引擎重跑设计期，对照 Orchestrator E2（A 臂、U-指数，设计期年化约 26.0%），差异须解释。退回未解除前不开工 |
 | 新会话 | 先读 `docs/project-intake/owner-vision-and-principles.md`。该文件在 PR #32，随冻结合入 main |
 | PR #29 | 防御资产与假期修复仍是待评审。分支 `dev/v3-data-defensive-holiday` @ `c80aa56804c8927b762ada71b232c08a24b42fc5`。PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/29 。v3.1 冻结之后再与 D10 对齐。本看板登记不合入 #29 |
 | G2 | 未开始。`milestone/v3-code-freeze` 仍不进入，直到 Owner 已看过 Orchestrator 设计期复诊结果。Owner 看过业务体检仍然必要。D10 执行顺序第 4 步的原文是：Owner 看过正式引擎复跑结果，然后代码冻结，然后一次性检验（Owner 批准）。本登记只记录该句，不把 G2 标成进行中或已完成 |
@@ -78,7 +81,7 @@ Owner 批准预注册 v3.1。内容是：补全标的池（官方回溯历史在
 | --- | --- | --- | --- | --- | --- | --- |
 | L1 数据层 | 已合入 | Dev | —（分支已删） | 无 | 2026-10-25 | ff-only 合入 `cursor/v3-l1-rework-review-37d1`。main `05d8476`。PR #25、#26 已合入。无 tag，无 LOCK |
 | L2 回测引擎 | 已合入 | Dev | —（分支已删） | L1 已合入 | 2026-10-25 | ff-only 合入 `cursor/review-v3-l2-d546`。main `2b8ee0e`。PR #18、#19 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
-| L3 溢价模块 | 已合入 | Dev | —（分支已删） | L1 QDII 数据 | 2026-10-25 | ff-only 合入 `cursor/v3-l3-review-2249`。main `4cecfad`。PR #20、#21 已合入。无 tag，无 LOCK，无 2016+ 组合收益。`allocate_container` / `adjust_weights` 接入未开始，D10 排在 v3.1 冻结之后，见「D10」节 |
+| L3 溢价模块 | 已合入 | Dev | —（分支已删） | L1 QDII 数据 | 2026-10-25 | ff-only 合入 `cursor/v3-l3-review-2249`。main `4cecfad`。PR #20、#21 已合入。无 tag，无 LOCK，无 2016+ 组合收益。`allocate_container` / `adjust_weights` 接入未开始。D10 排在 v3.1 冻结之后；v3.1 已退回，冻结前不开工。见「D10」节 |
 | L4 评估层 | 已合入 | Dev | —（分支已删） | L2 | 2026-10-25 | ff-only 合入 `cursor/v3-l4-review-4337`。main `2f29d40`。PR #22、#23 已合入。无 tag，无 LOCK，无 2016+ 组合收益。非有限收益、覆盖缺口与「B 不差于 A」解释改为 G2 前置，未开始 |
 | L5 运行与报告 | 未开始 | Dev 运行 / Reviewer 判定 | n/a（待 G2/G3） | G2 + G3 | 2026-10-25 | 仍等待 G2 + G3。此前不开分支、不跑全期 |
 
@@ -184,7 +187,7 @@ Owner 批准预注册 v3.1。内容是：补全标的池（官方回溯历史在
 - 49 段事件清单与 15 项状态抽查为 Reviewer 结论。此处只登记，不作判定
 - 无 tag，无 `results/v3/LOCK`，无 2016 年起的组合收益
 - 合入当时不阻塞的后续（本合入未做）: 执行器接入 `allocate_container` / `adjust_weights`；§5.5 污染检验段比较；§7.1 归属 L4
-- 2026-10-25 Owner/Orchestrator 复核后：`allocate_container` / `adjust_weights` 接入 U-可交易执行链改为 G2 前置，未开始。同日 D10 把它列为 v3.1 冻结之后的 Dev 工作，仍未开始。见「D10」节。此处不改 L3 签收结论
+- 2026-10-25 Owner/Orchestrator 复核后：`allocate_container` / `adjust_weights` 接入 U-可交易执行链改为 G2 前置，未开始。同日 D10 把它列为 v3.1 冻结之后的 Dev 工作，仍未开始，且在 v3.1 复签并冻结之前保持阻塞。见「D10」节。此处不改 L3 签收结论
 
 ### L4 评估层
 
@@ -229,7 +232,7 @@ Owner 批准预注册 v3.1。内容是：补全标的池（官方回溯历史在
 
 来源：Owner 2026-10-25（Asia/Taipei）对 main `2f29d4066709b8f8958164bba7c9098cba2803e9` 的 Orchestrator 复核；同日 Owner 方向把设计期诊断与 G2 阻塞工作顺序写入本看板。该次登记时 main 尖端 `cff054b696e39a19884a08ab176e3bc7f402f280`。
 
-2026-10-25 D10 之后，派活以「D10」节为准。下列原登记保留：第 1 项 L1 返工已合入，不重开。第 7、第 8 项仍是待评审（PR #29）；v3.1 冻结后再与 D10 对齐，本登记不合入 #29。第 2 项溢价接入与第 8 项 2012-10-30 假期修复，在 D10 里属于冻结后的 Dev 工作，状态未开始。第 3、第 4、第 6 项未开始。第 5 项看板 PR #14 已合入。
+2026-10-25 D10 之后，派活以「D10」节为准。v3.1 文本已退回，冻结后的 Dev 工作在复签并冻结之前不开工。下列原登记保留：第 1 项 L1 返工已合入，不重开。第 7、第 8 项仍是待评审（PR #29）；v3.1 冻结后再与 D10 对齐，本登记不合入 #29。第 2 项溢价接入与第 8 项 2012-10-30 假期修复，在 D10 里属于冻结后的 Dev 工作，状态未开始，冻结前保持阻塞。第 3、第 4、第 6 项未开始。第 5 项看板 PR #14 已合入。
 
 诊断（Orchestrator 事实，Manager 只登记，不判定）：
 
@@ -240,19 +243,19 @@ Owner 批准预注册 v3.1。内容是：补全标的池（官方回溯历史在
 G2 阻塞工作顺序（Owner 2026-10-25 原序，保留备查。同日 D10 之后，派活以「D10」节为准）：
 
 1. 第 7 项长历史防御资产。Dev 已交付，待评审。Reviewer §3 签收未完成。合入时机在 v3.1 冻结之后，再与 D10 对齐。
-2. 第 8 项：2012-10-30 美国休市被当成 NDX 单日暴跌，以及海外底层同类假期/零缺口审计。与第 7 项同一交付，待评审。Reviewer §3 签收未完成。D10 把 2012-10-30 假期修复列为 v3.1 冻结后的 Dev 工作，现为未开始。
-3. 宇宙去重与溢价控制接线，并保持既有第 2–4 项。第 1 项 L1 返工（按底层指数归并）已合入，不重开。非阻塞 follow-up（5 个代码也出现在对应 S2 容器）仍只登记，不升为阻塞。第 2 项 `allocate_container` / `adjust_weights` 接入 U-可交易仍未开始。D10 将其列为 v3.1 冻结后的 Dev 工作。第 3 项剩余的数据工作，以及第 4 项「B 不差于 A」解释，仍未开始。
+2. 第 8 项：2012-10-30 美国休市被当成 NDX 单日暴跌，以及海外底层同类假期/零缺口审计。与第 7 项同一交付，待评审。Reviewer §3 签收未完成。D10 把 2012-10-30 假期修复列为 v3.1 冻结后的 Dev 工作，现为未开始，冻结前保持阻塞。
+3. 宇宙去重与溢价控制接线，并保持既有第 2–4 项。第 1 项 L1 返工（按底层指数归并）已合入，不重开。非阻塞 follow-up（5 个代码也出现在对应 S2 容器）仍只登记，不升为阻塞。第 2 项 `allocate_container` / `adjust_weights` 接入 U-可交易仍未开始，冻结前保持阻塞。D10 将其列为 v3.1 冻结后的 Dev 工作。第 3 项剩余的数据工作，以及第 4 项「B 不差于 A」解释，仍未开始。
 4. D10 已登记。它批准的是 v3.1 规则，不是进入代码冻结。G2 仍未开始。代码冻结仍等到 Owner 已看过 Orchestrator 设计期复诊结果。D10 执行顺序第 4 步写明：正式引擎复跑之后，Owner 看过复跑结果，然后才是代码冻结。设计期业务体检未开始。Owner 看过业务体检仍然必要。
 
-代码冻结：G2 仍是未开始。不打 `milestone/v3-code-freeze`，直到 Owner 已看过 Orchestrator 设计期复诊结果。Owner 须看过业务体检仍然有效。D10 执行顺序第 4 步的原文是：Owner 看过正式引擎复跑结果，然后代码冻结，然后一次性检验（Owner 批准）。此处只登记该句。第 7、第 8 项仍待 Reviewer §3 签收；v3.1 冻结后再与 D10 对齐，本登记不合入 PR #29。冻结后的 Dev 工作未开始，见「D10」节。L5 仍等待 G2 与 G3。本看板不打 tag，不写 `results/v3/LOCK`，不改业务代码，不改预注册正文。
+代码冻结：G2 仍是未开始。不打 `milestone/v3-code-freeze`，直到 Owner 已看过 Orchestrator 设计期复诊结果。Owner 须看过业务体检仍然有效。D10 执行顺序第 4 步的原文是：Owner 看过正式引擎复跑结果，然后代码冻结，然后一次性检验（Owner 批准）。此处只登记该句。第 7、第 8 项仍待 Reviewer §3 签收；v3.1 冻结后再与 D10 对齐，本登记不合入 PR #29。冻结后的 Dev 工作未开始，且在 v3.1 复签并冻结之前保持阻塞，见「D10」节。L5 仍等待 G2 与 G3。本看板不打 tag，不写 `results/v3/LOCK`，不改业务代码，不改预注册正文。
 
 1. **L1 返工** — 已合入。`--ff-only` 合入评审尖端 `cursor/v3-l1-rework-review-37d1` @ `05d84760ece060c757008cb359b791cef51c2995`（rebase 到当时 main `a3811b98a80bf5e364a3aae1ffa1526d9b60fa73`；交付原 `7f055a18d7124e9dc91f884ffd53f37c3333ed1a` → `c5d5cb29bc51e61a0b3e1e31ac337c998464e95a`，评审原 `adbc20c1f5e9238bf9d2d78d967ffd1ec31aa4ad` → `05d8476`）。PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/25 与 https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/26 已 MERGED。分支 `dev/v3-L1-rework`、`cursor/v3-l1-rework-review-37d1` 已删除。容器 137→81；`universe.toml` SHA256 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`。无 tag，无 `results/v3/LOCK`。非阻塞 follow-up（只登记、不判定）：全文件 5 个代码也在对应 S2 容器。字面「任意代码只一次」不完全一致；主臂唯一成立。
-2. **L3 遗留 1** — 未开始。D10 将其列为 v3.1 冻结之后的 Dev 工作（溢价接入执行链）。见「D10」节。Dev：`allocate_container` / `adjust_weights` 接入 U-可交易执行链。
+2. **L3 遗留 1** — 未开始，冻结前保持阻塞。D10 将其列为 v3.1 冻结之后的 Dev 工作（溢价接入执行链）。见「D10」节。Dev：`allocate_container` / `adjust_weights` 接入 U-可交易执行链。退回未解除前不开工。
 3. **数据** — 未开始。长历史黄金、中债国债总财富在第 7 项；2012-10-29 的纳指收盘 0 在第 8 项，现与第 7 项一并待评审。D10 将冻结后的数据工作定为官方回溯历史 + 发布日口径开关，对齐放在 v3.1 冻结之后。本项仍留：2006–2010 覆盖；创业板指与美股人民币全收益的发布序列仍缺失，Dev 已在 PR #29 写明。Dev 在同一 PR 报告 `ndx100` 2012-11-01 不再是 +inf、2012-10-30 人民币收益不再是 −100%，评估层没有把非有限收益填 0。此处只登记该报告，不把本项改为完成，也不判定。补不齐则写明「缺失 → 对判定的影响」。
 4. **「B 不差于 A」（§7.1）解释** — 未开始。工作顺序第 3 步。写入 G2 签收文件，预注册正文不改。须在 G3 前写定：① 的 36/60 月两个比例都 ≥ A；③ 通过段数 ≥ A 且最差一段超额 ≥ A。负责人：Reviewer 起草进 G2 签收，Manager 登记。
 5. **看板 PR #14** — 已合入。https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/14 。不打 tag，不写 LOCK。
 6. **业务体检（G2 前必须，Owner 要看）** — 未开始。
-   - 时机：未开始。D10 未取消「Owner 须看过业务体检」。出具排在 v3.1 冻结、冻结后 Dev 工作与 Reviewer 签收之后。正式引擎设计期复跑对照 E2 见「D10」节。PR #29 仍待评审，对齐放在 v3.1 冻结之后
+   - 时机：未开始。D10 未取消「Owner 须看过业务体检」。出具排在 v3.1 冻结、冻结后 Dev 工作与 Reviewer 签收之后。v3.1 现为退回 / 待补字，这些步骤都还没到。正式引擎设计期复跑对照 E2 见「D10」节。PR #29 仍待评审，对齐放在 v3.1 冻结之后
    - 负责人：Dev 出具 `operations/reports/v3-design-period-brief.md`（附图）
    - 范围：设计期 end≤2015-12-31；不得含 2016 年起组合收益；数字只作参考不作判定
    - 内容（大白话）：A 臂 vs BM-主净值图 + 逐年收益；持仓面积图（大类/主要容器）+ 平均现金占比 + 年换手；仓位效应与选择效应拆分；各期可选标的数量；2008 与 2015 的持仓，以及这两段大跌期间的持仓与回撤；相对 BM-主归因（时期/大类）；判据①③④设计期数字（仅参考）
@@ -270,8 +273,8 @@ G2 阻塞工作顺序（Owner 2026-10-25 原序，保留备查。同日 D10 之�
      - 分支上 `config/v3/universe.toml` SHA256 `04ff3572ebd82a5159eaccced0bed5bc3531b732a1b11025f86021ebd0454be0`。这不是 main 上的登记表。main 上仍是 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`
      - `data/market.sqlite` 写入后 SHA256 `3e3e6f1d594586da2abf28db5fa88b05c1cc91fa29adf061fc699e1b8d4bc1d6`
      - 创业板指、美股人民币全收益的发布序列仍缺失。Dev 已在 PR #29 写明
-   - 溢价接线与设计期业务体检都未开始。D10 把溢价接入执行链放在 v3.1 冻结之后。业务体检仍须 Owner 看过，出具见第 6 项
-8. **海外假期 / 零缺口** — 待评审。负责人：Reviewer。§3 签收未完成。与第 7 项同一分支、同一 PR、同一尖端 `c80aa56804c8927b762ada71b232c08a24b42fc5`。D10 将 2012-10-30 假期修复列为 v3.1 冻结后的 Dev 工作，现为未开始。本登记不合入 PR #29。
+   - 溢价接线与设计期业务体检都未开始。D10 把溢价接入执行链放在 v3.1 冻结之后；v3.1 已退回，冻结前不开工。业务体检仍须 Owner 看过，出具见第 6 项
+8. **海外假期 / 零缺口** — 待评审。负责人：Reviewer。§3 签收未完成。与第 7 项同一分支、同一 PR、同一尖端 `c80aa56804c8927b762ada71b232c08a24b42fc5`。D10 将 2012-10-30 假期修复列为 v3.1 冻结后的 Dev 工作，现为未开始，冻结前保持阻塞。本登记不合入 PR #29。
    - 先前登记的现象仍保留：2012-10-30 美国休市被当成 NDX 暴跌（单日 -16.5%）。修法仍沿用已冻结的 §3.3：容器当日无有效收盘价时，用最近一个有效收盘价（例如美股或港股休市）。不改预注册
    - Dev 登记的事实（只登记，不判定）：纳指假期收盘 0 在 2012-10-29 已删除。海外底层非正收盘审计只此一行
    - 未合入 main，无 tag，无 `results/v3/LOCK`
@@ -279,11 +282,16 @@ G2 阻塞工作顺序（Owner 2026-10-25 原序，保留备查。同日 D10 之�
 
 ## 阻塞 / 待 Owner 决定
 
-D10 已由 Owner 于 2026-10-25 批准，见「D10」节。Manager 按该决定登记。Reviewer 批准前不合入 PR #32，不打 `milestone/v3.1-prereg-freeze`。Manager 不代决 G3、G5、v3.1 冻结后再改规则，也不代决尝试预算超过 60。
+D10 已由 Owner 于 2026-10-25 批准内容，见「D10」节。Manager 只登记。Reviewer 对 PR #32 的结论是 return（退回 / 待补字），评审在 PR #33。v3.1 正文补字且 Reviewer 复签之前，不合入 PR #32，不打 `milestone/v3.1-prereg-freeze`。本登记也不合入 PR #33、不合入 PR #29。Manager 不代决 G3、G5、v3.1 冻结后再改规则，也不代决尝试预算超过 60。Manager 不代决下面两条文本歧义。
+
+本次升级 Owner / Orchestrator：由他们在 v3.1 增量里落字。评审阻塞 B1、B2 指这次 v3.1 文本退回。下方表格 B1–B7 仍是 2026-10-24 的 Owner 决定。本登记不改那张表。
+
+- 评审阻塞 B1：§3.1 U-指数「发布日起计入」与 §3.3 官方回溯进入池、R、s（E1 完整宇宙语义）。
+- 评审阻塞 B2：§4.5 每个 (N, 频率) 独立离场，与 §4.4 A 臂六组合成后的单一成交路径（E2 验收语义）。
 
 仍待 Owner 的名称问题，不是代码冻结：中债国债总财富 `CBA00601` 自 2002-01-04 起已在库，名称对不上预注册 v3 §3.2 的两只债券容器（10 年国债、5 年国债，中债财富指数）。Dev 未放入池。第 7 项已写明：对不上、因而要新容器或改规则时停手，由 Manager 升级 Owner。v3.1 文本未点名该代码。D10 批准的是官方回溯与单只 10% 离场。本看板不把 `CBA00601` 放进池。放进池需要规则点名。B1–B7 已由 Owner 于 2026-10-24 决定，写入冻结预注册与 `operations/reviews/2026-10-24-v3-prereg-review.md`（`89d18be`）。
 
-G2 前的事项见「G2 前置」与「D10」。第 1 项已合入，不重开。第 7 项长历史防御资产与第 8 项假期/零缺口仍为待评审（PR #29，尖端 `c80aa56804c8927b762ada71b232c08a24b42fc5`，基线 main `4c6d4b0`）。Reviewer §3 签收未完成。v3.1 冻结后再与 D10 对齐；本登记不合入 #29。冻结后的 Dev 工作（官方回溯与发布日开关、2012-10-30 假期修复、§4.5 单只离场、溢价接入执行链）未开始。第 6 项业务体检未开始。代码冻结仍等到 Owner 看过 Orchestrator 设计期复诊结果。D10 执行顺序第 4 步写明，还要等 Owner 看过正式引擎复跑结果。Owner 看过业务体检仍然必要。这些满足之前，G2 保持未开始。
+G2 前的事项见「G2 前置」与「D10」。第 1 项已合入，不重开。第 7 项长历史防御资产与第 8 项假期/零缺口仍为待评审（PR #29，尖端 `c80aa56804c8927b762ada71b232c08a24b42fc5`，基线 main `4c6d4b0`）。Reviewer §3 签收未完成。v3.1 冻结后再与 D10 对齐；本登记不合入 #29。冻结后的 Dev 工作（官方回溯与发布日开关、2012-10-30 假期修复、§4.5 单只离场、溢价接入执行链）未开始，v3.1 退回期间继续阻塞，直到冻结。第 6 项业务体检未开始。代码冻结仍等到 Owner 看过 Orchestrator 设计期复诊结果。D10 执行顺序第 4 步写明，还要等 Owner 看过正式引擎复跑结果。Owner 看过业务体检仍然必要。这些满足之前，G2 保持未开始。
 
 | # | Owner 决定 |
 | --- | --- |
@@ -297,6 +305,8 @@ G2 前的事项见「G2 前置」与「D10」。第 1 项已合入，不重开�
 
 ## 最近更新
 
-2026-10-25（Asia/Taipei），Manager。登记 Owner 决定 D10。预注册 v3.1 = 补全标的池（官方回溯历史在可得处可用）+ 单只 10% 离场，其他规则不变。PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/32 ，分支 `cursor/v3.1-owner-context` @ `a5bf56a06e4a7ba25b1615792cdbb902a4fde0eb`，基线 main `1d8155bce361d6c09b248cd6497d83dc4bbd73d2`。范围是文档、SVG 和诊断脚本，无业务代码。Reviewer 核对 `docs/prereg/etf-multiasset-rotation-prereg-v3.1.md` 可执行、无歧义，状态待评审。批准后 Manager `--ff-only` 合入 #32，并打 `milestone/v3.1-prereg-freeze`（D10 已授权）。冻结后的 Dev 工作未开始：官方回溯历史 + 发布日口径开关；2012-10-30 假期修复；v3.1 §4.5 单只离场；溢价接入执行链；随后 Reviewer 签收；正式引擎重跑设计期，对照 Orchestrator E2（A 臂、U-指数，设计期年化约 26.0%）。新会话先读 `docs/project-intake/owner-vision-and-principles.md`（文件在 PR #32）。PR #29 防御资产与假期修复仍待评审，v3.1 冻结后再与 D10 对齐；本登记不合入 #29。G2 与 `milestone/v3-code-freeze` 仍未进入，直到 Owner 已看过 Orchestrator 设计期复诊结果；Owner 看过业务体检仍然必要。D10 执行顺序第 4 步另写：Owner 看过正式引擎复跑结果之后才是代码冻结。此处只登记该句。登记时 main 为 `1d8155bce361d6c09b248cd6497d83dc4bbd73d2`。无 tag，无 `results/v3/LOCK`，不改业务代码，不改预注册正文。
+2026-10-25（Asia/Taipei），Manager。登记 Reviewer 对 D10 / PR #32 的结论：return（退回 / 待补字）。评审 PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/33 ，分支 `cursor/v3.1-prereg-review-7a9f` @ `fa825b7beccacda24004fdb52f48b3073fddf052`，基线 `cursor/v3.1-owner-context`。评审文件 `operations/reviews/2026-10-25-v3.1-prereg-review.md`。所评父提交 `a5bf56a06e4a7ba25b1615792cdbb902a4fde0eb`。Manager 只登记，不代决两条歧义，并升级 Owner / Orchestrator 在 v3.1 增量里落字。评审阻塞 B1：§3.1 U-指数「发布日起计入」与 §3.3 官方回溯进入池、R、s（E1 完整宇宙语义）。评审阻塞 B2：§4.5 每个 (N, 频率) 独立离场，与 §4.4 A 臂六组合成后的单一成交路径（E2 验收语义）。评审阻塞 B1、B2 只指这次 v3.1 文本退回；2026-10-24 Owner 决定表的 B1–B7 保持原样。v3.1 正文补字且 Reviewer 复签为 `approve` 或 `approve_with_follow_up` 之前：不对 PR #32 做 `--ff-only`，不打 `milestone/v3.1-prereg-freeze`。本登记不合入 #32、#33、#29。冻结后的 Dev 工作仍阻塞，直到冻结。G2 与 `milestone/v3-code-freeze` 仍未进入。登记时 main 为 `81a1e78414b7b44d213fbb847ff8ad0f84c4dea3`。无 tag，无 `results/v3/LOCK`，不改业务代码，不改预注册正文。
 
-此前同日登记（防御资产与假期；现行顺序以上一条和「D10」节为准）：2026-10-25（Asia/Taipei），Manager。登记 Dev 交付 Owner 同日工作顺序①+②（第 7 项长历史防御资产、第 8 项假期/零缺口），状态改为待评审。分支 `dev/v3-data-defensive-holiday` @ `c80aa56804c8927b762ada71b232c08a24b42fc5`，基线 main `4c6d4b086d28bc58e1ec107210ce1b8125cea4c5`。PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/29 。未合入，无 tag，无 `results/v3/LOCK`。只登记、不判定：`Au99.99` partial，自 2008-08-11；`CBA04501` / `CBA03101` 自 2008-01-02；`CBA00601` 自 2002-01-04 在库、不在池内，名称对不上 §3.2，按第 7 项既有规则升级 Owner（v3.1，Manager 不代决）；纳指 2012-10-29 收盘 0 已删除；海外非正收盘审计只此一行；分支上 `universe.toml` SHA256 `04ff3572ebd82a5159eaccced0bed5bc3531b732a1b11025f86021ebd0454be0`（main 上仍是 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`）；`data/market.sqlite` 写入后 SHA256 `3e3e6f1d594586da2abf28db5fa88b05c1cc91fa29adf061fc699e1b8d4bc1d6`；创业板指与美股人民币全收益发布序列仍缺失，已在该 PR 写明。Reviewer §3 签收未完成。溢价接线与设计期业务体检仍未开始，等签收并合入之后。G2 与 `milestone/v3-code-freeze` 仍等 Owner 看过 Orchestrator 设计期复诊；看过业务体检仍然必要。登记时本看板所在 main 为 `4c6d4b0`。L5 仍等待 G2 与 G3。
+此前同日登记（D10 批准；当时 v3.1 文本待评审。现行结论见上一条与「D10」节）：2026-10-25（Asia/Taipei），Manager。登记 Owner 决定 D10。预注册 v3.1 = 补全标的池（官方回溯历史在可得处可用）+ 单只 10% 离场，其他规则不变。PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/32 ，分支 `cursor/v3.1-owner-context` @ `a5bf56a06e4a7ba25b1615792cdbb902a4fde0eb`，基线 main `1d8155bce361d6c09b248cd6497d83dc4bbd73d2`。范围是文档、SVG 和诊断脚本，无业务代码。Reviewer 核对 `docs/prereg/etf-multiasset-rotation-prereg-v3.1.md` 可执行、无歧义，状态待评审。批准后 Manager `--ff-only` 合入 #32，并打 `milestone/v3.1-prereg-freeze`（D10 已授权）。冻结后的 Dev 工作未开始：官方回溯历史 + 发布日口径开关；2012-10-30 假期修复；v3.1 §4.5 单只离场；溢价接入执行链；随后 Reviewer 签收；正式引擎重跑设计期，对照 Orchestrator E2（A 臂、U-指数，设计期年化约 26.0%）。新会话先读 `docs/project-intake/owner-vision-and-principles.md`（文件在 PR #32）。PR #29 防御资产与假期修复仍待评审，v3.1 冻结后再与 D10 对齐；本登记不合入 #29。G2 与 `milestone/v3-code-freeze` 仍未进入，直到 Owner 已看过 Orchestrator 设计期复诊结果；Owner 看过业务体检仍然必要。D10 执行顺序第 4 步另写：Owner 看过正式引擎复跑结果之后才是代码冻结。此处只登记该句。登记时 main 为 `1d8155bce361d6c09b248cd6497d83dc4bbd73d2`。无 tag，无 `results/v3/LOCK`，不改业务代码，不改预注册正文。
+
+此前同日登记（防御资产与假期；现行顺序以本文件最近一条和「D10」节为准）：2026-10-25（Asia/Taipei），Manager。登记 Dev 交付 Owner 同日工作顺序①+②（第 7 项长历史防御资产、第 8 项假期/零缺口），状态改为待评审。分支 `dev/v3-data-defensive-holiday` @ `c80aa56804c8927b762ada71b232c08a24b42fc5`，基线 main `4c6d4b086d28bc58e1ec107210ce1b8125cea4c5`。PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/29 。未合入，无 tag，无 `results/v3/LOCK`。只登记、不判定：`Au99.99` partial，自 2008-08-11；`CBA04501` / `CBA03101` 自 2008-01-02；`CBA00601` 自 2002-01-04 在库、不在池内，名称对不上 §3.2，按第 7 项既有规则升级 Owner（v3.1，Manager 不代决）；纳指 2012-10-29 收盘 0 已删除；海外非正收盘审计只此一行；分支上 `universe.toml` SHA256 `04ff3572ebd82a5159eaccced0bed5bc3531b732a1b11025f86021ebd0454be0`（main 上仍是 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`）；`data/market.sqlite` 写入后 SHA256 `3e3e6f1d594586da2abf28db5fa88b05c1cc91fa29adf061fc699e1b8d4bc1d6`；创业板指与美股人民币全收益发布序列仍缺失，已在该 PR 写明。Reviewer §3 签收未完成。溢价接线与设计期业务体检仍未开始，等签收并合入之后。G2 与 `milestone/v3-code-freeze` 仍等 Owner 看过 Orchestrator 设计期复诊；看过业务体检仍然必要。登记时本看板所在 main 为 `4c6d4b0`。L5 仍等待 G2 与 G3。
