@@ -55,7 +55,7 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 | L1 数据层 | 已合入 | Dev | —（分支已删） | 无 | 2026-10-24 | ff-only 合入 `review/v3-L1-sign`。main `98117155`。PR #16、#17 已合入。无回测，无 tag 变更 |
 | L2 回测引擎 | 已合入 | Dev | —（分支已删） | L1 已合入 | 2026-10-25 | ff-only 合入 `cursor/review-v3-l2-d546`。main `2b8ee0e`。PR #18、#19 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
 | L3 溢价模块 | 已合入 | Dev | —（分支已删） | L1 QDII 数据 | 2026-10-25 | ff-only 合入 `cursor/v3-l3-review-2249`。main `4cecfad`。PR #20、#21 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
-| L4 评估层 | 待评审 | Reviewer | `dev/v3-L4` | L2 | 2026-10-25 | `9ad9e6a`，基线 main `4cecfad`。PR #22。未合入，无 tag，无 LOCK |
+| L4 评估层 | 已合入 | Dev | —（分支已删） | L2 | 2026-10-25 | ff-only 合入 `cursor/v3-l4-review-4337`。main `2f29d40`。PR #22、#23 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
 | L5 运行与报告 | 未开始 | Dev 运行 / Reviewer 判定 | n/a（待 G2/G3） | G2 + G3 | — | G2、G3 之前不开分支、不跑全期 |
 
 ## 子任务
@@ -158,15 +158,17 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 - [ ] 随机游走、噪声候选集、公开示例三项核对
 - [ ] 设计期 ①②③ 交 Reviewer 独立复算
 
-待评审。
+已合入 main（`--ff-only`，来源 `cursor/v3-l4-review-4337`）:
 
-- 分支 `dev/v3-L4` @ `9ad9e6a`（`9ad9e6afbcf99353202776ca5e0e12c0171cab6f`），基线 main `4cecfad`
-- PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/22
-- 范围: §6 五条判据 + §7.1/§7.2（滚动前推/过拟合/稳健性）。设计期 end≤2015。设计期不判 `formal_pass`。收益日 >2015-12-31 拒绝
-- 复核入口: `criterion_1` / `criterion_2` / `criterion_3`
-- Dev 报告: 439 跑 / 0 失败 / 1 跳过（L4 28）。此处只登记报告，不作判定
-- 未合入 main，无 tag，无 `results/v3/LOCK`
-- 合入等 Reviewer 独立复算设计期 ①②③ 通过后，由 Manager `--ff-only`
+- main: `2f29d4066709b8f8958164bba7c9098cba2803e9`
+- PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/22 与 https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/23 已合入
+- 分支 `dev/v3-L4`（原指向 `9ad9e6afbcf99353202776ca5e0e12c0171cab6f`）、`cursor/v3-l4-review-4337`（原指向 `2f29d4066709b8f8958164bba7c9098cba2803e9`）已删除
+- 交付提交 `9ad9e6a`；签收 `2f29d40`（评审 `operations/reviews/2026-10-25-v3-L4.md`，approve_with_follow_up）
+- 基线 main `4cecfad`
+- 合入前测试（评审记录）: 439 跑，0 失败，1 跳过（L4 28）
+- 设计期 ①②③ 为 Reviewer 工程核对。此处只登记，不作判定
+- 无 tag，无 `results/v3/LOCK`，无 2016 年起的组合收益
+- 不阻塞的后续（本合入未做，只登记、不判定）: (1) `criterion_2` 原始 pnl 含 NaN/inf、`book.net` 为 NaN；(2) 2006–2010 段未覆盖全段；(3) G3 全池 1,000 次随机对照；(4) B 臂相对 A 不自动判定
 
 ### L5 运行与报告
 
@@ -198,4 +200,4 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 ## 最近更新
 
-2026-10-25，Manager，L4 改为待评审：`dev/v3-L4` @ `9ad9e6a`（基线 main `4cecfad`），PR #22。未合入 main，无 tag，无 LOCK。合入等 Reviewer 独立复算设计期 ①②③ 通过后由 Manager ff-only。
+2026-10-25，Manager，L4 `--ff-only` 合入 main `2f29d4066709b8f8958164bba7c9098cba2803e9`。PR #22、#23 已合入。Reviewer 结论 approve_with_follow_up（只登记，不判定）。分支 `dev/v3-L4`、`cursor/v3-l4-review-4337` 已删除。无 tag，无 LOCK，无 2016 年起的组合收益。
