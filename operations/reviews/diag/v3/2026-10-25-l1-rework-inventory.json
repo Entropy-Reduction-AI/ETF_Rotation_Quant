@@ -1,0 +1,1671 @@
+{
+  "universe_sha256": "96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a",
+  "n_containers": 81,
+  "counts_by_asset_class": {
+    "A股宽基": 5,
+    "A股红利": 1,
+    "A股行业": 10,
+    "S2": 16,
+    "债券": 2,
+    "商品": 3,
+    "港股": 2,
+    "现金": 1,
+    "美股和全球主题": 39,
+    "美股宽基": 2
+  },
+  "counts_by_arm": {
+    "main": 65,
+    "S2": 16
+  },
+  "main_arm_containers": 65,
+  "s2_containers": 16,
+  "validate_errors": [],
+  "duplicate_main_errors": [],
+  "execution_rows": 129,
+  "unique_execution_codes": 124,
+  "file_level_duplicate_codes": {
+    "510300": [
+      {
+        "container": "csi300",
+        "arm": "main"
+      },
+      {
+        "container": "s2-沪深300",
+        "arm": "S2"
+      }
+    ],
+    "510500": [
+      {
+        "container": "csi500",
+        "arm": "main"
+      },
+      {
+        "container": "s2-中证500",
+        "arm": "S2"
+      }
+    ],
+    "512100": [
+      {
+        "container": "csi1000",
+        "arm": "main"
+      },
+      {
+        "container": "s2-中证1000",
+        "arm": "S2"
+      }
+    ],
+    "159915": [
+      {
+        "container": "chinext",
+        "arm": "main"
+      },
+      {
+        "container": "s2-创业板",
+        "arm": "S2"
+      }
+    ],
+    "510880": [
+      {
+        "container": "csi-dividend",
+        "arm": "main"
+      },
+      {
+        "container": "s2-红利",
+        "arm": "S2"
+      }
+    ]
+  },
+  "main_arm_cross_container_duplicates": [],
+  "list_date_missing_execution_rows": 74,
+  "list_date_missing_unique_codes": 70,
+  "spot_check_orchestrator_examples": {
+    "159741": {
+      "expected": "hstech",
+      "containers": [
+        "hstech"
+      ],
+      "ok": true
+    },
+    "513130": {
+      "expected": "hstech",
+      "containers": [
+        "hstech"
+      ],
+      "ok": true
+    },
+    "158042": {
+      "expected": "hstech",
+      "containers": [
+        "hstech"
+      ],
+      "ok": true
+    },
+    "513260": {
+      "expected": "hstech",
+      "containers": [
+        "hstech"
+      ],
+      "ok": true
+    },
+    "164705": {
+      "expected": "hsi",
+      "containers": [
+        "hsi"
+      ],
+      "ok": true
+    },
+    "159660": {
+      "expected": "ndx100",
+      "containers": [
+        "ndx100"
+      ],
+      "ok": true
+    },
+    "160213": {
+      "expected": "ndx100",
+      "containers": [
+        "ndx100"
+      ],
+      "ok": true
+    },
+    "513870": {
+      "expected": "ndx100",
+      "containers": [
+        "ndx100"
+      ],
+      "ok": true
+    }
+  },
+  "qdii_dash_code_containers": [],
+  "inventory": [
+    {
+      "id": "csi300",
+      "arm": "main",
+      "asset_class": "A股宽基",
+      "name": "沪深300",
+      "research_index_code": "H00300",
+      "research_publish_date": "2005-04-08",
+      "execution": [
+        {
+          "code": "510300",
+          "list_date": "取不到",
+          "track": "沪深300指数"
+        }
+      ],
+      "execution_primary_code": "510300"
+    },
+    {
+      "id": "csi500",
+      "arm": "main",
+      "asset_class": "A股宽基",
+      "name": "中证500",
+      "research_index_code": "H00905",
+      "research_publish_date": "2007-01-15",
+      "execution": [
+        {
+          "code": "510500",
+          "list_date": "取不到",
+          "track": "中证500指数"
+        }
+      ],
+      "execution_primary_code": "510500"
+    },
+    {
+      "id": "csi1000",
+      "arm": "main",
+      "asset_class": "A股宽基",
+      "name": "中证1000",
+      "research_index_code": "H00852",
+      "research_publish_date": "2014-10-17",
+      "execution": [
+        {
+          "code": "512100",
+          "list_date": "取不到",
+          "track": "中证1000指数"
+        }
+      ],
+      "execution_primary_code": "512100"
+    },
+    {
+      "id": "chinext",
+      "arm": "main",
+      "asset_class": "A股宽基",
+      "name": "创业板指",
+      "research_index_code": "取不到",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "159915",
+          "list_date": "2011-12-09",
+          "track": "创业板指数(价格)"
+        }
+      ],
+      "execution_primary_code": "159915"
+    },
+    {
+      "id": "star50",
+      "arm": "main",
+      "asset_class": "A股宽基",
+      "name": "科创50",
+      "research_index_code": "000688",
+      "research_publish_date": "2020-07-23",
+      "execution": [
+        {
+          "code": "588000",
+          "list_date": "取不到",
+          "track": "上证科创板50成份指数"
+        }
+      ],
+      "execution_primary_code": "588000"
+    },
+    {
+      "id": "allshare-energy",
+      "arm": "main",
+      "asset_class": "A股行业",
+      "name": "中证全指能源",
+      "research_index_code": "H00986",
+      "research_publish_date": "2011-08-02",
+      "execution": [],
+      "execution_primary_code": null
+    },
+    {
+      "id": "allshare-materials",
+      "arm": "main",
+      "asset_class": "A股行业",
+      "name": "中证全指原材料",
+      "research_index_code": "H00987",
+      "research_publish_date": "2011-08-02",
+      "execution": [
+        {
+          "code": "159944",
+          "list_date": "2015-07-06",
+          "track": "中证全指原材料指数"
+        }
+      ],
+      "execution_primary_code": "159944"
+    },
+    {
+      "id": "allshare-industrials",
+      "arm": "main",
+      "asset_class": "A股行业",
+      "name": "中证全指工业",
+      "research_index_code": "H00988",
+      "research_publish_date": "2011-08-02",
+      "execution": [],
+      "execution_primary_code": null
+    },
+    {
+      "id": "allshare-discretionary",
+      "arm": "main",
+      "asset_class": "A股行业",
+      "name": "中证全指可选消费",
+      "research_index_code": "H00989",
+      "research_publish_date": "2011-08-02",
+      "execution": [
+        {
+          "code": "159936",
+          "list_date": "2014-06-25",
+          "track": "中证全指可选消费指数"
+        }
+      ],
+      "execution_primary_code": "159936"
+    },
+    {
+      "id": "allshare-staples",
+      "arm": "main",
+      "asset_class": "A股行业",
+      "name": "中证全指主要消费",
+      "research_index_code": "H00990",
+      "research_publish_date": "2011-08-02",
+      "execution": [],
+      "execution_primary_code": null
+    },
+    {
+      "id": "allshare-healthcare",
+      "arm": "main",
+      "asset_class": "A股行业",
+      "name": "中证全指医药卫生",
+      "research_index_code": "H00991",
+      "research_publish_date": "2011-08-02",
+      "execution": [],
+      "execution_primary_code": null
+    },
+    {
+      "id": "allshare-financials-re",
+      "arm": "main",
+      "asset_class": "A股行业",
+      "name": "中证全指金融地产",
+      "research_index_code": "H00992",
+      "research_publish_date": "2011-08-02",
+      "execution": [
+        {
+          "code": "159940",
+          "list_date": "2015-04-17",
+          "track": "中证全指金融地产指数"
+        }
+      ],
+      "execution_primary_code": "159940"
+    },
+    {
+      "id": "allshare-it",
+      "arm": "main",
+      "asset_class": "A股行业",
+      "name": "中证全指信息技术",
+      "research_index_code": "H00993",
+      "research_publish_date": "2011-08-02",
+      "execution": [],
+      "execution_primary_code": null
+    },
+    {
+      "id": "allshare-communication",
+      "arm": "main",
+      "asset_class": "A股行业",
+      "name": "中证全指通信服务",
+      "research_index_code": "H00994",
+      "research_publish_date": "2011-08-02",
+      "execution": [],
+      "execution_primary_code": null
+    },
+    {
+      "id": "allshare-utilities",
+      "arm": "main",
+      "asset_class": "A股行业",
+      "name": "中证全指公用事业",
+      "research_index_code": "H00995",
+      "research_publish_date": "2011-08-02",
+      "execution": [],
+      "execution_primary_code": null
+    },
+    {
+      "id": "csi-dividend",
+      "arm": "main",
+      "asset_class": "A股红利",
+      "name": "中证红利全收益",
+      "research_index_code": "H00922",
+      "research_publish_date": "2008-05-26",
+      "execution": [
+        {
+          "code": "510880",
+          "list_date": "取不到",
+          "track": "上证红利指数"
+        },
+        {
+          "code": "515180",
+          "list_date": "取不到",
+          "track": "中证红利指数"
+        }
+      ],
+      "execution_primary_code": "510880"
+    },
+    {
+      "id": "hsi",
+      "arm": "main",
+      "asset_class": "港股",
+      "name": "恒生指数",
+      "research_index_code": "HSI",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "159920",
+          "list_date": "2012-10-22",
+          "track": "恒生指数"
+        },
+        {
+          "code": "160924",
+          "list_date": "2017-08-28",
+          "track": "恒生指数"
+        },
+        {
+          "code": "164705",
+          "list_date": "2015-04-13",
+          "track": "恒生指数"
+        },
+        {
+          "code": "513210",
+          "list_date": "取不到",
+          "track": "恒生指数"
+        }
+      ],
+      "execution_primary_code": "159920"
+    },
+    {
+      "id": "hstech",
+      "arm": "main",
+      "asset_class": "港股",
+      "name": "恒生科技",
+      "research_index_code": "HSTECH",
+      "research_publish_date": "2020-07-27",
+      "execution": [
+        {
+          "code": "513130",
+          "list_date": "取不到",
+          "track": "恒生科技指数"
+        },
+        {
+          "code": "513180",
+          "list_date": "取不到",
+          "track": "恒生科技指数"
+        },
+        {
+          "code": "158042",
+          "list_date": "2026-09-24",
+          "track": "恒生科技指数"
+        },
+        {
+          "code": "159740",
+          "list_date": "2021-05-27",
+          "track": "恒生科技指数"
+        },
+        {
+          "code": "159741",
+          "list_date": "2021-06-03",
+          "track": "恒生科技指数"
+        },
+        {
+          "code": "159742",
+          "list_date": "2021-05-25",
+          "track": "恒生科技指数"
+        },
+        {
+          "code": "513010",
+          "list_date": "取不到",
+          "track": "恒生科技指数"
+        },
+        {
+          "code": "513260",
+          "list_date": "取不到",
+          "track": "恒生科技指数"
+        },
+        {
+          "code": "513380",
+          "list_date": "取不到",
+          "track": "恒生科技指数"
+        },
+        {
+          "code": "513580",
+          "list_date": "取不到",
+          "track": "恒生科技指数"
+        },
+        {
+          "code": "513890",
+          "list_date": "取不到",
+          "track": "恒生科技指数"
+        },
+        {
+          "code": "520570",
+          "list_date": "取不到",
+          "track": "恒生科技指数"
+        },
+        {
+          "code": "520590",
+          "list_date": "取不到",
+          "track": "恒生科技指数"
+        },
+        {
+          "code": "520920",
+          "list_date": "取不到",
+          "track": "恒生科技指数"
+        }
+      ],
+      "execution_primary_code": "513130"
+    },
+    {
+      "id": "ndx100",
+      "arm": "main",
+      "asset_class": "美股宽基",
+      "name": "纳指100全收益",
+      "research_index_code": "XNDX",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513100",
+          "list_date": "取不到",
+          "track": "纳斯达克100指数"
+        },
+        {
+          "code": "159941",
+          "list_date": "2015-07-13",
+          "track": "纳斯达克100指数"
+        },
+        {
+          "code": "513300",
+          "list_date": "取不到",
+          "track": "纳斯达克100指数"
+        },
+        {
+          "code": "159632",
+          "list_date": "2022-08-03",
+          "track": "纳斯达克100指数"
+        },
+        {
+          "code": "159660",
+          "list_date": "2023-04-17",
+          "track": "纳斯达克100指数"
+        },
+        {
+          "code": "159659",
+          "list_date": "2023-04-25",
+          "track": "纳斯达克100指数"
+        },
+        {
+          "code": "159501",
+          "list_date": "2023-06-14",
+          "track": "纳斯达克100指数"
+        },
+        {
+          "code": "159513",
+          "list_date": "2023-07-28",
+          "track": "纳斯达克100指数"
+        },
+        {
+          "code": "159696",
+          "list_date": "2023-08-25",
+          "track": "纳斯达克100指数"
+        },
+        {
+          "code": "160213",
+          "list_date": "取不到",
+          "track": "纳斯达克100指数"
+        },
+        {
+          "code": "513110",
+          "list_date": "取不到",
+          "track": "纳斯达克100指数"
+        },
+        {
+          "code": "513390",
+          "list_date": "取不到",
+          "track": "纳斯达克100指数"
+        },
+        {
+          "code": "513870",
+          "list_date": "取不到",
+          "track": "纳斯达克100指数"
+        }
+      ],
+      "execution_primary_code": "513100"
+    },
+    {
+      "id": "spx",
+      "arm": "main",
+      "asset_class": "美股宽基",
+      "name": "标普500全收益",
+      "research_index_code": "^SP500TR",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513500",
+          "list_date": "取不到",
+          "track": "标准普尔500指数"
+        },
+        {
+          "code": "159612",
+          "list_date": "2022-05-20",
+          "track": "标准普尔500指数"
+        },
+        {
+          "code": "513650",
+          "list_date": "取不到",
+          "track": "标准普尔500指数"
+        },
+        {
+          "code": "161125",
+          "list_date": "2016-12-14",
+          "track": "标准普尔500指数"
+        },
+        {
+          "code": "159655",
+          "list_date": "2022-10-25",
+          "track": "标准普尔500指数"
+        }
+      ],
+      "execution_primary_code": "513500"
+    },
+    {
+      "id": "gold",
+      "arm": "main",
+      "asset_class": "商品",
+      "name": "黄金",
+      "research_index_code": "Au99.99",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "518880",
+          "list_date": "取不到",
+          "track": "黄金9999"
+        }
+      ],
+      "execution_primary_code": "518880"
+    },
+    {
+      "id": "soymeal",
+      "arm": "main",
+      "asset_class": "商品",
+      "name": "豆粕",
+      "research_index_code": "取不到",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "159985",
+          "list_date": "2019-12-05",
+          "track": "大商所豆粕期货价格指数"
+        }
+      ],
+      "execution_primary_code": "159985"
+    },
+    {
+      "id": "crude-oil",
+      "arm": "main",
+      "asset_class": "商品",
+      "name": "原油",
+      "research_index_code": "取不到",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "161129",
+          "list_date": "2017-02-15",
+          "track": "该基金无跟踪标的"
+        },
+        {
+          "code": "160723",
+          "list_date": "2017-05-05",
+          "track": "该基金无跟踪标的"
+        },
+        {
+          "code": "501018",
+          "list_date": "取不到",
+          "track": "该基金无跟踪标的"
+        }
+      ],
+      "execution_primary_code": "161129"
+    },
+    {
+      "id": "cgb-10y",
+      "arm": "main",
+      "asset_class": "债券",
+      "name": "10年国债",
+      "research_index_code": "取不到",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "511260",
+          "list_date": "取不到",
+          "track": "上证10年期国债指数"
+        }
+      ],
+      "execution_primary_code": "511260"
+    },
+    {
+      "id": "cgb-5y",
+      "arm": "main",
+      "asset_class": "债券",
+      "name": "5年国债",
+      "research_index_code": "取不到",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "511010",
+          "list_date": "取不到",
+          "track": "上证5年期国债指数"
+        }
+      ],
+      "execution_primary_code": "511010"
+    },
+    {
+      "id": "cash",
+      "arm": "main",
+      "asset_class": "现金",
+      "name": "现金",
+      "research_index_code": "511880",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "511880",
+          "list_date": "取不到",
+          "track": "该基金无跟踪标的"
+        }
+      ],
+      "execution_primary_code": "511880"
+    },
+    {
+      "id": "theme-东京日经225指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "东京日经225指数",
+      "research_index_code": "东京日经225指数",
+      "research_publish_date": "2021-04-08",
+      "execution": [
+        {
+          "code": "159866",
+          "list_date": "2021-04-08",
+          "track": "东京日经225指数"
+        },
+        {
+          "code": "513000",
+          "list_date": "取不到",
+          "track": "东京日经225指数"
+        },
+        {
+          "code": "513520",
+          "list_date": "取不到",
+          "track": "东京日经225指数"
+        },
+        {
+          "code": "513880",
+          "list_date": "取不到",
+          "track": "东京日经225指数"
+        }
+      ],
+      "execution_primary_code": "159866"
+    },
+    {
+      "id": "theme-东证指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "东证指数",
+      "research_index_code": "东证指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513800",
+          "list_date": "取不到",
+          "track": "东证指数"
+        }
+      ],
+      "execution_primary_code": "513800"
+    },
+    {
+      "id": "theme-中证全球中国互联网人民币指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "中证全球中国互联网人民币指数",
+      "research_index_code": "中证全球中国互联网人民币指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513220",
+          "list_date": "取不到",
+          "track": "中证全球中国互联网人民币指数"
+        }
+      ],
+      "execution_primary_code": "513220"
+    },
+    {
+      "id": "theme-中证全球中国教育主题人民币指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "中证全球中国教育主题人民币指数",
+      "research_index_code": "中证全球中国教育主题人民币指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513360",
+          "list_date": "取不到",
+          "track": "中证全球中国教育主题人民币指数"
+        }
+      ],
+      "execution_primary_code": "513360"
+    },
+    {
+      "id": "theme-中证海外中国互联网30人民币指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "中证海外中国互联网30人民币指数",
+      "research_index_code": "中证海外中国互联网30人民币指数",
+      "research_publish_date": "2021-12-02",
+      "execution": [
+        {
+          "code": "159605",
+          "list_date": "2021-12-02",
+          "track": "中证海外中国互联网30人民币指数"
+        },
+        {
+          "code": "159607",
+          "list_date": "2021-12-02",
+          "track": "中证海外中国互联网30人民币指数"
+        }
+      ],
+      "execution_primary_code": "159605"
+    },
+    {
+      "id": "theme-中证海外中国互联网50人民币指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "中证海外中国互联网50人民币指数",
+      "research_index_code": "中证海外中国互联网50人民币指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513050",
+          "list_date": "取不到",
+          "track": "中证海外中国互联网50人民币指数"
+        }
+      ],
+      "execution_primary_code": "513050"
+    },
+    {
+      "id": "theme-中证海外中国互联网指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "中证海外中国互联网指数",
+      "research_index_code": "中证海外中国互联网指数",
+      "research_publish_date": "2015-07-10",
+      "execution": [
+        {
+          "code": "164906",
+          "list_date": "2015-07-10",
+          "track": "中证海外中国互联网指数"
+        }
+      ],
+      "execution_primary_code": "164906"
+    },
+    {
+      "id": "theme-中证港股通金融服务指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "中证港股通金融服务指数",
+      "research_index_code": "中证港股通金融服务指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513140",
+          "list_date": "取不到",
+          "track": "中证港股通金融服务指数"
+        }
+      ],
+      "execution_primary_code": "513140"
+    },
+    {
+      "id": "theme-中证港股通高股息投资港元指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "中证港股通高股息投资港元指数",
+      "research_index_code": "中证港股通高股息投资港元指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513530",
+          "list_date": "取不到",
+          "track": "中证港股通高股息投资港元指数"
+        }
+      ],
+      "execution_primary_code": "513530"
+    },
+    {
+      "id": "theme-中证韩交所中韩半导体指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "中证韩交所中韩半导体指数",
+      "research_index_code": "中证韩交所中韩半导体指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513310",
+          "list_date": "取不到",
+          "track": "中证韩交所中韩半导体指数"
+        }
+      ],
+      "execution_primary_code": "513310"
+    },
+    {
+      "id": "theme-中证香港内地国有企业港元指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "中证香港内地国有企业港元指数",
+      "research_index_code": "中证香港内地国有企业港元指数",
+      "research_publish_date": "2023-08-31",
+      "execution": [
+        {
+          "code": "159519",
+          "list_date": "2023-08-31",
+          "track": "中证香港内地国有企业港元指数"
+        },
+        {
+          "code": "513810",
+          "list_date": "取不到",
+          "track": "中证香港内地国有企业港元指数"
+        }
+      ],
+      "execution_primary_code": "159519"
+    },
+    {
+      "id": "theme-中证香港创新药港币指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "中证香港创新药港币指数",
+      "research_index_code": "中证香港创新药港币指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513120",
+          "list_date": "取不到",
+          "track": "中证香港创新药港币指数"
+        }
+      ],
+      "execution_primary_code": "513120"
+    },
+    {
+      "id": "theme-中证香港科技指数指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "中证香港科技指数指数",
+      "research_index_code": "中证香港科技指数指数",
+      "research_publish_date": "2021-07-14",
+      "execution": [
+        {
+          "code": "159747",
+          "list_date": "2021-07-14",
+          "track": "中证香港科技指数指数"
+        },
+        {
+          "code": "159750",
+          "list_date": "2022-02-14",
+          "track": "中证香港科技指数指数"
+        }
+      ],
+      "execution_primary_code": "159747"
+    },
+    {
+      "id": "theme-富时亚太低碳精选指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "富时亚太低碳精选指数",
+      "research_index_code": "富时亚太低碳精选指数",
+      "research_publish_date": "2022-12-30",
+      "execution": [
+        {
+          "code": "159687",
+          "list_date": "2022-12-30",
+          "track": "富时亚太低碳精选指数"
+        }
+      ],
+      "execution_primary_code": "159687"
+    },
+    {
+      "id": "theme-富时沙特阿拉伯指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "富时沙特阿拉伯指数",
+      "research_index_code": "富时沙特阿拉伯指数",
+      "research_publish_date": "2024-07-16",
+      "execution": [
+        {
+          "code": "159329",
+          "list_date": "2024-07-16",
+          "track": "富时沙特阿拉伯指数"
+        },
+        {
+          "code": "520830",
+          "list_date": "取不到",
+          "track": "富时沙特阿拉伯指数"
+        }
+      ],
+      "execution_primary_code": "159329"
+    },
+    {
+      "id": "theme-恒生中国企业指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "恒生中国企业指数",
+      "research_index_code": "恒生中国企业指数",
+      "research_publish_date": "2010-10-28",
+      "execution": [
+        {
+          "code": "160717",
+          "list_date": "2010-10-28",
+          "track": "恒生中国企业指数"
+        },
+        {
+          "code": "161831",
+          "list_date": "2015-04-13",
+          "track": "恒生中国企业指数"
+        },
+        {
+          "code": "159850",
+          "list_date": "2021-02-19",
+          "track": "恒生中国企业指数"
+        },
+        {
+          "code": "510900",
+          "list_date": "取不到",
+          "track": "恒生中国企业指数"
+        }
+      ],
+      "execution_primary_code": "160717"
+    },
+    {
+      "id": "theme-恒生中国央企指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "恒生中国央企指数",
+      "research_index_code": "恒生中国央企指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513170",
+          "list_date": "取不到",
+          "track": "恒生中国央企指数"
+        }
+      ],
+      "execution_primary_code": "513170"
+    },
+    {
+      "id": "theme-恒生互联网科技业指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "恒生互联网科技业指数",
+      "research_index_code": "恒生互联网科技业指数",
+      "research_publish_date": "2023-02-15",
+      "execution": [
+        {
+          "code": "159688",
+          "list_date": "2023-02-15",
+          "track": "恒生互联网科技业指数"
+        },
+        {
+          "code": "159202",
+          "list_date": "2025-04-16",
+          "track": "恒生互联网科技业指数"
+        },
+        {
+          "code": "513330",
+          "list_date": "取不到",
+          "track": "恒生互联网科技业指数"
+        }
+      ],
+      "execution_primary_code": "159688"
+    },
+    {
+      "id": "theme-恒生创新药指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "恒生创新药指数",
+      "research_index_code": "恒生创新药指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "520500",
+          "list_date": "取不到",
+          "track": "恒生创新药指数"
+        }
+      ],
+      "execution_primary_code": "520500"
+    },
+    {
+      "id": "theme-恒生医疗保健指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "恒生医疗保健指数",
+      "research_index_code": "恒生医疗保健指数",
+      "research_publish_date": "2024-06-27",
+      "execution": [
+        {
+          "code": "159303",
+          "list_date": "2024-06-27",
+          "track": "恒生医疗保健指数"
+        },
+        {
+          "code": "513060",
+          "list_date": "取不到",
+          "track": "恒生医疗保健指数"
+        }
+      ],
+      "execution_primary_code": "159303"
+    },
+    {
+      "id": "theme-恒生消费指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "恒生消费指数",
+      "research_index_code": "恒生消费指数",
+      "research_publish_date": "2023-08-23",
+      "execution": [
+        {
+          "code": "159699",
+          "list_date": "2023-08-23",
+          "track": "恒生消费指数"
+        },
+        {
+          "code": "513970",
+          "list_date": "取不到",
+          "track": "恒生消费指数"
+        },
+        {
+          "code": "520520",
+          "list_date": "取不到",
+          "track": "恒生消费指数"
+        }
+      ],
+      "execution_primary_code": "159699"
+    },
+    {
+      "id": "theme-恒生港股通红利低波动指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "恒生港股通红利低波动指数",
+      "research_index_code": "恒生港股通红利低波动指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513950",
+          "list_date": "取不到",
+          "track": "恒生港股通红利低波动指数"
+        }
+      ],
+      "execution_primary_code": "513950"
+    },
+    {
+      "id": "theme-恒生生物科技指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "恒生生物科技指数",
+      "research_index_code": "恒生生物科技指数",
+      "research_publish_date": "2021-10-19",
+      "execution": [
+        {
+          "code": "159892",
+          "list_date": "2021-10-19",
+          "track": "恒生生物科技指数"
+        },
+        {
+          "code": "159615",
+          "list_date": "2022-06-28",
+          "track": "恒生生物科技指数"
+        },
+        {
+          "code": "513280",
+          "list_date": "取不到",
+          "track": "恒生生物科技指数"
+        }
+      ],
+      "execution_primary_code": "159892"
+    },
+    {
+      "id": "theme-恒生综合小型股指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "恒生综合小型股指数",
+      "research_index_code": "恒生综合小型股指数",
+      "research_publish_date": "2016-11-10",
+      "execution": [
+        {
+          "code": "161124",
+          "list_date": "2016-11-10",
+          "track": "恒生综合小型股指数"
+        }
+      ],
+      "execution_primary_code": "161124"
+    },
+    {
+      "id": "theme-新交所泛东南亚科技指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "新交所泛东南亚科技指数",
+      "research_index_code": "新交所泛东南亚科技指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513730",
+          "list_date": "取不到",
+          "track": "新交所泛东南亚科技指数"
+        }
+      ],
+      "execution_primary_code": "513730"
+    },
+    {
+      "id": "theme-标普500信息科技指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "标普500信息科技指数",
+      "research_index_code": "标普500信息科技指数",
+      "research_publish_date": "2016-12-27",
+      "execution": [
+        {
+          "code": "161128",
+          "list_date": "2016-12-27",
+          "track": "标普500信息科技指数"
+        }
+      ],
+      "execution_primary_code": "161128"
+    },
+    {
+      "id": "theme-标普500医疗保健等权重指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "标普500医疗保健等权重指数",
+      "research_index_code": "标普500医疗保健等权重指数",
+      "research_publish_date": "2016-12-14",
+      "execution": [
+        {
+          "code": "161126",
+          "list_date": "2016-12-14",
+          "track": "标普500医疗保健等权重指数"
+        }
+      ],
+      "execution_primary_code": "161126"
+    },
+    {
+      "id": "theme-标普500消费精选指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "标普500消费精选指数",
+      "research_index_code": "标普500消费精选指数",
+      "research_publish_date": "2024-02-02",
+      "execution": [
+        {
+          "code": "159529",
+          "list_date": "2024-02-02",
+          "track": "标普500消费精选指数"
+        }
+      ],
+      "execution_primary_code": "159529"
+    },
+    {
+      "id": "theme-标普中国新经济行业指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "标普中国新经济行业指数",
+      "research_index_code": "标普中国新经济行业指数",
+      "research_publish_date": "2020-10-23",
+      "execution": [
+        {
+          "code": "159822",
+          "list_date": "2020-10-23",
+          "track": "标普中国新经济行业指数"
+        }
+      ],
+      "execution_primary_code": "159822"
+    },
+    {
+      "id": "theme-标普全球石油指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "标普全球石油指数",
+      "research_index_code": "标普全球石油指数",
+      "research_publish_date": "2012-05-02",
+      "execution": [
+        {
+          "code": "160416",
+          "list_date": "2012-05-02",
+          "track": "标普全球石油指数"
+        }
+      ],
+      "execution_primary_code": "160416"
+    },
+    {
+      "id": "theme-标普生物科技精选行业指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "标普生物科技精选行业指数",
+      "research_index_code": "标普生物科技精选行业指数",
+      "research_publish_date": "2016-12-27",
+      "execution": [
+        {
+          "code": "161127",
+          "list_date": "2016-12-27",
+          "track": "标普生物科技精选行业指数"
+        },
+        {
+          "code": "159502",
+          "list_date": "2024-01-10",
+          "track": "标普生物科技精选行业指数"
+        }
+      ],
+      "execution_primary_code": "161127"
+    },
+    {
+      "id": "theme-标普美国品质消费股票指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "标普美国品质消费股票指数",
+      "research_index_code": "标普美国品质消费股票指数",
+      "research_publish_date": "2016-04-06",
+      "execution": [
+        {
+          "code": "162415",
+          "list_date": "2016-04-06",
+          "track": "标普美国品质消费股票指数"
+        }
+      ],
+      "execution_primary_code": "162415"
+    },
+    {
+      "id": "theme-法兰克福DAX指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "法兰克福DAX指数",
+      "research_index_code": "法兰克福DAX指数",
+      "research_publish_date": "2024-04-30",
+      "execution": [
+        {
+          "code": "159561",
+          "list_date": "2024-04-30",
+          "track": "法兰克福DAX指数"
+        },
+        {
+          "code": "513030",
+          "list_date": "取不到",
+          "track": "法兰克福DAX指数"
+        }
+      ],
+      "execution_primary_code": "159561"
+    },
+    {
+      "id": "theme-法国CAC40指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "法国CAC40指数",
+      "research_index_code": "法国CAC40指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513080",
+          "list_date": "取不到",
+          "track": "法国CAC40指数"
+        }
+      ],
+      "execution_primary_code": "513080"
+    },
+    {
+      "id": "theme-纳斯达克生物科技指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "纳斯达克生物科技指数",
+      "research_index_code": "纳斯达克生物科技指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513290",
+          "list_date": "取不到",
+          "track": "纳斯达克生物科技指数"
+        }
+      ],
+      "execution_primary_code": "513290"
+    },
+    {
+      "id": "theme-纳斯达克科技市值加权指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "纳斯达克科技市值加权指数",
+      "research_index_code": "纳斯达克科技市值加权指数",
+      "research_publish_date": "2023-08-08",
+      "execution": [
+        {
+          "code": "159509",
+          "list_date": "2023-08-08",
+          "track": "纳斯达克科技市值加权指数"
+        }
+      ],
+      "execution_primary_code": "159509"
+    },
+    {
+      "id": "theme-道琼斯工业平均指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "道琼斯工业平均指数",
+      "research_index_code": "道琼斯工业平均指数",
+      "research_publish_date": "取不到",
+      "execution": [
+        {
+          "code": "513400",
+          "list_date": "取不到",
+          "track": "道琼斯工业平均指数"
+        }
+      ],
+      "execution_primary_code": "513400"
+    },
+    {
+      "id": "theme-道琼斯美国石油开发与生产指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "道琼斯美国石油开发与生产指数",
+      "research_index_code": "道琼斯美国石油开发与生产指数",
+      "research_publish_date": "2017-03-17",
+      "execution": [
+        {
+          "code": "162719",
+          "list_date": "2017-03-17",
+          "track": "道琼斯美国石油开发与生产指数"
+        }
+      ],
+      "execution_primary_code": "162719"
+    },
+    {
+      "id": "theme-道琼斯美国精选REIT指数",
+      "arm": "main",
+      "asset_class": "美股和全球主题",
+      "name": "道琼斯美国精选REIT指数",
+      "research_index_code": "道琼斯美国精选REIT指数",
+      "research_publish_date": "2017-11-24",
+      "execution": [
+        {
+          "code": "160140",
+          "list_date": "2017-11-24",
+          "track": "道琼斯美国精选REIT指数"
+        },
+        {
+          "code": "160141",
+          "list_date": "取不到",
+          "track": "道琼斯美国精选REIT指数"
+        }
+      ],
+      "execution_primary_code": "160140"
+    },
+    {
+      "id": "s2-沪深300",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "沪深300",
+      "research_index_code": "H00300",
+      "research_publish_date": "2005-04-08",
+      "execution": [
+        {
+          "code": "510300",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "510300"
+    },
+    {
+      "id": "s2-中证500",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "中证500",
+      "research_index_code": "H00905",
+      "research_publish_date": "2007-01-15",
+      "execution": [
+        {
+          "code": "510500",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "510500"
+    },
+    {
+      "id": "s2-中证1000",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "中证1000",
+      "research_index_code": "H00852",
+      "research_publish_date": "2014-10-17",
+      "execution": [
+        {
+          "code": "512100",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "512100"
+    },
+    {
+      "id": "s2-创业板",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "创业板",
+      "research_index_code": "399606",
+      "research_publish_date": "2010-06-01",
+      "execution": [
+        {
+          "code": "159915",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "159915"
+    },
+    {
+      "id": "s2-AI/算力",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "AI/算力",
+      "research_index_code": "H20713",
+      "research_publish_date": "2015-07-31",
+      "execution": [
+        {
+          "code": "159819",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "159819"
+    },
+    {
+      "id": "s2-有色",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "有色",
+      "research_index_code": "H00819",
+      "research_publish_date": "2012-05-09",
+      "execution": [
+        {
+          "code": "512400",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "512400"
+    },
+    {
+      "id": "s2-煤炭",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "煤炭",
+      "research_index_code": "399998",
+      "research_publish_date": "2015-02-13",
+      "execution": [
+        {
+          "code": "515220",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "515220"
+    },
+    {
+      "id": "s2-军工",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "军工",
+      "research_index_code": "399967",
+      "research_publish_date": "2013-12-26",
+      "execution": [
+        {
+          "code": "512660",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "512660"
+    },
+    {
+      "id": "s2-医药",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "医药",
+      "research_index_code": "H00913",
+      "research_publish_date": "2007-07-02",
+      "execution": [
+        {
+          "code": "512010",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "512010"
+    },
+    {
+      "id": "s2-消费",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "消费",
+      "research_index_code": "H00932",
+      "research_publish_date": "2009-07-03",
+      "execution": [
+        {
+          "code": "159928",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "159928"
+    },
+    {
+      "id": "s2-白酒",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "白酒",
+      "research_index_code": "399987",
+      "research_publish_date": "2014-12-10",
+      "execution": [
+        {
+          "code": "512690",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "512690"
+    },
+    {
+      "id": "s2-农业",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "农业",
+      "research_index_code": "H00949",
+      "research_publish_date": "2009-10-28",
+      "execution": [
+        {
+          "code": "159825",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "159825"
+    },
+    {
+      "id": "s2-银行",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "银行",
+      "research_index_code": "399986",
+      "research_publish_date": "2013-07-15",
+      "execution": [
+        {
+          "code": "512800",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "512800"
+    },
+    {
+      "id": "s2-券商",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "券商",
+      "research_index_code": "399975",
+      "research_publish_date": "2013-07-15",
+      "execution": [
+        {
+          "code": "512880",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "512880"
+    },
+    {
+      "id": "s2-地产",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "地产",
+      "research_index_code": "931775",
+      "research_publish_date": "2013-07-15",
+      "execution": [
+        {
+          "code": "512200",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "512200"
+    },
+    {
+      "id": "s2-红利",
+      "arm": "S2",
+      "asset_class": "S2",
+      "name": "红利",
+      "research_index_code": "H00015",
+      "research_publish_date": "2005-01-04",
+      "execution": [
+        {
+          "code": "510880",
+          "list_date": "取不到",
+          "track": "取不到"
+        }
+      ],
+      "execution_primary_code": "510880"
+    }
+  ]
+}

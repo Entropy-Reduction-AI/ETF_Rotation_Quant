@@ -1,0 +1,43 @@
+{
+  "parent_delivery_sha": "7f055a18d7124e9dc91f884ffd53f37c3333ed1a",
+  "universe_sha256": "96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a",
+  "design_end": "2015-12-31",
+  "pool_index_arm_a": {
+    "dev_cli": {
+      "command": ".venv/bin/python -m src.v3.engine --arm A --pool index --end 2015-12-31 --debug",
+      "n_days": 2671,
+      "cagr": 0.099979,
+      "max_drawdown": -0.430844
+    },
+    "reviewer_independent": {
+      "method": "operations/reviews/diag/v3/l2/* duplicated logic; tomllib + sqlite; no src.v3.engine import for net series",
+      "n_days": 2671,
+      "cagr": 0.09994019374725704,
+      "max_drawdown": -0.4308444671674143,
+      "cagr_gap_pp": 0.0039,
+      "mdd_gap_pp": 0.0,
+      "gate_0_1pp": "pass"
+    }
+  },
+  "pool_tradable_arm_a": {
+    "dev_cli": {
+      "command": ".venv/bin/python -m src.v3.engine --arm A --pool tradable --end 2015-12-31 --debug",
+      "n_days": 2671,
+      "cagr": 0.045094,
+      "max_drawdown": -0.271255
+    },
+    "reviewer_note": "U-可交易独立复算未在本 JSON 中重复；CLI 与 Dev 工作记录一致，非 formal_pass。"
+  },
+  "l2_l4_unit_tests": {
+    "command": ".venv/bin/python -m unittest tests.v3.engine.test_l2 tests.v3.premium.test_episodes tests.v3.eval.test_l4",
+    "result": "OK",
+    "n_tests": 54
+  },
+  "full_unittest": {
+    "command": ".venv/bin/python -m unittest discover -s tests -t .",
+    "result": "OK (skipped=1)",
+    "n_tests": 443
+  },
+  "formal_pass": false,
+  "note": "设计期工程核对 only；新 universe SHA 取代 main 上旧 L1 冻结值 693b7d4…"
+}
