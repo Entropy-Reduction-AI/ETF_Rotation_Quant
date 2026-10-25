@@ -21,7 +21,7 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 
 - 规则写在预注册里。实现可以迭代。未经 Owner，不改规则。
 - G3 之前：不计算、不输出截止日晚于 2015-12-31 的组合收益。溢价模块可以用 2021 年起的数据做机制检验，仍然不输出任何 2016 年起的组合收益。
-- `config/v3/universe.toml` 已在 main 冻结，SHA256 `693b7d4dff91dff4b9bac4a0c1241eb4692f6b3cbd444965440a265ffa32aaff`。设计期回测 end≤2015-12-31 可以开始。本次 L1 合入没有跑回测，也没有改 tag。
+- `config/v3/universe.toml` 在 main 上的登记表 SHA256 现为 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`（L1 返工重签；上一版 `693b7d4dff91dff4b9bac4a0c1241eb4692f6b3cbd444965440a265ffa32aaff`）。设计期回测 end≤2015-12-31 可以开始。本次合入没有打 tag，也没有写 `results/v3/LOCK`。
 - 合入 main、新建 tag、删除已合入分支只由 Manager 执行（任务清单 §1，Owner 2026-10-24 常设授权）。Manager 可用 `--ff-only` 合入已通过评审的 `dev/v3-*`，并在 G2 条件满足时打 `milestone/v3-code-freeze`。G3、G5、预注册 v3.1、尝试预算 >60 仍须 Owner。不得删除或移动任何 tag，不得强推或改写 main。
 
 ## 门禁
@@ -35,7 +35,7 @@ Phase 2 看板。Manager、Dev、Reviewer 按预注册 v3 执行；本文件只�
 | G4 | 按 v3 §6、§7.3 出结论 | Reviewer | 未开始 |
 | G5 | 是否进入前向模拟盘、是否上真钱 | Owner | 未开始 |
 
-G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 G2 前置第 1–4 项，并在 L1 返工完成且 Reviewer 重签收之后完成业务体检（第 6 项，开放，未完成）。G2 tag 等 Owner 看过体检报告后再打。L5 仍等待 G2 与 G3，此前不开分支、不跑全期。
+G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 G2 前置第 2–4 项（第 1 项 L1 返工已合入），并完成业务体检（第 6 项，开放，未完成）。Reviewer 已重签收，Dev 可以出具 `operations/reports/v3-design-period-brief.md`。G2 tag 等 Owner 看过体检报告后再打。L5 仍等待 G2 与 G3，此前不开分支、不跑全期。
 
 ## G1 预注册修订与冻结
 
@@ -56,7 +56,7 @@ G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 
 
 | 线 | 状态 | 负责人 | 分支 | 依赖 | 最近更新 | 备注 |
 | --- | --- | --- | --- | --- | --- | --- |
-| L1 数据层 | 待评审 | Reviewer | `dev/v3-L1-rework` | 无 | 2026-10-25 | 返工 `7f055a1`，基线 main `a86dba0`。PR #25。按指数 emit，容器 137→81。未合入，等 Reviewer 重签收。无 tag，无 LOCK |
+| L1 数据层 | 已合入 | Dev | —（分支已删） | 无 | 2026-10-25 | ff-only 合入 `cursor/v3-l1-rework-review-37d1`。main `05d8476`。PR #25、#26 已合入。无 tag，无 LOCK |
 | L2 回测引擎 | 已合入 | Dev | —（分支已删） | L1 已合入 | 2026-10-25 | ff-only 合入 `cursor/review-v3-l2-d546`。main `2b8ee0e`。PR #18、#19 已合入。无 tag，无 LOCK，无 2016+ 组合收益 |
 | L3 溢价模块 | 已合入 | Dev | —（分支已删） | L1 QDII 数据 | 2026-10-25 | ff-only 合入 `cursor/v3-l3-review-2249`。main `4cecfad`。PR #20、#21 已合入。无 tag，无 LOCK，无 2016+ 组合收益。`allocate_container` / `adjust_weights` 接入仍开放，见 G2 前置 |
 | L4 评估层 | 已合入 | Dev | —（分支已删） | L2 | 2026-10-25 | ff-only 合入 `cursor/v3-l4-review-4337`。main `2f29d40`。PR #22、#23 已合入。无 tag，无 LOCK，无 2016+ 组合收益。非有限收益、覆盖缺口与「B 不差于 A」解释改为 G2 前置，仍开放 |
@@ -101,16 +101,20 @@ G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 
 - 无回测，无 tag 变更
 - [ ] Dev 跟进（与 L2 分开）: MANIFEST 513580 漂移，只走 emit
 
-返工待评审（未合入）:
+已合入 main（`--ff-only`，来源 `cursor/v3-l1-rework-review-37d1`）:
 
-- 分支 `dev/v3-L1-rework` @ `7f055a18d7124e9dc91f884ffd53f37c3333ed1a`（`7f055a1`），基线 main `a86dba0`
-- PR: https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/25
+- main: `05d84760ece060c757008cb359b791cef51c2995`
+- PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/25 与 https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/26 已 MERGED
+- 分支 `dev/v3-L1-rework`、`cursor/v3-l1-rework-review-37d1` 已删除
+- 原基线 main `a86dba0`。rebase 到合入前 main `a3811b98a80bf5e364a3aae1ffa1526d9b60fa73` 后快进
+- 交付：原 `7f055a18d7124e9dc91f884ffd53f37c3333ed1a`，rebase 后 `c5d5cb29bc51e61a0b3e1e31ac337c998464e95a`
+- 签收：原 `adbc20c1f5e9238bf9d2d78d967ffd1ec31aa4ad`，rebase 后 `05d84760ece060c757008cb359b791cef51c2995`（评审 `operations/reviews/2026-10-25-v3-L1-rework.md`，approve_with_follow_up）
 - emit 按跟踪指数归并容器（一容器 = 一底层指数）。容器 137→81
 - `config/v3/universe.toml` SHA256 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`
-- 库与 sqlite 未改
-- 等 Reviewer 重签收：按指数归并后的容器清单、各大类容器数、「任意代码只出现一次」，以及 §3.3 可交易首日 / 上市日说明
-- 未合入 main，无 tag，无 `results/v3/LOCK`。此处只登记，不作判定
-- 第 6 项业务体检仍开放、未完成，须等本次重签收之后
+- 库与 sqlite 未改。合入前测试（LFS pull 之后）: 443 跑，0 失败，1 跳过
+- 无 tag，无 `results/v3/LOCK`。此处只登记 Reviewer 结论，不作判定
+- 非阻塞 follow-up（只登记、不判定）：全文件 5 个代码也在对应 S2 容器。字面「任意代码只一次」不完全一致；主臂唯一成立
+- 第 6 项业务体检仍开放、未完成。Reviewer 已重签收，Dev 可以出具 `operations/reports/v3-design-period-brief.md`
 
 ### L2 回测引擎
 
@@ -203,15 +207,15 @@ G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 
 
 ## G2 前置（Owner/Orchestrator 2026-10-25；第 1–4 项群内闭环，无需再批；第 6 项 Owner 要看）
 
-来源：Owner 2026-10-25（Asia/Taipei）对 main `2f29d4066709b8f8958164bba7c9098cba2803e9` 的 Orchestrator 复核。第 1–4 项是 `milestone/v3-code-freeze` 之前的开放阻塞，群内闭环，无需再批。登记不等于完成：这四项都还没做完。同日 Owner 追加第 6 项业务体检：G2 前必须，现为开放、未完成；不并入第 1–4 项的群内闭环。L1 返工完成且 Reviewer 重签收之后才出具，G2 tag 等 Owner 看过报告后再打。G2 仍是未开始。L5 仍等待 G2 与 G3。本看板不打 tag，不写 `results/v3/LOCK`，不改业务代码，不改预注册正文。
+来源：Owner 2026-10-25（Asia/Taipei）对 main `2f29d4066709b8f8958164bba7c9098cba2803e9` 的 Orchestrator 复核。第 2–4 项仍是 `milestone/v3-code-freeze` 之前的开放项，群内闭环，无需再批。第 1 项 L1 返工已合入。同日 Owner 追加第 6 项业务体检：G2 前必须，现为开放、未完成；不并入第 2–4 项的群内闭环。Reviewer 已重签收，Dev 可以出具 `operations/reports/v3-design-period-brief.md`。G2 tag 等 Owner 看过报告后再打。G2 仍是未开始。L5 仍等待 G2 与 G3。本看板不打 tag，不写 `results/v3/LOCK`，不改业务代码，不改预注册正文。
 
-1. **L1 返工（阻塞）** — 待评审，未完成。Dev 已交付 `dev/v3-L1-rework` @ `7f055a18d7124e9dc91f884ffd53f37c3333ed1a`（`7f055a1`），基线 main `a86dba0`。PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/25 。未合入。emit 按跟踪指数归并；容器 137→81；`universe.toml` SHA256 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`；库与 sqlite 未改。等 Reviewer 重签收：按指数归并后的容器清单、各大类容器数、「任意代码只出现一次」，以及 §3.3 可交易首日 / 上市日说明。登记不等于完成。签收前第 6 项业务体检仍等待。原要求仍在：同指数 ETF 合并到同一容器的 execution；港股指数 QDII 并入港股大类对应容器；同一 ETF 不得出现在两个容器；不得手改 toml。已知重复例：`qdii-159741` / `513130` / `158042` / `513260` 相对 `hstech`；`qdii-164705` 相对 `hsi`；`159660` / `160213` / `513870` 应归 `ndx100`。L2–L4 依赖旧容器表的测试与设计期数字，用新表重跑核对。
+1. **L1 返工** — 已合入。`--ff-only` 合入评审尖端 `cursor/v3-l1-rework-review-37d1` @ `05d84760ece060c757008cb359b791cef51c2995`（rebase 到当时 main `a3811b98a80bf5e364a3aae1ffa1526d9b60fa73`；交付原 `7f055a18d7124e9dc91f884ffd53f37c3333ed1a` → `c5d5cb29bc51e61a0b3e1e31ac337c998464e95a`，评审原 `adbc20c1f5e9238bf9d2d78d967ffd1ec31aa4ad` → `05d8476`）。PR https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/25 与 https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/26 已 MERGED。分支 `dev/v3-L1-rework`、`cursor/v3-l1-rework-review-37d1` 已删除。容器 137→81；`universe.toml` SHA256 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`。无 tag，无 `results/v3/LOCK`。非阻塞 follow-up（只登记、不判定）：全文件 5 个代码也在对应 S2 容器。字面「任意代码只一次」不完全一致；主臂唯一成立。
 2. **L3 遗留 1** — 开放，未完成。Dev：`allocate_container` / `adjust_weights` 接入 U-可交易执行链。
 3. **数据** — 开放，未完成。Dev：修 `ndx100` 2012-11-01 的 inf 及所有非有限日收益（数据层或引擎层保证有限值；禁止评估层填 0）。补齐 2006–2010 覆盖。补齐中债财富、黄金、美股人民币全收益、创业板指。补不齐则写明「缺失 → 对判定的影响」。
 4. **「B 不差于 A」（§7.1）解释** — 开放，未完成。写入 G2 签收文件，预注册正文不改。须在 G3 前写定：① 的 36/60 月两个比例都 ≥ A；③ 通过段数 ≥ A 且最差一段超额 ≥ A。负责人：Reviewer 起草进 G2 签收，Manager 登记。
 5. **看板 PR #14** — Manager 按授权合入（本任务完成项）。https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/14 。本文件即该 PR 的看板更新；合入 main 后本项关闭。优先 `--ff-only`。不打 tag，不写 LOCK。
 6. **业务体检（G2 前必须，Owner 要看）** — 开放，未完成。
-   - 时机：L1 返工完成且 Reviewer 重签收之后
+   - 时机：L1 返工已合入，Reviewer 已重签收；Dev 现在可以出具
    - 负责人：Dev 出具 `operations/reports/v3-design-period-brief.md`（附图）
    - 范围：设计期 end≤2015-12-31；**不得**含 2016 年起组合收益；数字只作参考不作判定
    - 内容（大白话）：A 臂 vs BM-主净值图 + 逐年收益；持仓面积图（大类/主要容器）+ 平均现金占比 + 年换手；2008 与 2015 大跌期间持仓与回撤；相对 BM-主归因（时期/大类）；判据①③④设计期数字（仅参考）
@@ -221,7 +225,7 @@ G2 仍是未开始。打 `milestone/v3-code-freeze` 之前，须先清掉下方 
 
 待 Owner 决定：无。B1–B7 已由 Owner 于 2026-10-24 决定，写入冻结预注册与 `operations/reviews/2026-10-24-v3-prereg-review.md`（`89d18be`）。Manager 不代决 v3.1、G3、G5，也不代决尝试预算超过 60。
 
-G2 前的开放事项见「G2 前置」。第 1–4 项与业务体检（第 6 项）仍未完成，所以 G2 仍是未开始。体检报告尚未出具，此刻无待 Owner 决定的新项；报告完成后由 Manager 在群里提请 Owner 查看，G2 tag 等 Owner 看过后再打。
+G2 前的开放事项见「G2 前置」。第 1 项已合入。第 2–4 项与业务体检（第 6 项）仍未完成，所以 G2 仍是未开始。体检报告尚未出具；Reviewer 重签收已完成，Dev 可以出具 `operations/reports/v3-design-period-brief.md`。报告完成后由 Manager 在群里提请 Owner 查看，G2 tag 等 Owner 看过后再打。
 
 | # | Owner 决定 |
 | --- | --- |
@@ -235,4 +239,4 @@ G2 前的开放事项见「G2 前置」。第 1–4 项与业务体检（第 6 �
 
 ## 最近更新
 
-2026-10-25（Asia/Taipei），Manager。L1 返工改为待评审：`dev/v3-L1-rework` @ `7f055a1`（基线 main `a86dba0`），PR #25。按指数 emit，容器 137→81，`universe.toml` SHA256 `96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a`，库与 sqlite 未改。未合入，等 Reviewer 重签收（清单 + §3.3 上市日）。第 6 项业务体检仍开放、未完成。不打 tag，不写 LOCK，不改业务代码与预注册。
+2026-10-25（Asia/Taipei），Manager。L1 返工已合入：评审尖端 `--ff-only` 到 main `05d84760ece060c757008cb359b791cef51c2995`（rebase 自 `adbc20c1f5e9238bf9d2d78d967ffd1ec31aa4ad`，交付 rebase 自 `7f055a18d7124e9dc91f884ffd53f37c3333ed1a` 到 `c5d5cb29bc51e61a0b3e1e31ac337c998464e95a`，基线当时 main `a3811b98a80bf5e364a3aae1ffa1526d9b60fa73`）。PR #25、#26 已 MERGED。分支 `dev/v3-L1-rework`、`cursor/v3-l1-rework-review-37d1` 已删除。无 tag，无 `results/v3/LOCK`。G2 前置第 1 项已合入；第 2–4 项仍开放；第 6 项业务体检仍开放、未完成。Reviewer 已重签收，Dev 可以出具 `operations/reports/v3-design-period-brief.md`，G2 tag 仍等 Owner 看过该报告。非阻塞 follow-up（不判定）：全文件 5 个代码也在对应 S2 容器，字面「任意代码只一次」不完全一致，主臂唯一成立。G2 仍是未开始。L5 仍等待 G2 与 G3。
