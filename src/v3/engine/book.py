@@ -25,6 +25,11 @@ class Book:
     buy: pd.Series
     sell: pd.Series
     choices: dict = field(default_factory=dict)
+    paths: dict = field(default_factory=dict)
+    peaks: pd.DataFrame | None = None
+    exits: pd.DataFrame | None = None
+    deferred_exits: pd.DataFrame | None = None
+    code_audit: pd.DataFrame | None = None
 
 
 def assert_window(index, allow_after: bool) -> None:

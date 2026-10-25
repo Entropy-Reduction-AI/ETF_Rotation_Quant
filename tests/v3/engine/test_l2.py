@@ -30,7 +30,7 @@ from src.v3.engine.book import RunnerError
 
 ROOT = Path(__file__).resolve().parents[3]
 # `python -m src.v3.data emit` 写出的登记表。手改 toml 会让这行失败。Reviewer 重签之前，这不是冻结 SHA。
-UNIVERSE_SHA = "04ff3572ebd82a5159eaccced0bed5bc3531b732a1b11025f86021ebd0454be0"
+UNIVERSE_SHA = "fda394d57b9109225bda0d459975125364b5f1bb5d1793c9ad080ec55f789b19"
 FREEZE = "bfeb49cc65eb0ba419bc98348f1d643fac1211f6"
 CASH = 0.02 / 252
 
@@ -129,9 +129,12 @@ class ArmBlend(unittest.TestCase):
         book = execute(market, spec, "A")
         last = book.decisions.iloc[-1]
         expected = (1.0 / 3.0 + 1.0 / 5.0 + 1.0 / 8.0) / 3.0
+        self.assertEqual(len(book.paths), 6)
         self.assertAlmostEqual(float(last["winner"]), expected, places=10)
         self.assertAlmostEqual(float(last["cash"]), 1.0 - expected, places=10)
         self.assertAlmostEqual(float(last.sum()), 1.0, places=10)
+        averaged = sum(path.net for path in book.paths.values()) / 6.0
+        pd.testing.assert_series_equal(book.net, averaged, check_names=False)
         self.assertLessEqual(book.net.index.max(), pd.Timestamp("2015-12-31"))
 
     def test_b_choice_does_not_use_the_following_year(self):

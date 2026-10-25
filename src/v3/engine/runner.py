@@ -9,8 +9,11 @@ import pandas as pd
 from src.data import db as DB
 from src.v3.data.universe import containers as load_containers
 
+from src.v3.data.history import MODES, OFFICIAL
+
 from .arms import execute
 from .book import DESIGN_END, RunnerError
+from .exit import EXIT_DRAWDOWN, check_drawdown
 from .ledger import append_ledger
 from .market import load_market
 from .spec import LEDGER, LOCK, Spec, load_spec, sha_matches
@@ -38,30 +41,43 @@ def resolve_end(end, spec: Spec, *, full_period: bool = False, freeze_sha: str |
 def run(arm: str, pool: str, end=None, *, full_period: bool = False, freeze_sha: str | None = None,
         debug: bool = False, cost_multiplier: float = 1.0, n: int | None = None, freq: str | None = None,
         ledger_path: Path | None = None, lock_path: Path = LOCK, db_path: Path = DB.MARKET_DB,
-        spec: Spec | None = None, market=None, runner: str | None = None):
+        spec: Spec | None = None, market=None, runner: str | None = None,
+        history_mode: str = OFFICIAL, exit_drawdown: float = EXIT_DRAWDOWN, premium_spec=None):
     """先检查结束日，再读不超过该日的行情。debug 不写尝试记录。本函数不创建 LOCK。"""
     spec = load_spec() if spec is None else spec
     if pool not in {"index", "tradable"}:
         raise RunnerError(f"未知的池 {pool}")
+    if history_mode not in MODES:
+        raise RunnerError(f"未知的历史口径 {history_mode}")
+    exit_drawdown = check_drawdown(exit_drawdown)
     chosen = resolve_end(end, spec, full_period=full_period, freeze_sha=freeze_sha,
                          lock_path=lock_path, debug=debug)
     allow_after = chosen > DESIGN_END
     if market is None:
         market = load_market(db_path, load_containers(), arm, pool, chosen, spec,
-                             cost_multiplier=cost_multiplier, allow_after=allow_after)
+                             cost_multiplier=cost_multiplier, allow_after=allow_after,
+                             history_mode=history_mode)
     else:
         market.cost_multiplier = cost_multiplier
     if len(market.dates) and pd.Timestamp(market.dates.max()) > chosen:
         raise RunnerError("行情越过结束日，拒绝计算")
-    book = execute(market, spec, arm, n=n, freq=freq, allow_after=allow_after)
+    book = execute(
+        market, spec, arm, n=n, freq=freq, allow_after=allow_after,
+        exit_drawdown=exit_drawdown, premium_spec=premium_spec)
     if len(book.net) and pd.Timestamp(book.net.index.max()) > chosen:
         raise RunnerError("组合收益越过结束日")
     if not debug:
         payload = {
+            "rules": "v3.1",
             "pool": pool,
             "end": str(chosen.date()),
             "cost_multiplier": cost_multiplier,
+            "history_mode": history_mode,
+            "exit_drawdown": exit_drawdown,
         }
+        if premium_spec is not None:
+            payload["premium_w"] = int(premium_spec.window)
+            payload["premium_theta"] = float(premium_spec.theta)
         if n is not None:
             payload["n"] = n
             payload["freq"] = freq

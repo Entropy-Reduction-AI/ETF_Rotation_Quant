@@ -23,11 +23,23 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--n", type=int, default=None)
     parser.add_argument("--freq", choices=["week", "month"], default=None)
     parser.add_argument("--ledger", default=None)
+    parser.add_argument("--history-mode", choices=["official", "publish_date"], default="official")
+    parser.add_argument("--exit-drawdown", type=float, default=0.10)
+    parser.add_argument("--premium-window", type=int, default=None)
+    parser.add_argument("--premium-theta", type=float, default=None)
     args = parser.parse_args(argv)
+    premium_spec = None
+    if args.premium_window is not None or args.premium_theta is not None:
+        from src.v3.premium.rules import PremiumSpec
+        if args.premium_window is None or args.premium_theta is None:
+            print("溢价参数要同时给出 W 和 θ。不给则按预注册逐年选择。")
+            return 2
+        premium_spec = PremiumSpec(args.premium_window, args.premium_theta)
     book = run(
         args.arm, args.pool, args.end, full_period=args.full_period, freeze_sha=args.freeze_sha,
         debug=args.debug, cost_multiplier=args.cost_multiplier, n=args.n, freq=args.freq,
-        ledger_path=args.ledger)
+        ledger_path=args.ledger, history_mode=args.history_mode, exit_drawdown=args.exit_drawdown,
+        premium_spec=premium_spec)
     if book.net.empty:
         print("没有收益")
         return 0

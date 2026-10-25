@@ -7,6 +7,7 @@ from pathlib import Path
 from src.data import store as bars
 
 from . import universe as U
+from .history import OFFICIAL, PUBLISH_DATE, history_floor, history_gap
 
 ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / "results" / "v3" / "inventory" / "coverage.csv"
@@ -17,6 +18,7 @@ COLUMNS = [
     "first_date", "last_date", "rows", "amount_missing_rows", "nav_rows", "nav_first",
     "nav_last", "subscribe_rows_from_2021", "series_status", "missing_flag",
     "pre_publish_rows", "source_url", "note",
+    "history_floor_official", "history_floor_publish_date", "history_gap",
 ]
 
 
@@ -128,6 +130,9 @@ def build_rows(con, doc: dict | None = None) -> list[dict]:
             "base_date": research.get("base_date") or "",
         }
         row["missing_flag"] = _flag(row["series_status"], row["rows"], "research", row["nav_rows"], row["return_basis"])
+        row["history_floor_official"] = history_floor(box, OFFICIAL)
+        row["history_floor_publish_date"] = history_floor(box, PUBLISH_DATE)
+        row["history_gap"] = history_gap(box, row.get("first_date") or "")
         out.append(row)
         for ex in box.get("execution") or []:
             stats = _bar_stats(con, ex.get("code") or "")

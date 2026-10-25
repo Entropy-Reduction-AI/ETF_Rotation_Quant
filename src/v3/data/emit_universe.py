@@ -885,7 +885,9 @@ def render(containers: list[dict], excluded: list[dict], references: list[str] |
         "# 机械生成。来源：docs/prereg/etf-multiasset-rotation-prereg-v3.md §3 与附录 1–2。\n"
         "# 不要手改。更新用 python -m src.v3.data emit。\n"
         "# 冻结预注册 B1：每条都有代码、发布日、口径、来源；缺失写「取不到」。\n"
-        "# §3.2：一个容器一个底层指数。同一指数的 ETF 只写在该容器的 execution。\n\n"
+        "# §3.2：一个容器一个底层指数。同一指数的 ETF 只写在该容器的 execution。\n"
+        "# v3.1：发布日字段保留给对照口径。主口径在基日可核实时从基日起用官方序列，不再按发布日截断。\n"
+        "# 美股和全球主题两种口径都不早于登记的 ETF 上市日。不新增容器，国债总财富不进池。\n\n"
     )
     body = "".join(_block(box) for box in containers)
     lines = ["# 附录 1 排除（不进入海外主题）", ""]

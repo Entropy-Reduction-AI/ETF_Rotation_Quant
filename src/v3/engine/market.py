@@ -1,6 +1,7 @@
 """把登记表和行情库收成引擎用的收益面板。只读，SQL 的日期不超过调用方给出的结束日。"""
 from __future__ import annotations
 
+import math
 import sqlite3
 from dataclasses import dataclass
 from pathlib import Path
@@ -11,6 +12,8 @@ from src.data.dividends import GAP_LIMIT
 from src.report.fx import cny_from_usd
 
 from .benchmark import _connect, _calendar, _fx, bm_main, cash_returns
+from src.v3.data.history import OFFICIAL, history_floor
+
 from .book import RunnerError
 from .prices import (
     OVERSEAS_SOURCES,
@@ -48,12 +51,38 @@ class Market:
     liquidity: pd.DataFrame | None
     benchmark: pd.Series | None = None
     cost_multiplier: float = 1.0
+    levels: pd.DataFrame | None = None
+    history_mode: str = OFFICIAL
+    premium_inputs: dict | None = None
+    premium_ids: tuple = ()
+    premium_panels: dict | None = None
+    code_levels: dict | None = None
+    code_returns: dict | None = None
+
+
+def levels_from_returns(pnl: pd.DataFrame, cash_id: str) -> pd.DataFrame:
+    """没有行情库时，用收益倒推一条计价序列，供离场比较。无效收益不把价格打成 0。"""
+    columns = {}
+    for name in pnl.columns:
+        if name == cash_id:
+            columns[name] = pd.Series(1.0, index=pnl.index, dtype=float)
+            continue
+        current = 100.0
+        values = []
+        for raw in pnl[name].to_numpy(dtype=float):
+            if math.isfinite(raw) and raw > -1.0:
+                current *= 1.0 + float(raw)
+                values.append(current)
+            else:
+                values.append(float("nan"))
+        columns[name] = pd.Series(values, index=pnl.index, dtype=float)
+    return pd.DataFrame(columns, index=pnl.index)
 
 
 def market_from_returns(signal: pd.DataFrame, fees: dict[str, float], *, pnl: pd.DataFrame | None = None,
                         cash_id: str = "cash", sort_ids: dict[str, str] | None = None,
                         liquidity: pd.DataFrame | None = None, benchmark: pd.Series | None = None,
-                        cost_multiplier: float = 1.0) -> Market:
+                        cost_multiplier: float = 1.0, levels: pd.DataFrame | None = None) -> Market:
     frame = signal.sort_index()
     mark = frame if pnl is None else pnl.reindex(frame.index)
     names = [name for name in frame.columns if name != cash_id]
@@ -72,6 +101,7 @@ def market_from_returns(signal: pd.DataFrame, fees: dict[str, float], *, pnl: pd
         liquidity=liquidity,
         benchmark=None if benchmark is None else benchmark.reindex(frame.index),
         cost_multiplier=cost_multiplier,
+        levels=levels_from_returns(mark, cash_id) if levels is None else levels.reindex(frame.index),
     )
 
 
@@ -164,25 +194,28 @@ def _usd_level(block: pd.DataFrame, fx, calendar, stale_limit: int, publish):
     return level, fresh, pd.DatetimeIndex([])
 
 
-def _research_level(code: str, source: str, bars: dict, divs: dict, calendar, fx, spec, publish):
-    """发布日前的点位先抹掉，再向前填充。这样发布日之前的收盘不会填进发布日之后。"""
+def _research_level(code: str, source: str, bars: dict, divs: dict, calendar, fx, spec, floor):
+    """截断日之前的点位先抹掉，再向前填充，避免更早的收盘填进截断日之后。
+
+    `floor` 在官方口径下是基日（可核实时），在发布日口径下是发布日。美股和全球主题还会再取上市日。
+    """
     if code in USD_CODES:
         block = bars.get(code)
         if block is None or block.empty:
             return _empty_level(calendar)
-        return _usd_level(block, fx, calendar, spec.stale_limit, publish)
+        return _usd_level(block, fx, calendar, spec.stale_limit, floor)
     block = bars.get(code)
     if block is None or block.empty:
         return _empty_level(calendar)
     adjusted, gaps = total_return_close(block, divs.get(code, {}), GAP_LIMIT)
-    adjusted = mask_publish(adjusted, publish)
+    adjusted = mask_publish(adjusted, floor)
     if source in OVERSEAS_SOURCES:
         ohlc = block.loc[:, ["date", "open", "close"]].copy()
         ohlc["date"] = pd.to_datetime(ohlc["date"])
         ohlc["close"] = adjusted.reindex(pd.DatetimeIndex(ohlc["date"])).to_numpy()
         ohlc = ohlc.dropna(subset=["close"])
-        if publish is not None:
-            ohlc = ohlc[ohlc["date"] >= publish]
+        if floor is not None:
+            ohlc = ohlc[ohlc["date"] >= floor]
         ohlc["open"] = ohlc["open"].fillna(ohlc["close"])
         ohlc["high"] = ohlc["close"]
         ohlc["low"] = ohlc["close"]
@@ -200,20 +233,21 @@ def _price_level(code: str | None, bars: dict, divs: dict, calendar, spec):
     return level, fresh, gaps
 
 
-def _nav_level(code: str | None, navs: dict, calendar, lag: int, publish):
+def _nav_level(code: str | None, navs: dict, calendar, lag: int, floor):
     """净值用 T−lag 已公布的最新值。没有净值则不可排名；有过净值之后沿用最近一笔。"""
     if not code or code not in navs:
         return _empty_level(calendar)
     events = navs[code]
-    if publish is not None:
-        events = events[events.index >= publish]
+    if floor is not None:
+        events = events[events.index >= floor]
     level = lag_asof(events, calendar, lag)
     fresh = level.notna()
     return level, fresh, pd.DatetimeIndex([])
 
 
 def load_market(db: Path, containers: list[dict], arm: str, pool: str, end, spec: Spec, *,
-                cost_multiplier: float = 1.0, allow_after: bool = False) -> Market:
+                cost_multiplier: float = 1.0, allow_after: bool = False,
+                history_mode: str = OFFICIAL) -> Market:
     end_text = str(pd.Timestamp(end).date())
     members = pool_members(containers, arm, pool)
     con = _connect(Path(db))
@@ -256,41 +290,77 @@ def load_market(db: Path, containers: list[dict], arm: str, pool: str, end, spec
     cash = cash_returns(db, calendar, end_text, spec.cash_annual).reindex(calendar)
     if cash.isna().any():
         raise RunnerError("现金收益没有盖住交易日历")
+    from src.v3.data.history import MODES
+    from src.v3.premium.rules import subject_to_premium
+    if history_mode not in MODES:
+        raise RunnerError(f"未知的历史口径 {history_mode}")
     signal = {spec.cash_id: cash}
     pnl = {spec.cash_id: cash}
+    levels = {spec.cash_id: pd.Series(1.0, index=calendar, dtype=float)}
     names = []
     fees = {spec.cash_id: spec.fee("现金")}
     sort_ids = {}
     liquid_cols = {}
+    premium_inputs: dict = {}
+    code_level_frames: dict = {}
+    code_return_frames: dict = {}
+    premium_ids: list[str] = []
     for container in members:
         if container.get("asset_class") == "现金":
             continue
         identity = str(container["id"])
         signal_kind, pnl_kind = signal_kinds(container, arm, pool)
         research = container.get("research") or {}
-        publish = parse_date(research.get("publish_date"))
+        floor = parse_date(history_floor(container, history_mode))
         code = research_code(container)
         traded = execution_code(container)
 
         def one(kind: str, *, lagged: bool):
             if kind == "research":
                 return _research_level(code or "", str(research.get("series_source") or ""),
-                                       bars, divs, calendar, fx, spec, publish)
+                                       bars, divs, calendar, fx, spec, floor)
             if kind == "price":
+                # 场内价只用 ETF 自己的行情。指数回溯不能虚构上市前成交。
                 return _price_level(traded, bars, divs, calendar, spec)
             if kind == "nav":
-                return _nav_level(traded or code, navs, calendar, spec.nav_lag if lagged else 0, publish)
+                return _nav_level(traded or code, navs, calendar, spec.nav_lag if lagged else 0, floor)
             raise RunnerError(kind)
 
         signal_level, signal_fresh, signal_gaps = one(signal_kind, lagged=True)
         signal[identity] = signal_returns(signal_level, signal_gaps).reindex(calendar)
         rank = signal_fresh.reindex(calendar).fillna(False).astype(bool)
         if pnl_kind == signal_kind and signal_kind != "nav":
+            pnl_level = signal_level
             pnl[identity] = returns_from_level(signal_level).reindex(calendar)
             price_fresh = signal_fresh
         else:
             pnl_level, price_fresh, _pnl_gaps = one(pnl_kind, lagged=False)
             pnl[identity] = returns_from_level(pnl_level).reindex(calendar)
+        levels[identity] = pnl_level.reindex(calendar)
+        if pool == "tradable" and subject_to_premium(container):
+            premium_ids.append(identity)
+            inputs = {}
+            level_cols = {}
+            ret_cols = {}
+            for ex in container.get("execution") or []:
+                traded_code = str(ex.get("code") or "")
+                if traded_code in {"", "取不到", "TBD"}:
+                    continue
+                raw = bars.get(traded_code)
+                if raw is not None and not raw.empty:
+                    close = pd.Series(raw["close"].to_numpy(dtype=float), index=pd.DatetimeIndex(raw["date"]))
+                    close = close[close > 0]
+                    close = close[~close.index.duplicated(keep="last")].sort_index()
+                else:
+                    close = pd.Series(dtype=float)
+                inputs[traded_code] = {"close": close, "nav": navs.get(traded_code, pd.Series(dtype=float))}
+                code_level, _fresh, _gaps = _price_level(traded_code, bars, divs, calendar, spec)
+                level_cols[traded_code] = code_level.reindex(calendar)
+                ret_cols[traded_code] = returns_from_level(code_level).reindex(calendar)
+            if inputs:
+                premium_inputs[identity] = inputs
+                code_level_frames[identity] = pd.DataFrame(level_cols, index=calendar)
+                code_return_frames[identity] = pd.DataFrame(ret_cols, index=calendar)
         if pool == "tradable":
             rank = rank & price_fresh.reindex(calendar).fillna(False).astype(bool)
         liquid_cols[identity] = rank
@@ -326,4 +396,10 @@ def load_market(db: Path, containers: list[dict], arm: str, pool: str, end, spec
         liquidity=liquidity,
         benchmark=benchmark,
         cost_multiplier=cost_multiplier,
+        levels=pd.DataFrame(levels, index=calendar),
+        history_mode=history_mode,
+        premium_inputs=premium_inputs or None,
+        premium_ids=tuple(premium_ids),
+        code_levels=code_level_frames or None,
+        code_returns=code_return_frames or None,
     )
