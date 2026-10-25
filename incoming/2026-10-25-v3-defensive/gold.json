@@ -1,0 +1,18 @@
+{
+ "series_code": "Au99.99",
+ "labels": {
+  "Au99.99": 116,
+  "Au9999": 1953
+ },
+ "conflicts": [],
+ "failed": 20,
+ "fresh": 2068,
+ "dailyhq": "https://www.sge.com.cn/graph/Dailyhq?instid=Au99.99",
+ "history": "https://www.sge.com.cn/sjzx/mrhqsj",
+ "archive_gap": "历史行情列表第 374 页止于 2008-08-11，下一页是 2003-04-15，中间没有页。2003-01-02→2003-04-15 的片段没有写入研究序列，避免把五年涨跌记成一个交易日。2012-04-13 与 2016-04-12 的文章没有 Au99.99/Au9999 行。",
+ "kept_from": "2008-08-11",
+ "failed_remaining": [
+  "2012-04-13",
+  "2016-04-12"
+ ]
+}

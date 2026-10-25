@@ -30,7 +30,7 @@ from src.v3.engine.book import RunnerError
 
 ROOT = Path(__file__).resolve().parents[3]
 # `python -m src.v3.data emit` 写出的登记表。手改 toml 会让这行失败。Reviewer 重签之前，这不是冻结 SHA。
-UNIVERSE_SHA = "96592f553b9cc796922312b918ad3bc349766c84baab650032bc5c0a9a6aec8a"
+UNIVERSE_SHA = "04ff3572ebd82a5159eaccced0bed5bc3531b732a1b11025f86021ebd0454be0"
 FREEZE = "bfeb49cc65eb0ba419bc98348f1d643fac1211f6"
 CASH = 0.02 / 252
 

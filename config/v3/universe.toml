@@ -699,7 +699,7 @@ series_code = "XNDX"
 series_source = "nasdaq"
 series_status = "in_db"
 source_url = "https://indexes.nasdaqomx.com/Index/ExportHistory/XNDX"
-note = "库内序列是美元全收益，来源 nasdaq，5470 行 2005-01-04→2026-09-30。预注册写人民币全收益。没有单独的人民币发布序列，不把该序列与 USDCNY 乘成新序列。发布日本次没有指数公司原件。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。"
+note = "库内序列是美元全收益，来源 nasdaq，5469 行 2005-01-04→2026-09-30。预注册写人民币全收益。没有单独的人民币发布序列，不把该序列与 USDCNY 乘成新序列。发布日本次没有指数公司原件。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。"
 
 [[container.execution]]
 code = "513100"
@@ -922,8 +922,8 @@ base_date_source = ""
 series_code = "Au99.99"
 series_source = "sge_daily"
 series_status = "partial"
-source_url = "https://www.sge.com.cn/sjzx/quotation_daily_new"
-note = "预注册写上金所 Au9999。日行情页面的合约字段是 Au99.99，研究序列只用这个字段。发布日和基日页面没有给出。部分月份请求失败或页面分页，序列不完整时 status=partial。 行情 240 行 2024-01-04→2026-09-28。"
+source_url = "https://www.sge.com.cn/graph/Dailyhq?instid=Au99.99"
+note = "预注册写上金所 Au9999。Dailyhq 与 2024 年后日行情的合约字段是 Au99.99；更早的历史行情文章写成 Au9999。两处都是同一只 99.99 现货，重叠日收盘一致，研究序列只用 Au99.99。发布日和基日页面没有给出。 历史行情页合约写法：Au99.99 116 行、Au9999 1953 行。 行情 4402 行 2008-08-11→2026-09-30。 历史行情列表第 374 页止于 2008-08-11，下一页是 2003-04-15，中间没有页。2003-01-02→2003-04-15 的片段没有写入研究序列，避免把五年涨跌记成一个交易日。2012-04-13 与 2016-04-12 的文章没有 Au99.99/Au9999 行。首日晚于 2006-01-04 时 status=partial：这一天之前的设计期没有黄金。"
 
 [[container.execution]]
 code = "518880"
@@ -1028,18 +1028,18 @@ in_pool_index = true
 in_pool_tradable = true
 
 [container.research]
-index_code = "取不到"
-index_name = "中债10年国债财富指数"
+index_code = "CBA04501"
+index_name = "中债-10年期国债指数"
 return_basis = "wealth"
 publish_date = "取不到"
-publish_date_source = ""
-base_date = "取不到"
-base_date_source = ""
-series_code = ""
-series_source = ""
-series_status = "取不到"
-source_url = "https://www.chinabond.com.cn/"
-note = "中国债券信息网本次只打开了首页，没有财富指数日频文件。不用上证国债指数或 ETF 行情顶替。"
+publish_date_source = "incoming/2026-10-25-v3-defensive/chinabond/CBA04501.txt"
+base_date = "2007-12-29"
+base_date_source = "incoming/2026-10-25-v3-defensive/chinabond/CBA04501.txt"
+series_code = "CBA04501"
+series_source = "chinabond"
+series_status = "in_db"
+source_url = "https://indices.chinabond.com.cn/cbweb-mn/indices/single_index_query?locale=zh_CN"
+note = "编制说明中文名称「中债-10年期国债指数」，财富指数代码 CBA04501，基准日 2007-12-29。正文没有单列首次发布日，发布日记取不到，引擎因此不按发布日截断。 行情 4687 行 2008-01-02→2026-09-30，来源 chinabond。查询的是财富指标、待偿期总值。"
 
 [[container.execution]]
 code = "511260"
@@ -1060,18 +1060,18 @@ in_pool_index = true
 in_pool_tradable = true
 
 [container.research]
-index_code = "取不到"
-index_name = "中债5年国债财富指数"
+index_code = "CBA03101"
+index_name = "中债-5年期国债指数"
 return_basis = "wealth"
 publish_date = "取不到"
-publish_date_source = ""
-base_date = "取不到"
-base_date_source = ""
-series_code = ""
-series_source = ""
-series_status = "取不到"
-source_url = "https://www.chinabond.com.cn/"
-note = "中国债券信息网本次只打开了首页，没有财富指数日频文件。不用上证国债指数或 ETF 行情顶替。"
+publish_date_source = "incoming/2026-10-25-v3-defensive/chinabond/CBA03101.txt"
+base_date = "2007-12-31"
+base_date_source = "incoming/2026-10-25-v3-defensive/chinabond/CBA03101.txt"
+series_code = "CBA03101"
+series_source = "chinabond"
+series_status = "in_db"
+source_url = "https://indices.chinabond.com.cn/cbweb-mn/indices/single_index_query?locale=zh_CN"
+note = "编制说明中文名称「中债-5年期国债指数」，财富指数代码 CBA03101，基准日 2007-12-31。正文没有单列首次发布日，发布日记取不到，引擎因此不按发布日截断。 行情 4687 行 2008-01-02→2026-09-30，来源 chinabond。查询的是财富指标、待偿期总值。"
 
 [[container.execution]]
 code = "511010"
@@ -3108,3 +3108,6 @@ note = "执行主代码来自 config/portfolio.toml 的 primary。上市日不�
 # 513850 易方达MSCI美国50交易型开放式指数证券投资基金(QDII) exclude:跟踪标的不是单一指数 track=MSCI list=取不到
 # 520580 招商利安新兴亚洲精选交易型开放式指数证券投资基金(QDII) exclude:跟踪标的不是单一指数 track=iEdge list=取不到
 # 520870 易方达伊塔乌巴西IBOVESPA交易型开放式指数证券投资基金(QDII) exclude:跟踪标的不是单一指数 track=巴西BOVESPA list=取不到
+
+# 已入库、但名称对不上 §3.2 容器的序列（不进入 U-指数 / U-可交易）
+# 参考序列 CBA00601 中债-国债总指数 财富 6190 行 2002-01-04→2026-09-30。不是预注册 §3.2 的 10 年或 5 年容器，不进入池。
