@@ -99,6 +99,10 @@ skills 和 domain modeling 是按需能力，不是默认关卡。
 - Pi（服务器）：暂缓，部署另行决定。
 - 任务只写四件事：目标、改动面、验证、完成判据。
 
+### 新会话必读（Owner 2026-10-25）
+
+新会话先读 `docs/project-intake/owner-vision-and-principles.md`：愿景的深层含义、Owner 的判断原则、路线图与现状。Owner 看板镜像见 `docs/owner/phase2-owner-board.md`（权威版本在 Notion）。
+
 ### 目标
 
 原目标：在 A 股主题 ETF 上找到一套样本外站得住的轮动规则；结论不成立就如实交付「不成立」。已交付：V1 轮动在设计期即不成立，v2 A 股择时在冻结样本外不通过（`docs/prereg/` 各预注册 §结果）。
