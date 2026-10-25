@@ -1,0 +1,11 @@
+run_at,git_sha,arm,params,segment,runner
+2026-10-25T22:21:47+08:00,9b421c0294a8509e5283aa871034ff0e8ed66c75,A,"{""cost_multiplier"":1.0,""end"":""2015-12-31"",""exit_drawdown"":0.1,""history_mode"":""official"",""pool"":""index"",""rules"":""v3.1""}",design,dev
+2026-10-25T22:22:03+08:00,9b421c0294a8509e5283aa871034ff0e8ed66c75,A,"{""cost_multiplier"":1.0,""end"":""2015-12-31"",""exit_drawdown"":0.1,""history_mode"":""publish_date"",""pool"":""index"",""rules"":""v3.1""}",design,dev
+2026-10-25T22:22:19+08:00,9b421c0294a8509e5283aa871034ff0e8ed66c75,S1,"{""cost_multiplier"":1.0,""end"":""2015-12-31"",""exit_drawdown"":0.1,""history_mode"":""official"",""pool"":""index"",""rules"":""v3.1""}",design,dev
+2026-10-25T22:22:35+08:00,9b421c0294a8509e5283aa871034ff0e8ed66c75,S2,"{""cost_multiplier"":1.0,""end"":""2015-12-31"",""exit_drawdown"":0.1,""history_mode"":""official"",""pool"":""index"",""rules"":""v3.1""}",design,dev
+2026-10-25T22:22:54+08:00,9b421c0294a8509e5283aa871034ff0e8ed66c75,B,"{""cost_multiplier"":1.0,""end"":""2015-12-31"",""exit_drawdown"":0.1,""history_mode"":""official"",""pool"":""index"",""rules"":""v3.1""}",design,dev
+2026-10-25T22:24:03+08:00,9b421c0294a8509e5283aa871034ff0e8ed66c75,A,"{""cost_multiplier"":1.0,""end"":""2015-12-31"",""exit_drawdown"":0.1,""history_mode"":""official"",""pool"":""tradable"",""rules"":""v3.1""}",design,dev
+2026-10-25T22:25:12+08:00,9b421c0294a8509e5283aa871034ff0e8ed66c75,A,"{""cost_multiplier"":1.0,""end"":""2015-12-31"",""exit_drawdown"":0.1,""history_mode"":""publish_date"",""pool"":""tradable"",""rules"":""v3.1""}",design,dev
+2026-10-25T22:26:21+08:00,9b421c0294a8509e5283aa871034ff0e8ed66c75,S1,"{""cost_multiplier"":1.0,""end"":""2015-12-31"",""exit_drawdown"":0.1,""history_mode"":""official"",""pool"":""tradable"",""rules"":""v3.1""}",design,dev
+2026-10-25T22:27:30+08:00,9b421c0294a8509e5283aa871034ff0e8ed66c75,S2,"{""cost_multiplier"":1.0,""end"":""2015-12-31"",""exit_drawdown"":0.1,""history_mode"":""official"",""pool"":""tradable"",""rules"":""v3.1""}",design,dev
+2026-10-25T22:28:41+08:00,9b421c0294a8509e5283aa871034ff0e8ed66c75,B,"{""cost_multiplier"":1.0,""end"":""2015-12-31"",""exit_drawdown"":0.1,""history_mode"":""official"",""pool"":""tradable"",""rules"":""v3.1""}",design,dev
