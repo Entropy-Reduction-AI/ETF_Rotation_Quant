@@ -90,7 +90,7 @@ skills 和 domain modeling 是按需能力，不是默认关卡。
 ### 执行者（2026-10-24 起，D9-6）
 
 - Owner：定方向；批准合同修订、预注册冻结、跑已污染检验段、前向模拟盘和真钱。
-- Orchestrator（Notion AI）：设计、写预注册、解读结果；不做主体开发。
+- Orchestrator：Owner 当前主要对话、负责设计、写预注册、解读结果的 agent；不做主体开发。它跟随 Owner 的选择而变（曾为 GPT Astra、Notion AI；2026-10-27 起为 Claude，D12-7）。Owner 可以同时向多个 agent 交叉征询意见；不以某一个平台的名称或文档作为 Orchestrator 的身份或权威来源。
 - ETF Rotation Manager（bot）：任务拆分、派活、看板、每日状态、按规则升级；不写业务代码、不判定结果。
 - ETF Rotation Dev（bot）：取数、开发、运行；在 `dev/v3-<线名>` 分支工作，可多实例并行；不判定通过、不碰 LOCK。
 - ETF Rotation Reviewer（bot）：独立复核与复算、保管冻结与 LOCK、按判据出结论；不改业务代码；应与 Dev 使用不同的底层模型，或使用独立实现。
@@ -101,7 +101,7 @@ skills 和 domain modeling 是按需能力，不是默认关卡。
 
 ### 新会话必读（Owner 2026-10-25）
 
-新会话先读 `docs/project-intake/owner-vision-and-principles.md`：愿景的深层含义、Owner 的判断原则、路线图与现状。Owner 看板镜像见 `docs/owner/phase2-owner-board.md`（权威版本在 Notion）。
+新会话先读 `docs/project-intake/owner-vision-and-principles.md`：愿景的深层含义、Owner 的判断原则、路线图与现状。Owner 看板见 `docs/owner/phase2-owner-board.md`（2026-10-27 起在仓库维护，并发布为 Claude 页面；Notion 页面停止同步，D11-8）。面向 Owner 的文档与页面按 `docs/reference/owner-facing-uiux-principles.md` 编写。
 
 ### 目标
 
