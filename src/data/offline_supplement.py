@@ -6,9 +6,10 @@ import json
 import math
 import re
 import sqlite3
-from datetime import date, datetime, time, timedelta, timezone
+from datetime import date, datetime, time, timezone
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
+from zoneinfo import ZoneInfo
 
 from . import db as DB
 from .offline_restore import BAR_COLUMNS, CODE, THEME, RestoreError, _coverage, _day
@@ -90,7 +91,7 @@ def _validate(manifest_text, response_texts):
                     r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,6})?(?:Z|[+-][0-9]{2}:[0-5][0-9])", fetched_at):
                 raise ValueError("须为带时区的 ISO 时间")
             fetched = datetime.fromisoformat(fetched_at.replace("Z", "+00:00"))
-            closed = datetime.combine(date.fromisoformat(target), time(15, 30), timezone(timedelta(hours=8)))
+            closed = datetime.combine(date.fromisoformat(target), time(15, 30), ZoneInfo("Asia/Taipei"))
             if not closed <= fetched <= datetime.now(timezone.utc):
                 raise ValueError("获取时间早于目标收盘或晚于当前时间")
         except ValueError as exc:

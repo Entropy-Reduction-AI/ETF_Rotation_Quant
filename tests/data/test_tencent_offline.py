@@ -365,7 +365,7 @@ class TencentOffline(unittest.TestCase):
 
     def test_fetch_time_is_after_current_window_close_not_just_after_its_start(self):
         entry = self.document["windows"][-1]["request"]
-        # 14:59 北京时间仍是当日盘中；UTC 时间戳不能仅与窗口开始或午夜比较。
+        # 14:59 台北时间仍是当日盘中；UTC 时间戳不能仅与窗口开始或午夜比较。
         entry["fetched_at"] = "2026-09-30T06:59:59+00:00"
         self.write_manifest()
         self.reject_unchanged()

@@ -31,7 +31,7 @@ PROBE_WINDOW_DAYS = 45       # 全收益候选与执行 ETF 只看最近一段�
 OVERLAP_DAYS = 10
 MAX_GAP_DAYS = 20            # 超过即在 notes 提示（春节长假约 10 天）
 INDEX_ROUTES = {"csi", "eastmoney_index", "yahoo"}     # universe 路由里属于价格指数的：无全收益版本即 price_only
-BEIJING = timezone(timedelta(hours=8))                  # 北京不用夏令时，固定偏移即可
+TAIPEI = ZoneInfo("Asia/Taipei")                        # 项目本地时区；台北无夏令时
 try:
     NEW_YORK = ZoneInfo("America/New_York")
 except Exception:  # noqa: BLE001 — 缺 tzdata 的精简镜像：按 UTC−5（冬令时）算，收盘判定只会更保守
@@ -53,11 +53,11 @@ def _utcnow() -> datetime:
 
 
 def last_complete(route: str, now: datetime | None = None) -> date:
-    """该路由最近一根已收盘日线的日期：A 股按北京时间 15:30，海外按纽约时间 17:00（亚洲海外指数更早收盘，按纽约算只会更保守）。
+    """该路由最近一根已收盘日线的日期：A 股按台北时间 15:30，海外按纽约时间 17:00（亚洲海外指数更早收盘，按纽约算只会更保守）。
     抓取时比它新的 K 线是盘中实时值，一律丢弃，不进库、更不进数据包。"""
     now = now or _utcnow()
     if route in A_SHARE_ROUTES:
-        t, cut = now.astimezone(BEIJING), time(15, 30)
+        t, cut = now.astimezone(TAIPEI), time(15, 30)
     else:
         t, cut = now.astimezone(NEW_YORK), time(17, 0)
     return t.date() if t.time() >= cut else t.date() - timedelta(days=1)

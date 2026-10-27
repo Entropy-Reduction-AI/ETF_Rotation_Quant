@@ -126,7 +126,7 @@ skills 和 domain modeling 是按需能力，不是默认关卡。
 - 指数逐个核实代码、起始日期、价格 / 全收益口径。
 - 黄金、原油、海外、国债、现金是一等容器。
 - 结论必须声明四项数据陷阱：主题指数回填、指数与 ETF 的差异、腾讯减法 qfq、份额折算造成的假跳空。
-- `data/market.sqlite` 纳入版本管理，每次变更都记录 SHA256；时区按 Asia/Shanghai。
+- `data/market.sqlite` 纳入版本管理，每次变更都记录 SHA256；时区按 Asia/Taipei。
 
 ### 分支
 
