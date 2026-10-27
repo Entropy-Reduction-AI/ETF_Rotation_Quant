@@ -7,7 +7,7 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Orchestrator（Notion AI）
-- Last updated: 2026-10-25
+- Last updated: 2026-10-27
 - Source of truth: Owner 与 Orchestrator 2026-10-21 → 10-25 的对话；决定记录 D9、D10
 - 读完本文再读：`operations/planning/2026-10-25-d10-v3.1-approval.md`、`docs/prereg/etf-multiasset-rotation-prereg-v3.1.md`、`docs/owner/phase2-owner-board.md`
 
@@ -17,7 +17,9 @@
 
 ## 1. 愿景
 
-**在多类资产之间做强势资产轮动，同时把回撤控制住，为个人账户找到一套可以验证、能稳定跑赢被动基准的 ETF 规则。**
+**在动态周期内，从多类资产里选出 Top N 强势 ETF 轮动持有，获得超额收益、稳定跑赢被动基准，同时把回撤控制住。**（按 Owner 2026-10-27 的意思更新，D11-9）
+
+“动态周期”指看多长、多久调一次仓、什么时候离场，都应跟随市场，而不是固定不变。这是交易系统的核心，v4 研究的主题。
 
 深层含义（Owner 原话的提炼）：
 
