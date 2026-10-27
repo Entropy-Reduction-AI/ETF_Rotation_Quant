@@ -13,7 +13,8 @@
 - `bt.py`、`v5.py`：原探索脚本，仅改数据路径。
 - `runall.py`：重算已登记变体 #18（v3 复现）、#19/#20（E1）、#21/#22/#25/#26（离场 8–15%）、#23（E3）。只是重算，不是新变体。
 - `weights.py`：记录 v3、E1、E2 每日持仓，用于 2.1 图。
-- `charts.py`：出图 b1–b5；2.4、2.5 读正式复跑产物 `results/v3/design-period/9b421c0…/P1`、`P6`（PR #44）。
+- `cand.py`：2009 回场候选 C1、C2（诊断变体 #30、#31，跑之前写定）。
+- `charts.py`：出图 b1–b7；2.4、2.5 读正式复跑产物 `results/v3/design-period/9b421c0…/P1`、`P6`（PR #44）。
 - `roadmap.html`：路线图 b0，用 Playwright 截图。
 
 ## 与原记录对照（年化 / 最大回撤）
