@@ -13,7 +13,7 @@ from src.data.db import git_head
 from .spec import LEDGER
 
 COLUMNS = ["run_at", "git_sha", "arm", "params", "segment", "runner"]
-SHANGHAI = ZoneInfo("Asia/Shanghai")
+TAIPEI = ZoneInfo("Asia/Taipei")
 
 
 def canonical_params(payload: dict) -> str:
@@ -34,7 +34,7 @@ def append_ledger(path: Path, *, arm: str, params: dict, segment: str, runner: s
                     return False
     new_file = not path.exists()
     row = {
-        "run_at": datetime.now(SHANGHAI).isoformat(timespec="seconds"),
+        "run_at": datetime.now(TAIPEI).isoformat(timespec="seconds"),
         "git_sha": git_head() or "",
         "arm": arm,
         "params": encoded,

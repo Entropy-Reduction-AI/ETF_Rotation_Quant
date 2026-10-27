@@ -6,9 +6,10 @@ import json
 import math
 import re
 import sqlite3
-from datetime import date, datetime, time, timedelta, timezone
+from datetime import date, datetime, time, timezone
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
+from zoneinfo import ZoneInfo
 
 from src.indicators.calendar import load_trading_days
 from . import db as DB
@@ -111,7 +112,7 @@ def _verify(index, responses, calendar):
                 or parse_qs(parts.query, keep_blank_values=True) != {"param": [param]}):
             raise PriceImportError("请求不唯一指向已批准的腾讯价格指数年度接口")
         fetched = _time(entry["fetched_at"])
-        closed = datetime.combine(_day(end), time(15, 30), timezone(timedelta(hours=8)))
+        closed = datetime.combine(_day(end), time(15, 30), ZoneInfo("Asia/Taipei"))
         if not closed <= fetched <= datetime.now(timezone.utc):
             raise PriceImportError("获取时间早于窗口收盘或晚于当前时间")
         payload = _json(text)
@@ -149,7 +150,7 @@ def _verify(index, responses, calendar):
                 desired[key] = dict(code=code, adj="raw", date=day, open=opening, high=high, low=low, close=close,
                                     volume=None, amount=None, source=SOURCE, fetched_at=entry["fetched_at"])
         days = [day for day in calendar if start <= day <= end]
-        latest_close = datetime.combine(_day(dates[-1]), time(15, 30), timezone(timedelta(hours=8)))
+        latest_close = datetime.combine(_day(dates[-1]), time(15, 30), ZoneInfo("Asia/Taipei"))
         if fetched < latest_close:
             raise PriceImportError("原响应含获取时刻尚未收盘的行情（含窗外行）")
         if not days or selected != days:

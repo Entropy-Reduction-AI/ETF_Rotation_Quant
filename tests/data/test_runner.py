@@ -185,7 +185,7 @@ class Probe(Base):
 
     def test_intraday_bar_is_dropped(self):
         self.net.add("csi", "000905", "中证500指数", "2004-12-31", "2026-09-29")
-        noon = datetime(2026, 9, 29, 4, 0, tzinfo=timezone.utc)                       # 北京 12:00，未收盘
+        noon = datetime(2026, 9, 29, 4, 0, tzinfo=timezone.utc)                       # 台北 12:00，未收盘
         with mock.patch("src.data.runner._utcnow", return_value=noon):
             self.probe(only=["T02"])
         c = read_cov(self.db)["T02"]
@@ -454,7 +454,7 @@ class BackfillUpdatePackage(Base):
 
     def test_package_refuses_unclosed_end(self):
         self.backfill(only=["T01"])
-        us_not_closed = datetime(2026, 9, 30, 12, 0, tzinfo=timezone.utc)   # 北京 20:00，纽约 08:00
+        us_not_closed = datetime(2026, 9, 30, 12, 0, tzinfo=timezone.utc)   # 台北 20:00，纽约 08:00
         with mock.patch("src.data.runner._utcnow", return_value=us_not_closed):
             with self.assertRaisesRegex(SystemExit, "尚未全部收盘"):
                 self.package(date(2026, 9, 30))

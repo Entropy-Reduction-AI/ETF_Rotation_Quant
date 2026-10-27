@@ -23,7 +23,7 @@
 
 ```text
 # BEGIN teardown-ingest (physical-first)
-CRON_TZ=Asia/Shanghai
+CRON_TZ=Asia/Taipei
 35 15 * * 1-5 cd /project/data_science/serenity_quant_research/api && (set -a; . /home/levi_luo/.config/teardown/runtime.env; set +a; /usr/bin/flock -n /project/data_science/serenity_quant_research/artifacts/runtime/ingest.lock /project/data_science/serenity_quant_research/api/.venv/bin/python -u -m app.ingest daily) >> /project/data_science/serenity_quant_research/artifacts/runtime/teardown-ingest.log 2>&1
 15 */3 * * * cd /project/data_science/serenity_quant_research/api && (set -a; . /home/levi_luo/.config/teardown/runtime.env; set +a; /usr/bin/flock -n /project/data_science/serenity_quant_research/artifacts/runtime/ingest.lock /project/data_science/serenity_quant_research/api/.venv/bin/python -u -m app.ingest news) >> /project/data_science/serenity_quant_research/artifacts/runtime/teardown-ingest.log 2>&1
 # END teardown-ingest
@@ -36,7 +36,7 @@ CRON_TZ=Asia/Shanghai
 
 ```text
 # BEGIN teardown-ingest (physical-first)
-CRON_TZ=Asia/Shanghai
+CRON_TZ=Asia/Taipei
 35 15 * * 1-5 cd /project/data_science/serenity_quant_research/api && (set -a; . /home/levi_luo/.config/teardown/runtime.env; set +a; /usr/bin/flock -n /project/data_science/serenity_quant_research/artifacts/runtime/ingest.lock /project/data_science/serenity_quant_research/api/.venv/bin/python -u -m app.ingest daily) >> /project/data_science/serenity_quant_research/artifacts/runtime/teardown-ingest.log 2>&1
 15 */3 * * * cd /project/data_science/serenity_quant_research/api && (set -a; . /home/levi_luo/.config/teardown/runtime.env; set +a; /usr/bin/flock -n /project/data_science/serenity_quant_research/artifacts/runtime/ingest.lock /project/data_science/serenity_quant_research/api/.venv/bin/python -u -m app.ingest news) >> /project/data_science/serenity_quant_research/artifacts/runtime/teardown-ingest.log 2>&1
 # END teardown-ingest
