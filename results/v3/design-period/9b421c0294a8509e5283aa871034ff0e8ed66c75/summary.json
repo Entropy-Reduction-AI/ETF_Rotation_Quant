@@ -1,0 +1,5729 @@
+{
+  "git_sha": "9b421c0294a8509e5283aa871034ff0e8ed66c75",
+  "end_limit": "2015-12-31",
+  "runs": [
+    {
+      "id": "P1",
+      "arm": "A",
+      "pool": "index",
+      "history_mode": "official",
+      "exit_drawdown": 0.1,
+      "start": "2005-01-04",
+      "end": "2015-12-31",
+      "n": 2671,
+      "cagr": 0.22632547972528338,
+      "max_drawdown": -0.34469806371314693,
+      "max_drawdown_peak": "2015-06-12",
+      "max_drawdown_trough": "2015-09-15",
+      "bm_main_cagr_on_overlap": 0.15446761075811666,
+      "bm_main_max_drawdown_on_overlap": -0.6546241458032607,
+      "excess_cagr_vs_bm_main": 0.0961658389279696,
+      "overlap_n": 2428,
+      "average_cash": 0.1916483725769235,
+      "buy_sum": 73.453727401922,
+      "sell_sum": 82.5203683559547,
+      "turnover_one_way_annual": 6.930115801304509,
+      "yearly": [
+        {
+          "year": 2005,
+          "arm": -0.001979782825078713,
+          "bm_main": null,
+          "excess": null,
+          "year_end": "2005-12-30",
+          "year_end_cash": 0.455664282258247,
+          "n_arm": 242,
+          "n_bm": 0
+        },
+        {
+          "year": 2006,
+          "arm": 1.1003010816801928,
+          "bm_main": 0.7949240638720936,
+          "excess": 0.3053770178080992,
+          "year_end": "2006-12-29",
+          "year_end_cash": 5.1205800887296315e-17,
+          "n_arm": 241,
+          "n_bm": 240
+        },
+        {
+          "year": 2007,
+          "arm": 1.5550449057698499,
+          "bm_main": 1.0383572489129107,
+          "excess": 0.5166876568569392,
+          "year_end": "2007-12-28",
+          "year_end_cash": 0.22825900498728813,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2008,
+          "arm": -0.23976578025089657,
+          "bm_main": -0.5964461695410448,
+          "excess": 0.3566803892901482,
+          "year_end": "2008-12-31",
+          "year_end_cash": 0.4833692317681328,
+          "n_arm": 246,
+          "n_bm": 246
+        },
+        {
+          "year": 2009,
+          "arm": 0.4409227481938325,
+          "bm_main": 0.833779526582332,
+          "excess": -0.39285677838849953,
+          "year_end": "2009-12-31",
+          "year_end_cash": 0.08105663103940504,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2010,
+          "arm": -0.07239986575464796,
+          "bm_main": -0.04259189667694907,
+          "excess": -0.029807969077698893,
+          "year_end": "2010-12-31",
+          "year_end_cash": 0.197259287991126,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2011,
+          "arm": -0.09280267659464236,
+          "bm_main": -0.1777148515049779,
+          "excess": 0.08491217491033554,
+          "year_end": "2011-12-30",
+          "year_end_cash": 0.3163405035329376,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2012,
+          "arm": 0.009979739825573875,
+          "bm_main": 0.12067804918505498,
+          "excess": -0.1106983093594811,
+          "year_end": "2012-12-31",
+          "year_end_cash": 0.15588217135847232,
+          "n_arm": 243,
+          "n_bm": 243
+        },
+        {
+          "year": 2013,
+          "arm": 0.08364907849721415,
+          "bm_main": 0.05167782084164907,
+          "excess": 0.03197125765556508,
+          "year_end": "2013-12-31",
+          "year_end_cash": 0.05833333333333338,
+          "n_arm": 238,
+          "n_bm": 238
+        },
+        {
+          "year": 2014,
+          "arm": 0.38937632921892473,
+          "bm_main": 0.44782335808804175,
+          "excess": -0.05844702886911701,
+          "year_end": "2014-12-31",
+          "year_end_cash": 5.254436551368102e-17,
+          "n_arm": 245,
+          "n_bm": 245
+        },
+        {
+          "year": 2015,
+          "arm": 0.1578687061815609,
+          "bm_main": 0.09715897247164218,
+          "excess": 0.06070973370991872,
+          "year_end": "2015-12-31",
+          "year_end_cash": 0.04334203883394965,
+          "n_arm": 244,
+          "n_bm": 244
+        }
+      ],
+      "eligibility": {
+        "n_days": 2671,
+        "min": 0,
+        "median": 17.0,
+        "max": 20,
+        "never_eligible": [
+          "chinext",
+          "crude-oil",
+          "hstech",
+          "soymeal",
+          "star50",
+          "theme-东京日经225指数",
+          "theme-东证指数",
+          "theme-中证全球中国互联网人民币指数",
+          "theme-中证全球中国教育主题人民币指数",
+          "theme-中证海外中国互联网30人民币指数",
+          "theme-中证海外中国互联网50人民币指数",
+          "theme-中证海外中国互联网指数",
+          "theme-中证港股通金融服务指数",
+          "theme-中证港股通高股息投资港元指数",
+          "theme-中证韩交所中韩半导体指数",
+          "theme-中证香港内地国有企业港元指数",
+          "theme-中证香港创新药港币指数",
+          "theme-中证香港科技指数指数",
+          "theme-富时亚太低碳精选指数",
+          "theme-富时沙特阿拉伯指数",
+          "theme-恒生中国企业指数",
+          "theme-恒生中国央企指数",
+          "theme-恒生互联网科技业指数",
+          "theme-恒生创新药指数",
+          "theme-恒生医疗保健指数",
+          "theme-恒生消费指数",
+          "theme-恒生港股通红利低波动指数",
+          "theme-恒生生物科技指数",
+          "theme-恒生综合小型股指数",
+          "theme-新交所泛东南亚科技指数",
+          "theme-标普500信息科技指数",
+          "theme-标普500医疗保健等权重指数",
+          "theme-标普500消费精选指数",
+          "theme-标普中国新经济行业指数",
+          "theme-标普全球石油指数",
+          "theme-标普生物科技精选行业指数",
+          "theme-标普美国品质消费股票指数",
+          "theme-法兰克福DAX指数",
+          "theme-法国CAC40指数",
+          "theme-纳斯达克生物科技指数",
+          "theme-纳斯达克科技市值加权指数",
+          "theme-道琼斯工业平均指数",
+          "theme-道琼斯美国石油开发与生产指数",
+          "theme-道琼斯美国精选REIT指数"
+        ],
+        "pool_ids_absent_from_eligibility": [],
+        "yearly": [
+          {
+            "year": 2005,
+            "n_days": 242,
+            "min": 0,
+            "median": 10.0,
+            "max": 15
+          },
+          {
+            "year": 2006,
+            "n_days": 241,
+            "min": 15,
+            "median": 17.0,
+            "max": 17
+          },
+          {
+            "year": 2007,
+            "n_days": 242,
+            "min": 16,
+            "median": 17.0,
+            "max": 17
+          },
+          {
+            "year": 2008,
+            "n_days": 246,
+            "min": 1,
+            "median": 15.0,
+            "max": 20
+          },
+          {
+            "year": 2009,
+            "n_days": 244,
+            "min": 12,
+            "median": 20.0,
+            "max": 20
+          },
+          {
+            "year": 2010,
+            "n_days": 242,
+            "min": 13,
+            "median": 20.0,
+            "max": 20
+          },
+          {
+            "year": 2011,
+            "n_days": 244,
+            "min": 3,
+            "median": 17.5,
+            "max": 20
+          },
+          {
+            "year": 2012,
+            "n_days": 243,
+            "min": 6,
+            "median": 15.0,
+            "max": 20
+          },
+          {
+            "year": 2013,
+            "n_days": 238,
+            "min": 8,
+            "median": 18.0,
+            "max": 20
+          },
+          {
+            "year": 2014,
+            "n_days": 245,
+            "min": 10,
+            "median": 19.0,
+            "max": 20
+          },
+          {
+            "year": 2015,
+            "n_days": 244,
+            "min": 16,
+            "median": 19.0,
+            "max": 20
+          }
+        ]
+      },
+      "samples": [
+        {
+          "date": "2005-01-04",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2015-12-31",
+          "n_eligible": 19,
+          "n_held": 15,
+          "cash": 0.04334203883394965
+        },
+        {
+          "date": "2005-12-30",
+          "n_eligible": 15,
+          "n_held": 12,
+          "cash": 0.455664282258247
+        },
+        {
+          "date": "2006-12-29",
+          "n_eligible": 17,
+          "n_held": 14,
+          "cash": 5.1205800887296315e-17
+        },
+        {
+          "date": "2007-12-28",
+          "n_eligible": 16,
+          "n_held": 16,
+          "cash": 0.22825900498728813
+        },
+        {
+          "date": "2008-12-31",
+          "n_eligible": 9,
+          "n_held": 9,
+          "cash": 0.4833692317681328
+        },
+        {
+          "date": "2009-12-31",
+          "n_eligible": 20,
+          "n_held": 13,
+          "cash": 0.08105663103940504
+        },
+        {
+          "date": "2010-12-31",
+          "n_eligible": 20,
+          "n_held": 16,
+          "cash": 0.197259287991126
+        },
+        {
+          "date": "2011-12-30",
+          "n_eligible": 6,
+          "n_held": 6,
+          "cash": 0.3163405035329376
+        },
+        {
+          "date": "2012-12-31",
+          "n_eligible": 20,
+          "n_held": 13,
+          "cash": 0.15588217135847232
+        },
+        {
+          "date": "2013-12-31",
+          "n_eligible": 16,
+          "n_held": 12,
+          "cash": 0.05833333333333338
+        },
+        {
+          "date": "2014-12-31",
+          "n_eligible": 18,
+          "n_held": 14,
+          "cash": 5.254436551368102e-17
+        },
+        {
+          "date": "2008-09-08",
+          "n_eligible": 3,
+          "n_held": 4,
+          "cash": 0.5373451772220114
+        },
+        {
+          "date": "2015-09-15",
+          "n_eligible": 16,
+          "n_held": 13,
+          "cash": 0.21425850432283364
+        }
+      ],
+      "crashes": {
+        "2008": {
+          "year": 2008,
+          "peak": "2007-10-16",
+          "trough": "2008-09-08",
+          "drawdown": -0.3237738270678594
+        },
+        "2015": {
+          "year": 2015,
+          "peak": "2015-06-12",
+          "trough": "2015-09-15",
+          "drawdown": -0.34469806371314693
+        }
+      },
+      "snapshots": {
+        "2008": {
+          "trough": {
+            "date": "2008-09-08",
+            "cash": 0.5373451772220114,
+            "n_nonzero": 4,
+            "positions": [
+              {
+                "id": "cgb-10y",
+                "name": "10年国债",
+                "asset_class": "债券",
+                "weight": 0.16576651290350908
+              },
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.1656521453749156
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.10491619894940103
+              },
+              {
+                "id": "spx",
+                "name": "标普500全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.026319965550163294
+              }
+            ]
+          },
+          "peak": {
+            "date": "2007-10-16",
+            "cash": 5.4701558148664105e-17,
+            "n_nonzero": 14,
+            "positions": [
+              {
+                "id": "allshare-energy",
+                "name": "中证全指能源",
+                "asset_class": "A股行业",
+                "weight": 0.2062730544485257
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.16976787277737002
+              },
+              {
+                "id": "allshare-materials",
+                "name": "中证全指原材料",
+                "asset_class": "A股行业",
+                "weight": 0.13428499239969457
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.12346325869232806
+              },
+              {
+                "id": "allshare-financials-re",
+                "name": "中证全指金融地产",
+                "asset_class": "A股行业",
+                "weight": 0.09573536153376495
+              },
+              {
+                "id": "hsi",
+                "name": "恒生指数",
+                "asset_class": "港股",
+                "weight": 0.06547956177522474
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.05442972779365049
+              },
+              {
+                "id": "allshare-industrials",
+                "name": "中证全指工业",
+                "asset_class": "A股行业",
+                "weight": 0.05316431956379389
+              },
+              {
+                "id": "allshare-staples",
+                "name": "中证全指主要消费",
+                "asset_class": "A股行业",
+                "weight": 0.03464446153176962
+              },
+              {
+                "id": "spx",
+                "name": "标普500全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.026739097138103827
+              },
+              {
+                "id": "allshare-utilities",
+                "name": "中证全指公用事业",
+                "asset_class": "A股行业",
+                "weight": 0.015537790546236052
+              },
+              {
+                "id": "allshare-communication",
+                "name": "中证全指通信服务",
+                "asset_class": "A股行业",
+                "weight": 0.010734587470305425
+              },
+              {
+                "id": "allshare-discretionary",
+                "name": "中证全指可选消费",
+                "asset_class": "A股行业",
+                "weight": 0.004919056716347633
+              },
+              {
+                "id": "csi1000",
+                "name": "中证1000",
+                "asset_class": "A股宽基",
+                "weight": 0.004826857612885096
+              }
+            ]
+          }
+        },
+        "2015": {
+          "trough": {
+            "date": "2015-09-15",
+            "cash": 0.21425850432283364,
+            "n_nonzero": 13,
+            "positions": [
+              {
+                "id": "cgb-10y",
+                "name": "10年国债",
+                "asset_class": "债券",
+                "weight": 0.22025351190901207
+              },
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.22020821515910005
+              },
+              {
+                "id": "allshare-utilities",
+                "name": "中证全指公用事业",
+                "asset_class": "A股行业",
+                "weight": 0.10807967309989115
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.06916534764039046
+              },
+              {
+                "id": "gold",
+                "name": "黄金",
+                "asset_class": "商品",
+                "weight": 0.054431793632219394
+              },
+              {
+                "id": "allshare-industrials",
+                "name": "中证全指工业",
+                "asset_class": "A股行业",
+                "weight": 0.03206582465847707
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.03203901287080856
+              },
+              {
+                "id": "allshare-staples",
+                "name": "中证全指主要消费",
+                "asset_class": "A股行业",
+                "weight": 0.013228644496854595
+              },
+              {
+                "id": "allshare-discretionary",
+                "name": "中证全指可选消费",
+                "asset_class": "A股行业",
+                "weight": 0.010352678789089097
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.010332916250259514
+              },
+              {
+                "id": "allshare-healthcare",
+                "name": "中证全指医药卫生",
+                "asset_class": "A股行业",
+                "weight": 0.005227312368000754
+              },
+              {
+                "id": "allshare-financials-re",
+                "name": "中证全指金融地产",
+                "asset_class": "A股行业",
+                "weight": 0.005208333333333333
+              },
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.0051482314697303124
+              }
+            ]
+          },
+          "peak": {
+            "date": "2015-06-12",
+            "cash": 5.301767725037299e-17,
+            "n_nonzero": 10,
+            "positions": [
+              {
+                "id": "csi1000",
+                "name": "中证1000",
+                "asset_class": "A股宽基",
+                "weight": 0.22256441107687017
+              },
+              {
+                "id": "allshare-industrials",
+                "name": "中证全指工业",
+                "asset_class": "A股行业",
+                "weight": 0.16686258590788475
+              },
+              {
+                "id": "allshare-communication",
+                "name": "中证全指通信服务",
+                "asset_class": "A股行业",
+                "weight": 0.1647526709252539
+              },
+              {
+                "id": "allshare-it",
+                "name": "中证全指信息技术",
+                "asset_class": "A股行业",
+                "weight": 0.15376920713253095
+              },
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.1368406866233575
+              },
+              {
+                "id": "allshare-healthcare",
+                "name": "中证全指医药卫生",
+                "asset_class": "A股行业",
+                "weight": 0.04768568509947552
+              },
+              {
+                "id": "allshare-materials",
+                "name": "中证全指原材料",
+                "asset_class": "A股行业",
+                "weight": 0.04497394360622977
+              },
+              {
+                "id": "allshare-discretionary",
+                "name": "中证全指可选消费",
+                "asset_class": "A股行业",
+                "weight": 0.036751826597108815
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.020598911133986774
+              },
+              {
+                "id": "allshare-staples",
+                "name": "中证全指主要消费",
+                "asset_class": "A股行业",
+                "weight": 0.005200071897301959
+              }
+            ]
+          }
+        }
+      },
+      "choices": {},
+      "position_matched": {
+        "average_equity_weight": 0.6480228799402803,
+        "cagr": 0.11418649972192751,
+        "max_drawdown": -0.4865145229769726
+      },
+      "criteria": {
+        "drawdown_stats": {
+          "max_drawdown": -0.34469806371314693,
+          "peak": "2015-06-12",
+          "trough": "2015-09-15",
+          "underwater_days": 2406,
+          "underwater_fraction": 0.9007862223886185,
+          "longest_underwater_days": 1138
+        },
+        "bm_drawdown_stats": {
+          "max_drawdown": -0.6546241458032607,
+          "peak": "2007-10-16",
+          "trough": "2008-10-27",
+          "underwater_days": 2252,
+          "underwater_fraction": 0.9275123558484349,
+          "longest_underwater_days": 1805
+        },
+        "criterion_4_deeper_by": -0.3099260820901141,
+        "criterion_1": {
+          "n_36": 84,
+          "n_60": 60,
+          "median_36": 0.017733397606656598,
+          "median_60": 0.03720408282165022,
+          "fraction_positive_60": 0.65
+        },
+        "criterion_3": [
+          {
+            "era": "2006-2010",
+            "status": "未覆盖全段",
+            "n": 1214,
+            "ann_strategy": null,
+            "ann_benchmark": null,
+            "excess": null
+          },
+          {
+            "era": "2011-2015",
+            "status": "ok",
+            "n": 1214,
+            "ann_strategy": 0.10209172793747734,
+            "ann_benchmark": 0.09368984383927126,
+            "excess": 0.00840188409820608
+          },
+          {
+            "era": "2016-2020",
+            "status": "未计算",
+            "n": 0,
+            "ann_strategy": null,
+            "ann_benchmark": null,
+            "excess": null
+          },
+          {
+            "era": "2021-2026",
+            "status": "未计算",
+            "n": 0,
+            "ann_strategy": null,
+            "ann_benchmark": null,
+            "excess": null
+          }
+        ]
+      },
+      "deferred_rows": 0,
+      "exit_rows": 1467
+    },
+    {
+      "id": "P2",
+      "arm": "A",
+      "pool": "index",
+      "history_mode": "publish_date",
+      "exit_drawdown": 0.1,
+      "start": "2005-01-04",
+      "end": "2015-12-31",
+      "n": 2671,
+      "cagr": 0.12634598476486647,
+      "max_drawdown": -0.34150257327476286,
+      "max_drawdown_peak": "2015-06-12",
+      "max_drawdown_trough": "2015-09-15",
+      "bm_main_cagr_on_overlap": 0.15446761075811666,
+      "bm_main_max_drawdown_on_overlap": -0.6546241458032607,
+      "excess_cagr_vs_bm_main": -0.016426635687675883,
+      "overlap_n": 2428,
+      "average_cash": 0.3033858481500881,
+      "buy_sum": 52.20287841014418,
+      "sell_sum": 58.143410102699136,
+      "turnover_one_way_annual": 4.925168610766129,
+      "yearly": [
+        {
+          "year": 2005,
+          "arm": 0.015234008197578364,
+          "bm_main": null,
+          "excess": null,
+          "year_end": "2005-12-30",
+          "year_end_cash": 0.8069957179548588,
+          "n_arm": 242,
+          "n_bm": 0
+        },
+        {
+          "year": 2006,
+          "arm": 0.25168376710079143,
+          "bm_main": 0.7949240638720936,
+          "excess": -0.5432402967713021,
+          "year_end": "2006-12-29",
+          "year_end_cash": 0.3500643901591218,
+          "n_arm": 241,
+          "n_bm": 240
+        },
+        {
+          "year": 2007,
+          "arm": 0.3459362549149032,
+          "bm_main": 1.0383572489129107,
+          "excess": -0.6924209939980075,
+          "year_end": "2007-12-28",
+          "year_end_cash": 0.5236408267781864,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2008,
+          "arm": -0.1007615390674853,
+          "bm_main": -0.5964461695410448,
+          "excess": 0.4956846304735595,
+          "year_end": "2008-12-31",
+          "year_end_cash": 0.5829324057534658,
+          "n_arm": 246,
+          "n_bm": 246
+        },
+        {
+          "year": 2009,
+          "arm": 0.37049243193183523,
+          "bm_main": 0.833779526582332,
+          "excess": -0.4632870946504968,
+          "year_end": "2009-12-31",
+          "year_end_cash": 0.14359766697850754,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2010,
+          "arm": -0.01486639425392311,
+          "bm_main": -0.04259189667694907,
+          "excess": 0.02772550242302596,
+          "year_end": "2010-12-31",
+          "year_end_cash": 0.1180649269664283,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2011,
+          "arm": -0.029983761413419963,
+          "bm_main": -0.1777148515049779,
+          "excess": 0.14773109009155794,
+          "year_end": "2011-12-30",
+          "year_end_cash": 0.3170563505242973,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2012,
+          "arm": 0.011340197906208216,
+          "bm_main": 0.12067804918505498,
+          "excess": -0.10933785127884676,
+          "year_end": "2012-12-31",
+          "year_end_cash": 0.15588217135847232,
+          "n_arm": 243,
+          "n_bm": 243
+        },
+        {
+          "year": 2013,
+          "arm": 0.08458791030573587,
+          "bm_main": 0.05167782084164907,
+          "excess": 0.0329100894640868,
+          "year_end": "2013-12-31",
+          "year_end_cash": 0.07187500000000005,
+          "n_arm": 238,
+          "n_bm": 238
+        },
+        {
+          "year": 2014,
+          "arm": 0.3757034083561166,
+          "bm_main": 0.44782335808804175,
+          "excess": -0.07211994973192515,
+          "year_end": "2014-12-31",
+          "year_end_cash": 5.25155197272419e-17,
+          "n_arm": 245,
+          "n_bm": 245
+        },
+        {
+          "year": 2015,
+          "arm": 0.16113433266130528,
+          "bm_main": 0.09715897247164218,
+          "excess": 0.0639753601896631,
+          "year_end": "2015-12-31",
+          "year_end_cash": 0.04334203883394965,
+          "n_arm": 244,
+          "n_bm": 244
+        }
+      ],
+      "eligibility": {
+        "n_days": 2671,
+        "min": 0,
+        "median": 9.0,
+        "max": 20,
+        "never_eligible": [
+          "chinext",
+          "crude-oil",
+          "hstech",
+          "soymeal",
+          "star50",
+          "theme-东京日经225指数",
+          "theme-东证指数",
+          "theme-中证全球中国互联网人民币指数",
+          "theme-中证全球中国教育主题人民币指数",
+          "theme-中证海外中国互联网30人民币指数",
+          "theme-中证海外中国互联网50人民币指数",
+          "theme-中证海外中国互联网指数",
+          "theme-中证港股通金融服务指数",
+          "theme-中证港股通高股息投资港元指数",
+          "theme-中证韩交所中韩半导体指数",
+          "theme-中证香港内地国有企业港元指数",
+          "theme-中证香港创新药港币指数",
+          "theme-中证香港科技指数指数",
+          "theme-富时亚太低碳精选指数",
+          "theme-富时沙特阿拉伯指数",
+          "theme-恒生中国企业指数",
+          "theme-恒生中国央企指数",
+          "theme-恒生互联网科技业指数",
+          "theme-恒生创新药指数",
+          "theme-恒生医疗保健指数",
+          "theme-恒生消费指数",
+          "theme-恒生港股通红利低波动指数",
+          "theme-恒生生物科技指数",
+          "theme-恒生综合小型股指数",
+          "theme-新交所泛东南亚科技指数",
+          "theme-标普500信息科技指数",
+          "theme-标普500医疗保健等权重指数",
+          "theme-标普500消费精选指数",
+          "theme-标普中国新经济行业指数",
+          "theme-标普全球石油指数",
+          "theme-标普生物科技精选行业指数",
+          "theme-标普美国品质消费股票指数",
+          "theme-法兰克福DAX指数",
+          "theme-法国CAC40指数",
+          "theme-纳斯达克生物科技指数",
+          "theme-纳斯达克科技市值加权指数",
+          "theme-道琼斯工业平均指数",
+          "theme-道琼斯美国石油开发与生产指数",
+          "theme-道琼斯美国精选REIT指数"
+        ],
+        "pool_ids_absent_from_eligibility": [],
+        "yearly": [
+          {
+            "year": 2005,
+            "n_days": 242,
+            "min": 0,
+            "median": 1.0,
+            "max": 2
+          },
+          {
+            "year": 2006,
+            "n_days": 241,
+            "min": 2,
+            "median": 4.0,
+            "max": 4
+          },
+          {
+            "year": 2007,
+            "n_days": 242,
+            "min": 3,
+            "median": 5.0,
+            "max": 5
+          },
+          {
+            "year": 2008,
+            "n_days": 246,
+            "min": 1,
+            "median": 5.0,
+            "max": 9
+          },
+          {
+            "year": 2009,
+            "n_days": 244,
+            "min": 5,
+            "median": 9.0,
+            "max": 9
+          },
+          {
+            "year": 2010,
+            "n_days": 242,
+            "min": 7,
+            "median": 9.0,
+            "max": 9
+          },
+          {
+            "year": 2011,
+            "n_days": 244,
+            "min": 3,
+            "median": 9.0,
+            "max": 19
+          },
+          {
+            "year": 2012,
+            "n_days": 243,
+            "min": 6,
+            "median": 14.0,
+            "max": 19
+          },
+          {
+            "year": 2013,
+            "n_days": 238,
+            "min": 7,
+            "median": 17.0,
+            "max": 19
+          },
+          {
+            "year": 2014,
+            "n_days": 245,
+            "min": 9,
+            "median": 18.0,
+            "max": 20
+          },
+          {
+            "year": 2015,
+            "n_days": 244,
+            "min": 15,
+            "median": 19.0,
+            "max": 20
+          }
+        ]
+      },
+      "samples": [
+        {
+          "date": "2005-01-04",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2015-12-31",
+          "n_eligible": 19,
+          "n_held": 15,
+          "cash": 0.04334203883394965
+        },
+        {
+          "date": "2005-12-30",
+          "n_eligible": 2,
+          "n_held": 2,
+          "cash": 0.8069957179548588
+        },
+        {
+          "date": "2006-12-29",
+          "n_eligible": 4,
+          "n_held": 4,
+          "cash": 0.3500643901591218
+        },
+        {
+          "date": "2007-12-28",
+          "n_eligible": 4,
+          "n_held": 5,
+          "cash": 0.5236408267781864
+        },
+        {
+          "date": "2008-12-31",
+          "n_eligible": 6,
+          "n_held": 7,
+          "cash": 0.5829324057534658
+        },
+        {
+          "date": "2009-12-31",
+          "n_eligible": 9,
+          "n_held": 9,
+          "cash": 0.14359766697850754
+        },
+        {
+          "date": "2010-12-31",
+          "n_eligible": 9,
+          "n_held": 9,
+          "cash": 0.1180649269664283
+        },
+        {
+          "date": "2011-12-30",
+          "n_eligible": 6,
+          "n_held": 6,
+          "cash": 0.3170563505242973
+        },
+        {
+          "date": "2012-12-31",
+          "n_eligible": 19,
+          "n_held": 13,
+          "cash": 0.15588217135847232
+        },
+        {
+          "date": "2013-12-31",
+          "n_eligible": 15,
+          "n_held": 12,
+          "cash": 0.07187500000000005
+        },
+        {
+          "date": "2014-12-31",
+          "n_eligible": 17,
+          "n_held": 13,
+          "cash": 5.25155197272419e-17
+        },
+        {
+          "date": "2008-09-08",
+          "n_eligible": 3,
+          "n_held": 4,
+          "cash": 0.5373451772220114
+        },
+        {
+          "date": "2015-09-15",
+          "n_eligible": 15,
+          "n_held": 13,
+          "cash": 0.21425850432283364
+        }
+      ],
+      "crashes": {
+        "2008": {
+          "year": 2008,
+          "peak": "2007-10-16",
+          "trough": "2008-09-08",
+          "drawdown": -0.18663614293646447
+        },
+        "2015": {
+          "year": 2015,
+          "peak": "2015-06-12",
+          "trough": "2015-09-15",
+          "drawdown": -0.34150257327476286
+        }
+      },
+      "snapshots": {
+        "2008": {
+          "trough": {
+            "date": "2008-09-08",
+            "cash": 0.5373451772220114,
+            "n_nonzero": 4,
+            "positions": [
+              {
+                "id": "cgb-10y",
+                "name": "10年国债",
+                "asset_class": "债券",
+                "weight": 0.16576651290350908
+              },
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.1656521453749156
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.10491619894940103
+              },
+              {
+                "id": "spx",
+                "name": "标普500全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.026319965550163294
+              }
+            ]
+          },
+          "peak": {
+            "date": "2007-10-16",
+            "cash": 0.19207214453806543,
+            "n_nonzero": 5,
+            "positions": [
+              {
+                "id": "hsi",
+                "name": "恒生指数",
+                "asset_class": "港股",
+                "weight": 0.222016042647016
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.19335094780583773
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.16409128492989714
+              },
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.11983532694395205
+              },
+              {
+                "id": "spx",
+                "name": "标普500全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.10863425313523184
+              }
+            ]
+          }
+        },
+        "2015": {
+          "trough": {
+            "date": "2015-09-15",
+            "cash": 0.21425850432283364,
+            "n_nonzero": 13,
+            "positions": [
+              {
+                "id": "cgb-10y",
+                "name": "10年国债",
+                "asset_class": "债券",
+                "weight": 0.22025351190901207
+              },
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.22020821515910005
+              },
+              {
+                "id": "allshare-utilities",
+                "name": "中证全指公用事业",
+                "asset_class": "A股行业",
+                "weight": 0.10807967309989115
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.06916534764039046
+              },
+              {
+                "id": "gold",
+                "name": "黄金",
+                "asset_class": "商品",
+                "weight": 0.054431793632219394
+              },
+              {
+                "id": "allshare-industrials",
+                "name": "中证全指工业",
+                "asset_class": "A股行业",
+                "weight": 0.03206582465847707
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.03203901287080856
+              },
+              {
+                "id": "allshare-staples",
+                "name": "中证全指主要消费",
+                "asset_class": "A股行业",
+                "weight": 0.013228644496854595
+              },
+              {
+                "id": "allshare-discretionary",
+                "name": "中证全指可选消费",
+                "asset_class": "A股行业",
+                "weight": 0.010352678789089097
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.010332916250259514
+              },
+              {
+                "id": "allshare-healthcare",
+                "name": "中证全指医药卫生",
+                "asset_class": "A股行业",
+                "weight": 0.005227312368000754
+              },
+              {
+                "id": "allshare-financials-re",
+                "name": "中证全指金融地产",
+                "asset_class": "A股行业",
+                "weight": 0.005208333333333333
+              },
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.0051482314697303124
+              }
+            ]
+          },
+          "peak": {
+            "date": "2015-06-12",
+            "cash": 5.302781300303821e-17,
+            "n_nonzero": 11,
+            "positions": [
+              {
+                "id": "allshare-it",
+                "name": "中证全指信息技术",
+                "asset_class": "A股行业",
+                "weight": 0.16784039062271416
+              },
+              {
+                "id": "csi1000",
+                "name": "中证1000",
+                "asset_class": "A股宽基",
+                "weight": 0.16697289264931384
+              },
+              {
+                "id": "allshare-industrials",
+                "name": "中证全指工业",
+                "asset_class": "A股行业",
+                "weight": 0.16691712947484452
+              },
+              {
+                "id": "allshare-communication",
+                "name": "中证全指通信服务",
+                "asset_class": "A股行业",
+                "weight": 0.16481537370839072
+              },
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.15108323590453557
+              },
+              {
+                "id": "allshare-materials",
+                "name": "中证全指原材料",
+                "asset_class": "A股行业",
+                "weight": 0.05331564291425813
+              },
+              {
+                "id": "allshare-healthcare",
+                "name": "中证全指医药卫生",
+                "asset_class": "A股行业",
+                "weight": 0.04771551701369334
+              },
+              {
+                "id": "allshare-discretionary",
+                "name": "中证全指可选消费",
+                "asset_class": "A股行业",
+                "weight": 0.03677373666138475
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.02904424636504856
+              },
+              {
+                "id": "allshare-utilities",
+                "name": "中证全指公用事业",
+                "asset_class": "A股行业",
+                "weight": 0.01032181451142506
+              },
+              {
+                "id": "allshare-staples",
+                "name": "中证全指主要消费",
+                "asset_class": "A股行业",
+                "weight": 0.005200020174391281
+              }
+            ]
+          }
+        }
+      },
+      "choices": {},
+      "position_matched": null,
+      "criteria": null,
+      "deferred_rows": 0,
+      "exit_rows": 869
+    },
+    {
+      "id": "P3",
+      "arm": "S1",
+      "pool": "index",
+      "history_mode": "official",
+      "exit_drawdown": 0.1,
+      "start": "2005-01-04",
+      "end": "2015-12-31",
+      "n": 2671,
+      "cagr": 0.22375713492306182,
+      "max_drawdown": -0.3446980637131467,
+      "max_drawdown_peak": "2015-06-12",
+      "max_drawdown_trough": "2015-09-15",
+      "bm_main_cagr_on_overlap": 0.15446761075811666,
+      "bm_main_max_drawdown_on_overlap": -0.6546241458032607,
+      "excess_cagr_vs_bm_main": 0.09328474594199299,
+      "overlap_n": 2428,
+      "average_cash": 0.18667724761245427,
+      "buy_sum": 74.1564718848987,
+      "sell_sum": 83.17932722230239,
+      "turnover_one_way_annual": 6.9964174148238385,
+      "yearly": [
+        {
+          "year": 2005,
+          "arm": -0.001979782825078713,
+          "bm_main": null,
+          "excess": null,
+          "year_end": "2005-12-30",
+          "year_end_cash": 0.455664282258247,
+          "n_arm": 242,
+          "n_bm": 0
+        },
+        {
+          "year": 2006,
+          "arm": 1.1003010816801928,
+          "bm_main": 0.7949240638720936,
+          "excess": 0.3053770178080992,
+          "year_end": "2006-12-29",
+          "year_end_cash": 5.1205800887296315e-17,
+          "n_arm": 241,
+          "n_bm": 240
+        },
+        {
+          "year": 2007,
+          "arm": 1.5550449057698499,
+          "bm_main": 1.0383572489129107,
+          "excess": 0.5166876568569392,
+          "year_end": "2007-12-28",
+          "year_end_cash": 0.22825900498728813,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2008,
+          "arm": -0.23976578025089657,
+          "bm_main": -0.5964461695410448,
+          "excess": 0.3566803892901482,
+          "year_end": "2008-12-31",
+          "year_end_cash": 0.4833692317681328,
+          "n_arm": 246,
+          "n_bm": 246
+        },
+        {
+          "year": 2009,
+          "arm": 0.4409227481938325,
+          "bm_main": 0.833779526582332,
+          "excess": -0.39285677838849953,
+          "year_end": "2009-12-31",
+          "year_end_cash": 0.08105663103940504,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2010,
+          "arm": -0.07239986575464796,
+          "bm_main": -0.04259189667694907,
+          "excess": -0.029807969077698893,
+          "year_end": "2010-12-31",
+          "year_end_cash": 0.197259287991126,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2011,
+          "arm": -0.08973201017847221,
+          "bm_main": -0.1777148515049779,
+          "excess": 0.08798284132650569,
+          "year_end": "2011-12-30",
+          "year_end_cash": 0.30587664505681894,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2012,
+          "arm": 0.004647793262164024,
+          "bm_main": 0.12067804918505498,
+          "excess": -0.11603025592289096,
+          "year_end": "2012-12-31",
+          "year_end_cash": 0.10302777128245928,
+          "n_arm": 243,
+          "n_bm": 243
+        },
+        {
+          "year": 2013,
+          "arm": 0.07115109928907026,
+          "bm_main": 0.05167782084164907,
+          "excess": 0.019473278447421194,
+          "year_end": "2013-12-31",
+          "year_end_cash": 0.04791666666666672,
+          "n_arm": 238,
+          "n_bm": 238
+        },
+        {
+          "year": 2014,
+          "arm": 0.38792632238333846,
+          "bm_main": 0.44782335808804175,
+          "excess": -0.05989703570470328,
+          "year_end": "2014-12-31",
+          "year_end_cash": 5.254436551368102e-17,
+          "n_arm": 245,
+          "n_bm": 245
+        },
+        {
+          "year": 2015,
+          "arm": 0.1490298443966016,
+          "bm_main": 0.09715897247164218,
+          "excess": 0.05187087192495943,
+          "year_end": "2015-12-31",
+          "year_end_cash": 0.04347631581404404,
+          "n_arm": 244,
+          "n_bm": 244
+        }
+      ],
+      "eligibility": {
+        "n_days": 2671,
+        "min": 0,
+        "median": 17.0,
+        "max": 23,
+        "never_eligible": [
+          "chinext",
+          "crude-oil",
+          "hstech",
+          "soymeal",
+          "star50",
+          "theme-东京日经225指数",
+          "theme-东证指数",
+          "theme-中证全球中国互联网人民币指数",
+          "theme-中证全球中国教育主题人民币指数",
+          "theme-中证海外中国互联网30人民币指数",
+          "theme-中证海外中国互联网50人民币指数",
+          "theme-中证港股通金融服务指数",
+          "theme-中证港股通高股息投资港元指数",
+          "theme-中证韩交所中韩半导体指数",
+          "theme-中证香港内地国有企业港元指数",
+          "theme-中证香港创新药港币指数",
+          "theme-中证香港科技指数指数",
+          "theme-富时亚太低碳精选指数",
+          "theme-富时沙特阿拉伯指数",
+          "theme-恒生中国央企指数",
+          "theme-恒生互联网科技业指数",
+          "theme-恒生创新药指数",
+          "theme-恒生医疗保健指数",
+          "theme-恒生消费指数",
+          "theme-恒生港股通红利低波动指数",
+          "theme-恒生生物科技指数",
+          "theme-恒生综合小型股指数",
+          "theme-新交所泛东南亚科技指数",
+          "theme-标普500信息科技指数",
+          "theme-标普500医疗保健等权重指数",
+          "theme-标普500消费精选指数",
+          "theme-标普中国新经济行业指数",
+          "theme-标普生物科技精选行业指数",
+          "theme-标普美国品质消费股票指数",
+          "theme-法兰克福DAX指数",
+          "theme-法国CAC40指数",
+          "theme-纳斯达克生物科技指数",
+          "theme-纳斯达克科技市值加权指数",
+          "theme-道琼斯工业平均指数",
+          "theme-道琼斯美国石油开发与生产指数",
+          "theme-道琼斯美国精选REIT指数"
+        ],
+        "pool_ids_absent_from_eligibility": [],
+        "yearly": [
+          {
+            "year": 2005,
+            "n_days": 242,
+            "min": 0,
+            "median": 10.0,
+            "max": 15
+          },
+          {
+            "year": 2006,
+            "n_days": 241,
+            "min": 15,
+            "median": 17.0,
+            "max": 17
+          },
+          {
+            "year": 2007,
+            "n_days": 242,
+            "min": 16,
+            "median": 17.0,
+            "max": 17
+          },
+          {
+            "year": 2008,
+            "n_days": 246,
+            "min": 1,
+            "median": 15.0,
+            "max": 20
+          },
+          {
+            "year": 2009,
+            "n_days": 244,
+            "min": 12,
+            "median": 20.0,
+            "max": 20
+          },
+          {
+            "year": 2010,
+            "n_days": 242,
+            "min": 13,
+            "median": 20.0,
+            "max": 20
+          },
+          {
+            "year": 2011,
+            "n_days": 244,
+            "min": 3,
+            "median": 18.0,
+            "max": 21
+          },
+          {
+            "year": 2012,
+            "n_days": 243,
+            "min": 7,
+            "median": 16.0,
+            "max": 22
+          },
+          {
+            "year": 2013,
+            "n_days": 238,
+            "min": 9,
+            "median": 20.0,
+            "max": 22
+          },
+          {
+            "year": 2014,
+            "n_days": 245,
+            "min": 11,
+            "median": 20.0,
+            "max": 22
+          },
+          {
+            "year": 2015,
+            "n_days": 244,
+            "min": 16,
+            "median": 21.0,
+            "max": 23
+          }
+        ]
+      },
+      "samples": [
+        {
+          "date": "2005-01-04",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2015-12-31",
+          "n_eligible": 20,
+          "n_held": 16,
+          "cash": 0.04347631581404404
+        },
+        {
+          "date": "2005-12-30",
+          "n_eligible": 15,
+          "n_held": 12,
+          "cash": 0.455664282258247
+        },
+        {
+          "date": "2006-12-29",
+          "n_eligible": 17,
+          "n_held": 14,
+          "cash": 5.1205800887296315e-17
+        },
+        {
+          "date": "2007-12-28",
+          "n_eligible": 16,
+          "n_held": 16,
+          "cash": 0.22825900498728813
+        },
+        {
+          "date": "2008-12-31",
+          "n_eligible": 9,
+          "n_held": 9,
+          "cash": 0.4833692317681328
+        },
+        {
+          "date": "2009-12-31",
+          "n_eligible": 20,
+          "n_held": 13,
+          "cash": 0.08105663103940504
+        },
+        {
+          "date": "2010-12-31",
+          "n_eligible": 20,
+          "n_held": 16,
+          "cash": 0.197259287991126
+        },
+        {
+          "date": "2011-12-30",
+          "n_eligible": 7,
+          "n_held": 7,
+          "cash": 0.30587664505681894
+        },
+        {
+          "date": "2012-12-31",
+          "n_eligible": 22,
+          "n_held": 14,
+          "cash": 0.10302777128245928
+        },
+        {
+          "date": "2013-12-31",
+          "n_eligible": 18,
+          "n_held": 14,
+          "cash": 0.04791666666666672
+        },
+        {
+          "date": "2014-12-31",
+          "n_eligible": 19,
+          "n_held": 14,
+          "cash": 5.254436551368102e-17
+        },
+        {
+          "date": "2008-09-08",
+          "n_eligible": 3,
+          "n_held": 4,
+          "cash": 0.5373451772220114
+        },
+        {
+          "date": "2015-09-15",
+          "n_eligible": 16,
+          "n_held": 13,
+          "cash": 0.21425850432283364
+        }
+      ],
+      "crashes": {
+        "2008": {
+          "year": 2008,
+          "peak": "2007-10-16",
+          "trough": "2008-09-08",
+          "drawdown": -0.3237738270678594
+        },
+        "2015": {
+          "year": 2015,
+          "peak": "2015-06-12",
+          "trough": "2015-09-15",
+          "drawdown": -0.3446980637131467
+        }
+      },
+      "snapshots": {
+        "2008": {
+          "trough": {
+            "date": "2008-09-08",
+            "cash": 0.5373451772220114,
+            "n_nonzero": 4,
+            "positions": [
+              {
+                "id": "cgb-10y",
+                "name": "10年国债",
+                "asset_class": "债券",
+                "weight": 0.16576651290350908
+              },
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.1656521453749156
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.10491619894940103
+              },
+              {
+                "id": "spx",
+                "name": "标普500全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.026319965550163294
+              }
+            ]
+          },
+          "peak": {
+            "date": "2007-10-16",
+            "cash": 5.4701558148664105e-17,
+            "n_nonzero": 14,
+            "positions": [
+              {
+                "id": "allshare-energy",
+                "name": "中证全指能源",
+                "asset_class": "A股行业",
+                "weight": 0.2062730544485257
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.16976787277737002
+              },
+              {
+                "id": "allshare-materials",
+                "name": "中证全指原材料",
+                "asset_class": "A股行业",
+                "weight": 0.13428499239969457
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.12346325869232806
+              },
+              {
+                "id": "allshare-financials-re",
+                "name": "中证全指金融地产",
+                "asset_class": "A股行业",
+                "weight": 0.09573536153376495
+              },
+              {
+                "id": "hsi",
+                "name": "恒生指数",
+                "asset_class": "港股",
+                "weight": 0.06547956177522474
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.05442972779365049
+              },
+              {
+                "id": "allshare-industrials",
+                "name": "中证全指工业",
+                "asset_class": "A股行业",
+                "weight": 0.05316431956379389
+              },
+              {
+                "id": "allshare-staples",
+                "name": "中证全指主要消费",
+                "asset_class": "A股行业",
+                "weight": 0.03464446153176962
+              },
+              {
+                "id": "spx",
+                "name": "标普500全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.026739097138103827
+              },
+              {
+                "id": "allshare-utilities",
+                "name": "中证全指公用事业",
+                "asset_class": "A股行业",
+                "weight": 0.015537790546236052
+              },
+              {
+                "id": "allshare-communication",
+                "name": "中证全指通信服务",
+                "asset_class": "A股行业",
+                "weight": 0.010734587470305425
+              },
+              {
+                "id": "allshare-discretionary",
+                "name": "中证全指可选消费",
+                "asset_class": "A股行业",
+                "weight": 0.004919056716347633
+              },
+              {
+                "id": "csi1000",
+                "name": "中证1000",
+                "asset_class": "A股宽基",
+                "weight": 0.004826857612885096
+              }
+            ]
+          }
+        },
+        "2015": {
+          "trough": {
+            "date": "2015-09-15",
+            "cash": 0.21425850432283364,
+            "n_nonzero": 13,
+            "positions": [
+              {
+                "id": "cgb-10y",
+                "name": "10年国债",
+                "asset_class": "债券",
+                "weight": 0.22025351190901207
+              },
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.22020821515910005
+              },
+              {
+                "id": "allshare-utilities",
+                "name": "中证全指公用事业",
+                "asset_class": "A股行业",
+                "weight": 0.10807967309989115
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.06916534764039046
+              },
+              {
+                "id": "gold",
+                "name": "黄金",
+                "asset_class": "商品",
+                "weight": 0.054431793632219394
+              },
+              {
+                "id": "allshare-industrials",
+                "name": "中证全指工业",
+                "asset_class": "A股行业",
+                "weight": 0.03206582465847707
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.03203901287080856
+              },
+              {
+                "id": "allshare-staples",
+                "name": "中证全指主要消费",
+                "asset_class": "A股行业",
+                "weight": 0.013228644496854595
+              },
+              {
+                "id": "allshare-discretionary",
+                "name": "中证全指可选消费",
+                "asset_class": "A股行业",
+                "weight": 0.010352678789089097
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.010332916250259514
+              },
+              {
+                "id": "allshare-healthcare",
+                "name": "中证全指医药卫生",
+                "asset_class": "A股行业",
+                "weight": 0.005227312368000754
+              },
+              {
+                "id": "allshare-financials-re",
+                "name": "中证全指金融地产",
+                "asset_class": "A股行业",
+                "weight": 0.005208333333333333
+              },
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.0051482314697303124
+              }
+            ]
+          },
+          "peak": {
+            "date": "2015-06-12",
+            "cash": 5.301767725037299e-17,
+            "n_nonzero": 10,
+            "positions": [
+              {
+                "id": "csi1000",
+                "name": "中证1000",
+                "asset_class": "A股宽基",
+                "weight": 0.22256441107687017
+              },
+              {
+                "id": "allshare-industrials",
+                "name": "中证全指工业",
+                "asset_class": "A股行业",
+                "weight": 0.16686258590788475
+              },
+              {
+                "id": "allshare-communication",
+                "name": "中证全指通信服务",
+                "asset_class": "A股行业",
+                "weight": 0.1647526709252539
+              },
+              {
+                "id": "allshare-it",
+                "name": "中证全指信息技术",
+                "asset_class": "A股行业",
+                "weight": 0.15376920713253095
+              },
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.1368406866233575
+              },
+              {
+                "id": "allshare-healthcare",
+                "name": "中证全指医药卫生",
+                "asset_class": "A股行业",
+                "weight": 0.04768568509947552
+              },
+              {
+                "id": "allshare-materials",
+                "name": "中证全指原材料",
+                "asset_class": "A股行业",
+                "weight": 0.04497394360622977
+              },
+              {
+                "id": "allshare-discretionary",
+                "name": "中证全指可选消费",
+                "asset_class": "A股行业",
+                "weight": 0.036751826597108815
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.020598911133986774
+              },
+              {
+                "id": "allshare-staples",
+                "name": "中证全指主要消费",
+                "asset_class": "A股行业",
+                "weight": 0.005200071897301959
+              }
+            ]
+          }
+        }
+      },
+      "choices": {},
+      "position_matched": null,
+      "criteria": null,
+      "deferred_rows": 0,
+      "exit_rows": 1457
+    },
+    {
+      "id": "P4",
+      "arm": "S2",
+      "pool": "index",
+      "history_mode": "official",
+      "exit_drawdown": 0.1,
+      "start": "2005-01-04",
+      "end": "2015-12-31",
+      "n": 2671,
+      "cagr": 0.2433537211864425,
+      "max_drawdown": -0.34892132014283517,
+      "max_drawdown_peak": "2007-10-16",
+      "max_drawdown_trough": "2008-11-25",
+      "bm_main_cagr_on_overlap": 0.15446761075811666,
+      "bm_main_max_drawdown_on_overlap": -0.6546241458032607,
+      "excess_cagr_vs_bm_main": 0.11139187750341417,
+      "overlap_n": 2428,
+      "average_cash": 0.18162228223902818,
+      "buy_sum": 73.9461002638032,
+      "sell_sum": 84.8122978163671,
+      "turnover_one_way_annual": 6.976569549411608,
+      "yearly": [
+        {
+          "year": 2005,
+          "arm": 0.020540194481931895,
+          "bm_main": null,
+          "excess": null,
+          "year_end": "2005-12-30",
+          "year_end_cash": 0.35568871339580815,
+          "n_arm": 242,
+          "n_bm": 0
+        },
+        {
+          "year": 2006,
+          "arm": 1.39235281196728,
+          "bm_main": 0.7949240638720936,
+          "excess": 0.5974287480951863,
+          "year_end": "2006-12-29",
+          "year_end_cash": 5.1267286355660727e-17,
+          "n_arm": 241,
+          "n_bm": 240
+        },
+        {
+          "year": 2007,
+          "arm": 1.440411970707601,
+          "bm_main": 1.0383572489129107,
+          "excess": 0.4020547217946904,
+          "year_end": "2007-12-28",
+          "year_end_cash": 0.30020823958211246,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2008,
+          "arm": -0.23706150847748253,
+          "bm_main": -0.5964461695410448,
+          "excess": 0.35938466106356226,
+          "year_end": "2008-12-31",
+          "year_end_cash": 0.5177718792083921,
+          "n_arm": 246,
+          "n_bm": 246
+        },
+        {
+          "year": 2009,
+          "arm": 0.48289115685109474,
+          "bm_main": 0.833779526582332,
+          "excess": -0.35088836973123727,
+          "year_end": "2009-12-31",
+          "year_end_cash": 0.14200585407060043,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2010,
+          "arm": -0.08052703345890122,
+          "bm_main": -0.04259189667694907,
+          "excess": -0.03793513678195215,
+          "year_end": "2010-12-31",
+          "year_end_cash": 0.21793141324725399,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2011,
+          "arm": -0.10248392315427401,
+          "bm_main": -0.1777148515049779,
+          "excess": 0.07523092835070389,
+          "year_end": "2011-12-30",
+          "year_end_cash": 0.32920025297712857,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2012,
+          "arm": 0.011436572280051793,
+          "bm_main": 0.12067804918505498,
+          "excess": -0.10924147690500319,
+          "year_end": "2012-12-31",
+          "year_end_cash": 0.13123039991079247,
+          "n_arm": 243,
+          "n_bm": 243
+        },
+        {
+          "year": 2013,
+          "arm": 0.11388017023698271,
+          "bm_main": 0.05167782084164907,
+          "excess": 0.062202349395333645,
+          "year_end": "2013-12-31",
+          "year_end_cash": 0.08576388888888893,
+          "n_arm": 238,
+          "n_bm": 238
+        },
+        {
+          "year": 2014,
+          "arm": 0.43849191846214697,
+          "bm_main": 0.44782335808804175,
+          "excess": -0.009331439625894777,
+          "year_end": "2014-12-31",
+          "year_end_cash": 0.1423681102957395,
+          "n_arm": 245,
+          "n_bm": 245
+        },
+        {
+          "year": 2015,
+          "arm": 0.11595243687289503,
+          "bm_main": 0.09715897247164218,
+          "excess": 0.018793464401252846,
+          "year_end": "2015-12-31",
+          "year_end_cash": 0.027926726936705826,
+          "n_arm": 244,
+          "n_bm": 244
+        }
+      ],
+      "eligibility": {
+        "n_days": 2671,
+        "min": 0,
+        "median": 16.0,
+        "max": 22,
+        "never_eligible": [
+          "crude-oil",
+          "hstech",
+          "soymeal",
+          "theme-东京日经225指数",
+          "theme-东证指数",
+          "theme-中证全球中国互联网人民币指数",
+          "theme-中证全球中国教育主题人民币指数",
+          "theme-中证海外中国互联网30人民币指数",
+          "theme-中证海外中国互联网50人民币指数",
+          "theme-中证海外中国互联网指数",
+          "theme-中证港股通金融服务指数",
+          "theme-中证港股通高股息投资港元指数",
+          "theme-中证韩交所中韩半导体指数",
+          "theme-中证香港内地国有企业港元指数",
+          "theme-中证香港创新药港币指数",
+          "theme-中证香港科技指数指数",
+          "theme-富时亚太低碳精选指数",
+          "theme-富时沙特阿拉伯指数",
+          "theme-恒生中国企业指数",
+          "theme-恒生中国央企指数",
+          "theme-恒生互联网科技业指数",
+          "theme-恒生创新药指数",
+          "theme-恒生医疗保健指数",
+          "theme-恒生消费指数",
+          "theme-恒生港股通红利低波动指数",
+          "theme-恒生生物科技指数",
+          "theme-恒生综合小型股指数",
+          "theme-新交所泛东南亚科技指数",
+          "theme-标普500信息科技指数",
+          "theme-标普500医疗保健等权重指数",
+          "theme-标普500消费精选指数",
+          "theme-标普中国新经济行业指数",
+          "theme-标普全球石油指数",
+          "theme-标普生物科技精选行业指数",
+          "theme-标普美国品质消费股票指数",
+          "theme-法兰克福DAX指数",
+          "theme-法国CAC40指数",
+          "theme-纳斯达克生物科技指数",
+          "theme-纳斯达克科技市值加权指数",
+          "theme-道琼斯工业平均指数",
+          "theme-道琼斯美国石油开发与生产指数",
+          "theme-道琼斯美国精选REIT指数"
+        ],
+        "pool_ids_absent_from_eligibility": [],
+        "yearly": [
+          {
+            "year": 2005,
+            "n_days": 242,
+            "min": 0,
+            "median": 8.5,
+            "max": 12
+          },
+          {
+            "year": 2006,
+            "n_days": 241,
+            "min": 12,
+            "median": 14.0,
+            "max": 14
+          },
+          {
+            "year": 2007,
+            "n_days": 242,
+            "min": 13,
+            "median": 14.0,
+            "max": 15
+          },
+          {
+            "year": 2008,
+            "n_days": 246,
+            "min": 2,
+            "median": 13.0,
+            "max": 18
+          },
+          {
+            "year": 2009,
+            "n_days": 244,
+            "min": 11,
+            "median": 20.0,
+            "max": 20
+          },
+          {
+            "year": 2010,
+            "n_days": 242,
+            "min": 12,
+            "median": 20.0,
+            "max": 21
+          },
+          {
+            "year": 2011,
+            "n_days": 244,
+            "min": 3,
+            "median": 17.5,
+            "max": 21
+          },
+          {
+            "year": 2012,
+            "n_days": 243,
+            "min": 7,
+            "median": 17.0,
+            "max": 22
+          },
+          {
+            "year": 2013,
+            "n_days": 238,
+            "min": 10,
+            "median": 19.0,
+            "max": 22
+          },
+          {
+            "year": 2014,
+            "n_days": 245,
+            "min": 10,
+            "median": 20.0,
+            "max": 22
+          },
+          {
+            "year": 2015,
+            "n_days": 244,
+            "min": 18,
+            "median": 21.0,
+            "max": 22
+          }
+        ]
+      },
+      "samples": [
+        {
+          "date": "2005-01-04",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2015-12-31",
+          "n_eligible": 21,
+          "n_held": 15,
+          "cash": 0.027926726936705826
+        },
+        {
+          "date": "2005-12-30",
+          "n_eligible": 12,
+          "n_held": 11,
+          "cash": 0.35568871339580815
+        },
+        {
+          "date": "2006-12-29",
+          "n_eligible": 14,
+          "n_held": 14,
+          "cash": 5.1267286355660727e-17
+        },
+        {
+          "date": "2007-12-28",
+          "n_eligible": 14,
+          "n_held": 12,
+          "cash": 0.30020823958211246
+        },
+        {
+          "date": "2008-12-31",
+          "n_eligible": 9,
+          "n_held": 8,
+          "cash": 0.5177718792083921
+        },
+        {
+          "date": "2009-12-31",
+          "n_eligible": 20,
+          "n_held": 17,
+          "cash": 0.14200585407060043
+        },
+        {
+          "date": "2010-12-31",
+          "n_eligible": 20,
+          "n_held": 18,
+          "cash": 0.21793141324725399
+        },
+        {
+          "date": "2011-12-30",
+          "n_eligible": 7,
+          "n_held": 7,
+          "cash": 0.32920025297712857
+        },
+        {
+          "date": "2012-12-31",
+          "n_eligible": 22,
+          "n_held": 12,
+          "cash": 0.13123039991079247
+        },
+        {
+          "date": "2013-12-31",
+          "n_eligible": 15,
+          "n_held": 11,
+          "cash": 0.08576388888888893
+        },
+        {
+          "date": "2014-12-31",
+          "n_eligible": 20,
+          "n_held": 16,
+          "cash": 0.1423681102957395
+        },
+        {
+          "date": "2008-11-25",
+          "n_eligible": 16,
+          "n_held": 8,
+          "cash": 0.5997856043004829
+        },
+        {
+          "date": "2015-09-15",
+          "n_eligible": 18,
+          "n_held": 14,
+          "cash": 0.21441344004026022
+        }
+      ],
+      "crashes": {
+        "2008": {
+          "year": 2008,
+          "peak": "2007-10-16",
+          "trough": "2008-11-25",
+          "drawdown": -0.34892132014283517
+        },
+        "2015": {
+          "year": 2015,
+          "peak": "2015-06-12",
+          "trough": "2015-09-15",
+          "drawdown": -0.3434757405533012
+        }
+      },
+      "snapshots": {
+        "2008": {
+          "trough": {
+            "date": "2008-11-25",
+            "cash": 0.5997856043004829,
+            "n_nonzero": 8,
+            "positions": [
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.16520837999019874
+              },
+              {
+                "id": "cgb-10y",
+                "name": "10年国债",
+                "asset_class": "债券",
+                "weight": 0.16486712682042967
+              },
+              {
+                "id": "s2-地产",
+                "name": "地产",
+                "asset_class": "S2",
+                "weight": 0.027430555555555555
+              },
+              {
+                "id": "s2-中证1000",
+                "name": "中证1000",
+                "asset_class": "S2",
+                "weight": 0.013541666666666667
+              },
+              {
+                "id": "s2-军工",
+                "name": "军工",
+                "asset_class": "S2",
+                "weight": 0.013541666666666667
+              },
+              {
+                "id": "s2-中证500",
+                "name": "中证500",
+                "asset_class": "S2",
+                "weight": 0.005208333333333333
+              },
+              {
+                "id": "s2-有色",
+                "name": "有色",
+                "asset_class": "S2",
+                "weight": 0.005208333333333333
+              },
+              {
+                "id": "s2-银行",
+                "name": "银行",
+                "asset_class": "S2",
+                "weight": 0.005208333333333333
+              }
+            ]
+          },
+          "peak": {
+            "date": "2007-10-16",
+            "cash": 5.4479248194494565e-17,
+            "n_nonzero": 15,
+            "positions": [
+              {
+                "id": "s2-有色",
+                "name": "有色",
+                "asset_class": "S2",
+                "weight": 0.22536912783561772
+              },
+              {
+                "id": "s2-沪深300",
+                "name": "沪深300",
+                "asset_class": "S2",
+                "weight": 0.1744806400216554
+              },
+              {
+                "id": "s2-红利",
+                "name": "红利",
+                "asset_class": "S2",
+                "weight": 0.12211101334100179
+              },
+              {
+                "id": "s2-军工",
+                "name": "军工",
+                "asset_class": "S2",
+                "weight": 0.07802844542685221
+              },
+              {
+                "id": "hsi",
+                "name": "恒生指数",
+                "asset_class": "港股",
+                "weight": 0.06839506712178642
+              },
+              {
+                "id": "s2-地产",
+                "name": "地产",
+                "asset_class": "S2",
+                "weight": 0.06273995783805171
+              },
+              {
+                "id": "s2-银行",
+                "name": "银行",
+                "asset_class": "S2",
+                "weight": 0.06178553342559529
+              },
+              {
+                "id": "s2-券商",
+                "name": "券商",
+                "asset_class": "S2",
+                "weight": 0.05488608923497055
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.0403742388413759
+              },
+              {
+                "id": "s2-消费",
+                "name": "消费",
+                "asset_class": "S2",
+                "weight": 0.04024869726433863
+              },
+              {
+                "id": "s2-医药",
+                "name": "医药",
+                "asset_class": "S2",
+                "weight": 0.02312703614514355
+              },
+              {
+                "id": "spx",
+                "name": "标普500全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.018395034291196533
+              },
+              {
+                "id": "s2-中证1000",
+                "name": "中证1000",
+                "asset_class": "S2",
+                "weight": 0.014871795723284174
+              },
+              {
+                "id": "s2-农业",
+                "name": "农业",
+                "asset_class": "S2",
+                "weight": 0.01031511100911464
+              },
+              {
+                "id": "s2-中证500",
+                "name": "中证500",
+                "asset_class": "S2",
+                "weight": 0.004872212480015539
+              }
+            ]
+          }
+        },
+        "2015": {
+          "trough": {
+            "date": "2015-09-15",
+            "cash": 0.21441344004026022,
+            "n_nonzero": 14,
+            "positions": [
+              {
+                "id": "cgb-10y",
+                "name": "10年国债",
+                "asset_class": "债券",
+                "weight": 0.2204326643222899
+              },
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.22038729415405364
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.06924040601664398
+              },
+              {
+                "id": "s2-地产",
+                "name": "地产",
+                "asset_class": "S2",
+                "weight": 0.06812344746240388
+              },
+              {
+                "id": "gold",
+                "name": "黄金",
+                "asset_class": "商品",
+                "weight": 0.05447555804478193
+              },
+              {
+                "id": "s2-军工",
+                "name": "军工",
+                "asset_class": "S2",
+                "weight": 0.038402343035350436
+              },
+              {
+                "id": "s2-医药",
+                "name": "医药",
+                "asset_class": "S2",
+                "weight": 0.03269101565224794
+              },
+              {
+                "id": "s2-红利",
+                "name": "红利",
+                "asset_class": "S2",
+                "weight": 0.026868273601845266
+              },
+              {
+                "id": "s2-沪深300",
+                "name": "沪深300",
+                "asset_class": "S2",
+                "weight": 0.018672275470575095
+              },
+              {
+                "id": "s2-中证1000",
+                "name": "中证1000",
+                "asset_class": "S2",
+                "weight": 0.010443876236359432
+              },
+              {
+                "id": "s2-中证500",
+                "name": "中证500",
+                "asset_class": "S2",
+                "weight": 0.010362618497871194
+              },
+              {
+                "id": "spx",
+                "name": "标普500全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.005227761851238793
+              },
+              {
+                "id": "s2-银行",
+                "name": "银行",
+                "asset_class": "S2",
+                "weight": 0.005208333333333333
+              },
+              {
+                "id": "s2-消费",
+                "name": "消费",
+                "asset_class": "S2",
+                "weight": 0.00505069228074505
+              }
+            ]
+          },
+          "peak": {
+            "date": "2015-06-12",
+            "cash": 5.3247254154803065e-17,
+            "n_nonzero": 13,
+            "positions": [
+              {
+                "id": "s2-中证1000",
+                "name": "中证1000",
+                "asset_class": "S2",
+                "weight": 0.22366488182086794
+              },
+              {
+                "id": "s2-中证500",
+                "name": "中证500",
+                "asset_class": "S2",
+                "weight": 0.17991056510919254
+              },
+              {
+                "id": "s2-军工",
+                "name": "军工",
+                "asset_class": "S2",
+                "weight": 0.1640511420678619
+              },
+              {
+                "id": "s2-AI/算力",
+                "name": "AI/算力",
+                "asset_class": "S2",
+                "weight": 0.16329026199288144
+              },
+              {
+                "id": "s2-创业板",
+                "name": "创业板",
+                "asset_class": "S2",
+                "weight": 0.11382468021711628
+              },
+              {
+                "id": "s2-地产",
+                "name": "地产",
+                "asset_class": "S2",
+                "weight": 0.05373850871303074
+              },
+              {
+                "id": "s2-农业",
+                "name": "农业",
+                "asset_class": "S2",
+                "weight": 0.03983834705448324
+              },
+              {
+                "id": "s2-消费",
+                "name": "消费",
+                "asset_class": "S2",
+                "weight": 0.020870690236307037
+              },
+              {
+                "id": "s2-红利",
+                "name": "红利",
+                "asset_class": "S2",
+                "weight": 0.015428116773353382
+              },
+              {
+                "id": "s2-沪深300",
+                "name": "沪深300",
+                "asset_class": "S2",
+                "weight": 0.010169572659254389
+              },
+              {
+                "id": "s2-煤炭",
+                "name": "煤炭",
+                "asset_class": "S2",
+                "weight": 0.005149804352775045
+              },
+              {
+                "id": "s2-有色",
+                "name": "有色",
+                "asset_class": "S2",
+                "weight": 0.005088895460070086
+              },
+              {
+                "id": "s2-医药",
+                "name": "医药",
+                "asset_class": "S2",
+                "weight": 0.0049745335428060325
+              }
+            ]
+          }
+        }
+      },
+      "choices": {},
+      "position_matched": null,
+      "criteria": null,
+      "deferred_rows": 0,
+      "exit_rows": 1698
+    },
+    {
+      "id": "P5",
+      "arm": "B",
+      "pool": "index",
+      "history_mode": "official",
+      "exit_drawdown": 0.1,
+      "start": "2005-01-04",
+      "end": "2015-12-31",
+      "n": 2671,
+      "cagr": 0.06565724175729848,
+      "max_drawdown": -0.26680872168887404,
+      "max_drawdown_peak": "2015-06-12",
+      "max_drawdown_trough": "2015-09-15",
+      "bm_main_cagr_on_overlap": 0.15446761075811666,
+      "bm_main_max_drawdown_on_overlap": -0.6546241458032607,
+      "excess_cagr_vs_bm_main": -0.08415091596014457,
+      "overlap_n": 2428,
+      "average_cash": 0.6363650474045174,
+      "buy_sum": 19.903573838788027,
+      "sell_sum": 25.573603165463943,
+      "turnover_one_way_annual": 1.8778362438691811,
+      "yearly": [
+        {
+          "year": 2005,
+          "arm": 0.019391200746564197,
+          "bm_main": null,
+          "excess": null,
+          "year_end": "2005-12-30",
+          "year_end_cash": 1.0,
+          "n_arm": 242,
+          "n_bm": 0
+        },
+        {
+          "year": 2006,
+          "arm": 0.019310303103460713,
+          "bm_main": 0.7949240638720936,
+          "excess": -0.7756137607686329,
+          "year_end": "2006-12-29",
+          "year_end_cash": 1.0,
+          "n_arm": 241,
+          "n_bm": 240
+        },
+        {
+          "year": 2007,
+          "arm": 0.019391200746564197,
+          "bm_main": 1.0383572489129107,
+          "excess": -1.0189660481663465,
+          "year_end": "2007-12-28",
+          "year_end_cash": 1.0,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2008,
+          "arm": 0.019714855528552677,
+          "bm_main": -0.5964461695410448,
+          "excess": 0.6161610250695975,
+          "year_end": "2008-12-31",
+          "year_end_cash": 1.0,
+          "n_arm": 246,
+          "n_bm": 246
+        },
+        {
+          "year": 2009,
+          "arm": 0.019553015294624387,
+          "bm_main": 0.833779526582332,
+          "excess": -0.8142265112877076,
+          "year_end": "2009-12-31",
+          "year_end_cash": 1.0,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2010,
+          "arm": 0.019391200746564197,
+          "bm_main": -0.04259189667694907,
+          "excess": 0.06198309742351327,
+          "year_end": "2010-12-31",
+          "year_end_cash": 1.0,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2011,
+          "arm": -0.12609603684418247,
+          "bm_main": -0.1777148515049779,
+          "excess": 0.05161881466079543,
+          "year_end": "2011-12-30",
+          "year_end_cash": 0.6593574113727074,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2012,
+          "arm": -0.03460091711430913,
+          "bm_main": 0.12067804918505498,
+          "excess": -0.1552789662993641,
+          "year_end": "2012-12-31",
+          "year_end_cash": 0.5313915450509528,
+          "n_arm": 243,
+          "n_bm": 243
+        },
+        {
+          "year": 2013,
+          "arm": 0.09449897784310446,
+          "bm_main": 0.05167782084164907,
+          "excess": 0.04282115700145539,
+          "year_end": "2013-12-31",
+          "year_end_cash": 5.5010881312933413e-17,
+          "n_arm": 238,
+          "n_bm": 238
+        },
+        {
+          "year": 2014,
+          "arm": 0.39066113617006337,
+          "bm_main": 0.44782335808804175,
+          "excess": -0.05716222191797837,
+          "year_end": "2014-12-31",
+          "year_end_cash": 0.0,
+          "n_arm": 245,
+          "n_bm": 245
+        },
+        {
+          "year": 2015,
+          "arm": 0.36112849877427733,
+          "bm_main": 0.09715897247164218,
+          "excess": 0.26396952630263515,
+          "year_end": "2015-12-31",
+          "year_end_cash": 0.11973545841930051,
+          "n_arm": 244,
+          "n_bm": 244
+        }
+      ],
+      "eligibility": {
+        "n_days": 2671,
+        "min": 0,
+        "median": 17.0,
+        "max": 20,
+        "never_eligible": [
+          "chinext",
+          "crude-oil",
+          "hstech",
+          "soymeal",
+          "star50",
+          "theme-东京日经225指数",
+          "theme-东证指数",
+          "theme-中证全球中国互联网人民币指数",
+          "theme-中证全球中国教育主题人民币指数",
+          "theme-中证海外中国互联网30人民币指数",
+          "theme-中证海外中国互联网50人民币指数",
+          "theme-中证海外中国互联网指数",
+          "theme-中证港股通金融服务指数",
+          "theme-中证港股通高股息投资港元指数",
+          "theme-中证韩交所中韩半导体指数",
+          "theme-中证香港内地国有企业港元指数",
+          "theme-中证香港创新药港币指数",
+          "theme-中证香港科技指数指数",
+          "theme-富时亚太低碳精选指数",
+          "theme-富时沙特阿拉伯指数",
+          "theme-恒生中国企业指数",
+          "theme-恒生中国央企指数",
+          "theme-恒生互联网科技业指数",
+          "theme-恒生创新药指数",
+          "theme-恒生医疗保健指数",
+          "theme-恒生消费指数",
+          "theme-恒生港股通红利低波动指数",
+          "theme-恒生生物科技指数",
+          "theme-恒生综合小型股指数",
+          "theme-新交所泛东南亚科技指数",
+          "theme-标普500信息科技指数",
+          "theme-标普500医疗保健等权重指数",
+          "theme-标普500消费精选指数",
+          "theme-标普中国新经济行业指数",
+          "theme-标普全球石油指数",
+          "theme-标普生物科技精选行业指数",
+          "theme-标普美国品质消费股票指数",
+          "theme-法兰克福DAX指数",
+          "theme-法国CAC40指数",
+          "theme-纳斯达克生物科技指数",
+          "theme-纳斯达克科技市值加权指数",
+          "theme-道琼斯工业平均指数",
+          "theme-道琼斯美国石油开发与生产指数",
+          "theme-道琼斯美国精选REIT指数"
+        ],
+        "pool_ids_absent_from_eligibility": [],
+        "yearly": [
+          {
+            "year": 2005,
+            "n_days": 242,
+            "min": 0,
+            "median": 10.0,
+            "max": 15
+          },
+          {
+            "year": 2006,
+            "n_days": 241,
+            "min": 15,
+            "median": 17.0,
+            "max": 17
+          },
+          {
+            "year": 2007,
+            "n_days": 242,
+            "min": 16,
+            "median": 17.0,
+            "max": 17
+          },
+          {
+            "year": 2008,
+            "n_days": 246,
+            "min": 1,
+            "median": 15.0,
+            "max": 20
+          },
+          {
+            "year": 2009,
+            "n_days": 244,
+            "min": 12,
+            "median": 20.0,
+            "max": 20
+          },
+          {
+            "year": 2010,
+            "n_days": 242,
+            "min": 13,
+            "median": 20.0,
+            "max": 20
+          },
+          {
+            "year": 2011,
+            "n_days": 244,
+            "min": 3,
+            "median": 17.5,
+            "max": 20
+          },
+          {
+            "year": 2012,
+            "n_days": 243,
+            "min": 6,
+            "median": 15.0,
+            "max": 20
+          },
+          {
+            "year": 2013,
+            "n_days": 238,
+            "min": 8,
+            "median": 18.0,
+            "max": 20
+          },
+          {
+            "year": 2014,
+            "n_days": 245,
+            "min": 10,
+            "median": 19.0,
+            "max": 20
+          },
+          {
+            "year": 2015,
+            "n_days": 244,
+            "min": 16,
+            "median": 19.0,
+            "max": 20
+          }
+        ]
+      },
+      "samples": [
+        {
+          "date": "2005-01-04",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2015-12-31",
+          "n_eligible": 19,
+          "n_held": 13,
+          "cash": 0.11973545841930051
+        },
+        {
+          "date": "2005-12-30",
+          "n_eligible": 15,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2006-12-29",
+          "n_eligible": 17,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2007-12-28",
+          "n_eligible": 16,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2008-12-31",
+          "n_eligible": 9,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2009-12-31",
+          "n_eligible": 20,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2010-12-31",
+          "n_eligible": 20,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2011-12-30",
+          "n_eligible": 6,
+          "n_held": 3,
+          "cash": 0.6593574113727074
+        },
+        {
+          "date": "2012-12-31",
+          "n_eligible": 20,
+          "n_held": 6,
+          "cash": 0.5313915450509528
+        },
+        {
+          "date": "2013-12-31",
+          "n_eligible": 16,
+          "n_held": 9,
+          "cash": 5.5010881312933413e-17
+        },
+        {
+          "date": "2014-12-31",
+          "n_eligible": 18,
+          "n_held": 12,
+          "cash": 0.0
+        },
+        {
+          "date": "2008-01-02",
+          "n_eligible": 16,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2015-09-15",
+          "n_eligible": 16,
+          "n_held": 12,
+          "cash": 0.31518303405762615
+        }
+      ],
+      "crashes": {
+        "2008": {
+          "year": 2008,
+          "peak": "2008-01-02",
+          "trough": "2008-01-02",
+          "drawdown": 0.0
+        },
+        "2015": {
+          "year": 2015,
+          "peak": "2015-06-12",
+          "trough": "2015-09-15",
+          "drawdown": -0.26680872168887404
+        }
+      },
+      "snapshots": {
+        "2008": {
+          "trough": {
+            "date": "2008-01-02",
+            "cash": 1.0,
+            "n_nonzero": 0,
+            "positions": []
+          },
+          "peak": {
+            "date": "2008-01-02",
+            "cash": 1.0,
+            "n_nonzero": 0,
+            "positions": []
+          }
+        },
+        "2015": {
+          "trough": {
+            "date": "2015-09-15",
+            "cash": 0.31518303405762615,
+            "n_nonzero": 12,
+            "positions": [
+              {
+                "id": "cgb-10y",
+                "name": "10年国债",
+                "asset_class": "债券",
+                "weight": 0.1259642119395052
+              },
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.12591259063460358
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.06368399047493663
+              },
+              {
+                "id": "allshare-industrials",
+                "name": "中证全指工业",
+                "asset_class": "A股行业",
+                "weight": 0.06176068539325978
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.061671293239308284
+              },
+              {
+                "id": "allshare-utilities",
+                "name": "中证全指公用事业",
+                "asset_class": "A股行业",
+                "weight": 0.06064919933953843
+              },
+              {
+                "id": "allshare-healthcare",
+                "name": "中证全指医药卫生",
+                "asset_class": "A股行业",
+                "weight": 0.03136387420800452
+              },
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.030889388818381876
+              },
+              {
+                "id": "allshare-discretionary",
+                "name": "中证全指可选消费",
+                "asset_class": "A股行业",
+                "weight": 0.030866072734534577
+              },
+              {
+                "id": "gold",
+                "name": "黄金",
+                "asset_class": "商品",
+                "weight": 0.030771283727492885
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.030747497501557083
+              },
+              {
+                "id": "allshare-staples",
+                "name": "中证全指主要消费",
+                "asset_class": "A股行业",
+                "weight": 0.030536877931250945
+              }
+            ]
+          },
+          "peak": {
+            "date": "2015-06-12",
+            "cash": 0.0,
+            "n_nonzero": 10,
+            "positions": [
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.12667531417351038
+              },
+              {
+                "id": "allshare-discretionary",
+                "name": "中证全指可选消费",
+                "asset_class": "A股行业",
+                "weight": 0.12613170802751267
+              },
+              {
+                "id": "csi1000",
+                "name": "中证1000",
+                "asset_class": "A股宽基",
+                "weight": 0.1260758271744689
+              },
+              {
+                "id": "allshare-communication",
+                "name": "中证全指通信服务",
+                "asset_class": "A股行业",
+                "weight": 0.12565432667963697
+              },
+              {
+                "id": "allshare-it",
+                "name": "中证全指信息技术",
+                "asset_class": "A股行业",
+                "weight": 0.12142665239446299
+              },
+              {
+                "id": "allshare-materials",
+                "name": "中证全指原材料",
+                "asset_class": "A股行业",
+                "weight": 0.09532088706739311
+              },
+              {
+                "id": "allshare-industrials",
+                "name": "中证全指工业",
+                "asset_class": "A股行业",
+                "weight": 0.09239700035618086
+              },
+              {
+                "id": "allshare-healthcare",
+                "name": "中证全指医药卫生",
+                "asset_class": "A股行业",
+                "weight": 0.09209395410777134
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.06302389863525094
+              },
+              {
+                "id": "allshare-staples",
+                "name": "中证全指主要消费",
+                "asset_class": "A股行业",
+                "weight": 0.031200431383811754
+              }
+            ]
+          }
+        }
+      },
+      "choices": {
+        "2005": null,
+        "2006": null,
+        "2007": null,
+        "2008": null,
+        "2009": null,
+        "2010": null,
+        "2011": [
+          8,
+          "month"
+        ],
+        "2012": [
+          8,
+          "month"
+        ],
+        "2013": [
+          5,
+          "month"
+        ],
+        "2014": [
+          8,
+          "month"
+        ],
+        "2015": [
+          8,
+          "month"
+        ]
+      },
+      "position_matched": null,
+      "criteria": null,
+      "deferred_rows": 0,
+      "exit_rows": 189
+    },
+    {
+      "id": "P6",
+      "arm": "A",
+      "pool": "tradable",
+      "history_mode": "official",
+      "exit_drawdown": 0.1,
+      "start": "2005-01-04",
+      "end": "2015-12-31",
+      "n": 2671,
+      "cagr": 0.04873476981386182,
+      "max_drawdown": -0.26049924577977734,
+      "max_drawdown_peak": "2015-06-12",
+      "max_drawdown_trough": "2015-09-15",
+      "bm_main_cagr_on_overlap": 0.15446761075811666,
+      "bm_main_max_drawdown_on_overlap": -0.6546241458032607,
+      "excess_cagr_vs_bm_main": -0.10283349644661377,
+      "overlap_n": 2428,
+      "average_cash": 0.8551030002339346,
+      "buy_sum": 15.49436488563062,
+      "sell_sum": 18.123864327948553,
+      "turnover_one_way_annual": 1.4618419884608447,
+      "yearly": [
+        {
+          "year": 2005,
+          "arm": 0.019391200746564197,
+          "bm_main": null,
+          "excess": null,
+          "year_end": "2005-12-30",
+          "year_end_cash": 1.0,
+          "n_arm": 242,
+          "n_bm": 0
+        },
+        {
+          "year": 2006,
+          "arm": 0.019310303103460713,
+          "bm_main": 0.7949240638720936,
+          "excess": -0.7756137607686329,
+          "year_end": "2006-12-29",
+          "year_end_cash": 1.0,
+          "n_arm": 241,
+          "n_bm": 240
+        },
+        {
+          "year": 2007,
+          "arm": 0.06007857448695764,
+          "bm_main": 1.0383572489129107,
+          "excess": -0.9782786744259531,
+          "year_end": "2007-12-28",
+          "year_end_cash": 0.9128695483026802,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2008,
+          "arm": -0.03653933392535558,
+          "bm_main": -0.5964461695410448,
+          "excess": 0.5599068356156892,
+          "year_end": "2008-12-31",
+          "year_end_cash": 1.0000000000000002,
+          "n_arm": 246,
+          "n_bm": 246
+        },
+        {
+          "year": 2009,
+          "arm": 0.08079909939485042,
+          "bm_main": 0.833779526582332,
+          "excess": -0.7529804271874816,
+          "year_end": "2009-12-31",
+          "year_end_cash": 0.8891101777686514,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2010,
+          "arm": -0.02865976936688308,
+          "bm_main": -0.04259189667694907,
+          "excess": 0.01393212731006599,
+          "year_end": "2010-12-31",
+          "year_end_cash": 0.9462218823311831,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2011,
+          "arm": 0.02132926265378332,
+          "bm_main": -0.1777148515049779,
+          "excess": 0.19904411415876122,
+          "year_end": "2011-12-30",
+          "year_end_cash": 1.0,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2012,
+          "arm": 0.007808472493521013,
+          "bm_main": 0.12067804918505498,
+          "excess": -0.11286957669153397,
+          "year_end": "2012-12-31",
+          "year_end_cash": 0.9430722069858325,
+          "n_arm": 243,
+          "n_bm": 243
+        },
+        {
+          "year": 2013,
+          "arm": 0.09119076652444758,
+          "bm_main": 0.05167782084164907,
+          "excess": 0.039512945682798506,
+          "year_end": "2013-12-31",
+          "year_end_cash": 0.6972751806166112,
+          "n_arm": 238,
+          "n_bm": 238
+        },
+        {
+          "year": 2014,
+          "arm": 0.15446065032604372,
+          "bm_main": 0.44782335808804175,
+          "excess": -0.293362707761998,
+          "year_end": "2014-12-31",
+          "year_end_cash": 0.19077407000861588,
+          "n_arm": 245,
+          "n_bm": 245
+        },
+        {
+          "year": 2015,
+          "arm": 0.1462527190772327,
+          "bm_main": 0.09715897247164218,
+          "excess": 0.049093746605590516,
+          "year_end": "2015-12-31",
+          "year_end_cash": 0.35181901944794786,
+          "n_arm": 244,
+          "n_bm": 244
+        }
+      ],
+      "eligibility": {
+        "n_days": 2671,
+        "min": 0,
+        "median": 1.0,
+        "max": 9,
+        "never_eligible": [
+          "allshare-communication",
+          "allshare-discretionary",
+          "allshare-energy",
+          "allshare-financials-re",
+          "allshare-healthcare",
+          "allshare-industrials",
+          "allshare-it",
+          "allshare-materials",
+          "allshare-staples",
+          "allshare-utilities",
+          "cgb-10y",
+          "crude-oil",
+          "csi1000",
+          "hstech",
+          "soymeal",
+          "star50",
+          "theme-东京日经225指数",
+          "theme-东证指数",
+          "theme-中证全球中国互联网人民币指数",
+          "theme-中证全球中国教育主题人民币指数",
+          "theme-中证海外中国互联网30人民币指数",
+          "theme-中证海外中国互联网50人民币指数",
+          "theme-中证海外中国互联网指数",
+          "theme-中证港股通金融服务指数",
+          "theme-中证港股通高股息投资港元指数",
+          "theme-中证韩交所中韩半导体指数",
+          "theme-中证香港内地国有企业港元指数",
+          "theme-中证香港创新药港币指数",
+          "theme-中证香港科技指数指数",
+          "theme-富时亚太低碳精选指数",
+          "theme-富时沙特阿拉伯指数",
+          "theme-恒生中国企业指数",
+          "theme-恒生中国央企指数",
+          "theme-恒生互联网科技业指数",
+          "theme-恒生创新药指数",
+          "theme-恒生医疗保健指数",
+          "theme-恒生消费指数",
+          "theme-恒生港股通红利低波动指数",
+          "theme-恒生生物科技指数",
+          "theme-恒生综合小型股指数",
+          "theme-新交所泛东南亚科技指数",
+          "theme-标普500信息科技指数",
+          "theme-标普500医疗保健等权重指数",
+          "theme-标普500消费精选指数",
+          "theme-标普中国新经济行业指数",
+          "theme-标普全球石油指数",
+          "theme-标普生物科技精选行业指数",
+          "theme-标普美国品质消费股票指数",
+          "theme-法兰克福DAX指数",
+          "theme-法国CAC40指数",
+          "theme-纳斯达克生物科技指数",
+          "theme-纳斯达克科技市值加权指数",
+          "theme-道琼斯工业平均指数",
+          "theme-道琼斯美国石油开发与生产指数",
+          "theme-道琼斯美国精选REIT指数"
+        ],
+        "pool_ids_absent_from_eligibility": [],
+        "yearly": [
+          {
+            "year": 2005,
+            "n_days": 242,
+            "min": 0,
+            "median": 0.0,
+            "max": 0
+          },
+          {
+            "year": 2006,
+            "n_days": 241,
+            "min": 0,
+            "median": 0.0,
+            "max": 0
+          },
+          {
+            "year": 2007,
+            "n_days": 242,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2008,
+            "n_days": 246,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2009,
+            "n_days": 244,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2010,
+            "n_days": 242,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2011,
+            "n_days": 244,
+            "min": 0,
+            "median": 0.0,
+            "max": 1
+          },
+          {
+            "year": 2012,
+            "n_days": 243,
+            "min": 0,
+            "median": 1.0,
+            "max": 2
+          },
+          {
+            "year": 2013,
+            "n_days": 238,
+            "min": 0,
+            "median": 2.0,
+            "max": 3
+          },
+          {
+            "year": 2014,
+            "n_days": 245,
+            "min": 1,
+            "median": 3.0,
+            "max": 6
+          },
+          {
+            "year": 2015,
+            "n_days": 244,
+            "min": 3,
+            "median": 5.0,
+            "max": 9
+          }
+        ]
+      },
+      "samples": [
+        {
+          "date": "2005-01-04",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2015-12-31",
+          "n_eligible": 4,
+          "n_held": 4,
+          "cash": 0.35181901944794786
+        },
+        {
+          "date": "2005-12-30",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2006-12-29",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2007-12-28",
+          "n_eligible": 1,
+          "n_held": 1,
+          "cash": 0.9128695483026802
+        },
+        {
+          "date": "2008-12-31",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0000000000000002
+        },
+        {
+          "date": "2009-12-31",
+          "n_eligible": 1,
+          "n_held": 1,
+          "cash": 0.8891101777686514
+        },
+        {
+          "date": "2010-12-31",
+          "n_eligible": 0,
+          "n_held": 1,
+          "cash": 0.9462218823311831
+        },
+        {
+          "date": "2011-12-30",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2012-12-31",
+          "n_eligible": 1,
+          "n_held": 1,
+          "cash": 0.9430722069858325
+        },
+        {
+          "date": "2013-12-31",
+          "n_eligible": 2,
+          "n_held": 2,
+          "cash": 0.6972751806166112
+        },
+        {
+          "date": "2014-12-31",
+          "n_eligible": 6,
+          "n_held": 6,
+          "cash": 0.19077407000861588
+        },
+        {
+          "date": "2008-11-18",
+          "n_eligible": 0,
+          "n_held": 1,
+          "cash": 0.9725694444444445
+        },
+        {
+          "date": "2015-09-15",
+          "n_eligible": 4,
+          "n_held": 6,
+          "cash": 0.5775376037620897
+        }
+      ],
+      "crashes": {
+        "2008": {
+          "year": 2008,
+          "peak": "2007-09-17",
+          "trough": "2008-11-18",
+          "drawdown": -0.05425906872164177
+        },
+        "2015": {
+          "year": 2015,
+          "peak": "2015-06-12",
+          "trough": "2015-09-15",
+          "drawdown": -0.26049924577977734
+        }
+      },
+      "snapshots": {
+        "2008": {
+          "trough": {
+            "date": "2008-11-18",
+            "cash": 0.9725694444444445,
+            "n_nonzero": 1,
+            "positions": [
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.027430555555555555
+              }
+            ]
+          },
+          "peak": {
+            "date": "2007-09-17",
+            "cash": 0.9144403452317591,
+            "n_nonzero": 1,
+            "positions": [
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.08555965476824119
+              }
+            ]
+          }
+        },
+        "2015": {
+          "trough": {
+            "date": "2015-09-15",
+            "cash": 0.5775376037620897,
+            "n_nonzero": 6,
+            "positions": [
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.19254972527832104
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.08114255625045026
+              },
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.053993593477749735
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.04063268000460524
+              },
+              {
+                "id": "chinext",
+                "name": "创业板指",
+                "asset_class": "A股宽基",
+                "weight": 0.027239740687258318
+              },
+              {
+                "id": "gold",
+                "name": "黄金",
+                "asset_class": "商品",
+                "weight": 0.02690410053952574
+              }
+            ]
+          },
+          "peak": {
+            "date": "2015-06-12",
+            "cash": 0.15899839785256065,
+            "n_nonzero": 6,
+            "positions": [
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.22599367129128067
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.2073414725371825
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.20364141294192384
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.09006749592163547
+              },
+              {
+                "id": "spx",
+                "name": "标普500全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.06060381319936148
+              },
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.05335373625605552
+              }
+            ]
+          }
+        }
+      },
+      "choices": {},
+      "position_matched": null,
+      "criteria": null,
+      "deferred_rows": 0,
+      "exit_rows": 299
+    },
+    {
+      "id": "P7",
+      "arm": "A",
+      "pool": "tradable",
+      "history_mode": "publish_date",
+      "exit_drawdown": 0.1,
+      "start": "2005-01-04",
+      "end": "2015-12-31",
+      "n": 2671,
+      "cagr": 0.04873476981386182,
+      "max_drawdown": -0.26049924577977734,
+      "max_drawdown_peak": "2015-06-12",
+      "max_drawdown_trough": "2015-09-15",
+      "bm_main_cagr_on_overlap": 0.15446761075811666,
+      "bm_main_max_drawdown_on_overlap": -0.6546241458032607,
+      "excess_cagr_vs_bm_main": -0.10283349644661377,
+      "overlap_n": 2428,
+      "average_cash": 0.8551030002339346,
+      "buy_sum": 15.49436488563062,
+      "sell_sum": 18.123864327948553,
+      "turnover_one_way_annual": 1.4618419884608447,
+      "yearly": [
+        {
+          "year": 2005,
+          "arm": 0.019391200746564197,
+          "bm_main": null,
+          "excess": null,
+          "year_end": "2005-12-30",
+          "year_end_cash": 1.0,
+          "n_arm": 242,
+          "n_bm": 0
+        },
+        {
+          "year": 2006,
+          "arm": 0.019310303103460713,
+          "bm_main": 0.7949240638720936,
+          "excess": -0.7756137607686329,
+          "year_end": "2006-12-29",
+          "year_end_cash": 1.0,
+          "n_arm": 241,
+          "n_bm": 240
+        },
+        {
+          "year": 2007,
+          "arm": 0.06007857448695764,
+          "bm_main": 1.0383572489129107,
+          "excess": -0.9782786744259531,
+          "year_end": "2007-12-28",
+          "year_end_cash": 0.9128695483026802,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2008,
+          "arm": -0.03653933392535558,
+          "bm_main": -0.5964461695410448,
+          "excess": 0.5599068356156892,
+          "year_end": "2008-12-31",
+          "year_end_cash": 1.0000000000000002,
+          "n_arm": 246,
+          "n_bm": 246
+        },
+        {
+          "year": 2009,
+          "arm": 0.08079909939485042,
+          "bm_main": 0.833779526582332,
+          "excess": -0.7529804271874816,
+          "year_end": "2009-12-31",
+          "year_end_cash": 0.8891101777686514,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2010,
+          "arm": -0.02865976936688308,
+          "bm_main": -0.04259189667694907,
+          "excess": 0.01393212731006599,
+          "year_end": "2010-12-31",
+          "year_end_cash": 0.9462218823311831,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2011,
+          "arm": 0.02132926265378332,
+          "bm_main": -0.1777148515049779,
+          "excess": 0.19904411415876122,
+          "year_end": "2011-12-30",
+          "year_end_cash": 1.0,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2012,
+          "arm": 0.007808472493521013,
+          "bm_main": 0.12067804918505498,
+          "excess": -0.11286957669153397,
+          "year_end": "2012-12-31",
+          "year_end_cash": 0.9430722069858325,
+          "n_arm": 243,
+          "n_bm": 243
+        },
+        {
+          "year": 2013,
+          "arm": 0.09119076652444758,
+          "bm_main": 0.05167782084164907,
+          "excess": 0.039512945682798506,
+          "year_end": "2013-12-31",
+          "year_end_cash": 0.6972751806166112,
+          "n_arm": 238,
+          "n_bm": 238
+        },
+        {
+          "year": 2014,
+          "arm": 0.15446065032604372,
+          "bm_main": 0.44782335808804175,
+          "excess": -0.293362707761998,
+          "year_end": "2014-12-31",
+          "year_end_cash": 0.19077407000861588,
+          "n_arm": 245,
+          "n_bm": 245
+        },
+        {
+          "year": 2015,
+          "arm": 0.1462527190772327,
+          "bm_main": 0.09715897247164218,
+          "excess": 0.049093746605590516,
+          "year_end": "2015-12-31",
+          "year_end_cash": 0.35181901944794786,
+          "n_arm": 244,
+          "n_bm": 244
+        }
+      ],
+      "eligibility": {
+        "n_days": 2671,
+        "min": 0,
+        "median": 1.0,
+        "max": 9,
+        "never_eligible": [
+          "allshare-communication",
+          "allshare-discretionary",
+          "allshare-energy",
+          "allshare-financials-re",
+          "allshare-healthcare",
+          "allshare-industrials",
+          "allshare-it",
+          "allshare-materials",
+          "allshare-staples",
+          "allshare-utilities",
+          "cgb-10y",
+          "crude-oil",
+          "csi1000",
+          "hstech",
+          "soymeal",
+          "star50",
+          "theme-东京日经225指数",
+          "theme-东证指数",
+          "theme-中证全球中国互联网人民币指数",
+          "theme-中证全球中国教育主题人民币指数",
+          "theme-中证海外中国互联网30人民币指数",
+          "theme-中证海外中国互联网50人民币指数",
+          "theme-中证海外中国互联网指数",
+          "theme-中证港股通金融服务指数",
+          "theme-中证港股通高股息投资港元指数",
+          "theme-中证韩交所中韩半导体指数",
+          "theme-中证香港内地国有企业港元指数",
+          "theme-中证香港创新药港币指数",
+          "theme-中证香港科技指数指数",
+          "theme-富时亚太低碳精选指数",
+          "theme-富时沙特阿拉伯指数",
+          "theme-恒生中国企业指数",
+          "theme-恒生中国央企指数",
+          "theme-恒生互联网科技业指数",
+          "theme-恒生创新药指数",
+          "theme-恒生医疗保健指数",
+          "theme-恒生消费指数",
+          "theme-恒生港股通红利低波动指数",
+          "theme-恒生生物科技指数",
+          "theme-恒生综合小型股指数",
+          "theme-新交所泛东南亚科技指数",
+          "theme-标普500信息科技指数",
+          "theme-标普500医疗保健等权重指数",
+          "theme-标普500消费精选指数",
+          "theme-标普中国新经济行业指数",
+          "theme-标普全球石油指数",
+          "theme-标普生物科技精选行业指数",
+          "theme-标普美国品质消费股票指数",
+          "theme-法兰克福DAX指数",
+          "theme-法国CAC40指数",
+          "theme-纳斯达克生物科技指数",
+          "theme-纳斯达克科技市值加权指数",
+          "theme-道琼斯工业平均指数",
+          "theme-道琼斯美国石油开发与生产指数",
+          "theme-道琼斯美国精选REIT指数"
+        ],
+        "pool_ids_absent_from_eligibility": [],
+        "yearly": [
+          {
+            "year": 2005,
+            "n_days": 242,
+            "min": 0,
+            "median": 0.0,
+            "max": 0
+          },
+          {
+            "year": 2006,
+            "n_days": 241,
+            "min": 0,
+            "median": 0.0,
+            "max": 0
+          },
+          {
+            "year": 2007,
+            "n_days": 242,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2008,
+            "n_days": 246,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2009,
+            "n_days": 244,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2010,
+            "n_days": 242,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2011,
+            "n_days": 244,
+            "min": 0,
+            "median": 0.0,
+            "max": 1
+          },
+          {
+            "year": 2012,
+            "n_days": 243,
+            "min": 0,
+            "median": 1.0,
+            "max": 2
+          },
+          {
+            "year": 2013,
+            "n_days": 238,
+            "min": 0,
+            "median": 2.0,
+            "max": 3
+          },
+          {
+            "year": 2014,
+            "n_days": 245,
+            "min": 1,
+            "median": 3.0,
+            "max": 6
+          },
+          {
+            "year": 2015,
+            "n_days": 244,
+            "min": 3,
+            "median": 5.0,
+            "max": 9
+          }
+        ]
+      },
+      "samples": [
+        {
+          "date": "2005-01-04",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2015-12-31",
+          "n_eligible": 4,
+          "n_held": 4,
+          "cash": 0.35181901944794786
+        },
+        {
+          "date": "2005-12-30",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2006-12-29",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2007-12-28",
+          "n_eligible": 1,
+          "n_held": 1,
+          "cash": 0.9128695483026802
+        },
+        {
+          "date": "2008-12-31",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0000000000000002
+        },
+        {
+          "date": "2009-12-31",
+          "n_eligible": 1,
+          "n_held": 1,
+          "cash": 0.8891101777686514
+        },
+        {
+          "date": "2010-12-31",
+          "n_eligible": 0,
+          "n_held": 1,
+          "cash": 0.9462218823311831
+        },
+        {
+          "date": "2011-12-30",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2012-12-31",
+          "n_eligible": 1,
+          "n_held": 1,
+          "cash": 0.9430722069858325
+        },
+        {
+          "date": "2013-12-31",
+          "n_eligible": 2,
+          "n_held": 2,
+          "cash": 0.6972751806166112
+        },
+        {
+          "date": "2014-12-31",
+          "n_eligible": 6,
+          "n_held": 6,
+          "cash": 0.19077407000861588
+        },
+        {
+          "date": "2008-11-18",
+          "n_eligible": 0,
+          "n_held": 1,
+          "cash": 0.9725694444444445
+        },
+        {
+          "date": "2015-09-15",
+          "n_eligible": 4,
+          "n_held": 6,
+          "cash": 0.5775376037620897
+        }
+      ],
+      "crashes": {
+        "2008": {
+          "year": 2008,
+          "peak": "2007-09-17",
+          "trough": "2008-11-18",
+          "drawdown": -0.05425906872164177
+        },
+        "2015": {
+          "year": 2015,
+          "peak": "2015-06-12",
+          "trough": "2015-09-15",
+          "drawdown": -0.26049924577977734
+        }
+      },
+      "snapshots": {
+        "2008": {
+          "trough": {
+            "date": "2008-11-18",
+            "cash": 0.9725694444444445,
+            "n_nonzero": 1,
+            "positions": [
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.027430555555555555
+              }
+            ]
+          },
+          "peak": {
+            "date": "2007-09-17",
+            "cash": 0.9144403452317591,
+            "n_nonzero": 1,
+            "positions": [
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.08555965476824119
+              }
+            ]
+          }
+        },
+        "2015": {
+          "trough": {
+            "date": "2015-09-15",
+            "cash": 0.5775376037620897,
+            "n_nonzero": 6,
+            "positions": [
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.19254972527832104
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.08114255625045026
+              },
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.053993593477749735
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.04063268000460524
+              },
+              {
+                "id": "chinext",
+                "name": "创业板指",
+                "asset_class": "A股宽基",
+                "weight": 0.027239740687258318
+              },
+              {
+                "id": "gold",
+                "name": "黄金",
+                "asset_class": "商品",
+                "weight": 0.02690410053952574
+              }
+            ]
+          },
+          "peak": {
+            "date": "2015-06-12",
+            "cash": 0.15899839785256065,
+            "n_nonzero": 6,
+            "positions": [
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.22599367129128067
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.2073414725371825
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.20364141294192384
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.09006749592163547
+              },
+              {
+                "id": "spx",
+                "name": "标普500全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.06060381319936148
+              },
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.05335373625605552
+              }
+            ]
+          }
+        }
+      },
+      "choices": {},
+      "position_matched": null,
+      "criteria": null,
+      "deferred_rows": 0,
+      "exit_rows": 299
+    },
+    {
+      "id": "P8",
+      "arm": "S1",
+      "pool": "tradable",
+      "history_mode": "official",
+      "exit_drawdown": 0.1,
+      "start": "2005-01-04",
+      "end": "2015-12-31",
+      "n": 2671,
+      "cagr": 0.048724449568221306,
+      "max_drawdown": -0.26049924577977723,
+      "max_drawdown_peak": "2015-06-12",
+      "max_drawdown_trough": "2015-09-15",
+      "bm_main_cagr_on_overlap": 0.15446761075811666,
+      "bm_main_max_drawdown_on_overlap": -0.6546241458032607,
+      "excess_cagr_vs_bm_main": -0.1028448809482847,
+      "overlap_n": 2428,
+      "average_cash": 0.8551767460149441,
+      "buy_sum": 15.482110478288963,
+      "sell_sum": 18.111609920606895,
+      "turnover_one_way_annual": 1.4606858257314932,
+      "yearly": [
+        {
+          "year": 2005,
+          "arm": 0.019391200746564197,
+          "bm_main": null,
+          "excess": null,
+          "year_end": "2005-12-30",
+          "year_end_cash": 1.0,
+          "n_arm": 242,
+          "n_bm": 0
+        },
+        {
+          "year": 2006,
+          "arm": 0.019310303103460713,
+          "bm_main": 0.7949240638720936,
+          "excess": -0.7756137607686329,
+          "year_end": "2006-12-29",
+          "year_end_cash": 1.0,
+          "n_arm": 241,
+          "n_bm": 240
+        },
+        {
+          "year": 2007,
+          "arm": 0.06007857448695764,
+          "bm_main": 1.0383572489129107,
+          "excess": -0.9782786744259531,
+          "year_end": "2007-12-28",
+          "year_end_cash": 0.9128695483026802,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2008,
+          "arm": -0.03653933392535558,
+          "bm_main": -0.5964461695410448,
+          "excess": 0.5599068356156892,
+          "year_end": "2008-12-31",
+          "year_end_cash": 1.0000000000000002,
+          "n_arm": 246,
+          "n_bm": 246
+        },
+        {
+          "year": 2009,
+          "arm": 0.08079909939485042,
+          "bm_main": 0.833779526582332,
+          "excess": -0.7529804271874816,
+          "year_end": "2009-12-31",
+          "year_end_cash": 0.8891101777686514,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2010,
+          "arm": -0.02865976936688308,
+          "bm_main": -0.04259189667694907,
+          "excess": 0.01393212731006599,
+          "year_end": "2010-12-31",
+          "year_end_cash": 0.9462218823311831,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2011,
+          "arm": 0.02132926265378332,
+          "bm_main": -0.1777148515049779,
+          "excess": 0.19904411415876122,
+          "year_end": "2011-12-30",
+          "year_end_cash": 1.0,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2012,
+          "arm": 0.007808472493521013,
+          "bm_main": 0.12067804918505498,
+          "excess": -0.11286957669153397,
+          "year_end": "2012-12-31",
+          "year_end_cash": 0.9430722069858325,
+          "n_arm": 243,
+          "n_bm": 243
+        },
+        {
+          "year": 2013,
+          "arm": 0.09119076652444758,
+          "bm_main": 0.05167782084164907,
+          "excess": 0.039512945682798506,
+          "year_end": "2013-12-31",
+          "year_end_cash": 0.6972751806166112,
+          "n_arm": 238,
+          "n_bm": 238
+        },
+        {
+          "year": 2014,
+          "arm": 0.15446065032604372,
+          "bm_main": 0.44782335808804175,
+          "excess": -0.293362707761998,
+          "year_end": "2014-12-31",
+          "year_end_cash": 0.19077407000861588,
+          "n_arm": 245,
+          "n_bm": 245
+        },
+        {
+          "year": 2015,
+          "arm": 0.14613316687473654,
+          "bm_main": 0.09715897247164218,
+          "excess": 0.04897419440309436,
+          "year_end": "2015-12-31",
+          "year_end_cash": 0.35181901944794786,
+          "n_arm": 244,
+          "n_bm": 244
+        }
+      ],
+      "eligibility": {
+        "n_days": 2671,
+        "min": 0,
+        "median": 1.0,
+        "max": 10,
+        "never_eligible": [
+          "allshare-communication",
+          "allshare-discretionary",
+          "allshare-energy",
+          "allshare-financials-re",
+          "allshare-healthcare",
+          "allshare-industrials",
+          "allshare-it",
+          "allshare-materials",
+          "allshare-staples",
+          "allshare-utilities",
+          "cgb-10y",
+          "crude-oil",
+          "csi1000",
+          "hstech",
+          "soymeal",
+          "star50",
+          "theme-东京日经225指数",
+          "theme-东证指数",
+          "theme-中证全球中国互联网人民币指数",
+          "theme-中证全球中国教育主题人民币指数",
+          "theme-中证海外中国互联网30人民币指数",
+          "theme-中证海外中国互联网50人民币指数",
+          "theme-中证海外中国互联网指数",
+          "theme-中证港股通金融服务指数",
+          "theme-中证港股通高股息投资港元指数",
+          "theme-中证韩交所中韩半导体指数",
+          "theme-中证香港内地国有企业港元指数",
+          "theme-中证香港创新药港币指数",
+          "theme-中证香港科技指数指数",
+          "theme-富时亚太低碳精选指数",
+          "theme-富时沙特阿拉伯指数",
+          "theme-恒生中国央企指数",
+          "theme-恒生互联网科技业指数",
+          "theme-恒生创新药指数",
+          "theme-恒生医疗保健指数",
+          "theme-恒生消费指数",
+          "theme-恒生港股通红利低波动指数",
+          "theme-恒生生物科技指数",
+          "theme-恒生综合小型股指数",
+          "theme-新交所泛东南亚科技指数",
+          "theme-标普500信息科技指数",
+          "theme-标普500医疗保健等权重指数",
+          "theme-标普500消费精选指数",
+          "theme-标普中国新经济行业指数",
+          "theme-标普生物科技精选行业指数",
+          "theme-标普美国品质消费股票指数",
+          "theme-法兰克福DAX指数",
+          "theme-法国CAC40指数",
+          "theme-纳斯达克生物科技指数",
+          "theme-纳斯达克科技市值加权指数",
+          "theme-道琼斯工业平均指数",
+          "theme-道琼斯美国石油开发与生产指数",
+          "theme-道琼斯美国精选REIT指数"
+        ],
+        "pool_ids_absent_from_eligibility": [],
+        "yearly": [
+          {
+            "year": 2005,
+            "n_days": 242,
+            "min": 0,
+            "median": 0.0,
+            "max": 0
+          },
+          {
+            "year": 2006,
+            "n_days": 241,
+            "min": 0,
+            "median": 0.0,
+            "max": 0
+          },
+          {
+            "year": 2007,
+            "n_days": 242,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2008,
+            "n_days": 246,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2009,
+            "n_days": 244,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2010,
+            "n_days": 242,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2011,
+            "n_days": 244,
+            "min": 0,
+            "median": 0.0,
+            "max": 1
+          },
+          {
+            "year": 2012,
+            "n_days": 243,
+            "min": 0,
+            "median": 1.0,
+            "max": 2
+          },
+          {
+            "year": 2013,
+            "n_days": 238,
+            "min": 0,
+            "median": 2.0,
+            "max": 3
+          },
+          {
+            "year": 2014,
+            "n_days": 245,
+            "min": 1,
+            "median": 3.0,
+            "max": 6
+          },
+          {
+            "year": 2015,
+            "n_days": 244,
+            "min": 3,
+            "median": 5.0,
+            "max": 10
+          }
+        ]
+      },
+      "samples": [
+        {
+          "date": "2005-01-04",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2015-12-31",
+          "n_eligible": 4,
+          "n_held": 4,
+          "cash": 0.35181901944794786
+        },
+        {
+          "date": "2005-12-30",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2006-12-29",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2007-12-28",
+          "n_eligible": 1,
+          "n_held": 1,
+          "cash": 0.9128695483026802
+        },
+        {
+          "date": "2008-12-31",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0000000000000002
+        },
+        {
+          "date": "2009-12-31",
+          "n_eligible": 1,
+          "n_held": 1,
+          "cash": 0.8891101777686514
+        },
+        {
+          "date": "2010-12-31",
+          "n_eligible": 0,
+          "n_held": 1,
+          "cash": 0.9462218823311831
+        },
+        {
+          "date": "2011-12-30",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2012-12-31",
+          "n_eligible": 1,
+          "n_held": 1,
+          "cash": 0.9430722069858325
+        },
+        {
+          "date": "2013-12-31",
+          "n_eligible": 2,
+          "n_held": 2,
+          "cash": 0.6972751806166112
+        },
+        {
+          "date": "2014-12-31",
+          "n_eligible": 6,
+          "n_held": 6,
+          "cash": 0.19077407000861588
+        },
+        {
+          "date": "2008-11-18",
+          "n_eligible": 0,
+          "n_held": 1,
+          "cash": 0.9725694444444445
+        },
+        {
+          "date": "2015-09-15",
+          "n_eligible": 4,
+          "n_held": 6,
+          "cash": 0.5775376037620897
+        }
+      ],
+      "crashes": {
+        "2008": {
+          "year": 2008,
+          "peak": "2007-09-17",
+          "trough": "2008-11-18",
+          "drawdown": -0.05425906872164177
+        },
+        "2015": {
+          "year": 2015,
+          "peak": "2015-06-12",
+          "trough": "2015-09-15",
+          "drawdown": -0.26049924577977723
+        }
+      },
+      "snapshots": {
+        "2008": {
+          "trough": {
+            "date": "2008-11-18",
+            "cash": 0.9725694444444445,
+            "n_nonzero": 1,
+            "positions": [
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.027430555555555555
+              }
+            ]
+          },
+          "peak": {
+            "date": "2007-09-17",
+            "cash": 0.9144403452317591,
+            "n_nonzero": 1,
+            "positions": [
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.08555965476824119
+              }
+            ]
+          }
+        },
+        "2015": {
+          "trough": {
+            "date": "2015-09-15",
+            "cash": 0.5775376037620897,
+            "n_nonzero": 6,
+            "positions": [
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.19254972527832104
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.08114255625045026
+              },
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.053993593477749735
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.04063268000460524
+              },
+              {
+                "id": "chinext",
+                "name": "创业板指",
+                "asset_class": "A股宽基",
+                "weight": 0.027239740687258318
+              },
+              {
+                "id": "gold",
+                "name": "黄金",
+                "asset_class": "商品",
+                "weight": 0.02690410053952574
+              }
+            ]
+          },
+          "peak": {
+            "date": "2015-06-12",
+            "cash": 0.15899839785256065,
+            "n_nonzero": 6,
+            "positions": [
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.22599367129128067
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.2073414725371825
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.20364141294192384
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.09006749592163547
+              },
+              {
+                "id": "spx",
+                "name": "标普500全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.06060381319936148
+              },
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.05335373625605552
+              }
+            ]
+          }
+        }
+      },
+      "choices": {},
+      "position_matched": null,
+      "criteria": null,
+      "deferred_rows": 0,
+      "exit_rows": 299
+    },
+    {
+      "id": "P9",
+      "arm": "S2",
+      "pool": "tradable",
+      "history_mode": "official",
+      "exit_drawdown": 0.1,
+      "start": "2005-01-04",
+      "end": "2015-12-31",
+      "n": 2671,
+      "cagr": 0.04873476981386182,
+      "max_drawdown": -0.26049924577977723,
+      "max_drawdown_peak": "2015-06-12",
+      "max_drawdown_trough": "2015-09-15",
+      "bm_main_cagr_on_overlap": 0.15446761075811666,
+      "bm_main_max_drawdown_on_overlap": -0.6546241458032607,
+      "excess_cagr_vs_bm_main": -0.10283349644661377,
+      "overlap_n": 2428,
+      "average_cash": 0.8551030002339346,
+      "buy_sum": 15.49436488563062,
+      "sell_sum": 18.123864327948553,
+      "turnover_one_way_annual": 1.4618419884608447,
+      "yearly": [
+        {
+          "year": 2005,
+          "arm": 0.019391200746564197,
+          "bm_main": null,
+          "excess": null,
+          "year_end": "2005-12-30",
+          "year_end_cash": 1.0,
+          "n_arm": 242,
+          "n_bm": 0
+        },
+        {
+          "year": 2006,
+          "arm": 0.019310303103460713,
+          "bm_main": 0.7949240638720936,
+          "excess": -0.7756137607686329,
+          "year_end": "2006-12-29",
+          "year_end_cash": 1.0,
+          "n_arm": 241,
+          "n_bm": 240
+        },
+        {
+          "year": 2007,
+          "arm": 0.06007857448695764,
+          "bm_main": 1.0383572489129107,
+          "excess": -0.9782786744259531,
+          "year_end": "2007-12-28",
+          "year_end_cash": 0.9128695483026802,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2008,
+          "arm": -0.03653933392535558,
+          "bm_main": -0.5964461695410448,
+          "excess": 0.5599068356156892,
+          "year_end": "2008-12-31",
+          "year_end_cash": 1.0000000000000002,
+          "n_arm": 246,
+          "n_bm": 246
+        },
+        {
+          "year": 2009,
+          "arm": 0.08079909939485042,
+          "bm_main": 0.833779526582332,
+          "excess": -0.7529804271874816,
+          "year_end": "2009-12-31",
+          "year_end_cash": 0.8891101777686514,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2010,
+          "arm": -0.02865976936688308,
+          "bm_main": -0.04259189667694907,
+          "excess": 0.01393212731006599,
+          "year_end": "2010-12-31",
+          "year_end_cash": 0.9462218823311831,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2011,
+          "arm": 0.02132926265378332,
+          "bm_main": -0.1777148515049779,
+          "excess": 0.19904411415876122,
+          "year_end": "2011-12-30",
+          "year_end_cash": 1.0,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2012,
+          "arm": 0.007808472493521013,
+          "bm_main": 0.12067804918505498,
+          "excess": -0.11286957669153397,
+          "year_end": "2012-12-31",
+          "year_end_cash": 0.9430722069858325,
+          "n_arm": 243,
+          "n_bm": 243
+        },
+        {
+          "year": 2013,
+          "arm": 0.09119076652444758,
+          "bm_main": 0.05167782084164907,
+          "excess": 0.039512945682798506,
+          "year_end": "2013-12-31",
+          "year_end_cash": 0.6972751806166112,
+          "n_arm": 238,
+          "n_bm": 238
+        },
+        {
+          "year": 2014,
+          "arm": 0.15446065032604372,
+          "bm_main": 0.44782335808804175,
+          "excess": -0.293362707761998,
+          "year_end": "2014-12-31",
+          "year_end_cash": 0.19077407000861582,
+          "n_arm": 245,
+          "n_bm": 245
+        },
+        {
+          "year": 2015,
+          "arm": 0.14625271907723314,
+          "bm_main": 0.09715897247164218,
+          "excess": 0.04909374660559096,
+          "year_end": "2015-12-31",
+          "year_end_cash": 0.35181901944794786,
+          "n_arm": 244,
+          "n_bm": 244
+        }
+      ],
+      "eligibility": {
+        "n_days": 2671,
+        "min": 0,
+        "median": 1.0,
+        "max": 9,
+        "never_eligible": [
+          "cgb-10y",
+          "crude-oil",
+          "hstech",
+          "s2-AI/算力",
+          "s2-中证1000",
+          "s2-军工",
+          "s2-农业",
+          "s2-券商",
+          "s2-医药",
+          "s2-地产",
+          "s2-有色",
+          "s2-消费",
+          "s2-煤炭",
+          "s2-白酒",
+          "s2-银行",
+          "soymeal",
+          "theme-东京日经225指数",
+          "theme-东证指数",
+          "theme-中证全球中国互联网人民币指数",
+          "theme-中证全球中国教育主题人民币指数",
+          "theme-中证海外中国互联网30人民币指数",
+          "theme-中证海外中国互联网50人民币指数",
+          "theme-中证海外中国互联网指数",
+          "theme-中证港股通金融服务指数",
+          "theme-中证港股通高股息投资港元指数",
+          "theme-中证韩交所中韩半导体指数",
+          "theme-中证香港内地国有企业港元指数",
+          "theme-中证香港创新药港币指数",
+          "theme-中证香港科技指数指数",
+          "theme-富时亚太低碳精选指数",
+          "theme-富时沙特阿拉伯指数",
+          "theme-恒生中国企业指数",
+          "theme-恒生中国央企指数",
+          "theme-恒生互联网科技业指数",
+          "theme-恒生创新药指数",
+          "theme-恒生医疗保健指数",
+          "theme-恒生消费指数",
+          "theme-恒生港股通红利低波动指数",
+          "theme-恒生生物科技指数",
+          "theme-恒生综合小型股指数",
+          "theme-新交所泛东南亚科技指数",
+          "theme-标普500信息科技指数",
+          "theme-标普500医疗保健等权重指数",
+          "theme-标普500消费精选指数",
+          "theme-标普中国新经济行业指数",
+          "theme-标普全球石油指数",
+          "theme-标普生物科技精选行业指数",
+          "theme-标普美国品质消费股票指数",
+          "theme-法兰克福DAX指数",
+          "theme-法国CAC40指数",
+          "theme-纳斯达克生物科技指数",
+          "theme-纳斯达克科技市值加权指数",
+          "theme-道琼斯工业平均指数",
+          "theme-道琼斯美国石油开发与生产指数",
+          "theme-道琼斯美国精选REIT指数"
+        ],
+        "pool_ids_absent_from_eligibility": [],
+        "yearly": [
+          {
+            "year": 2005,
+            "n_days": 242,
+            "min": 0,
+            "median": 0.0,
+            "max": 0
+          },
+          {
+            "year": 2006,
+            "n_days": 241,
+            "min": 0,
+            "median": 0.0,
+            "max": 0
+          },
+          {
+            "year": 2007,
+            "n_days": 242,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2008,
+            "n_days": 246,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2009,
+            "n_days": 244,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2010,
+            "n_days": 242,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2011,
+            "n_days": 244,
+            "min": 0,
+            "median": 0.0,
+            "max": 1
+          },
+          {
+            "year": 2012,
+            "n_days": 243,
+            "min": 0,
+            "median": 1.0,
+            "max": 2
+          },
+          {
+            "year": 2013,
+            "n_days": 238,
+            "min": 0,
+            "median": 2.0,
+            "max": 3
+          },
+          {
+            "year": 2014,
+            "n_days": 245,
+            "min": 1,
+            "median": 3.0,
+            "max": 6
+          },
+          {
+            "year": 2015,
+            "n_days": 244,
+            "min": 3,
+            "median": 5.0,
+            "max": 9
+          }
+        ]
+      },
+      "samples": [
+        {
+          "date": "2005-01-04",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2015-12-31",
+          "n_eligible": 4,
+          "n_held": 4,
+          "cash": 0.35181901944794786
+        },
+        {
+          "date": "2005-12-30",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2006-12-29",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2007-12-28",
+          "n_eligible": 1,
+          "n_held": 1,
+          "cash": 0.9128695483026802
+        },
+        {
+          "date": "2008-12-31",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0000000000000002
+        },
+        {
+          "date": "2009-12-31",
+          "n_eligible": 1,
+          "n_held": 1,
+          "cash": 0.8891101777686514
+        },
+        {
+          "date": "2010-12-31",
+          "n_eligible": 0,
+          "n_held": 1,
+          "cash": 0.9462218823311831
+        },
+        {
+          "date": "2011-12-30",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2012-12-31",
+          "n_eligible": 1,
+          "n_held": 1,
+          "cash": 0.9430722069858325
+        },
+        {
+          "date": "2013-12-31",
+          "n_eligible": 2,
+          "n_held": 2,
+          "cash": 0.6972751806166112
+        },
+        {
+          "date": "2014-12-31",
+          "n_eligible": 6,
+          "n_held": 6,
+          "cash": 0.19077407000861582
+        },
+        {
+          "date": "2008-11-18",
+          "n_eligible": 0,
+          "n_held": 1,
+          "cash": 0.9725694444444445
+        },
+        {
+          "date": "2015-09-15",
+          "n_eligible": 4,
+          "n_held": 6,
+          "cash": 0.5775376037620897
+        }
+      ],
+      "crashes": {
+        "2008": {
+          "year": 2008,
+          "peak": "2007-09-17",
+          "trough": "2008-11-18",
+          "drawdown": -0.05425906872164177
+        },
+        "2015": {
+          "year": 2015,
+          "peak": "2015-06-12",
+          "trough": "2015-09-15",
+          "drawdown": -0.26049924577977723
+        }
+      },
+      "snapshots": {
+        "2008": {
+          "trough": {
+            "date": "2008-11-18",
+            "cash": 0.9725694444444445,
+            "n_nonzero": 1,
+            "positions": [
+              {
+                "id": "s2-红利",
+                "name": "红利",
+                "asset_class": "S2",
+                "weight": 0.027430555555555555
+              }
+            ]
+          },
+          "peak": {
+            "date": "2007-09-17",
+            "cash": 0.9144403452317591,
+            "n_nonzero": 1,
+            "positions": [
+              {
+                "id": "s2-红利",
+                "name": "红利",
+                "asset_class": "S2",
+                "weight": 0.08555965476824119
+              }
+            ]
+          }
+        },
+        "2015": {
+          "trough": {
+            "date": "2015-09-15",
+            "cash": 0.5775376037620897,
+            "n_nonzero": 6,
+            "positions": [
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.19254972527832104
+              },
+              {
+                "id": "s2-红利",
+                "name": "红利",
+                "asset_class": "S2",
+                "weight": 0.08114255625045026
+              },
+              {
+                "id": "s2-中证500",
+                "name": "中证500",
+                "asset_class": "S2",
+                "weight": 0.053993593477749735
+              },
+              {
+                "id": "s2-沪深300",
+                "name": "沪深300",
+                "asset_class": "S2",
+                "weight": 0.04063268000460524
+              },
+              {
+                "id": "s2-创业板",
+                "name": "创业板",
+                "asset_class": "S2",
+                "weight": 0.027239740687258318
+              },
+              {
+                "id": "gold",
+                "name": "黄金",
+                "asset_class": "商品",
+                "weight": 0.02690410053952574
+              }
+            ]
+          },
+          "peak": {
+            "date": "2015-06-12",
+            "cash": 0.15899839785256065,
+            "n_nonzero": 6,
+            "positions": [
+              {
+                "id": "s2-中证500",
+                "name": "中证500",
+                "asset_class": "S2",
+                "weight": 0.22599367129128067
+              },
+              {
+                "id": "s2-红利",
+                "name": "红利",
+                "asset_class": "S2",
+                "weight": 0.2073414725371825
+              },
+              {
+                "id": "s2-沪深300",
+                "name": "沪深300",
+                "asset_class": "S2",
+                "weight": 0.20364141294192384
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.09006749592163547
+              },
+              {
+                "id": "spx",
+                "name": "标普500全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.06060381319936148
+              },
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.05335373625605552
+              }
+            ]
+          }
+        }
+      },
+      "choices": {},
+      "position_matched": null,
+      "criteria": null,
+      "deferred_rows": 0,
+      "exit_rows": 299
+    },
+    {
+      "id": "P10",
+      "arm": "B",
+      "pool": "tradable",
+      "history_mode": "official",
+      "exit_drawdown": 0.1,
+      "start": "2005-01-04",
+      "end": "2015-12-31",
+      "n": 2671,
+      "cagr": 0.06817957964687671,
+      "max_drawdown": -0.23918191101986552,
+      "max_drawdown_peak": "2015-06-12",
+      "max_drawdown_trough": "2015-09-15",
+      "bm_main_cagr_on_overlap": 0.15446761075811666,
+      "bm_main_max_drawdown_on_overlap": -0.6546241458032607,
+      "excess_cagr_vs_bm_main": -0.08136367427552282,
+      "overlap_n": 2428,
+      "average_cash": 0.8665394833355219,
+      "buy_sum": 8.936441850563266,
+      "sell_sum": 12.398376557874693,
+      "turnover_one_way_annual": 0.843123678900016,
+      "yearly": [
+        {
+          "year": 2005,
+          "arm": 0.019391200746564197,
+          "bm_main": null,
+          "excess": null,
+          "year_end": "2005-12-30",
+          "year_end_cash": 1.0,
+          "n_arm": 242,
+          "n_bm": 0
+        },
+        {
+          "year": 2006,
+          "arm": 0.019310303103460713,
+          "bm_main": 0.7949240638720936,
+          "excess": -0.7756137607686329,
+          "year_end": "2006-12-29",
+          "year_end_cash": 1.0,
+          "n_arm": 241,
+          "n_bm": 240
+        },
+        {
+          "year": 2007,
+          "arm": 0.019391200746564197,
+          "bm_main": 1.0383572489129107,
+          "excess": -1.0189660481663465,
+          "year_end": "2007-12-28",
+          "year_end_cash": 1.0,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2008,
+          "arm": 0.019714855528552677,
+          "bm_main": -0.5964461695410448,
+          "excess": 0.6161610250695975,
+          "year_end": "2008-12-31",
+          "year_end_cash": 1.0,
+          "n_arm": 246,
+          "n_bm": 246
+        },
+        {
+          "year": 2009,
+          "arm": 0.019553015294624387,
+          "bm_main": 0.833779526582332,
+          "excess": -0.8142265112877076,
+          "year_end": "2009-12-31",
+          "year_end_cash": 1.0,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2010,
+          "arm": 0.019391200746564197,
+          "bm_main": -0.04259189667694907,
+          "excess": 0.06198309742351327,
+          "year_end": "2010-12-31",
+          "year_end_cash": 1.0,
+          "n_arm": 242,
+          "n_bm": 242
+        },
+        {
+          "year": 2011,
+          "arm": 0.019553015294624387,
+          "bm_main": -0.1777148515049779,
+          "excess": 0.1972678667996023,
+          "year_end": "2011-12-30",
+          "year_end_cash": 1.0,
+          "n_arm": 244,
+          "n_bm": 244
+        },
+        {
+          "year": 2012,
+          "arm": 0.016941722987140917,
+          "bm_main": 0.12067804918505498,
+          "excess": -0.10373632619791406,
+          "year_end": "2012-12-31",
+          "year_end_cash": 1.0,
+          "n_arm": 243,
+          "n_bm": 243
+        },
+        {
+          "year": 2013,
+          "arm": 0.06584071112501433,
+          "bm_main": 0.05167782084164907,
+          "excess": 0.01416289028336526,
+          "year_end": "2013-12-31",
+          "year_end_cash": 0.779666807911404,
+          "n_arm": 238,
+          "n_bm": 238
+        },
+        {
+          "year": 2014,
+          "arm": 0.214093063884075,
+          "bm_main": 0.44782335808804175,
+          "excess": -0.23373029420396674,
+          "year_end": "2014-12-31",
+          "year_end_cash": 1.0389546414356661e-16,
+          "n_arm": 245,
+          "n_bm": 245
+        },
+        {
+          "year": 2015,
+          "arm": 0.33579177589648745,
+          "bm_main": 0.09715897247164218,
+          "excess": 0.23863280342484527,
+          "year_end": "2015-12-31",
+          "year_end_cash": 0.16197378532542,
+          "n_arm": 244,
+          "n_bm": 244
+        }
+      ],
+      "eligibility": {
+        "n_days": 2671,
+        "min": 0,
+        "median": 1.0,
+        "max": 9,
+        "never_eligible": [
+          "allshare-communication",
+          "allshare-discretionary",
+          "allshare-energy",
+          "allshare-financials-re",
+          "allshare-healthcare",
+          "allshare-industrials",
+          "allshare-it",
+          "allshare-materials",
+          "allshare-staples",
+          "allshare-utilities",
+          "cgb-10y",
+          "crude-oil",
+          "csi1000",
+          "hstech",
+          "soymeal",
+          "star50",
+          "theme-东京日经225指数",
+          "theme-东证指数",
+          "theme-中证全球中国互联网人民币指数",
+          "theme-中证全球中国教育主题人民币指数",
+          "theme-中证海外中国互联网30人民币指数",
+          "theme-中证海外中国互联网50人民币指数",
+          "theme-中证海外中国互联网指数",
+          "theme-中证港股通金融服务指数",
+          "theme-中证港股通高股息投资港元指数",
+          "theme-中证韩交所中韩半导体指数",
+          "theme-中证香港内地国有企业港元指数",
+          "theme-中证香港创新药港币指数",
+          "theme-中证香港科技指数指数",
+          "theme-富时亚太低碳精选指数",
+          "theme-富时沙特阿拉伯指数",
+          "theme-恒生中国企业指数",
+          "theme-恒生中国央企指数",
+          "theme-恒生互联网科技业指数",
+          "theme-恒生创新药指数",
+          "theme-恒生医疗保健指数",
+          "theme-恒生消费指数",
+          "theme-恒生港股通红利低波动指数",
+          "theme-恒生生物科技指数",
+          "theme-恒生综合小型股指数",
+          "theme-新交所泛东南亚科技指数",
+          "theme-标普500信息科技指数",
+          "theme-标普500医疗保健等权重指数",
+          "theme-标普500消费精选指数",
+          "theme-标普中国新经济行业指数",
+          "theme-标普全球石油指数",
+          "theme-标普生物科技精选行业指数",
+          "theme-标普美国品质消费股票指数",
+          "theme-法兰克福DAX指数",
+          "theme-法国CAC40指数",
+          "theme-纳斯达克生物科技指数",
+          "theme-纳斯达克科技市值加权指数",
+          "theme-道琼斯工业平均指数",
+          "theme-道琼斯美国石油开发与生产指数",
+          "theme-道琼斯美国精选REIT指数"
+        ],
+        "pool_ids_absent_from_eligibility": [],
+        "yearly": [
+          {
+            "year": 2005,
+            "n_days": 242,
+            "min": 0,
+            "median": 0.0,
+            "max": 0
+          },
+          {
+            "year": 2006,
+            "n_days": 241,
+            "min": 0,
+            "median": 0.0,
+            "max": 0
+          },
+          {
+            "year": 2007,
+            "n_days": 242,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2008,
+            "n_days": 246,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2009,
+            "n_days": 244,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2010,
+            "n_days": 242,
+            "min": 0,
+            "median": 1.0,
+            "max": 1
+          },
+          {
+            "year": 2011,
+            "n_days": 244,
+            "min": 0,
+            "median": 0.0,
+            "max": 1
+          },
+          {
+            "year": 2012,
+            "n_days": 243,
+            "min": 0,
+            "median": 1.0,
+            "max": 2
+          },
+          {
+            "year": 2013,
+            "n_days": 238,
+            "min": 0,
+            "median": 2.0,
+            "max": 3
+          },
+          {
+            "year": 2014,
+            "n_days": 245,
+            "min": 1,
+            "median": 3.0,
+            "max": 6
+          },
+          {
+            "year": 2015,
+            "n_days": 244,
+            "min": 3,
+            "median": 5.0,
+            "max": 9
+          }
+        ]
+      },
+      "samples": [
+        {
+          "date": "2005-01-04",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2015-12-31",
+          "n_eligible": 4,
+          "n_held": 4,
+          "cash": 0.16197378532542
+        },
+        {
+          "date": "2005-12-30",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2006-12-29",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2007-12-28",
+          "n_eligible": 1,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2008-12-31",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2009-12-31",
+          "n_eligible": 1,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2010-12-31",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2011-12-30",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2012-12-31",
+          "n_eligible": 1,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2013-12-31",
+          "n_eligible": 2,
+          "n_held": 2,
+          "cash": 0.779666807911404
+        },
+        {
+          "date": "2014-12-31",
+          "n_eligible": 6,
+          "n_held": 3,
+          "cash": 1.0389546414356661e-16
+        },
+        {
+          "date": "2008-01-02",
+          "n_eligible": 0,
+          "n_held": 0,
+          "cash": 1.0
+        },
+        {
+          "date": "2015-09-15",
+          "n_eligible": 4,
+          "n_held": 4,
+          "cash": 0.2538563427316777
+        }
+      ],
+      "crashes": {
+        "2008": {
+          "year": 2008,
+          "peak": "2008-01-02",
+          "trough": "2008-01-02",
+          "drawdown": 0.0
+        },
+        "2015": {
+          "year": 2015,
+          "peak": "2015-06-12",
+          "trough": "2015-09-15",
+          "drawdown": -0.23918191101986552
+        }
+      },
+      "snapshots": {
+        "2008": {
+          "trough": {
+            "date": "2008-01-02",
+            "cash": 1.0,
+            "n_nonzero": 0,
+            "positions": []
+          },
+          "peak": {
+            "date": "2008-01-02",
+            "cash": 1.0,
+            "n_nonzero": 0,
+            "positions": []
+          }
+        },
+        "2015": {
+          "trough": {
+            "date": "2015-09-15",
+            "cash": 0.2538563427316777,
+            "n_nonzero": 4,
+            "positions": [
+              {
+                "id": "cgb-5y",
+                "name": "5年国债",
+                "asset_class": "债券",
+                "weight": 0.33597053911385927
+              },
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.1645254500018622
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.1636674004383414
+              },
+              {
+                "id": "gold",
+                "name": "黄金",
+                "asset_class": "商品",
+                "weight": 0.08198026771425944
+              }
+            ]
+          },
+          "peak": {
+            "date": "2015-06-12",
+            "cash": 1.0600548855069038e-16,
+            "n_nonzero": 5,
+            "positions": [
+              {
+                "id": "csi500",
+                "name": "中证500",
+                "asset_class": "A股宽基",
+                "weight": 0.33912142929209754
+              },
+              {
+                "id": "csi-dividend",
+                "name": "中证红利全收益",
+                "asset_class": "A股红利",
+                "weight": 0.25481021299454587
+              },
+              {
+                "id": "csi300",
+                "name": "沪深300",
+                "asset_class": "A股宽基",
+                "weight": 0.24725896543173248
+              },
+              {
+                "id": "spx",
+                "name": "标普500全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.07973091036394328
+              },
+              {
+                "id": "ndx100",
+                "name": "纳指100全收益",
+                "asset_class": "美股宽基",
+                "weight": 0.07907848191768078
+              }
+            ]
+          }
+        }
+      },
+      "choices": {
+        "2005": null,
+        "2006": null,
+        "2007": null,
+        "2008": null,
+        "2009": null,
+        "2010": null,
+        "2011": [
+          8,
+          "month"
+        ],
+        "2012": [
+          8,
+          "month"
+        ],
+        "2013": [
+          8,
+          "month"
+        ],
+        "2014": [
+          3,
+          "month"
+        ],
+        "2015": [
+          3,
+          "month"
+        ]
+      },
+      "position_matched": null,
+      "criteria": null,
+      "deferred_rows": 0,
+      "exit_rows": 32
+    }
+  ]
+}
