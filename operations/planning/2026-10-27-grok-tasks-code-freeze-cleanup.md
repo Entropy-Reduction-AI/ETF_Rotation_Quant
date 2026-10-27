@@ -20,7 +20,7 @@
 先读：
 1. operations/planning/2026-10-27-d11-owner-decisions.md（本次全部决定）
 2. docs/prereg/etf-multiasset-rotation-prereg-v3.1-addendum-1.md（补充文本，待 Reviewer 核对）
-3. 分支 claude/owner-board-v2 上的 PR（看板、UI/UX 规范、诊断记录）
+3. PR #48（分支 claude/owner-board-v2：看板、UI/UX 规范、D11、addendum-1、诊断记录）
 
 授权范围：
 - 批准：v3.1 代码冻结；分支清理；标签只做清点。
@@ -58,7 +58,7 @@ R3 代码冻结签收：全量测试 0 失败 + addendum-1 已合入 + D1–D3 �
 【Manager】
 M1 合入顺序（全部 --ff-only，按序进行，每步先 rebase 到最新 main）：
   a. PR #44（设计期复跑）、PR #45（数字核对）
-  b. 分支 claude/owner-board-v2（看板、UI/UX 规范、D11、addendum-1、诊断记录）——Reviewer approve 之后
+  b. PR #48（看板、UI/UX 规范、D11、addendum-1、诊断记录）——Reviewer approve addendum-1 之后
   c. D1–D3 的开发分支
 M2 Reviewer 给出冻结结论后，打附注标签 milestone/v3-code-freeze，指向 main 上的冻结提交；标签说明写：“v3.1 代码冻结（D11-4）；一次性检验未批准（D11-5）”。
 M3 关闭被取代的 PR：#46（UI/UX 已并入 docs/reference/owner-facing-uiux-principles.md，D11-7）、#42（被新看板取代）。#29、#31：内容已随 #39 进入 main，确认后关闭。#1：确认是否仍需要，需要则单独评审，不需要则关闭。关闭时在 PR 里留言写明原因和取代它的位置。
