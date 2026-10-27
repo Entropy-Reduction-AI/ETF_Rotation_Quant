@@ -59,7 +59,6 @@ for ax, g, c, nm in [(axs[0], g3, c3, 'v3：指数发布日之后才能选'), (a
     ax.grid(axis='x', visible=False); ax.set_xlabel('年份（20xx）', fontsize=10, color=MUTED)
     ax.set_title(nm, loc='left', fontsize=12, weight='bold', color=INK, pad=22)
     ax.text(-.5, 108.5, '柱顶数字 = 当年能选几个', fontsize=9.5, color=MUTED)
-    if nm.startswith('E1'): ax.annotate('现金只剩 4% 和 3%', xy=(0.5, 97), xytext=(2.2, 104.5), fontsize=10, weight='bold', color='#111827', arrowprops=dict(arrowstyle='->', color='#111827', lw=1))
 axs[0].set_ylabel('全年平均仓位 %')
 axs[1].legend(ncol=4, frameon=False, loc='upper center', bbox_to_anchor=(-.03, -.13), fontsize=10)
 fig.suptitle('同一套规则，可选标的从 4–6 个变成 17 个，牛市里的现金从 60% 降到 4%', x=.125, ha='left', y=1.04, fontsize=14.5, weight='bold', color=INK)
@@ -98,8 +97,8 @@ for k in order:
                  color=C[k] if k != 'v3' else '#6b7280', weight='bold')
 ax2.set_ylabel('从最高点回落 %'); ax2.set_ylim(-75, 3)
 ax2.set_xlim(pd.Timestamp('2006-01-01'), pd.Timestamp('2017-04-01'))
-ax.legend(handles=[Line2D([], [], color=C[k], lw=2.4, label={'基准': '基准：70% 沪深300 + 15% 纳指 + 15% 标普', 'v3': 'v3：原规则',
-          'E1': 'E1：v3 + 补全池子', 'E2': 'E2：E1 + 单只 10% 离场（已批准）'}[k]) for k in order],
+ax.legend(handles=[Line2D([], [], color=C[k], lw=2.4, label={'基准': '基准：70% 沪深300 + 15% 纳指 + 15% 标普', 'v3': 'v3：原规则（池子小）',
+          'E1': 'E1：补全池子', 'E2': 'E2：补全池子 + 10% 离场（现行）'}[k]) for k in order],
           frameon=False, loc='upper left', bbox_to_anchor=(0, .86), fontsize=10)
 title(ax, '补全池子让 v3 从跑输变成跑赢；再加 10% 离场，收益更高、回撤更浅',
       '设计期 2006-01 → 2015-12，扣成本；下图是同期每条线离自己最高点跌了多少。')
