@@ -4,7 +4,15 @@
 紧缩夏普比率的出处写在 `sharpe.py` 的文档字符串里。
 """
 
-from .common import DESIGN_END, EXPLORATION_TRIALS, TRADING_DAYS, EvalError, annualized_return, require_design_period
+from .common import (
+    DESIGN_END,
+    EXPLORATION_TRIALS,
+    ORCHESTRATOR_DIAGNOSTIC_TRIALS,
+    TRADING_DAYS,
+    EvalError,
+    annualized_return,
+    require_design_period,
+)
 from .controls import criterion_2, eligibility, percentile_rank
 from .drawdown import EQUITY_CLASSES, criterion_4, drawdown_stats, equity_weight, position_matched
 from .eras import ERAS, criterion_3
@@ -19,6 +27,7 @@ __all__ = [
     "EQUITY_CLASSES",
     "ERAS",
     "EXPLORATION_TRIALS",
+    "ORCHESTRATOR_DIAGNOSTIC_TRIALS",
     "TRADING_DAYS",
     "EvalError",
     "action_for",
