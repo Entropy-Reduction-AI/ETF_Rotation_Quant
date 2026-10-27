@@ -5,6 +5,7 @@
 """
 
 from .common import (
+    C1_SHADOW_ARM,
     DESIGN_END,
     EXPLORATION_TRIALS,
     ORCHESTRATOR_DIAGNOSTIC_TRIALS,
@@ -23,6 +24,7 @@ from .sharpe import criterion_5, deflated_sharpe_ratio, expected_maximum_sharpe,
 from .windows import criterion_1, rolling_windows
 
 __all__ = [
+    "C1_SHADOW_ARM",
     "DESIGN_END",
     "EQUITY_CLASSES",
     "ERAS",

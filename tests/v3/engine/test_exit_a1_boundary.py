@@ -1,16 +1,7 @@
-"""PROVISIONAL — 不是 v3.1 代码冻结的签收项。
+"""addendum-1 第 2 版 A1 第 5 条的四个边界。D12-6。
 
-Owner D11 / addendum-1 A1 的边界测试。Reviewer #48 R1 的 B2 仍开着：
-连续 5 个上交所交易日没有有效价时，A1 写「退出排名」，持仓和未成交离场挂单
-「沿用现行实现」。Owner 还没有闭合这件事。本文件不改成交假设。
-
-已经写死的部分（顺延到下一有效价、等待期用前向沿用计收益、等待期遇到常规调仓则调仓优先）
-按 A1 的字面钉住 `simulate_path`：计价序列里出现 0、负数或非有限值时不成交。
-`load_market` 在交给离场函数之前会把缺印的收盘前向沿用成上一笔正价格；本文件不把那条接线
-当成已经批准的规则，也不改它。五日排名旗标按现有 `align_same_day` 钉住，那是 v3 §3.3
-已经写过的 fresh 规则。持仓在满五日之后是否强平，只记录今天的 `simulate_path`，标 TODO B2。
-
-夹具自己给出交易日序列，不把实盘「现行实现」当成已经批准的规则。
+钉住现行 `align_same_day`、`pick_row` 和 `simulate_path`，不改成交分支。
+上交所交易日用夹具给出的工作日序列。缺印日的计价序列由 `align_same_day` 前向沿用。
 """
 from __future__ import annotations
 
@@ -19,9 +10,13 @@ import unittest
 import pandas as pd
 
 from src.v3.engine.exit import simulate_path
-from src.v3.engine.prices import align_same_day
+from src.v3.engine.prices import align_same_day, returns_from_level
+from src.v3.engine.score import Lookback, pick_row
+from src.v3.engine.spec import load_spec
 
 FEE = 0.001
+CASH_FEE = 0.0005
+STALE = load_spec().stale_limit
 
 
 def _run(levels: pd.Series, rets: pd.Series, targets: dict) -> object:
@@ -31,128 +26,166 @@ def _run(levels: pd.Series, rets: pd.Series, targets: dict) -> object:
     tgt = pd.DataFrame.from_dict(targets, orient="index", dtype=float)
     tgt.index = pd.to_datetime(list(targets))
     return simulate_path(
-        pnl, frame, {"asset": FEE, "cash": 0.0005}, "cash", targets=tgt, exit_drawdown=0.10)
+        pnl, frame, {"asset": FEE, "cash": CASH_FEE}, "cash", targets=tgt, exit_drawdown=0.10)
 
 
-def _kinds(book) -> set[str]:
+def _kinds(book) -> list[tuple[str, str]]:
     if book.exits is None or book.exits.empty or "kind" not in book.exits.columns:
-        return set()
-    return set(book.exits["kind"])
+        return []
+    return [
+        (str(kind), str(pd.Timestamp(day).date()))
+        for kind, day in zip(book.exits["kind"], book.exits["date"])
+    ]
 
 
-class ProvisionalA1Defer(unittest.TestCase):
-    """A1 已经写明的顺延。计划成交日的计价用原始收盘；收益用前向沿用。"""
+def _deferred(book) -> list[str]:
+    if book.deferred_exits is None or book.deferred_exits.empty:
+        return []
+    return [str(pd.Timestamp(day).date()) for day in book.deferred_exits["date"]]
 
-    def test_invalid_close_defers_to_the_next_valid_session_and_charges_the_sell_fee(self):
+
+def _price(book, kind: str) -> float:
+    return float(book.exits.loc[book.exits["kind"].eq(kind), "price"].iloc[0])
+
+
+class A1Boundary(unittest.TestCase):
+    """A1 §5 的四种情况。预期和现行成交一致。"""
+
+    def test_holiday_without_own_price_fills_at_the_carried_close(self):
+        """计划卖出日没有自身价格，计价序列已前向沿用 → 当天按沿用值成交。"""
         days = pd.to_datetime([
             "2006-01-04", "2006-01-05", "2006-01-06", "2006-01-09", "2006-01-10", "2006-01-11",
         ])
-        # 01-06 收盘跌破 90 产生信号。计划卖出日 01-09 没有有效价，01-10 才有。
-        # 收益按 §3.3 前向沿用：缺价日收益为 0，下一笔有效价吃掉整段缺口。
-        levels = pd.Series([100.0, 100.0, 80.0, float("nan"), 70.0, 70.0], index=days)
-        rets = pd.Series([0.0, 0.0, 80.0 / 100.0 - 1.0, 0.0, 70.0 / 80.0 - 1.0, 0.0], index=days)
-        book = _run(levels, rets, {"2006-01-05": {"asset": 1.0, "cash": 0.0}})
-        self.assertIn("signal", _kinds(book))
-        self.assertIn("exit", _kinds(book))
-        signal = book.exits.loc[book.exits["kind"].eq("signal"), "date"]
-        filled = book.exits.loc[book.exits["kind"].eq("exit"), "date"]
-        self.assertEqual(str(pd.Timestamp(signal.iloc[0]).date()), "2006-01-06")
-        self.assertEqual(str(pd.Timestamp(filled.iloc[0]).date()), "2006-01-10")
-        self.assertAlmostEqual(float(book.exits.loc[book.exits["kind"].eq("exit"), "price"].iloc[0]), 70.0, places=8)
-        deferred = {str(pd.Timestamp(day).date()) for day in book.deferred_exits["date"]}
-        self.assertEqual(deferred, {"2006-01-09"})
-        self.assertAlmostEqual(float(book.cost.loc[days[3]]), 0.0, places=12)
-        self.assertAlmostEqual(float(book.net.loc[days[3]]), 0.0, places=12)
-        self.assertAlmostEqual(float(book.cost.loc[days[4]]), FEE, places=8)
-        self.assertAlmostEqual(float(book.sell.loc[days[4]]), 1.0, places=8)
-        self.assertAlmostEqual(float(book.net.loc[days[4]]), 70.0 / 80.0 - 1.0 - FEE, places=8)
-        self.assertAlmostEqual(float(book.held.loc[days[4], "asset"]), 1.0, places=8)
-        self.assertAlmostEqual(float(book.held.loc[days[5], "asset"]), 0.0, places=8)
-        self.assertAlmostEqual(float(book.held.loc[days[5], "cash"]), 1.0, places=8)
+        native = pd.Series([100.0, 100.0, 80.0, float("nan"), 70.0, 70.0], index=days)
+        level, _fresh = align_same_day(native, pd.DatetimeIndex(days), STALE)
+        sell = days[3]
+        self.assertTrue(pd.isna(native.loc[sell]))
+        self.assertAlmostEqual(float(level.loc[sell]), 80.0, places=8)
+        rets = returns_from_level(level).fillna(0.0)
+        book = _run(level, rets, {"2006-01-05": {"asset": 1.0, "cash": 0.0}})
+        self.assertEqual(_kinds(book), [("signal", "2006-01-06"), ("exit", "2006-01-09")])
+        self.assertAlmostEqual(_price(book, "exit"), 80.0, places=8)
+        self.assertEqual(_deferred(book), [])
+        self.assertAlmostEqual(float(book.cost.loc[sell]), FEE, places=8)
+        self.assertAlmostEqual(float(book.sell.loc[sell]), 1.0, places=8)
+        self.assertAlmostEqual(float(book.net.loc[sell]), -FEE, places=8)
+        self.assertAlmostEqual(float(book.held.loc[sell, "asset"]), 1.0, places=8)
+        self.assertAlmostEqual(float(book.held.loc[days[4], "asset"]), 0.0, places=8)
+        self.assertAlmostEqual(float(book.held.loc[days[4], "cash"]), 1.0, places=8)
+        self.assertAlmostEqual(float(book.cost.loc[days[4]]), 0.0, places=12)
 
-    def test_zero_or_negative_close_is_not_a_fill(self):
+    def test_zero_or_nan_planned_sell_does_not_fill_until_the_next_valid_day(self):
+        """计划卖出日计价为 0、负数、NaN 或非有限值 → 当天不成交，下一个有效日成交。"""
+        days = pd.to_datetime([
+            "2006-01-04", "2006-01-05", "2006-01-06", "2006-01-09", "2006-01-10", "2006-01-11",
+        ])
+        rets = pd.Series([0.0, 0.0, -0.2, 0.0, 75.0 / 80.0 - 1.0, 0.0], index=days)
+        zero = pd.Series([100.0, 100.0, 80.0, 0.0, 75.0, 75.0], index=days)
+        aligned, _fresh = align_same_day(zero, pd.DatetimeIndex(days), STALE)
+        self.assertAlmostEqual(float(aligned.iloc[3]), 0.0, places=8)
+        marks = {
+            "zero": aligned,
+            "nan": pd.Series([100.0, 100.0, 80.0, float("nan"), 75.0, 75.0], index=days),
+            "negative": pd.Series([100.0, 100.0, 80.0, -1.0, 75.0, 75.0], index=days),
+            "nonfinite": pd.Series([100.0, 100.0, 80.0, float("inf"), 75.0, 75.0], index=days),
+        }
+        for name, levels in marks.items():
+            with self.subTest(mark=name):
+                book = _run(levels, rets, {"2006-01-05": {"asset": 1.0, "cash": 0.0}})
+                self.assertEqual(_kinds(book), [("signal", "2006-01-06"), ("exit", "2006-01-10")])
+                self.assertAlmostEqual(_price(book, "exit"), 75.0, places=8)
+                self.assertEqual(_deferred(book), ["2006-01-09"])
+                self.assertAlmostEqual(float(book.cost.loc[days[3]]), 0.0, places=12)
+                self.assertAlmostEqual(float(book.net.loc[days[3]]), 0.0, places=12)
+                self.assertAlmostEqual(float(book.held.loc[days[3], "asset"]), 1.0, places=8)
+                self.assertAlmostEqual(float(book.held.loc[days[4], "asset"]), 1.0, places=8)
+                self.assertAlmostEqual(float(book.cost.loc[days[4]]), FEE, places=8)
+                self.assertAlmostEqual(float(book.sell.loc[days[4]]), 1.0, places=8)
+                self.assertAlmostEqual(float(book.net.loc[days[4]]), 75.0 / 80.0 - 1.0 - FEE, places=8)
+                self.assertAlmostEqual(float(book.held.loc[days[5], "asset"]), 0.0, places=8)
+                self.assertAlmostEqual(float(book.held.loc[days[5], "cash"]), 1.0, places=8)
+
+    def test_rebalance_on_a_pending_exit_day_clears_the_order_and_charges_once(self):
+        """挂单遇到常规调仓日 → 调仓优先，挂单清除，只收这一次调仓费。"""
         days = pd.to_datetime(["2006-01-04", "2006-01-05", "2006-01-06", "2006-01-09", "2006-01-10"])
-        levels = pd.Series([100.0, 100.0, 80.0, 0.0, 75.0], index=days)
-        rets = pd.Series([0.0, 0.0, -0.2, 0.0, 75.0 / 80.0 - 1.0], index=days)
-        book = _run(levels, rets, {"2006-01-05": {"asset": 1.0, "cash": 0.0}})
-        filled = book.exits.loc[book.exits["kind"].eq("exit"), "date"]
-        self.assertEqual(str(pd.Timestamp(filled.iloc[0]).date()), "2006-01-10")
-        self.assertAlmostEqual(float(book.cost.loc[days[3]]), 0.0, places=12)
-        self.assertAlmostEqual(float(book.net.loc[days[3]]), 0.0, places=12)
-        negative = levels.copy()
-        negative.iloc[3] = -1.0
-        book = _run(negative, rets, {"2006-01-05": {"asset": 1.0, "cash": 0.0}})
-        filled = book.exits.loc[book.exits["kind"].eq("exit"), "date"]
-        self.assertEqual(str(pd.Timestamp(filled.iloc[0]).date()), "2006-01-10")
-
-    def test_rebalance_during_deferral_clears_the_pending_exit(self):
-        days = pd.to_datetime([
-            "2006-01-04", "2006-01-05", "2006-01-06", "2006-01-09", "2006-01-10", "2006-01-11",
-        ])
-        levels = pd.Series([100.0, 100.0, 80.0, float("nan"), 80.0, 80.0], index=days)
-        rets = pd.Series([0.0, 0.0, -0.2, 0.0, 0.0, 0.0], index=days)
+        levels = pd.Series([100.0, 100.0, 80.0, 80.0, 80.0], index=days)
+        rets = pd.Series([0.0, 0.0, -0.2, 0.0, 0.0], index=days)
         book = _run(levels, rets, {
             "2006-01-05": {"asset": 1.0, "cash": 0.0},
-            "2006-01-10": {"asset": 0.0, "cash": 1.0},
+            "2006-01-09": {"asset": 0.0, "cash": 1.0},
         })
-        self.assertNotIn("exit", _kinds(book))
-        self.assertIn("signal", _kinds(book))
-        deferred = {str(pd.Timestamp(day).date()) for day in book.deferred_exits["date"]}
-        self.assertEqual(deferred, {"2006-01-09"})
-        # 一次常规调仓：卖出资产 0.10%，买入现金 0.05%。没有再加一笔离场费。
-        self.assertAlmostEqual(float(book.cost.loc[days[4]]), FEE + 0.0005, places=8)
-        self.assertAlmostEqual(float(book.sell.loc[days[4]]), 1.0, places=8)
-        self.assertAlmostEqual(float(book.buy.loc[days[4]]), 1.0, places=8)
-        self.assertAlmostEqual(float(book.held.loc[days[5], "asset"]), 0.0, places=8)
-        self.assertAlmostEqual(float(book.held.loc[days[5], "cash"]), 1.0, places=8)
-        self.assertAlmostEqual(float(book.cost.loc[days[5]]), 0.0, places=12)
+        self.assertEqual(_kinds(book), [("signal", "2006-01-06")])
+        self.assertEqual(_deferred(book), [])
+        self.assertAlmostEqual(float(book.cost.loc[days[3]]), FEE + CASH_FEE, places=8)
+        self.assertAlmostEqual(float(book.sell.loc[days[3]]), 1.0, places=8)
+        self.assertAlmostEqual(float(book.buy.loc[days[3]]), 1.0, places=8)
+        self.assertAlmostEqual(float(book.held.loc[days[4], "asset"]), 0.0, places=8)
+        self.assertAlmostEqual(float(book.held.loc[days[4], "cash"]), 1.0, places=8)
+        self.assertAlmostEqual(float(book.cost.loc[days[4]]), 0.0, places=12)
 
+    def test_five_missing_sessions_drop_ranking_and_pending_exit_fills_at_carry(self):
+        """连续 5 个上交所交易日没有自身价格：第 5 日起退出排名，下一调仓日按沿用值调出。
 
-class ProvisionalA1Ranking(unittest.TestCase):
-    def test_five_consecutive_missing_sessions_clear_the_ranking_flag(self):
-        """v3 §3.3：最近 5 个交易日都没有有效价，fresh 为假，退出排名。
-
-        价格序列本身仍前向沿用。这只钉排名旗标，不钉持仓怎么处理。
+        若离场挂单已经存在，下一交易日按沿用值成交，不等到第 5 日，也不等到之后的新价格。
         """
-        calendar = pd.bdate_range("2006-01-03", periods=8)
-        native = pd.Series([100.0], index=pd.DatetimeIndex([calendar[0]]))
-        level, fresh = align_same_day(native, pd.DatetimeIndex(calendar), 5)
-        self.assertTrue(bool(fresh.iloc[0]))
-        self.assertTrue(bool(fresh.iloc[4]))
-        self.assertFalse(bool(fresh.iloc[5]))
-        self.assertFalse(bool(fresh.iloc[7]))
-        self.assertAlmostEqual(float(level.iloc[5]), 100.0, places=8)
-
-    def test_five_missing_sessions_do_not_force_sell_the_holding(self):
-        # TODO(Reviewer B2 / PR #48): A1 对「持仓 + 未成交挂单」只写了沿用现行实现。
-        # Owner 还没有闭合：满 5 日退出排名之后，持仓是继续留着、按最后价强平，还是挂单作废。
-        # 下面只钉今天的 simulate_path：不因满 5 日把权重划进现金，挂单留到下一笔有效价。
-        # 这不是代码冻结签收。
+        self.assertEqual(STALE, 5)
         days = pd.to_datetime([
             "2006-01-04", "2006-01-05", "2006-01-06",
             "2006-01-09", "2006-01-10", "2006-01-11", "2006-01-12", "2006-01-13",
-            "2006-01-16",
+            "2006-01-16", "2006-01-17",
         ])
-        levels = pd.Series(
-            [100.0, 100.0, 80.0, float("nan"), float("nan"), float("nan"), float("nan"), float("nan"), 60.0],
-            index=days,
+        native = pd.Series([100.0, 100.0, 100.0, *([float("nan")] * 7)], index=days)
+        level, fresh = align_same_day(native, pd.DatetimeIndex(days), STALE)
+        fifth = days[7]
+        fourth = days[6]
+        rebalance = days[8]
+        self.assertTrue(bool(fresh.loc[fourth]))
+        self.assertFalse(bool(fresh.loc[fifth]))
+        self.assertFalse(bool(fresh.loc[rebalance]))
+        self.assertTrue(pd.isna(native.loc[fifth]))
+        self.assertAlmostEqual(float(level.loc[fifth]), 100.0, places=8)
+        self.assertAlmostEqual(float(level.loc[rebalance]), 100.0, places=8)
+        panel = Lookback(
+            total=pd.DataFrame({"asset": 0.2, "cash": 0.0}, index=days),
+            score=pd.DataFrame({"asset": 1.0, "cash": 0.0}, index=days),
+            ok=pd.DataFrame({"asset": True, "cash": False}, index=days),
         )
-        rets = pd.Series(
-            [0.0, 0.0, -0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 60.0 / 80.0 - 1.0],
-            index=days,
-        )
-        book = _run(levels, rets, {"2006-01-05": {"asset": 1.0, "cash": 0.0}})
-        missing = [str(pd.Timestamp(day).date()) for day in days[3:8]]
-        deferred = [str(pd.Timestamp(day).date()) for day in book.deferred_exits["date"]]
-        self.assertEqual(deferred, missing)
-        filled = book.exits.loc[book.exits["kind"].eq("exit"), "date"]
-        self.assertEqual(len(filled), 1)
-        self.assertEqual(str(pd.Timestamp(filled.iloc[0]).date()), "2006-01-16")
-        for day in days[3:8]:
-            self.assertAlmostEqual(float(book.held.loc[day, "asset"]), 1.0, places=8)
-            self.assertAlmostEqual(float(book.cost.loc[day]), 0.0, places=12)
-            self.assertAlmostEqual(float(book.net.loc[day]), 0.0, places=12)
-        self.assertAlmostEqual(float(book.cost.loc[days[8]]), FEE, places=8)
+        liquidity = pd.DataFrame({"asset": fresh.to_numpy()}, index=days)
+        still = pick_row(panel, fourth, 1, ["asset"], "cash", {"asset": "asset"}, liquidity)
+        dropped = pick_row(panel, fifth, 1, ["asset"], "cash", {"asset": "asset"}, liquidity)
+        self.assertAlmostEqual(float(still["asset"]), 1.0, places=8)
+        self.assertNotIn("asset", dropped)
+        self.assertAlmostEqual(float(dropped["cash"]), 1.0, places=8)
+        rets = returns_from_level(level).fillna(0.0)
+        book = _run(level, rets, {
+            "2006-01-05": {"asset": 1.0, "cash": 0.0},
+            "2006-01-16": {"asset": float(dropped.get("asset", 0.0)), "cash": float(dropped["cash"])},
+        })
+        self.assertEqual(_kinds(book), [])
+        self.assertEqual(_deferred(book), [])
+        self.assertAlmostEqual(float(book.held.loc[fifth, "asset"]), 1.0, places=8)
+        self.assertAlmostEqual(float(book.cost.loc[fifth]), 0.0, places=12)
+        self.assertAlmostEqual(float(book.cost.loc[rebalance]), FEE + CASH_FEE, places=8)
+        self.assertAlmostEqual(float(book.sell.loc[rebalance]), 1.0, places=8)
+        self.assertAlmostEqual(float(book.buy.loc[rebalance]), 1.0, places=8)
+        self.assertAlmostEqual(float(book.net.loc[rebalance]), -(FEE + CASH_FEE), places=8)
+        self.assertAlmostEqual(float(book.held.loc[days[9], "asset"]), 0.0, places=8)
+        self.assertAlmostEqual(float(book.held.loc[days[9], "cash"]), 1.0, places=8)
+
+        pending = pd.Series(
+            [100.0, 100.0, 80.0, *([float("nan")] * 5), 60.0, 60.0], index=days)
+        carried, pending_fresh = align_same_day(pending, pd.DatetimeIndex(days), STALE)
+        self.assertTrue(pd.isna(pending.loc[days[3]]))
+        self.assertAlmostEqual(float(carried.loc[days[3]]), 80.0, places=8)
+        self.assertFalse(bool(pending_fresh.loc[fifth]))
+        self.assertAlmostEqual(float(carried.loc[days[8]]), 60.0, places=8)
+        book = _run(carried, returns_from_level(carried).fillna(0.0), {"2006-01-05": {"asset": 1.0, "cash": 0.0}})
+        self.assertEqual(_kinds(book), [("signal", "2006-01-06"), ("exit", "2006-01-09")])
+        self.assertAlmostEqual(_price(book, "exit"), 80.0, places=8)
+        self.assertEqual(_deferred(book), [])
+        self.assertAlmostEqual(float(book.cost.loc[days[3]]), FEE, places=8)
+        self.assertAlmostEqual(float(book.held.loc[days[4], "asset"]), 0.0, places=8)
+        self.assertAlmostEqual(float(book.cost.loc[days[8]]), 0.0, places=12)
 
 
 if __name__ == "__main__":

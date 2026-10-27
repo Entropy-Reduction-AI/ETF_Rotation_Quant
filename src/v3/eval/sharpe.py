@@ -12,10 +12,9 @@ Journal of Portfolio Management, 40(5), 94–107, 2014.
 γ 是 Euler–Mascheroni 常数，取论文附录代码里的 0.5772156649。
 Φ 是标准正态。γ3 是收益偏度，γ4 是 Pearson 峰度（正态为 3，不是超额峰度）。
 §6⑤ 在「真实夏普为 0」的原假设下取 μ = 0。σ² 是各次试验夏普估计的方差，由调用方给出。
-N = 正式 ledger 的配置行数 + §1-2 的 28 + D11-3 的诊断 31。数值门槛是 DSR ≥ 0.90。
-诊断 31 已含 C1。若 A2 再把同一个 C1 写入 ledger，会和这 31 撞车；本函数不另造公式，见
-`ORCHESTRATOR_DIAGNOSTIC_TRIALS` 的注释。Owner 澄清之前，两笔都照现在的公式加。
-正式通过与否留到 G3。报告里要注明本段出处。
+N = 正式 ledger 里 v3/v3.1 的配置行数（不含 arm 为 C1-shadow 的行）+ §1-2 的 28 + D12-4 的诊断 35。
+数值门槛是 DSR ≥ 0.90。诊断 35 已含 C1。D12-5：同一条 C1 再写入 ledger 时 arm 为 C1-shadow，
+计入 60 条预算，不计入本 N。正式通过与否留到 G3。报告里要注明本段出处。
 
 公开例题（论文 "A Numerical Example"）：年化夏普 2.5，每年 250 个观测，
 试验夏普的年化方差 0.5，N = 100，T = 1250，偏度 −3，峰度 10。
@@ -34,6 +33,7 @@ import pandas as pd
 from src.v3.engine.spec import LEDGER
 
 from .common import (
+    C1_SHADOW_ARM,
     EXPLORATION_TRIALS,
     ORCHESTRATOR_DIAGNOSTIC_TRIALS,
     EvalError,
@@ -130,11 +130,12 @@ def criterion_5(returns, *, n_trials: int, sr_variance: float, cash=None) -> dic
 
 
 def trial_count(ledger_path: Path | None = None) -> int:
-    """正式 ledger 的数据行数 + 28 + 31。文件不存在当作 0 行。不创建、不修改文件。
+    """判据⑤的尝试次数。文件不存在当作 0 行。不创建、不修改文件。
 
-    28 是 `EXPLORATION_TRIALS`（§1-2）。31 是 `ORCHESTRATOR_DIAGNOSTIC_TRIALS`（D11-3）。
-    ledger 里每一行都是 v3 或 v3.1 的正式配置，全部计入。不识别、不剔除影子方案 C1：
-    那会变成另一套公式。碰撞说明写在 `ORCHESTRATOR_DIAGNOSTIC_TRIALS` 上。
+    正式 ledger 的 v3/v3.1 配置行数（`arm` 不是 `C1-shadow`）+ 28 + 35。
+    28 是 `EXPLORATION_TRIALS`（§1-2）。35 是 `ORCHESTRATOR_DIAGNOSTIC_TRIALS`（D12-4）。
+    这个文件里的每一行都是 v3 或 v3.1 的正式配置。D12-5：`arm` 为 `C1-shadow` 的行
+    仍留在文件里，计入 §9.6 的 60 条预算；C1 已经在诊断 35 里，判据⑤不再加这一行。
     """
     path = LEDGER if ledger_path is None else Path(ledger_path)
     base = EXPLORATION_TRIALS + ORCHESTRATOR_DIAGNOSTIC_TRIALS
@@ -142,7 +143,8 @@ def trial_count(ledger_path: Path | None = None) -> int:
         return base
     with path.open(encoding="utf-8", newline="") as handle:
         rows = list(csv.DictReader(handle))
-    return len(rows) + base
+    formal = sum(1 for row in rows if (row.get("arm") or "") != C1_SHADOW_ARM)
+    return formal + base
 
 
 def variance_of_sharpes(sharpes) -> float:
