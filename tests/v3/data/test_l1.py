@@ -241,7 +241,7 @@ class Parse(unittest.TestCase):
         self.assertEqual(rows[0]["low"], 471.9)
         self.assertEqual(rows[0]["high"], 486.0)
 
-    def test_chinabond_wealth_uses_shanghai_date_and_exact_names(self):
+    def test_chinabond_wealth_uses_taipei_date_and_exact_names(self):
         rows = parse.parse_chinabond_wealth({"CFZS_00": {"1010073600000": 99.9987, "1010332800000": 100.0381}})
         self.assertEqual([row["date"] for row in rows], ["2002-01-04", "2002-01-07"])
         text = """
