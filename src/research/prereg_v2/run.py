@@ -37,7 +37,7 @@ DEFAULT_CONFIG = ROOT / "config" / "portfolio.toml"
 DEFAULT_LOCK = ROOT / "results" / "v2" / "oos" / "LOCK"
 DESIGN_OUT = ROOT / "results" / "v2" / "design" / "summary.json"
 OOS_OUT = ROOT / "results" / "v2" / "oos" / "summary.json"
-SHANGHAI = ZoneInfo("Asia/Shanghai")
+TAIPEI = ZoneInfo("Asia/Taipei")
 
 
 def sha256_file(path: Path) -> str:
@@ -60,7 +60,7 @@ def write_lock(path: Path, market_db: Path) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = {
-        "written_at": datetime.now(SHANGHAI).isoformat(timespec="seconds"),
+        "written_at": datetime.now(TAIPEI).isoformat(timespec="seconds"),
         "code_sha": git_head(),
         "market_sqlite_sha256": sha256_file(market_db) if Path(market_db).exists() else None,
         "prereg_sha": FROZEN_SHA,
@@ -179,7 +179,7 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"设计期只允许 end ≤ {DESIGN_END.date()}。样本外需要 --oos 和预注册 SHA。")
                 return 2
             result = run_design(args.panel, args.market_db, args.config, end)
-            result["generated_at"] = datetime.now(SHANGHAI).isoformat(timespec="seconds")
+            result["generated_at"] = datetime.now(TAIPEI).isoformat(timespec="seconds")
             result["code_sha"] = git_head()
             result["market_sqlite_sha256"] = sha256_file(args.market_db)
             _print_design(result)

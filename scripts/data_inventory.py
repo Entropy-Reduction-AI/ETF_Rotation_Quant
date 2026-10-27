@@ -221,7 +221,7 @@ def main() -> int:
         f"（`{t12_cov['series_code']}/{t12_cov['series_adj']}`，口径为{caliber(t12_cov['price_only'])}），"
         "不受这只执行基金的身份影响。"
     )
-    today = datetime.now(ZoneInfo("Asia/Shanghai")).date().isoformat()
+    today = datetime.now(ZoneInfo("Asia/Taipei")).date().isoformat()
     series_lines = [
         f"| {md_cell(row['code'])} | {md_cell(row['adj'])} | {md_cell(row['source'])} | {row['start']} | {row['end']} | {row['n']} |"
         for row in series

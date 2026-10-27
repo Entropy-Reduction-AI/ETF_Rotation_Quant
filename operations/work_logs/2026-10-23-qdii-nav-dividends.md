@@ -13,7 +13,7 @@
 
 `main` 已快进到 `1ad86ac`。开工时 `data/market.sqlite` 的 SHA256 与给定基线一致：`9bc8e74935fe34f22c254568f4b6ef284df79a97496bcc8fcd704fe58ec5d49b`。
 
-三次写入都有 `run_id`。结束后 SHA256 为 `3b9f8fb253a29de5835aa54c0b8062bbaa77ebf3f229611eb91b97a9ece155f9`。`PRAGMA integrity_check` 为 `ok`。没有 `-wal` / `-shm` / `-journal`。交易日按 Asia/Shanghai 的日历日期原样存储；`fetched_at` 沿用数据层的 UTC。
+三次写入都有 `run_id`。结束后 SHA256 为 `3b9f8fb253a29de5835aa54c0b8062bbaa77ebf3f229611eb91b97a9ece155f9`。`PRAGMA integrity_check` 为 `ok`。没有 `-wal` / `-shm` / `-journal`。交易日按 Asia/Taipei 的日历日期原样存储；`fetched_at` 沿用数据层的 UTC。
 
 没有改价格。没有计算或报告 2016-01-01 之后的策略、择时或组合收益。下面的溢价是收盘价 / 同日单位净值 − 1，用来核对净值是否入库。
 

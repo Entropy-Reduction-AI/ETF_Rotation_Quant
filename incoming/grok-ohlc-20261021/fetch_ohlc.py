@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parent
 RAW = ROOT / "raw"
 NEEDED = ROOT / "NEEDED.csv"
 DB = ROOT.parents[1] / "data" / "market.sqlite"
-SHA = ZoneInfo("Asia/Shanghai")
+TAIPEI = ZoneInfo("Asia/Taipei")
 END = "20260930"
 END_ISO = "2026-09-30"
 CSI = "https://www.csindex.com.cn/csindex-home/perf/index-perf"
@@ -56,8 +56,8 @@ SOURCE_SOHU = "搜狐行情"
 SOURCE_SINA = "新浪财经"
 
 
-def now_sha() -> str:
-    return datetime.now(SHA).isoformat(timespec="seconds")
+def now_taipei() -> str:
+    return datetime.now(TAIPEI).isoformat(timespec="seconds")
 
 
 def sha256_bytes(raw: bytes) -> str:
@@ -186,7 +186,7 @@ class Http:
             path.write_bytes(body)
         meta = {
             "url": url, "status": status if isinstance(status, int) else str(status),
-            "fetched_at": now_sha(), "sha256": digest, "bytes": len(body), "file": name,
+            "fetched_at": now_taipei(), "sha256": digest, "bytes": len(body), "file": name,
         }
         (RAW / f"{name}.meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
         self.log.append(meta)
@@ -688,7 +688,7 @@ def try_fallbacks(code: str, start_iso: str, csi_rows: list[Row], must_cover: se
         attempts.append(Attempt(SOURCE_EM, f"secid={secid} {msg}；{detail}"))
         if ok:
             return Series(rows, SOURCE_EM, EM, {"secid": secid, "klt": 101, "fqt": 0, "beg": ymd(start_iso), "end": END},
-                          entry["fetched_at"] if entry else now_sha(),
+                          entry["fetched_at"] if entry else now_taipei(),
                           [entry["file"]] if entry else [], [entry] if entry else [],
                           [detail]), attempts
 
@@ -699,7 +699,7 @@ def try_fallbacks(code: str, start_iso: str, csi_rows: list[Row], must_cover: se
     if ok:
         return Series(rows, SOURCE_TENCENT, TENCENT,
                       {"param": "<symbol>,day,<start>,<end>,400,", "symbols": tencent_symbols(code)},
-                      entries[-1]["fetched_at"] if entries else now_sha(),
+                      entries[-1]["fetched_at"] if entries else now_taipei(),
                       [e["file"] for e in entries], entries, [detail]), attempts
 
     rows, msg, entries = fetch_sohu(code, start_iso)
@@ -709,7 +709,7 @@ def try_fallbacks(code: str, start_iso: str, csi_rows: list[Row], must_cover: se
     if ok:
         return Series(rows, SOURCE_SOHU, SOHU,
                       {"code": f"zs_{code}", "start": ymd(start_iso), "end": END, "period": "d"},
-                      entries[-1]["fetched_at"] if entries else now_sha(),
+                      entries[-1]["fetched_at"] if entries else now_taipei(),
                       [e["file"] for e in entries], entries, [detail]), attempts
 
     if not code.startswith("H"):
@@ -720,7 +720,7 @@ def try_fallbacks(code: str, start_iso: str, csi_rows: list[Row], must_cover: se
             attempts.append(Attempt(SOURCE_SINA, f"{msg}；{detail}"))
             if ok:
                 return Series(rows, SOURCE_SINA, SINA, {"symbol": sym, "scale": 240, "datalen": "最近可用根数"},
-                              entry["fetched_at"] if entry else now_sha(),
+                              entry["fetched_at"] if entry else now_taipei(),
                               [entry["file"]] if entry else [], [entry] if entry else [],
                               [detail]), attempts
     return None, attempts
@@ -749,7 +749,7 @@ def csi_series(code: str, rows: list[Row], entries: list[dict], start: str) -> S
         rows, SOURCE_CSI, CSI,
         {"indexCode": code, "startDate": start, "endDate": END,
          "segments": "一次取全段" if len(entries) <= 1 else "按年"},
-        entries[-1].get("fetched_at") if entries else now_sha(),
+        entries[-1].get("fetched_at") if entries else now_taipei(),
         [e["file"] for e in entries],
         entries,
     )
@@ -972,7 +972,7 @@ def main() -> None:
         "source": "按 index_code 见 series",
         "request_url": CSI,
         "params": {"indexCode": "<各全收益代码>", "startDate": "<该代码最早缺口日前>", "endDate": "<该代码最晚缺口日>"},
-        "fetched_at": now_sha(),
+        "fetched_at": now_taipei(),
         "sha256": sha256_file(tr_path),
         "rows": len(uniq),
         "start_date": uniq[0]["date"] if uniq else None,
@@ -981,8 +981,8 @@ def main() -> None:
     })
 
     manifest = {
-        "generated_at": now_sha(),
-        "timezone": "Asia/Shanghai",
+        "generated_at": now_taipei(),
+        "timezone": "Asia/Taipei",
         "needed_sha256": sha256_file(NEEDED),
         "files": manifest_files,
     }
