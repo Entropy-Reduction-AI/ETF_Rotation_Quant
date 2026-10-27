@@ -1,0 +1,69 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans CJK SC",sans-serif;background:#fff;color:#111827;width:2000px;padding:26px 26px 18px}
+.top{position:relative;height:92px}
+.call{position:absolute;font-size:24px;font-weight:700}
+.call small{display:block;font-size:17px;font-weight:400;margin-top:2px}
+.red{color:#dc2626}.pur{color:#7c3aed}
+.arrow{position:absolute;width:3px}
+.legend{position:absolute;right:0;top:4px;font-size:17px;color:#374151}
+.row{display:flex;gap:16px;align-items:stretch}
+.card{flex:1 1 0;min-width:0;border:3px solid;border-radius:14px;padding:16px 12px 14px;min-height:430px;position:relative}
+.card h3{font-size:21px;text-align:center;white-space:nowrap}
+.card .sub{font-size:15px;color:#4b5563;text-align:center;margin:4px 0 12px;white-space:nowrap}
+.bar{height:16px;border:1px solid #9ca3af;background:#fff;margin:0 6px}
+.bar i{display:block;height:100%}
+.pct{font-size:17px;font-weight:700;text-align:center;margin:8px 0 14px}
+.card ul{list-style:none;font-size:16px;line-height:1.35}
+.card li{margin-bottom:12px;padding-left:20px;text-indent:-20px}
+.done{border-color:#16a34a;background:#ecfdf5}.done .bar i{background:#16a34a}.done .pct{color:#15803d}
+.go{border-color:#ca8a04;background:#fefce8}.go .bar i{background:#ca8a04}.go .pct{color:#a16207}
+.wait{border-color:#7c3aed;background:#f5f3ff}.wait .bar i{background:#7c3aed}.wait .pct{color:#6d28d9}
+.todo{border-color:#9ca3af;background:#f3f4f6}.todo .pct{color:#6b7280}
+.block{outline:5px solid #dc2626;outline-offset:3px}
+.ok{color:#15803d}.iss{color:#dc2626}.own{color:#7c3aed;font-weight:700}.pt{color:#374151}
+.bands{display:flex;gap:16px;margin-top:16px;font-size:17px;color:#374151;text-align:center}
+.bands div{border-top:6px solid;padding-top:6px}
+</style></head><body>
+<div class="top">
+  <div class="call red" style="left:360px;top:0">卡点：代码冻结前还差 4 件小事<small>休市日卖法 · 试过次数少算 · 6 个过时测试 · 结果合并（都不改策略）</small></div>
+  <div class="call pur" style="left:1130px;top:0">现在需要你：3 个选择（第 1、4 节）</div>
+  <div class="legend">✓ 完成　! 待收尾　· 待做　◆ 需要你</div>
+</div>
+<div class="row">
+  <div class="card done"><h3>第一阶段</h3><div class="sub">被动配置收尾</div><div class="bar"><i style="width:100%"></i></div><div class="pct">100% 已完成</div>
+    <ul><li class="ok">✓ 三条主动路线都不成立</li><li class="ok">✓ 交付 70/15/15 被动配置</li><li class="ok">✓ 2016–26 已用过一次</li></ul></div>
+  <div class="card done block"><h3>① 规则定稿</h3><div class="sub">把策略写死</div><div class="bar"><i style="width:95%"></i></div><div class="pct">95% 已冻结</div>
+    <ul><li class="ok">✓ v3.1（=E2）已批准、已冻结</li><li class="ok">✓ Reviewer 复审通过</li><li class="iss">! 休市日的离场单怎么卖，要你选</li></ul></div>
+  <div class="card done"><h3>② 标的池</h3><div class="sub">能在哪些资产间轮动</div><div class="bar"><i style="width:90%"></i></div><div class="pct">90% 基本完成</div>
+    <ul><li class="ok">✓ 同一指数合并 137→81</li><li class="ok">✓ 官方回溯数据已接入</li><li class="ok">✓ 黄金、国债 2008 起</li><li class="pt">· 2006–07 仍无黄金债券（已登记，不阻塞）</li></ul></div>
+  <div class="card done block"><h3>③ 交易引擎</h3><div class="sub">每期算出买什么</div><div class="bar"><i style="width:90%"></i></div><div class="pct">90% 已跑通</div>
+    <ul><li class="ok">✓ 补池 + 10% 离场已实现</li><li class="ok">✓ 设计期正式复跑完成</li><li class="iss">! 休市日卖法的测试待签收</li></ul></div>
+  <div class="card done"><h3>④ 溢价控制</h3><div class="sub">QDII 贵了少买</div><div class="bar"><i style="width:85%"></i></div><div class="pct">85% 已接入</div>
+    <ul><li class="ok">✓ 已接进交易流程</li><li class="ok">✓ 规则与测试已签收</li><li class="pt">· 效果要在 2021 年后数据上看</li></ul></div>
+  <div class="card go block"><h3>⑤ 打分卡</h3><div class="sub">五条判据</div><div class="bar"><i style="width:80%"></i></div><div class="pct">80% 收尾中</div>
+    <ul><li class="ok">✓ 五条判据已实现</li><li class="iss">! “试过多少次”少算了 29 次</li><li class="iss">! 6 个测试过时</li></ul></div>
+  <div class="card wait"><h3>⑥ 业务体检</h3><div class="sub">2006–15 怎么赚的</div><div class="bar"><i style="width:90%"></i></div><div class="pct">90% 等你决定</div>
+    <ul><li class="ok">✓ 正式引擎复现 E2</li><li class="ok">✓ 2009 失手已查明，改进已测</li><li class="own">◆ 你做第 4 节的 2 个决定</li></ul></div>
+  <div class="card todo"><h3>⑦ 代码冻结</h3><div class="sub">把代码定稿</div><div class="bar"><i style="width:0"></i></div><div class="pct">未开始</div>
+    <ul><li class="pt">· 4 件小事完成</li><li class="pt">· Reviewer 签收后打标签</li></ul></div>
+  <div class="card todo"><h3>⑧ 一次性检验</h3><div class="sub">2016–26 只跑一次</div><div class="bar"><i style="width:0"></i></div><div class="pct">未开始</div>
+    <ul><li class="own">◆ 你单独批准</li><li class="pt">· 按冻结清单跑一次</li></ul></div>
+  <div class="card todo"><h3>⑨ 结论</h3><div class="sub">通过 / 不通过</div><div class="bar"><i style="width:0"></i></div><div class="pct">未开始</div>
+    <ul><li class="pt">· Reviewer 按判据出结论</li><li class="own">◆ 你看结论</li></ul></div>
+  <div class="card todo"><h3>⑩ 模拟盘</h3><div class="sub">真实时间验证</div><div class="bar"><i style="width:0"></i></div><div class="pct">未开始</div>
+    <ul><li class="pt">· 每月运行</li><li class="own">◆ 真钱另行决定</li></ul></div>
+</div>
+<div class="bands">
+  <div style="flex:1;border-color:#16a34a">10-23 收尾</div>
+  <div style="flex:6.1;border-color:#ca8a04">第二阶段 · 开发与设计期体检（10-24 起）</div>
+  <div style="flex:4;border-color:#9ca3af">冻结 → 检验 → 结论 → 模拟盘</div>
+</div>
+<svg style="position:absolute;left:0;top:0" width="2000" height="140">
+  <defs><marker id="r" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+  <marker id="p" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7c3aed"/></marker></defs>
+  <line x1="420" y1="94" x2="290" y2="128" stroke="#dc2626" stroke-width="3" marker-end="url(#r)"/><line x1="640" y1="94" x2="650" y2="128" stroke="#dc2626" stroke-width="3" marker-end="url(#r)"/><line x1="880" y1="94" x2="1000" y2="128" stroke="#dc2626" stroke-width="3" marker-end="url(#r)"/><line x1="1200" y1="64" x2="1180" y2="128" stroke="#7c3aed" stroke-width="3" marker-end="url(#p)"/>
+</svg>
+</body></html>
