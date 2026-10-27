@@ -12,12 +12,13 @@ from src.v3.engine.book import DESIGN_END
 TRADING_DAYS = 252
 # §1-2 的探索配置，计入 §6⑤。不在 trial-ledger 里。
 EXPLORATION_TRIALS = 28
-# Orchestrator 诊断变体。D11-3（2026-10-27）：由 29 改为 31，因为计入了 C1 与 C2。
-# 出处：Owner 决定 D11-3；补充文本 A3 的写法是「ledger 配置行 + 28 + 31」。
-# 碰撞（Reviewer #48 R1 / B1）：A2 允许把影子方案 C1 另写进正式 ledger，并计入判据⑤。
-# 诊断桶里的 31 已经含有诊断 C1。若以后 ledger 出现 C1，不要把同一个 C1 再从这 31 里加一次。
-# 本次不新造公式，也不从行数里扣除 C1。Owner 须澄清：ledger 里的 C1 是取代诊断 C1，还是与它并列。
-ORCHESTRATOR_DIAGNOSTIC_TRIALS = 31
+# Orchestrator 诊断变体。D12-4（2026-10-27）：由 31 改为 35。
+# 35 = 2026-10-25 的 29 个诊断 + C1、C2（#30、#31）+ 四个回看期分解（#32–#35）。
+# 判据⑤ = trial-ledger 的 v3/v3.1 正式行（不含下方 C1-shadow）+ 28 + 35。
+# D12-5：C1 已在这 35 里计过。arm 为 C1-shadow 的行仍留在 ledger，计入 §9.6 的 60 条预算，不计入判据⑤。
+ORCHESTRATOR_DIAGNOSTIC_TRIALS = 35
+# 影子方案 C1 的 ledger arm。计入 60 条预算，trial_count 排除这一行。
+C1_SHADOW_ARM = "C1-shadow"
 
 
 class EvalError(RuntimeError):

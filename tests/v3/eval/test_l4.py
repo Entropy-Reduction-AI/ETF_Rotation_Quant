@@ -17,6 +17,7 @@ from src.v3.engine.control import null_b_targets
 from src.v3.engine.market import market_from_returns
 from src.v3.engine.spec import LEDGER, LOCK, load_spec
 from src.v3.eval.common import (
+    C1_SHADOW_ARM,
     EXPLORATION_TRIALS,
     ORCHESTRATOR_DIAGNOSTIC_TRIALS,
     EvalError,
@@ -271,13 +272,15 @@ class SharpePaper(unittest.TestCase):
         self.assertAlmostEqual(net["sr"], float(spread.mean() / spread.std(ddof=1)), places=12)
 
     def test_trial_count_adds_the_exploration_block(self):
-        """D11-3：行数 + 28 + 31。无 ledger 为 59；10 行正式配置为 69。不碰仓库里的 ledger。"""
+        """D12-4 / D12-5：正式行（不含 C1-shadow）+ 28 + 35。无 ledger 为 63；10 行正式配置为 73。不碰仓库里的 ledger。"""
         before = _ledger_bytes()
         self.assertEqual(EXPLORATION_TRIALS, 28)
-        self.assertEqual(ORCHESTRATOR_DIAGNOSTIC_TRIALS, 31)
-        self.assertEqual(TRIAL_BASE, 59)
+        self.assertEqual(ORCHESTRATOR_DIAGNOSTIC_TRIALS, 35)
+        self.assertEqual(C1_SHADOW_ARM, "C1-shadow")
+        self.assertEqual(TRIAL_BASE, 63)
         missing = ROOT / "results" / "v3" / "missing-ledger.csv"
         self.assertFalse(missing.exists())
+        self.assertEqual(trial_count(missing), 63)
         self.assertEqual(trial_count(missing), TRIAL_BASE)
         with tempfile.TemporaryDirectory() as tmp:
             two = Path(tmp) / "two.csv"
@@ -292,27 +295,39 @@ class SharpePaper(unittest.TestCase):
             ])
             with ten.open(encoding="utf-8", newline="") as handle:
                 self.assertEqual(len(list(csv.DictReader(handle))), 10)
-            self.assertEqual(trial_count(ten), 69)
-            # B1：即使某一行写着影子 C1，也不从 31 里扣掉。那是另一套公式，本次不做。
+            self.assertEqual(trial_count(ten), 73)
+            # D12-5：C1-shadow 计入 60 条预算（文件里的行），不计入判据⑤。
             shadow = Path(tmp) / "shadow-c1.csv"
             _write_ledger(shadow, [
-                "2026-10-27T00:00:00+08:00,abc,A,shadow-C1,design,dev",
+                "2026-10-27T00:00:00+08:00,abc,C1-shadow,{},design,dev",
+                "2026-10-27T00:00:01+08:00,abc,A,{},design,dev",
             ])
+            with shadow.open(encoding="utf-8", newline="") as handle:
+                raw = list(csv.DictReader(handle))
+            self.assertEqual(len(raw), 2)
             self.assertEqual(trial_count(shadow), 1 + TRIAL_BASE)
+            only = Path(tmp) / "only-shadow.csv"
+            _write_ledger(only, [
+                "2026-10-27T00:00:00+08:00,abc,C1-shadow,{},design,dev",
+            ])
+            with only.open(encoding="utf-8", newline="") as handle:
+                self.assertEqual(len(list(csv.DictReader(handle))), 1)
+            self.assertEqual(trial_count(only), TRIAL_BASE)
         self.assertAlmostEqual(variance_of_sharpes([0.1, 0.3, 0.2]), float(pd.Series([0.1, 0.3, 0.2]).var(ddof=1)))
         self.assertEqual(_ledger_bytes(), before)
         self.assertFalse(missing.exists())
 
-    def test_checked_in_formal_ledger_counts_sixty_nine(self):
-        """当前仓库的正式 ledger 是 10 行 v3.1 设计期配置，trial_count() 为 69。只读。"""
+    def test_checked_in_formal_ledger_counts_seventy_three(self):
+        """当前仓库的正式 ledger 是 10 行 v3.1 设计期配置，没有 C1-shadow，trial_count() 为 73。只读。"""
         self.assertTrue(LEDGER.is_file())
         before = _ledger_bytes()
         with LEDGER.open(encoding="utf-8", newline="") as handle:
             rows = list(csv.DictReader(handle))
         self.assertEqual(len(rows), 10)
         self.assertTrue(all("v3.1" in (row.get("params") or "") for row in rows))
-        self.assertEqual(trial_count(), 69)
-        self.assertEqual(trial_count(LEDGER), 69)
+        self.assertTrue(all(row.get("arm") != C1_SHADOW_ARM for row in rows))
+        self.assertEqual(trial_count(), 73)
+        self.assertEqual(trial_count(LEDGER), 73)
         self.assertEqual(_ledger_bytes(), before)
 
 
