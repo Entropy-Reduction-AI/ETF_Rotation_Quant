@@ -1,6 +1,6 @@
 {
   "generated_at": "2026-10-22T11:28:29+08:00",
-  "timezone": "Asia/Shanghai",
+  "timezone": "Asia/Taipei",
   "needed_sha256": "3a61e5b378c496e1855d4ae908bf4144822535db179d5df5749df117605d645e",
   "files": [
     {
@@ -854,7 +854,7 @@
         ],
         "request_url": "https://stock.xueqiu.com/v5/stock/chart/kline.json?symbol=SZ399967&period=day&type=before&indicator=kline",
         "fetched_at": "2026-10-22T11:26:50+08:00",
-        "timezone": "Asia/Shanghai",
+        "timezone": "Asia/Taipei",
         "rows": 5,
         "sha256": "9a784c75e508fbc5aff03b45c2375d23b3b962a0172d882a774273b075751951",
         "file": "raw/399967_xueqiu_gap_fill.csv",

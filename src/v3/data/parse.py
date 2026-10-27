@@ -2,8 +2,9 @@
 from __future__ import annotations
 
 import re
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from html.parser import HTMLParser
+from zoneinfo import ZoneInfo
 
 _DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 _SGE_ARTICLE = re.compile(
@@ -179,9 +180,9 @@ def parse_sge_dailyhq(payload: dict) -> list[dict]:
 
 
 def chinabond_day(millis: int | str) -> str:
-    """查询结果的键是 UTC 毫秒。页面按北京时间的日期展示，16:00Z 是次日。"""
+    """查询结果的键是 UTC 毫秒。页面按台北时间的日期展示，16:00Z 是次日。"""
     stamp = datetime.fromtimestamp(int(millis) / 1000, timezone.utc)
-    return stamp.astimezone(timezone(timedelta(hours=8))).date().isoformat()
+    return stamp.astimezone(ZoneInfo("Asia/Taipei")).date().isoformat()
 
 
 def parse_chinabond_wealth(payload: dict) -> list[dict]:

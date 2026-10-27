@@ -64,7 +64,7 @@ PR 里有、这一节里没有的内容：
 | --- | --- |
 | `sudo apt-get install -y python3.12-venv`，再 `python3 -m venv .venv` | 该节写了先安装 `python3.12-venv` 并在仓库根建 `.venv`，没有 apt 命令 |
 | 当时还没有 `requirements.txt`，文件出现后再 `.venv/bin/python -m pip install -r requirements.txt` | 该节已经直接安装 `requirements.txt`。这个文件现在在 main 上 |
-| 研究时区 `Asia/Shanghai`；版本化数据只有 `data/market.sqlite` 和 `data/universe.csv`；更新 sqlite 后记录 SHA256；`.venv/` 不入库 | 时区和 sqlite 的 SHA256 在「数据约束」，不在这一节。`AGENTS.md` 没有写 `universe.csv`，也没有写 `.venv/` 不入库。这两个事实分别在已跟踪的 `data/universe.csv` 和 `.gitignore` 里 |
+| 研究时区 `Asia/Taipei`；版本化数据只有 `data/market.sqlite` 和 `data/universe.csv`；更新 sqlite 后记录 SHA256；`.venv/` 不入库 | 时区和 sqlite 的 SHA256 在「数据约束」，不在这一节。`AGENTS.md` 没有写 `universe.csv`，也没有写 `.venv/` 不入库。这两个事实分别在已跟踪的 `data/universe.csv` 和 `.gitignore` 里 |
 | `src/` 与 `tests/` 随 R1 迁入，见 `docs/project-intake/etf-rotation-quant.md`；没有常驻服务 | 这一节有测试命令，没有 R1 迁入说明、intake 路径，也没有「没有常驻服务」 |
 
 ## Decision / Next Steps

@@ -4,7 +4,7 @@
 
 这一项跳过。下面的地址没有返回中证一级行业权重。成份股权重文件不是行业权重，没有拿来凑数。
 
-| URL | 状态码 | 时间（Asia/Shanghai） | 说明 |
+| URL | 状态码 | 时间（Asia/Taipei） | 说明 |
 | --- | --- | --- | --- |
 | `https://www.csindex.com.cn/csindex-home/index/indexIndustryWeight?indexCode=000985` | 404 | 2026-10-23T23:20:00+08:00 | 没有行业权重 |
 | `https://www.csindex.com.cn/csindex-home/index-weight/industryWeight?indexCode=000985` | 404 | 2026-10-23T23:20:01+08:00 | 没有行业权重 |
