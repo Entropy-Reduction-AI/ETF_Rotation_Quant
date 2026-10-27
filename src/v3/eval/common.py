@@ -10,8 +10,14 @@ from src.v3.engine.book import DESIGN_END
 
 # §6①：年化 = (1+R)^(252/n) − 1。
 TRADING_DAYS = 252
-# §1-2 的探索配置，计入 §6⑤。
+# §1-2 的探索配置，计入 §6⑤。不在 trial-ledger 里。
 EXPLORATION_TRIALS = 28
+# Orchestrator 诊断变体。D11-3（2026-10-27）：由 29 改为 31，因为计入了 C1 与 C2。
+# 出处：Owner 决定 D11-3；补充文本 A3 的写法是「ledger 配置行 + 28 + 31」。
+# 碰撞（Reviewer #48 R1 / B1）：A2 允许把影子方案 C1 另写进正式 ledger，并计入判据⑤。
+# 诊断桶里的 31 已经含有诊断 C1。若以后 ledger 出现 C1，不要把同一个 C1 再从这 31 里加一次。
+# 本次不新造公式，也不从行数里扣除 C1。Owner 须澄清：ledger 里的 C1 是取代诊断 C1，还是与它并列。
+ORCHESTRATOR_DIAGNOSTIC_TRIALS = 31
 
 
 class EvalError(RuntimeError):

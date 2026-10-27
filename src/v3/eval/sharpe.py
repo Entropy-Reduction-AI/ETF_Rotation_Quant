@@ -12,7 +12,9 @@ Journal of Portfolio Management, 40(5), 94–107, 2014.
 γ 是 Euler–Mascheroni 常数，取论文附录代码里的 0.5772156649。
 Φ 是标准正态。γ3 是收益偏度，γ4 是 Pearson 峰度（正态为 3，不是超额峰度）。
 §6⑤ 在「真实夏普为 0」的原假设下取 μ = 0。σ² 是各次试验夏普估计的方差，由调用方给出。
-N = `results/v3/trial-ledger.csv` 的行数 + §1-2 的 28。数值门槛是 DSR ≥ 0.90。
+N = 正式 ledger 的配置行数 + §1-2 的 28 + D11-3 的诊断 31。数值门槛是 DSR ≥ 0.90。
+诊断 31 已含 C1。若 A2 再把同一个 C1 写入 ledger，会和这 31 撞车；本函数不另造公式，见
+`ORCHESTRATOR_DIAGNOSTIC_TRIALS` 的注释。Owner 澄清之前，两笔都照现在的公式加。
 正式通过与否留到 G3。报告里要注明本段出处。
 
 公开例题（论文 "A Numerical Example"）：年化夏普 2.5，每年 250 个观测，
@@ -31,7 +33,12 @@ import pandas as pd
 
 from src.v3.engine.spec import LEDGER
 
-from .common import EXPLORATION_TRIALS, EvalError, require_design_period
+from .common import (
+    EXPLORATION_TRIALS,
+    ORCHESTRATOR_DIAGNOSTIC_TRIALS,
+    EvalError,
+    require_design_period,
+)
 
 EULER_MASCHERONI = 0.5772156649
 DSR_THRESHOLD = 0.90
@@ -123,13 +130,19 @@ def criterion_5(returns, *, n_trials: int, sr_variance: float, cash=None) -> dic
 
 
 def trial_count(ledger_path: Path | None = None) -> int:
-    """ledger 里的数据行数 + 28。文件不存在当作 0 行。不创建文件。"""
+    """正式 ledger 的数据行数 + 28 + 31。文件不存在当作 0 行。不创建、不修改文件。
+
+    28 是 `EXPLORATION_TRIALS`（§1-2）。31 是 `ORCHESTRATOR_DIAGNOSTIC_TRIALS`（D11-3）。
+    ledger 里每一行都是 v3 或 v3.1 的正式配置，全部计入。不识别、不剔除影子方案 C1：
+    那会变成另一套公式。碰撞说明写在 `ORCHESTRATOR_DIAGNOSTIC_TRIALS` 上。
+    """
     path = LEDGER if ledger_path is None else Path(ledger_path)
+    base = EXPLORATION_TRIALS + ORCHESTRATOR_DIAGNOSTIC_TRIALS
     if not path.exists():
-        return EXPLORATION_TRIALS
+        return base
     with path.open(encoding="utf-8", newline="") as handle:
         rows = list(csv.DictReader(handle))
-    return len(rows) + EXPLORATION_TRIALS
+    return len(rows) + base
 
 
 def variance_of_sharpes(sharpes) -> float:

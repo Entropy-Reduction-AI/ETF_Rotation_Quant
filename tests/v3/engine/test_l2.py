@@ -29,6 +29,13 @@ from src.v3.engine.benchmark import bm_main
 from src.v3.engine.book import RunnerError
 
 ROOT = Path(__file__).resolve().parents[3]
+
+
+def _ledger_bytes() -> bytes | None:
+    """正式 ledger 的原文。测试只比较，不创建、不删除。"""
+    if not LEDGER.exists():
+        return None
+    return LEDGER.read_bytes()
 # `python -m src.v3.data emit` 写出的登记表。手改 toml 会让这行失败。Reviewer 重签之前，这不是冻结 SHA。
 UNIVERSE_SHA = "fda394d57b9109225bda0d459975125364b5f1bb5d1793c9ad080ec55f789b19"
 FREEZE = "bfeb49cc65eb0ba419bc98348f1d643fac1211f6"
@@ -305,14 +312,16 @@ class Gates(unittest.TestCase):
         days = _days(5)
         signal = _frame(days, {"a": np.zeros(5), "cash": np.full(5, CASH)})
         market = market_from_returns(signal, {"a": 0.0005, "cash": 0.0005})
+        before = _ledger_bytes()
         with self.assertRaises(RunnerError):
             run("A", "index", "2016-01-04", market=market)
-        self.assertFalse(LEDGER.exists())
+        self.assertEqual(_ledger_bytes(), before)
 
     def test_ledger_one_row_and_debug_skips(self):
         days = _days(40)
         signal = _frame(days, {"a": np.full(40, 0.001), "cash": np.full(40, CASH)})
         market = market_from_returns(signal, {"a": 0.0005, "cash": 0.0005})
+        before = _ledger_bytes()
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "trial-ledger.csv"
             run("A", "index", "2007-12-31", market=market, ledger_path=path, debug=True)
@@ -326,7 +335,7 @@ class Gates(unittest.TestCase):
             self.assertEqual(rows[0].segment, "design")
             self.assertIn("index", rows[0].params)
             self.assertLessEqual(pd.Timestamp("2007-12-31"), pd.Timestamp("2015-12-31"))
-        self.assertFalse(LEDGER.exists())
+        self.assertEqual(_ledger_bytes(), before)
 
 
 class Membership(unittest.TestCase):
@@ -480,13 +489,14 @@ class Smoke(unittest.TestCase):
         db = ROOT / "data" / "market.sqlite"
         if not db.exists() or db.stat().st_size < 1000:
             self.skipTest("market.sqlite 不在这台机器上")
+        before = _ledger_bytes()
         book = run("A", "index", "2008-12-31", debug=True, db_path=db)
         self.assertFalse(book.net.empty)
         self.assertLessEqual(book.net.index.max(), pd.Timestamp("2008-12-31"))
         self.assertLessEqual(book.held.index.max(), pd.Timestamp("2008-12-31"))
         sums = book.decisions.sum(axis=1)
         self.assertLess(float((sums - 1.0).abs().max()), 1e-8)
-        self.assertFalse(LEDGER.exists())
+        self.assertEqual(_ledger_bytes(), before)
 
 
 if __name__ == "__main__":

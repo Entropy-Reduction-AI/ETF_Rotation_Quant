@@ -1,6 +1,7 @@
 """v3 §6 和 §7：随机起点、随机对照、年代、回撤、紧缩夏普、滚动前推、过拟合概率、稳健性。"""
 from __future__ import annotations
 
+import csv
 import math
 import tempfile
 import unittest
@@ -15,7 +16,12 @@ from src.v3.engine.book import simulate
 from src.v3.engine.control import null_b_targets
 from src.v3.engine.market import market_from_returns
 from src.v3.engine.spec import LEDGER, LOCK, load_spec
-from src.v3.eval.common import EvalError, annualized_return
+from src.v3.eval.common import (
+    EXPLORATION_TRIALS,
+    ORCHESTRATOR_DIAGNOSTIC_TRIALS,
+    EvalError,
+    annualized_return,
+)
 from src.v3.eval.controls import criterion_2, eligibility_on_targets, null_a_targets, percentile_rank
 from src.v3.eval.drawdown import criterion_4, drawdown_stats, equity_weight, position_matched
 from src.v3.eval.eras import criterion_3, four_era_check
@@ -36,6 +42,21 @@ from src.v3.eval import selection as selection_mod
 
 ROOT = Path(__file__).resolve().parents[3]
 CASH = 0.02 / 252
+TRIAL_BASE = EXPLORATION_TRIALS + ORCHESTRATOR_DIAGNOSTIC_TRIALS
+
+
+def _ledger_bytes() -> bytes | None:
+    """正式 ledger 的原文。测试只比较，不创建、不删除。"""
+    if not LEDGER.exists():
+        return None
+    return LEDGER.read_bytes()
+
+
+def _write_ledger(path: Path, rows: list[str]) -> None:
+    path.write_text(
+        "run_at,git_sha,arm,params,segment,runner\n" + "".join(line if line.endswith("\n") else line + "\n" for line in rows),
+        encoding="utf-8",
+    )
 
 
 def _calendar(start: str, end: str) -> pd.DatetimeIndex:
@@ -44,6 +65,7 @@ def _calendar(start: str, end: str) -> pd.DatetimeIndex:
 
 class Gate(unittest.TestCase):
     def test_post_2015_portfolio_returns_are_refused(self):
+        before = _ledger_bytes()
         days = pd.bdate_range("2015-12-30", periods=4)
         self.assertGreater(days.max(), pd.Timestamp("2015-12-31"))
         series = pd.Series(0.0, index=days)
@@ -58,7 +80,7 @@ class Gate(unittest.TestCase):
         with self.assertRaises(EvalError):
             cscv_pbo(pd.DataFrame({"a": series, "b": series}))
         self.assertFalse(LOCK.exists())
-        self.assertFalse(LEDGER.exists())
+        self.assertEqual(_ledger_bytes(), before)
 
     def test_paper_citation_is_in_the_docstring(self):
         text = sharpe_mod.__doc__ or ""
@@ -249,17 +271,49 @@ class SharpePaper(unittest.TestCase):
         self.assertAlmostEqual(net["sr"], float(spread.mean() / spread.std(ddof=1)), places=12)
 
     def test_trial_count_adds_the_exploration_block(self):
-        self.assertEqual(trial_count(ROOT / "results" / "v3" / "missing-ledger.csv"), 28)
+        """D11-3：行数 + 28 + 31。无 ledger 为 59；10 行正式配置为 69。不碰仓库里的 ledger。"""
+        before = _ledger_bytes()
+        self.assertEqual(EXPLORATION_TRIALS, 28)
+        self.assertEqual(ORCHESTRATOR_DIAGNOSTIC_TRIALS, 31)
+        self.assertEqual(TRIAL_BASE, 59)
+        missing = ROOT / "results" / "v3" / "missing-ledger.csv"
+        self.assertFalse(missing.exists())
+        self.assertEqual(trial_count(missing), TRIAL_BASE)
         with tempfile.TemporaryDirectory() as tmp:
-            path = Path(tmp) / "trial-ledger.csv"
-            path.write_text(
-                "run_at,git_sha,arm,params,segment,runner\n"
-                "2026-10-25T00:00:00+08:00,abc,A,{},design,dev\n"
-                "2026-10-25T00:00:01+08:00,abc,B,{},design,dev\n",
-                encoding="utf-8")
-            self.assertEqual(trial_count(path), 30)
+            two = Path(tmp) / "two.csv"
+            _write_ledger(two, [
+                "2026-10-25T00:00:00+08:00,abc,A,{},design,dev",
+                "2026-10-25T00:00:01+08:00,abc,B,{},design,dev",
+            ])
+            self.assertEqual(trial_count(two), 2 + TRIAL_BASE)
+            ten = Path(tmp) / "ten.csv"
+            _write_ledger(ten, [
+                f"2026-10-25T00:00:{i:02d}+08:00,abc,A,{{}},design,dev" for i in range(10)
+            ])
+            with ten.open(encoding="utf-8", newline="") as handle:
+                self.assertEqual(len(list(csv.DictReader(handle))), 10)
+            self.assertEqual(trial_count(ten), 69)
+            # B1：即使某一行写着影子 C1，也不从 31 里扣掉。那是另一套公式，本次不做。
+            shadow = Path(tmp) / "shadow-c1.csv"
+            _write_ledger(shadow, [
+                "2026-10-27T00:00:00+08:00,abc,A,shadow-C1,design,dev",
+            ])
+            self.assertEqual(trial_count(shadow), 1 + TRIAL_BASE)
         self.assertAlmostEqual(variance_of_sharpes([0.1, 0.3, 0.2]), float(pd.Series([0.1, 0.3, 0.2]).var(ddof=1)))
-        self.assertFalse(LEDGER.exists())
+        self.assertEqual(_ledger_bytes(), before)
+        self.assertFalse(missing.exists())
+
+    def test_checked_in_formal_ledger_counts_sixty_nine(self):
+        """当前仓库的正式 ledger 是 10 行 v3.1 设计期配置，trial_count() 为 69。只读。"""
+        self.assertTrue(LEDGER.is_file())
+        before = _ledger_bytes()
+        with LEDGER.open(encoding="utf-8", newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        self.assertEqual(len(rows), 10)
+        self.assertTrue(all("v3.1" in (row.get("params") or "") for row in rows))
+        self.assertEqual(trial_count(), 69)
+        self.assertEqual(trial_count(LEDGER), 69)
+        self.assertEqual(_ledger_bytes(), before)
 
 
 class Controls(unittest.TestCase):
@@ -516,11 +570,19 @@ class Robustness(unittest.TestCase):
 
 class Report(unittest.TestCase):
     def test_design_report_does_not_judge(self):
+        before = _ledger_bytes()
         calendar = _calendar("2006-01-02", "2010-12-31")
         strategy = pd.Series(0.0004, index=calendar)
         strategy.iloc[::5] = -0.001
         benchmark = pd.Series(0.0, index=calendar)
-        report = evaluate_design(strategy, benchmark, calendar, sr_variance=0.002, cash=benchmark)
+        with tempfile.TemporaryDirectory() as tmp:
+            ledger = Path(tmp) / "trial-ledger.csv"
+            _write_ledger(ledger, [
+                "2026-10-25T00:00:00+08:00,abc,A,{},design,dev",
+                "2026-10-25T00:00:01+08:00,abc,B,{},design,dev",
+            ])
+            report = evaluate_design(
+                strategy, benchmark, calendar, sr_variance=0.002, cash=benchmark, ledger_path=ledger)
         self.assertEqual(report["period"], "design")
         self.assertEqual(report["end"], "2015-12-31")
         self.assertIsNone(report["formal_pass"])
@@ -528,9 +590,10 @@ class Report(unittest.TestCase):
         self.assertIsNone(report["criterion_1"]["formal_pass"])
         self.assertEqual(report["criterion_3"]["eras"][2]["status"], "未计算")
         self.assertIsNone(report["criterion_3"]["eras"][2]["excess"])
-        self.assertEqual(report["trial_count"], 28)
+        self.assertEqual(report["trial_count"], 2 + TRIAL_BASE)
         self.assertIn("probability", report["criterion_5"])
         self.assertFalse(LOCK.exists())
+        self.assertEqual(_ledger_bytes(), before)
 
     def test_action_table(self):
         self.assertEqual(action_for(
