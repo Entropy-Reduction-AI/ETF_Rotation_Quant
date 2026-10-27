@@ -44,22 +44,25 @@ def groups(Wk):
                       '美股': Wk.get('纳指100', 0) + Wk.get('标普500', 0), '现金': Wk['cash']})
     return g.loc['2006':'2015'].groupby(g.loc['2006':'2015'].index.year).mean() * 100
 g3, g1 = groups(W['v3']), groups(W['E1'])
-cnt = W['avail_v3'].groupby(W['avail_v3'].index.year).mean()
-fig, ax = plt.subplots(figsize=(11, 4.9))
-x = np.arange(len(g3)); b = np.zeros(len(g3))
-for k, col in zip(g3.columns, ['#1d4ed8', '#a855f7', '#16a34a', '#d1d5db']):
-    ax.bar(x, g3[k], .6, bottom=b, color=col, label=f'v3 {k}', zorder=2); b += g3[k].values
-ax.plot(x, g1['现金'], color=INK, marker='D', ms=6, lw=1.6, zorder=4, label='E1（补全池子后）的现金')
-for i, v in enumerate(cnt.values):
-    ax.text(i, 103, f'{v:.0f} 个', ha='center', fontsize=10.5, color='#374151')
-ax.text(-.62, 110, '当年 v3 能选的标的数 →', fontsize=10, color=MUTED)
-ax.annotate('2006：沪深300 全年 +125%\nv3 只放了 20%，60% 拿现金\n补全池子后（E1）现金只剩 4%', xy=(0, 62), xytext=(0.55, 76),
-            fontsize=10.5, color=INK, ha='left', arrowprops=dict(arrowstyle='->', color=INK, lw=1),
-            bbox=dict(fc='white', ec='#e5e7eb', pad=3))
-ax.set_xticks(x, g3.index); ax.set_ylim(0, 116); ax.set_yticks([0, 25, 50, 75, 100]); ax.set_ylabel('全年平均仓位 %')
-ax.grid(axis='x', visible=False)
-ax.legend(ncol=5, frameon=False, loc='upper center', bbox_to_anchor=(.5, -.08), fontsize=10)
-title(ax, '病根：能选的太少，v3 在牛市里一半以上拿着现金', '柱子 = v3 每年平均仓位；黑色菱形 = 只补全池子（E1）后的现金比例。设计期 2006–2015。')
+c3 = W['avail_v3'].groupby(W['avail_v3'].index.year).mean(); c1 = W['avail_full'].groupby(W['avail_full'].index.year).mean()
+fig, axs = plt.subplots(1, 2, figsize=(12, 4.9), sharey=True, gridspec_kw=dict(wspace=.06))
+for ax, g, c, nm in [(axs[0], g3, c3, 'v3：指数发布日之后才能选'), (axs[1], g1, c1, 'E1：行业指数用 2005 年起的官方回溯数据')]:
+    x = np.arange(len(g)); bb = np.zeros(len(g))
+    for k, col in zip(g.columns, ['#1d4ed8', '#a855f7', '#16a34a', '#d1d5db']):
+        ax.bar(x, g[k], .66, bottom=bb, color=col, label=k, zorder=2); bb += g[k].values
+    for i, v in enumerate(c.values): ax.text(i, 102.5, f'{v:.0f}', ha='center', fontsize=10, color='#374151')
+    for i in (0, 1):
+        cv = g['现金'].values[i]
+        if cv > 12: ax.text(i, 100 - cv / 2, f"现金\n{cv:.0f}%", ha='center', va='center', fontsize=9.5, weight='bold', color='#111827', linespacing=1)
+        else: ax.text(i, 104 + 0, '', ha='center')
+    ax.set_xticks(x, [str(y)[2:] for y in g.index]); ax.set_ylim(0, 112); ax.set_yticks([0, 25, 50, 75, 100])
+    ax.grid(axis='x', visible=False); ax.set_xlabel('年份（20xx）', fontsize=10, color=MUTED)
+    ax.set_title(nm, loc='left', fontsize=12, weight='bold', color=INK, pad=22)
+    ax.text(-.5, 108.5, '柱顶数字 = 当年能选几个', fontsize=9.5, color=MUTED)
+    if nm.startswith('E1'): ax.annotate('现金只剩 4% 和 3%', xy=(0.5, 97), xytext=(2.2, 104.5), fontsize=10, weight='bold', color='#111827', arrowprops=dict(arrowstyle='->', color='#111827', lw=1))
+axs[0].set_ylabel('全年平均仓位 %')
+axs[1].legend(ncol=4, frameon=False, loc='upper center', bbox_to_anchor=(-.03, -.13), fontsize=10)
+fig.suptitle('同一套规则，可选标的从 4–6 个变成 17 个，牛市里的现金从 60% 降到 4%', x=.125, ha='left', y=1.04, fontsize=14.5, weight='bold', color=INK)
 save(fig, 'b1-positions')
 
 # ---------- 图 2：E 系列净值 + 回撤（2.2） ----------
@@ -78,7 +81,7 @@ for k in order:
 ypos = {'E2': ends['E2'], 'E1': ends['E1'], '基准': ends['基准'] + .25, 'v3': ends['v3'] - .35}
 for k in order:
     nm, ann, mdd = LAB[k]
-    ax.text(pd.Timestamp('2016-01-25'), ypos[k], f'{nm}  {ends[k]:.1f} 元\n年化 {ann}', color=C[k] if k != 'v3' else '#6b7280',
+    ax.text(pd.Timestamp('2016-01-25'), ypos[k], f'{nm}  {ends[k]:.1f} 元（+{(ends[k]-1)*100:.0f}%）\n年化 {ann}', color=C[k] if k != 'v3' else '#6b7280',
             fontsize=10.5, weight='bold', va='center', linespacing=1.15)
 ax.set_ylabel('1 元变成多少'); ax.set_ylim(0, 12)
 for k in order:
@@ -148,7 +151,7 @@ for xx, v in ex.items():
     ax2.text(xx, v + (2 if v > 0 else -2), f'{v:+.0f}', ha='center', va='bottom' if v > 0 else 'top', fontsize=10, color=INK)
 ax2.axhline(0, color=INK, lw=.8); ax2.set_ylim(-52, 66); ax2.set_ylabel('超额（百分点）')
 ax2.set_xticks(ex.index, [str(y) for y in ex.index]); ax2.grid(axis='x', visible=False)
-ax2.text(2009.45, -40, '← 2008 年多拿现金躲过下跌，2009 年反弹没跟上', ha='left', fontsize=9.5, color='#b91c1c')
+ax2.text(2009.45, -40, '← 底部之后回场太慢，2009 上半年四成仓位还在现金、国债、黄金（见 3.5）', ha='left', fontsize=9.5, color='#b91c1c')
 ax2.text(2013, 50, '2011–2015 按年化算只比基准多 0.8 个百分点', ha='center', fontsize=10, color='#374151',
          bbox=dict(fc='#f3f4f6', ec='none', pad=3))
 save(fig, 'b4-formal')
@@ -168,8 +171,53 @@ ax.text(8.02, 110, '预注册里可交易池从 2013-07 才开始算', ha='cente
 ax.set_xticks(x, c1.index); ax.set_ylim(0, 118); ax.set_yticks([0, 25, 50, 75, 100]); ax.set_ylabel('全年平均现金 %')
 ax.grid(axis='x', visible=False)
 ax.legend(frameon=False, loc='upper center', bbox_to_anchor=(.5, -.08), ncol=2, fontsize=10)
-title(ax, '可交易池落后，是因为当年没有 ETF 可买，不是执行损耗',
-      '同一套规则，两种可选范围。可交易池 2013 年以前 88–100% 是现金；年化 5.2% 衡量的是 ETF 上市进度。')
+title(ax, '可交易池：2013 年以前几乎买不到对应的 ETF，只能拿现金',
+      '同一套规则跑两遍：蓝柱可以买指数，灰柱只能买当年已经上市的 ETF。灰柱越高，说明能买的越少。')
 save(fig, 'b5-tradable')
 print('ok', sorted(os.listdir(OUT)))
 print('E2 recon end', round(e_nav.iloc[-1], 2), 'formal', round(f_nav.iloc[-1], 2), 'excess 11-15 mean', round(ex.loc[2011:2015].mean(), 1))
+
+# ---------- 图 6：2009 年跑输的原因（3.5） ----------
+H = pd.read_csv('P1-held.csv', index_col=0, parse_dates=True)
+dfn = H[['cash', 'cgb-5y', 'cgb-10y', 'gold']].sum(axis=1)
+ov = H[['ndx100', 'spx', 'hsi'] + [c for c in H.columns if c.startswith('theme-')]].sum(axis=1)
+ash = 1 - dfn - ov
+win = slice('2008-06-01', '2009-12-31')
+fig, ax = plt.subplots(figsize=(11, 4.8))
+xx = H.loc[win].index
+ax.stackplot(xx, ash.loc[win] * 100, ov.loc[win] * 100, dfn.loc[win] * 100, colors=['#1d4ed8', '#16a34a', '#d1d5db'],
+             labels=['A 股', '海外', '现金 + 国债 + 黄金'], zorder=2, alpha=.95)
+ax.set_ylim(0, 100); ax.set_ylabel('E2 正式版仓位 %')
+ax2 = ax.twinx(); ax2.spines['right'].set_visible(True)
+hs = P['沪深300'] if 'P' in dir() else None
+import pickle as _p
+PP = _p.load(open('data.pkl', 'rb'))[0]['沪深300'].loc[win]
+ax2.plot(PP.index, PP / PP.iloc[0], color=INK, lw=2.2, zorder=5, label='沪深300（右轴，期初 = 1）')
+ax2.set_ylabel('沪深300（期初 = 1）', color=INK); ax2.grid(False); ax2.set_ylim(0.2, 1.3)
+for d, t, y in [('2008-11-04', '沪深300 见底', 1.22), ('2009-03-02', '120 日信号转正', 1.22), ('2009-06-01', '250 日信号转正', 1.22)]:
+    ax2.axvline(pd.Timestamp(d), color='#b91c1c', ls='--', lw=1.1, zorder=6)
+    ax2.text(pd.Timestamp(d) + pd.Timedelta(days=4), y, t, color='#b91c1c', fontsize=10, va='top', bbox=dict(fc='white', ec='none', pad=1))
+ax.text(pd.Timestamp('2008-11-25'), 70, '2009 上半年平均\n43% 在防守', fontsize=11, weight='bold', color='#111827', bbox=dict(fc='white', ec='none', alpha=.85, pad=2))
+h1, l1 = ax.get_legend_handles_labels(); h2, l2 = ax2.get_legend_handles_labels()
+ax.legend(h1 + h2, l1 + l2, ncol=4, frameon=False, loc='upper center', bbox_to_anchor=(.5, -.09), fontsize=10)
+ax.set_xlim(xx[0], xx[-1])
+title(ax, '2009 年为什么跑输：见底之后半年，四成仓位还在防守',
+      '上半年策略 +22%，基准 +55%；下半年 +18% 对 +18%，打平。差距全在回场太慢。')
+save(fig, 'b6-2009')
+
+# ---------- 图 7：回场改进候选（3.5） ----------
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(11, 4.2), gridspec_kw=dict(wspace=.28))
+nm = ['E2', 'C1\n快信号回场', 'C2\n准入看 60 日', '基准']
+v1 = [28, 43, 50, 55]; v2 = [1.71, 1.69, 1.59]
+cc = ['#1d4ed8', '#0891b2', '#7c3aed', '#111827']
+a1.bar(range(4), v1, .62, color=cc, zorder=2)
+for i, v in enumerate(v1): a1.text(i, v + 1.2, f'+{v}%', ha='center', fontsize=11, weight='bold', color=INK)
+a1.set_xticks(range(4), nm, fontsize=10); a1.set_ylim(0, 64); a1.grid(axis='x', visible=False)
+a1.set_title('2009 上半年收益：修好了', loc='left', fontsize=12, weight='bold', color='#15803d')
+a2.bar(range(3), v2, .62, color=cc[:3], zorder=2)
+for i, v in enumerate(v2): a2.text(i, v + .02, f'{v:.2f} 元', ha='center', fontsize=11, weight='bold', color=INK)
+a2.set_xticks(range(3), nm[:3], fontsize=10); a2.set_ylim(1.0, 1.85); a2.grid(axis='x', visible=False)
+a2.set_title('2011–2015 一元变成：没有帮助', loc='left', fontsize=12, weight='bold', color='#b91c1c')
+fig.suptitle('回场改进只在 2009 这一次大底上有效，另一段没有改善', x=.125, ha='left', y=1.05, fontsize=14.5, weight='bold', color=INK)
+fig.text(.125, .965, '两个候选都在 E2 上只改一处，跑之前写定。18 个序列复现口径，设计期 2006–2015。', fontsize=10.5, color=MUTED)
+save(fig, 'b7-candidates')
