@@ -136,7 +136,7 @@ git push origin --delete claude/agents-orchestrator-def cursor/d10-design-period
 
 - 清理前、推送 keep 标签后、删除分支后，各做一次 `git ls-remote --tags origin`。四个 `milestone/*` 标签对象分别为 `4812115867d0e9176175bd45d21b2dae19c10979`、`007c9accf9be2c423564b7b885ea1961124b7f32`、`e3b55a7b8ce967a43341a3c9d02e6a0a42e2b508`、`f1d3d0c170ecbd5eb3b463c26834bafd5dc40254`，三次一致。
 - keep 标签在删除分支之前已经出现在 origin，剥开后的提交分别是 `6cba1c77d4c9309df6a2b3375c8654cd1b6162fa`、`cbc80ca069e26f6398cc2dc2df899228260963a6`、`fa825b7beccacda24004fdb52f48b3073fddf052`。
-- 删除后的 head 列表只剩：`main`、`claude/owner-board-v2`、`cursor/d11-d1-d4-freeze-prep-7d28`、`cursor/d12-b1-b2-followups-e4fb`、`cursor/v3-data-defensive-holiday-review-5690`、`dev/v3-design-period-brief`、`review/v3.1-addendum-1-r1`、`review/v3.1-addendum-1-r1-rereview`、`review/v3.1-d11-d1-d4-r2`、`review/v3.1-d12-b1-b2-r2`。
+- 删除分支之后、推送本记录之前，head 列表是：`main`、`claude/owner-board-v2`、`cursor/d11-d1-d4-freeze-prep-7d28`、`cursor/d12-b1-b2-followups-e4fb`、`cursor/v3-data-defensive-holiday-review-5690`、`dev/v3-design-period-brief`、`review/v3.1-addendum-1-r1`、`review/v3.1-addendum-1-r1-rereview`、`review/v3.1-d11-d1-d4-r2`、`review/v3.1-d12-b1-b2-r2`。随后多出来的 `cursor/branch-tag-cleanup-33ff` 是本记录自己的分支，不在删除名单里。
 - `gh pr list --state open` 仍是 #55、#53、#51、#49。
 - 工作区没有改 `results/v3/LOCK`，没有跑 2016-01-01 及以后的组合收益。
 
