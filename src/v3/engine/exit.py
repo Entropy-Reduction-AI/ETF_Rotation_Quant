@@ -145,14 +145,20 @@ def _queue_refill(refills, filled_slots, exited: set[str], refill_targets, stamp
 
 
 def _fill_due_refills(weights, refills, stamp, cash_id, fee_table, fill_limits, fill_quotes,
-                      columns, trade_eps, weight_eps, peaks, spot, deferred) -> tuple[float, float]:
-    """执行已经排到今天的补位买单。涨停或无价的那一档留下，不把额度让给更后面的名字。"""
+                      columns, trade_eps, weight_eps, peaks, spot, deferred,
+                      cash_cap: float | None = None) -> tuple[float, float]:
+    """执行已经排到今天的补位买单。涨停或无价的那一档留下，不把额度让给更后面的名字。
+
+    `cash_cap` 是卖单成交前的现金。同一天先卖后买时，这笔补位只用已经在账上的卖出所得，
+    不把今天刚卖出、还没排进下一笔补位的现金算进去。
+    """
     due = [order for order in refills if order.get("armed")]
     pending = [order for order in refills if not order.get("armed")]
     refills.clear()
     refills.extend(pending)
     extra_cost = 0.0
     extra_buy = 0.0
+    spendable = None if cash_cap is None else float(cash_cap)
     names = [name for name in columns if name != cash_id]
     flags = session_tradable(fill_quotes, stamp, names) if fill_limits else {}
     for order in due:
@@ -175,7 +181,8 @@ def _fill_due_refills(weights, refills, stamp, cash_id, fee_table, fill_limits, 
         for _, name, room in ranked:
             if proceeds <= trade_eps:
                 break
-            cash_now = float(weights.get(cash_id, 0.0))
+            actual_cash = float(weights.get(cash_id, 0.0))
+            cash_now = actual_cash if spendable is None else min(actual_cash, max(spendable, 0.0))
             take = min(room, proceeds, cash_now)
             if take <= trade_eps:
                 break
@@ -190,7 +197,9 @@ def _fill_due_refills(weights, refills, stamp, cash_id, fee_table, fill_limits, 
                 })
                 break
             weights[name] = float(weights.get(name, 0.0)) + take
-            weights[cash_id] = cash_now - take
+            weights[cash_id] = actual_cash - take
+            if spendable is not None:
+                spendable -= take
             extra_cost += take * float(fee_table[name])
             extra_buy += take
             proceeds -= take
@@ -443,13 +452,8 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
             weights = drifted
             still: list[str] = []
             filled_slots: list[tuple[str, float]] = []
-            if refill_targets is not None:
-                # 昨天排好的补位单在今天收盘买。先买，再处理今天才成交的离场卖单。
-                extra_cost, extra_buy = _fill_due_refills(
-                    weights, refills, stamp, cash_id, fee_table, fill_limits, fill_quotes,
-                    columns, trade_eps, weight_eps, peaks, spot, deferred)
-                cost += extra_cost
-                buy += extra_buy
+            # 同一天既有顺延卖单又有补位买单时先卖后买。补位只用卖出之前已经在账上的现金。
+            cash_for_refill = float(weights.get(cash_id, 0.0))
             limit_flags = session_tradable(fill_quotes, stamp, traded_names) if fill_limits else None
             for name in list(tosell):
                 weight = float(weights.get(name, 0.0))
@@ -476,6 +480,17 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
                 exits.append({"date": stamp, "name": name, "price": float(mark), "kind": "exit"})
                 filled_slots.append((name, weight))
             tosell = still
+            if refill_targets is not None:
+                sold_names = {name for name, _weight in filled_slots}
+                for order in refills:
+                    if order.get("armed") and sold_names:
+                        order["exclude"] = set(order.get("exclude") or ()) | sold_names
+                extra_cost, extra_buy = _fill_due_refills(
+                    weights, refills, stamp, cash_id, fee_table, fill_limits, fill_quotes,
+                    columns, trade_eps, weight_eps, peaks, spot, deferred,
+                    cash_cap=cash_for_refill)
+                cost += extra_cost
+                buy += extra_buy
             if refill_targets is not None and filled_slots:
                 _queue_refill(refills, filled_slots, exited, refill_targets, stamp, trade_eps)
         cost *= cost_multiplier

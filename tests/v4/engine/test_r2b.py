@@ -240,16 +240,23 @@ class NewPoolRanks(unittest.TestCase):
         con = _connect(DB.MARKET_DB)
         try:
             r1_sig, r1_fresh = added_signals(
-                con, market.dates, spec, "2015-12-31", adjusted=False, hk_fx=False, usd_filled=False)
+                con, market.dates, spec, "2015-12-31", adjusted=False, hk_fx=False, usd_filled=False,
+                hk_same_day=False)
             v4_sig, v4_fresh = added_signals(
-                con, market.dates, spec, "2015-12-31", adjusted=True, hk_fx=True, usd_filled=True)
+                con, market.dates, spec, "2015-12-31", adjusted=True, hk_fx=True, usd_filled=True,
+                hk_same_day=True)
             fx_sig, fx_fresh = added_signals(
-                con, market.dates, spec, "2015-12-31", adjusted=False, hk_fx=True, usd_filled=True)
+                con, market.dates, spec, "2015-12-31", adjusted=False, hk_fx=True, usd_filled=True,
+                hk_same_day=False)
             adj_sig, adj_fresh = added_signals(
-                con, market.dates, spec, "2015-12-31", adjusted=True, hk_fx=False, usd_filled=False)
+                con, market.dates, spec, "2015-12-31", adjusted=True, hk_fx=False, usd_filled=False,
+                hk_same_day=False)
+            session_sig, session_fresh = added_signals(
+                con, market.dates, spec, "2015-12-31", adjusted=False, hk_fx=False, usd_filled=False,
+                hk_same_day=True)
         finally:
             con.close()
-        for frame in (r1_sig, v4_sig, fx_sig, adj_sig):
+        for frame in (r1_sig, v4_sig, fx_sig, adj_sig, session_sig):
             if len(frame.index):
                 self.assertLessEqual(pd.Timestamp(frame.index.max()), end)
 
@@ -283,14 +290,17 @@ class NewPoolRanks(unittest.TestCase):
                 official = top_names(v4_signal, v4_gate, market.cash_id, v4_names, spec, day, length)
                 fx_only = top_names(*_pack(joined(fx_sig, fx_fresh), market, spec, day, length))
                 adj_only = top_names(*_pack(joined(adj_sig, adj_fresh), market, spec, day, length))
+                session_only = top_names(*_pack(joined(session_sig, session_fresh), market, spec, day, length))
                 if official != expected:
                     kind = []
                     if fx_only != got:
                         kind.append("fx")
                     if adj_only != got:
                         kind.append("adjust")
+                    if session_only != got:
+                        kind.append("session")
                     if not kind:
-                        kind.append("other")
+                        kind.append("combined")
                     method_rows.append(
                         f"{day.date()} L={length} [{'+'.join(kind)}] r1={got} v4={official}")
         self.assertEqual(mismatches, [])

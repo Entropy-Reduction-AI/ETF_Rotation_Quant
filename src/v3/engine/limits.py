@@ -45,6 +45,7 @@ class FillQuote:
     close: pd.Series
     board: str
     board_by_day: pd.Series | None = None
+    prev_close: pd.Series | None = None
 
 
 _A_SHARE = frozenset({"A股宽基", "A股行业", "A股红利"})
@@ -53,9 +54,12 @@ LIMIT_BUFFER = Decimal("0.005")
 
 
 def fill_board_for(track: str, code: str, asset_class: str = "") -> str:
-    """没有 A 股 ETF 的 A 股容器按主板 ±10%。美股、港股、场外不是 A 股代码时不设板。"""
+    """没有 A 股 ETF 的 A 股容器按主板 ±10%。美股、港股没有涨跌停，即使挂牌代码是 6 位。"""
+    text = asset_class or ""
+    if text == "港股" or text.startswith("美股"):
+        return "none"
     board = board_of(track, code)
-    if board == "none" and asset_class in _A_SHARE:
+    if board == "none" and text in _A_SHARE:
         return "main"
     return board
 
@@ -105,15 +109,20 @@ def _positive(value) -> float | None:
     return number
 
 
-def previous_and_close(series: pd.Series | None, day) -> tuple[float | None, float | None]:
+def previous_and_close(series: pd.Series | None, day,
+                       prev_series: pd.Series | None = None) -> tuple[float | None, float | None]:
     """(上一笔原始收盘, 当日原始收盘)。当日没打印时第二个值是 None。
 
     上一笔是这只代码自己的上一笔成交，不是上一个上交所交易日。
+    `prev_series` 给出时用它的当天值当上一笔，避免载体换只后拿另一只的收盘当前收。
     """
-    if series is None or len(series) == 0:
+    if (series is None or len(series) == 0) and prev_series is None:
         return None, None
     stamp = pd.Timestamp(day).normalize()
-    close = _positive(series.loc[stamp]) if stamp in series.index else None
+    close = _positive(series.loc[stamp]) if series is not None and len(series) and stamp in series.index else None
+    if prev_series is not None:
+        prev = _positive(prev_series.loc[stamp]) if stamp in prev_series.index else None
+        return prev, close
     earlier = series.loc[series.index < stamp]
     prev = None
     if len(earlier):
@@ -152,7 +161,7 @@ def session_tradable(quotes: dict[str, FillQuote] | None, day, names: list[str])
         if quote is None:
             out[name] = (False, False)
             continue
-        prev, close = previous_and_close(quote.close, stamp)
+        prev, close = previous_and_close(quote.close, stamp, quote.prev_close)
         board_name = quote.board
         by_day = quote.board_by_day
         if by_day is not None and stamp in by_day.index:
@@ -226,10 +235,12 @@ def quotes_from_market(market) -> dict[str, FillQuote]:
     closes = getattr(market, "fill_close", None) or {}
     boards = getattr(market, "fill_board", None) or {}
     by_day = getattr(market, "fill_board_by_day", None) or {}
-    names = list(dict.fromkeys([*closes.keys(), *boards.keys()]))
+    prevs = getattr(market, "fill_prev", None) or {}
+    names = list(dict.fromkeys([*closes.keys(), *boards.keys(), *prevs.keys()]))
     quotes: dict[str, FillQuote] = {}
     for name in names:
         series = closes.get(name, pd.Series(dtype=float))
         quotes[name] = FillQuote(
-            close=series, board=str(boards.get(name, "none")), board_by_day=by_day.get(name))
+            close=series, board=str(boards.get(name, "none")), board_by_day=by_day.get(name),
+            prev_close=prevs.get(name))
     return quotes

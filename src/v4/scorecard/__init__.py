@@ -17,6 +17,7 @@ from .core import (
     reference_scorecard,
     score_book,
 )
+from .gate import GATE_COLUMNS, attempt_count, candidate_gate
 
 __all__ = [
     "DESIGN_END",
@@ -26,6 +27,9 @@ __all__ = [
     "acceptance",
     "any_start",
     "cash_weight_on",
+    "GATE_COLUMNS",
+    "attempt_count",
+    "candidate_gate",
     "label_state",
     "reference_scorecard",
     "score_book",

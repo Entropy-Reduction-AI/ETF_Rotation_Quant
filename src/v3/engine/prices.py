@@ -70,7 +70,10 @@ def align_same_day(native: pd.Series, calendar: pd.DatetimeIndex, stale_limit: i
 def align_overseas(bars: pd.DataFrame, calendar: pd.DatetimeIndex, stale_limit: int,
                    gap_days: pd.DatetimeIndex | None = None
                    ) -> tuple[pd.Series, pd.Series, pd.DatetimeIndex]:
-    """港股、美股、上金所的收盘晚于或可能晚于 A 股 15:00，决策只用严格早于当日的 K 线。
+    """v3.1 的海外对齐：决策只用严格早于当日的 K 线。开关全关时恒生仍走这里，和冻结引擎一致。
+
+    v4 的港股不走这里。D18-1 起，旧池恒生和四个分类用决策日当天收盘，见 `src.v4.engine.pool._hk_level`。
+    美股仍走这里。
 
     返回 (水平, 是否可排名, 信号里要剔除的 A 股交易日)。断档日仍保留最近收盘，避免复牌收益丢失。
     """

@@ -14,7 +14,7 @@ from src.v3.engine.costs import leg_fee
 from src.v3.engine.market import _split_bars, _usd_level, levels_from_returns
 from src.v3.engine.prices import USD_CODES, returns_from_level, signal_returns
 from src.v3.engine.universe import parse_date, research_code
-from src.v4.engine.carriers import build_candidates, choose_on, sse_calendar
+from src.v4.engine.carriers import build_candidates, choose_on, prints_for, sse_calendar, stitch_fills
 from src.v4.engine.pool import HK_SECTORS, US_SECTORS, added_signals, bm_nav_level, load_mid
 from src.v4.engine.pool import _hk_level
 
@@ -64,9 +64,13 @@ def _reprice(market, con, containers: list[dict], spec, end: str) -> None:
                 continue
             level, fresh, gaps = _usd_level(block, usd, calendar, spec.stale_limit, floor)
         elif source == "tencent_hk_index":
-            level, fresh, gaps = _hk_level(code, bars, calendar, spec, hkd)
+            # B0 / 旧池恒生：D 当天收盘 × D 当天或之前的港币中间价（D18-1）。
+            level, fresh, gaps = _hk_level(code, bars, calendar, spec, hkd, same_day=True)
         else:
             continue
+        asset = str(container.get("asset_class") or "")
+        if market.fill_close is not None and (asset == "港股" or asset.startswith("美股")):
+            market.fill_close[identity] = level.where(level > 0)
         market.signal[identity] = signal_returns(level, gaps).reindex(calendar)
         market.pnl[identity] = returns_from_level(level).reindex(calendar)
         series = market.signal[identity]
@@ -116,6 +120,17 @@ def _gate(market, con, containers, end: str, switches) -> None:
             for key, rows in grouped.items()
         }
     hk_ids = {name for name, _code in HK_SECTORS}
+    assets = {str(row.get("id") or ""): str(row.get("asset_class") or "") for row in containers}
+    if market.fill_close is None:
+        market.fill_close = {}
+    if getattr(market, "fill_prev", None) is None:
+        market.fill_prev = {}
+    if getattr(market, "fill_board_by_day", None) is None:
+        market.fill_board_by_day = {}
+    for name, fill in stitch_fills(grouped, market.dates, prints_for(con, grouped, end), assets).items():
+        market.fill_close[name] = fill.close
+        market.fill_prev[name] = fill.prev
+        market.fill_board_by_day[name] = fill.board
     for name in list(market.names):
         rows = grouped.get(name, [])
         flags = []
