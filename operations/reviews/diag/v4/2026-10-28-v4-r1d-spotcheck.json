@@ -1,0 +1,41 @@
+{
+  "task": "v4-R1d-data-spotcheck",
+  "date": "2026-10-28",
+  "decision": "approve",
+  "dev_pr": 94,
+  "dev_head": "302c1c3f11a2e31a74d3626fde7151fee0dab9ae",
+  "dev_base": "83f300de0982b740c486017e427f4e7986eef9d9",
+  "sqlite_sha256_reviewer": "6c896fd1e5de6bc66ddf6f42833033f202f6e480f4d78c6cd267c6c6a4362248",
+  "sqlite_bytes": 246054912,
+  "integrity_check": "ok",
+  "bars_count": 787005,
+  "v4_tests": "58 OK",
+  "bar_spotchecks": {
+    "931160": {
+      "csindex_201901_json_sha256": "8309cff714d5f872cea03bfa413b0270b30b5db6545e99d9dd2b59bc489344eb",
+      "csindex_201902_duplicate_0201_0222_close": 5444.67,
+      "last_bar_before_gap": {"date": "2018-12-28", "close": 4303.78},
+      "sse_missing_bar_days_20190102_20190221": 32,
+      "ranking_exit_first_day_claim": "2019-01-08",
+      "ranking_exit_first_day_reviewer": "2019-01-08"
+    },
+    "HSTECH_20201013": {
+      "hkex_html_sha256": "aa7d09a1a8ec789a86d647624e20694ae6aeddf9fccadea220ab85551e6801fd",
+      "sse_hkconnect_html_sha256": "1809bab95752c5064e217789e9b2d827b19da654b40569fff5d6c1eb5cf77c01",
+      "hsi_20201013_flat_close": 24649.68,
+      "hstech_20201013_row_present": false
+    },
+    "161229_20260930": {
+      "tencent_hfq_json_sha256": "d4eb0933d7b4fb66d1bf65635d910aa1b57a85b346396a8e4412b48f2f26ba40",
+      "sina_window_json_sha256": "790d167cfd430b2ee2eb78d054689a5aa3a4f1972b8c26e4dce0b7700d504fd8",
+      "db_raw_last": {"date": "2026-09-29", "close": 1.368},
+      "next_external_bar": "2026-10-08"
+    }
+  },
+  "list_date_spotchecks": [
+    {"code": "510300", "csv_date": "2012-05-28", "db_first_positive_close_date": "2012-05-28", "evidence_sha256": "2eb272eb1c489362dc4574de5b3be4830eccea33e8a75a3866f3006ea06bc6cc"},
+    {"code": "512100", "csv_date": "2016-11-04", "db_first_positive_close_date": "2016-11-04", "evidence_sha256": "656fed48ff9ae5658100020157e771f9a515793afee766686989bcdbafbddc4b"},
+    {"code": "515180", "csv_date": "2019-12-20", "db_first_positive_close_date": "2019-12-20", "evidence_sha256": "423f83688ba6e7b7086e55dfefa3b63d6266899f19522f003c890b5a0d4aa513"}
+  ],
+  "blockers": []
+}
