@@ -55,4 +55,4 @@ D14-7 将本 IC 表标为 **探索、不计入判据 ⑤**；Reviewer 不反对�
 
 ## E. Pull request
 
-（合入后由 Agent 填写 PR URL。）
+https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/70
