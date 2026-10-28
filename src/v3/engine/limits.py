@@ -3,7 +3,8 @@
 收盘涨停的买单、收盘跌停的卖单、停牌或没有当日价格，当天不成交，顺延到下一次
 能成交的交易日。涨跌停看原始收盘，不看后复权，也不看研究指数的全收益点位。
 
-幅度按板块和日期：
+幅度按板块和日期，触发线是涨跌停幅度再减 0.5 个百分点
+（±10% 用 ±9.5%，±20% 用 ±19.5%）。预注册草案 §4.5。
 
 - 主板以及其余在 A 股挂牌的基金：±10%。
 - 跟踪创业板的 ETF：2020-08-24 起 ±20%。深交所《创业板交易特别规定》第 2.9 条
@@ -11,9 +12,10 @@
 - 跟踪科创板的 ETF：2020-08-21 起 ±20%。上证发〔2020〕61 号自发布之日起实施。
   此前 ±10%。科创板股票自身从 2019-07-22 起就是 ±20%，基金条款以这份通知为准。
 - 没有 A 股涨跌停的品种：不设板。只有停牌或无当日价才不成交。
+- U-指数里的 A 股容器，没有对应 ETF 时按 ±10%。
 
 指数池用对应 ETF 的板块和该 ETF 的原始收盘。报价四舍五入到 0.001 元，
-与 `src.v3.diag.limit_close` 相同。
+与 `src.v3.diag.limit_close` 相同。开关关闭时引擎不调用这里。
 """
 from __future__ import annotations
 
@@ -34,10 +36,28 @@ STAR_20 = pd.Timestamp("2020-08-21")
 
 @dataclass(frozen=True)
 class FillQuote:
-    """一只可交易工具的原始收盘。索引是它自己的打印日，缺日不前向填充。"""
+    """一只可交易工具的原始收盘。索引是它自己的打印日，缺日不前向填充。
+
+    `board_by_day` 只在载体当天不是 A 股场内 ETF 时使用（场外、美股、港股没有涨跌停）。
+    不传时整天用 `board`。
+    """
 
     close: pd.Series
     board: str
+    board_by_day: pd.Series | None = None
+
+
+_A_SHARE = frozenset({"A股宽基", "A股行业", "A股红利"})
+# 草案 §4.5：达到「涨跌停幅度减 0.5 个百分点」就视为涨停或跌停。
+LIMIT_BUFFER = Decimal("0.005")
+
+
+def fill_board_for(track: str, code: str, asset_class: str = "") -> str:
+    """没有 A 股 ETF 的 A 股容器按主板 ±10%。美股、港股、场外不是 A 股代码时不设板。"""
+    board = board_of(track, code)
+    if board == "none" and asset_class in _A_SHARE:
+        return "main"
+    return board
 
 
 def board_of(track: str, code: str) -> str:
@@ -112,11 +132,13 @@ def blocked(prev_close: float | None, close: float | None, side: str, ratio: Dec
         return True
     if ratio is None or prev_close is None:
         return False
-    up, down = limit_prices(prev_close, ratio)
-    quoted = as_tick(close)
-    if side == "buy" and quoted == up:
+    threshold = ratio - LIMIT_BUFFER
+    if threshold <= 0:
+        return False
+    move = (as_tick(close) - as_tick(prev_close)) / as_tick(prev_close)
+    if side == "buy" and move >= threshold:
         return True
-    if side == "sell" and quoted == down:
+    if side == "sell" and move <= -threshold:
         return True
     return False
 
@@ -131,7 +153,13 @@ def session_tradable(quotes: dict[str, FillQuote] | None, day, names: list[str])
             out[name] = (False, False)
             continue
         prev, close = previous_and_close(quote.close, stamp)
-        ratio = limit_ratio(quote.board, stamp)
+        board_name = quote.board
+        by_day = quote.board_by_day
+        if by_day is not None and stamp in by_day.index:
+            value = by_day.loc[stamp]
+            if value == value and str(value):
+                board_name = str(value)
+        ratio = limit_ratio(board_name, stamp)
         out[name] = (
             not blocked(prev, close, "buy", ratio),
             not blocked(prev, close, "sell", ratio),
@@ -197,9 +225,11 @@ def quotes_from_market(market) -> dict[str, FillQuote]:
     """把行情对象上的原始收盘收成成交判断用的报价。没有登记的名字不会出现。"""
     closes = getattr(market, "fill_close", None) or {}
     boards = getattr(market, "fill_board", None) or {}
+    by_day = getattr(market, "fill_board_by_day", None) or {}
     names = list(dict.fromkeys([*closes.keys(), *boards.keys()]))
     quotes: dict[str, FillQuote] = {}
     for name in names:
         series = closes.get(name, pd.Series(dtype=float))
-        quotes[name] = FillQuote(close=series, board=str(boards.get(name, "none")))
+        quotes[name] = FillQuote(
+            close=series, board=str(boards.get(name, "none")), board_by_day=by_day.get(name))
     return quotes

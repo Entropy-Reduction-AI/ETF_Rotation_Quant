@@ -15,7 +15,6 @@ import pandas as pd
 
 from .book import Book, RunnerError, assert_window, drift
 from .limits import executable_weights, legs_clear, session_tradable
-from .regime import next_replacement
 
 EXIT_DRAWDOWN = 0.10
 ALLOWED_DRAWDOWNS = (0.08, 0.10, 0.12, 0.15)
@@ -121,45 +120,84 @@ def _scale_codes(codes: dict[str, float], new_weight: float, weight_eps: float) 
     return {code: weight * scale for code, weight in codes.items() if weight > 0.0}
 
 
-def _apply_refills(weights, refills, filled_slots, rank_row, stamp, cash_id, fee_table, fill_limits,
-                   fill_quotes, columns, trade_eps, weight_eps, peaks, spot, deferred) -> tuple[float, float]:
-    """离场成交当天按排名补位。买不进就留到下一天。返回 (额外成本, 额外买入)。"""
-    for name, sold in filled_slots:
-        refills.append({"weight": float(sold), "exclude": {name}})
-    if rank_row is None:
-        return 0.0, 0.0
-    pending_orders = list(refills)
+def _target_row(refill_targets: pd.DataFrame | None, stamp: pd.Timestamp) -> dict[str, float]:
+    if refill_targets is None or stamp not in refill_targets.index:
+        return {}
+    row = refill_targets.loc[stamp]
+    return {str(name): float(row[name]) for name in refill_targets.columns}
+
+
+def _queue_refill(refills, filled_slots, exited: set[str], refill_targets, stamp, trade_eps: float) -> None:
+    """卖单在 t 日收盘成交。买单留到 t+1，目标用 t 日收盘的权重。"""
+    sold = 0.0
+    for name, weight in filled_slots:
+        exited.add(str(name))
+        sold += float(weight)
+    if sold <= trade_eps:
+        return
+    refills.append({
+        "proceeds": sold,
+        "exclude": set(exited),
+        "target": _target_row(refill_targets, stamp),
+        "filled": {},
+        "armed": False,
+    })
+
+
+def _fill_due_refills(weights, refills, stamp, cash_id, fee_table, fill_limits, fill_quotes,
+                      columns, trade_eps, weight_eps, peaks, spot, deferred) -> tuple[float, float]:
+    """执行已经排到今天的补位买单。涨停或无价的那一档留下，不把额度让给更后面的名字。"""
+    due = [order for order in refills if order.get("armed")]
+    pending = [order for order in refills if not order.get("armed")]
     refills.clear()
+    refills.extend(pending)
     extra_cost = 0.0
     extra_buy = 0.0
     names = [name for name in columns if name != cash_id]
     flags = session_tradable(fill_quotes, stamp, names) if fill_limits else {}
-    for order in pending_orders:
-        if float(order["weight"]) <= trade_eps:
+    for order in due:
+        proceeds = float(order.get("proceeds") or 0.0)
+        if proceeds <= trade_eps:
             continue
+        target = order.get("target") or {}
+        exclude = set(order.get("exclude") or ())
+        filled = dict(order.get("filled") or {})
         held = {name for name in names if float(weights.get(name, 0.0)) > weight_eps}
-        choice = next_replacement(rank_row, set(order["exclude"]) | held)
-        if choice is None or choice not in fee_table:
-            continue
-        if fill_limits and not flags.get(choice, (False, False))[0]:
-            refills.append(order)
-            deferred.append({"date": stamp, "name": choice, "reason": "refill_blocked"})
-            continue
-        cash_now = float(weights.get(cash_id, 0.0))
-        take = min(float(order["weight"]), cash_now)
-        if take <= trade_eps:
-            refills.append(order)
-            continue
-        weights[choice] = float(weights.get(choice, 0.0)) + take
-        weights[cash_id] = cash_now - take
-        extra_cost += take * float(fee_table[choice])
-        extra_buy += take
-        mark = spot(choice, stamp)
-        if valid_mark(mark):
-            peaks[choice] = float(mark)
-        left = float(order["weight"]) - take
-        if left > trade_eps:
-            refills.append({"weight": left, "exclude": set(order["exclude"])})
+        ranked = []
+        for name, raw in target.items():
+            if name == cash_id:
+                continue
+            room = float(raw) - float(filled.get(name, 0.0))
+            if room <= trade_eps or name in held or name in exclude or name not in fee_table:
+                continue
+            ranked.append((-room, str(name), room))
+        ranked.sort()
+        for _, name, room in ranked:
+            if proceeds <= trade_eps:
+                break
+            cash_now = float(weights.get(cash_id, 0.0))
+            take = min(room, proceeds, cash_now)
+            if take <= trade_eps:
+                break
+            if fill_limits and not flags.get(name, (False, False))[0]:
+                deferred.append({"date": stamp, "name": name, "reason": "refill_blocked"})
+                refills.append({
+                    "proceeds": proceeds,
+                    "exclude": exclude,
+                    "target": target,
+                    "filled": filled,
+                    "armed": False,
+                })
+                break
+            weights[name] = float(weights.get(name, 0.0)) + take
+            weights[cash_id] = cash_now - take
+            extra_cost += take * float(fee_table[name])
+            extra_buy += take
+            proceeds -= take
+            filled[name] = float(filled.get(name, 0.0)) + take
+            mark = spot(name, stamp)
+            if valid_mark(mark):
+                peaks[name] = float(mark)
     return extra_cost, extra_buy
 
 
@@ -211,7 +249,7 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
                   exit_drawdown: float = EXIT_DRAWDOWN, trade_eps: float = 1e-12,
                   cost_multiplier: float = 1.0, allow_after: bool = False,
                   weight_eps: float = 1e-6, fill_limits: bool = False,
-                  fill_quotes: dict | None = None, refill_rank: pd.DataFrame | None = None,
+                  fill_quotes: dict | None = None, refill_targets: pd.DataFrame | None = None,
                   cross_border=None, cross_border_names: set | None = None,
                   dividend_yield: pd.DataFrame | None = None) -> Book:
     """一条路：先记当日收益和漂移，再处理收盘成交，最后才接收新的调仓决定。
@@ -219,7 +257,8 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
     `targets` 已经是成交日权重，无溢价时直接用。有溢价上下文时，`decisions` 是决策日的
     §4 权重：决策日收盘后改一次，下一交易日成交，成交日不再跑溢价状态机。
 
-    `fill_limits`、`refill_rank`、`cross_border` 默认关闭。关闭时下面的分支不改权重和费用。
+    `fill_limits`、`refill_targets`、`cross_border` 默认关闭。关闭时下面的分支不改权重和费用。
+    `refill_targets` 打开时，离场卖单在 t 日收盘成交，补位买单在 t+1 日收盘成交。
     """
     drawdown = check_drawdown(exit_drawdown)
     assert_window(pnl.index, allow_after)
@@ -236,6 +275,7 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
     pending: _Pending | None = None
     retry: _Pending | None = None
     refills: list[dict] = []
+    exited: set[str] = set()
     fee_table = fees
     if cross_border is not None and cross_border_names:
         extra = float(cross_border.fx_spread) + float(cross_border.commission)
@@ -313,7 +353,7 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
             scale = 1.0 + gross
             growth = (1.0 + float(rets.get(cash_id, 0.0))) / scale if scale != 0.0 else 1.0
             for order in refills:
-                order["weight"] = float(order["weight"]) * growth
+                order["proceeds"] = float(order.get("proceeds") or 0.0) * growth
         cost = 0.0
         buy = 0.0
         sell = 0.0
@@ -325,11 +365,13 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
             rebalanced = True
             retry = None
             refills.clear()
+            exited.clear()
         elif stamp in target_rows:
             target = _Pending(_row_weights(target_rows[stamp], columns, cash_id), {})
             rebalanced = True
             retry = None
             refills.clear()
+            exited.clear()
         elif fill_limits and retry is not None:
             target = retry
             retry = None
@@ -401,6 +443,13 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
             weights = drifted
             still: list[str] = []
             filled_slots: list[tuple[str, float]] = []
+            if refill_targets is not None:
+                # 昨天排好的补位单在今天收盘买。先买，再处理今天才成交的离场卖单。
+                extra_cost, extra_buy = _fill_due_refills(
+                    weights, refills, stamp, cash_id, fee_table, fill_limits, fill_quotes,
+                    columns, trade_eps, weight_eps, peaks, spot, deferred)
+                cost += extra_cost
+                buy += extra_buy
             limit_flags = session_tradable(fill_quotes, stamp, traded_names) if fill_limits else None
             for name in list(tosell):
                 weight = float(weights.get(name, 0.0))
@@ -427,13 +476,8 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
                 exits.append({"date": stamp, "name": name, "price": float(mark), "kind": "exit"})
                 filled_slots.append((name, weight))
             tosell = still
-            if refill_rank is not None:
-                rank_row = refill_rank.loc[stamp] if stamp in refill_rank.index else None
-                extra_cost, extra_buy = _apply_refills(
-                    weights, refills, filled_slots, rank_row, stamp, cash_id, fee_table, fill_limits,
-                    fill_quotes, columns, trade_eps, weight_eps, peaks, spot, deferred)
-                cost += extra_cost
-                buy += extra_buy
+            if refill_targets is not None and filled_slots:
+                _queue_refill(refills, filled_slots, exited, refill_targets, stamp, trade_eps)
         cost *= cost_multiplier
         if retry is None:
             for name, weight in list(weights.items()):
@@ -454,6 +498,10 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
                         "date": stamp, "name": name, "price": float(mark),
                         "peak": float(peaks[name]), "kind": "signal",
                     })
+        if refill_targets is not None:
+            for order in refills:
+                if not order.get("armed"):
+                    order["armed"] = True
         if stamp in decision_rows:
             raw = _row_weights(decision_rows[stamp], columns, cash_id)
             codes: dict[str, dict[str, float]] = {}

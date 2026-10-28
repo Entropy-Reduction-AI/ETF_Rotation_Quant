@@ -14,7 +14,7 @@ from .book import Book, RunnerError, to_execution
 from .costs import names_for
 from .exit import EXIT_DRAWDOWN, simulate_path
 from .limits import quotes_from_market
-from .regime import blend_sleeves, daily_ranks, t1_eligible, trend_efficiency
+from .regime import blend_sleeves, efficiency_series, percentile_q, t1_eligible
 from .score import Lookback, average_weights, lookback_panel, pick_row
 from .sessions import decision_dates, next_session
 from .spec import Spec
@@ -24,16 +24,37 @@ def _columns(names: list[str], cash_id: str) -> list[str]:
     return [*names, cash_id]
 
 
+def _q_at(q_series: pd.Series | None, day) -> float | None:
+    if q_series is None or len(q_series) == 0:
+        return None
+    stamp = pd.Timestamp(day).normalize()
+    if stamp not in q_series.index:
+        return None
+    value = q_series.at[stamp]
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    if not math.isfinite(number):
+        return None
+    return number
+
+
 def group_decisions(prepared: dict[int, Lookback], dates: pd.DatetimeIndex, freq: str, n: int,
                     names: list[str], cash_id: str, sort_ids: dict[str, str],
                     liquidity: pd.DataFrame | None, lookbacks: tuple[int, ...],
                     switches=None, market_level: pd.Series | None = None,
-                    weight_eps: float = 1e-6) -> pd.DataFrame:
+                    weight_eps: float = 1e-6, every_session: bool = False) -> pd.DataFrame:
+    """`every_session` 只在 T3 打开时用来准备每一天的目标权重。关闭时仍只在决策日算。"""
     columns = _columns(names, cash_id)
-    days = decision_dates(dates, freq)
+    days = pd.DatetimeIndex(dates) if every_session else decision_dates(dates, freq)
     rows = []
     use_t1 = switches is not None and switches.t1_turn
     use_t2 = switches is not None and switches.t2_state_weights
+    q_series = None
+    if use_t2:
+        window = int(switches.t2_window)
+        q_series = percentile_q(efficiency_series(market_level, window))
     held = {length: {name: 0.0 for name in names} for length in lookbacks}
     for day in days:
         masks = t1_eligible(prepared, day, names, lookbacks, held, weight_eps) if use_t1 else None
@@ -45,8 +66,7 @@ def group_decisions(prepared: dict[int, Lookback], dates: pd.DatetimeIndex, freq
             for length in lookbacks
         ]
         if use_t2:
-            efficiency = trend_efficiency(market_level, day, int(switches.t2_window))
-            averaged = blend_sleeves(parts, efficiency, lookbacks, names, cash_id, average_weights)
+            averaged = blend_sleeves(parts, _q_at(q_series, day), lookbacks, names, cash_id, average_weights)
         else:
             averaged = average_weights(parts, names, cash_id)
         if use_t1:
@@ -225,14 +245,14 @@ def _schedule(market, spec: Spec, prepared, premium_spec):
 
 def _run_path(market, spec: Spec, decisions: pd.DataFrame, *, allow_after: bool,
               exit_drawdown: float, premium, switches=None, fill_quotes=None,
-              refill_rank=None, cross_border_names=None, dividend_yield=None) -> Book:
+              refill_targets=None, cross_border_names=None, dividend_yield=None) -> Book:
     use_premium = premium is not None
     extra = {}
     if switches is not None and switches.fill_limits:
         extra["fill_limits"] = True
         extra["fill_quotes"] = fill_quotes
     if switches is not None and switches.t3_refill:
-        extra["refill_rank"] = refill_rank
+        extra["refill_targets"] = refill_targets
     if switches is not None and switches.cross_border is not None:
         extra["cross_border"] = switches.cross_border
         extra["cross_border_names"] = cross_border_names
@@ -320,6 +340,27 @@ def _stitch_decisions(frames: dict[tuple[int, str], pd.DataFrame], choices: dict
     return out[~out.index.duplicated(keep="last")]
 
 
+def _stitch_targets(frames: dict, choices: dict, dates: pd.DatetimeIndex, cash_id: str) -> pd.DataFrame:
+    """B 臂按当年选中的那一路，取它在每个交易日的补位目标。没选中的年份不补。"""
+    columns = None
+    rows = []
+    index = []
+    for day in dates:
+        stamp = pd.Timestamp(day)
+        nxt = next_session(dates, stamp)
+        year = int(nxt.year) if nxt is not None else int(stamp.year)
+        key = choices.get(year)
+        frame = None if key is None else frames.get(key)
+        if frame is None or stamp not in frame.index:
+            continue
+        columns = list(frame.columns)
+        rows.append(frame.loc[stamp].to_numpy(dtype=float))
+        index.append(stamp)
+    if not rows:
+        return pd.DataFrame(columns=columns or [cash_id])
+    return pd.DataFrame(rows, index=pd.DatetimeIndex(index), columns=columns)
+
+
 def execute(market, spec: Spec, arm: str, *, n: int | None = None, freq: str | None = None,
             allow_after: bool = False, exit_drawdown: float = EXIT_DRAWDOWN,
             premium_spec=None, _selecting: bool = False, switches=None) -> Book:
@@ -336,36 +377,38 @@ def execute(market, spec: Spec, arm: str, *, n: int | None = None, freq: str | N
     keys = ((n, freq),) if n is not None else spec.candidates()
     idle = switches is None or switches.idle()
     level = None
-    refill = None
     quotes = None
     border_names = None
     div_yield = None
     if not idle and switches.t2_state_weights:
-        frame = getattr(market, "levels", None)
-        if frame is not None and "csi300" in frame.columns:
-            level = frame["csi300"]
-    if not idle and switches.t3_refill:
-        refill = daily_ranks(
-            prepared, market.dates, names, spec.lookbacks, market.sort_ids, market.liquidity,
-            t1=bool(switches.t1_turn), weight_eps=spec.weight_eps)
+        level = getattr(market, "bm_nav", None)
+    want_refill = not idle and switches.t3_refill
     if not idle and switches.fill_limits:
         quotes = quotes_from_market(market)
     if not idle and switches.cross_border is not None:
         border_names = names_for(getattr(market, "asset_classes", None))
         div_yield = getattr(market, "dividend_yield", None)
     frames = {}
+    refill_frames = {}
     for key in keys:
         frames[key] = group_decisions(
             prepared, market.dates, key[1], key[0], names, cash_id, market.sort_ids,
             market.liquidity, spec.lookbacks,
             switches=None if idle else switches, market_level=level, weight_eps=spec.weight_eps)
+        if want_refill:
+            refill_frames[key] = group_decisions(
+                prepared, market.dates, key[1], key[0], names, cash_id, market.sort_ids,
+                market.liquidity, spec.lookbacks,
+                switches=None if idle else switches, market_level=level, weight_eps=spec.weight_eps,
+                every_session=True)
     premium = None if _selecting else _schedule(market, spec, prepared, premium_spec)
 
     def one(key) -> Book:
         return _run_path(
             market, spec, frames[key], allow_after=allow_after,
             exit_drawdown=exit_drawdown, premium=premium,
-            switches=None if idle else switches, fill_quotes=quotes, refill_rank=refill,
+            switches=None if idle else switches, fill_quotes=quotes,
+            refill_targets=None if not want_refill else refill_frames.get(key),
             cross_border_names=border_names, dividend_yield=div_yield)
 
     if n is not None:
@@ -376,17 +419,18 @@ def execute(market, spec: Spec, arm: str, *, n: int | None = None, freq: str | N
         books = {key: one(key) for key in keys}
         _targets, choices = select_b(books, market.benchmark, spec, market.dates)
         stitched = _stitch_decisions(frames, choices, market.dates, cash_id)
+        stitched_refill = _stitch_targets(refill_frames, choices, market.dates, cash_id) if want_refill else None
         if premium is None:
             book = _run_path(
                 market, spec, stitched, allow_after=allow_after, exit_drawdown=exit_drawdown,
                 premium=None, switches=None if idle else switches, fill_quotes=quotes,
-                refill_rank=refill, cross_border_names=border_names, dividend_yield=div_yield)
+                refill_targets=stitched_refill, cross_border_names=border_names, dividend_yield=div_yield)
             book.targets = _targets
         else:
             book = _run_path(
                 market, spec, stitched, allow_after=allow_after, exit_drawdown=exit_drawdown,
                 premium=premium, switches=None if idle else switches, fill_quotes=quotes,
-                refill_rank=refill, cross_border_names=border_names, dividend_yield=div_yield)
+                refill_targets=stitched_refill, cross_border_names=border_names, dividend_yield=div_yield)
         book.choices = choices
         book.paths = books
         return book

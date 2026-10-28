@@ -119,6 +119,10 @@ class SwitchDefaults(unittest.TestCase):
         self.assertFalse(switches.t2_state_weights)
         self.assertFalse(switches.t3_refill)
         self.assertIsNone(switches.cross_border)
+        self.assertFalse(switches.t4_pool)
+        self.assertFalse(switches.carriers)
+        self.assertFalse(switches.fx_v4)
+        self.assertTrue(switches.allow_substitute)
         self.assertEqual(switches.t2_window, T2_WINDOW_PLACEHOLDER)
         self.assertEqual(T2_WINDOW_PLACEHOLDER, 60)
         self.assertEqual(PLACEHOLDER_COSTS.trade_surcharge(), 0.002)
@@ -385,8 +389,10 @@ class TurnAndRefill(unittest.TestCase):
         on = group_decisions(**kwargs, switches=EngineSwitches(t1_turn=True))
         self.assertAlmostEqual(float(off.loc[days[1], "fresh"]), 0.5)
         self.assertAlmostEqual(float(off.loc[days[1], "old"]), 0.0)
-        self.assertAlmostEqual(float(on.loc[days[1], "old"]), 0.5)
+        # 快组都转负：慢组没有资格，已经持有的也在这次调仓调出。
+        self.assertAlmostEqual(float(on.loc[days[1], "old"]), 0.0)
         self.assertAlmostEqual(float(on.loc[days[1], "fresh"]), 0.0)
+        self.assertAlmostEqual(float(on.loc[days[1], "cash"]), 1.0)
         self.assertEqual(split_speed((20, 60, 120, 250)), ((20, 60), (120, 250)))
 
     def test_t2_tilts_fast_when_the_market_trends_and_slow_when_it_chops(self):
@@ -419,56 +425,61 @@ class TurnAndRefill(unittest.TestCase):
         even = group_decisions(
             prepared(trend_day), pd.DatetimeIndex([trend_day]), "month", 1, names, "cash", sort_ids, None, lookbacks)
         self.assertAlmostEqual(float(even.loc[trend_day, "f20"]), 0.25)
-        self.assertAlmostEqual(float(trend.loc[trend_day, "f20"]), 0.5)
-        self.assertAlmostEqual(float(trend.loc[trend_day, "f60"]), 0.5)
-        self.assertAlmostEqual(float(trend.loc[trend_day, "s120"]), 0.0)
-        self.assertAlmostEqual(float(chop_book.loc[chop_day, "s120"]), 0.5)
-        self.assertAlmostEqual(float(chop_book.loc[chop_day, "s250"]), 0.5)
-        self.assertAlmostEqual(float(chop_book.loc[chop_day, "f20"]), 0.0)
+        # 历史里的 E 不足 250 个，q = 0.5，四组回到各 1/4。不再用效率本身当权重。
+        for name in names:
+            self.assertAlmostEqual(float(trend.loc[trend_day, name]), 0.25)
+            self.assertAlmostEqual(float(chop_book.loc[chop_day, name]), 0.25)
         short = pd.Series([1.0, 2.0, 3.0], index=pd.to_datetime(["2006-01-04", "2006-01-05", "2006-01-06"]))
         self.assertIsNone(trend_efficiency(short, short.index[-1], 10))
 
-    def test_t3_refills_the_next_name_on_the_exit_day_and_off_leaves_cash(self):
-        days = _days("2006-01-04", "2006-01-05", "2006-01-06", "2006-01-09", "2006-01-10")
-        levels = pd.DataFrame({"asset": [100, 100, 80, 80, 80], "nxt": 50.0}, index=days)
-        rets = pd.DataFrame({"asset": [0, 0, -0.2, 0, 0], "nxt": 0.0}, index=days)
-        rank = pd.DataFrame({"asset": np.nan, "nxt": 0.0}, index=days)
-        targets = {"2006-01-04": {"asset": 1.0, "nxt": 0.0, "cash": 0.0}}
-        off = _book(["asset", "nxt"], levels, rets, targets)
-        on = _book(["asset", "nxt"], levels, rets, targets, refill_rank=rank)
-        self.assertAlmostEqual(float(off.held.loc[days[4], "cash"]), 1.0)
-        self.assertAlmostEqual(float(off.held.loc[days[4], "nxt"]), 0.0)
-        self.assertAlmostEqual(float(on.held.loc[days[4], "nxt"]), 1.0)
-        self.assertAlmostEqual(float(on.held.loc[days[4], "asset"]), 0.0)
-        self.assertAlmostEqual(float(on.cost.loc[days[3]]), FEE + FEE)
-        self.assertAlmostEqual(float(on.net.loc[days[3]]), -(FEE + FEE))
-
-    def test_t3_rebalance_wins_and_limit_up_defers_the_refill(self):
+    def test_t3_buys_the_target_on_the_next_close_and_off_leaves_cash(self):
         days = _days("2006-01-04", "2006-01-05", "2006-01-06", "2006-01-09", "2006-01-10", "2006-01-11")
         levels = pd.DataFrame({"asset": [100, 100, 80, 80, 80, 80], "nxt": 50.0}, index=days)
         rets = pd.DataFrame({"asset": [0, 0, -0.2, 0, 0, 0], "nxt": 0.0}, index=days)
-        rank = pd.DataFrame({"asset": np.nan, "nxt": 0.0}, index=days)
+        # 卖出发生在 01-09 收盘。目标在当天收盘算好，买单在 01-10 收盘成交。
+        sleeve = pd.DataFrame({"asset": 0.0, "nxt": 1.0, "cash": 0.0}, index=days)
+        targets = {"2006-01-04": {"asset": 1.0, "nxt": 0.0, "cash": 0.0}}
+        off = _book(["asset", "nxt"], levels, rets, targets)
+        on = _book(["asset", "nxt"], levels, rets, targets, refill_targets=sleeve)
+        self.assertAlmostEqual(float(off.held.loc[days[5], "cash"]), 1.0)
+        self.assertAlmostEqual(float(on.held.loc[days[3], "asset"]), 1.0)
+        self.assertAlmostEqual(float(on.cost.loc[days[3]]), FEE)
+        self.assertAlmostEqual(float(on.held.loc[days[4], "nxt"]), 0.0)
+        self.assertAlmostEqual(float(on.held.loc[days[4], "cash"]), 1.0)
+        self.assertAlmostEqual(float(on.cost.loc[days[4]]), FEE)
+        self.assertAlmostEqual(float(on.held.loc[days[5], "nxt"]), 1.0)
+        self.assertAlmostEqual(float(on.held.loc[days[5], "asset"]), 0.0)
+
+    def test_t3_rebalance_wins_and_limit_up_defers_the_refill(self):
+        days = _days(
+            "2006-01-04", "2006-01-05", "2006-01-06", "2006-01-09",
+            "2006-01-10", "2006-01-11", "2006-01-12",
+        )
+        levels = pd.DataFrame({"asset": [100, 100, 80, 80, 80, 80, 80], "nxt": 50.0}, index=days)
+        rets = pd.DataFrame({"asset": [0, 0, -0.2, 0, 0, 0, 0], "nxt": 0.0}, index=days)
+        sleeve = pd.DataFrame({"asset": 0.0, "nxt": 1.0, "cash": 0.0}, index=days)
+        # 01-10 是常规调仓执行日，补位取消。
         targets = {
             "2006-01-04": {"asset": 1.0, "nxt": 0.0, "cash": 0.0},
-            "2006-01-09": {"asset": 0.0, "nxt": 0.0, "cash": 1.0},
+            "2006-01-10": {"asset": 0.0, "nxt": 0.0, "cash": 1.0},
         }
-        booked = _book(["asset", "nxt"], levels, rets, targets, refill_rank=rank)
-        self.assertAlmostEqual(float(booked.held.loc[days[4], "cash"]), 1.0)
-        self.assertAlmostEqual(float(booked.held.loc[days[4], "nxt"]), 0.0)
-        self.assertAlmostEqual(float(booked.cost.loc[days[3]]), FEE + CASH_FEE)
+        booked = _book(["asset", "nxt"], levels, rets, targets, refill_targets=sleeve)
+        self.assertAlmostEqual(float(booked.held.loc[days[5], "cash"]), 1.0)
+        self.assertAlmostEqual(float(booked.held.loc[days[5], "nxt"]), 0.0)
+        self.assertAlmostEqual(float(booked.cost.loc[days[3]]), FEE)
         quotes = {
-            "asset": _quote("main", ["2006-01-03", *days.strftime("%Y-%m-%d")], [10, 10, 10, 10, 10, 10, 10]),
-            "nxt": _quote("main", ["2006-01-06", "2006-01-09", "2006-01-10"], [10, 11, 11]),
+            "asset": _quote("main", ["2006-01-03", *days.strftime("%Y-%m-%d")], [10] * 8),
+            "nxt": _quote("main", ["2006-01-09", "2006-01-10", "2006-01-11"], [10, 11, 11]),
         }
         delayed = _book(
             ["asset", "nxt"], levels, rets,
             {"2006-01-04": {"asset": 1.0, "nxt": 0.0, "cash": 0.0}},
-            quotes, refill_rank=rank,
+            quotes, refill_targets=sleeve,
         )
-        self.assertAlmostEqual(float(delayed.held.loc[days[4], "cash"]), 1.0)
-        self.assertAlmostEqual(float(delayed.held.loc[days[5], "nxt"]), 1.0)
-        blocked_rows = delayed.deferred_exits
-        self.assertIn("refill_blocked", set(blocked_rows["reason"]))
+        # 01-10 涨停买不进，01-11 仍是 11 相对 11 的前收不是涨停，当天买进。
+        self.assertAlmostEqual(float(delayed.held.loc[days[5], "cash"]), 1.0)
+        self.assertAlmostEqual(float(delayed.held.loc[days[6], "nxt"]), 1.0)
+        self.assertIn("refill_blocked", set(delayed.deferred_exits["reason"]))
 
     def test_daily_ranks_puts_the_eligible_name_first(self):
         day = pd.Timestamp("2006-01-31")
