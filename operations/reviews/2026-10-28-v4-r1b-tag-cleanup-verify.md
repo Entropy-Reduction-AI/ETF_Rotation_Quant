@@ -87,4 +87,4 @@ git merge-base --is-ancestor <pointed_commit> origin/main
 
 ## G. Pull request
 
-（本 Reviewer PR 合入后更新本节 URL。）
+https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/72
