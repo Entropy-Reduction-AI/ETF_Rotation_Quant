@@ -11,7 +11,10 @@ import numpy as np
 import pandas as pd
 
 from .book import Book, RunnerError, to_execution
+from .costs import names_for
 from .exit import EXIT_DRAWDOWN, simulate_path
+from .limits import quotes_from_market
+from .regime import blend_sleeves, daily_ranks, t1_eligible, trend_efficiency
 from .score import Lookback, average_weights, lookback_panel, pick_row
 from .sessions import decision_dates, next_session
 from .spec import Spec
@@ -23,16 +26,32 @@ def _columns(names: list[str], cash_id: str) -> list[str]:
 
 def group_decisions(prepared: dict[int, Lookback], dates: pd.DatetimeIndex, freq: str, n: int,
                     names: list[str], cash_id: str, sort_ids: dict[str, str],
-                    liquidity: pd.DataFrame | None, lookbacks: tuple[int, ...]) -> pd.DataFrame:
+                    liquidity: pd.DataFrame | None, lookbacks: tuple[int, ...],
+                    switches=None, market_level: pd.Series | None = None,
+                    weight_eps: float = 1e-6) -> pd.DataFrame:
     columns = _columns(names, cash_id)
     days = decision_dates(dates, freq)
     rows = []
+    use_t1 = switches is not None and switches.t1_turn
+    use_t2 = switches is not None and switches.t2_state_weights
+    held = {length: {name: 0.0 for name in names} for length in lookbacks}
     for day in days:
+        masks = t1_eligible(prepared, day, names, lookbacks, held, weight_eps) if use_t1 else None
         parts = [
-            pick_row(prepared[length], day, n, names, cash_id, sort_ids, liquidity)
+            pick_row(
+                prepared[length], day, n, names, cash_id, sort_ids, liquidity,
+                eligible=None if masks is None else masks[length],
+            )
             for length in lookbacks
         ]
-        averaged = average_weights(parts, names, cash_id)
+        if use_t2:
+            efficiency = trend_efficiency(market_level, day, int(switches.t2_window))
+            averaged = blend_sleeves(parts, efficiency, lookbacks, names, cash_id, average_weights)
+        else:
+            averaged = average_weights(parts, names, cash_id)
+        if use_t1:
+            for length, part in zip(lookbacks, parts):
+                held[length] = part
         rows.append([averaged.get(name, 0.0) for name in columns])
     if not rows:
         return pd.DataFrame(columns=columns)
@@ -205,8 +224,19 @@ def _schedule(market, spec: Spec, prepared, premium_spec):
 
 
 def _run_path(market, spec: Spec, decisions: pd.DataFrame, *, allow_after: bool,
-              exit_drawdown: float, premium) -> Book:
+              exit_drawdown: float, premium, switches=None, fill_quotes=None,
+              refill_rank=None, cross_border_names=None, dividend_yield=None) -> Book:
     use_premium = premium is not None
+    extra = {}
+    if switches is not None and switches.fill_limits:
+        extra["fill_limits"] = True
+        extra["fill_quotes"] = fill_quotes
+    if switches is not None and switches.t3_refill:
+        extra["refill_rank"] = refill_rank
+    if switches is not None and switches.cross_border is not None:
+        extra["cross_border"] = switches.cross_border
+        extra["cross_border_names"] = cross_border_names
+        extra["dividend_yield"] = dividend_yield
     book = simulate_path(
         market.pnl, _levels(market), market.fees, market.cash_id,
         targets=None if use_premium else to_execution(decisions, market.dates),
@@ -219,6 +249,7 @@ def _run_path(market, spec: Spec, decisions: pd.DataFrame, *, allow_after: bool,
         cost_multiplier=market.cost_multiplier,
         allow_after=allow_after,
         weight_eps=spec.weight_eps,
+        **extra,
     )
     book.decisions = decisions
     if not use_premium:
@@ -291,7 +322,7 @@ def _stitch_decisions(frames: dict[tuple[int, str], pd.DataFrame], choices: dict
 
 def execute(market, spec: Spec, arm: str, *, n: int | None = None, freq: str | None = None,
             allow_after: bool = False, exit_drawdown: float = EXIT_DRAWDOWN,
-            premium_spec=None, _selecting: bool = False) -> Book:
+            premium_spec=None, _selecting: bool = False, switches=None) -> Book:
     """在已经准备好的行情上跑一条臂。行情的日期不得晚于调用方允许的结束日。"""
     if arm not in {"A", "B", "S1", "S2"}:
         raise RunnerError(f"未知的臂 {arm}")
@@ -303,17 +334,39 @@ def execute(market, spec: Spec, arm: str, *, n: int | None = None, freq: str | N
     cash_id = market.cash_id
     prepared = {length: lookback_panel(market.signal, cash_id, length) for length in spec.lookbacks}
     keys = ((n, freq),) if n is not None else spec.candidates()
+    idle = switches is None or switches.idle()
+    level = None
+    refill = None
+    quotes = None
+    border_names = None
+    div_yield = None
+    if not idle and switches.t2_state_weights:
+        frame = getattr(market, "levels", None)
+        if frame is not None and "csi300" in frame.columns:
+            level = frame["csi300"]
+    if not idle and switches.t3_refill:
+        refill = daily_ranks(
+            prepared, market.dates, names, spec.lookbacks, market.sort_ids, market.liquidity,
+            t1=bool(switches.t1_turn), weight_eps=spec.weight_eps)
+    if not idle and switches.fill_limits:
+        quotes = quotes_from_market(market)
+    if not idle and switches.cross_border is not None:
+        border_names = names_for(getattr(market, "asset_classes", None))
+        div_yield = getattr(market, "dividend_yield", None)
     frames = {}
     for key in keys:
         frames[key] = group_decisions(
             prepared, market.dates, key[1], key[0], names, cash_id, market.sort_ids,
-            market.liquidity, spec.lookbacks)
+            market.liquidity, spec.lookbacks,
+            switches=None if idle else switches, market_level=level, weight_eps=spec.weight_eps)
     premium = None if _selecting else _schedule(market, spec, prepared, premium_spec)
 
     def one(key) -> Book:
         return _run_path(
             market, spec, frames[key], allow_after=allow_after,
-            exit_drawdown=exit_drawdown, premium=premium)
+            exit_drawdown=exit_drawdown, premium=premium,
+            switches=None if idle else switches, fill_quotes=quotes, refill_rank=refill,
+            cross_border_names=border_names, dividend_yield=div_yield)
 
     if n is not None:
         return one((n, freq))
@@ -322,15 +375,18 @@ def execute(market, spec: Spec, arm: str, *, n: int | None = None, freq: str | N
             raise RunnerError("B 臂需要 BM-主 日收益")
         books = {key: one(key) for key in keys}
         _targets, choices = select_b(books, market.benchmark, spec, market.dates)
+        stitched = _stitch_decisions(frames, choices, market.dates, cash_id)
         if premium is None:
             book = _run_path(
-                market, spec, _stitch_decisions(frames, choices, market.dates, cash_id),
-                allow_after=allow_after, exit_drawdown=exit_drawdown, premium=None)
+                market, spec, stitched, allow_after=allow_after, exit_drawdown=exit_drawdown,
+                premium=None, switches=None if idle else switches, fill_quotes=quotes,
+                refill_rank=refill, cross_border_names=border_names, dividend_yield=div_yield)
             book.targets = _targets
         else:
             book = _run_path(
-                market, spec, _stitch_decisions(frames, choices, market.dates, cash_id),
-                allow_after=allow_after, exit_drawdown=exit_drawdown, premium=premium)
+                market, spec, stitched, allow_after=allow_after, exit_drawdown=exit_drawdown,
+                premium=premium, switches=None if idle else switches, fill_quotes=quotes,
+                refill_rank=refill, cross_border_names=border_names, dividend_yield=div_yield)
         book.choices = choices
         book.paths = books
         return book
