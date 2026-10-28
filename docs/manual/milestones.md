@@ -35,6 +35,20 @@
 
 处置按 D14-2。删除是否执行，以 `operations/work_logs/2026-10-28-tag-cleanup.md` 的核对结果为准：核对不过的不删。
 
+## 执行结果
+
+2026-10-28，D14-2 已执行。上表 9 个「删除」标签已从 origin 去掉（PR #71 写入索引和纪律，PR #72 独立核对 `approve`）。核对时没有跳过的标签。三个「保留」标签的对象 SHA 与上表一致，清理之后没有移动。
+
+收口核对时 `origin/main` 为 `3d5ce322899576c1dbb7d0e3d456b7c7c8eac1bd`。`git ls-remote --tags origin` 只剩：
+
+| 标签 | 标签对象 SHA | 指向提交 SHA |
+| --- | --- | --- |
+| `milestone/phase1-archive` | `4812115867d0e9176175bd45d21b2dae19c10979` | `0dd93fa13e0aa79b09ef16ba80676c022004be02` |
+| `milestone/v3.1-prereg-freeze` | `e3b55a7b8ce967a43341a3c9d02e6a0a42e2b508` | `1040035ee1d707368b58687994894189753843ac` |
+| `milestone/v3-code-freeze` | `f1d3d0c170ecbd5eb3b463c26834bafd5dc40254` | `b1f84d899f4a37914c1ce4ef0ab16484f0ef7cdb` |
+
+「十二个标签」那张表仍是清理前的登记，处置列不改。
+
 ## Related Files
 
 - `operations/planning/2026-10-28-d14-owner-decisions.md`
