@@ -1,0 +1,270 @@
+{
+  "db_sha256": "af4c5a376d084cd6254187c1107c6179d0cfd9647c008bff84b4c26f52045b78",
+  "sha_matches_dev": true,
+  "git_head": "01dd5449b50db293ff51656590a46899e35492be",
+  "integrity": "ok",
+  "coverage_by_year": [
+    {
+      "year": 2006,
+      "etf": 0,
+      "otc_only": 1,
+      "neither": 13,
+      "containers": 14
+    },
+    {
+      "year": 2007,
+      "etf": 0,
+      "otc_only": 1,
+      "neither": 13,
+      "containers": 14
+    },
+    {
+      "year": 2008,
+      "etf": 0,
+      "otc_only": 2,
+      "neither": 12,
+      "containers": 14
+    },
+    {
+      "year": 2009,
+      "etf": 0,
+      "otc_only": 3,
+      "neither": 11,
+      "containers": 14
+    },
+    {
+      "year": 2010,
+      "etf": 0,
+      "otc_only": 4,
+      "neither": 10,
+      "containers": 14
+    },
+    {
+      "year": 2011,
+      "etf": 0,
+      "otc_only": 4,
+      "neither": 10,
+      "containers": 14
+    },
+    {
+      "year": 2012,
+      "etf": 1,
+      "otc_only": 3,
+      "neither": 10,
+      "containers": 14
+    },
+    {
+      "year": 2013,
+      "etf": 2,
+      "otc_only": 2,
+      "neither": 10,
+      "containers": 14
+    },
+    {
+      "year": 2014,
+      "etf": 3,
+      "otc_only": 2,
+      "neither": 9,
+      "containers": 14
+    },
+    {
+      "year": 2015,
+      "etf": 5,
+      "otc_only": 1,
+      "neither": 8,
+      "containers": 14
+    }
+  ],
+  "tracking_median_pure": 0.03077,
+  "tracking_median_enhanced": 0.050541,
+  "share_max_abs_diff": 0.055556,
+  "adj_pool_membership_equals_raw": true,
+  "outside_pool_without_backward": 124,
+  "lab2_match_baseline_3dp": true,
+  "lab2_rounded": {
+    "20": 0.093,
+    "60": 0.028,
+    "120": -0.004,
+    "250": 0.049,
+    "blend": 0.069
+  },
+  "new_pool_vs_baseline": {
+    "20": {
+      "new_pool": 0.07688,
+      "baseline_rounded": 0.093,
+      "rounded_3dp": 0.077,
+      "minus_baseline": -0.01612
+    },
+    "60": {
+      "new_pool": 0.051868,
+      "baseline_rounded": 0.028,
+      "rounded_3dp": 0.052,
+      "minus_baseline": 0.023868
+    },
+    "120": {
+      "new_pool": 0.014544,
+      "baseline_rounded": -0.004,
+      "rounded_3dp": 0.015,
+      "minus_baseline": 0.018544
+    },
+    "250": {
+      "new_pool": 0.031157,
+      "baseline_rounded": 0.049,
+      "rounded_3dp": 0.031,
+      "minus_baseline": -0.017843
+    },
+    "blend": {
+      "new_pool": 0.064775,
+      "baseline_rounded": 0.069,
+      "rounded_3dp": 0.065,
+      "minus_baseline": -0.004225
+    }
+  },
+  "engine_17_vs_baseline": {
+    "20": {
+      "new_pool": 0.092442,
+      "baseline_rounded": 0.093,
+      "rounded_3dp": 0.092,
+      "minus_baseline": -0.000558
+    },
+    "60": {
+      "new_pool": 0.030296,
+      "baseline_rounded": 0.028,
+      "rounded_3dp": 0.03,
+      "minus_baseline": 0.002296
+    },
+    "120": {
+      "new_pool": -0.002625,
+      "baseline_rounded": -0.004,
+      "rounded_3dp": -0.003,
+      "minus_baseline": 0.001375
+    },
+    "250": {
+      "new_pool": 0.048115,
+      "baseline_rounded": 0.049,
+      "rounded_3dp": 0.048,
+      "minus_baseline": -0.000885
+    },
+    "blend": {
+      "new_pool": 0.069618,
+      "baseline_rounded": 0.069,
+      "rounded_3dp": 0.07,
+      "minus_baseline": 0.000618
+    }
+  },
+  "ic_months": {
+    "lab2_17": 119,
+    "engine_17": 119,
+    "new_pool": 119
+  },
+  "new_pool_names": [
+    "csi300",
+    "csi500",
+    "csi1000",
+    "chinext",
+    "star50",
+    "allshare-energy",
+    "allshare-materials",
+    "allshare-industrials",
+    "allshare-discretionary",
+    "allshare-staples",
+    "allshare-healthcare",
+    "allshare-financials-re",
+    "allshare-it",
+    "allshare-communication",
+    "allshare-utilities",
+    "csi-dividend",
+    "hsi",
+    "hstech",
+    "ndx100",
+    "spx",
+    "gold",
+    "soymeal",
+    "crude-oil",
+    "cgb-10y",
+    "cgb-5y",
+    "theme-东京日经225指数",
+    "theme-东证指数",
+    "theme-中证全球中国互联网人民币指数",
+    "theme-中证全球中国教育主题人民币指数",
+    "theme-中证海外中国互联网30人民币指数",
+    "theme-中证海外中国互联网50人民币指数",
+    "theme-中证海外中国互联网指数",
+    "theme-中证港股通金融服务指数",
+    "theme-中证港股通高股息投资港元指数",
+    "theme-中证韩交所中韩半导体指数",
+    "theme-中证香港内地国有企业港元指数",
+    "theme-中证香港创新药港币指数",
+    "theme-中证香港科技指数指数",
+    "theme-富时亚太低碳精选指数",
+    "theme-富时沙特阿拉伯指数",
+    "theme-恒生中国企业指数",
+    "theme-恒生中国央企指数",
+    "theme-恒生互联网科技业指数",
+    "theme-恒生创新药指数",
+    "theme-恒生医疗保健指数",
+    "theme-恒生消费指数",
+    "theme-恒生港股通红利低波动指数",
+    "theme-恒生生物科技指数",
+    "theme-恒生综合小型股指数",
+    "theme-新交所泛东南亚科技指数",
+    "theme-标普500信息科技指数",
+    "theme-标普500医疗保健等权重指数",
+    "theme-标普500消费精选指数",
+    "theme-标普中国新经济行业指数",
+    "theme-标普全球石油指数",
+    "theme-标普生物科技精选行业指数",
+    "theme-标普美国品质消费股票指数",
+    "theme-法兰克福DAX指数",
+    "theme-法国CAC40指数",
+    "theme-纳斯达克生物科技指数",
+    "theme-纳斯达克科技市值加权指数",
+    "theme-道琼斯工业平均指数",
+    "theme-道琼斯美国石油开发与生产指数",
+    "theme-道琼斯美国精选REIT指数",
+    "us-xlb",
+    "us-xle",
+    "us-xlf",
+    "us-xli",
+    "us-xlk",
+    "us-xlp",
+    "us-xlu",
+    "us-xlv",
+    "us-xly",
+    "us-xlre",
+    "hk-hsf",
+    "hk-hsu",
+    "hk-hsp",
+    "hk-hsc"
+  ],
+  "method": {
+    "end": "2015-12-31",
+    "coverage": "14 个 A 股容器。场内 ETF 只算跟踪标的全称一致、且第一根正收盘不晚于该年末的。510880 跟踪上证红利，不算中证红利。",
+    "tracking": "基金复权净值对库里的全收益指数。年化跟踪差是日收益差的标准差乘 sqrt(252)，与 R1 相同。价格指数没有入库。",
+    "shares": "R1 第 4 节。后复权口径只把有 backward 的美股 ETF 换成后复权，再走同一条美元中间价对齐。指数没有后复权序列，不把原始收盘写成后复权。",
+    "ic": "得分是 L 日价格比除以日收益标准差乘 sqrt(L)。Rank IC 对之后 20 个交易日。四个平均是 20/60/120/250 得分排名的平均。现金门槛是 (1+0.02/252)^L-1。",
+    "fx": "美股用 bars 里 2006-01-04 起的 USDCNY，和 R1 相同。港股不乘 HKDCNY。"
+  },
+  "ic_gap": {
+    "lab2_17_20_minus_blend": {
+      "mean": 0.024373,
+      "t": 0.8573,
+      "n": 119
+    },
+    "lab2_17_20_minus_120": {
+      "mean": 0.0975,
+      "t": 2.8474,
+      "n": 119
+    },
+    "new_pool_20_minus_blend": {
+      "mean": 0.012105,
+      "t": 0.4432,
+      "n": 119
+    },
+    "new_pool_20_minus_120": {
+      "mean": 0.062335,
+      "t": 1.7454,
+      "n": 119
+    }
+  }
+}
