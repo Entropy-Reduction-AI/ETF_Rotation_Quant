@@ -1,0 +1,458 @@
+{
+  "seed": 2026102873,
+  "dev_pr_tip": "01dd5449b50db293ff51656590a46899e35492be",
+  "db_sha256": "af4c5a376d084cd6254187c1107c6179d0cfd9647c008bff84b4c26f52045b78",
+  "expected_db_sha256": "af4c5a376d084cd6254187c1107c6179d0cfd9647c008bff84b4c26f52045b78",
+  "pre_write_sha256_claim": "a130af9eab11368d71488ee48f83bb71952d17eb5abd1d5bcc00d1cd6993f1e6",
+  "integrity": "ok",
+  "adj_random_codes": [
+    "XLK",
+    "XLV",
+    "XLE"
+  ],
+  "otc_random_codes": [
+    "162711",
+    "020011",
+    "090010"
+  ],
+  "h_null": {
+    "values": {
+      "H20184": null,
+      "H20187": null,
+      "H20202": null,
+      "H30184": null,
+      "H30187": null,
+      "H30202": null
+    },
+    "ok": true
+  },
+  "bars_vs_main": {
+    "bar_rows_pr": 787005,
+    "bar_rows_main": 787005,
+    "identical_rows": 786999,
+    "zero_to_null": 6,
+    "unexpected_count": 0,
+    "unexpected_sample": [],
+    "fx_bars_unchanged": {
+      "USDCNY": true,
+      "HKDCNY": true
+    },
+    "ok": true
+  },
+  "split_basis": [
+    {
+      "code": "XLF",
+      "split_date": "2016-09-19",
+      "raw_close_ratio": 1.0063763338163092,
+      "adj_close_ratio": 1.0063763338163092,
+      "split_already_in_price": true,
+      "ok": true
+    },
+    {
+      "code": "XLB",
+      "split_date": "2025-12-05",
+      "raw_close_ratio": 0.996722042370002,
+      "adj_close_ratio": 0.996722042370002,
+      "split_already_in_price": true,
+      "ok": true
+    },
+    {
+      "code": "XLE",
+      "split_date": "2025-12-05",
+      "raw_close_ratio": 0.9958793658882842,
+      "adj_close_ratio": 0.9958793658882842,
+      "split_already_in_price": true,
+      "ok": true
+    },
+    {
+      "code": "XLK",
+      "split_date": "2025-12-05",
+      "raw_close_ratio": 1.0073178439180095,
+      "adj_close_ratio": 1.0073178439180095,
+      "split_already_in_price": true,
+      "ok": true
+    },
+    {
+      "code": "XLU",
+      "split_date": "2025-12-05",
+      "raw_close_ratio": 0.9906199987188342,
+      "adj_close_ratio": 0.9906199987188342,
+      "split_already_in_price": true,
+      "ok": true
+    },
+    {
+      "code": "XLY",
+      "split_date": "2025-12-05",
+      "raw_close_ratio": 1.0055429886940537,
+      "adj_close_ratio": 1.0055429886940537,
+      "split_already_in_price": true,
+      "ok": true
+    }
+  ],
+  "unavailable_adj": {
+    "unavailable_adj_rows": 124,
+    "backward_leaks": [],
+    "ok": true
+  },
+  "registry_r1b": {
+    "r1b_coverage_rows": 256,
+    "mismatches": [],
+    "ok": true
+  },
+  "adj_spot": [
+    {
+      "code": "XLK",
+      "date": "2016-03-18",
+      "db_close": 26.27302177682114,
+      "external_close": 26.27302177682114,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLK",
+      "date": "2025-12-05",
+      "db_close": 196.5047565875139,
+      "external_close": 196.5047565875139,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLK",
+      "date": "2006-03-15",
+      "db_close": 11.500368581353419,
+      "external_close": 11.500368581353419,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLK",
+      "date": "2020-06-09",
+      "db_close": 65.6329825171872,
+      "external_close": 65.6329825171872,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLK",
+      "date": "2020-02-25",
+      "db_close": 58.8365344094491,
+      "external_close": 58.8365344094491,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLV",
+      "date": "2013-12-20",
+      "db_close": 67.06377700824758,
+      "external_close": 67.06377700824758,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLV",
+      "date": "2013-01-14",
+      "db_close": 50.202760211788075,
+      "external_close": 50.202760211788075,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLV",
+      "date": "2012-01-11",
+      "db_close": 41.72675732513065,
+      "external_close": 41.72675732513065,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLV",
+      "date": "2007-06-26",
+      "db_close": 37.832339021505156,
+      "external_close": 37.832339021505156,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLV",
+      "date": "2021-05-25",
+      "db_close": 170.74561508895073,
+      "external_close": 170.74561508895073,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLE",
+      "date": "2013-03-15",
+      "db_close": 50.057836459118064,
+      "external_close": 50.057836459118064,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLE",
+      "date": "2025-12-05",
+      "db_close": 91.81687640715015,
+      "external_close": 91.81687640715015,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLE",
+      "date": "2018-02-14",
+      "db_close": 48.64387355421265,
+      "external_close": 48.64387355421265,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLE",
+      "date": "2019-01-14",
+      "db_close": 45.29834771276329,
+      "external_close": 45.29834771276329,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "XLE",
+      "date": "2011-03-03",
+      "db_close": 47.74187429248822,
+      "external_close": 47.74187429248822,
+      "source": "recompute_yahoo_raw_div",
+      "abs_diff": 0.0,
+      "ok": true
+    }
+  ],
+  "otc_spot": [
+    {
+      "code": "162711",
+      "date": "2015-06-18",
+      "db_close": 2.2738953515132883,
+      "external_close": 2.2738953515132883,
+      "source": "https://fund.eastmoney.com/pingzhongdata/162711.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "162711",
+      "date": "2011-11-29",
+      "db_close": 0.8910023620961544,
+      "external_close": 0.8910023620961544,
+      "source": "https://fund.eastmoney.com/pingzhongdata/162711.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "162711",
+      "date": "2025-07-04",
+      "db_close": 1.399714273959272,
+      "external_close": 1.399714273959272,
+      "source": "https://fund.eastmoney.com/pingzhongdata/162711.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "162711",
+      "date": "2020-02-17",
+      "db_close": 1.2160049667013748,
+      "external_close": 1.2160049667013748,
+      "source": "https://fund.eastmoney.com/pingzhongdata/162711.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "162711",
+      "date": "2025-10-09",
+      "db_close": 1.772837176526647,
+      "external_close": 1.772837176526647,
+      "source": "https://fund.eastmoney.com/pingzhongdata/162711.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "020011",
+      "date": "2025-03-28",
+      "db_close": 1.5075683966330498,
+      "external_close": 1.5075683966330498,
+      "source": "https://fund.eastmoney.com/pingzhongdata/020011.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "020011",
+      "date": "2015-01-13",
+      "db_close": 1.0124583398866622,
+      "external_close": 1.0124583398866622,
+      "source": "https://fund.eastmoney.com/pingzhongdata/020011.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "020011",
+      "date": "2008-01-17",
+      "db_close": 1.4070199752946169,
+      "external_close": 1.4070199752946169,
+      "source": "https://fund.eastmoney.com/pingzhongdata/020011.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "020011",
+      "date": "2015-08-13",
+      "db_close": 1.1789923692141997,
+      "external_close": 1.1789923692141997,
+      "source": "https://fund.eastmoney.com/pingzhongdata/020011.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "020011",
+      "date": "2014-06-12",
+      "db_close": 0.6502835029772783,
+      "external_close": 0.6502835029772783,
+      "source": "https://fund.eastmoney.com/pingzhongdata/020011.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "090010",
+      "date": "2025-12-02",
+      "db_close": 2.9197076713088985,
+      "external_close": 2.9197076713088985,
+      "source": "https://fund.eastmoney.com/pingzhongdata/090010.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "090010",
+      "date": "2018-08-21",
+      "db_close": 1.5939777049683264,
+      "external_close": 1.5939777049683264,
+      "source": "https://fund.eastmoney.com/pingzhongdata/090010.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "090010",
+      "date": "2021-01-25",
+      "db_close": 2.0056081456750183,
+      "external_close": 2.0056081456750183,
+      "source": "https://fund.eastmoney.com/pingzhongdata/090010.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "090010",
+      "date": "2024-01-19",
+      "db_close": 2.4000900847260356,
+      "external_close": 2.4000900847260356,
+      "source": "https://fund.eastmoney.com/pingzhongdata/090010.js",
+      "abs_diff": 0.0,
+      "ok": true
+    },
+    {
+      "code": "090010",
+      "date": "2012-06-11",
+      "db_close": 0.834999109487021,
+      "external_close": 0.834999109487021,
+      "source": "https://fund.eastmoney.com/pingzhongdata/090010.js",
+      "abs_diff": 0.0,
+      "ok": true
+    }
+  ],
+  "fx_fill_spot": [
+    {
+      "code": "USDCNY",
+      "date": "2005-10-06",
+      "db_close": 8.088515,
+      "fx_fill_csv": 8.088515,
+      "safe_official": null,
+      "filled": 1,
+      "method": "fill_mean_next_20",
+      "matches_fill_csv": true,
+      "ok": true,
+      "safe_url": "https://www.safe.gov.cn/safe/2020/1218/17833.html",
+      "workbook_url": "https://www.safe.gov.cn/safe/file/file/20260106/0f147e5357eb4c12a6406fc575cc21e8.xlsx"
+    },
+    {
+      "code": "HKDCNY",
+      "date": "2005-10-06",
+      "db_close": 1.0422850000000001,
+      "fx_fill_csv": 1.0422850000000001,
+      "safe_official": null,
+      "filled": 1,
+      "method": "fill_mean_next_20",
+      "matches_fill_csv": true,
+      "ok": true,
+      "safe_url": "https://www.safe.gov.cn/safe/2020/1218/17833.html",
+      "workbook_url": "https://www.safe.gov.cn/safe/file/file/20260106/0f147e5357eb4c12a6406fc575cc21e8.xlsx"
+    },
+    {
+      "code": "USDCNY",
+      "date": "2005-10-04",
+      "db_close": 8.088515,
+      "fx_fill_csv": 8.088515,
+      "safe_official": null,
+      "filled": 1,
+      "method": "fill_mean_next_20",
+      "matches_fill_csv": true,
+      "ok": true,
+      "safe_url": "https://www.safe.gov.cn/safe/2020/1218/17833.html",
+      "workbook_url": "https://www.safe.gov.cn/safe/file/file/20260106/0f147e5357eb4c12a6406fc575cc21e8.xlsx"
+    },
+    {
+      "code": "HKDCNY",
+      "date": "2005-10-04",
+      "db_close": 1.0422850000000001,
+      "fx_fill_csv": 1.0422850000000001,
+      "safe_official": null,
+      "filled": 1,
+      "method": "fill_mean_next_20",
+      "matches_fill_csv": true,
+      "ok": true,
+      "safe_url": "https://www.safe.gov.cn/safe/2020/1218/17833.html",
+      "workbook_url": "https://www.safe.gov.cn/safe/file/file/20260106/0f147e5357eb4c12a6406fc575cc21e8.xlsx"
+    },
+    {
+      "code": "USDCNY",
+      "date": "2005-05-05",
+      "db_close": 8.2765,
+      "fx_fill_csv": 8.2765,
+      "safe_official": null,
+      "filled": 1,
+      "method": "fill_mean_next_20",
+      "matches_fill_csv": true,
+      "ok": true,
+      "safe_url": "https://www.safe.gov.cn/safe/2020/1218/17833.html",
+      "workbook_url": "https://www.safe.gov.cn/safe/file/file/20260106/0f147e5357eb4c12a6406fc575cc21e8.xlsx"
+    },
+    {
+      "code": "HKDCNY",
+      "date": "2005-05-05",
+      "db_close": 1.061965,
+      "fx_fill_csv": 1.061965,
+      "safe_official": null,
+      "filled": 1,
+      "method": "fill_mean_next_20",
+      "matches_fill_csv": true,
+      "ok": true,
+      "safe_url": "https://www.safe.gov.cn/safe/2020/1218/17833.html",
+      "workbook_url": "https://www.safe.gov.cn/safe/file/file/20260106/0f147e5357eb4c12a6406fc575cc21e8.xlsx"
+    }
+  ],
+  "failures": [],
+  "decision_hint": "approve"
+}
