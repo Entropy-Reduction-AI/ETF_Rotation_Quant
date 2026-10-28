@@ -1,45 +1,29 @@
 {
   "reviewed_dev_pr": 82,
   "tip_sha": "a348365f50eab51875f2bf8d36a50a77fa64f4d3",
-  "base_sha": "63f41fa3d700a11dedbeeb23f74db6658480ba72",
-  "prior_sqlite_sha256": "af4c5a376d084cd6254187c1107c6179d0cfd9647c008bff84b4c26f52045b78",
-  "sqlite": {
-    "integrity_check": "ok",
-    "sha256": "43bf125532da01fb6f0056db77f2ab05b3da3f0bdc5f32fa33502bafffd922fc",
-    "bytes": 245170176,
-    "bars_rows": 787005,
-    "sha_match_dev_claim": true
-  },
-  "tests": {
-    "v4_discover": 52,
-    "v3_discover": 136,
-    "v4_test_r1c_only": 12
-  },
-  "fhsp_backward": {
-    "distinct_codes": 124,
-    "rows": 171520,
-    "overlap_tencent_hfq_codes": 0
-  },
-  "near_sub_count": 2,
-  "310318_crosscheck": {
-    "overlap_days": 246,
-    "max_abs_diff": 5e-7,
-    "days_over_5bp": 0
-  },
-  "integrity_findings_counts": {
-    "missing_trade_days": 2268,
-    "list_date_unknown": 67,
-    "large_move_hfq_smoothed": 38,
-    "large_move": 10,
-    "ended_before_cutoff": 5,
-    "adj_discontinuous": 1,
+  "sqlite_sha256_match": true,
+  "adj_3x5_score": "15/15",
+  "manager_d15_9_classification": {
+    "source": "Manager post-review (CSV PR pending; not written to repo by Reviewer)",
+    "must_fix": 12,
+    "accept": 2362,
+    "needs_Orchestrator": 15,
     "total": 2389
   },
-  "adj_3x5_score": "15/15",
+  "must_fix_symbols_manager": [
+    "159922",
+    "159952",
+    "160125",
+    "161831",
+    "164705",
+    "588050",
+    "588080"
+  ],
   "integrity_sample_10": {
     "true_positive": 10,
     "false_positive": 0,
-    "inconclusive": 0
+    "must_fix_rows_sampled": 7,
+    "must_fix_dev_inventory_surfaces_ok": 7
   },
   "decision": "approve_with_follow_up"
 }
