@@ -1,0 +1,9 @@
+code,name,fund_type,track_cell,benchmark,track,single_index,decision,container_id,list_date,source
+159518,嘉实标普石油天然气勘探及生产精选行业交易型开放式指数证券投资基金(QDII),指数型-海外股票,S&P Oil & Gas Exploration & Production Select Industry,经估值汇率调整后的标普石油天然气勘探及生产精选行业指数收益率,标普石油天然气勘探及生产精选行业指数,single_index,include,theme-标普石油天然气勘探及生产精选行业指数,2023-11-15,incoming/2026-10-28-d17-qdii/raw/jbgk/159518.html.gz
+513350,富国标普石油天然气勘探及生产精选行业交易型开放式指数证券投资基金(QDII),指数型-海外股票,S&P Oil & Gas Exploration & Production Select Industry,标普石油天然气勘探及生产精选行业指数收益率(经汇率调整后),标普石油天然气勘探及生产精选行业指数,single_index,include,theme-标普石油天然气勘探及生产精选行业指数,取不到,incoming/2026-10-28-d17-qdii/raw/jbgk/513350.html.gz
+162411,华宝标普石油天然气上游股票指数证券投资基金(LOF),指数型-海外股票,S&P Oil & Gas Exploration & Production Select Industry,标普石油天然气上游股票指数(全收益指数),标普石油天然气上游股票指数,single_index,include,theme-标普石油天然气上游股票指数,2012-06-08,incoming/2026-10-28-d17-qdii/raw/jbgk/162411.html.gz
+159577,汇添富MSCI美国50交易型开放式指数证券投资基金(QDII),指数型-海外股票,MSCI USA 50 Index,经人民币汇率调整的MSCI美国50指数收益率,MSCI USA 50 Index,single_index,include,theme-MSCI USA 50 Index,2024-02-23,incoming/2026-10-28-d17-qdii/raw/jbgk/159577.html.gz
+513850,易方达MSCI美国50交易型开放式指数证券投资基金(QDII),指数型-海外股票,MSCI USA 50 Index,MSCI美国50指数收益率(使用估值汇率折算),MSCI USA 50 Index,single_index,include,theme-MSCI USA 50 Index,取不到,incoming/2026-10-28-d17-qdii/raw/jbgk/513850.html.gz
+159100,华夏布拉德斯科巴西伊博维斯帕交易型开放式指数证券投资基金(QDII),指数型-海外股票,巴西BOVESPA,经估值汇率调整后的巴西伊博维斯帕指数收益率,巴西伊博维斯帕指数,single_index,include,theme-巴西伊博维斯帕指数,2025-11-13,incoming/2026-10-28-d17-qdii/raw/jbgk/159100.html.gz
+520870,易方达伊塔乌巴西IBOVESPA交易型开放式指数证券投资基金(QDII),指数型-海外股票,巴西BOVESPA,巴西IBOVESPA指数收益率(使用估值汇率折算),巴西IBOVESPA指数,single_index,include,theme-巴西IBOVESPA指数,取不到,incoming/2026-10-28-d17-qdii/raw/jbgk/520870.html.gz
+520580,招商利安新兴亚洲精选交易型开放式指数证券投资基金(QDII),指数型-海外股票,iEdge Emerging Asia Select 50 Index,新交所新兴亚洲精选50指数收益率(经估值汇率调整后),iEdge Emerging Asia Select 50 Index,single_index,include,theme-iEdge Emerging Asia Select 50 Index,取不到,incoming/2026-10-28-d17-qdii/raw/jbgk/520580.html.gz

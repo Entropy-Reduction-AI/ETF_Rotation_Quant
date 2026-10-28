@@ -7,8 +7,8 @@ import tests  # noqa: F401 — ETF_LEDGER_TESTING
 
 from src.data import db as DB
 from src.v4.data.integrity import (
-    adj_discontinuity, count_findings, large_move_days, list_date_findings, missing_ranges,
-    scan_price_series,
+    add_months, adj_discontinuity, count_findings, large_move_days, list_date_findings,
+    missing_ranges, nav_late_vs_list, scan_price_series,
 )
 from src.v4.data.r1c import (
     actions_after, carried_tail, insert_backward, limit_up_checks, merge_manager_class,
@@ -35,6 +35,20 @@ EMPTY = """
 
 def _bar(day, close):
     return {"date": day, "open": close, "high": close, "low": close, "close": close, "volume": 1}
+
+
+class NavStart(unittest.TestCase):
+    def test_one_calendar_month_is_not_late(self):
+        self.assertEqual(add_months("2012-06-08", 1), "2012-07-08")
+        self.assertIsNone(nav_late_vs_list("2012-06-08", "2012-07-08"))
+        late = nav_late_vs_list("2012-06-08", "2012-07-09")
+        self.assertEqual(late["check"], "nav_starts_after_list_date")
+        self.assertEqual(late["date"], "2012-07-09")
+
+    def test_short_month_and_unknown_list_date(self):
+        self.assertEqual(add_months("2012-01-31", 1), "2012-02-29")
+        self.assertIsNone(nav_late_vs_list("取不到", "2021-01-04"))
+        self.assertIsNone(nav_late_vs_list("2010-10-28", "2010-09-30"))
 
 
 class Near(unittest.TestCase):

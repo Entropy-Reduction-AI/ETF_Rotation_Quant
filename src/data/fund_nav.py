@@ -124,6 +124,81 @@ def fetch_code(code: str, *, pause: float = PAUSE) -> list[dict]:
     return [by_date[day] for day in sorted(by_date)]
 
 
+END_DEFAULT = "2026-09-30"
+
+
+def overlap_conflicts(existing: dict[str, tuple], incoming: list[dict], *, tol: float = 1e-4) -> list[str]:
+    """已有日期上单位净值或累计净值对不上的日子。空值不比。"""
+    bad = []
+    for row in incoming:
+        prev = existing.get(row["date"])
+        if prev is None:
+            continue
+        clash = False
+        for old, new in ((prev[0], row.get("unit_nav")), (prev[1], row.get("accum_nav"))):
+            if old is None or new is None:
+                continue
+            if abs(float(old) - float(new)) > tol:
+                clash = True
+                break
+        if clash:
+            bad.append(row["date"])
+    return bad
+
+
+def store_missing(con, run_id: int, rows: list[dict], fetched_at: str, *,
+                  end: str = END_DEFAULT, source: str = "eastmoney_pingzhongdata") -> dict:
+    """只插入还不存在、且不晚于 end 的日期。已有行不改。"""
+    ensure(con)
+    if not rows:
+        return {"code": "", "inserted": 0, "kept": 0, "conflicts": [], "first": None, "last": None}
+    code = rows[0]["code"]
+    existing = {
+        day: (unit, accum)
+        for day, unit, accum in con.execute(
+            "SELECT date, unit_nav, accum_nav FROM fund_nav WHERE code = ?", (code,))
+    }
+    conflicts = overlap_conflicts(existing, [row for row in rows if row["date"] <= end])
+    if conflicts:
+        return {
+            "code": code, "inserted": 0, "kept": len(existing), "conflicts": conflicts,
+            "first": None, "last": None,
+        }
+    fresh = []
+    for row in rows:
+        if row["date"] > end or row["date"] in existing:
+            continue
+        if row.get("unit_nav") is None and row.get("accum_nav") is None:
+            continue
+        fresh.append(row)
+    with con:
+        con.executemany(
+            """INSERT OR IGNORE INTO fund_nav
+               (code, date, unit_nav, accum_nav, subscribe_status, redeem_status, source, run_id, fetched_at)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            [(r["code"], r["date"], r["unit_nav"], r["accum_nav"], r.get("subscribe_status"),
+              r.get("redeem_status"), source, run_id, fetched_at) for r in fresh])
+        after = {
+            day: (unit, accum)
+            for day, unit, accum in con.execute(
+                "SELECT date, unit_nav, accum_nav FROM fund_nav WHERE code = ?", (code,))
+        }
+        for day, prev in existing.items():
+            if after.get(day) != prev:
+                raise RuntimeError(f"{code} 已有净值被改写 {day}")
+    span = con.execute(
+        "SELECT min(date), max(date) FROM fund_nav WHERE code = ? AND date <= ?",
+        (code, end)).fetchone()
+    return {
+        "code": code,
+        "inserted": len(fresh),
+        "kept": len(existing),
+        "conflicts": [],
+        "first": span[0],
+        "last": span[1],
+    }
+
+
 def store_code(con, run_id: int, rows: list[dict], fetched_at: str) -> int:
     ensure(con)
     with con:

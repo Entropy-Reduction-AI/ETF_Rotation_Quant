@@ -40,6 +40,9 @@ CASH_FEE = 0.0005
 # PYTHONHASHSEED=0 下，milestone/v3-code-freeze 的 P1（A / index / official，至 2015-12-31）。
 # 费用按集合遍历，跨进程的哈希盐会改最后一比特；固定盐之后与冻结引擎逐日相同。
 # 0eb25e2 在这次改动之前，src/v3/engine 与该标签逐字相同。
+# 下面两个输入是写出 FREEZE_P1 时的登记表和库。D17 改了这两样，冻结结果不在新输入上重算。
+FREEZE_INPUT_UNIVERSE = "fda394d57b9109225bda0d459975125364b5f1bb5d1793c9ad080ec55f789b19"
+FREEZE_INPUT_DB = "6c896fd1e5de6bc66ddf6f42833033f202f6e480f4d78c6cd267c6c6a4362248"
 FREEZE_P1 = {
     "net": "962178c503df7d1ee900971711271fc4fac4436522053dbc9c297b48c3b8fa57",
     "held": "bdd1521f7d9d66404184351dfe50e3e4681edfd91415e46572394c44d6eea32b",
@@ -494,6 +497,22 @@ class TurnAndRefill(unittest.TestCase):
         self.assertEqual(float(ranks.loc[day, "bbb"]), 1.0)
 
 
+def _sha_file(path) -> str:
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for chunk in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def freeze_inputs_match() -> bool:
+    from src.v3.data.universe import UNIVERSE
+    if not UNIVERSE.exists() or not DB.MARKET_DB.exists():
+        return False
+    universe = hashlib.sha256(UNIVERSE.read_bytes()).hexdigest()
+    return universe == FREEZE_INPUT_UNIVERSE and _sha_file(DB.MARKET_DB) == FREEZE_INPUT_DB
+
+
 class FreezeP1(unittest.TestCase):
     def test_switches_off_match_freeze_p1_day_by_day(self):
         if os.environ.get("PYTHONHASHSEED") != "0":
@@ -506,9 +525,15 @@ class FreezeP1(unittest.TestCase):
                 cwd=root, env=env, capture_output=True, text=True, check=False,
             )
             combined = proc.stdout + "\n" + proc.stderr
+            if proc.returncode == 0 and "D17 已改登记表和净值" in combined:
+                return
             self.assertEqual(proc.returncode, 0, combined)
             self.assertNotIn("skipped", combined.lower(), combined)
             return
+        if not freeze_inputs_match():
+            message = "D17 已改登记表和净值。v3.1 冻结 P1 不在新输入上重算，FREEZE_P1 保持 milestone/v3-code-freeze。"
+            print(message)
+            self.skipTest(message)
         db = DB.MARKET_DB
         if not db.exists() or db.stat().st_size < 1_000_000:
             self.skipTest("market.sqlite 不在这台机器上")

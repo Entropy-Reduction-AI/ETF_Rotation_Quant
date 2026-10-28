@@ -18,7 +18,7 @@ from src.v4.data import catalog as C
 from src.v4.data import ingest as IN
 from src.v4.data.integrity import (
     ETF_MOVE, FINDING_COLUMNS, OTC_MOVE, WINDOW_END, WINDOW_START, adj_discontinuity,
-    count_findings, scan_price_series,
+    count_findings, nav_late_vs_list, scan_price_series,
 )
 from src.v4.data.parse import bar_sha256
 from src.v4.data.r1c_parse import (
@@ -806,7 +806,44 @@ def run_integrity(con, list_date_map: dict[str, str]) -> tuple[list[dict], list[
             code, "otc", "otc_nav", source, rows, calendar, OTC_MOVE, set(), None, None)
         inventory.append(info)
         findings.extend(found)
+    findings.extend(fund_nav_late_findings(con, list_date_map))
     return inventory, findings
+
+
+def fund_nav_late_findings(con, list_date_map: dict[str, str]) -> list[dict]:
+    """单位净值起点比上市日晚一个日历月以上。
+
+    上市日先用调用方给的表（v3 execution）。那一格不是日期时，用已落地的深交所列表或概况页。
+    仍然不是日期的不记。
+    """
+    have = con.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='fund_nav'").fetchone()
+    if not have:
+        return []
+    from src.v3.data.emit_universe import load_jbgk, load_szse
+    szse = load_szse()
+    jbgk = load_jbgk()
+    found = []
+    codes = [row[0] for row in con.execute("SELECT DISTINCT code FROM fund_nav ORDER BY code")]
+    for code in codes:
+        listed = str(list_date_map.get(code) or "")
+        if len(listed) != 10:
+            listed = (szse.get(code) or {}).get("list_date") or (jbgk.get(code) or {}).get("list_date") or ""
+        row = con.execute(
+            """SELECT date, source FROM fund_nav
+               WHERE code=? AND unit_nav>0 AND date<=? ORDER BY date LIMIT 1""",
+            (code, WINDOW_END)).fetchone()
+        if row is None:
+            continue
+        item = nav_late_vs_list(listed, row[0])
+        if item is None:
+            continue
+        found.append({
+            "code": code, "group": "fund", "series_kind": "fund_nav", "source": row[1] or "",
+            "check": item["check"], "date": item["date"], "end_date": item["date"],
+            "n_days": "1", "detail": item["detail"], "manager_class": "",
+        })
+    return found
 
 
 def write_integrity(inventory: list[dict], findings: list[dict]) -> dict[str, int]:
@@ -836,6 +873,7 @@ def write_integrity(inventory: list[dict], findings: list[dict]) -> dict[str, in
         "A 股和场外对照上交所日历，港股对照恒生指数的交易日，美股对照标普500的交易日。",
         "恒生指数、标普500，以及没有外部日历的序列，只标内部间隔不少于 12 个日历日的洞。",
         "上市日来自 v3 execution；登记为取不到的记 `list_date_unknown`。",
+        "基金单位净值起点严格晚于上市日一个日历月的，记 `nav_starts_after_list_date`。上市日先用 v3 execution；不是日期时用已落地的深交所列表或概况页。仍然不是日期的不记。`manager_class` 留空，待 Manager。",
         "没有代码变更登记，本次没有旧代码到新代码的对照行。",
         "汇率中间价不在这三类序列里。",
         "",

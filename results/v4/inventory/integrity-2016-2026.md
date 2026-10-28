@@ -4,7 +4,7 @@ Dev 只列出问题。`manager_class` 由调用方填入；没有分类的行留
 
 没有计算年化、累计、排名或 IC。单日涨跌只出现在坏点行上，没有加总。
 
-窗口 2016-01-01 → 2026-09-30。序列 532 条，问题行 2419。
+窗口 2016-01-01 → 2026-09-30。序列 532 条，问题行 2430。D17 新增 `nav_starts_after_list_date` 11 行，manager_class 留空，待 Manager。
 
 | 检查项 | 行数 |
 | --- | --- |
@@ -13,6 +13,7 @@ Dev 只列出问题。`manager_class` 由调用方填入；没有分类的行留
 | large_move_hfq_smoothed | 38 |
 | list_date_unknown | 67 |
 | missing_trade_days | 2310 |
+| nav_starts_after_list_date | 11 |
 
 场内 ETF 单日阈值是 ±20%，场外基金是 ±30%。研究序列不做这个阈值。
 A 股和场外对照上交所日历，港股对照恒生指数的交易日，美股对照标普500的交易日。
@@ -20,3 +21,4 @@ A 股和场外对照上交所日历，港股对照恒生指数的交易日，美
 上市日来自 v3 execution；登记为取不到的记 `list_date_unknown`。
 没有代码变更登记，本次没有旧代码到新代码的对照行。
 汇率中间价不在这三类序列里。
+基金单位净值起点严格晚于上市日一个日历月的，记 `nav_starts_after_list_date`。上市日先用 v3 execution；不是日期时用已落地的深交所列表或概况页。仍然不是日期的不记。这些行的 manager_class 留空，待 Manager。
