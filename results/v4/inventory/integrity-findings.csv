@@ -45,7 +45,6 @@ code,group,series_kind,source,check,date,end_date,n_days,detail,manager_class
 159881,etf,raw,tencent_etf,large_move_hfq_smoothed,2026-06-26,2026-06-26,1,move=-0.520474 other_move=-0.040948,可以接受
 159915,etf,raw,tencent_etf,missing_trade_days,2021-02-08,2021-02-08,1,日历有、序列没有正收盘,可以接受
 159919,etf,raw,tencent_etf,missing_trade_days,2019-01-11,2019-01-11,1,日历有、序列没有正收盘,可以接受
-159922,etf,backward,v4_series,adj_discontinuous,2024-12-02,2024-12-02,1,dividend raw=-0.614548 adj=0.016062 expected=-0.593570,必须修
 159928,etf,raw,tencent_etf,large_move_hfq_smoothed,2021-06-25,2021-06-25,1,move=-0.744737 other_move=0.021053,可以接受
 159928,etf,raw,tencent_etf,list_date_unknown,2013-09-16,2013-09-16,1,上市日登记为取不到,可以接受
 159936,etf,raw,tencent_etf,missing_trade_days,2016-05-04,2016-05-04,1,日历有、序列没有正收盘,可以接受
@@ -128,7 +127,6 @@ code,group,series_kind,source,check,date,end_date,n_days,detail,manager_class
 159944,etf,raw,tencent_etf,missing_trade_days,2019-11-13,2019-11-13,1,日历有、序列没有正收盘,可以接受
 159952,etf,raw,tencent_etf,missing_trade_days,2023-07-18,2023-07-18,1,日历有、序列没有正收盘,可以接受
 159952,etf,raw,tencent_etf,missing_trade_days,2023-11-28,2023-11-28,1,日历有、序列没有正收盘,可以接受
-159952,etf,raw,tencent_etf,large_move,2024-10-08,2024-10-08,1,move=0.200297 other_move=0.200297,必须修
 160125,etf,raw,tencent_etf,missing_trade_days,2018-08-31,2018-08-31,1,日历有、序列没有正收盘,可以接受
 160125,etf,raw,tencent_etf,missing_trade_days,2018-11-09,2018-11-09,1,日历有、序列没有正收盘,可以接受
 160125,etf,raw,tencent_etf,missing_trade_days,2018-11-21,2018-11-21,1,日历有、序列没有正收盘,可以接受
@@ -1265,9 +1263,6 @@ code,group,series_kind,source,check,date,end_date,n_days,detail,manager_class
 561600,etf,raw,tencent_etf,large_move_hfq_smoothed,2026-07-23,2026-07-23,1,move=-0.506353 other_move=-0.012706,可以接受
 562590,etf,raw,tencent_etf,large_move_hfq_smoothed,2026-07-06,2026-07-06,1,move=-0.667570 other_move=-0.002711,可以接受
 588000,etf,raw,tencent_etf,list_date_unknown,2020-11-16,2020-11-16,1,上市日登记为取不到,可以接受
-588050,etf,raw,tencent_etf,large_move,2024-09-30,2024-09-30,1,move=0.200258 other_move=0.200371,必须修
-588050,etf,raw,tencent_etf,large_move,2024-10-08,2024-10-08,1,move=0.200215 other_move=0.200927,必须修
-588080,etf,raw,tencent_etf,large_move,2024-10-08,2024-10-08,1,move=0.200219 other_move=0.201563,必须修
 HSTECH,research,raw,tencent_hk_index,missing_trade_days,2020-10-13,2020-10-13,1,日历有、序列没有正收盘,需要 Orchestrator
 XLE,etf,raw,yahoo,large_move,2020-03-09,2020-03-09,1,move=-0.201412 other_move=-0.201412,可以接受
 159303,etf,backward,eastmoney_fhsp,missing_trade_days,2025-08-19,2025-08-19,1,日历有、序列没有正收盘,可以接受
@@ -1372,8 +1367,6 @@ XLE,etf,raw,yahoo,large_move,2020-03-09,2020-03-09,1,move=-0.201412 other_move=-
 159944,etf,backward,eastmoney_fhsp,missing_trade_days,2019-11-13,2019-11-13,1,日历有、序列没有正收盘,可以接受
 159952,etf,backward,eastmoney_fhsp,missing_trade_days,2023-07-18,2023-07-18,1,日历有、序列没有正收盘,可以接受
 159952,etf,backward,eastmoney_fhsp,missing_trade_days,2023-11-28,2023-11-28,1,日历有、序列没有正收盘,可以接受
-159952,etf,backward,eastmoney_fhsp,large_move,2024-10-08,2024-10-08,1,move=0.200297,必须修
-160125,etf,backward,tencent_etf_hfq,ended_before_cutoff,2019-07-03,2019-07-03,1,最后正收盘早于 2026-09-30,必须修
 160125,etf,backward,tencent_etf_hfq,missing_trade_days,2018-08-31,2018-08-31,1,日历有、序列没有正收盘,可以接受
 160125,etf,backward,tencent_etf_hfq,missing_trade_days,2018-11-09,2018-11-09,1,日历有、序列没有正收盘,可以接受
 160125,etf,backward,tencent_etf_hfq,missing_trade_days,2018-11-21,2018-11-21,1,日历有、序列没有正收盘,可以接受
@@ -1382,6 +1375,41 @@ XLE,etf,raw,yahoo,large_move,2020-03-09,2020-03-09,1,move=-0.201412 other_move=-
 160125,etf,backward,tencent_etf_hfq,missing_trade_days,2019-01-10,2019-01-10,1,日历有、序列没有正收盘,可以接受
 160125,etf,backward,tencent_etf_hfq,missing_trade_days,2019-06-05,2019-06-06,2,日历有、序列没有正收盘,可以接受
 160125,etf,backward,tencent_etf_hfq,missing_trade_days,2019-06-26,2019-06-26,1,日历有、序列没有正收盘,可以接受
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2019-07-12,2019-07-12,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2019-07-15,2019-07-15,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2019-07-23,2019-07-23,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2019-08-08,2019-08-08,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2019-09-03,2019-09-03,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2019-09-25,2019-09-25,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2019-10-21,2019-10-21,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2020-02-12,2020-02-12,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2020-04-21,2020-04-21,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2020-05-12,2020-05-12,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2020-09-25,2020-09-25,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2021-08-06,2021-08-06,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2021-08-31,2021-08-31,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2021-09-13,2021-09-13,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2021-11-17,2021-11-17,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2021-11-25,2021-11-25,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2022-09-14,2022-09-14,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2022-09-23,2022-09-23,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2022-09-30,2022-09-30,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2022-10-10,2022-10-11,2,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2022-11-10,2022-11-10,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2022-12-15,2022-12-15,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2022-12-19,2022-12-21,3,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2023-04-19,2023-04-19,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2023-07-04,2023-07-04,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2023-07-14,2023-07-14,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2023-11-28,2023-11-28,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2023-12-18,2023-12-18,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2024-05-09,2024-05-09,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2024-08-27,2024-08-27,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2024-09-03,2024-09-03,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2024-09-06,2024-09-06,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2024-09-09,2024-09-09,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2024-09-18,2024-09-18,1,日历有、序列没有正收盘,
+160125,etf,backward,tencent_etf_hfq,missing_trade_days,2024-12-19,2024-12-19,1,日历有、序列没有正收盘,
 160140,etf,backward,tencent_etf_hfq,missing_trade_days,2018-02-09,2018-02-09,1,日历有、序列没有正收盘,可以接受
 160140,etf,backward,tencent_etf_hfq,missing_trade_days,2018-03-01,2018-03-02,2,日历有、序列没有正收盘,可以接受
 160140,etf,backward,tencent_etf_hfq,missing_trade_days,2018-04-04,2018-04-04,1,日历有、序列没有正收盘,可以接受
@@ -2145,7 +2173,6 @@ XLE,etf,raw,yahoo,large_move,2020-03-09,2020-03-09,1,move=-0.201412 other_move=-
 161229,etf,backward,tencent_etf_hfq,missing_trade_days,2025-11-07,2025-11-07,1,日历有、序列没有正收盘,可以接受
 161229,etf,backward,tencent_etf_hfq,missing_trade_days,2026-09-24,2026-09-24,1,日历有、序列没有正收盘,可以接受
 161815,etf,backward,eastmoney_fhsp,missing_trade_days,2019-08-12,2019-08-12,1,日历有、序列没有正收盘,可以接受
-161831,etf,backward,tencent_etf_hfq,ended_before_cutoff,2020-12-31,2020-12-31,1,最后正收盘早于 2026-09-30,必须修
 161831,etf,backward,tencent_etf_hfq,missing_trade_days,2016-12-02,2016-12-02,1,日历有、序列没有正收盘,可以接受
 161831,etf,backward,tencent_etf_hfq,missing_trade_days,2017-08-16,2017-08-16,1,日历有、序列没有正收盘,可以接受
 161831,etf,backward,tencent_etf_hfq,missing_trade_days,2017-12-04,2017-12-04,1,日历有、序列没有正收盘,可以接受
@@ -2168,6 +2195,7 @@ XLE,etf,raw,yahoo,large_move,2020-03-09,2020-03-09,1,move=-0.201412 other_move=-
 161831,etf,backward,tencent_etf_hfq,missing_trade_days,2020-08-18,2020-08-18,1,日历有、序列没有正收盘,可以接受
 161831,etf,backward,tencent_etf_hfq,missing_trade_days,2020-10-27,2020-10-27,1,日历有、序列没有正收盘,可以接受
 161831,etf,backward,tencent_etf_hfq,missing_trade_days,2020-12-02,2020-12-02,1,日历有、序列没有正收盘,可以接受
+161831,etf,backward,tencent_etf_hfq,missing_trade_days,2021-01-04,2021-01-04,1,日历有、序列没有正收盘,
 162415,etf,backward,eastmoney_fhsp,missing_trade_days,2016-05-19,2016-05-19,1,日历有、序列没有正收盘,可以接受
 162415,etf,backward,eastmoney_fhsp,missing_trade_days,2016-09-27,2016-09-27,1,日历有、序列没有正收盘,可以接受
 162415,etf,backward,eastmoney_fhsp,missing_trade_days,2016-11-08,2016-11-08,1,日历有、序列没有正收盘,可以接受
@@ -2226,7 +2254,6 @@ XLE,etf,raw,yahoo,large_move,2020-03-09,2020-03-09,1,move=-0.201412 other_move=-
 164701,etf,backward,eastmoney_fhsp,missing_trade_days,2019-05-23,2019-05-23,1,日历有、序列没有正收盘,可以接受
 164701,etf,backward,eastmoney_fhsp,missing_trade_days,2019-10-30,2019-10-30,1,日历有、序列没有正收盘,可以接受
 164701,etf,backward,eastmoney_fhsp,missing_trade_days,2019-12-06,2019-12-06,1,日历有、序列没有正收盘,可以接受
-164705,etf,backward,tencent_etf_hfq,ended_before_cutoff,2020-11-30,2020-11-30,1,最后正收盘早于 2026-09-30,必须修
 164705,etf,backward,tencent_etf_hfq,missing_trade_days,2016-01-05,2016-01-05,1,日历有、序列没有正收盘,可以接受
 164705,etf,backward,tencent_etf_hfq,missing_trade_days,2017-01-04,2017-01-04,1,日历有、序列没有正收盘,可以接受
 164705,etf,backward,tencent_etf_hfq,missing_trade_days,2017-07-07,2017-07-07,1,日历有、序列没有正收盘,可以接受
@@ -2276,6 +2303,12 @@ XLE,etf,raw,yahoo,large_move,2020-03-09,2020-03-09,1,move=-0.201412 other_move=-
 164705,etf,backward,tencent_etf_hfq,missing_trade_days,2020-01-03,2020-01-03,1,日历有、序列没有正收盘,可以接受
 164705,etf,backward,tencent_etf_hfq,missing_trade_days,2020-01-14,2020-01-14,1,日历有、序列没有正收盘,可以接受
 164705,etf,backward,tencent_etf_hfq,missing_trade_days,2020-10-29,2020-10-29,1,日历有、序列没有正收盘,可以接受
+164705,etf,backward,tencent_etf_hfq,missing_trade_days,2020-12-01,2020-12-01,1,日历有、序列没有正收盘,
+164705,etf,backward,tencent_etf_hfq,missing_trade_days,2021-10-28,2021-10-28,1,日历有、序列没有正收盘,
+164705,etf,backward,tencent_etf_hfq,missing_trade_days,2022-08-08,2022-08-08,1,日历有、序列没有正收盘,
+164705,etf,backward,tencent_etf_hfq,missing_trade_days,2022-11-23,2022-11-23,1,日历有、序列没有正收盘,
+164705,etf,backward,tencent_etf_hfq,missing_trade_days,2023-09-13,2023-09-13,1,日历有、序列没有正收盘,
+164705,etf,backward,tencent_etf_hfq,missing_trade_days,2024-03-08,2024-03-08,1,日历有、序列没有正收盘,
 164824,etf,backward,eastmoney_fhsp,missing_trade_days,2019-04-26,2019-04-26,1,日历有、序列没有正收盘,可以接受
 501018,etf,backward,eastmoney_fhsp,missing_trade_days,2026-01-30,2026-01-30,1,日历有、序列没有正收盘,可以接受
 501018,etf,backward,eastmoney_fhsp,missing_trade_days,2026-03-24,2026-03-24,1,日历有、序列没有正收盘,可以接受
@@ -2384,7 +2417,4 @@ XLE,etf,raw,yahoo,large_move,2020-03-09,2020-03-09,1,move=-0.201412 other_move=-
 513360,etf,backward,eastmoney_fhsp,missing_trade_days,2025-02-06,2025-02-06,1,日历有、序列没有正收盘,可以接受
 513500,etf,backward,tencent_etf_hfq,missing_trade_days,2022-03-29,2022-03-29,1,日历有、序列没有正收盘,可以接受
 520830,etf,backward,eastmoney_fhsp,missing_trade_days,2025-01-23,2025-01-23,1,日历有、序列没有正收盘,可以接受
-588050,etf,backward,tencent_etf_hfq,large_move,2024-09-30,2024-09-30,1,move=0.200371,必须修
-588050,etf,backward,tencent_etf_hfq,large_move,2024-10-08,2024-10-08,1,move=0.200927,必须修
-588080,etf,backward,tencent_etf_hfq,large_move,2024-10-08,2024-10-08,1,move=0.201563,必须修
 XLE,etf,backward,yahoo,large_move,2020-03-09,2020-03-09,1,move=-0.201412,可以接受

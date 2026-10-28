@@ -1,19 +1,18 @@
 # 2016-01 至 2026-09 数据完整性
 
-Dev 只列出问题。必须修、可以接受、需要 Orchestrator 由 Manager 填，`manager_class` 留空。
+Dev 只列出问题。`manager_class` 由调用方填入；没有分类的行留空，留给 Manager。
 
 没有计算年化、累计、排名或 IC。单日涨跌只出现在坏点行上，没有加总。
 
-窗口 2016-01-01 → 2026-09-30。序列 532 条，问题行 2389。
+窗口 2016-01-01 → 2026-09-30。序列 532 条，问题行 2419。
 
 | 检查项 | 行数 |
 | --- | --- |
-| adj_discontinuous | 1 |
-| ended_before_cutoff | 5 |
-| large_move | 10 |
+| ended_before_cutoff | 2 |
+| large_move | 2 |
 | large_move_hfq_smoothed | 38 |
 | list_date_unknown | 67 |
-| missing_trade_days | 2268 |
+| missing_trade_days | 2310 |
 
 场内 ETF 单日阈值是 ±20%，场外基金是 ±30%。研究序列不做这个阈值。
 A 股和场外对照上交所日历，港股对照恒生指数的交易日，美股对照标普500的交易日。
