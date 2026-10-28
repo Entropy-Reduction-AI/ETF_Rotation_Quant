@@ -84,5 +84,5 @@
 
 ## Review PR
 
-- Review 签收 PR：（本分支 push 后创建）
+- Review 签收 PR：https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/86
 - Dev must-fix PR：https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/85
