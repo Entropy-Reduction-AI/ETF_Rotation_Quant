@@ -23,7 +23,9 @@
 
 ## 计数
 
-`results/v4/inventory/integrity-findings.csv` 共 **2389** 行，与 #82 交付行数一致，原列与行序未改，只填原先留空的 `manager_class`。
+下文是 D15-9（#84）当时的计数。当前清单是 2419 行：v4-R1c 修掉必须修 12 后重扫，D16-8 把新增的 42 行留空填成可以接受。当前合计是必须修 0 / 可以接受 2404 / 需要 Orchestrator 15 / 留空 0，见 `operations/work_logs/2026-10-28-d16-8-hfq-tail-classify.md`。
+
+`results/v4/inventory/integrity-findings.csv` 在 D15-9 当时共 **2389** 行，与 #82 交付行数一致，原列与行序未改，只填原先留空的 `manager_class`。
 
 | manager_class | 行数 |
 | --- | ---: |

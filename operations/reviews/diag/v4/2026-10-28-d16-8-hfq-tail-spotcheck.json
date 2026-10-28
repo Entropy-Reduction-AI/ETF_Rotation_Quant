@@ -1,0 +1,55 @@
+{
+  "reviewed_manager_pr": 90,
+  "manager_tip_sha": "c2db9a21cb47de1eb5b44d4ad26ebc61666ae881",
+  "manager_base_sha": "3780e28c3729bf925d08ad18afe81c01f1191a23",
+  "portfolio_pnl_ran": false,
+  "integrity_findings_total": 2419,
+  "csv_rows_changed": 42,
+  "csv_only_manager_class_changed": true,
+  "manager_class_base": {
+    "must_fix": 0,
+    "accept": 2362,
+    "needs_Orchestrator": 15,
+    "blank": 42
+  },
+  "manager_class_head": {
+    "must_fix": 0,
+    "accept": 2404,
+    "needs_Orchestrator": 15,
+    "blank": 0
+  },
+  "blank_to_accept_count": 42,
+  "blank_to_accept_by_code": {
+    "160125": 35,
+    "161831": 1,
+    "164705": 6
+  },
+  "blank_to_accept_checks": {
+    "missing_trade_days": 42
+  },
+  "blank_to_accept_series_kind": {
+    "backward": 42
+  },
+  "blank_to_accept_source": {
+    "tencent_etf_hfq": 42
+  },
+  "orchestrator_keys_unchanged_vs_base": true,
+  "must_fix_unchanged_zero": true,
+  "forbidden_flips_to_accept": 0,
+  "missing_trade_days_accept_raw": 1151,
+  "missing_trade_days_accept_backward": 1151,
+  "pairing_raw_accept_all_42": true,
+  "handoff_date_after_tencent_last_all_42": true,
+  "hfq_handoff_dates": {
+    "160125": "2019-07-03",
+    "161831": "2020-12-31",
+    "164705": "2020-11-30"
+  },
+  "unexpected_diff_files": [
+    "operations/reviews/2026-10-28-v4-prereg-r1b.md"
+  ],
+  "unexpected_diff_kind": "deleted_review_artifact",
+  "src_or_data_diff_bytes": 0,
+  "spot_sample_rows": 12,
+  "decision": "approve_with_follow_up"
+}
