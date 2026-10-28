@@ -15,7 +15,7 @@ from .benchmark import _connect, _calendar, _fx, bm_main, cash_returns
 from src.v3.data.history import OFFICIAL, history_floor
 
 from .book import RunnerError
-from .limits import board_of
+from .limits import fill_board_for
 from .prices import (
     OVERSEAS_SOURCES,
     USD_CODES,
@@ -63,6 +63,7 @@ class Market:
     fill_board: dict | None = None
     asset_classes: dict | None = None
     dividend_yield: pd.DataFrame | None = None
+    bm_nav: pd.Series | None = None
 
 
 def levels_from_returns(pnl: pd.DataFrame, cash_id: str) -> pd.DataFrame:
@@ -335,7 +336,7 @@ def load_market(db: Path, containers: list[dict], arm: str, pool: str, end, spec
         executions = container.get("execution") or []
         track = str(executions[0].get("track") or "") if executions else ""
         fill_close[identity] = _raw_close(bars.get(traded or ""))
-        fill_board[identity] = board_of(track, traded or "")
+        fill_board[identity] = fill_board_for(track, traded or "", str(container.get("asset_class") or ""))
         asset_classes[identity] = str(container.get("asset_class") or "")
 
         def one(kind: str, *, lagged: bool):

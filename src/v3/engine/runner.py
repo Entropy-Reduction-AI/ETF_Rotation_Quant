@@ -42,7 +42,8 @@ def run(arm: str, pool: str, end=None, *, full_period: bool = False, freeze_sha:
         debug: bool = False, cost_multiplier: float = 1.0, n: int | None = None, freq: str | None = None,
         ledger_path: Path | None = None, lock_path: Path = LOCK, db_path: Path = DB.MARKET_DB,
         spec: Spec | None = None, market=None, runner: str | None = None,
-        history_mode: str = OFFICIAL, exit_drawdown: float = EXIT_DRAWDOWN, premium_spec=None):
+        history_mode: str = OFFICIAL, exit_drawdown: float = EXIT_DRAWDOWN, premium_spec=None,
+        switches=None):
     """先检查结束日，再读不超过该日的行情。debug 不写尝试记录。本函数不创建 LOCK。"""
     spec = load_spec() if spec is None else spec
     if pool not in {"index", "tradable"}:
@@ -59,11 +60,15 @@ def run(arm: str, pool: str, end=None, *, full_period: bool = False, freeze_sha:
                              history_mode=history_mode)
     else:
         market.cost_multiplier = cost_multiplier
+    if switches is not None and not switches.idle():
+        from src.v4.engine.apply import apply_market
+        market = apply_market(
+            market, switches, db=db_path, containers=load_containers(), spec=spec, pool=pool)
     if len(market.dates) and pd.Timestamp(market.dates.max()) > chosen:
         raise RunnerError("行情越过结束日，拒绝计算")
     book = execute(
         market, spec, arm, n=n, freq=freq, allow_after=allow_after,
-        exit_drawdown=exit_drawdown, premium_spec=premium_spec)
+        exit_drawdown=exit_drawdown, premium_spec=premium_spec, switches=switches)
     if len(book.net) and pd.Timestamp(book.net.index.max()) > chosen:
         raise RunnerError("组合收益越过结束日")
     if not debug:

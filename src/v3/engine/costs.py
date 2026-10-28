@@ -37,6 +37,17 @@ def withheld_dividend(gross_yield: float, withholding: float) -> float:
     return float(gross_yield) * (1.0 - float(withholding))
 
 
+# 草案 §5：美股行业 ETF 每腿 0.15%，含换汇和佣金。不是占位。
+US_SECTOR_LEG = 0.0015
+
+
+def leg_fee(asset_class: str, spec, *, carrier: str = "") -> float:
+    """场外基金用该资产类别的场内费率，不加申赎费。美股行业 SPDR 用 0.15%。"""
+    if carrier == "spdr" or asset_class == "美股行业":
+        return US_SECTOR_LEG
+    return spec.fee(asset_class)
+
+
 def names_for(asset_classes: dict[str, str] | None) -> set[str]:
     if not asset_classes:
         return set()

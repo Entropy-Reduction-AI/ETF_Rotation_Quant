@@ -1,15 +1,16 @@
-"""T1 转折点换挡、T2 按趋势效率分配四组权重、T3 离场后补位。
+"""T1 转折点换挡、T2 按市场状态分配四组权重。
 
-规则见 v4 研究备忘 §4。快组和慢组由已有回看期切成两半，不另加自由度。
-v3.1 的四组是 20、60 为快，120、250 为慢。T2 的窗口长度由调用方传入，占位值
-不在这里写死成预注册参数。
+快组和慢组由已有回看期切成两半。v3.1 的四组是 20、60 为快，120、250 为慢。
+规则以预注册草案 §4.2、§4.3 为准。开关关闭时这些函数不被调用。
 
-T1 是 C1 的两个方向：
+T1 只改慢组的资格：
 
-- 反弹：快组都跑赢现金、慢组自己还没有。慢组也可以买它，但数据必须够排名。
-- 回调：快组都没跑赢现金、慢组自己仍跑赢。慢组不新买它；上一决策日本组已经持有的可以留。
+- 反弹：本组跑输现金，快组都跑赢。慢组可以买，但数据必须够排名。
+- 回调：本组跑赢现金，快组都跑输。慢组没有资格，已经持有的也在这次调仓调出。
+- 其他情况仍看本组是否跑赢现金。
 
-快组本身的过滤不变。一快一慢对不上时，不换挡，各组仍看自己。
+T2 用 BM-主净值的 60 日趋势效率。q(t) 是此前所有 E(s)（s < t）里严格小于 E(t) 的比例。
+此前的 E 少于 250 个时 q = 0.5。f = 0.25 + 0.5 × q。快组各 f/2，慢组各 (1-f)/2。
 """
 from __future__ import annotations
 
@@ -57,10 +58,13 @@ def t1_eligible(prepared: dict[int, Lookback], day: pd.Timestamp, names: list[st
                 continue
             up = all(_flag(prepared[item], stamp, name) for item in fast)
             down = all(not _flag(prepared[item], stamp, name) for item in fast)
-            prev = float(held.get(length, {}).get(name, 0.0)) > weight_eps
             rebound = (not own) and up and _rankable(prepared[length], stamp, name)
-            pullback_block = own and down and (not prev)
-            flags.append((own and not pullback_block) or rebound)
+            # 回调：本组仍跑赢、快组都转负。已持有的也不再有资格，本次调仓调出。
+            if own and down:
+                flags.append(False)
+            else:
+                flags.append(bool(own or rebound))
+            _ = held, weight_eps
         out[length] = pd.Series(flags, index=names, dtype=bool)
     return out
 
@@ -84,24 +88,75 @@ def trend_efficiency(level: pd.Series | None, day, window: int) -> float | None:
     return change / path
 
 
-def sleeve_weights(efficiency: float | None, lookbacks) -> list[float] | None:
-    """效率高时快组权重大，效率低时慢组权重大。None 表示这一天用原来的等权平均。"""
-    if efficiency is None or not math.isfinite(efficiency):
+# 草案 §4.3：此前 E 值少于 250 个时 q = 0.5。不是可调参数。
+Q_MIN_HISTORY = 250
+
+
+def efficiency_series(level: pd.Series | None, window: int) -> pd.Series:
+    """每个时点的 E(t)。窗口不够、或窗口里有非正价格时，这一天是空值。"""
+    if level is None or window < 1 or len(level) == 0:
+        return pd.Series(dtype=float)
+    hist = level.sort_index()
+    hist = hist[~hist.index.duplicated(keep="last")]
+    values = hist.to_numpy(dtype=float)
+    out = np.full(len(hist), np.nan)
+    for i in range(int(window), len(hist)):
+        chunk = values[i - int(window):i + 1]
+        if not np.isfinite(chunk).all() or np.any(chunk <= 0.0):
+            continue
+        change = abs(float(chunk[-1]) - float(chunk[0]))
+        path = float(np.abs(np.diff(chunk)).sum())
+        out[i] = 0.0 if path == 0.0 else change / path
+    return pd.Series(out, index=hist.index, dtype=float)
+
+
+def percentile_q(efficiency: pd.Series | None, min_history: int = Q_MIN_HISTORY) -> pd.Series:
+    """q(t) = 此前 E(s)（s < t）中严格小于 E(t) 的比例。历史少于 min_history 时为 0.5。
+
+    相等的不算小于。E(t) 自己不进入分母。空的 E 不占历史。
+    """
+    if efficiency is None or len(efficiency) == 0:
+        return pd.Series(dtype=float)
+    values = efficiency.to_numpy(dtype=float)
+    out = np.full(len(values), np.nan)
+    prior: list[float] = []
+    need = int(min_history)
+    for i, value in enumerate(values):
+        if not math.isfinite(float(value)):
+            continue
+        current = float(value)
+        if len(prior) < need:
+            out[i] = 0.5
+        else:
+            out[i] = sum(item < current for item in prior) / float(len(prior))
+        prior.append(current)
+    return pd.Series(out, index=efficiency.index, dtype=float)
+
+
+def speed_fraction(q: float | None) -> float | None:
+    """f(t) = 0.25 + 0.5 × q(t)。q 先收到 [0, 1]，所以 f 在 25% 到 75%。"""
+    if q is None or not math.isfinite(float(q)):
         return None
+    clipped = min(1.0, max(0.0, float(q)))
+    return 0.25 + 0.5 * clipped
+
+
+def sleeve_weights_from_q(q: float | None, lookbacks) -> list[float] | None:
+    """快组各 f/2，慢组各 (1-f)/2。q 算不出来时返回 None，调用方改回等权。"""
+    fraction = speed_fraction(q)
     fast, slow = split_speed(lookbacks)
-    if not fast or not slow:
+    if fraction is None or not fast or not slow:
         return None
-    er = min(1.0, max(0.0, float(efficiency)))
     fast_set = set(fast)
-    fast_each = er / float(len(fast))
-    slow_each = (1.0 - er) / float(len(slow))
+    fast_each = fraction / float(len(fast))
+    slow_each = (1.0 - fraction) / float(len(slow))
     return [fast_each if length in fast_set else slow_each for length in lookbacks]
 
 
-def blend_sleeves(parts: list[dict[str, float]], efficiency: float | None, lookbacks,
+def blend_sleeves(parts: list[dict[str, float]], q: float | None, lookbacks,
                   names: list[str], cash_id: str, equal) -> dict[str, float]:
-    """`equal` 是 v3.1 的等权平均函数。效率算不出来时直接调用它。"""
-    sleeve = sleeve_weights(efficiency, lookbacks)
+    """`equal` 是 v3.1 的等权平均。q 为空时直接调用它。"""
+    sleeve = sleeve_weights_from_q(q, lookbacks)
     if sleeve is None:
         return equal(parts, names, cash_id)
     return weighted_average(parts, sleeve, names, cash_id)
