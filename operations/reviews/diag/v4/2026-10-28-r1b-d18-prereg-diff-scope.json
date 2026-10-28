@@ -1,0 +1,13 @@
+{
+  "baseline_sha": "2633613e0f652811f96db2a0dd16e4e7bee06eff",
+  "tip_sha": "83f300de0982b740c486017e427f4e7986eef9d9",
+  "prereg_path": "docs/prereg/etf-multiasset-rotation-prereg-v4.md",
+  "hunk_count": 4,
+  "hunks": [
+    "title: 草案第 2 版 → 2.1 版",
+    "metadata: R1b 状态与 D18 待复核说明",
+    "section_3_1: D18-1 收盘时点 + D18-2 市场是成长的",
+    "appendix_r1_table: note 汇率行跟踪 D18-1"
+  ],
+  "mf_sections_unchanged": ["§3.1 MF-2 纳入条", "§3.2", "§4", "§6.2", "§6.3"]
+}
