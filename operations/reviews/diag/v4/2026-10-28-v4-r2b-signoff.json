@@ -1,0 +1,36 @@
+{
+  "dev_tip": "d36218d77b944e06a70b1ac819a58c63c7998ed0",
+  "pythonhashseed": "0",
+  "p1": {
+    "n_days": 2671,
+    "first_day": "2005-01-04",
+    "last_day": "2015-12-31"
+  },
+  "shas": {
+    "net": "962178c503df7d1ee900971711271fc4fac4436522053dbc9c297b48c3b8fa57",
+    "held": "bdd1521f7d9d66404184351dfe50e3e4681edfd91415e46572394c44d6eea32b",
+    "cost": "62b76e5375f73360de7e4b03753808bd00058310c7dc35ce353ca091a4e44e0c",
+    "3-week": "75e3f744c2f347781965632729a184cd9c0244efc41a84963f5b3550f0e6e5a6",
+    "3-month": "6cbf6fd1e24696d6c855305a63447f0e761f7ca73c6c559a28dfea253243d42f",
+    "5-week": "d5bddc5cea82b4aa9bc3b32bda21c8c00e8af66e31f8aac7ed8afafdf10ce760",
+    "5-month": "f2470bf01046c3739b4fafd87dc356b80212a52ba2f20db37297c04320478fe3",
+    "8-week": "64ed67d0756a69cda899903ea8da7db100828b07f09cd6560a730e5c73d2aa7f",
+    "8-month": "83131d7b8d4f010fec33bf799669cfa88bae465d483be7bd03dcee4f3acf1f6e"
+  },
+  "matches_expected": {
+    "net": true,
+    "held": true,
+    "cost": true,
+    "3-week": true,
+    "3-month": true,
+    "5-week": true,
+    "5-month": true,
+    "8-week": true,
+    "8-month": true
+  },
+  "plain_equals_engine_switches_idle": true,
+  "freeze_tag_commit": "b1f84d899f4a37914c1ce4ef0ab16484f0ef7cdb",
+  "freeze_worktree_net_sha": null,
+  "freeze_net_matches": null,
+  "decision_inputs_ok": true
+}
