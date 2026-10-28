@@ -1,26 +1,29 @@
 """U-可交易载体。开关关闭时不调用。
 
-顺序是预注册草案 §3.2 的字面，和载体表同一读法：
+顺序是预注册第 2.1 版 §3.2：
 
 1. 跟踪同一指数的场内 ETF，有后复权，并且满足 v3 §3.3 的可交易首日和当天流动性。
    可交易首日 = max(上市日后第 60 个上交所交易日, 首次「近 20 个自身交易日成交额中位数 ≥ 3000 万元」)。
    上市日取原始 K 线第一根正收盘，第 60 个交易日不含上市日当天。
    流动性是当天的条件：这一天对应的近 20 个自身交易日成交额中位数仍然 ≥ 3000 万元。
-2. 跟踪同一指数的场外纯指数基金。增强型不用。草案没有把「联接」排除出这一档，
-   非增强且跟踪同一指数的联接放在第 2 档。
+   同一档多只时，近 20 日成交额中位数高的优先，再按代码升序。不够 3000 万就看下一档（D16-1）。
+2. 跟踪同一指数的场外纯指数基金，含非增强的联接基金（D16-2）。增强型不用。
+   成立日早的优先，再取第一笔净值早的，再按代码升序。
 3. 已经决定的相近替身，只有 161211 和 510880。不把拒绝入库的指数升成替身。
-4. 美股行业才用美国的 SPDR，后复权。
+   登记表顺序，再按代码升序。场内的同样要过第 1 档的流动性。
+4. 美股行业才用美国的 SPDR，后复权。可用的后复权收盘严格早于 D。
 
-同一档有多只场外基金时，取成立日最早的，再取净值起点最早的，再取代码最小的。
-场内同一档按登记表里的先后。都没有的那天，该容器不进 U-可交易排名。
+都没有的那天，该容器不进 U-可交易排名。
 """
 from __future__ import annotations
 
 import sqlite3
 from dataclasses import dataclass
 
+import numpy as np
 import pandas as pd
 
+from src.v3.engine.limits import board_of
 from src.v4.data.r1b import EXACT_INDEX
 
 # 14 个 A 股容器之外，执行层跟踪标的就是容器自己的指数。
@@ -47,6 +50,7 @@ CALENDAR_FROM = "2005-01-04"
 class CarrierChoice:
     vehicle: str
     code: str
+    board: str = "none"
 
     @property
     def label(self) -> str:
@@ -215,6 +219,8 @@ class _Candidate:
     nav_start: str
     order: int
     available: pd.Series
+    median: pd.Series
+    board: str
 
 
 def _mask(calendar: pd.DatetimeIndex, predicate) -> pd.Series:
@@ -230,7 +236,8 @@ def build_candidates(con: sqlite3.Connection, containers: list[dict], calendar: 
     for identity, rows in etfs.items():
         for row in rows:
             grouped.setdefault(identity, []).append(_etf_candidate(
-                con, identity, row["code"], row["order"], calendar, end, tier=1, vehicle="etf"))
+                con, identity, row["code"], row["order"], calendar, end, tier=1, vehicle="etf",
+                track=row["tracks"]))
     for row in _listings(con):
         identity = str(row["maps_to"])
         track = str(row["tracked_index"] or "")
@@ -246,12 +253,14 @@ def build_candidates(con: sqlite3.Connection, containers: list[dict], calendar: 
         available = pd.Series(calendar >= opened, index=calendar)
         grouped.setdefault(identity, []).append(_Candidate(
             container=identity, code=str(row["code"]), vehicle="otc", tier=2,
-            inception=inception, nav_start=str(nav_start.date()), order=0, available=available))
-    for row in SUBSTITUTES:
+            inception=inception, nav_start=str(nav_start.date()), order=0, available=available,
+            median=pd.Series(dtype=float), board="none"))
+    for order, row in enumerate(SUBSTITUTES):
         identity = row["container"]
         if row["vehicle"] == "etf":
             grouped.setdefault(identity, []).append(_etf_candidate(
-                con, identity, row["code"], 0, calendar, end, tier=3, vehicle="near"))
+                con, identity, row["code"], order, calendar, end, tier=3, vehicle="near",
+                track=row["tracks"]))
             continue
         nav_start = otc_nav_start(con, row["code"], end)
         inception = str(nav_start.date()) if nav_start is not None else ""
@@ -265,7 +274,8 @@ def build_candidates(con: sqlite3.Connection, containers: list[dict], calendar: 
         available = pd.Series(calendar >= opened, index=calendar)
         grouped.setdefault(identity, []).append(_Candidate(
             container=identity, code=row["code"], vehicle="near", tier=3,
-            inception=inception, nav_start=str(nav_start.date()), order=0, available=available))
+            inception=inception, nav_start=str(nav_start.date()), order=order, available=available,
+            median=pd.Series(dtype=float), board="none"))
     for identity, code in us_spdr:
         dates = hfq_dates(con, code, end)
         if len(dates) == 0:
@@ -278,14 +288,16 @@ def build_candidates(con: sqlite3.Connection, containers: list[dict], calendar: 
         grouped.setdefault(identity, []).append(_Candidate(
             container=identity, code=code, vehicle="spdr", tier=4,
             inception="", nav_start="", order=0,
-            available=pd.Series(flags, index=calendar, dtype=bool)))
+            available=pd.Series(flags, index=calendar, dtype=bool),
+            median=pd.Series(dtype=float), board="none"))
     for identity, rows in grouped.items():
         rows.sort(key=lambda item: (item.tier, item.order, item.inception, item.nav_start, item.code))
         grouped[identity] = rows
     return grouped
 
 
-def _etf_candidate(con, identity, code, order, calendar, end, *, tier: int, vehicle: str) -> _Candidate:
+def _etf_candidate(con, identity, code, order, calendar, end, *, tier: int, vehicle: str,
+                   track: str = "") -> _Candidate:
     prints = raw_dates(con, code, end)
     median = amount_median(con, code, end)
     backward = hfq_dates(con, code, end)
@@ -295,19 +307,154 @@ def _etf_candidate(con, identity, code, order, calendar, end, *, tier: int, vehi
         calendar, day, hfq=backward, prints=prints, median=median, opened=opened))
     return _Candidate(
         container=identity, code=code, vehicle=vehicle, tier=tier,
-        inception="", nav_start="", order=order, available=available)
+        inception="", nav_start="", order=order, available=available,
+        median=median, board=board_of(track, code))
+
+
+def _median_on(item: _Candidate, day: pd.Timestamp) -> float:
+    series = item.median
+    if series is None or len(series) == 0:
+        return float("-inf")
+    known = series.dropna()
+    known = known[known.index <= pd.Timestamp(day)]
+    if known.empty:
+        return float("-inf")
+    return float(known.iloc[-1])
 
 
 def choose_on(candidates: list[_Candidate], day: pd.Timestamp) -> CarrierChoice | None:
+    """当天可用的最低一档。第 1 档按成交额中位数、再按代码；不够 3000 万的不在可用名单里。"""
     stamp = pd.Timestamp(day)
+    ready = []
     for item in candidates:
         if stamp not in item.available.index:
             continue
         if bool(item.available.at[stamp]):
-            return CarrierChoice(item.vehicle, item.code)
-    return None
+            ready.append(item)
+    if not ready:
+        return None
+    tier = min(item.tier for item in ready)
+    pool = [item for item in ready if item.tier == tier]
+    if tier == 1:
+        pool.sort(key=lambda item: (-_median_on(item, stamp), item.code))
+    elif tier == 2:
+        pool.sort(key=lambda item: (item.inception or "9999-99-99", item.nav_start or "9999-99-99", item.code))
+    else:
+        pool.sort(key=lambda item: (item.order, item.code))
+    winner = pool[0]
+    return CarrierChoice(winner.vehicle, winner.code, winner.board)
 
 
 def choices_on(grouped: dict[str, list[_Candidate]], day: pd.Timestamp,
                containers: list[str]) -> dict[str, CarrierChoice | None]:
     return {identity: choose_on(grouped.get(identity, []), day) for identity in containers}
+
+
+@dataclass(frozen=True)
+class StitchedFill:
+    """U-可交易当天载体的收盘、同一只的前收、以及涨跌停板块。"""
+
+    close: pd.Series
+    prev: pd.Series
+    board: pd.Series
+
+
+def _close_and_prev(series: pd.Series | None, day, *, strict_before: bool) -> tuple[float, float]:
+    """A 股场内和场外用当天打印。美股 SPDR 用严格早于 D 的收盘。没有打印就是空。"""
+    if series is None or len(series) == 0:
+        return float("nan"), float("nan")
+    stamp = pd.Timestamp(day).normalize()
+    ordered = series.dropna().sort_index()
+    if strict_before:
+        known = ordered[ordered.index < stamp]
+        if known.empty:
+            return float("nan"), float("nan")
+        close = float(known.iloc[-1])
+        prev = float(known.iloc[-2]) if len(known) >= 2 else float("nan")
+        return close, prev
+    if stamp not in ordered.index:
+        return float("nan"), float("nan")
+    earlier = ordered[ordered.index < stamp]
+    prev = float(earlier.iloc[-1]) if len(earlier) else float("nan")
+    return float(ordered.loc[stamp]), prev
+
+
+def stitch_fills(grouped: dict[str, list[_Candidate]], days, prints: dict[str, pd.Series],
+                 assets: dict[str, str]) -> dict[str, StitchedFill]:
+    """每个容器用当天选中的载体自己的收盘。港股、美股容器不设涨跌停。"""
+    index = pd.DatetimeIndex(pd.to_datetime(days))
+    out: dict[str, StitchedFill] = {}
+    for name, rows in grouped.items():
+        asset = assets.get(name, "")
+        no_band = asset == "港股" or str(asset).startswith("美股")
+        closes = []
+        prevs = []
+        boards = []
+        for day in index:
+            choice = choose_on(rows, day)
+            if choice is None:
+                closes.append(np.nan)
+                prevs.append(np.nan)
+                boards.append("none")
+                continue
+            close, prev = _close_and_prev(
+                prints.get(choice.code), day, strict_before=choice.vehicle == "spdr")
+            closes.append(close)
+            prevs.append(prev)
+            boards.append("none" if no_band else choice.board)
+        out[name] = StitchedFill(
+            close=pd.Series(closes, index=index, dtype=float),
+            prev=pd.Series(prevs, index=index, dtype=float),
+            board=pd.Series(boards, index=index, dtype=object),
+        )
+    return out
+
+
+def _positive_series(frame: pd.DataFrame) -> dict[str, pd.Series]:
+    out: dict[str, pd.Series] = {}
+    if frame.empty:
+        return out
+    frame = frame.copy()
+    frame["date"] = pd.to_datetime(frame["date"])
+    for code, block in frame.groupby("code", sort=False):
+        series = pd.Series(block["close"].to_numpy(dtype=float), index=pd.DatetimeIndex(block["date"]))
+        series = series[np.isfinite(series.to_numpy(dtype=float)) & (series > 0)]
+        out[str(code)] = series[~series.index.duplicated(keep="last")].sort_index()
+    return out
+
+
+def prints_for(con: sqlite3.Connection, grouped: dict[str, list[_Candidate]], end: str) -> dict[str, pd.Series]:
+    """场内用原始收盘，场外用复权净值，美股 SPDR 用后复权。"""
+    raw_codes: list[str] = []
+    nav_codes: list[str] = []
+    back_codes: list[str] = []
+    for rows in grouped.values():
+        for row in rows:
+            if row.vehicle == "spdr":
+                back_codes.append(row.code)
+            elif row.vehicle == "otc" or (row.vehicle == "near" and row.board == "none"):
+                nav_codes.append(row.code)
+            else:
+                raw_codes.append(row.code)
+    found: dict[str, pd.Series] = {}
+
+    def pull(sql: str, codes: list[str]) -> None:
+        if not codes:
+            return
+        marks = ",".join("?" * len(codes))
+        frame = pd.read_sql_query(sql.format(marks=marks), con, params=[end, *codes])
+        found.update(_positive_series(frame))
+
+    pull(
+        "SELECT code, date, close FROM bars WHERE adj = 'raw' AND close > 0 AND date <= ? "
+        "AND code IN ({marks})",
+        raw_codes)
+    pull(
+        "SELECT code, date, close FROM v4_series WHERE kind = 'otc_nav' AND close > 0 AND date <= ? "
+        "AND code IN ({marks})",
+        nav_codes)
+    pull(
+        "SELECT code, date, close FROM v4_series WHERE kind = 'backward' AND close > 0 AND date <= ? "
+        "AND code IN ({marks})",
+        back_codes)
+    return found
