@@ -1,6 +1,7 @@
 """纯解析。不出网，不写库。"""
 from __future__ import annotations
 
+import html as html_lib
 import re
 from datetime import datetime, timezone
 from html.parser import HTMLParser
@@ -282,13 +283,52 @@ def _anchor_text(html: str) -> str:
     return match.group(1).strip() if match else re.sub(r"<[^>]+>", "", html or "").strip()
 
 
+def _td_value(html: str, label: str) -> str:
+    """概况表一格的全文。空格保留，不用第一个词截断。"""
+    match = re.search(
+        rf"{re.escape(label)}\s*</t[hd][^>]*>\s*<td[^>]*>\s*([^<]*)",
+        html or "",
+        re.I,
+    )
+    if not match:
+        return ""
+    text = html_lib.unescape(match.group(1))
+    return re.sub(r"\s+", " ", text).replace("\xa0", " ").strip()
+
+
+def index_from_benchmark(text: str) -> str:
+    """业绩比较基准里只出现一只指数时，取出指数全称。多只或看不出就不猜。"""
+    raw = (text or "").strip()
+    if not raw or any(tok in raw for tok in ("+", "＋", "%", "％", "以及")):
+        return ""
+    cleaned = re.sub(r"[（(][^）)]*[）)]", "", raw)
+    cleaned = cleaned.replace("收益率", "")
+    cleaned = re.sub(r"^经[^的]{0,40}的", "", cleaned).strip(" ，,")
+    if cleaned.count("指数") != 1:
+        return ""
+    if any(tok in cleaned for tok in ("+", "＋", "和", "以及", "%", "％")):
+        return ""
+    return cleaned
+
+
 def parse_jbgk(html: str) -> dict:
     """基金概况页的可见字段。没有上市日期字段时不编一个。"""
     text = re.sub(r"<[^>]+>", " ", html)
     text = re.sub(r"\s+", " ", text)
     full = _after(text, "基金全称")
     kind = _after(text, "基金类型")
-    track = _after(text, "跟踪标的")
+    cell = _td_value(html, "跟踪标的") or _after(text, "跟踪标的")
+    bench = _td_value(html, "业绩比较基准") or _after(text, "业绩比较基准")
+    track = cell
+    # 单元格被截成没有「指数 / Index」的残段时，同一页的业绩比较基准若只写了一只指数，用那个全称。
+    if (
+        classify_track(cell) == "unknown"
+        and cell
+        and ("海外" in (kind or "") or "QDII" in (full or "") or "QDII" in (kind or ""))
+    ):
+        recovered = index_from_benchmark(bench)
+        if classify_track(recovered) == "single_index":
+            track = recovered
     setup = ""
     match = re.search(r"成立日期/规模\s*(\d{4}年\d{2}月\d{2}日)", text)
     if match:
@@ -307,6 +347,8 @@ def parse_jbgk(html: str) -> dict:
         "full_name": full,
         "fund_type": kind,
         "track": track,
+        "track_cell": cell,
+        "benchmark": bench,
         "setup_date": setup,
         "list_date": listed,
         "single_index": classify_track(track),
@@ -340,7 +382,7 @@ def classify_track(track: str) -> str:
         return "not_single_index"
     if any(tok in text for tok in ("+", "＋", "和", "以及", "%", "％")):
         return "not_single_index"
-    if "指数" in text:
+    if "指数" in text or re.search(r"\bIndex\b", text):
         return "single_index"
     return "unknown"
 

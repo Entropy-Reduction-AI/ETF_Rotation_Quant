@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[3]
 UNIVERSE_OUT = ROOT / "config" / "v3" / "universe.toml"
 CSI_DIR = artifacts.INCOMING / "raw" / "csi"
 JBGK_DIR = artifacts.INCOMING / "raw" / "jbgk"
+JBGK_OVERLAY = ROOT / "incoming" / "2026-10-28-d17-qdii" / "raw" / "jbgk"
 SZSE_DIR = artifacts.INCOMING / "raw" / "szse"
 LAUNCH_CSV = ROOT / "incoming" / "grok-pit-20261022" / "index_launch.csv"
 PHASE1_UNIVERSE = ROOT / "data" / "universe.csv"
@@ -147,7 +148,7 @@ def load_szse(directory: Path = SZSE_DIR) -> dict[str, dict]:
     return out
 
 
-def load_jbgk(directory: Path = JBGK_DIR) -> dict[str, dict]:
+def _load_jbgk_dir(directory: Path) -> dict[str, dict]:
     out = {}
     if not directory.exists():
         return out
@@ -161,6 +162,13 @@ def load_jbgk(directory: Path = JBGK_DIR) -> dict[str, dict]:
             continue
         profile["path"] = str(path.relative_to(ROOT))
         out[code] = profile
+    return out
+
+
+def load_jbgk(directory: Path = JBGK_DIR, overlay: Path = JBGK_OVERLAY) -> dict[str, dict]:
+    """D17 重新抓的概况页只覆盖同代码，不替换 2026-10-24 的原件。"""
+    out = _load_jbgk_dir(directory)
+    out.update(_load_jbgk_dir(overlay))
     return out
 
 

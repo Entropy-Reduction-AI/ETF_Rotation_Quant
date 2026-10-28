@@ -2418,3 +2418,14 @@ XLE,etf,raw,yahoo,large_move,2020-03-09,2020-03-09,1,move=-0.201412 other_move=-
 513500,etf,backward,tencent_etf_hfq,missing_trade_days,2022-03-29,2022-03-29,1,日历有、序列没有正收盘,可以接受
 520830,etf,backward,eastmoney_fhsp,missing_trade_days,2025-01-23,2025-01-23,1,日历有、序列没有正收盘,可以接受
 XLE,etf,backward,yahoo,large_move,2020-03-09,2020-03-09,1,move=-0.201412,可以接受
+160125,fund,fund_nav,eastmoney_f10_lsjz,nav_starts_after_list_date,2021-01-04,2021-01-04,1,list_date=2011-11-01 first_nav=2021-01-04 limit=2011-12-01,
+160216,fund,fund_nav,eastmoney_f10_lsjz,nav_starts_after_list_date,2021-01-04,2021-01-04,1,list_date=2015-04-07 first_nav=2021-01-04 limit=2015-05-07,
+160644,fund,fund_nav,eastmoney_f10_lsjz,nav_starts_after_list_date,2021-01-04,2021-01-04,1,list_date=2017-12-29 first_nav=2021-01-04 limit=2018-01-29,
+160719,fund,fund_nav,eastmoney_f10_lsjz,nav_starts_after_list_date,2021-01-04,2021-01-04,1,list_date=2012-02-10 first_nav=2021-01-04 limit=2012-03-10,
+161116,fund,fund_nav,eastmoney_f10_lsjz,nav_starts_after_list_date,2021-01-04,2021-01-04,1,list_date=2011-11-08 first_nav=2021-01-04 limit=2011-12-08,
+161229,fund,fund_nav,eastmoney_f10_lsjz,nav_starts_after_list_date,2021-01-04,2021-01-04,1,list_date=2016-01-04 first_nav=2021-01-04 limit=2016-02-04,
+161815,fund,fund_nav,eastmoney_f10_lsjz,nav_starts_after_list_date,2021-01-04,2021-01-04,1,list_date=2010-12-20 first_nav=2021-01-04 limit=2011-01-20,
+163208,fund,fund_nav,eastmoney_f10_lsjz,nav_starts_after_list_date,2021-01-04,2021-01-04,1,list_date=2015-02-17 first_nav=2021-01-04 limit=2015-03-17,
+164701,fund,fund_nav,eastmoney_f10_lsjz,nav_starts_after_list_date,2021-01-04,2021-01-04,1,list_date=2012-03-01 first_nav=2021-01-04 limit=2012-04-01,
+164824,fund,fund_nav,eastmoney_f10_lsjz,nav_starts_after_list_date,2021-01-04,2021-01-04,1,list_date=2018-08-01 first_nav=2021-01-04 limit=2018-09-01,
+165513,fund,fund_nav,eastmoney_f10_lsjz,nav_starts_after_list_date,2021-01-04,2021-01-04,1,list_date=2012-01-13 first_nav=2021-01-04 limit=2012-02-13,
