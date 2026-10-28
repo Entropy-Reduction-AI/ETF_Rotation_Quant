@@ -31,6 +31,7 @@ from .prices import (
 )
 from .spec import Spec
 from .universe import (
+    A_SHARE,
     execution_code,
     fee_for,
     parse_date,
@@ -64,6 +65,8 @@ class Market:
     asset_classes: dict | None = None
     dividend_yield: pd.DataFrame | None = None
     bm_nav: pd.Series | None = None
+    fill_board_by_day: dict | None = None
+    fill_prev: dict | None = None
 
 
 def levels_from_returns(pnl: pd.DataFrame, cash_id: str) -> pd.DataFrame:
@@ -170,6 +173,18 @@ def _liquidity(amount: pd.Series, calendar: pd.DatetimeIndex, list_date: pd.Time
     start = max(opened, first_liquid)
     ok = (calendar >= start) & median.ge(spec.min_new_buy_amount).fillna(False).to_numpy()
     return pd.Series(ok, index=calendar)
+
+
+def index_pool_fill_close(pool: str, asset_class: str, research: pd.Series, traded: pd.Series) -> pd.Series:
+    """U-指数的 A 股容器用研究序列收盘判断涨跌停。其余用成交工具自己的收盘。"""
+    if pool == "index" and asset_class in A_SHARE:
+        return research
+    return traded
+
+
+def _no_limit_asset(asset_class: str) -> bool:
+    text = asset_class or ""
+    return text == "港股" or text.startswith("美股")
 
 
 def _raw_close(block: pd.DataFrame | None) -> pd.Series:
@@ -335,9 +350,12 @@ def load_market(db: Path, containers: list[dict], arm: str, pool: str, end, spec
         traded = execution_code(container)
         executions = container.get("execution") or []
         track = str(executions[0].get("track") or "") if executions else ""
-        fill_close[identity] = _raw_close(bars.get(traded or ""))
-        fill_board[identity] = fill_board_for(track, traded or "", str(container.get("asset_class") or ""))
-        asset_classes[identity] = str(container.get("asset_class") or "")
+        asset = str(container.get("asset_class") or "")
+        research_close = _raw_close(bars.get(code or ""))
+        traded_close = _raw_close(bars.get(traded or ""))
+        fill_close[identity] = index_pool_fill_close(pool, asset, research_close, traded_close)
+        fill_board[identity] = fill_board_for(track, traded or "", asset)
+        asset_classes[identity] = asset
 
         def one(kind: str, *, lagged: bool):
             if kind == "research":
@@ -351,6 +369,9 @@ def load_market(db: Path, containers: list[dict], arm: str, pool: str, end, spec
             raise RunnerError(kind)
 
         signal_level, signal_fresh, signal_gaps = one(signal_kind, lagged=True)
+        if pool == "index" and _no_limit_asset(asset):
+            # 港股、美股没有涨跌停。有没有价看研究序列，不看后来才上市的场内 ETF。
+            fill_close[identity] = signal_level.where(signal_level > 0)
         signal[identity] = signal_returns(signal_level, signal_gaps).reindex(calendar)
         rank = signal_fresh.reindex(calendar).fillna(False).astype(bool)
         if pnl_kind == signal_kind and signal_kind != "nav":

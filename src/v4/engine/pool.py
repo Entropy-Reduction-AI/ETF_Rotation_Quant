@@ -1,7 +1,8 @@
 """T4 新池的研究序列。只构造排名用的收益，不跑组合。
 
 美股行业：后复权美元收盘严格早于 D，乘 D 当天或之前的美元中间价。
-港股四个分类：价格指数对齐到严格早于 D 的收盘，再乘 D 当天或之前的港币中间价。
+港股四个分类和旧池恒生（B0 的汇率开关打开时）：D 当天的港股收盘，休市沿用最近收盘，
+再乘 D 当天或之前的港币中间价（D18-1）。不沿用 D16-7 的「严格早于 D」。
 `filled=True` 时中间价用含 2005 年补齐的 v4 序列。开关关闭时不调用。
 """
 from __future__ import annotations
@@ -14,7 +15,7 @@ from src.report.blend import monthly_rebalance
 from src.report.fx import cny_from_usd, latest_on_or_before
 from src.v3.engine.benchmark import WEIGHTS, _closes, _cny_returns, _level_returns, _ohlc
 from src.v3.engine.market import _research_level, _split_bars, _usd_level
-from src.v3.engine.prices import signal_returns
+from src.v3.engine.prices import align_same_day, signal_returns, total_return_close
 from src.v3.engine.score import lookback_panel
 from src.v3.engine.sessions import decision_dates
 from src.v3.engine.spec import Spec
@@ -60,18 +61,42 @@ def _closes_frame(con: sqlite3.Connection, code: str, end: str, *, kind: str) ->
     return frame.loc[:, ["date", "open", "close"]]
 
 
-def _hk_level(code: str, bars: dict, calendar, spec: Spec, hkd: pd.Series | None):
-    level, fresh, gaps = _research_level(code, "tencent_hk_index", bars, {}, calendar, None, spec, None)
-    if hkd is None:
+def _with_fx(level: pd.Series, fresh: pd.Series, gaps, calendar, fx: pd.Series | None):
+    """乘 D 当天或之前最近的中间价。没有汇率序列时价格保持原币。"""
+    if fx is None:
         return level, fresh, gaps
-    rate = latest_on_or_before(hkd, calendar)
-    priced = level * rate.reindex(calendar).to_numpy(dtype=float)
-    fresh = fresh.reindex(calendar).fillna(False).astype(bool) & rate.notna().to_numpy() & priced.notna()
+    rate = latest_on_or_before(fx, calendar)
+    priced = level.reindex(calendar) * rate.reindex(calendar)
+    fresh = fresh.reindex(calendar).fillna(False).astype(bool) & rate.notna().to_numpy() & priced.notna().to_numpy()
     return priced, fresh, gaps
 
 
+def _hk_level(code: str, bars: dict, calendar, spec: Spec, hkd: pd.Series | None, *,
+              same_day: bool = True):
+    """港股收盘时点。`same_day=True` 是 D18-1：决策日 D 用 D 当天的港股收盘。
+
+    休市日沿用最近有效收盘（v3 §3.3）。`same_day=False` 只留给和 Manager R1 旧表对照，
+    那条路径仍是严格早于 D。B0 和四个分类走默认的当天收盘。
+    BM-主 的权重里没有港股；和它同一条决策日上的恒生、四个分类都用这个函数。
+    """
+    block = None if bars is None else bars.get(code)
+    if block is None or getattr(block, "empty", True) or not same_day:
+        level, fresh, gaps = _research_level(code, "tencent_hk_index", bars, {}, calendar, None, spec, None)
+        return _with_fx(level, fresh, gaps, calendar, hkd)
+    frame = block.loc[:, ["date", "open", "close"]].copy()
+    frame["date"] = pd.to_datetime(frame["date"])
+    frame["open"] = frame["open"].fillna(frame["close"])
+    adjusted, gaps = total_return_close(frame, {})
+    level, fresh = align_same_day(adjusted, calendar, spec.stale_limit)
+    cal = pd.DatetimeIndex(pd.to_datetime(calendar)).normalize()
+    gap_set = set(pd.DatetimeIndex(gaps).normalize()) if len(gaps) else set()
+    gap_on = pd.DatetimeIndex([day for day in cal if pd.Timestamp(day) in gap_set])
+    return _with_fx(level, fresh, gap_on, calendar, hkd)
+
+
 def added_signals(con: sqlite3.Connection, calendar: pd.DatetimeIndex, spec: Spec, end: str, *,
-                  adjusted: bool, hk_fx: bool, usd_filled: bool) -> tuple[pd.DataFrame, pd.DataFrame]:
+                  adjusted: bool, hk_fx: bool, usd_filled: bool,
+                  hk_same_day: bool = True) -> tuple[pd.DataFrame, pd.DataFrame]:
     """返回 (信号收益, 是否可排名)。列是新容器。不含组合净值。"""
     usd = load_mid(con, "USDCNY", end, filled=usd_filled)
     hkd = load_mid(con, "HKDCNY", end, filled=True) if hk_fx else None
@@ -94,7 +119,7 @@ def added_signals(con: sqlite3.Connection, calendar: pd.DatetimeIndex, spec: Spe
         signals[name] = signal_returns(level, pd.DatetimeIndex([])).reindex(calendar)
         fresh[name] = flag.reindex(calendar).fillna(False).astype(bool)
     for name, code in HK_SECTORS:
-        level, flag, gaps = _hk_level(code, hk_bars, calendar, spec, hkd)
+        level, flag, gaps = _hk_level(code, hk_bars, calendar, spec, hkd, same_day=hk_same_day)
         signals[name] = signal_returns(level, gaps).reindex(calendar)
         fresh[name] = flag.reindex(calendar).fillna(False).astype(bool)
     if not signals:
@@ -130,7 +155,11 @@ def month_decision(dates: pd.DatetimeIndex, year: int, month: int) -> pd.Timesta
 
 
 def bm_nav_level(con: sqlite3.Connection, calendar: pd.DatetimeIndex, end: str) -> pd.Series:
-    """T2 用的 BM-主净值。汇率用含 2005 补齐的美元中间价。返回的是净值水平，不是收益汇总。"""
+    """T2 用的 BM-主净值。汇率用含 2005 补齐的美元中间价。返回的是净值水平，不是收益汇总。
+
+    权重是 70% 沪深300、15% 纳指100、15% 标普500，没有港股。美股两条腿严格早于 D
+    （`cny_from_usd`）。港股不放进这条净值；旧池恒生和四个分类在 `_hk_level` 里用 D 当天收盘。
+    """
     fx = load_mid(con, "USDCNY", end, filled=True)
     h00300 = _level_returns(_closes(con, "H00300", calendar, end))
     xndx = _cny_returns(cny_from_usd(_ohlc(con, "XNDX", end), fx, calendar))
