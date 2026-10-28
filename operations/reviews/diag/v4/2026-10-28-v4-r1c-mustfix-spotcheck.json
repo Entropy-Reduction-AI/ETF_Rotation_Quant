@@ -1,0 +1,94 @@
+{
+  "reviewed_dev_pr": 85,
+  "dev_tip_sha": "48f50796640ff4c98c0f1c105dd2473c8ff1922c",
+  "dev_base_sha": "e338a5b2101b322701d52b6df8613fe7fcef01d6",
+  "pre_write_sqlite_sha256": "43bf125532da01fb6f0056db77f2ab05b3da3f0bdc5f32fa33502bafffd922fc",
+  "post_write_sqlite_sha256_claim": "6c896fd1e5de6bc66ddf6f42833033f202f6e480f4d78c6cd267c6c6a4362248",
+  "post_write_sqlite_sha256_reviewer": "6c896fd1e5de6bc66ddf6f42833033f202f6e480f4d78c6cd267c6c6a4362248",
+  "sqlite_sha256_match": true,
+  "integrity_check": "ok",
+  "bars_count": 787005,
+  "sqlite_bytes": 246054912,
+  "wal_shm": false,
+  "unittest_v4": 58,
+  "unittest_v3": 136,
+  "portfolio_pnl_ran": false,
+  "integrity_findings_total": 2419,
+  "manager_class": {
+    "must_fix": 0,
+    "accept": 2362,
+    "needs_Orchestrator": 15,
+    "blank": 42
+  },
+  "check_type_counts": {
+    "missing_trade_days": 2310,
+    "list_date_unknown": 67,
+    "large_move_hfq_smoothed": 38,
+    "ended_before_cutoff": 2,
+    "large_move": 2,
+    "adj_discontinuous": 0
+  },
+  "orchestrator_rows_unchanged_vs_e338a5b": true,
+  "symbol_spotcheck": {
+    "159922": {
+      "pass": true,
+      "split_ex_date": "2024-12-02",
+      "split_ratio": "1:2.5",
+      "cash_per_post_split_share": 0.1292,
+      "hfq_return_pct": 1.6062,
+      "expected_return_pct": 1.6074,
+      "return_diff_pp": -0.0012,
+      "v4_corp_action_split": true,
+      "adj_discontinuous_finding": false
+    },
+    "160125": {
+      "pass": true,
+      "tencent_hfq_last": "2019-07-03",
+      "carry_first": "2019-07-04",
+      "backward_last": "2026-09-30",
+      "carry_rows": 1721,
+      "overlap_max_abs_from_csv": 0,
+      "ended_before_cutoff_finding": false
+    },
+    "161831": {
+      "pass": true,
+      "tencent_hfq_last": "2020-12-31",
+      "carry_first": "2021-01-05",
+      "backward_last": "2026-09-30",
+      "carry_rows": 1392,
+      "overlap_max_abs_from_csv": 0,
+      "ended_before_cutoff_finding": false
+    },
+    "164705": {
+      "pass": true,
+      "tencent_hfq_last": "2020-11-30",
+      "carry_first": "2020-12-02",
+      "backward_last": "2026-09-30",
+      "carry_rows": 1410,
+      "overlap_max_abs_from_csv": 0,
+      "ended_before_cutoff_finding": false
+    },
+    "159952": {
+      "pass": true,
+      "limit_up_date": "2024-10-08",
+      "sina_close_match": true,
+      "large_move_finding": false,
+      "v4_move_check_limit_up": true
+    },
+    "588050": {
+      "pass": true,
+      "limit_up_dates": ["2024-09-30", "2024-10-08"],
+      "sina_close_match": true,
+      "large_move_finding": false,
+      "v4_move_check_limit_up": true
+    },
+    "588080": {
+      "pass": true,
+      "limit_up_date": "2024-10-08",
+      "sina_close_match": true,
+      "large_move_finding": false,
+      "v4_move_check_limit_up": true
+    }
+  },
+  "decision": "approve_with_follow_up"
+}
