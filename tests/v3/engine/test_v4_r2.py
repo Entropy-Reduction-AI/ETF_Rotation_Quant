@@ -494,7 +494,9 @@ class FreezeP1(unittest.TestCase):
                  "tests.v3.engine.test_v4_r2.FreezeP1.test_switches_off_match_freeze_p1_day_by_day"],
                 cwd=root, env=env, capture_output=True, text=True, check=False,
             )
-            self.assertEqual(proc.returncode, 0, proc.stdout + "\n" + proc.stderr)
+            combined = proc.stdout + "\n" + proc.stderr
+            self.assertEqual(proc.returncode, 0, combined)
+            self.assertNotIn("skipped", combined.lower(), combined)
             return
         db = DB.MARKET_DB
         if not db.exists() or db.stat().st_size < 1_000_000:
