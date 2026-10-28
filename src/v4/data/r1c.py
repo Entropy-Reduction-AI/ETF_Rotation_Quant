@@ -9,6 +9,7 @@ import hashlib
 import time
 import tomllib
 from datetime import date
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 
 from src.data import db as DB
@@ -90,10 +91,38 @@ class R1cError(RuntimeError):
     pass
 
 
+CARRY_SOURCE = "tencent_etf_hfq_carry"
+CARRY_METHOD = "factor_carry"
+LIMIT_UP = "limit_up"
+# 重叠段末日附近，后复权/原始收盘的比例只应剩三位小数的取整抖动。
+RATIO_SPAN_LIMIT = 0.002
+# 承接后的后复权收盘，相对「原始收盘 × 前一日比例」允许一个最小价位。
+TICK = 0.001
+
+_MOVE = """
+CREATE TABLE IF NOT EXISTS v4_move_check (
+    code         TEXT NOT NULL,
+    series_kind  TEXT NOT NULL,
+    date         TEXT NOT NULL,
+    close        REAL NOT NULL,
+    prev_close   REAL NOT NULL,
+    peer_close   REAL NOT NULL,
+    peer_source  TEXT NOT NULL,
+    peer_url     TEXT NOT NULL,
+    limit_close  REAL,
+    conclusion   TEXT NOT NULL,
+    note         TEXT NOT NULL DEFAULT '',
+    fetched_at   TEXT NOT NULL,
+    PRIMARY KEY (code, series_kind, date)
+) WITHOUT ROWID
+"""
+
+
 def ensure(con) -> None:
     con.execute(_ACTION)
     con.execute(_NEAR)
     con.execute(_BLOCK)
+    con.execute(_MOVE)
     con.commit()
 
 
@@ -481,10 +510,12 @@ def _events_for(con, code: str) -> tuple[set[str], list[dict]]:
             detailed.append({"date": ex_date, "kind": kind, "amount": amount,
                              "numerator": num, "denominator": den})
     if _table(con, "v4_corp_action"):
-        for ex_date, kind, amount in con.execute(
-                "SELECT ex_date, kind, amount FROM v4_corp_action WHERE code=?", (code,)):
+        for ex_date, kind, amount, num, den in con.execute(
+                """SELECT ex_date, kind, amount, ratio_num, ratio_den
+                   FROM v4_corp_action WHERE code=?""", (code,)):
             days.add(ex_date)
-            detailed.append({"date": ex_date, "kind": kind, "amount": amount})
+            detailed.append({"date": ex_date, "kind": kind, "amount": amount,
+                             "numerator": num, "denominator": den})
     return days, detailed
 
 
@@ -518,6 +549,200 @@ def _group(source: str, code: str) -> str | None:
     return "research"
 
 
+def limit_close(prev: float) -> float:
+    """涨跌幅 20% 的限价。按最小价位 0.001 四舍五入。"""
+    return float((Decimal(str(prev)) * Decimal("1.2")).quantize(Decimal("0.001"), rounding=ROUND_HALF_UP))
+
+
+def _positive(rows: list[dict]) -> list[dict]:
+    return [row for row in rows if row.get("date") and row.get("close") not in (None, "") and float(row["close"]) > 0]
+
+
+def ratio_span(raw: list[dict], backward: list[dict], last: str, n: int = 20) -> float:
+    """末日及之前 n 个重叠日的后复权/原始比例极差。"""
+    raw_close = {row["date"]: float(row["close"]) for row in _positive(raw) if row["date"] <= last}
+    ratios = []
+    for row in _positive(backward):
+        if row["date"] > last or row["date"] not in raw_close or raw_close[row["date"]] <= 0:
+            continue
+        ratios.append(float(row["close"]) / raw_close[row["date"]])
+    if len(ratios) < 2:
+        raise R1cError("重叠段不足以看后复权比例")
+    tail = ratios[-n:]
+    return max(tail) - min(tail)
+
+
+def carried_tail(raw: list[dict], backward: list[dict], end: str) -> dict:
+    """腾讯后复权停更之后，用末日比例承接原始收盘。不改重叠段。"""
+    back = _positive(backward)
+    if not back:
+        raise R1cError("没有后复权，不能承接")
+    last = back[-1]["date"]
+    raw_rows = [row for row in _positive(raw) if row["date"] <= end]
+    raw_on = {row["date"]: row for row in raw_rows}
+    if last not in raw_on:
+        raise R1cError(f"后复权末日 {last} 没有原始收盘")
+    ratio = float(back[-1]["close"]) / float(raw_on[last]["close"])
+    span = ratio_span(raw_rows, back, last)
+    if span > RATIO_SPAN_LIMIT:
+        raise R1cError(f"末日附近后复权比例极差 {span:.6f}，不承接")
+    tail = []
+    for row in raw_rows:
+        if row["date"] <= last:
+            continue
+        scale = ratio
+        tail.append({
+            "date": row["date"],
+            "open": None if row.get("open") in (None, "") else float(row["open"]) * scale,
+            "high": None if row.get("high") in (None, "") else float(row["high"]) * scale,
+            "low": None if row.get("low") in (None, "") else float(row["low"]) * scale,
+            "close": float(row["close"]) * scale,
+            "volume": row.get("volume"),
+        })
+    if not tail:
+        raise R1cError(f"{last} 之后没有原始正收盘")
+    if tail[-1]["date"] != end:
+        raise R1cError(f"承接后最后一日是 {tail[-1]['date']}，不是 {end}")
+    anchor = float(back[-1]["close"])
+    linked = tail[0]["close"] / anchor - 1.0
+    raw_linked = float(raw_on[tail[0]["date"]]["close"]) / float(raw_on[last]["close"]) - 1.0
+    if abs(linked - raw_linked) > 1e-9:
+        raise R1cError("承接的第一天和原始收盘收益不一致")
+    return {"last": last, "ratio": ratio, "span": span, "tail": tail}
+
+
+def overlap_mismatches(stored: dict[str, float], fresh: dict[str, float], tol: float = 1e-6) -> list[tuple]:
+    """新抓到的重叠段必须落在库内，且收盘一致。"""
+    bad = []
+    for day, close in sorted(fresh.items()):
+        if day not in stored:
+            bad.append((day, None, close))
+        elif abs(stored[day] - close) > tol:
+            bad.append((day, stored[day], close))
+    return bad
+
+
+def actions_after(parsed: dict, last: str) -> list[dict]:
+    later = []
+    for item in parsed.get("dividends") or []:
+        if item["date"] > last:
+            later.append({"kind": "dividend", "date": item["date"]})
+    for item in parsed.get("splits") or []:
+        if item["date"] > last:
+            later.append({"kind": "split", "date": item["date"]})
+    return later
+
+
+def append_carried_tail(con, code: str, tail: list[dict], source_url: str, fetched_at: str) -> int:
+    """只插入库里还没有的日期。重叠段不覆盖。"""
+    have = {row[0] for row in con.execute(
+        "SELECT date FROM v4_series WHERE code=? AND kind='backward'", (code,))}
+    fresh = [row for row in tail if row["date"] not in have]
+    if not fresh:
+        return 0
+    con.executemany(
+        """INSERT INTO v4_series
+           (code, kind, date, open, high, low, close, volume, unit_nav, accum_nav, filled,
+            source, source_url, method, fetched_at)
+           VALUES (?, 'backward', ?, ?, ?, ?, ?, ?, NULL, NULL, 0, ?, ?, ?, ?)""",
+        [(code, row["date"], row.get("open"), row.get("high"), row.get("low"), row["close"],
+          row.get("volume"), CARRY_SOURCE, source_url, CARRY_METHOD, fetched_at) for row in fresh])
+    return len(fresh)
+
+
+def limit_up_checks(code: str, day: str, raw: list[dict], backward: list[dict],
+                    peer_close: float, peer_source: str, peer_url: str, note: str) -> list[dict]:
+    """原始收盘等于涨停价、且与对照价一致时，记下原始和后复权两行。"""
+    raw_pos = _positive(raw)
+    back_pos = _positive(backward)
+    raw_i = {row["date"]: i for i, row in enumerate(raw_pos)}
+    back_i = {row["date"]: i for i, row in enumerate(back_pos)}
+    if day not in raw_i or raw_i[day] == 0 or day not in back_i or back_i[day] == 0:
+        raise R1cError(f"{code} {day} 缺少相邻收盘")
+    prev_raw = raw_pos[raw_i[day] - 1]
+    raw_row = raw_pos[raw_i[day]]
+    prev_back = back_pos[back_i[day] - 1]
+    back_row = back_pos[back_i[day]]
+    capped = limit_close(float(prev_raw["close"]))
+    if abs(float(raw_row["close"]) - capped) > 1e-9 or abs(float(raw_row["close"]) - peer_close) > 1e-9:
+        raise R1cError(f"{code} {day} 原始收盘不是涨停价或与对照价不一致")
+    scaled = float(raw_row["close"]) * float(prev_back["close"]) / float(prev_raw["close"])
+    if abs(float(back_row["close"]) - scaled) > TICK:
+        raise R1cError(f"{code} {day} 后复权偏离原始涨停一个价位以上")
+    shared = {
+        "code": code, "date": day, "peer_source": peer_source, "peer_url": peer_url,
+        "conclusion": LIMIT_UP, "note": note,
+    }
+    return [
+        {**shared, "series_kind": "raw", "close": float(raw_row["close"]),
+         "prev_close": float(prev_raw["close"]), "peer_close": peer_close, "limit_close": capped},
+        {**shared, "series_kind": "backward", "close": float(back_row["close"]),
+         "prev_close": float(prev_back["close"]), "peer_close": peer_close, "limit_close": capped},
+    ]
+
+
+def record_limit_ups(con, rows: list[dict], fetched_at: str) -> None:
+    ensure(con)
+    with con:
+        for row in rows:
+            con.execute("DELETE FROM v4_move_check WHERE code=? AND series_kind=? AND date=?",
+                        (row["code"], row["series_kind"], row["date"]))
+            con.execute(
+                """INSERT INTO v4_move_check
+                   (code, series_kind, date, close, prev_close, peer_close, peer_source, peer_url,
+                    limit_close, conclusion, note, fetched_at)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (row["code"], row["series_kind"], row["date"], row["close"], row["prev_close"],
+                 row["peer_close"], row["peer_source"], row["peer_url"], row["limit_close"],
+                 row["conclusion"], row["note"], fetched_at))
+
+
+def record_split(con, code: str, ex_date: str, numerator: float, denominator: float,
+                 ratio_text: str, source_url: str, body_sha: str, note: str, fetched_at: str) -> None:
+    ensure(con)
+    with con:
+        con.execute(
+            """INSERT OR REPLACE INTO v4_corp_action
+               (code, kind, ex_date, amount, ratio_num, ratio_den, ratio_text, source, source_url,
+                body_sha256, note, fetched_at)
+               VALUES (?, 'split', ?, NULL, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (code, ex_date, numerator, denominator, ratio_text, SOURCE, source_url, body_sha, note, fetched_at))
+
+
+def _limit_up_days(con, code: str, kind: str, rows: list[dict]) -> set[str]:
+    if not _table(con, "v4_move_check"):
+        return set()
+    recorded = {}
+    for day, close, conclusion in con.execute(
+            """SELECT date, close, conclusion FROM v4_move_check
+               WHERE code=? AND series_kind=?""", (code, kind)):
+        if conclusion == LIMIT_UP:
+            recorded[day] = float(close)
+    found = set()
+    for row in rows:
+        close = row.get("close")
+        if row.get("date") in recorded and close not in (None, "") and abs(float(close) - recorded[row["date"]]) <= 1e-4:
+            found.add(row["date"])
+    return found
+
+
+def merge_manager_class(findings: list[dict], previous: list[dict]) -> list[dict]:
+    """未改动的问题行保留 Manager 分类。新行留空。"""
+    kept = {}
+    for row in previous:
+        key = (row["code"], row["series_kind"], row["source"], row["check"],
+               row["date"], row["end_date"], row["detail"])
+        kept[key] = row.get("manager_class") or ""
+    merged = []
+    for row in findings:
+        item = dict(row)
+        key = (item["code"], item["series_kind"], item["source"], item["check"],
+               item["date"], item["end_date"], item["detail"])
+        item["manager_class"] = kept.get(key, "")
+        merged.append(item)
+    return merged
+
+
 def run_integrity(con, list_date_map: dict[str, str]) -> tuple[list[dict], list[dict]]:
     inventory = []
     findings = []
@@ -543,8 +768,9 @@ def run_integrity(con, list_date_map: dict[str, str]) -> tuple[list[dict], list[
         events, detailed = _events_for(con, code) if group == "etf" else (set(), [])
         other = hfq.get(code) if group == "etf" else None
         listed = list_date_map.get(code) if group == "etf" else None
+        explained = _limit_up_days(con, code, "raw", rows) if group == "etf" else set()
         info, found = scan_price_series(
-            code, group, "raw", source, rows, calendar, threshold, events, other, listed)
+            code, group, "raw", source, rows, calendar, threshold, events, other, listed, explained)
         inventory.append(info)
         findings.extend(found)
         if group == "etf" and code in hfq and detailed:
@@ -565,8 +791,9 @@ def run_integrity(con, list_date_map: dict[str, str]) -> tuple[list[dict], list[
         group = "etf"
         calendar = _calendar(con, code, "tencent_etf" if code not in US_ETF else "yahoo")
         events, _detailed = _events_for(con, code)
+        explained = _limit_up_days(con, code, "backward", rows)
         info, found = scan_price_series(
-            code, group, "backward", source, rows, calendar, ETF_MOVE, events, None, None)
+            code, group, "backward", source, rows, calendar, ETF_MOVE, events, None, None, explained)
         inventory.append(info)
         findings.extend(found)
     for code, source in con.execute(
@@ -590,7 +817,7 @@ def write_integrity(inventory: list[dict], findings: list[dict]) -> dict[str, in
     lines = [
         "# 2016-01 至 2026-09 数据完整性",
         "",
-        "Dev 只列出问题。必须修、可以接受、需要 Orchestrator 由 Manager 填，`manager_class` 留空。",
+        "Dev 只列出问题。`manager_class` 由调用方填入；没有分类的行留空，留给 Manager。",
         "",
         "没有计算年化、累计、排名或 IC。单日涨跌只出现在坏点行上，没有加总。",
         "",

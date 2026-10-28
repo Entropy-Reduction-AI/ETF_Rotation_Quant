@@ -77,10 +77,12 @@ def _move(prev: float, close: float) -> float:
 
 
 def large_move_days(rows: list[dict], threshold: float, events: set[str],
-                    other: dict[str, float] | None = None) -> list[dict]:
+                    other: dict[str, float] | None = None,
+                    explained: set[str] | None = None) -> list[dict]:
     """单日涨跌绝对值大于 threshold、且没有公司行为的日子。
 
     other 给后复权收盘时，原始缺口被后复权抹平的日子单独标，仍不算收益汇总。
+    explained 是已经核对过的日子（例如核实过的涨停），不当成缺陷。
     """
     usable = []
     for row in rows:
@@ -90,6 +92,9 @@ def large_move_days(rows: list[dict], threshold: float, events: set[str],
         else:
             usable.append((row["date"], float(close)))
     found = []
+    skip = set(events)
+    if explained:
+        skip |= set(explained)
     prev_day = None
     prev_close = None
     for day, close in usable:
@@ -98,7 +103,7 @@ def large_move_days(rows: list[dict], threshold: float, events: set[str],
                 prev_day, prev_close = day, close
             continue
         move = _move(prev_close, close)
-        if abs(move) > threshold and day not in events:
+        if abs(move) > threshold and day not in skip:
             other_move = None
             if other and day in other and prev_day in other and other[prev_day] > 0:
                 other_move = _move(other[prev_day], other[day])
@@ -119,32 +124,63 @@ def _move_detail(move: float, other_move: float | None) -> str:
     return text
 
 
+def _split_mult(event: dict) -> float | None:
+    num = event.get("numerator")
+    den = event.get("denominator")
+    if num in (None, "") or den in (None, ""):
+        return None
+    num = float(num)
+    den = float(den)
+    if num <= 0 or den <= 0:
+        return None
+    return num / den
+
+
 def adj_discontinuity(raw: list[dict], adjusted: list[dict], events: list[dict]) -> list[dict]:
-    """事件日的后复权是否还留着缺口。分红日对照原始收益加分红率；拆分日只要求后复权不再超过 ETF 阈值。"""
+    """事件日的后复权是否还留着缺口。
+
+    只有分红时，对照原始收益加分红率。只有拆分时，后复权不得超过 ETF 阈值。
+    同一天既有拆分又有分红时，分红金额按拆分后的每份计算：
+    期望收益 = (原始收盘 + 每股分红) × (新份额/旧份额) / 前收 − 1。
+    """
     raw_close = {row["date"]: float(row["close"]) for row in raw if row.get("close") and float(row["close"]) > 0}
     adj_close = {row["date"]: float(row["close"]) for row in adjusted if row.get("close") and float(row["close"]) > 0}
     raw_days = [day for day in sorted(raw_close) if day in adj_close]
     prev = {day: raw_days[i - 1] for i, day in enumerate(raw_days) if i}
-    found = []
+    by_day: dict[str, list[dict]] = {}
     for event in events:
-        day = event["date"]
+        by_day.setdefault(event["date"], []).append(event)
+    found = []
+    for day, day_events in by_day.items():
         if day not in prev or day not in adj_close:
             continue
         prev_day = prev[day]
         raw_ret = raw_close[day] / raw_close[prev_day] - 1.0
         adj_ret = adj_close[day] / adj_close[prev_day] - 1.0
-        kind = event["kind"]
-        bad = False
-        if kind == "dividend":
-            amount = float(event.get("amount") or 0.0)
-            expected = raw_ret + amount / raw_close[prev_day]
-            bad = abs(adj_ret - expected) > 0.005
-            detail = f"raw={raw_ret:.6f} adj={adj_ret:.6f} expected={expected:.6f}"
-        else:
-            bad = abs(adj_ret) > ETF_MOVE
-            detail = f"raw={raw_ret:.6f} adj={adj_ret:.6f}"
-        if bad:
-            found.append({"date": day, "check": "adj_discontinuous", "detail": f"{kind} {detail}"})
+        splits = [event for event in day_events if _split_mult(event) is not None and event["kind"] != "dividend"]
+        divs = [event for event in day_events if event["kind"] == "dividend"]
+        if splits and divs:
+            mult = 1.0
+            for event in splits:
+                mult *= _split_mult(event)
+            amount = sum(float(event.get("amount") or 0.0) for event in divs)
+            expected = (raw_close[day] + amount) * mult / raw_close[prev_day] - 1.0
+            if abs(adj_ret - expected) > 0.005:
+                detail = f"split+dividend raw={raw_ret:.6f} adj={adj_ret:.6f} expected={expected:.6f}"
+                found.append({"date": day, "check": "adj_discontinuous", "detail": detail})
+            continue
+        for event in day_events:
+            kind = event["kind"]
+            if kind == "dividend":
+                amount = float(event.get("amount") or 0.0)
+                expected = raw_ret + amount / raw_close[prev_day]
+                bad = abs(adj_ret - expected) > 0.005
+                detail = f"raw={raw_ret:.6f} adj={adj_ret:.6f} expected={expected:.6f}"
+            else:
+                bad = abs(adj_ret) > ETF_MOVE
+                detail = f"raw={raw_ret:.6f} adj={adj_ret:.6f}"
+            if bad:
+                found.append({"date": day, "check": "adj_discontinuous", "detail": f"{kind} {detail}"})
     return found
 
 
@@ -180,7 +216,7 @@ def finding(code: str, group: str, series_kind: str, source: str, check: str, da
 def scan_price_series(code: str, group: str, series_kind: str, source: str, rows: list[dict],
                        calendar: list[str] | None, threshold: float | None,
                        events: set[str] | None = None, other: dict[str, float] | None = None,
-                       list_date: str | None = None) -> tuple[dict, list[dict]]:
+                       list_date: str | None = None, explained: set[str] | None = None) -> tuple[dict, list[dict]]:
     """一条序列在窗口内的起止和问题。calendar 为空表示没有外部交易日历，只查序列内部。"""
     window_rows = [row for row in rows if row.get("date") and in_window(row["date"])]
     present = {row["date"] for row in window_rows if row.get("close") not in (None, "") and float(row["close"]) > 0}
@@ -217,7 +253,7 @@ def scan_price_series(code: str, group: str, series_kind: str, source: str, rows
         found.append(finding(code, group, series_kind, source, "nonpositive_close", day, detail="收盘小于或等于 0"))
     if threshold is not None:
         ordered = [row for row in window_rows if row["date"] >= first and row["date"] <= last]
-        for item in large_move_days(ordered, threshold, events or set(), other):
+        for item in large_move_days(ordered, threshold, events or set(), other, explained):
             found.append(finding(code, group, series_kind, source, item["check"], item["date"], detail=item["detail"]))
     if list_date is not None:
         history = [row["date"] for row in rows if row.get("date") and row.get("close") not in (None, "")

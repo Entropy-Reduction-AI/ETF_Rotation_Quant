@@ -7,9 +7,13 @@ import tests  # noqa: F401 — ETF_LEDGER_TESTING
 
 from src.data import db as DB
 from src.v4.data.integrity import (
-    count_findings, large_move_days, list_date_findings, missing_ranges, scan_price_series,
+    adj_discontinuity, count_findings, large_move_days, list_date_findings, missing_ranges,
+    scan_price_series,
 )
-from src.v4.data.r1c import insert_backward, sort_codes
+from src.v4.data.r1c import (
+    actions_after, carried_tail, insert_backward, limit_up_checks, merge_manager_class,
+    overlap_mismatches, record_split, sort_codes, _events_for,
+)
 from src.v4.data.r1c_parse import (
     REJECTED_NOT_SUBSTITUTE, assemble_backward, cash_amount, near_substitute_rows, parse_fhsp,
     parse_sina_nav, sina_daily_growth, split_ratio, spot_event,
@@ -157,6 +161,68 @@ class Command(unittest.TestCase):
     def test_pnl_is_rejected(self):
         from src.v4.data.__main__ import main
         self.assertEqual(main(["r1c", "pnl"]), 2)
+
+
+class MustFix(unittest.TestCase):
+    def test_split_plus_dividend_uses_post_split_cash(self):
+        raw = [_bar("2024-11-29", 6.159), _bar("2024-12-02", 2.374)]
+        adjusted = [_bar("2024-11-29", 1.93), _bar("2024-12-02", 1.961)]
+        events = [
+            {"date": "2024-12-02", "kind": "dividend", "amount": 0.1292},
+            {"date": "2024-12-02", "kind": "split", "numerator": 2.5, "denominator": 1},
+        ]
+        self.assertEqual(adj_discontinuity(raw, adjusted, events), [])
+        dividend_only = adj_discontinuity(raw, adjusted, events[:1])
+        self.assertEqual(dividend_only[0]["check"], "adj_discontinuous")
+
+    def test_verified_limit_up_is_not_a_large_move(self):
+        rows = [_bar("2024-09-30", 0.929), _bar("2024-10-08", 1.115)]
+        flagged = large_move_days(rows, 0.20, set())
+        self.assertEqual(flagged[0]["check"], "large_move")
+        quiet = large_move_days(rows, 0.20, set(), explained={"2024-10-08"})
+        self.assertEqual(quiet, [])
+
+    def test_carry_keeps_overlap_and_matches_the_next_raw_move(self):
+        raw = [_bar("2019-07-02", 1.05), _bar("2019-07-03", 1.051), _bar("2019-07-04", 1.069)]
+        backward = [_bar("2019-07-02", 1.140), _bar("2019-07-03", 1.141)]
+        got = carried_tail(raw, backward, "2019-07-04")
+        self.assertEqual([row["date"] for row in got["tail"]], ["2019-07-04"])
+        self.assertAlmostEqual(got["tail"][0]["close"] / 1.141, 1.069 / 1.051)
+        self.assertEqual(overlap_mismatches({"2019-07-03": 1.141}, {"2019-07-03": 1.141}), [])
+        self.assertEqual(actions_after({"dividends": [{"date": "2013-05-14"}], "splits": []}, "2019-07-03"), [])
+        self.assertEqual(actions_after({"dividends": [], "splits": [{"date": "2021-01-04"}]}, "2019-07-03")[0]["kind"], "split")
+
+    def test_limit_up_check_accepts_a_rounded_twenty_percent_print(self):
+        raw = [_bar("2024-09-30", 1.348), _bar("2024-10-08", 1.618)]
+        backward = [_bar("2024-09-30", 1.348), _bar("2024-10-08", 1.618)]
+        rows = limit_up_checks("159952", "2024-10-08", raw, backward, 1.618, "sina", "https://example.test", "创业板")
+        self.assertEqual([row["series_kind"] for row in rows], ["raw", "backward"])
+        self.assertTrue(all(row["conclusion"] == "limit_up" for row in rows))
+
+    def test_recorded_split_keeps_its_ratio_for_the_continuity_check(self):
+        con = DB.connect(":memory:")
+        con.execute("CREATE TABLE cash_dividends (code TEXT, ex_date TEXT, amount REAL)")
+        record_split(con, "159922", "2024-12-02", 2.5, 1.0, "1:2.5", "u", "abc", "除权日", "t")
+        _days, detailed = _events_for(con, "159922")
+        self.assertEqual(detailed[0]["numerator"], 2.5)
+        self.assertEqual(detailed[0]["denominator"], 1.0)
+        con.close()
+
+    def test_manager_class_stays_on_unchanged_rows(self):
+        previous = [{
+            "code": "931160", "series_kind": "raw", "source": "csi", "check": "missing_trade_days",
+            "date": "2019-01-02", "end_date": "2019-01-04", "detail": "日历有、序列没有正收盘",
+            "manager_class": "需要 Orchestrator",
+        }]
+        findings = [
+            {**previous[0], "manager_class": ""},
+            {"code": "160125", "series_kind": "backward", "source": "tencent_etf_hfq",
+             "check": "missing_trade_days", "date": "2024-01-02", "end_date": "2024-01-02",
+             "detail": "日历有、序列没有正收盘", "manager_class": ""},
+        ]
+        merged = merge_manager_class(findings, previous)
+        self.assertEqual(merged[0]["manager_class"], "需要 Orchestrator")
+        self.assertEqual(merged[1]["manager_class"], "")
 
 
 if __name__ == "__main__":
