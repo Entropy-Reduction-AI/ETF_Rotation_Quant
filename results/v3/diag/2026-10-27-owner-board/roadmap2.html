@@ -1,0 +1,52 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans CJK SC",sans-serif;background:#fff;color:#111827;width:2000px;padding:24px}
+.head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.head h1{font-size:26px}.legend{font-size:16px;color:#374151;display:flex;gap:18px}
+.legend span{display:inline-flex;align-items:center;gap:6px}.legend i{width:16px;height:16px;border-radius:4px;display:inline-block;border:2px solid}
+.grid{display:grid;grid-template-columns:150px repeat(10,1fr);gap:10px}
+.col{font-size:19px;font-weight:700;text-align:center;padding:6px 0;color:#374151}
+.row{display:flex;flex-direction:column;justify-content:center;padding:10px;border-radius:12px;background:#111827;color:#fff}
+.row b{font-size:26px;font-family:monospace}.row span{font-size:14px;opacity:.8;margin-top:4px}
+.c{border:3px solid;border-radius:12px;padding:12px 10px;min-height:150px;font-size:15.5px;line-height:1.45}
+.c .s{font-weight:700;font-size:16px;margin-bottom:6px}
+.done{border-color:#16a34a;background:#ecfdf5}.done .s{color:#15803d}
+.go{border-color:#ca8a04;background:#fefce8}.go .s{color:#a16207}
+.own{border-color:#7c3aed;background:#f5f3ff}.own .s{color:#6d28d9}
+.pause{border-color:#9ca3af;border-style:dashed;background:#f9fafb}.pause .s{color:#6b7280}
+.todo{border-color:#d1d5db;background:#f3f4f6;color:#6b7280}
+.r{display:inline-block;font-family:monospace;font-weight:700;background:#111827;color:#fff;border-radius:6px;padding:1px 7px;font-size:14px;margin-bottom:4px}
+.note{margin-top:14px;font-size:16px;color:#374151}
+</style></head><body>
+<div class="head"><h1>进度总览：版本 × 阶段</h1>
+<div class="legend"><span><i style="border-color:#16a34a;background:#ecfdf5"></i>完成</span><span><i style="border-color:#ca8a04;background:#fefce8"></i>进行中（轮次）</span><span><i style="border-color:#7c3aed;background:#f5f3ff"></i>需要你</span><span><i style="border-color:#9ca3af;border-style:dashed"></i>暂停</span><span><i style="border-color:#d1d5db;background:#f3f4f6"></i>未开始</span></div></div>
+<div class="grid">
+<div></div>
+<div class="col">① 规则定稿</div><div class="col">② 标的池</div><div class="col">③ 交易引擎</div><div class="col">④ 溢价控制</div><div class="col">⑤ 打分卡</div><div class="col">⑥ 业务体检</div><div class="col">⑦ 代码冻结</div><div class="col">⑧ 一次性检验</div><div class="col">⑨ 结论</div><div class="col">⑩ 模拟盘</div>
+
+<div class="row"><b>v3.1</b><span>冻结基线<br>= E2</span></div>
+<div class="c done"><div class="s">✓ 已冻结</div>补全池子 + 10% 离场；补充文本已签收</div>
+<div class="c done"><div class="s">✓ 完成</div>81 个容器；黄金、国债 2008 起</div>
+<div class="c done"><div class="s">✓ 完成</div>补池 + 离场 + 溢价接入</div>
+<div class="c done"><div class="s">✓ 完成</div>已接进交易流程</div>
+<div class="c done"><div class="s">✓ 完成</div>五条判据；尝试次数 28 + 35</div>
+<div class="c done"><div class="s">✓ 完成</div>年化 25.1%，基准 15.4%；弱点：反弹</div>
+<div class="c done"><div class="s">✓ 10-27 冻结</div>milestone/v3-code-freeze</div>
+<div class="c pause"><div class="s">⏸ 暂不跑</div>策略完成度约 60%，先做 v4</div>
+<div class="c todo"><div class="s">—</div></div>
+<div class="c todo"><div class="s">—</div></div>
+
+<div class="row"><b>v4</b><span>进行中</span></div>
+<div class="c go"><div class="s">研究完成</div><span class="r">v4-R4</span><br>预注册待起草，之后交你批准</div>
+<div class="c go"><div class="s">进行中</div><span class="r">v4-R1</span><br>美股行业 ETF、港股行业指数取数</div>
+<div class="c go"><div class="s">进行中</div><span class="r">v4-R2</span><br>涨跌停与停牌顺延；T1–T3 开关</div>
+<div class="c go"><div class="s">进行中</div><span class="r">v4-R2</span><br>跨境成本机制</div>
+<div class="c go"><div class="s">进行中</div><span class="r">v4-R3</span><br>任意起点、四种市场状态</div>
+<div class="c todo"><div class="s">未开始</div><span class="r">v4-R5</span><br>预注册冻结后才运行</div>
+<div class="c todo"><div class="s">未开始</div></div>
+<div class="c todo"><div class="s">未开始</div></div>
+<div class="c todo"><div class="s">未开始</div></div>
+<div class="c todo"><div class="s">未开始</div></div>
+</div>
+<div class="note">轮次编号的规则：版本-R 序号；每个轮次推进一个或几个阶段（docs/manual/roadmap-and-naming.md）。</div>
+</body></html>
