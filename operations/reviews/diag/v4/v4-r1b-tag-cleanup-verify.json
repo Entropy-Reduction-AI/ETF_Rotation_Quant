@@ -1,0 +1,147 @@
+{
+  "review": "D14-2 tag cleanup independent verification",
+  "verified_at_utc": "2026-10-28T08:11:43Z",
+  "reviewer": "ETF Rotation Reviewer (independent)",
+  "method": "git ls-remote --tags origin; git merge-base --is-ancestor; git ls-remote refs/pull/*/head",
+  "is_shallow_repository": false,
+  "origin_main": "d5d460abde1f320f775fce23787644a7b7b050c5",
+  "manager_work_log": "operations/work_logs/2026-10-28-tag-cleanup.md",
+  "manager_docs_merge": "PR #71 → main (tip d5d460a)",
+  "origin_main_matches_claimed_merge": true,
+  "git_ls_remote_tags_origin_raw": [
+    "4812115867d0e9176175bd45d21b2dae19c10979\trefs/tags/milestone/phase1-archive",
+    "0dd93fa13e0aa79b09ef16ba80676c022004be02\trefs/tags/milestone/phase1-archive^{}",
+    "f1d3d0c170ecbd5eb3b463c26834bafd5dc40254\trefs/tags/milestone/v3-code-freeze",
+    "b1f84d899f4a37914c1ce4ef0ab16484f0ef7cdb\trefs/tags/milestone/v3-code-freeze^{}",
+    "e3b55a7b8ce967a43341a3c9d02e6a0a42e2b508\trefs/tags/milestone/v3.1-prereg-freeze",
+    "1040035ee1d707368b58687994894189753843ac\trefs/tags/milestone/v3.1-prereg-freeze^{}"
+  ],
+  "non_milestone_tags_on_origin": [],
+  "kept_tags_on_origin": {
+    "milestone/phase1-archive": {
+      "tag_object": "4812115867d0e9176175bd45d21b2dae19c10979",
+      "peeled_commit": "0dd93fa13e0aa79b09ef16ba80676c022004be02"
+    },
+    "milestone/v3-code-freeze": {
+      "tag_object": "f1d3d0c170ecbd5eb3b463c26834bafd5dc40254",
+      "peeled_commit": "b1f84d899f4a37914c1ce4ef0ab16484f0ef7cdb"
+    },
+    "milestone/v3.1-prereg-freeze": {
+      "tag_object": "e3b55a7b8ce967a43341a3c9d02e6a0a42e2b508",
+      "peeled_commit": "1040035ee1d707368b58687994894189753843ac"
+    }
+  },
+  "checks": [
+    {
+      "id": "origin_only_three_milestone_tags",
+      "pass": true,
+      "tag_names_on_origin": [
+        "milestone/phase1-archive",
+        "milestone/v3-code-freeze",
+        "milestone/v3.1-prereg-freeze"
+      ]
+    },
+    {
+      "id": "keep_tag_sha_phase1-archive",
+      "pass": true,
+      "origin_tag_object": "4812115867d0e9176175bd45d21b2dae19c10979",
+      "expected_tag_object_milestones_and_work_log": "4812115867d0e9176175bd45d21b2dae19c10979",
+      "origin_peeled_commit": "0dd93fa13e0aa79b09ef16ba80676c022004be02",
+      "expected_peeled_commit": "0dd93fa13e0aa79b09ef16ba80676c022004be02"
+    },
+    {
+      "id": "keep_tag_sha_v3-code-freeze",
+      "pass": true,
+      "origin_tag_object": "f1d3d0c170ecbd5eb3b463c26834bafd5dc40254",
+      "expected_tag_object_milestones_and_work_log": "f1d3d0c170ecbd5eb3b463c26834bafd5dc40254",
+      "origin_peeled_commit": "b1f84d899f4a37914c1ce4ef0ab16484f0ef7cdb",
+      "expected_peeled_commit": "b1f84d899f4a37914c1ce4ef0ab16484f0ef7cdb"
+    },
+    {
+      "id": "keep_tag_sha_v3.1-prereg-freeze",
+      "pass": true,
+      "origin_tag_object": "e3b55a7b8ce967a43341a3c9d02e6a0a42e2b508",
+      "expected_tag_object_milestones_and_work_log": "e3b55a7b8ce967a43341a3c9d02e6a0a42e2b508",
+      "origin_peeled_commit": "1040035ee1d707368b58687994894189753843ac",
+      "expected_peeled_commit": "1040035ee1d707368b58687994894189753843ac"
+    },
+    {
+      "id": "deleted_reachable_milestone/v1-code-freeze",
+      "pass": true,
+      "pointed_commit": "cb8fe7b09253208fba157195c2fefbf3eb76d2b3",
+      "via": "origin/main ancestor"
+    },
+    {
+      "id": "deleted_reachable_milestone/v1-r2-stop",
+      "pass": true,
+      "pointed_commit": "ed1501cf2ec2eed6a025f39786fb83f1e432b491",
+      "via": "origin/main ancestor"
+    },
+    {
+      "id": "deleted_reachable_milestone/v2-prereg-freeze",
+      "pass": true,
+      "pointed_commit": "1ad86ac0150138b7284cca7566d421e63bf39032",
+      "via": "origin/main ancestor"
+    },
+    {
+      "id": "deleted_reachable_milestone/v2-oos-result",
+      "pass": true,
+      "pointed_commit": "36e53ce0cc0a35c9d99d7461d01b6107b3ed1279",
+      "via": "origin/main ancestor"
+    },
+    {
+      "id": "deleted_reachable_milestone/v3-prereg-freeze",
+      "pass": true,
+      "pointed_commit": "bfeb49cc65eb0ba419bc98348f1d643fac1211f6",
+      "via": "origin/main ancestor"
+    },
+    {
+      "id": "deleted_reachable_milestone/core-portfolio-live-config",
+      "pass": true,
+      "pointed_commit": "745ecedca4bfef5f5af881182c1fbcb9c5a32cac",
+      "via": "origin/main ancestor"
+    },
+    {
+      "id": "deleted_reachable_keep/cursor/owner-progress-boundary-audit",
+      "pass": true,
+      "pointed_commit": "6cba1c77d4c9309df6a2b3375c8654cd1b6162fa",
+      "refs_pull_head": "6cba1c77d4c9309df6a2b3375c8654cd1b6162fa",
+      "pr": 42
+    },
+    {
+      "id": "deleted_reachable_keep/cursor/task-complete-owner-experience",
+      "pass": true,
+      "pointed_commit": "cbc80ca069e26f6398cc2dc2df899228260963a6",
+      "refs_pull_head": "cbc80ca069e26f6398cc2dc2df899228260963a6",
+      "pr": 46
+    },
+    {
+      "id": "deleted_reachable_keep/cursor/v3.1-prereg-review-7a9f",
+      "pass": true,
+      "pointed_commit": "fa825b7beccacda24004fdb52f48b3073fddf052",
+      "refs_pull_head": "fa825b7beccacda24004fdb52f48b3073fddf052",
+      "pr": 33
+    },
+    {
+      "id": "milestones_md_twelve_rows",
+      "pass": true,
+      "row_count": 12
+    },
+    {
+      "id": "deleted_absent_from_origin",
+      "pass": true,
+      "deleted_tag_names": [
+        "milestone/v1-code-freeze",
+        "milestone/v1-r2-stop",
+        "milestone/v2-prereg-freeze",
+        "milestone/v2-oos-result",
+        "milestone/v3-prereg-freeze",
+        "milestone/core-portfolio-live-config",
+        "keep/cursor/owner-progress-boundary-audit",
+        "keep/cursor/task-complete-owner-experience",
+        "keep/cursor/v3.1-prereg-review-7a9f"
+      ]
+    }
+  ],
+  "decision_gate_all_checks_pass": true
+}
