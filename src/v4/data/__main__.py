@@ -1,4 +1,4 @@
-"""python -m src.v4.data ingest|r1b|hash CODE
+"""python -m src.v4.data ingest|r1b|r1c|hash CODE
 
 不提供回测或组合收益命令。
 """
@@ -17,11 +17,13 @@ def main(argv: list[str] | None = None) -> int:
     if any(token in {"backtest", "returns", "pnl", "timing"} for token in argv):
         print("v4 只取数和登记，不计算组合收益。")
         return 2
-    if not argv or argv[0] not in {"ingest", "r1b", "hash"}:
-        print("用法: python -m src.v4.data ingest|r1b|hash CODE")
+    if not argv or argv[0] not in {"ingest", "r1b", "r1c", "hash"}:
+        print("用法: python -m src.v4.data ingest|r1b|r1c|hash CODE")
         return 2
     if argv[0] == "r1b":
         return _r1b()
+    if argv[0] == "r1c":
+        return _r1c()
     if argv[0] == "hash":
         if len(argv) != 2:
             print("用法: python -m src.v4.data hash CODE")
@@ -42,6 +44,18 @@ def _r1b() -> int:
     con = DB.connect(DB.MARKET_DB)
     try:
         for line in run_r1b(con):
+            print(line, flush=True)
+    finally:
+        con.close()
+    print(COVERAGE)
+    return 0
+
+
+def _r1c() -> int:
+    from .r1c import run as run_r1c
+    con = DB.connect(DB.MARKET_DB)
+    try:
+        for line in run_r1c(con):
             print(line, flush=True)
     finally:
         con.close()

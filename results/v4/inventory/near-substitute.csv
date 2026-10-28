@@ -1,0 +1,3 @@
+code,name,instrument,container_id,container_name,tracked_index,near_index,near_index_code,decision,note
+161211,国投瑞银沪深300金融地产交易型开放式指数证券投资基金联接基金,otc_fund,allshare-financials-re,中证全指金融地产,沪深300金融地产指数,中证全指金融地产指数,H00992,D15-2,相近替身。收益用这只基金自己的复权净值，不冒充中证全指金融地产。非增强，联接。成立日和净值起点 2010-04-09。
+510880,上证红利交易型开放式指数证券投资基金,etf,csi-dividend,中证红利,上证红利指数,中证红利指数,H00922,D15-3,相近替身。实际跟踪上证红利，不是中证红利。对上证红利容器是同一指数的场内 ETF。
