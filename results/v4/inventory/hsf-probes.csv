@@ -1,0 +1,5 @@
+url,bytes,error,head
+https://www.hsi.com.hk/static/uploads/contents/en/indexes/report/hsf.csv,0,HTTPError: HTTP Error 404: Not Found  ← https://www.hsi.com.hk/static/uploads/contents/en/indexes/report/hsf.csv,
+https://www.hsi.com.hk/data/eng/indexes/hsf/chart.json,0,HTTPError: HTTP Error 404: Not Found  ← https://www.hsi.com.hk/data/eng/indexes/hsf/chart.json,
+https://www.hsi.com.hk/eng/indexes/all-indexes/hsf,0,HTTPError: HTTP Error 404: Not Found  ← https://www.hsi.com.hk/eng/indexes/all-indexes/hsf,
+https://www.hsi.com.hk/static/uploads/contents/en/dl_centre/factsheets/hsf.pdf,0,HTTPError: HTTP Error 404: Not Found  ← https://www.hsi.com.hk/static/uploads/contents/en/dl_centre/factsheets/hsf.pdf,

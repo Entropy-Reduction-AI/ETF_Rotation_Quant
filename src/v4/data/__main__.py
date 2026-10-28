@@ -1,4 +1,4 @@
-"""python -m src.v4.data ingest|hash CODE
+"""python -m src.v4.data ingest|r1b|hash CODE
 
 不提供回测或组合收益命令。
 """
@@ -15,11 +15,13 @@ from .parse import bar_sha256, series_sha256
 def main(argv: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     if any(token in {"backtest", "returns", "pnl", "timing"} for token in argv):
-        print("v4-R1 只取数和登记，不计算组合收益。")
+        print("v4 只取数和登记，不计算组合收益。")
         return 2
-    if not argv or argv[0] not in {"ingest", "hash"}:
-        print("用法: python -m src.v4.data ingest|hash CODE")
+    if not argv or argv[0] not in {"ingest", "r1b", "hash"}:
+        print("用法: python -m src.v4.data ingest|r1b|hash CODE")
         return 2
+    if argv[0] == "r1b":
+        return _r1b()
     if argv[0] == "hash":
         if len(argv) != 2:
             print("用法: python -m src.v4.data hash CODE")
@@ -28,6 +30,18 @@ def main(argv: list[str] | None = None) -> int:
     con = DB.connect(DB.MARKET_DB)
     try:
         for line in run(con):
+            print(line, flush=True)
+    finally:
+        con.close()
+    print(COVERAGE)
+    return 0
+
+
+def _r1b() -> int:
+    from .r1b import run as run_r1b
+    con = DB.connect(DB.MARKET_DB)
+    try:
+        for line in run_r1b(con):
             print(line, flush=True)
     finally:
         con.close()
