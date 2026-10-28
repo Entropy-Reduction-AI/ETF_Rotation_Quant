@@ -1,0 +1,92 @@
+{
+  "decision": "approve",
+  "reviewed_at_utc": "2026-10-28",
+  "dev_pr": 67,
+  "dev_branch": "cursor/v4-r2-engine-8e66",
+  "dev_tip": "c4eebdc52c4da05a981b423277541f43818ef22c",
+  "engine_commit": "6ee2f091e5e9fef4cee1a41765a76c11d81c8118",
+  "base_main": "a5b6fb434404802555c3925755929b192e89c4d7",
+  "freeze_tag": "milestone/v3-code-freeze",
+  "freeze_commit": "b1f84d899f4a37914c1ce4ef0ab16484f0ef7cdb",
+  "market_sqlite_sha256": "3e3e6f1d594586da2abf28db5fa88b05c1cc91fa29adf061fc699e1b8d4bc1d6",
+  "pythonhashseed": "0",
+  "p1_window": {
+    "first_day": "2005-01-04",
+    "last_day": "2015-12-31",
+    "n_days": 2671
+  },
+  "p1_shas_reviewer": {
+    "net": "962178c503df7d1ee900971711271fc4fac4436522053dbc9c297b48c3b8fa57",
+    "held": "bdd1521f7d9d66404184351dfe50e3e4681edfd91415e46572394c44d6eea32b",
+    "cost": "62b76e5375f73360de7e4b03753808bd00058310c7dc35ce353ca091a4e44e0c",
+    "3-week": "75e3f744c2f347781965632729a184cd9c0244efc41a84963f5b3550f0e6e5a6",
+    "3-month": "6cbf6fd1e24696d6c855305a63447f0e761f7ca73c6c559a28dfea253243d42f",
+    "5-week": "d5bddc5cea82b4aa9bc3b32bda21c8c00e8af66e31f8aac7ed8afafdf10ce760",
+    "5-month": "f2470bf01046c3739b4fafd87dc356b80212a52ba2f20db37297c04320478fe3",
+    "8-week": "64ed67d0756a69cda899903ea8da7db100828b07f09cd6560a730e5c73d2aa7f",
+    "8-month": "83131d7b8d4f010fec33bf799669cfa88bae465d483be7bd03dcee4f3acf1f6e"
+  },
+  "freeze_tag_net_sha_reviewer": "962178c503df7d1ee900971711271fc4fac4436522053dbc9c297b48c3b8fa57",
+  "switches_off_equiv": {
+    "execute_no_kw_equals_engine_switches_idle": true,
+    "all_nine_shas_match_dev_claim": true
+  },
+  "switch_matrix_tests": {
+    "module": "tests.v3.engine.test_v4_r2",
+    "cases": 18,
+    "classes": {
+      "SwitchDefaults": ["defaults off", "explicit off vs plain execute"],
+      "LimitBands": ["board mapping", "±10/±20 effective dates", "ETF raw close not index TR"],
+      "FillLimitPaths": ["clear quotes vs off", "limit-up/down defer", "halt span rebalance", "exit through limit-down"],
+      "CrossBorderHook": ["CrossBorderCosts() zeros unchanged", "PLACEHOLDER_COSTS only when set"],
+      "TurnAndRefill": ["T1 off/on", "T2 trend/chop", "T3 refill/off", "T3 rebalance priority", "limit-up defer refill"],
+      "FreezeP1": ["full P1 SHA gate; subprocess fails if child skips on missing DB"]
+    }
+  },
+  "limit_boundary_evidence": {
+    "chinext_20pct_from": "2020-08-24",
+    "star_20pct_from": "2020-08-21",
+    "main_10pct": "unchanged across sample",
+    "tests": [
+      "LimitBands.test_ratio_changes_on_the_exchange_effective_date",
+      "LimitBands.test_session_uses_the_etf_board_not_the_index_level",
+      "FillLimitPaths.test_consecutive_limit_up_defers_the_buy",
+      "FillLimitPaths.test_consecutive_limit_down_defers_the_sell",
+      "FillLimitPaths.test_halt_spanning_rebalance_retries_the_whole_leg"
+    ]
+  },
+  "unittest_runs_at_c4eebdc": {
+    "gate_63": "OK",
+    "tests_v3_discover": "136 OK",
+    "tests_v4_scorecard_plus_ingest": "17 OK",
+    "freeze_p1": "OK under PYTHONHASHSEED=0"
+  },
+  "scope_diff_a5b6fb4_to_c4eebdc": {
+    "files": 10,
+    "touched_paths": [
+      "operations/work_logs/2026-10-28-v4-r2-engine.md",
+      "src/v3/engine/arms.py",
+      "src/v3/engine/costs.py",
+      "src/v3/engine/exit.py",
+      "src/v3/engine/limits.py",
+      "src/v3/engine/market.py",
+      "src/v3/engine/regime.py",
+      "src/v3/engine/score.py",
+      "src/v3/engine/switches.py",
+      "tests/v3/engine/test_v4_r2.py"
+    ],
+    "data_config_results_v4_scorecard_pnl": "none in PR diff"
+  },
+  "reviewer_discipline": {
+    "merged_main": false,
+    "moved_tags": false,
+    "lock_written": false,
+    "computed_2016_plus_portfolio_pnl": false
+  },
+  "artifact_logs": [
+    "/opt/cursor/artifacts/v4-r2-reviewer-gate-63-c4eebdc.log",
+    "/opt/cursor/artifacts/v4-r2-reviewer-discover-v3-c4eebdc.log",
+    "/opt/cursor/artifacts/v4-r2-reviewer-v4-modules-c4eebdc.log",
+    "/opt/cursor/artifacts/v4-r2-reviewer-p1-sha-c4eebdc.json"
+  ]
+}
