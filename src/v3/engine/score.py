@@ -13,6 +13,8 @@ class Lookback:
     total: pd.DataFrame
     score: pd.DataFrame
     ok: pd.DataFrame
+    # 够排名、但还没套用“跑赢现金”的那一层。T1 反弹换挡用。v3.1 的 `ok` 不读它。
+    rankable: pd.DataFrame | None = None
 
 
 def min_observations(length: int) -> int:
@@ -59,15 +61,26 @@ def lookback_panel(ret: pd.DataFrame, cash_id: str, length: int) -> Lookback:
         & score.notna()
     )
     ok[cash_id] = False
-    return Lookback(total=total, score=score, ok=ok)
+    rankable = (
+        history_ok(finite_df, length)
+        & count.ge(need)
+        & finite_df
+        & score.notna()
+    )
+    rankable[cash_id] = False
+    return Lookback(total=total, score=score, ok=ok, rankable=rankable)
 
 
 def pick_row(panel: Lookback, day: pd.Timestamp, n: int, names: list[str], cash_id: str,
-             sort_ids: dict[str, str], liquidity: pd.DataFrame | None) -> dict[str, float]:
-    """有资格的按 s 降序，其次 R 降序，其次容器 id 升序。不足 N 个时每个入选者仍是 1/N，其余给现金。"""
+             sort_ids: dict[str, str], liquidity: pd.DataFrame | None,
+             eligible: pd.Series | None = None) -> dict[str, float]:
+    """有资格的按 s 降序，其次 R 降序，其次容器 id 升序。不足 N 个时每个入选者仍是 1/N，其余给现金。
+
+    `eligible` 仅在 T1 打开时传入。不传时用面板自己的 `ok`，和 v3.1 相同。
+    """
     total = panel.total.loc[day]
     score = panel.score.loc[day]
-    ok = panel.ok.loc[day]
+    ok = panel.ok.loc[day] if eligible is None else eligible
     if liquidity is not None:
         gate = liquidity.loc[day]
         ranked = []
@@ -96,3 +109,15 @@ def average_weights(rows: list[dict[str, float]], names: list[str], cash_id: str
             acc[key] += float(row.get(key, 0.0))
     count = float(len(rows))
     return {key: value / count for key, value in acc.items()}
+
+
+def weighted_average(rows: list[dict[str, float]], weights: list[float], names: list[str],
+                     cash_id: str) -> dict[str, float]:
+    """四组权重不再固定 1/4。`weights` 与 `rows` 对齐，且和为 1。T2 用。"""
+    keys = [*names, cash_id]
+    acc = {key: 0.0 for key in keys}
+    for row, weight in zip(rows, weights):
+        scale = float(weight)
+        for key in keys:
+            acc[key] += scale * float(row.get(key, 0.0))
+    return acc

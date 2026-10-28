@@ -15,6 +15,7 @@ from .benchmark import _connect, _calendar, _fx, bm_main, cash_returns
 from src.v3.data.history import OFFICIAL, history_floor
 
 from .book import RunnerError
+from .limits import board_of
 from .prices import (
     OVERSEAS_SOURCES,
     USD_CODES,
@@ -58,6 +59,10 @@ class Market:
     premium_panels: dict | None = None
     code_levels: dict | None = None
     code_returns: dict | None = None
+    fill_close: dict | None = None
+    fill_board: dict | None = None
+    asset_classes: dict | None = None
+    dividend_yield: pd.DataFrame | None = None
 
 
 def levels_from_returns(pnl: pd.DataFrame, cash_id: str) -> pd.DataFrame:
@@ -164,6 +169,16 @@ def _liquidity(amount: pd.Series, calendar: pd.DatetimeIndex, list_date: pd.Time
     start = max(opened, first_liquid)
     ok = (calendar >= start) & median.ge(spec.min_new_buy_amount).fillna(False).to_numpy()
     return pd.Series(ok, index=calendar)
+
+
+def _raw_close(block: pd.DataFrame | None) -> pd.Series:
+    """原始收盘，只留正的有限价。不前向填充，供涨跌停和停牌判断。"""
+    if block is None or block.empty or "close" not in block.columns:
+        return pd.Series(dtype=float)
+    close = pd.Series(block["close"].to_numpy(dtype=float), index=pd.DatetimeIndex(block["date"]))
+    close = close[~close.index.duplicated(keep="last")].sort_index()
+    keep = [math.isfinite(value) and value > 0.0 for value in close.to_numpy(dtype=float)]
+    return close.where(keep)
 
 
 def _empty_level(calendar):
@@ -305,6 +320,9 @@ def load_market(db: Path, containers: list[dict], arm: str, pool: str, end, spec
     code_level_frames: dict = {}
     code_return_frames: dict = {}
     premium_ids: list[str] = []
+    fill_close: dict[str, pd.Series] = {}
+    fill_board: dict[str, str] = {}
+    asset_classes: dict[str, str] = {}
     for container in members:
         if container.get("asset_class") == "现金":
             continue
@@ -314,6 +332,11 @@ def load_market(db: Path, containers: list[dict], arm: str, pool: str, end, spec
         floor = parse_date(history_floor(container, history_mode))
         code = research_code(container)
         traded = execution_code(container)
+        executions = container.get("execution") or []
+        track = str(executions[0].get("track") or "") if executions else ""
+        fill_close[identity] = _raw_close(bars.get(traded or ""))
+        fill_board[identity] = board_of(track, traded or "")
+        asset_classes[identity] = str(container.get("asset_class") or "")
 
         def one(kind: str, *, lagged: bool):
             if kind == "research":
@@ -402,4 +425,7 @@ def load_market(db: Path, containers: list[dict], arm: str, pool: str, end, spec
         premium_ids=tuple(premium_ids),
         code_levels=code_level_frames or None,
         code_returns=code_return_frames or None,
+        fill_close=fill_close,
+        fill_board=fill_board,
+        asset_classes=asset_classes,
     )

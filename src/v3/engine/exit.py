@@ -14,6 +14,8 @@ from dataclasses import dataclass
 import pandas as pd
 
 from .book import Book, RunnerError, assert_window, drift
+from .limits import executable_weights, legs_clear, session_tradable
+from .regime import next_replacement
 
 EXIT_DRAWDOWN = 0.10
 ALLOWED_DRAWDOWNS = (0.08, 0.10, 0.12, 0.15)
@@ -119,6 +121,48 @@ def _scale_codes(codes: dict[str, float], new_weight: float, weight_eps: float) 
     return {code: weight * scale for code, weight in codes.items() if weight > 0.0}
 
 
+def _apply_refills(weights, refills, filled_slots, rank_row, stamp, cash_id, fee_table, fill_limits,
+                   fill_quotes, columns, trade_eps, weight_eps, peaks, spot, deferred) -> tuple[float, float]:
+    """离场成交当天按排名补位。买不进就留到下一天。返回 (额外成本, 额外买入)。"""
+    for name, sold in filled_slots:
+        refills.append({"weight": float(sold), "exclude": {name}})
+    if rank_row is None:
+        return 0.0, 0.0
+    pending_orders = list(refills)
+    refills.clear()
+    extra_cost = 0.0
+    extra_buy = 0.0
+    names = [name for name in columns if name != cash_id]
+    flags = session_tradable(fill_quotes, stamp, names) if fill_limits else {}
+    for order in pending_orders:
+        if float(order["weight"]) <= trade_eps:
+            continue
+        held = {name for name in names if float(weights.get(name, 0.0)) > weight_eps}
+        choice = next_replacement(rank_row, set(order["exclude"]) | held)
+        if choice is None or choice not in fee_table:
+            continue
+        if fill_limits and not flags.get(choice, (False, False))[0]:
+            refills.append(order)
+            deferred.append({"date": stamp, "name": choice, "reason": "refill_blocked"})
+            continue
+        cash_now = float(weights.get(cash_id, 0.0))
+        take = min(float(order["weight"]), cash_now)
+        if take <= trade_eps:
+            refills.append(order)
+            continue
+        weights[choice] = float(weights.get(choice, 0.0)) + take
+        weights[cash_id] = cash_now - take
+        extra_cost += take * float(fee_table[choice])
+        extra_buy += take
+        mark = spot(choice, stamp)
+        if valid_mark(mark):
+            peaks[choice] = float(mark)
+        left = float(order["weight"]) - take
+        if left > trade_eps:
+            refills.append({"weight": left, "exclude": set(order["exclude"])})
+    return extra_cost, extra_buy
+
+
 def _execution_cost(before: dict[str, float], after: dict[str, float],
                     before_codes: dict[str, dict[str, float]], after_codes: dict[str, dict[str, float]],
                     fees: dict[str, float], cash_id: str, trade_eps: float) -> tuple[float, float, float]:
@@ -166,11 +210,16 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
                   premium=None, code_levels=None, code_returns=None,
                   exit_drawdown: float = EXIT_DRAWDOWN, trade_eps: float = 1e-12,
                   cost_multiplier: float = 1.0, allow_after: bool = False,
-                  weight_eps: float = 1e-6) -> Book:
+                  weight_eps: float = 1e-6, fill_limits: bool = False,
+                  fill_quotes: dict | None = None, refill_rank: pd.DataFrame | None = None,
+                  cross_border=None, cross_border_names: set | None = None,
+                  dividend_yield: pd.DataFrame | None = None) -> Book:
     """一条路：先记当日收益和漂移，再处理收盘成交，最后才接收新的调仓决定。
 
     `targets` 已经是成交日权重，无溢价时直接用。有溢价上下文时，`decisions` 是决策日的
     §4 权重：决策日收盘后改一次，下一交易日成交，成交日不再跑溢价状态机。
+
+    `fill_limits`、`refill_rank`、`cross_border` 默认关闭。关闭时下面的分支不改权重和费用。
     """
     drawdown = check_drawdown(exit_drawdown)
     assert_window(pnl.index, allow_after)
@@ -185,6 +234,16 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
     stopped: set[str] = set()
     tosell: list[str] = []
     pending: _Pending | None = None
+    retry: _Pending | None = None
+    refills: list[dict] = []
+    fee_table = fees
+    if cross_border is not None and cross_border_names:
+        extra = float(cross_border.fx_spread) + float(cross_border.commission)
+        if extra != 0.0:
+            fee_table = dict(fees)
+            for name in cross_border_names:
+                if name in fee_table:
+                    fee_table[name] = float(fee_table[name]) + extra
     target_rows = {}
     if targets is not None and not targets.empty and premium is None:
         target_rows = {pd.Timestamp(day).normalize(): row for day, row in targets.iterrows()}
@@ -228,6 +287,17 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
             else:
                 number = _finite(pnl.at[day, name])
                 rets[name] = 0.0 if number is None else number
+        if cross_border is not None and dividend_yield is not None and cross_border.dividend_withholding:
+            rate = float(cross_border.dividend_withholding)
+            for name in cross_border_names or ():
+                if name == cash_id or name not in rets or name not in dividend_yield.columns:
+                    continue
+                if stamp not in dividend_yield.index:
+                    continue
+                value = _finite(dividend_yield.at[stamp, name])
+                if value is None or value <= 0.0:
+                    continue
+                rets[name] = float(rets[name]) - value * rate
         for name, weight in list(weights.items()):
             if name == cash_id or weight <= weight_eps:
                 continue
@@ -239,25 +309,74 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
         gross, drifted = drift(weights, rets)
         for name in list(code_book):
             code_book[name] = _scale_codes(code_book[name], drifted.get(name, 0.0), weight_eps)
+        if refills:
+            scale = 1.0 + gross
+            growth = (1.0 + float(rets.get(cash_id, 0.0))) / scale if scale != 0.0 else 1.0
+            for order in refills:
+                order["weight"] = float(order["weight"]) * growth
         cost = 0.0
         buy = 0.0
         sell = 0.0
         rebalanced = False
+        target = None
         if pending is not None:
             target = pending
             pending = None
             rebalanced = True
+            retry = None
+            refills.clear()
         elif stamp in target_rows:
             target = _Pending(_row_weights(target_rows[stamp], columns, cash_id), {})
             rebalanced = True
-        else:
-            target = None
-        if rebalanced and target is not None:
+            retry = None
+            refills.clear()
+        elif fill_limits and retry is not None:
+            target = retry
+            retry = None
+            rebalanced = True
+        blocked_fill = False
+        tradable = {}
+        traded_names = [name for name in columns if name != cash_id]
+        if rebalanced and target is not None and fill_limits:
+            tradable = session_tradable(fill_quotes, stamp, traded_names)
+            blocked_fill = not legs_clear(drifted, target.weights, tradable, cash_id, trade_eps)
+        if rebalanced and target is not None and blocked_fill:
+            new_w = executable_weights(drifted, target.weights, tradable, cash_id, trade_eps)
+            before_codes = {name: dict(codes) for name, codes in code_book.items()}
+            after_codes = {
+                name: _scale_codes(before_codes.get(name) or {}, float(new_w.get(name, 0.0)), weight_eps)
+                for name in code_book
+            }
+            cost, buy, sell = _execution_cost(
+                drifted, new_w, before_codes, after_codes, fee_table, cash_id, trade_eps)
+            weights = {name: float(new_w.get(name, 0.0)) for name in columns}
+            code_book = after_codes
+            tosell = []
+            stopped = set()
+            retry = target
+            for name in list(peaks):
+                if weights.get(name, 0.0) <= weight_eps:
+                    peaks.pop(name, None)
+                    baskets.pop(name, None)
+            for name, weight in weights.items():
+                if name == cash_id or weight <= weight_eps:
+                    continue
+                if abs(weight - float(drifted.get(name, 0.0))) <= trade_eps:
+                    continue
+                multi = len(_active(code_book.get(name), weight_eps)) > 1
+                mark = baskets.get(name) if multi else spot(name, stamp)
+                if valid_mark(mark):
+                    peaks[name] = float(mark)
+                    if multi:
+                        baskets[name] = float(mark)
+            applied_rows.append([weights.get(name, 0.0) for name in columns])
+            applied_index.append(stamp)
+        elif rebalanced and target is not None:
             after_codes = {name: {} for name in code_book}
             for name, codes in target.codes.items():
                 after_codes[name] = dict(codes)
             cost, buy, sell = _execution_cost(
-                drifted, target.weights, code_book, after_codes, fees, cash_id, trade_eps)
+                drifted, target.weights, code_book, after_codes, fee_table, cash_id, trade_eps)
             weights = {name: float(target.weights.get(name, 0.0)) for name in columns}
             code_book = after_codes
             tosell = []
@@ -281,17 +400,23 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
         else:
             weights = drifted
             still: list[str] = []
+            filled_slots: list[tuple[str, float]] = []
+            limit_flags = session_tradable(fill_quotes, stamp, traded_names) if fill_limits else None
             for name in list(tosell):
                 weight = float(weights.get(name, 0.0))
                 if weight <= weight_eps:
                     continue
                 multi = len(_active(code_book.get(name), weight_eps)) > 1
                 mark = baskets.get(name) if multi else spot(name, stamp)
+                if limit_flags is not None and not limit_flags.get(name, (False, False))[1]:
+                    still.append(name)
+                    deferred.append({"date": stamp, "name": name, "reason": "limit_or_no_price"})
+                    continue
                 if not valid_mark(mark):
                     still.append(name)
                     deferred.append({"date": stamp, "name": name, "reason": "missing_exit_price"})
                     continue
-                cost += weight * float(fees[name])
+                cost += weight * float(fee_table[name])
                 sell += weight
                 weights[cash_id] = float(weights.get(cash_id, 0.0)) + weight
                 weights[name] = 0.0
@@ -300,26 +425,35 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
                 baskets.pop(name, None)
                 stopped.discard(name)
                 exits.append({"date": stamp, "name": name, "price": float(mark), "kind": "exit"})
+                filled_slots.append((name, weight))
             tosell = still
+            if refill_rank is not None:
+                rank_row = refill_rank.loc[stamp] if stamp in refill_rank.index else None
+                extra_cost, extra_buy = _apply_refills(
+                    weights, refills, filled_slots, rank_row, stamp, cash_id, fee_table, fill_limits,
+                    fill_quotes, columns, trade_eps, weight_eps, peaks, spot, deferred)
+                cost += extra_cost
+                buy += extra_buy
         cost *= cost_multiplier
-        for name, weight in list(weights.items()):
-            if name == cash_id or weight <= weight_eps:
-                continue
-            multi = len(_active(code_book.get(name), weight_eps)) > 1
-            mark = baskets.get(name) if multi else spot(name, stamp)
-            if not valid_mark(mark):
-                continue
-            if name not in peaks:
-                peaks[name] = float(mark)
-                continue
-            peaks[name] = max(float(peaks[name]), float(mark))
-            if triggered(float(mark), float(peaks[name]), drawdown) and name not in stopped:
-                stopped.add(name)
-                tosell.append(name)
-                exits.append({
-                    "date": stamp, "name": name, "price": float(mark),
-                    "peak": float(peaks[name]), "kind": "signal",
-                })
+        if retry is None:
+            for name, weight in list(weights.items()):
+                if name == cash_id or weight <= weight_eps:
+                    continue
+                multi = len(_active(code_book.get(name), weight_eps)) > 1
+                mark = baskets.get(name) if multi else spot(name, stamp)
+                if not valid_mark(mark):
+                    continue
+                if name not in peaks:
+                    peaks[name] = float(mark)
+                    continue
+                peaks[name] = max(float(peaks[name]), float(mark))
+                if triggered(float(mark), float(peaks[name]), drawdown) and name not in stopped:
+                    stopped.add(name)
+                    tosell.append(name)
+                    exits.append({
+                        "date": stamp, "name": name, "price": float(mark),
+                        "peak": float(peaks[name]), "kind": "signal",
+                    })
         if stamp in decision_rows:
             raw = _row_weights(decision_rows[stamp], columns, cash_id)
             codes: dict[str, dict[str, float]] = {}
