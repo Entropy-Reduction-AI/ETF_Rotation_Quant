@@ -9,7 +9,7 @@
 - Maintainer: Orchestrator
 - Date: 2026-10-27（Asia/Taipei）
 - 依据：Owner 对《v4 研究备忘》第 6 节的答复（“四个选择我都同意”），以及对 Orchestrator 定义、时代风格和检验方式的补充
-- 相关：`docs/research/2026-10-27-v4-research-memo.md`；`operations/planning/2026-10-27-d11-owner-decisions.md`；`docs/prereg/etf-multiasset-rotation-prereg-v3.1-addendum-1.md`（第 2 版）
+- 相关：`docs/owner/v4-research-memo.md`；`operations/planning/2026-10-27-d11-owner-decisions.md`；`docs/prereg/etf-multiasset-rotation-prereg-v3.1-addendum-1.md`（第 2 版）
 
 ## 决定
 
