@@ -1,0 +1,16 @@
+pair_kind,left_code,right_code,sector,basis,n_days,corr,te_annual,start,end,note
+same_industry,XLRE,SP500-60,Real Estate,price_vs_price,58,0.802434,0.108417,2015-10-09,2015-12-31,两边都是价格指数，不是全收益。XLRE 2015-10-08 才有 K 线，设计期重叠很短。Select Sector 有个股权重上限，官方行业指数没有。
+broad_sanity,XLB,^SP500TR,材料,etf_price_vs_spx_total_return,4024,0.793743,0.154138,2000-01-04,2015-12-31,不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。
+broad_sanity,XLE,^SP500TR,能源,etf_price_vs_spx_total_return,4024,0.710401,0.199225,2000-01-04,2015-12-31,不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。
+broad_sanity,XLF,^SP500TR,金融,etf_price_vs_spx_total_return,4024,0.851481,0.180589,2000-01-04,2015-12-31,不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。
+broad_sanity,XLI,^SP500TR,工业,etf_price_vs_spx_total_return,4024,0.90559,0.093544,2000-01-04,2015-12-31,不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。
+broad_sanity,XLK,^SP500TR,信息科技,etf_price_vs_spx_total_return,4024,0.853753,0.14228,2000-01-04,2015-12-31,不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。
+broad_sanity,XLP,^SP500TR,必需消费,etf_price_vs_spx_total_return,4024,0.687898,0.146492,2000-01-04,2015-12-31,不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。
+broad_sanity,XLU,^SP500TR,公用事业,etf_price_vs_spx_total_return,4024,0.645132,0.166617,2000-01-04,2015-12-31,不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。
+broad_sanity,XLV,^SP500TR,医疗保健,etf_price_vs_spx_total_return,4024,0.785005,0.12746,2000-01-04,2015-12-31,不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。
+broad_sanity,XLY,^SP500TR,可选消费,etf_price_vs_spx_total_return,4024,0.860569,0.11828,2000-01-04,2015-12-31,不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。
+broad_sanity,XLRE,^SP500TR,房地产,etf_price_vs_spx_total_return,58,0.55081,0.154404,2015-10-09,2015-12-31,不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。
+hk_vs_hsi,HSF,HSI,恒生金融分类,price_vs_price_hkd,3946,0.920035,0.097866,2000-01-04,2015-12-31,港币价格指数对恒生价格指数。不是 GICS 对照。
+hk_vs_hsi,HSU,HSI,恒生公用事业分类,price_vs_price_hkd,3945,0.521032,0.211217,2000-01-04,2015-12-31,港币价格指数对恒生价格指数。不是 GICS 对照。
+hk_vs_hsi,HSP,HSI,恒生地产分类,price_vs_price_hkd,3945,0.869412,0.146061,2000-01-04,2015-12-31,港币价格指数对恒生价格指数。不是 GICS 对照。
+hk_vs_hsi,HSC,HSI,恒生工商分类,price_vs_price_hkd,3945,0.958631,0.086348,2000-01-04,2015-12-31,港币价格指数对恒生价格指数。不是 GICS 对照。

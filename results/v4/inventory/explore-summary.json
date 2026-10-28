@@ -1,0 +1,5377 @@
+{
+  "end": "2015-12-31",
+  "coverage": [
+    {
+      "pool": "old",
+      "year": 2006,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 2,
+        "selectable_20": 1,
+        "selectable_250": 1,
+        "min": 1,
+        "max": 1
+      },
+      "美股": {
+        "roster": 41,
+        "selectable_20": 2,
+        "selectable_250": 0,
+        "min": 0,
+        "max": 2
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 0,
+        "selectable_250": 0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    {
+      "pool": "old",
+      "year": 2007,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 2,
+        "selectable_20": 1,
+        "selectable_250": 1,
+        "min": 1,
+        "max": 1
+      },
+      "美股": {
+        "roster": 41,
+        "selectable_20": 2,
+        "selectable_250": 2,
+        "min": 2,
+        "max": 2
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 0,
+        "selectable_250": 0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    {
+      "pool": "old",
+      "year": 2008,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 2,
+        "selectable_20": 1,
+        "selectable_250": 1,
+        "min": 1,
+        "max": 1
+      },
+      "美股": {
+        "roster": 41,
+        "selectable_20": 2,
+        "selectable_250": 2,
+        "min": 2,
+        "max": 2
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 0,
+        "min": 2,
+        "max": 3
+      }
+    },
+    {
+      "pool": "old",
+      "year": 2009,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 2,
+        "selectable_20": 1,
+        "selectable_250": 1,
+        "min": 1,
+        "max": 1
+      },
+      "美股": {
+        "roster": 41,
+        "selectable_20": 2,
+        "selectable_250": 2,
+        "min": 2,
+        "max": 2
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    {
+      "pool": "old",
+      "year": 2010,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 2,
+        "selectable_20": 1,
+        "selectable_250": 1,
+        "min": 1,
+        "max": 1
+      },
+      "美股": {
+        "roster": 41,
+        "selectable_20": 2,
+        "selectable_250": 2,
+        "min": 2,
+        "max": 2
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    {
+      "pool": "old",
+      "year": 2011,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 2,
+        "selectable_20": 1,
+        "selectable_250": 1,
+        "min": 1,
+        "max": 1
+      },
+      "美股": {
+        "roster": 41,
+        "selectable_20": 2,
+        "selectable_250": 2,
+        "min": 2,
+        "max": 2
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    {
+      "pool": "old",
+      "year": 2012,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 2,
+        "selectable_20": 1,
+        "selectable_250": 1,
+        "min": 1,
+        "max": 1
+      },
+      "美股": {
+        "roster": 41,
+        "selectable_20": 2,
+        "selectable_250": 2,
+        "min": 2,
+        "max": 2
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    {
+      "pool": "old",
+      "year": 2013,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 2,
+        "selectable_20": 1,
+        "selectable_250": 1,
+        "min": 1,
+        "max": 1
+      },
+      "美股": {
+        "roster": 41,
+        "selectable_20": 2,
+        "selectable_250": 2,
+        "min": 2,
+        "max": 2
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    {
+      "pool": "old",
+      "year": 2014,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 2,
+        "selectable_20": 1,
+        "selectable_250": 1,
+        "min": 1,
+        "max": 1
+      },
+      "美股": {
+        "roster": 41,
+        "selectable_20": 2,
+        "selectable_250": 2,
+        "min": 2,
+        "max": 2
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    {
+      "pool": "old",
+      "year": 2015,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 2,
+        "selectable_20": 1,
+        "selectable_250": 1,
+        "min": 1,
+        "max": 1
+      },
+      "美股": {
+        "roster": 41,
+        "selectable_20": 2,
+        "selectable_250": 2,
+        "min": 2,
+        "max": 2
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    {
+      "pool": "new",
+      "year": 2006,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 6,
+        "selectable_20": 5,
+        "selectable_250": 5,
+        "min": 5,
+        "max": 5
+      },
+      "美股": {
+        "roster": 52,
+        "selectable_20": 11,
+        "selectable_250": 0,
+        "min": 0,
+        "max": 11
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 0,
+        "selectable_250": 0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    {
+      "pool": "new",
+      "year": 2007,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 6,
+        "selectable_20": 5,
+        "selectable_250": 5,
+        "min": 5,
+        "max": 5
+      },
+      "美股": {
+        "roster": 52,
+        "selectable_20": 11,
+        "selectable_250": 11,
+        "min": 11,
+        "max": 11
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 0,
+        "selectable_250": 0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    {
+      "pool": "new",
+      "year": 2008,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 6,
+        "selectable_20": 5,
+        "selectable_250": 5,
+        "min": 5,
+        "max": 5
+      },
+      "美股": {
+        "roster": 52,
+        "selectable_20": 11,
+        "selectable_250": 11,
+        "min": 11,
+        "max": 11
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 0,
+        "min": 2,
+        "max": 3
+      }
+    },
+    {
+      "pool": "new",
+      "year": 2009,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 6,
+        "selectable_20": 5,
+        "selectable_250": 5,
+        "min": 5,
+        "max": 5
+      },
+      "美股": {
+        "roster": 52,
+        "selectable_20": 11,
+        "selectable_250": 11,
+        "min": 11,
+        "max": 11
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    {
+      "pool": "new",
+      "year": 2010,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 6,
+        "selectable_20": 5,
+        "selectable_250": 5,
+        "min": 5,
+        "max": 5
+      },
+      "美股": {
+        "roster": 52,
+        "selectable_20": 11,
+        "selectable_250": 11,
+        "min": 11,
+        "max": 11
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    {
+      "pool": "new",
+      "year": 2011,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 6,
+        "selectable_20": 5,
+        "selectable_250": 5,
+        "min": 5,
+        "max": 5
+      },
+      "美股": {
+        "roster": 52,
+        "selectable_20": 11,
+        "selectable_250": 11,
+        "min": 11,
+        "max": 11
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    {
+      "pool": "new",
+      "year": 2012,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 6,
+        "selectable_20": 5,
+        "selectable_250": 5,
+        "min": 5,
+        "max": 5
+      },
+      "美股": {
+        "roster": 52,
+        "selectable_20": 11,
+        "selectable_250": 11,
+        "min": 11,
+        "max": 11
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    {
+      "pool": "new",
+      "year": 2013,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 6,
+        "selectable_20": 5,
+        "selectable_250": 5,
+        "min": 5,
+        "max": 5
+      },
+      "美股": {
+        "roster": 52,
+        "selectable_20": 11,
+        "selectable_250": 11,
+        "min": 11,
+        "max": 11
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    {
+      "pool": "new",
+      "year": 2014,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 6,
+        "selectable_20": 5,
+        "selectable_250": 5,
+        "min": 5,
+        "max": 5
+      },
+      "美股": {
+        "roster": 52,
+        "selectable_20": 11,
+        "selectable_250": 11,
+        "min": 11,
+        "max": 11
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    },
+    {
+      "pool": "new",
+      "year": 2015,
+      "A股": {
+        "roster": 16,
+        "selectable_20": 14,
+        "selectable_250": 14,
+        "min": 14,
+        "max": 14
+      },
+      "港股": {
+        "roster": 6,
+        "selectable_20": 5,
+        "selectable_250": 5,
+        "min": 5,
+        "max": 5
+      },
+      "美股": {
+        "roster": 52,
+        "selectable_20": 12,
+        "selectable_250": 11,
+        "min": 11,
+        "max": 12
+      },
+      "防守": {
+        "roster": 5,
+        "selectable_20": 3,
+        "selectable_250": 3,
+        "min": 3,
+        "max": 3
+      }
+    }
+  ],
+  "headline": [
+    {
+      "pool": "new",
+      "year": 2006,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 2.5208,
+      "mean_share": 0.8403
+    },
+    {
+      "pool": "new",
+      "year": 2006,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.25,
+      "mean_share": 0.0833
+    },
+    {
+      "pool": "new",
+      "year": 2006,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.2292,
+      "mean_share": 0.0764
+    },
+    {
+      "pool": "new",
+      "year": 2006,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "new",
+      "year": 2006,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 4.1667,
+      "mean_share": 0.8333
+    },
+    {
+      "pool": "new",
+      "year": 2006,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.4167,
+      "mean_share": 0.0833
+    },
+    {
+      "pool": "new",
+      "year": 2006,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.4167,
+      "mean_share": 0.0833
+    },
+    {
+      "pool": "new",
+      "year": 2006,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "new",
+      "year": 2006,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 6.5208,
+      "mean_share": 0.8151
+    },
+    {
+      "pool": "new",
+      "year": 2006,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.7917,
+      "mean_share": 0.099
+    },
+    {
+      "pool": "new",
+      "year": 2006,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 0.6667,
+      "mean_share": 0.0833
+    },
+    {
+      "pool": "new",
+      "year": 2006,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "new",
+      "year": 2007,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 2.4583,
+      "mean_share": 0.8194
+    },
+    {
+      "pool": "new",
+      "year": 2007,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.4583,
+      "mean_share": 0.1528
+    },
+    {
+      "pool": "new",
+      "year": 2007,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.0833,
+      "mean_share": 0.0278
+    },
+    {
+      "pool": "new",
+      "year": 2007,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "new",
+      "year": 2007,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 4.1875,
+      "mean_share": 0.8375
+    },
+    {
+      "pool": "new",
+      "year": 2007,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.6458,
+      "mean_share": 0.1292
+    },
+    {
+      "pool": "new",
+      "year": 2007,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.1667,
+      "mean_share": 0.0333
+    },
+    {
+      "pool": "new",
+      "year": 2007,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "new",
+      "year": 2007,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 6.625,
+      "mean_share": 0.8281
+    },
+    {
+      "pool": "new",
+      "year": 2007,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.8542,
+      "mean_share": 0.1068
+    },
+    {
+      "pool": "new",
+      "year": 2007,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 0.4375,
+      "mean_share": 0.0547
+    },
+    {
+      "pool": "new",
+      "year": 2007,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "new",
+      "year": 2008,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.4583,
+      "mean_share": 0.1528
+    },
+    {
+      "pool": "new",
+      "year": 2008,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.5417,
+      "mean_share": 0.1806
+    },
+    {
+      "pool": "new",
+      "year": 2008,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.3958,
+      "mean_share": 0.1319
+    },
+    {
+      "pool": "new",
+      "year": 2008,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.8958,
+      "mean_share": 0.2986
+    },
+    {
+      "pool": "new",
+      "year": 2008,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 0.8958,
+      "mean_share": 0.1792
+    },
+    {
+      "pool": "new",
+      "year": 2008,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.7083,
+      "mean_share": 0.1417
+    },
+    {
+      "pool": "new",
+      "year": 2008,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.7917,
+      "mean_share": 0.1583
+    },
+    {
+      "pool": "new",
+      "year": 2008,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.8958,
+      "mean_share": 0.1792
+    },
+    {
+      "pool": "new",
+      "year": 2008,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 1.4375,
+      "mean_share": 0.1797
+    },
+    {
+      "pool": "new",
+      "year": 2008,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 1.0417,
+      "mean_share": 0.1302
+    },
+    {
+      "pool": "new",
+      "year": 2008,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 1.1458,
+      "mean_share": 0.1432
+    },
+    {
+      "pool": "new",
+      "year": 2008,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.9167,
+      "mean_share": 0.1146
+    },
+    {
+      "pool": "new",
+      "year": 2009,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 1.3958,
+      "mean_share": 0.4653
+    },
+    {
+      "pool": "new",
+      "year": 2009,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.1458,
+      "mean_share": 0.0486
+    },
+    {
+      "pool": "new",
+      "year": 2009,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.6667,
+      "mean_share": 0.2222
+    },
+    {
+      "pool": "new",
+      "year": 2009,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.6875,
+      "mean_share": 0.2292
+    },
+    {
+      "pool": "new",
+      "year": 2009,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 2.6042,
+      "mean_share": 0.5208
+    },
+    {
+      "pool": "new",
+      "year": 2009,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.2292,
+      "mean_share": 0.0458
+    },
+    {
+      "pool": "new",
+      "year": 2009,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 1.125,
+      "mean_share": 0.225
+    },
+    {
+      "pool": "new",
+      "year": 2009,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.7292,
+      "mean_share": 0.1458
+    },
+    {
+      "pool": "new",
+      "year": 2009,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 4.125,
+      "mean_share": 0.5156
+    },
+    {
+      "pool": "new",
+      "year": 2009,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.3542,
+      "mean_share": 0.0443
+    },
+    {
+      "pool": "new",
+      "year": 2009,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 1.9583,
+      "mean_share": 0.2448
+    },
+    {
+      "pool": "new",
+      "year": 2009,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.875,
+      "mean_share": 0.1094
+    },
+    {
+      "pool": "new",
+      "year": 2010,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.7292,
+      "mean_share": 0.2431
+    },
+    {
+      "pool": "new",
+      "year": 2010,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.2917,
+      "mean_share": 0.0972
+    },
+    {
+      "pool": "new",
+      "year": 2010,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.75,
+      "mean_share": 0.25
+    },
+    {
+      "pool": "new",
+      "year": 2010,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.2292,
+      "mean_share": 0.4097
+    },
+    {
+      "pool": "new",
+      "year": 2010,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 1.5833,
+      "mean_share": 0.3167
+    },
+    {
+      "pool": "new",
+      "year": 2010,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.6042,
+      "mean_share": 0.1208
+    },
+    {
+      "pool": "new",
+      "year": 2010,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 1.2292,
+      "mean_share": 0.2458
+    },
+    {
+      "pool": "new",
+      "year": 2010,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.5,
+      "mean_share": 0.3
+    },
+    {
+      "pool": "new",
+      "year": 2010,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 2.625,
+      "mean_share": 0.3281
+    },
+    {
+      "pool": "new",
+      "year": 2010,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.9167,
+      "mean_share": 0.1146
+    },
+    {
+      "pool": "new",
+      "year": 2010,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 2.4167,
+      "mean_share": 0.3021
+    },
+    {
+      "pool": "new",
+      "year": 2010,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.625,
+      "mean_share": 0.2031
+    },
+    {
+      "pool": "new",
+      "year": 2011,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.2917,
+      "mean_share": 0.0972
+    },
+    {
+      "pool": "new",
+      "year": 2011,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.375,
+      "mean_share": 0.125
+    },
+    {
+      "pool": "new",
+      "year": 2011,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.9792,
+      "mean_share": 0.3264
+    },
+    {
+      "pool": "new",
+      "year": 2011,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.3125,
+      "mean_share": 0.4375
+    },
+    {
+      "pool": "new",
+      "year": 2011,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 0.5,
+      "mean_share": 0.1
+    },
+    {
+      "pool": "new",
+      "year": 2011,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.7083,
+      "mean_share": 0.1417
+    },
+    {
+      "pool": "new",
+      "year": 2011,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 1.9792,
+      "mean_share": 0.3958
+    },
+    {
+      "pool": "new",
+      "year": 2011,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.5417,
+      "mean_share": 0.3083
+    },
+    {
+      "pool": "new",
+      "year": 2011,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 0.8125,
+      "mean_share": 0.1016
+    },
+    {
+      "pool": "new",
+      "year": 2011,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.8958,
+      "mean_share": 0.112
+    },
+    {
+      "pool": "new",
+      "year": 2011,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 3.4792,
+      "mean_share": 0.4349
+    },
+    {
+      "pool": "new",
+      "year": 2011,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.6875,
+      "mean_share": 0.2109
+    },
+    {
+      "pool": "new",
+      "year": 2012,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.1875,
+      "mean_share": 0.0625
+    },
+    {
+      "pool": "new",
+      "year": 2012,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.5625,
+      "mean_share": 0.1875
+    },
+    {
+      "pool": "new",
+      "year": 2012,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.8125,
+      "mean_share": 0.2708
+    },
+    {
+      "pool": "new",
+      "year": 2012,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.4375,
+      "mean_share": 0.4792
+    },
+    {
+      "pool": "new",
+      "year": 2012,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 0.4583,
+      "mean_share": 0.0917
+    },
+    {
+      "pool": "new",
+      "year": 2012,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.9167,
+      "mean_share": 0.1833
+    },
+    {
+      "pool": "new",
+      "year": 2012,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 2.1458,
+      "mean_share": 0.4292
+    },
+    {
+      "pool": "new",
+      "year": 2012,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.4792,
+      "mean_share": 0.2958
+    },
+    {
+      "pool": "new",
+      "year": 2012,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 0.9375,
+      "mean_share": 0.1172
+    },
+    {
+      "pool": "new",
+      "year": 2012,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 1.3125,
+      "mean_share": 0.1641
+    },
+    {
+      "pool": "new",
+      "year": 2012,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 4.1042,
+      "mean_share": 0.513
+    },
+    {
+      "pool": "new",
+      "year": 2012,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.5417,
+      "mean_share": 0.1927
+    },
+    {
+      "pool": "new",
+      "year": 2013,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.5208,
+      "mean_share": 0.1736
+    },
+    {
+      "pool": "new",
+      "year": 2013,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.2917,
+      "mean_share": 0.0972
+    },
+    {
+      "pool": "new",
+      "year": 2013,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 1.5417,
+      "mean_share": 0.5139
+    },
+    {
+      "pool": "new",
+      "year": 2013,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.5833,
+      "mean_share": 0.1944
+    },
+    {
+      "pool": "new",
+      "year": 2013,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 1.0417,
+      "mean_share": 0.2083
+    },
+    {
+      "pool": "new",
+      "year": 2013,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.5,
+      "mean_share": 0.1
+    },
+    {
+      "pool": "new",
+      "year": 2013,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 2.6458,
+      "mean_share": 0.5292
+    },
+    {
+      "pool": "new",
+      "year": 2013,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.7083,
+      "mean_share": 0.1417
+    },
+    {
+      "pool": "new",
+      "year": 2013,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 1.8958,
+      "mean_share": 0.237
+    },
+    {
+      "pool": "new",
+      "year": 2013,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.8333,
+      "mean_share": 0.1042
+    },
+    {
+      "pool": "new",
+      "year": 2013,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 4.3333,
+      "mean_share": 0.5417
+    },
+    {
+      "pool": "new",
+      "year": 2013,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.7708,
+      "mean_share": 0.0964
+    },
+    {
+      "pool": "new",
+      "year": 2014,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.8542,
+      "mean_share": 0.2847
+    },
+    {
+      "pool": "new",
+      "year": 2014,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.0417,
+      "mean_share": 0.0139
+    },
+    {
+      "pool": "new",
+      "year": 2014,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 1.2917,
+      "mean_share": 0.4306
+    },
+    {
+      "pool": "new",
+      "year": 2014,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.8125,
+      "mean_share": 0.2708
+    },
+    {
+      "pool": "new",
+      "year": 2014,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 1.6042,
+      "mean_share": 0.3208
+    },
+    {
+      "pool": "new",
+      "year": 2014,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.1667,
+      "mean_share": 0.0333
+    },
+    {
+      "pool": "new",
+      "year": 2014,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 2.25,
+      "mean_share": 0.45
+    },
+    {
+      "pool": "new",
+      "year": 2014,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.9792,
+      "mean_share": 0.1958
+    },
+    {
+      "pool": "new",
+      "year": 2014,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 2.6667,
+      "mean_share": 0.3333
+    },
+    {
+      "pool": "new",
+      "year": 2014,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.4583,
+      "mean_share": 0.0573
+    },
+    {
+      "pool": "new",
+      "year": 2014,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 3.7292,
+      "mean_share": 0.4661
+    },
+    {
+      "pool": "new",
+      "year": 2014,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.125,
+      "mean_share": 0.1406
+    },
+    {
+      "pool": "new",
+      "year": 2015,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 1.375,
+      "mean_share": 0.4583
+    },
+    {
+      "pool": "new",
+      "year": 2015,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.0833,
+      "mean_share": 0.0278
+    },
+    {
+      "pool": "new",
+      "year": 2015,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.2708,
+      "mean_share": 0.0903
+    },
+    {
+      "pool": "new",
+      "year": 2015,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.25,
+      "mean_share": 0.4167
+    },
+    {
+      "pool": "new",
+      "year": 2015,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 2.75,
+      "mean_share": 0.55
+    },
+    {
+      "pool": "new",
+      "year": 2015,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.0833,
+      "mean_share": 0.0167
+    },
+    {
+      "pool": "new",
+      "year": 2015,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.6667,
+      "mean_share": 0.1333
+    },
+    {
+      "pool": "new",
+      "year": 2015,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.3125,
+      "mean_share": 0.2625
+    },
+    {
+      "pool": "new",
+      "year": 2015,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 4.6875,
+      "mean_share": 0.5859
+    },
+    {
+      "pool": "new",
+      "year": 2015,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.1667,
+      "mean_share": 0.0208
+    },
+    {
+      "pool": "new",
+      "year": 2015,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 1.25,
+      "mean_share": 0.1562
+    },
+    {
+      "pool": "new",
+      "year": 2015,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.375,
+      "mean_share": 0.1719
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2006,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 2.5,
+      "mean_share": 0.8333
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2006,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.2292,
+      "mean_share": 0.0764
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2006,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.2708,
+      "mean_share": 0.0903
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2006,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2006,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 4.1042,
+      "mean_share": 0.8208
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2006,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.3958,
+      "mean_share": 0.0792
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2006,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.5,
+      "mean_share": 0.1
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2006,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2006,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 6.4375,
+      "mean_share": 0.8047
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2006,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.7917,
+      "mean_share": 0.099
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2006,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 0.75,
+      "mean_share": 0.0938
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2006,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2007,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 2.4583,
+      "mean_share": 0.8194
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2007,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.4583,
+      "mean_share": 0.1528
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2007,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.0833,
+      "mean_share": 0.0278
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2007,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2007,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 4.1875,
+      "mean_share": 0.8375
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2007,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.6458,
+      "mean_share": 0.1292
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2007,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.1667,
+      "mean_share": 0.0333
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2007,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2007,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 6.625,
+      "mean_share": 0.8281
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2007,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.8542,
+      "mean_share": 0.1068
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2007,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 0.4375,
+      "mean_share": 0.0547
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2007,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2008,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.4375,
+      "mean_share": 0.1458
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2008,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.5208,
+      "mean_share": 0.1736
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2008,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.4375,
+      "mean_share": 0.1458
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2008,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.8958,
+      "mean_share": 0.2986
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2008,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 0.875,
+      "mean_share": 0.175
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2008,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.7083,
+      "mean_share": 0.1417
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2008,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.8125,
+      "mean_share": 0.1625
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2008,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.8958,
+      "mean_share": 0.1792
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2008,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 1.3958,
+      "mean_share": 0.1745
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2008,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 1.0208,
+      "mean_share": 0.1276
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2008,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 1.2292,
+      "mean_share": 0.1536
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2008,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.9167,
+      "mean_share": 0.1146
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2009,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 1.375,
+      "mean_share": 0.4583
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2009,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.125,
+      "mean_share": 0.0417
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2009,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.7083,
+      "mean_share": 0.2361
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2009,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.6875,
+      "mean_share": 0.2292
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2009,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 2.5833,
+      "mean_share": 0.5167
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2009,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.2083,
+      "mean_share": 0.0417
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2009,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 1.1667,
+      "mean_share": 0.2333
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2009,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.7292,
+      "mean_share": 0.1458
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2009,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 4.1042,
+      "mean_share": 0.513
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2009,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.3542,
+      "mean_share": 0.0443
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2009,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 1.9792,
+      "mean_share": 0.2474
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2009,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.875,
+      "mean_share": 0.1094
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2010,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.7083,
+      "mean_share": 0.2361
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2010,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.2708,
+      "mean_share": 0.0903
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2010,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.8333,
+      "mean_share": 0.2778
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2010,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.1875,
+      "mean_share": 0.3958
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2010,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 1.4583,
+      "mean_share": 0.2917
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2010,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.5833,
+      "mean_share": 0.1167
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2010,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 1.3958,
+      "mean_share": 0.2792
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2010,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.4792,
+      "mean_share": 0.2958
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2010,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 2.4792,
+      "mean_share": 0.3099
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2010,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.8958,
+      "mean_share": 0.112
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2010,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 2.625,
+      "mean_share": 0.3281
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2010,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.5833,
+      "mean_share": 0.1979
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2011,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.2708,
+      "mean_share": 0.0903
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2011,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.2917,
+      "mean_share": 0.0972
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2011,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 1.1458,
+      "mean_share": 0.3819
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2011,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.2708,
+      "mean_share": 0.4236
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2011,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 0.4792,
+      "mean_share": 0.0958
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2011,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.6458,
+      "mean_share": 0.1292
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2011,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 2.25,
+      "mean_share": 0.45
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2011,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.4583,
+      "mean_share": 0.2917
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2011,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 0.75,
+      "mean_share": 0.0938
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2011,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.8333,
+      "mean_share": 0.1042
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2011,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 3.8542,
+      "mean_share": 0.4818
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2011,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.625,
+      "mean_share": 0.2031
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2012,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.1667,
+      "mean_share": 0.0556
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2012,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.4792,
+      "mean_share": 0.1597
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2012,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.9375,
+      "mean_share": 0.3125
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2012,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.4167,
+      "mean_share": 0.4722
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2012,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 0.4583,
+      "mean_share": 0.0917
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2012,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.7917,
+      "mean_share": 0.1583
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2012,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 2.2708,
+      "mean_share": 0.4542
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2012,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.4792,
+      "mean_share": 0.2958
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2012,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 0.8958,
+      "mean_share": 0.112
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2012,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 1.25,
+      "mean_share": 0.1562
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2012,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 4.2708,
+      "mean_share": 0.5339
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2012,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.5208,
+      "mean_share": 0.1901
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2013,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.4583,
+      "mean_share": 0.1528
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2013,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.2917,
+      "mean_share": 0.0972
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2013,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 1.6458,
+      "mean_share": 0.5486
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2013,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.5417,
+      "mean_share": 0.1806
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2013,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 0.9375,
+      "mean_share": 0.1875
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2013,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.3958,
+      "mean_share": 0.0792
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2013,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 2.9167,
+      "mean_share": 0.5833
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2013,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.6458,
+      "mean_share": 0.1292
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2013,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 1.7708,
+      "mean_share": 0.2214
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2013,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.7083,
+      "mean_share": 0.0885
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2013,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 4.6042,
+      "mean_share": 0.5755
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2013,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.75,
+      "mean_share": 0.0938
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2014,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.8542,
+      "mean_share": 0.2847
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2014,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.0417,
+      "mean_share": 0.0139
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2014,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 1.2917,
+      "mean_share": 0.4306
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2014,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.8125,
+      "mean_share": 0.2708
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2014,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 1.5833,
+      "mean_share": 0.3167
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2014,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.125,
+      "mean_share": 0.025
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2014,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 2.3125,
+      "mean_share": 0.4625
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2014,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.9792,
+      "mean_share": 0.1958
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2014,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 2.5417,
+      "mean_share": 0.3177
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2014,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.3958,
+      "mean_share": 0.0495
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2014,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 3.9375,
+      "mean_share": 0.4922
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2014,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.125,
+      "mean_share": 0.1406
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2015,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 1.375,
+      "mean_share": 0.4583
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2015,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.0833,
+      "mean_share": 0.0278
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2015,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.2708,
+      "mean_share": 0.0903
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2015,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.25,
+      "mean_share": 0.4167
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2015,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 2.6667,
+      "mean_share": 0.5333
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2015,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.0833,
+      "mean_share": 0.0167
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2015,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.75,
+      "mean_share": 0.15
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2015,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.3125,
+      "mean_share": 0.2625
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2015,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 4.5625,
+      "mean_share": 0.5703
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2015,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.1667,
+      "mean_share": 0.0208
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2015,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 1.375,
+      "mean_share": 0.1719
+    },
+    {
+      "pool": "new_plus_div",
+      "year": 2015,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.375,
+      "mean_share": 0.1719
+    },
+    {
+      "pool": "old",
+      "year": 2006,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 2.7708,
+      "mean_share": 0.9236
+    },
+    {
+      "pool": "old",
+      "year": 2006,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.125,
+      "mean_share": 0.0417
+    },
+    {
+      "pool": "old",
+      "year": 2006,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.0833,
+      "mean_share": 0.0278
+    },
+    {
+      "pool": "old",
+      "year": 2006,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "old",
+      "year": 2006,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 4.5417,
+      "mean_share": 0.9083
+    },
+    {
+      "pool": "old",
+      "year": 2006,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.1875,
+      "mean_share": 0.0375
+    },
+    {
+      "pool": "old",
+      "year": 2006,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.1875,
+      "mean_share": 0.0375
+    },
+    {
+      "pool": "old",
+      "year": 2006,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "old",
+      "year": 2006,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 7.2083,
+      "mean_share": 0.901
+    },
+    {
+      "pool": "old",
+      "year": 2006,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.2708,
+      "mean_share": 0.0339
+    },
+    {
+      "pool": "old",
+      "year": 2006,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 0.25,
+      "mean_share": 0.0312
+    },
+    {
+      "pool": "old",
+      "year": 2006,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "old",
+      "year": 2007,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 2.7083,
+      "mean_share": 0.9028
+    },
+    {
+      "pool": "old",
+      "year": 2007,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.1667,
+      "mean_share": 0.0556
+    },
+    {
+      "pool": "old",
+      "year": 2007,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.0625,
+      "mean_share": 0.0208
+    },
+    {
+      "pool": "old",
+      "year": 2007,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "old",
+      "year": 2007,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 4.5625,
+      "mean_share": 0.9125
+    },
+    {
+      "pool": "old",
+      "year": 2007,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.1875,
+      "mean_share": 0.0375
+    },
+    {
+      "pool": "old",
+      "year": 2007,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.0833,
+      "mean_share": 0.0167
+    },
+    {
+      "pool": "old",
+      "year": 2007,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "old",
+      "year": 2007,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 7.2083,
+      "mean_share": 0.901
+    },
+    {
+      "pool": "old",
+      "year": 2007,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.2292,
+      "mean_share": 0.0286
+    },
+    {
+      "pool": "old",
+      "year": 2007,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 0.1458,
+      "mean_share": 0.0182
+    },
+    {
+      "pool": "old",
+      "year": 2007,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "old",
+      "year": 2008,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.7083,
+      "mean_share": 0.2361
+    },
+    {
+      "pool": "old",
+      "year": 2008,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.1042,
+      "mean_share": 0.0347
+    },
+    {
+      "pool": "old",
+      "year": 2008,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.125,
+      "mean_share": 0.0417
+    },
+    {
+      "pool": "old",
+      "year": 2008,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.8958,
+      "mean_share": 0.2986
+    },
+    {
+      "pool": "old",
+      "year": 2008,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 1.2708,
+      "mean_share": 0.2542
+    },
+    {
+      "pool": "old",
+      "year": 2008,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.1667,
+      "mean_share": 0.0333
+    },
+    {
+      "pool": "old",
+      "year": 2008,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.25,
+      "mean_share": 0.05
+    },
+    {
+      "pool": "old",
+      "year": 2008,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.8958,
+      "mean_share": 0.1792
+    },
+    {
+      "pool": "old",
+      "year": 2008,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 1.9792,
+      "mean_share": 0.2474
+    },
+    {
+      "pool": "old",
+      "year": 2008,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.2083,
+      "mean_share": 0.026
+    },
+    {
+      "pool": "old",
+      "year": 2008,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 0.25,
+      "mean_share": 0.0312
+    },
+    {
+      "pool": "old",
+      "year": 2008,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.9167,
+      "mean_share": 0.1146
+    },
+    {
+      "pool": "old",
+      "year": 2009,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 1.6042,
+      "mean_share": 0.5347
+    },
+    {
+      "pool": "old",
+      "year": 2009,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.1042,
+      "mean_share": 0.0347
+    },
+    {
+      "pool": "old",
+      "year": 2009,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.4167,
+      "mean_share": 0.1389
+    },
+    {
+      "pool": "old",
+      "year": 2009,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.7708,
+      "mean_share": 0.2569
+    },
+    {
+      "pool": "old",
+      "year": 2009,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 3.0417,
+      "mean_share": 0.6083
+    },
+    {
+      "pool": "old",
+      "year": 2009,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.1875,
+      "mean_share": 0.0375
+    },
+    {
+      "pool": "old",
+      "year": 2009,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.5625,
+      "mean_share": 0.1125
+    },
+    {
+      "pool": "old",
+      "year": 2009,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.8958,
+      "mean_share": 0.1792
+    },
+    {
+      "pool": "old",
+      "year": 2009,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 5.2917,
+      "mean_share": 0.6615
+    },
+    {
+      "pool": "old",
+      "year": 2009,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.2292,
+      "mean_share": 0.0286
+    },
+    {
+      "pool": "old",
+      "year": 2009,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 0.6042,
+      "mean_share": 0.0755
+    },
+    {
+      "pool": "old",
+      "year": 2009,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.0208,
+      "mean_share": 0.1276
+    },
+    {
+      "pool": "old",
+      "year": 2010,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 1.0417,
+      "mean_share": 0.3472
+    },
+    {
+      "pool": "old",
+      "year": 2010,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.0833,
+      "mean_share": 0.0278
+    },
+    {
+      "pool": "old",
+      "year": 2010,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.375,
+      "mean_share": 0.125
+    },
+    {
+      "pool": "old",
+      "year": 2010,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.5,
+      "mean_share": 0.5
+    },
+    {
+      "pool": "old",
+      "year": 2010,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 2.25,
+      "mean_share": 0.45
+    },
+    {
+      "pool": "old",
+      "year": 2010,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.1458,
+      "mean_share": 0.0292
+    },
+    {
+      "pool": "old",
+      "year": 2010,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.6875,
+      "mean_share": 0.1375
+    },
+    {
+      "pool": "old",
+      "year": 2010,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.6875,
+      "mean_share": 0.3375
+    },
+    {
+      "pool": "old",
+      "year": 2010,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 4.0833,
+      "mean_share": 0.5104
+    },
+    {
+      "pool": "old",
+      "year": 2010,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.25,
+      "mean_share": 0.0312
+    },
+    {
+      "pool": "old",
+      "year": 2010,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 0.9375,
+      "mean_share": 0.1172
+    },
+    {
+      "pool": "old",
+      "year": 2010,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.8542,
+      "mean_share": 0.2318
+    },
+    {
+      "pool": "old",
+      "year": 2011,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.4792,
+      "mean_share": 0.1597
+    },
+    {
+      "pool": "old",
+      "year": 2011,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.0625,
+      "mean_share": 0.0208
+    },
+    {
+      "pool": "old",
+      "year": 2011,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.625,
+      "mean_share": 0.2083
+    },
+    {
+      "pool": "old",
+      "year": 2011,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.6667,
+      "mean_share": 0.5556
+    },
+    {
+      "pool": "old",
+      "year": 2011,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 1.0417,
+      "mean_share": 0.2083
+    },
+    {
+      "pool": "old",
+      "year": 2011,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.2292,
+      "mean_share": 0.0458
+    },
+    {
+      "pool": "old",
+      "year": 2011,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.9375,
+      "mean_share": 0.1875
+    },
+    {
+      "pool": "old",
+      "year": 2011,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.75,
+      "mean_share": 0.35
+    },
+    {
+      "pool": "old",
+      "year": 2011,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 2.3333,
+      "mean_share": 0.2917
+    },
+    {
+      "pool": "old",
+      "year": 2011,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.2708,
+      "mean_share": 0.0339
+    },
+    {
+      "pool": "old",
+      "year": 2011,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 1.0,
+      "mean_share": 0.125
+    },
+    {
+      "pool": "old",
+      "year": 2011,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.75,
+      "mean_share": 0.2188
+    },
+    {
+      "pool": "old",
+      "year": 2012,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.4375,
+      "mean_share": 0.1458
+    },
+    {
+      "pool": "old",
+      "year": 2012,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.1875,
+      "mean_share": 0.0625
+    },
+    {
+      "pool": "old",
+      "year": 2012,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.7708,
+      "mean_share": 0.2569
+    },
+    {
+      "pool": "old",
+      "year": 2012,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.6042,
+      "mean_share": 0.5347
+    },
+    {
+      "pool": "old",
+      "year": 2012,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 1.0,
+      "mean_share": 0.2
+    },
+    {
+      "pool": "old",
+      "year": 2012,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.4792,
+      "mean_share": 0.0958
+    },
+    {
+      "pool": "old",
+      "year": 2012,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 1.375,
+      "mean_share": 0.275
+    },
+    {
+      "pool": "old",
+      "year": 2012,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.7917,
+      "mean_share": 0.3583
+    },
+    {
+      "pool": "old",
+      "year": 2012,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 1.9583,
+      "mean_share": 0.2448
+    },
+    {
+      "pool": "old",
+      "year": 2012,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.5208,
+      "mean_share": 0.0651
+    },
+    {
+      "pool": "old",
+      "year": 2012,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 1.5,
+      "mean_share": 0.1875
+    },
+    {
+      "pool": "old",
+      "year": 2012,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.9167,
+      "mean_share": 0.2396
+    },
+    {
+      "pool": "old",
+      "year": 2013,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 1.0417,
+      "mean_share": 0.3472
+    },
+    {
+      "pool": "old",
+      "year": 2013,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.1875,
+      "mean_share": 0.0625
+    },
+    {
+      "pool": "old",
+      "year": 2013,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.9792,
+      "mean_share": 0.3264
+    },
+    {
+      "pool": "old",
+      "year": 2013,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.7292,
+      "mean_share": 0.2431
+    },
+    {
+      "pool": "old",
+      "year": 2013,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 2.5833,
+      "mean_share": 0.5167
+    },
+    {
+      "pool": "old",
+      "year": 2013,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.2292,
+      "mean_share": 0.0458
+    },
+    {
+      "pool": "old",
+      "year": 2013,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 1.2292,
+      "mean_share": 0.2458
+    },
+    {
+      "pool": "old",
+      "year": 2013,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.7917,
+      "mean_share": 0.1583
+    },
+    {
+      "pool": "old",
+      "year": 2013,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 4.6458,
+      "mean_share": 0.5807
+    },
+    {
+      "pool": "old",
+      "year": 2013,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.4167,
+      "mean_share": 0.0521
+    },
+    {
+      "pool": "old",
+      "year": 2013,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 1.5208,
+      "mean_share": 0.1901
+    },
+    {
+      "pool": "old",
+      "year": 2013,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.8333,
+      "mean_share": 0.1042
+    },
+    {
+      "pool": "old",
+      "year": 2014,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 1.2292,
+      "mean_share": 0.4097
+    },
+    {
+      "pool": "old",
+      "year": 2014,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.0417,
+      "mean_share": 0.0139
+    },
+    {
+      "pool": "old",
+      "year": 2014,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.7917,
+      "mean_share": 0.2639
+    },
+    {
+      "pool": "old",
+      "year": 2014,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.9167,
+      "mean_share": 0.3056
+    },
+    {
+      "pool": "old",
+      "year": 2014,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 2.6042,
+      "mean_share": 0.5208
+    },
+    {
+      "pool": "old",
+      "year": 2014,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.1042,
+      "mean_share": 0.0208
+    },
+    {
+      "pool": "old",
+      "year": 2014,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 1.125,
+      "mean_share": 0.225
+    },
+    {
+      "pool": "old",
+      "year": 2014,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.0833,
+      "mean_share": 0.2167
+    },
+    {
+      "pool": "old",
+      "year": 2014,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 4.7708,
+      "mean_share": 0.5964
+    },
+    {
+      "pool": "old",
+      "year": 2014,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.2292,
+      "mean_share": 0.0286
+    },
+    {
+      "pool": "old",
+      "year": 2014,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 1.25,
+      "mean_share": 0.1562
+    },
+    {
+      "pool": "old",
+      "year": 2014,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.2708,
+      "mean_share": 0.1589
+    },
+    {
+      "pool": "old",
+      "year": 2015,
+      "n": 3,
+      "market": "A股",
+      "mean_count": 1.5,
+      "mean_share": 0.5
+    },
+    {
+      "pool": "old",
+      "year": 2015,
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.0,
+      "mean_share": 0.0
+    },
+    {
+      "pool": "old",
+      "year": 2015,
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.1458,
+      "mean_share": 0.0486
+    },
+    {
+      "pool": "old",
+      "year": 2015,
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.2708,
+      "mean_share": 0.4236
+    },
+    {
+      "pool": "old",
+      "year": 2015,
+      "n": 5,
+      "market": "A股",
+      "mean_count": 2.9792,
+      "mean_share": 0.5958
+    },
+    {
+      "pool": "old",
+      "year": 2015,
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.0208,
+      "mean_share": 0.0042
+    },
+    {
+      "pool": "old",
+      "year": 2015,
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.2708,
+      "mean_share": 0.0542
+    },
+    {
+      "pool": "old",
+      "year": 2015,
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.3125,
+      "mean_share": 0.2625
+    },
+    {
+      "pool": "old",
+      "year": 2015,
+      "n": 8,
+      "market": "A股",
+      "mean_count": 5.125,
+      "mean_share": 0.6406
+    },
+    {
+      "pool": "old",
+      "year": 2015,
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.0417,
+      "mean_share": 0.0052
+    },
+    {
+      "pool": "old",
+      "year": 2015,
+      "n": 8,
+      "market": "美股",
+      "mean_count": 0.375,
+      "mean_share": 0.0469
+    },
+    {
+      "pool": "old",
+      "year": 2015,
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.4167,
+      "mean_share": 0.1771
+    }
+  ],
+  "halves": [
+    {
+      "pool": "new",
+      "half": "2006-2010",
+      "n": 3,
+      "market": "A股",
+      "mean_count": 1.5125,
+      "mean_share": 0.5042
+    },
+    {
+      "pool": "new",
+      "half": "2006-2010",
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.3375,
+      "mean_share": 0.1125
+    },
+    {
+      "pool": "new",
+      "half": "2006-2010",
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.425,
+      "mean_share": 0.1417
+    },
+    {
+      "pool": "new",
+      "half": "2006-2010",
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.5625,
+      "mean_share": 0.1875
+    },
+    {
+      "pool": "new",
+      "half": "2006-2010",
+      "n": 5,
+      "market": "A股",
+      "mean_count": 2.6875,
+      "mean_share": 0.5375
+    },
+    {
+      "pool": "new",
+      "half": "2006-2010",
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.5208,
+      "mean_share": 0.1042
+    },
+    {
+      "pool": "new",
+      "half": "2006-2010",
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.7458,
+      "mean_share": 0.1492
+    },
+    {
+      "pool": "new",
+      "half": "2006-2010",
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.625,
+      "mean_share": 0.125
+    },
+    {
+      "pool": "new",
+      "half": "2006-2010",
+      "n": 8,
+      "market": "A股",
+      "mean_count": 4.2667,
+      "mean_share": 0.5333
+    },
+    {
+      "pool": "new",
+      "half": "2006-2010",
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.7917,
+      "mean_share": 0.099
+    },
+    {
+      "pool": "new",
+      "half": "2006-2010",
+      "n": 8,
+      "market": "美股",
+      "mean_count": 1.325,
+      "mean_share": 0.1656
+    },
+    {
+      "pool": "new",
+      "half": "2006-2010",
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.6833,
+      "mean_share": 0.0854
+    },
+    {
+      "pool": "new",
+      "half": "2011-2015",
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.6458,
+      "mean_share": 0.2153
+    },
+    {
+      "pool": "new",
+      "half": "2011-2015",
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.2708,
+      "mean_share": 0.0903
+    },
+    {
+      "pool": "new",
+      "half": "2011-2015",
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.9792,
+      "mean_share": 0.3264
+    },
+    {
+      "pool": "new",
+      "half": "2011-2015",
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.0792,
+      "mean_share": 0.3597
+    },
+    {
+      "pool": "new",
+      "half": "2011-2015",
+      "n": 5,
+      "market": "A股",
+      "mean_count": 1.2708,
+      "mean_share": 0.2542
+    },
+    {
+      "pool": "new",
+      "half": "2011-2015",
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.475,
+      "mean_share": 0.095
+    },
+    {
+      "pool": "new",
+      "half": "2011-2015",
+      "n": 5,
+      "market": "美股",
+      "mean_count": 1.9375,
+      "mean_share": 0.3875
+    },
+    {
+      "pool": "new",
+      "half": "2011-2015",
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.2042,
+      "mean_share": 0.2408
+    },
+    {
+      "pool": "new",
+      "half": "2011-2015",
+      "n": 8,
+      "market": "A股",
+      "mean_count": 2.2,
+      "mean_share": 0.275
+    },
+    {
+      "pool": "new",
+      "half": "2011-2015",
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.7333,
+      "mean_share": 0.0917
+    },
+    {
+      "pool": "new",
+      "half": "2011-2015",
+      "n": 8,
+      "market": "美股",
+      "mean_count": 3.3792,
+      "mean_share": 0.4224
+    },
+    {
+      "pool": "new",
+      "half": "2011-2015",
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.3,
+      "mean_share": 0.1625
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2006-2010",
+      "n": 3,
+      "market": "A股",
+      "mean_count": 1.4958,
+      "mean_share": 0.4986
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2006-2010",
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.3208,
+      "mean_share": 0.1069
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2006-2010",
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.4667,
+      "mean_share": 0.1556
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2006-2010",
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.5542,
+      "mean_share": 0.1847
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2006-2010",
+      "n": 5,
+      "market": "A股",
+      "mean_count": 2.6417,
+      "mean_share": 0.5283
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2006-2010",
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.5083,
+      "mean_share": 0.1017
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2006-2010",
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.8083,
+      "mean_share": 0.1617
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2006-2010",
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.6208,
+      "mean_share": 0.1242
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2006-2010",
+      "n": 8,
+      "market": "A股",
+      "mean_count": 4.2083,
+      "mean_share": 0.526
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2006-2010",
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.7833,
+      "mean_share": 0.0979
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2006-2010",
+      "n": 8,
+      "market": "美股",
+      "mean_count": 1.4042,
+      "mean_share": 0.1755
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2006-2010",
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.675,
+      "mean_share": 0.0844
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2011-2015",
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.625,
+      "mean_share": 0.2083
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2011-2015",
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.2375,
+      "mean_share": 0.0792
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2011-2015",
+      "n": 3,
+      "market": "美股",
+      "mean_count": 1.0583,
+      "mean_share": 0.3528
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2011-2015",
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.0583,
+      "mean_share": 0.3528
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2011-2015",
+      "n": 5,
+      "market": "A股",
+      "mean_count": 1.225,
+      "mean_share": 0.245
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2011-2015",
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.4083,
+      "mean_share": 0.0817
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2011-2015",
+      "n": 5,
+      "market": "美股",
+      "mean_count": 2.1,
+      "mean_share": 0.42
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2011-2015",
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.175,
+      "mean_share": 0.235
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2011-2015",
+      "n": 8,
+      "market": "A股",
+      "mean_count": 2.1042,
+      "mean_share": 0.263
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2011-2015",
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.6708,
+      "mean_share": 0.0839
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2011-2015",
+      "n": 8,
+      "market": "美股",
+      "mean_count": 3.6083,
+      "mean_share": 0.451
+    },
+    {
+      "pool": "new_plus_div",
+      "half": "2011-2015",
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.2792,
+      "mean_share": 0.1599
+    },
+    {
+      "pool": "old",
+      "half": "2006-2010",
+      "n": 3,
+      "market": "A股",
+      "mean_count": 1.7667,
+      "mean_share": 0.5889
+    },
+    {
+      "pool": "old",
+      "half": "2006-2010",
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.1167,
+      "mean_share": 0.0389
+    },
+    {
+      "pool": "old",
+      "half": "2006-2010",
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.2125,
+      "mean_share": 0.0708
+    },
+    {
+      "pool": "old",
+      "half": "2006-2010",
+      "n": 3,
+      "market": "防守",
+      "mean_count": 0.6333,
+      "mean_share": 0.2111
+    },
+    {
+      "pool": "old",
+      "half": "2006-2010",
+      "n": 5,
+      "market": "A股",
+      "mean_count": 3.1333,
+      "mean_share": 0.6267
+    },
+    {
+      "pool": "old",
+      "half": "2006-2010",
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.175,
+      "mean_share": 0.035
+    },
+    {
+      "pool": "old",
+      "half": "2006-2010",
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.3542,
+      "mean_share": 0.0708
+    },
+    {
+      "pool": "old",
+      "half": "2006-2010",
+      "n": 5,
+      "market": "防守",
+      "mean_count": 0.6958,
+      "mean_share": 0.1392
+    },
+    {
+      "pool": "old",
+      "half": "2006-2010",
+      "n": 8,
+      "market": "A股",
+      "mean_count": 5.1542,
+      "mean_share": 0.6443
+    },
+    {
+      "pool": "old",
+      "half": "2006-2010",
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.2375,
+      "mean_share": 0.0297
+    },
+    {
+      "pool": "old",
+      "half": "2006-2010",
+      "n": 8,
+      "market": "美股",
+      "mean_count": 0.4375,
+      "mean_share": 0.0547
+    },
+    {
+      "pool": "old",
+      "half": "2006-2010",
+      "n": 8,
+      "market": "防守",
+      "mean_count": 0.7583,
+      "mean_share": 0.0948
+    },
+    {
+      "pool": "old",
+      "half": "2011-2015",
+      "n": 3,
+      "market": "A股",
+      "mean_count": 0.9375,
+      "mean_share": 0.3125
+    },
+    {
+      "pool": "old",
+      "half": "2011-2015",
+      "n": 3,
+      "market": "港股",
+      "mean_count": 0.0958,
+      "mean_share": 0.0319
+    },
+    {
+      "pool": "old",
+      "half": "2011-2015",
+      "n": 3,
+      "market": "美股",
+      "mean_count": 0.6625,
+      "mean_share": 0.2208
+    },
+    {
+      "pool": "old",
+      "half": "2011-2015",
+      "n": 3,
+      "market": "防守",
+      "mean_count": 1.2375,
+      "mean_share": 0.4125
+    },
+    {
+      "pool": "old",
+      "half": "2011-2015",
+      "n": 5,
+      "market": "A股",
+      "mean_count": 2.0417,
+      "mean_share": 0.4083
+    },
+    {
+      "pool": "old",
+      "half": "2011-2015",
+      "n": 5,
+      "market": "港股",
+      "mean_count": 0.2125,
+      "mean_share": 0.0425
+    },
+    {
+      "pool": "old",
+      "half": "2011-2015",
+      "n": 5,
+      "market": "美股",
+      "mean_count": 0.9875,
+      "mean_share": 0.1975
+    },
+    {
+      "pool": "old",
+      "half": "2011-2015",
+      "n": 5,
+      "market": "防守",
+      "mean_count": 1.3458,
+      "mean_share": 0.2692
+    },
+    {
+      "pool": "old",
+      "half": "2011-2015",
+      "n": 8,
+      "market": "A股",
+      "mean_count": 3.7667,
+      "mean_share": 0.4708
+    },
+    {
+      "pool": "old",
+      "half": "2011-2015",
+      "n": 8,
+      "market": "港股",
+      "mean_count": 0.2958,
+      "mean_share": 0.037
+    },
+    {
+      "pool": "old",
+      "half": "2011-2015",
+      "n": 8,
+      "market": "美股",
+      "mean_count": 1.1292,
+      "mean_share": 0.1411
+    },
+    {
+      "pool": "old",
+      "half": "2011-2015",
+      "n": 8,
+      "market": "防守",
+      "mean_count": 1.4375,
+      "mean_share": 0.1797
+    }
+  ],
+  "us_broad_top2": [
+    {
+      "year": 2006,
+      "pool": "new",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2006,
+      "pool": "new",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2006,
+      "pool": "new",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2006,
+      "pool": "new",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2007,
+      "pool": "new",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2007,
+      "pool": "new",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2007,
+      "pool": "new",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2007,
+      "pool": "new",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2008,
+      "pool": "new",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2008,
+      "pool": "new",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2008,
+      "pool": "new",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2008,
+      "pool": "new",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2009,
+      "pool": "new",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2009,
+      "pool": "new",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2009,
+      "pool": "new",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2009,
+      "pool": "new",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2010,
+      "pool": "new",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2010,
+      "pool": "new",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2010,
+      "pool": "new",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2010,
+      "pool": "new",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2011,
+      "pool": "new",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2011,
+      "pool": "new",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2011,
+      "pool": "new",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2011,
+      "pool": "new",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2012,
+      "pool": "new",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2012,
+      "pool": "new",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2012,
+      "pool": "new",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2012,
+      "pool": "new",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2013,
+      "pool": "new",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2013,
+      "pool": "new",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2013,
+      "pool": "new",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2013,
+      "pool": "new",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2014,
+      "pool": "new",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2014,
+      "pool": "new",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2014,
+      "pool": "new",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2014,
+      "pool": "new",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 1,
+      "rate": 0.08333333333333333
+    },
+    {
+      "year": 2015,
+      "pool": "new",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2015,
+      "pool": "new",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2015,
+      "pool": "new",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2015,
+      "pool": "new",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2006,
+      "pool": "new_plus_div",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2006,
+      "pool": "new_plus_div",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2006,
+      "pool": "new_plus_div",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2006,
+      "pool": "new_plus_div",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2007,
+      "pool": "new_plus_div",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2007,
+      "pool": "new_plus_div",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2007,
+      "pool": "new_plus_div",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2007,
+      "pool": "new_plus_div",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2008,
+      "pool": "new_plus_div",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2008,
+      "pool": "new_plus_div",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2008,
+      "pool": "new_plus_div",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2008,
+      "pool": "new_plus_div",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2009,
+      "pool": "new_plus_div",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2009,
+      "pool": "new_plus_div",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2009,
+      "pool": "new_plus_div",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2009,
+      "pool": "new_plus_div",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2010,
+      "pool": "new_plus_div",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2010,
+      "pool": "new_plus_div",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2010,
+      "pool": "new_plus_div",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2010,
+      "pool": "new_plus_div",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2011,
+      "pool": "new_plus_div",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2011,
+      "pool": "new_plus_div",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2011,
+      "pool": "new_plus_div",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2011,
+      "pool": "new_plus_div",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2012,
+      "pool": "new_plus_div",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2012,
+      "pool": "new_plus_div",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2012,
+      "pool": "new_plus_div",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2012,
+      "pool": "new_plus_div",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2013,
+      "pool": "new_plus_div",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2013,
+      "pool": "new_plus_div",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2013,
+      "pool": "new_plus_div",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2013,
+      "pool": "new_plus_div",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2014,
+      "pool": "new_plus_div",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2014,
+      "pool": "new_plus_div",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2014,
+      "pool": "new_plus_div",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2014,
+      "pool": "new_plus_div",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2015,
+      "pool": "new_plus_div",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2015,
+      "pool": "new_plus_div",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2015,
+      "pool": "new_plus_div",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2015,
+      "pool": "new_plus_div",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2006,
+      "pool": "old",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2006,
+      "pool": "old",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2006,
+      "pool": "old",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2006,
+      "pool": "old",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2007,
+      "pool": "old",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2007,
+      "pool": "old",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2007,
+      "pool": "old",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2007,
+      "pool": "old",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2008,
+      "pool": "old",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2008,
+      "pool": "old",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2008,
+      "pool": "old",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2008,
+      "pool": "old",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2009,
+      "pool": "old",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 2,
+      "rate": 0.16666666666666666
+    },
+    {
+      "year": 2009,
+      "pool": "old",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 2,
+      "rate": 0.16666666666666666
+    },
+    {
+      "year": 2009,
+      "pool": "old",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 1,
+      "rate": 0.08333333333333333
+    },
+    {
+      "year": 2009,
+      "pool": "old",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2010,
+      "pool": "old",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 1,
+      "rate": 0.08333333333333333
+    },
+    {
+      "year": 2010,
+      "pool": "old",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 2,
+      "rate": 0.16666666666666666
+    },
+    {
+      "year": 2010,
+      "pool": "old",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 1,
+      "rate": 0.08333333333333333
+    },
+    {
+      "year": 2010,
+      "pool": "old",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 1,
+      "rate": 0.08333333333333333
+    },
+    {
+      "year": 2011,
+      "pool": "old",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2011,
+      "pool": "old",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 1,
+      "rate": 0.08333333333333333
+    },
+    {
+      "year": 2011,
+      "pool": "old",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 3,
+      "rate": 0.25
+    },
+    {
+      "year": 2011,
+      "pool": "old",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2012,
+      "pool": "old",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 1,
+      "rate": 0.08333333333333333
+    },
+    {
+      "year": 2012,
+      "pool": "old",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 3,
+      "rate": 0.25
+    },
+    {
+      "year": 2012,
+      "pool": "old",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2012,
+      "pool": "old",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2013,
+      "pool": "old",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 2,
+      "rate": 0.16666666666666666
+    },
+    {
+      "year": 2013,
+      "pool": "old",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 2,
+      "rate": 0.16666666666666666
+    },
+    {
+      "year": 2013,
+      "pool": "old",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 3,
+      "rate": 0.25
+    },
+    {
+      "year": 2013,
+      "pool": "old",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 1,
+      "rate": 0.08333333333333333
+    },
+    {
+      "year": 2014,
+      "pool": "old",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2014,
+      "pool": "old",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2014,
+      "pool": "old",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 3,
+      "rate": 0.25
+    },
+    {
+      "year": 2014,
+      "pool": "old",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 6,
+      "rate": 0.5
+    },
+    {
+      "year": 2015,
+      "pool": "old",
+      "lookback": 20,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2015,
+      "pool": "old",
+      "lookback": 60,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2015,
+      "pool": "old",
+      "lookback": 120,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    },
+    {
+      "year": 2015,
+      "pool": "old",
+      "lookback": 250,
+      "months": 12,
+      "both_broad_in_top2": 0,
+      "rate": 0.0
+    }
+  ],
+  "dividend_yield_sum": [
+    {
+      "code": "XLB",
+      "n": 40,
+      "sum_simple_yield": 0.237049,
+      "first_ex": "2006-03-17",
+      "last_ex": "2015-12-18",
+      "window": "2006-01-01:2015-12-31"
+    },
+    {
+      "code": "XLE",
+      "n": 40,
+      "sum_simple_yield": 0.177615,
+      "first_ex": "2006-03-17",
+      "last_ex": "2015-12-18",
+      "window": "2006-01-01:2015-12-31"
+    },
+    {
+      "code": "XLF",
+      "n": 40,
+      "sum_simple_yield": 0.21025,
+      "first_ex": "2006-03-17",
+      "last_ex": "2015-12-18",
+      "window": "2006-01-01:2015-12-31"
+    },
+    {
+      "code": "XLI",
+      "n": 40,
+      "sum_simple_yield": 0.207309,
+      "first_ex": "2006-03-17",
+      "last_ex": "2015-12-18",
+      "window": "2006-01-01:2015-12-31"
+    },
+    {
+      "code": "XLK",
+      "n": 37,
+      "sum_simple_yield": 0.145148,
+      "first_ex": "2006-09-15",
+      "last_ex": "2015-12-18",
+      "window": "2006-01-01:2015-12-31"
+    },
+    {
+      "code": "XLP",
+      "n": 40,
+      "sum_simple_yield": 0.259585,
+      "first_ex": "2006-03-17",
+      "last_ex": "2015-12-18",
+      "window": "2006-01-01:2015-12-31"
+    },
+    {
+      "code": "XLU",
+      "n": 40,
+      "sum_simple_yield": 0.371585,
+      "first_ex": "2006-03-17",
+      "last_ex": "2015-12-18",
+      "window": "2006-01-01:2015-12-31"
+    },
+    {
+      "code": "XLV",
+      "n": 40,
+      "sum_simple_yield": 0.175958,
+      "first_ex": "2006-03-17",
+      "last_ex": "2015-12-18",
+      "window": "2006-01-01:2015-12-31"
+    },
+    {
+      "code": "XLY",
+      "n": 40,
+      "sum_simple_yield": 0.142669,
+      "first_ex": "2006-03-17",
+      "last_ex": "2015-12-18",
+      "window": "2006-01-01:2015-12-31"
+    },
+    {
+      "code": "XLRE",
+      "n": 1,
+      "sum_simple_yield": 0.010936,
+      "first_ex": "2015-12-18",
+      "last_ex": "2015-12-18",
+      "window": "2006-01-01:2015-12-31"
+    },
+    {
+      "code": "XLC",
+      "n": 0,
+      "sum_simple_yield": 0,
+      "first_ex": "",
+      "last_ex": "",
+      "window": "2006-01-01:2015-12-31"
+    }
+  ],
+  "consistency": [
+    {
+      "pair_kind": "same_industry",
+      "left_code": "XLRE",
+      "right_code": "SP500-60",
+      "sector": "Real Estate",
+      "basis": "price_vs_price",
+      "n_days": 58,
+      "corr": 0.802434,
+      "te_annual": 0.108417,
+      "start": "2015-10-09",
+      "end": "2015-12-31",
+      "note": "两边都是价格指数，不是全收益。XLRE 2015-10-08 才有 K 线，设计期重叠很短。Select Sector 有个股权重上限，官方行业指数没有。"
+    },
+    {
+      "pair_kind": "broad_sanity",
+      "left_code": "XLB",
+      "right_code": "^SP500TR",
+      "sector": "材料",
+      "basis": "etf_price_vs_spx_total_return",
+      "n_days": 4024,
+      "corr": 0.793743,
+      "te_annual": 0.154138,
+      "start": "2000-01-04",
+      "end": "2015-12-31",
+      "note": "不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。"
+    },
+    {
+      "pair_kind": "broad_sanity",
+      "left_code": "XLE",
+      "right_code": "^SP500TR",
+      "sector": "能源",
+      "basis": "etf_price_vs_spx_total_return",
+      "n_days": 4024,
+      "corr": 0.710401,
+      "te_annual": 0.199225,
+      "start": "2000-01-04",
+      "end": "2015-12-31",
+      "note": "不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。"
+    },
+    {
+      "pair_kind": "broad_sanity",
+      "left_code": "XLF",
+      "right_code": "^SP500TR",
+      "sector": "金融",
+      "basis": "etf_price_vs_spx_total_return",
+      "n_days": 4024,
+      "corr": 0.851481,
+      "te_annual": 0.180589,
+      "start": "2000-01-04",
+      "end": "2015-12-31",
+      "note": "不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。"
+    },
+    {
+      "pair_kind": "broad_sanity",
+      "left_code": "XLI",
+      "right_code": "^SP500TR",
+      "sector": "工业",
+      "basis": "etf_price_vs_spx_total_return",
+      "n_days": 4024,
+      "corr": 0.90559,
+      "te_annual": 0.093544,
+      "start": "2000-01-04",
+      "end": "2015-12-31",
+      "note": "不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。"
+    },
+    {
+      "pair_kind": "broad_sanity",
+      "left_code": "XLK",
+      "right_code": "^SP500TR",
+      "sector": "信息科技",
+      "basis": "etf_price_vs_spx_total_return",
+      "n_days": 4024,
+      "corr": 0.853753,
+      "te_annual": 0.14228,
+      "start": "2000-01-04",
+      "end": "2015-12-31",
+      "note": "不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。"
+    },
+    {
+      "pair_kind": "broad_sanity",
+      "left_code": "XLP",
+      "right_code": "^SP500TR",
+      "sector": "必需消费",
+      "basis": "etf_price_vs_spx_total_return",
+      "n_days": 4024,
+      "corr": 0.687898,
+      "te_annual": 0.146492,
+      "start": "2000-01-04",
+      "end": "2015-12-31",
+      "note": "不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。"
+    },
+    {
+      "pair_kind": "broad_sanity",
+      "left_code": "XLU",
+      "right_code": "^SP500TR",
+      "sector": "公用事业",
+      "basis": "etf_price_vs_spx_total_return",
+      "n_days": 4024,
+      "corr": 0.645132,
+      "te_annual": 0.166617,
+      "start": "2000-01-04",
+      "end": "2015-12-31",
+      "note": "不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。"
+    },
+    {
+      "pair_kind": "broad_sanity",
+      "left_code": "XLV",
+      "right_code": "^SP500TR",
+      "sector": "医疗保健",
+      "basis": "etf_price_vs_spx_total_return",
+      "n_days": 4024,
+      "corr": 0.785005,
+      "te_annual": 0.12746,
+      "start": "2000-01-04",
+      "end": "2015-12-31",
+      "note": "不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。"
+    },
+    {
+      "pair_kind": "broad_sanity",
+      "left_code": "XLY",
+      "right_code": "^SP500TR",
+      "sector": "可选消费",
+      "basis": "etf_price_vs_spx_total_return",
+      "n_days": 4024,
+      "corr": 0.860569,
+      "te_annual": 0.11828,
+      "start": "2000-01-04",
+      "end": "2015-12-31",
+      "note": "不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。"
+    },
+    {
+      "pair_kind": "broad_sanity",
+      "left_code": "XLRE",
+      "right_code": "^SP500TR",
+      "sector": "房地产",
+      "basis": "etf_price_vs_spx_total_return",
+      "n_days": 58,
+      "corr": 0.55081,
+      "te_annual": 0.154404,
+      "start": "2015-10-09",
+      "end": "2015-12-31",
+      "note": "不是同行业对照。标普行业指数没有日线时，用来看这条 ETF 价格收益是不是完全不像美股。"
+    },
+    {
+      "pair_kind": "hk_vs_hsi",
+      "left_code": "HSF",
+      "right_code": "HSI",
+      "sector": "恒生金融分类",
+      "basis": "price_vs_price_hkd",
+      "n_days": 3946,
+      "corr": 0.920035,
+      "te_annual": 0.097866,
+      "start": "2000-01-04",
+      "end": "2015-12-31",
+      "note": "港币价格指数对恒生价格指数。不是 GICS 对照。"
+    },
+    {
+      "pair_kind": "hk_vs_hsi",
+      "left_code": "HSU",
+      "right_code": "HSI",
+      "sector": "恒生公用事业分类",
+      "basis": "price_vs_price_hkd",
+      "n_days": 3945,
+      "corr": 0.521032,
+      "te_annual": 0.211217,
+      "start": "2000-01-04",
+      "end": "2015-12-31",
+      "note": "港币价格指数对恒生价格指数。不是 GICS 对照。"
+    },
+    {
+      "pair_kind": "hk_vs_hsi",
+      "left_code": "HSP",
+      "right_code": "HSI",
+      "sector": "恒生地产分类",
+      "basis": "price_vs_price_hkd",
+      "n_days": 3945,
+      "corr": 0.869412,
+      "te_annual": 0.146061,
+      "start": "2000-01-04",
+      "end": "2015-12-31",
+      "note": "港币价格指数对恒生价格指数。不是 GICS 对照。"
+    },
+    {
+      "pair_kind": "hk_vs_hsi",
+      "left_code": "HSC",
+      "right_code": "HSI",
+      "sector": "恒生工商分类",
+      "basis": "price_vs_price_hkd",
+      "n_days": 3945,
+      "corr": 0.958631,
+      "te_annual": 0.086348,
+      "start": "2000-01-04",
+      "end": "2015-12-31",
+      "note": "港币价格指数对恒生价格指数。不是 GICS 对照。"
+    }
+  ],
+  "db_sha256": "a130af9eab11368d71488ee48f83bb71952d17eb5abd1d5bcc00d1cd6993f1e6",
+  "git_head": "a5b6fb434404802555c3925755929b192e89c4d7",
+  "months": 120,
+  "method": {
+    "pool": "v3.1 U-指数 arm=A history=official",
+    "lookbacks": [
+      20,
+      60,
+      120,
+      250
+    ],
+    "rank": "s desc, R desc, id asc; R>cash; fresh stale_limit=5",
+    "new_us": "未复权收盘 × USDCNY，D 用严格早于 D 的美股 K 线",
+    "new_hk": "与恒生指数相同，腾讯价格指数，不乘 HKDCNY",
+    "new_plus_div": "只把 v4_event 里 ≤2015-12-31 的现金分红按 total_return_close 加进 SPDR，再乘 USDCNY",
+    "excluded": [
+      "11 个标普行业全收益：没有日线",
+      "SP500-60：核对序列，不进排名",
+      "恒生综合行业 12 个：没有日线",
+      "四个分类指数总收益：2021-04 起，不进设计期排名",
+      "XLC：2018-06-19 起，登记但设计期可选为 0"
+    ]
+  }
+}
