@@ -39,9 +39,10 @@ for sec in soup.select('section.status'):
     ks = [inline(x) for x in sec.select('.k')]
     ps = [inline(x.find('p')) for x in sec.select('.st')]
     sec.replace_with(md_block(table(ks, [ps])))
-for p in soup.select('p.vision'):
-    p.replace_with(md_block(inline(p)))
 for h in soup.select('header'):
+    v = h.select_one('p.vision')
+    if v is not None:
+        h.insert_after(md_block(inline(v)))
     h.decompose()
 # 事项卡片
 for it in soup.select('.todo .item'):
@@ -162,6 +163,7 @@ for i, d in enumerate(soup.select('div[data-md]')):
 out = mdify(str(soup), heading_style='ATX', bullets='-')
 for k, v in blocks.items(): out = out.replace(k, v.strip())
 out = re.sub(r'(\|[ \t]*\n)(?=[^|\n])', r'\1\n', out)
+out = re.sub(r'(?m)^([^|\n][^\n]*)\n(?=\|)', r'\1\n\n', out)
 out = re.sub(r'\n{3,}', '\n\n', out).strip()
 head = open(headf).read().rstrip() + '\n\n'
 open(dst, 'w').write(head + out + '\n')
