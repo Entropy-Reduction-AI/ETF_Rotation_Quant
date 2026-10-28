@@ -1,0 +1,80 @@
+{
+  "parent_delivery_sha": "c80aa56804c8927b762ada71b232c08a24b42fc5",
+  "baseline_main_sha": "4c6d4b086d28bc58e1ec107210ce1b8125cea4c5",
+  "sha256": {
+    "universe.toml": "04ff3572ebd82a5159eaccced0bed5bc3531b732a1b11025f86021ebd0454be0",
+    "market.sqlite": "3e3e6f1d594586da2abf28db5fa88b05c1cc91fa29adf061fc699e1b8d4bc1d6",
+    "coverage.csv": "577125a16c28830f38bb5bbd89ba72179efb848cbe8a725945762db9f4a039b2",
+    "matches_dev_claim": {
+      "universe.toml": true,
+      "market.sqlite": true,
+      "coverage.csv": true
+    }
+  },
+  "lock_exists": false,
+  "series_spans_close_gt_0": {
+    "Au99.99": {
+      "rows": 4402,
+      "start": "2008-08-11",
+      "end": "2026-09-30"
+    },
+    "CBA04501": {
+      "rows": 4687,
+      "start": "2008-01-02",
+      "end": "2026-09-30"
+    },
+    "CBA03101": {
+      "rows": 4687,
+      "start": "2008-01-02",
+      "end": "2026-09-30"
+    },
+    "CBA00601": {
+      "rows": 6190,
+      "start": "2002-01-04",
+      "end": "2026-09-30"
+    },
+    "XNDX": {
+      "rows": 5469,
+      "start": "2005-01-04",
+      "end": "2026-09-30"
+    }
+  },
+  "overseas_nonpositive_close_rows": [],
+  "overseas_holiday_audit_hits": 0,
+  "sandy_hurricane_window": {
+    "xndx_bar_dates": {
+      "2012-10-26": [
+        2828.62219942411
+      ],
+      "2012-10-29": null,
+      "2012-10-30": null,
+      "2012-10-31": [
+        2809.95163633277
+      ],
+      "2012-11-01": [
+        2851.97097162354
+      ]
+    },
+    "cny_levels": {
+      "2012-10-26": 17768.490010862253,
+      "2012-10-29": 17818.056958612353,
+      "2012-10-30": 17828.23999853028,
+      "2012-10-31": 17820.885580811777,
+      "2012-11-01": 17707.472226678216
+    },
+    "cny_returns": {
+      "2012-10-29": 0.0027895981999481734,
+      "2012-10-30": 0.0005715011430023065,
+      "2012-10-31": -0.00041251507266615306,
+      "2012-11-01": -0.00636406948573176
+    },
+    "returns_all_finite": true,
+    "2012_10_30_return": 0.0005715011430023065,
+    "2012_11_01_return": -0.00636406948573176
+  },
+  "emit_idempotent": true,
+  "unittest": [
+    "随机入场对照（诊断，非验收）：{'reps': 200, 'n_signals': 21, 'null_mean_R_median': 0.8209026336329444, 'null_p95': 1.963138002679099, 'v1_percentile': 0.325}",
+    "冻结样本外已经跑过（/tmp/tmpfs9ph1sf/out/OOS_LOCK.json）。prereg-v1 §9：只跑一次，不允许重跑。"
+  ]
+}
