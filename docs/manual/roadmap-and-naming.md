@@ -8,7 +8,7 @@
 - Owner: L. Loric
 - Maintainer: Orchestrator
 - Last updated: 2026-10-28
-- 依据：D13-4（Owner 2026-10-28：开发按轮次组织；进度总览卡片和实际开发要能对上）
+- 依据：D13-4（Owner 2026-10-28：开发按轮次组织；进度总览卡片和实际开发要能对上）；D14-2（标签只留现行基线，不再用 `keep/*`）
 
 ## 为什么要有这份文档
 
@@ -46,6 +46,17 @@
 | ⑩ | 模拟盘 | 前向模拟，真钱另行决定 | Owner |
 
 ②③④⑤ 是基础建设，可以在 ① 冻结之前并行做，但不能运行任何候选规则看收益；⑥ 必须在 ① 冻结之后。
+
+## 标签
+
+每个版本最多两个附注标签：
+
+- `milestone/<版本>-prereg-freeze`：① 规则冻结
+- `milestone/<版本>-code-freeze`：⑦ 代码冻结
+
+每个阶段结束一个 `milestone/phase<N>-archive`。
+
+不再用 `keep/*` 保存已关闭或未合入的分支；PR 页面本身保留提交。不移动任何标签。删除只按 Owner 的决定记录执行，删除前写入 `docs/manual/milestones.md`。`milestone/phase1-archive` 永不删除、不移动。
 
 ## 旧名称怎么对应
 
