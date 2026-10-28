@@ -81,5 +81,5 @@ Dev 结论「Yahoo 收盘已含拆分、后复权只加分红」与 Reviewer 复
 
 ## H. Review PR
 
-- Review 签收 PR：（本分支 `review/v4-r1b-data-spotcheck`）
+- Review 签收 PR：https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/74
 - Dev 取数 PR：https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/73
