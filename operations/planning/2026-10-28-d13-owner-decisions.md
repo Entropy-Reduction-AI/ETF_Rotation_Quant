@@ -9,7 +9,7 @@
 - Maintainer: Orchestrator
 - Date: 2026-10-28（Asia/Taipei）
 - 依据：Owner 对《v4 研究备忘》第 2 版第 7 节的答复（两个选择按建议），以及分工、进度和命名的要求
-- 相关：`docs/research/2026-10-27-v4-research-memo.md`；`docs/manual/roadmap-and-naming.md`；`operations/planning/2026-10-28-v4-dev-plan.md`
+- 相关：`docs/owner/v4-research-memo.md`；`docs/manual/roadmap-and-naming.md`；`operations/planning/2026-10-28-v4-dev-plan.md`
 
 ## 决定
 
