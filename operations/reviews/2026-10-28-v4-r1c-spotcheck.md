@@ -112,5 +112,5 @@ Reviewer 在 Dev tip 执行 `git lfs pull -I data/market.sqlite` 后打开库文
 
 ## Review PR
 
-- Review 签收 PR：（本 PR，创建后补 URL）
+- Review 签收 PR：https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/83
 - Dev 取数 PR：https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/82
