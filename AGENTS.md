@@ -95,7 +95,7 @@ skills 和 domain modeling 是按需能力，不是默认关卡。
 - ETF Rotation Dev（bot）：取数、开发、运行；在 `dev/v3-<线名>` 分支工作，可多实例并行；不判定通过、不碰 LOCK。
 - ETF Rotation Reviewer（bot）：独立复核与复算、保管冻结与 LOCK、按判据出结论；不改业务代码；应与 Dev 使用不同的底层模型，或使用独立实现。
 - Cloud Agent：按 Owner 的明确指令创建 tag、执行 `--ff-only` 合入。
-- **tag 与分支纪律（所有执行者）**：不删除、不移动任何 tag；不删除、不强推、不改写 `main`。删除分支或 tag 只在 Owner 明确要求时执行，并在工作记录里写明名称和原指向提交。仓库不设 tag 保护规则，此条靠纪律执行。
+- **tag 与分支纪律（所有执行者）**：不移动任何 tag；不删除、不强推、不改写 `main`。删除 tag 只按 Owner 的决定记录执行，并且先写入 `docs/manual/milestones.md`。`milestone/phase1-archive` 永不删除、不移动。删除分支只在 Owner 明确要求时执行，并在工作记录里写明名称和原指向提交。仓库不设 tag 保护规则，此条靠纪律执行。
 - Pi（服务器）：暂缓，部署另行决定。
 - 任务只写四件事：目标、改动面、验证、完成判据。任务按“版本 → 阶段 ①–⑩ → 轮次 → 任务”组织，不写时间估计；编号与分工规则见 `docs/manual/roadmap-and-naming.md`（D13-4）。
 
@@ -127,10 +127,11 @@ skills 和 domain modeling 是按需能力，不是默认关卡。
 - 黄金、原油、海外、国债、现金是一等容器。
 - 结论必须声明四项数据陷阱：主题指数回填、指数与 ETF 的差异、腾讯减法 qfq、份额折算造成的假跳空。
 - `data/market.sqlite` 纳入版本管理，每次变更都记录 SHA256；时区按 Asia/Taipei。
+- 取数按 `docs/manual/data-principles.md`。
 
 ### 分支
 
-常驻只有 main；开发用临时分支 `cursor/<任务>`，合入后删除；关键证据节点打 `milestone/` 附注标签（如 `milestone/v2-prereg-freeze`），不删、不移；需要存档但未合入的分支打 `keep/` 标签。
+常驻只有 main；开发用临时分支 `cursor/<任务>`，合入后删除。关键证据节点打 `milestone/` 附注标签，命名见 `docs/manual/roadmap-and-naming.md`，索引见 `docs/manual/milestones.md`。不移动任何标签；删除只按 Owner 决定记录执行，删除前写入里程碑索引；`milestone/phase1-archive` 永不删除、不移动。不再用 `keep/*` 保存未合入或已关闭的分支。
 
 ### 面向 Owner 的语言
 
