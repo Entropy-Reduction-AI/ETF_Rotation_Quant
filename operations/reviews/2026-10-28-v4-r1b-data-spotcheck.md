@@ -13,7 +13,7 @@
 - Route: review-only（本 PR 仅 `operations/reviews/**`）
 - 签收对象（Dev）: PR #73 · head `01dd5449b50db293ff51656590a46899e35492be`
 - Dev work log: `operations/work_logs/2026-10-28-v4-r1b-ingest.md`
-- Review branch: `review/v4-r1b-data-spotcheck-1ca4`（基于 `origin/main`，仅追加评审产物）
+- Review branch: `review/v4-r1b-data-spotcheck`（基于 `origin/main`，仅追加评审产物）
 
 ## 证据总表
 
@@ -81,5 +81,5 @@ Dev 结论「Yahoo 收盘已含拆分、后复权只加分红」与 Reviewer 复
 
 ## H. Review PR
 
-- Review 签收 PR：（本分支 `review/v4-r1b-data-spotcheck-1ca4` 合入 main 后 URL 由 CI 填充）
+- Review 签收 PR：（本分支 `review/v4-r1b-data-spotcheck`）
 - Dev 取数 PR：https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/73
