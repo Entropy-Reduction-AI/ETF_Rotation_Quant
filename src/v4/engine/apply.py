@@ -131,7 +131,10 @@ def _grouped(con, containers, end: str, switches):
 
 
 def _splice_indexless(market, con, containers, spec, end: str, grouped) -> None:
-    """没有可投资指数的容器，研究序列改成关联基金的日收益拼接。有指数的不动。"""
+    """没有可投资指数的容器，研究序列改成关联基金的日收益拼接。有指数的不动。
+
+    收益比载体选定滞后一天：D 日记 D−1 的载体，新载体从 D+1 起进入这条序列。
+    """
     for container in containers:
         identity = str(container.get("id") or "")
         if not identity or identity not in market.signal.columns:
