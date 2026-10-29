@@ -65,12 +65,17 @@ TABLE = {
                      2013: "otc:090010", 2014: "otc:090010", 2015: "otc:090010"},
     "allshare-financials-re": {2006: "", 2007: "", 2008: "", 2009: "",
                                2010: "near:161211", 2011: "near:161211", 2012: "near:161211",
-                               2013: "near:161211", 2014: "near:161211", 2015: "near:161211"},
+                               2013: "near:161211", 2014: "near:161211", 2015: "otc:001469"},
+    "allshare-discretionary": {2006: "", 2007: "", 2008: "", 2009: "", 2010: "", 2011: "",
+                               2012: "", 2013: "", 2014: "", 2015: "otc:001133"},
+    "allshare-healthcare": {2006: "", 2007: "", 2008: "", 2009: "", 2010: "", 2011: "",
+                            2012: "", 2013: "", 2014: "", 2015: "otc:001180"},
+    "allshare-it": {2006: "", 2007: "", 2008: "", 2009: "", 2010: "", 2011: "",
+                    2012: "", 2013: "", 2014: "", 2015: "otc:000942"},
 }
 NONE_IDS = (
     "csi1000", "allshare-energy", "allshare-materials", "allshare-industrials",
-    "allshare-discretionary", "allshare-staples", "allshare-healthcare",
-    "allshare-it", "allshare-communication", "allshare-utilities",
+    "allshare-staples", "allshare-communication", "allshare-utilities",
 )
 
 

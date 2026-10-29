@@ -1,7 +1,8 @@
 """附表 A 在设计期的真实行情。信号用与 v4 相同的收盘时点和汇率。
 
-U-可交易仍用研究序列做月末判断；当天没有载体的那一腿拿现金。
-不接离场、溢价和 T1–T4。日期晚于 2015-12-31 的序列直接拒绝。
+U-指数用研究序列。U-可交易的月末判断和日收益都用选定载体自己的复权路径；
+当天没有载体的那一腿拿现金。不接离场、溢价和 T1–T4。
+日期晚于 2015-12-31 的序列直接拒绝。
 """
 from __future__ import annotations
 
@@ -17,7 +18,14 @@ from src.v3.engine.universe import execution_code, research_code
 from src.v3.data.history import OFFICIAL, history_floor
 from src.v3.data.universe import containers as load_containers
 from src.v3.engine.universe import parse_date
-from src.v4.engine.carriers import build_candidates, choose_path, prints_for, stitch_fills
+from src.v4.engine.carriers import (
+    build_candidates,
+    choose_path,
+    compound_level,
+    prints_for,
+    spliced_portfolio,
+    stitch_fills,
+)
 from src.v4.engine.pool import _hk_level, load_mid
 from src.v4.peers import load_peer, run_peer
 from src.v4.r5.design import (
@@ -121,6 +129,12 @@ def research_panel(spec: Spec) -> dict:
         assets = {name: str(by_id[name].get("asset_class") or "") for name in names}
         prints = prints_for(con, grouped, DESIGN_END)
         fills = stitch_fills(grouped, calendar, prints, assets)
+        tradable_levels = {}
+        for name in names:
+            series = spliced_portfolio(
+                con, grouped[name], calendar, DESIGN_END,
+                nav_lag=int(spec.nav_lag), usd=usd, stale_limit=int(spec.stale_limit))
+            tradable_levels[name] = compound_level(series, pd.DatetimeIndex(calendar))
     finally:
         con.close()
     level_frame = pd.DataFrame(levels, index=calendar)
@@ -139,6 +153,7 @@ def research_panel(spec: Spec) -> dict:
         "index_quotes": quotes,
         "tradable_quotes": traded_quotes,
         "carriers": pd.DataFrame(mask, index=calendar),
+        "tradable_levels": pd.DataFrame(tradable_levels, index=calendar),
     }
 
 
@@ -176,8 +191,9 @@ def run_peers(spec: Spec, *, resume: bool = True) -> None:
             peer = load_peer(peer_id, pool)
             carriers = panel["carriers"] if pool == "tradable" else None
             quotes = panel["tradable_quotes"] if pool == "tradable" else panel["index_quotes"]
+            levels = panel["tradable_levels"] if pool == "tradable" else panel["levels"]
             result = run_peer(
-                peer, panel["calendar"], panel["levels"],
+                peer, panel["calendar"], levels,
                 cash=panel["cash"], carriers=carriers, quotes=quotes, calendar_closed=True)
             net = result.net.astype(float)
             require_design_index(net.index, what=f"{peer_id}/{pool}")

@@ -43,7 +43,7 @@ from src.v3.engine.spec import Spec, load_spec
 from src.v3.engine.switches import EngineSwitches
 from src.v3.engine.universe import parse_date, research_code
 from src.v3.eval.robustness import best_containers, delay_targets
-from src.v4.engine.apply import apply_market
+from src.v4.engine.apply import apply_market, apply_tradable_execution
 from src.v4.engine.pool import US_SECTORS, _closes_frame, load_mid
 from src.v4.scorecard.core import ScorecardError, classify_months, refuse_portfolio_dates
 from src.v4.scorecard.gate import GATE_COLUMNS, candidate_gate
@@ -52,8 +52,9 @@ from src.report.fx import cny_from_usd
 
 ROOT = Path(__file__).resolve().parents[3]
 DESIGN_END = "2015-12-31"
-# D22 运行窗口登记的库指纹。本步不写库；对不上就停。
-DB_SHA256 = "1adb6d43384be3336a3f58e993dd31ed3d75e705935aa2ff16c575a30fc00e27"
+# D22 曾登记 1adb6d43384be3336a3f58e993dd31ed3d75e705935aa2ff16c575a30fc00e27。
+# D24-1 只插入第 2 档场外复权净值，没有改已有行。对不上就停。
+DB_SHA256 = "79ae5a47e1a6eb0977a18f13efb21211d24b48e393ad567f615130d89c8f00cd"
 LEDGER = ROOT / "results" / "v4" / "trial-ledger.csv"
 OUT = ROOT / "results" / "v4" / "r5"
 SEGMENT = "design"
@@ -86,7 +87,7 @@ def require_frozen_db() -> str:
         raise RunnerError(f"行情库不可读：{path}")
     digest = file_sha256(path)
     if digest != DB_SHA256:
-        raise RunnerError(f"行情库 SHA256 与 D22 不一致：{digest}")
+        raise RunnerError(f"行情库 SHA256 与登记不一致：{digest}")
     wal = path.with_name(path.name + "-wal")
     shm = path.with_name(path.name + "-shm")
     if wal.exists() or shm.exists():
@@ -143,7 +144,7 @@ class Job:
 
     def params(self, dropped: list[str] | None = None) -> dict:
         lookbacks = list(self.lookbacks) if self.lookbacks is not None else None
-        return {
+        payload = {
             "rules": "v4",
             "case": self.case,
             "kind": self.kind,
@@ -168,6 +169,9 @@ class Job:
             "dropped": list(dropped or []),
             "passed": list(self.passed),
         }
+        if self.pool == "tradable":
+            payload["fix"] = "D24-1"
+        return payload
 
 
 def single_jobs() -> list[Job]:
@@ -222,7 +226,7 @@ def budget_jobs(passed: list[str]) -> list[Job]:
 
 
 def peer_params(peer_id: str, pool: str) -> dict:
-    return {
+    payload = {
         "rules": "v4",
         "case": peer_id,
         "kind": "peer",
@@ -239,6 +243,9 @@ def peer_params(peer_id: str, pool: str) -> dict:
         "t4_pool": False,
         "cash": "v3-cash-sequence",
     }
+    if pool == "tradable":
+        payload["fix"] = "D24-1"
+    return payload
 
 
 def ledger_rows(path: Path = LEDGER) -> list[dict]:
@@ -363,24 +370,39 @@ def attach_prev_closes(market) -> None:
 
 
 def prepare_market(pool: str, *, t4: bool, allow_substitute: bool, spec: Spec):
-    """装好 B0 的数据开关。T2 的净值在这里附上，权重仍由执行时的开关决定。"""
+    """装好 B0 的数据开关。T2 的净值在这里附上，权重仍由执行时的开关决定。
+
+    两个池的排名信号都从 U-指数的研究序列出发。U-可交易再把计价收益换成载体自己的日收益，
+    并且只有当天选得到载体才进排名。不含相近替身只影响载体，不改研究序列。
+    """
     if pool not in POOLS:
         raise RunnerError(f"未知的池 {pool}")
-    switches = EngineSwitches(
+    containers = load_containers()
+    signal_switches = EngineSwitches(
         fill_limits=True,
         fx_v4=True,
         carriers=True,
         t4_pool=t4,
-        allow_substitute=allow_substitute,
+        allow_substitute=True,
         t2_state_weights=True,
     )
-    containers = load_containers()
     market = load_market(
-        DB.MARKET_DB, containers, "A", pool, DESIGN_END, spec,
+        DB.MARKET_DB, containers, "A", "index", DESIGN_END, spec,
         cost_multiplier=1.0, allow_after=False, history_mode=OFFICIAL,
     )
     market = apply_market(
-        market, switches, db=DB.MARKET_DB, containers=containers, spec=spec, pool=pool)
+        market, signal_switches, db=DB.MARKET_DB, containers=containers, spec=spec, pool="index")
+    if pool == "tradable":
+        carrier_switches = EngineSwitches(
+            fill_limits=True,
+            fx_v4=True,
+            carriers=True,
+            t4_pool=t4,
+            allow_substitute=allow_substitute,
+            t2_state_weights=True,
+        )
+        market = apply_tradable_execution(
+            market, carrier_switches, db=DB.MARKET_DB, containers=containers, spec=spec)
     attach_prev_closes(market)
     require_design_index(market.dates, what="行情")
     return market
