@@ -7,12 +7,12 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Manager
-- Last updated: 2026-10-28
-- Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`
+- Last updated: 2026-10-29
+- Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`
 
 ## Purpose
 
-登记 2026-10-28 清理前 origin 上的全部 12 个附注标签。标签对象 SHA 是附注标签对象本身，不是剥开后的提交（`^{}`）。三个保留标签的对象 SHA 以本表为准，删除其他标签时不得改变。
+登记 2026-10-28 清理前 origin 上的全部 12 个附注标签，以及清理之后按 Owner 决定新增的标签。标签对象 SHA 是附注标签对象本身，不是剥开后的提交（`^{}`）。三个保留标签的对象 SHA 以本表为准，删除其他标签时不得改变。新增标签写在文末，不改上表。
 
 清理前读取时，仓库不是浅克隆，`origin/main` 为 `29650f0d5fa88b29d8ba460c7a4855fb74178edf`。
 
@@ -49,8 +49,20 @@
 
 「十二个标签」那张表仍是清理前的登记，处置列不改。
 
+## 清理之后新增
+
+2026-10-29，D23-1。Owner 批准 v4 预注册第 2.3 版。附注标签打在合入 PR #118 后的 `main` 上。新建时 origin 上还没有这个名字；没有移动、删除或改写任何既有标签。三个保留标签的对象 SHA 与上表一致。
+
+| 标签 | 标签对象 SHA | 指向提交 SHA | 说明 | 处置 | 理由 |
+| --- | --- | --- | --- | --- | --- |
+| `milestone/v4-prereg-freeze` | `830320d03712df3a4098f352be8932e0553b5eeb` | `6bcba53e36e74ec81dd21fb7ee7b8cea695038fb` | D23-1 Owner 批准 v4 预注册第 2.3 版；合入 PR #118 后的 main | 保留 | v4 规则冻结。名字按 `milestone/<版本>-prereg-freeze` |
+
+核对见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`。
+
 ## Related Files
 
 - `operations/planning/2026-10-28-d14-owner-decisions.md`
+- `operations/work_logs/2026-10-28-tag-cleanup.md`
+- `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`
 - `docs/manual/roadmap-and-naming.md`
 - `AGENTS.md`
