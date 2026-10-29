@@ -1,0 +1,580 @@
+{
+  "repo": "/workspace",
+  "db_sha256": "1adb6d43384be3336a3f58e993dd31ed3d75e705935aa2ff16c575a30fc00e27",
+  "db_sha_ok": true,
+  "candidate_gate_sha256": "32058828326f5155ce9b9a678746d2f55d7a4a023b3d20a883e01676383c1b42",
+  "candidate_gate_sha_ok": true,
+  "trial_ledger_rows": 41,
+  "trial_ledger_sha256": "37a43abe5586ff4f24640a02f419e8296a03d05c285337fddec6489b402bf2a3",
+  "trial_ledger_sha_ok": true,
+  "ledger_git_shas": [
+    "18b5a82f0e874bcaa32cb4c26b001f8311d42819"
+  ],
+  "ledger_git_sha_ok": true,
+  "gate_independent_vs_dev": {
+    "match": true,
+    "mismatches": []
+  },
+  "gate_dev_impl_vs_independent": {
+    "match": true,
+    "mismatches": []
+  },
+  "independent_gate_records": [
+    {
+      "arm": "B0",
+      "pool": "index",
+      "ann_excess_s1": 0.14839536540491993,
+      "ann_excess_s2": -0.02388562016843654,
+      "pp_bull": -10.807330755282015,
+      "pp_correction": 12.601313805203437,
+      "pp_bear": 91.16970760240714,
+      "pp_rebound": -55.03622956552664,
+      "pass_segments": null,
+      "pass_target": null,
+      "pass_bear": null,
+      "pass": null
+    },
+    {
+      "arm": "T1",
+      "pool": "index",
+      "ann_excess_s1": 0.19103481786292886,
+      "ann_excess_s2": -0.03720795334781157,
+      "pp_bull": -11.99310190443223,
+      "pp_correction": 19.036854988092,
+      "pp_bear": 86.63552100363465,
+      "pp_rebound": -46.96355939932329,
+      "pass_segments": false,
+      "pass_target": true,
+      "pass_bear": true,
+      "pass": false
+    },
+    {
+      "arm": "T2",
+      "pool": "index",
+      "ann_excess_s1": 0.14950371306715238,
+      "ann_excess_s2": -0.01611466992810562,
+      "pp_bull": -1.574645714729972,
+      "pp_correction": 9.738958827234136,
+      "pp_bear": 92.63293333465714,
+      "pp_rebound": -58.33825720390411,
+      "pass_segments": true,
+      "pass_target": false,
+      "pass_bear": true,
+      "pass": false
+    },
+    {
+      "arm": "T3",
+      "pool": "index",
+      "ann_excess_s1": 0.15042670517947476,
+      "ann_excess_s2": -0.025941651331650828,
+      "pp_bull": -9.430660035141603,
+      "pp_correction": 11.157604301937038,
+      "pp_bear": 91.16970760240714,
+      "pp_rebound": -55.03622956552664,
+      "pass_segments": false,
+      "pass_target": true,
+      "pass_bear": true,
+      "pass": false
+    },
+    {
+      "arm": "T4",
+      "pool": "index",
+      "ann_excess_s1": 0.10698968035338807,
+      "ann_excess_s2": -0.03119475631131552,
+      "pp_bull": -66.53832930694271,
+      "pp_correction": 26.474987264944488,
+      "pp_bear": 121.91594432319448,
+      "pp_rebound": -65.86089606158978,
+      "pass_segments": false,
+      "pass_target": false,
+      "pass_bear": true,
+      "pass": false
+    }
+  ],
+  "any_candidate_pass": false,
+  "b0_final_index_net_identical": true,
+  "b0_index_series_sha256": "6f92c0388825e210623400e9743ff6672f244b143f0d6b4b3f56223bd4eeb87f",
+  "b0_index_series_sha_ok": true,
+  "b0_index_file_sha256": "eb24b980dea31a9f9786a9c77f17b711ac44f37d9b81dc734d92a199ed8c8afc",
+  "net_end_B0": "2015-12-31",
+  "net_end_T1": "2015-12-31",
+  "net_end_T2": "2015-12-31",
+  "net_end_T3": "2015-12-31",
+  "net_end_T4": "2015-12-31",
+  "reexec_net_max_abs_diff_vs_published": 4.999473057765158e-14,
+  "reexec_net_match": true,
+  "b0_index_turnover_per_year": 13.95,
+  "scorecard_B0_index": {
+    "any_start": [
+      {
+        "years": 1,
+        "comparator": "基准",
+        "n": 108,
+        "win_rate": 0.5555555555555556,
+        "win_pct": 56,
+        "median_excess": 0.021342121704541528,
+        "median_excess_pp": 2.1,
+        "worst_excess": -0.5124915040845466,
+        "worst_excess_pp": -51.2,
+        "worst_start": "2008-11-03"
+      },
+      {
+        "years": 1,
+        "comparator": "沪深300",
+        "n": 108,
+        "win_rate": 0.5277777777777778,
+        "win_pct": 53,
+        "median_excess": 0.022537022414215235,
+        "median_excess_pp": 2.3,
+        "worst_excess": -0.8033048248598686,
+        "worst_excess_pp": -80.3,
+        "worst_start": "2008-11-03"
+      },
+      {
+        "years": 1,
+        "comparator": "标普500",
+        "n": 108,
+        "win_rate": 0.46296296296296297,
+        "win_pct": 46,
+        "median_excess": -0.0448909915033614,
+        "median_excess_pp": -4.5,
+        "worst_excess": -0.2855703478194017,
+        "worst_excess_pp": -28.6,
+        "worst_start": "2009-08-03"
+      },
+      {
+        "years": 1,
+        "comparator": "纳指100",
+        "n": 108,
+        "win_rate": 0.42592592592592593,
+        "win_pct": 43,
+        "median_excess": -0.07611161890374957,
+        "median_excess_pp": -7.6,
+        "worst_excess": -0.3654209359711549,
+        "worst_excess_pp": -36.5,
+        "worst_start": "2009-04-01"
+      },
+      {
+        "years": 2,
+        "comparator": "基准",
+        "n": 96,
+        "win_rate": 0.5104166666666666,
+        "win_pct": 51,
+        "median_excess": 0.005017377586250482,
+        "median_excess_pp": 0.5,
+        "worst_excess": -0.2296517242955447,
+        "worst_excess_pp": -23.0,
+        "worst_start": "2008-11-03"
+      },
+      {
+        "years": 2,
+        "comparator": "沪深300",
+        "n": 96,
+        "win_rate": 0.7083333333333334,
+        "win_pct": 71,
+        "median_excess": 0.05259262194515346,
+        "median_excess_pp": 5.3,
+        "worst_excess": -0.29425703438573425,
+        "worst_excess_pp": -29.4,
+        "worst_start": "2008-11-03"
+      },
+      {
+        "years": 2,
+        "comparator": "标普500",
+        "n": 96,
+        "win_rate": 0.4583333333333333,
+        "win_pct": 46,
+        "median_excess": -0.033048114220594615,
+        "median_excess_pp": -3.3,
+        "worst_excess": -0.23173188934077515,
+        "worst_excess_pp": -23.2,
+        "worst_start": "2009-03-02"
+      },
+      {
+        "years": 2,
+        "comparator": "纳指100",
+        "n": 96,
+        "win_rate": 0.3854166666666667,
+        "win_pct": 39,
+        "median_excess": -0.10133402861264085,
+        "median_excess_pp": -10.1,
+        "worst_excess": -0.3185293289083462,
+        "worst_excess_pp": -31.9,
+        "worst_start": "2009-03-02"
+      },
+      {
+        "years": 3,
+        "comparator": "基准",
+        "n": 84,
+        "win_rate": 0.5238095238095238,
+        "win_pct": 52,
+        "median_excess": 0.006135952183777715,
+        "median_excess_pp": 0.6,
+        "worst_excess": -0.1356934274317687,
+        "worst_excess_pp": -13.6,
+        "worst_start": "2008-11-03"
+      },
+      {
+        "years": 3,
+        "comparator": "沪深300",
+        "n": 84,
+        "win_rate": 0.75,
+        "win_pct": 75,
+        "median_excess": 0.06554992151891298,
+        "median_excess_pp": 6.6,
+        "worst_excess": -0.14432434870362454,
+        "worst_excess_pp": -14.4,
+        "worst_start": "2008-11-03"
+      },
+      {
+        "years": 3,
+        "comparator": "标普500",
+        "n": 84,
+        "win_rate": 0.4523809523809524,
+        "win_pct": 45,
+        "median_excess": -0.029934228246788708,
+        "median_excess_pp": -3.0,
+        "worst_excess": -0.18442934952338175,
+        "worst_excess_pp": -18.4,
+        "worst_start": "2009-04-01"
+      },
+      {
+        "years": 3,
+        "comparator": "纳指100",
+        "n": 84,
+        "win_rate": 0.32142857142857145,
+        "win_pct": 32,
+        "median_excess": -0.08024838749241092,
+        "median_excess_pp": -8.0,
+        "worst_excess": -0.267088422085515,
+        "worst_excess_pp": -26.7,
+        "worst_start": "2009-04-01"
+      },
+      {
+        "years": 5,
+        "comparator": "基准",
+        "n": 60,
+        "win_rate": 0.5333333333333333,
+        "win_pct": 53,
+        "median_excess": 0.015511353268775507,
+        "median_excess_pp": 1.6,
+        "worst_excess": -0.0782035999634183,
+        "worst_excess_pp": -7.8,
+        "worst_start": "2008-11-03"
+      },
+      {
+        "years": 5,
+        "comparator": "沪深300",
+        "n": 60,
+        "win_rate": 0.8833333333333333,
+        "win_pct": 88,
+        "median_excess": 0.05974230150802695,
+        "median_excess_pp": 6.0,
+        "worst_excess": -0.04908882087095989,
+        "worst_excess_pp": -4.9,
+        "worst_start": "2008-11-03"
+      },
+      {
+        "years": 5,
+        "comparator": "标普500",
+        "n": 60,
+        "win_rate": 0.35,
+        "win_pct": 35,
+        "median_excess": -0.028306771632917616,
+        "median_excess_pp": -2.8,
+        "worst_excess": -0.16373881037105265,
+        "worst_excess_pp": -16.4,
+        "worst_start": "2009-08-03"
+      },
+      {
+        "years": 5,
+        "comparator": "纳指100",
+        "n": 60,
+        "win_rate": 0.26666666666666666,
+        "win_pct": 27,
+        "median_excess": -0.07270637765214416,
+        "median_excess_pp": -7.3,
+        "worst_excess": -0.21582686480671853,
+        "worst_excess_pp": -21.6,
+        "worst_start": "2009-03-02"
+      }
+    ],
+    "states": [
+      {
+        "state": "牛市",
+        "months": 53,
+        "win_month_pct": 50.9,
+        "cash_pp": -55.3,
+        "selection_pp": 45.1,
+        "excess_pp": -10.2,
+        "excess_pp_board": -10
+      },
+      {
+        "state": "回调",
+        "months": 21,
+        "win_month_pct": 57.1,
+        "cash_pp": 28.1,
+        "selection_pp": -15.5,
+        "excess_pp": 12.6,
+        "excess_pp_board": 13
+      },
+      {
+        "state": "熊市",
+        "months": 27,
+        "win_month_pct": 85.2,
+        "cash_pp": 81.5,
+        "selection_pp": 9.6,
+        "excess_pp": 91.2,
+        "excess_pp_board": 91
+      },
+      {
+        "state": "反弹",
+        "months": 19,
+        "win_month_pct": 15.8,
+        "cash_pp": -54.2,
+        "selection_pp": -0.8,
+        "excess_pp": -55.0,
+        "excess_pp_board": -55
+      }
+    ],
+    "capture": {
+      "up_capture": 0.84,
+      "down_capture": 0.6,
+      "up_months": 74,
+      "down_months": 46
+    }
+  },
+  "personality": {
+    "B0_index_full": {
+      "label": "B0 index full calendar",
+      "cagr_full": 0.19009239680884726,
+      "cagr_from_2006": 0.21124582831483285,
+      "max_drawdown": -0.3906367607394384,
+      "drawdown_peak": "2015-06-12",
+      "drawdown_trough": "2015-08-26",
+      "ann_vol": 0.19152322513841682,
+      "monthly_ret_std": 0.06553354519213765,
+      "downside_vol_ann": 0.13752766483200493,
+      "calmar": 0.4866218848656751,
+      "n_days": 2671,
+      "last_date": "2015-12-31"
+    },
+    "B0_index_2006_2010": {
+      "label": "2006-2010",
+      "cagr_full": 0.3712476466004053,
+      "cagr_from_2006": 0.3712476466004053,
+      "max_drawdown": -0.3864832327644371,
+      "drawdown_peak": "2007-10-16",
+      "drawdown_trough": "2008-11-18",
+      "ann_vol": 0.23670549755105671,
+      "monthly_ret_std": 0.08310715244609285,
+      "downside_vol_ann": 0.16950025355970205,
+      "calmar": 0.9605789207074918,
+      "n_days": 1215,
+      "last_date": "2010-12-31"
+    },
+    "B0_index_2011_2015": {
+      "label": "2011-2015",
+      "cagr_full": 0.06980422367086248,
+      "cagr_from_2006": 0.06980422367086248,
+      "max_drawdown": -0.39063676073943854,
+      "drawdown_peak": "2015-06-12",
+      "drawdown_trough": "2015-08-26",
+      "ann_vol": 0.1543819690978272,
+      "monthly_ret_std": 0.047775659704822136,
+      "downside_vol_ann": 0.1092625895015621,
+      "calmar": 0.17869343258614387,
+      "n_days": 1214,
+      "last_date": "2015-12-31"
+    }
+  },
+  "u_index_cagr_spotcheck": {
+    "B0": {
+      "published_cagr": 0.19009239680895607,
+      "recomputed_cagr": 0.19009239680884726,
+      "published_cagr_from_2006": 0.21124582831494587,
+      "recomputed_cagr_from_2006": 0.21124582831483285,
+      "published_mdd": -0.3906367607393668,
+      "recomputed_mdd": -0.3906367607394384
+    },
+    "T1": {
+      "published_cagr": 0.19949560954605805,
+      "recomputed_cagr": 0.19949560954602252,
+      "published_cagr_from_2006": 0.2222623799319654,
+      "recomputed_cagr_from_2006": 0.22226237993194076,
+      "published_mdd": -0.39404354252597895,
+      "recomputed_mdd": -0.39404354252595863
+    },
+    "T2": {
+      "published_cagr": 0.19445267226164464,
+      "recomputed_cagr": 0.1944526722615001,
+      "published_cagr_from_2006": 0.21612662910739844,
+      "recomputed_cagr_from_2006": 0.2161266291072439,
+      "published_mdd": -0.40381367999185847,
+      "recomputed_mdd": -0.40381367999208295
+    },
+    "T3": {
+      "published_cagr": 0.189853218609356,
+      "recomputed_cagr": 0.1898532186092705,
+      "published_cagr_from_2006": 0.210978148741771,
+      "recomputed_cagr_from_2006": 0.21097814874168352,
+      "published_mdd": -0.39925811494916164,
+      "recomputed_mdd": -0.39925811494921204
+    },
+    "T4": {
+      "published_cagr": 0.16952015393943998,
+      "recomputed_cagr": 0.16952015393953102,
+      "published_cagr_from_2006": 0.18873088388167214,
+      "recomputed_cagr_from_2006": 0.18873088388177983,
+      "published_mdd": -0.36112969613996926,
+      "recomputed_mdd": -0.36112969613999246
+    }
+  },
+  "adaptability_samples": [
+    {
+      "case": "no-substitute",
+      "pool": "tradable",
+      "cagr": 0.0467226013067048,
+      "max_drawdown": -0.2778065559192814
+    },
+    {
+      "case": "lookback-15-50-100-200",
+      "pool": "index",
+      "cagr": 0.17687301442701964,
+      "max_drawdown": -0.3206925382541146
+    },
+    {
+      "case": "lookback-15-50-100-200",
+      "pool": "tradable",
+      "cagr": 0.043031449088182905,
+      "max_drawdown": -0.2437160091656193
+    },
+    {
+      "case": "delay-1d",
+      "pool": "index",
+      "cagr": 0.18600067994773228,
+      "max_drawdown": -0.4230244559709945
+    },
+    {
+      "case": "delay-1d",
+      "pool": "tradable",
+      "cagr": 0.05021980919215441,
+      "max_drawdown": -0.2568664402474119
+    },
+    {
+      "case": "drop-best-1",
+      "pool": "index",
+      "cagr": 0.19498706897630536,
+      "max_drawdown": -0.39013342503523685
+    },
+    {
+      "case": "drop-best-1",
+      "pool": "tradable",
+      "cagr": 0.03188462200562303,
+      "max_drawdown": -0.23264560009805835
+    }
+  ],
+  "p1_frozen_any_start_5y": [
+    {
+      "years": 5,
+      "comparator": "基准",
+      "n": 60,
+      "win_rate": 0.6333333333333333,
+      "win_pct": 63,
+      "median_excess": 0.04055934733362876,
+      "median_excess_pp": 4.1,
+      "worst_excess": -0.0658349019364497,
+      "worst_excess_pp": -6.6,
+      "worst_start": "2008-11-03"
+    },
+    {
+      "years": 5,
+      "comparator": "沪深300",
+      "n": 60,
+      "win_rate": 0.9333333333333333,
+      "win_pct": 93,
+      "median_excess": 0.08477639968234835,
+      "median_excess_pp": 8.5,
+      "worst_excess": -0.03672012284399129,
+      "worst_excess_pp": -3.7,
+      "worst_start": "2008-11-03"
+    },
+    {
+      "years": 5,
+      "comparator": "标普500",
+      "n": 60,
+      "win_rate": 0.5,
+      "win_pct": 50,
+      "median_excess": -0.0035735902345592763,
+      "median_excess_pp": -0.4,
+      "worst_excess": -0.1465437332718087,
+      "worst_excess_pp": -14.7,
+      "worst_start": "2009-04-01"
+    },
+    {
+      "years": 5,
+      "comparator": "纳指100",
+      "n": 60,
+      "win_rate": 0.31666666666666665,
+      "win_pct": 32,
+      "median_excess": -0.04817043438174068,
+      "median_excess_pp": -4.8,
+      "worst_excess": -0.19766637283790645,
+      "worst_excess_pp": -19.8,
+      "worst_start": "2009-03-02"
+    }
+  ],
+  "b0_any_start_5y": [
+    {
+      "years": 5,
+      "comparator": "基准",
+      "n": 60,
+      "win_rate": 0.5333333333333333,
+      "win_pct": 53,
+      "median_excess": 0.015511353268775507,
+      "median_excess_pp": 1.6,
+      "worst_excess": -0.0782035999634183,
+      "worst_excess_pp": -7.8,
+      "worst_start": "2008-11-03"
+    },
+    {
+      "years": 5,
+      "comparator": "沪深300",
+      "n": 60,
+      "win_rate": 0.8833333333333333,
+      "win_pct": 88,
+      "median_excess": 0.05974230150802695,
+      "median_excess_pp": 6.0,
+      "worst_excess": -0.04908882087095989,
+      "worst_excess_pp": -4.9,
+      "worst_start": "2008-11-03"
+    },
+    {
+      "years": 5,
+      "comparator": "标普500",
+      "n": 60,
+      "win_rate": 0.35,
+      "win_pct": 35,
+      "median_excess": -0.028306771632917616,
+      "median_excess_pp": -2.8,
+      "worst_excess": -0.16373881037105265,
+      "worst_excess_pp": -16.4,
+      "worst_start": "2009-08-03"
+    },
+    {
+      "years": 5,
+      "comparator": "纳指100",
+      "n": 60,
+      "win_rate": 0.26666666666666666,
+      "win_pct": 27,
+      "median_excess": -0.07270637765214416,
+      "median_excess_pp": -7.3,
+      "worst_excess": -0.21582686480671853,
+      "worst_excess_pp": -21.6,
+      "worst_start": "2009-03-02"
+    }
+  ],
+  "lock_exists": false,
+  "gate_inputs_max_date": "2015-12-31",
+  "tag_v4_prereg_freeze": "830320d03712df3a4098f352be8932e0553b5eeb"
+}
