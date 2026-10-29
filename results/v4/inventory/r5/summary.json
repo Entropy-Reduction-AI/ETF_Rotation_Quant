@@ -1,0 +1,80 @@
+{
+  "rule": "D22-1 按东财 → 腾讯（含按比例延长的尾部）→ D21 还原选用。D22-2 只列出日收益差超过 0.1 个百分点的日期，不据此改选用，也不按日换源。D22-3：bars.adj=hfq 仍只是东财；腾讯和还原留在 v4_series。",
+  "diff_pp": 0.1,
+  "compare_end": "2026-09-30",
+  "codes": [
+    "160125",
+    "160644"
+  ],
+  "by_code": {
+    "160125": {
+      "canonical_tier": "tencent",
+      "parts": [
+        "tencent_etf_hfq",
+        "tencent_etf_hfq_carry"
+      ],
+      "tiers_present": [
+        "tencent",
+        "d21"
+      ],
+      "conflict_days": 14,
+      "max_abs_diff_pp": 2.931582,
+      "dates": [
+        "2012-02-17",
+        "2012-02-21",
+        "2012-06-27",
+        "2012-12-14",
+        "2012-12-18",
+        "2013-01-14",
+        "2013-01-16",
+        "2013-05-14",
+        "2013-05-16",
+        "2016-02-02",
+        "2016-02-18",
+        "2016-04-12",
+        "2016-05-24",
+        "2016-12-06"
+      ]
+    },
+    "160644": {
+      "canonical_tier": "tencent",
+      "parts": [
+        "tencent_etf_hfq"
+      ],
+      "tiers_present": [
+        "tencent",
+        "d21"
+      ],
+      "conflict_days": 2,
+      "max_abs_diff_pp": 0.306743,
+      "dates": [
+        "2020-12-03",
+        "2020-12-07"
+      ]
+    }
+  },
+  "conflict_rows": 16,
+  "source_rows": 409,
+  "files": {
+    "hfq-sources.csv": "8de72fe09c859f0f14fd7c0df21becbae1629b72a3f350f18c83baf0bcd936cd",
+    "hfq-return-conflicts.csv": "eff7f0ea783cfc8a99bb217d850599b8be9924b41a6b965ff87c9365859a94a1"
+  },
+  "hashed": [
+    {
+      "path": "data/market.sqlite",
+      "sha256": "1adb6d43384be3336a3f58e993dd31ed3d75e705935aa2ff16c575a30fc00e27",
+      "bytes": 292618240
+    },
+    {
+      "path": "config/v3/universe.toml",
+      "sha256": "3fb37205f6ebb852906ec68bde5751bdbe331cf2ba491e6d1685b7bc24879477",
+      "bytes": 232466
+    },
+    {
+      "path": "config/v4/universe.toml",
+      "sha256": "1226175884c7d4f8fc735a3d718f51e4560af57676216b604c9386476556ddb0",
+      "bytes": 177979
+    }
+  ],
+  "database_written": false
+}
