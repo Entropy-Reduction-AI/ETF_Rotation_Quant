@@ -3,11 +3,11 @@
 ## Metadata
 
 - Project: ETF_Rotation_Quant · Owner: L. Loric · 起草：Orchestrator（Claude）
-- 状态：**草案第 2 版，闭合 R1 的 MF-1 至 MF-5 和 should-fix，待 Reviewer 复审，再交 Owner 批准；尚未冻结**。冻结前不运行任何 v4 候选看收益。
+- 状态：**第 2.3 版，Reviewer 已全部签收（R1、R1b、R1e、R1f），待 Owner 批准；尚未冻结**。冻结前不运行任何 v4 候选看收益。
 - 母版：`docs/prereg/etf-multiasset-rotation-prereg-v3.1.md`（`milestone/v3.1-prereg-freeze`）及补充文本 1 第 2 版。本文只写增量；没有写到的条款沿用 v3.1（以及 v3.1 未改的 v3 条款）。
 - 尝试登记：本项目第 4 次正式尝试（第 3 次为 v3 / v3.1）。
-- 依据：D11–D16（`operations/planning/`）；`docs/owner/v4-research-memo.md`（第 6 版）；`docs/manual/data-principles.md`。
-- R1 复核：`operations/reviews/2026-10-28-v4-prereg-r1.md`；第 2 版 R1b 通过（`operations/reviews/2026-10-28-v4-prereg-r1b.md`）。第 2.1 版只改 §3.1 港股收盘时点一处（D18-1，已复核）。第 2.2 版改 §3.1 的 QDII、LOF 纳入和分组、§3.2 的载体切换、§6.1 的 B0 定义（D19，R1e 已复核）。第 2.3 版改 §6.3 标题、§7.3–§7.6（含附表 A 公开同行规则）、§9.3：一次性检验推迟到研究封板，加三层对照、结论报告的内容和期望说明书（D20）；另闭合 R1e 的 MF-6（§3.1 研究序列、§3.2 “已选定”的含义，D21）。待 Reviewer 对这几处复核。
+- 依据：D11–D22（`operations/planning/`）；`docs/owner/v4-research-memo.md`（第 6 版）；`docs/manual/data-principles.md`。
+- R1 复核：`operations/reviews/2026-10-28-v4-prereg-r1.md`；第 2 版 R1b 通过（`operations/reviews/2026-10-28-v4-prereg-r1b.md`）。第 2.1 版只改 §3.1 港股收盘时点一处（D18-1，已复核）。第 2.2 版改 §3.1 的 QDII、LOF 纳入和分组、§3.2 的载体切换、§6.1 的 B0 定义（D19，R1e 已复核）。第 2.3 版改 §6.3 标题、§7.3–§7.6（含附表 A 公开同行规则）、§9.3：一次性检验推迟到研究封板，加三层对照、结论报告的内容和期望说明书（D20）；另闭合 R1e 的 MF-6（§3.1 研究序列、§3.2 “已选定”的含义，D21）。R1f 通过（`operations/reviews/2026-10-29-v4-prereg-r1e.md` 的 R1f 段）；SF-5（本行状态）已改，SF-6（附表 A 的“月末”= 各自然月最后一个上交所交易日）已由 Manager 确认。
 - 冻结：Reviewer 签收、Owner 批准后，由 Manager 合入 main 并打 `milestone/v4-prereg-freeze`。之后改规则 = v4.1，须 Owner。
 
 ## §0 一句话
@@ -206,7 +206,7 @@ B0 是 v4 的对照基线，和冻结的 v3.1 P1 不会逐日相同（成交限�
 | 公开同行：Antonacci 双动量、Faber 10 个月均线，用同一个池子和同一套交易条件 | 我们的复杂设计有没有带来价值 | 只报告，不改判；每一版研究都做（D20-6） |
 | 单一指数：沪深300、标普500、纳指100（人民币全收益） | 事后最好的那一个是什么水平 | 只报告，用于任意起点 |
 
-公开同行的两条规则按原作者的公开写法定死如下（附表 A），每条在每个池各登记一行 ledger。两条都只用月末收盘做决定，下一个上交所交易日按收盘成交；成本、成交限制（§4.5）、收盘时点和汇率（§3.1）、现金序列与 v4 相同；不加 10% 离场，不加溢价模块，也不加 T1–T4，保持原作者的写法。
+公开同行的两条规则按原作者的公开写法定死如下（附表 A），每条在每个池各登记一行 ledger。两条都只用月末收盘做决定（月末 = 每个自然月最后一个上交所交易日，SF-6），下一个上交所交易日按收盘成交；成本、成交限制（§4.5）、收盘时点和汇率（§3.1）、现金序列与 v4 相同；不加 10% 离场，不加溢价模块，也不加 T1–T4，保持原作者的写法。
 
 **附表 A　公开同行的两条规则**
 
