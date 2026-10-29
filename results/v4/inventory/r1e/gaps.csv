@@ -1,0 +1,18 @@
+code,name,reason,source
+160126,南方香港优选,代码表有，交易所现行名单没有，概况页没有上市日,https://fundf10.eastmoney.com/jbgk_160126.html
+160141,南方道琼斯美国精选REIT,代码表有，交易所现行名单没有，概况页没有上市日,https://fundf10.eastmoney.com/jbgk_160141.html
+160213,国泰纳斯达克100,代码表有，交易所现行名单没有，概况页没有上市日,https://fundf10.eastmoney.com/jbgk_160213.html
+161620,融通核心价值,代码表有，交易所现行名单没有，概况页没有上市日,https://fundf10.eastmoney.com/jbgk_161620.html
+163813,中银全球策略,代码表有，交易所现行名单没有，概况页没有上市日,https://fundf10.eastmoney.com/jbgk_163813.html
+164212,天弘全球新能源汽车,代码表有，交易所现行名单没有，概况页没有上市日,https://fundf10.eastmoney.com/jbgk_164212.html
+501226,长城全球新能源汽车,代码表有，交易所现行名单没有，概况页没有上市日,https://fundf10.eastmoney.com/jbgk_501226.html
+513820,港股通红利ETF汇添富 [hfq],东财 K 线多次断连，近端窗口仍空回复,https://push2his.eastmoney.com/api/qt/stock/kline/get
+513910,港股通央企红利ETF华夏 [hfq],东财 K 线多次断连，近端窗口仍空回复,https://push2his.eastmoney.com/api/qt/stock/kline/get
+159501,纳指ETF嘉实 [hfq],东财 K 线多次断连，近端窗口仍空回复,https://push2his.eastmoney.com/api/qt/stock/kline/get
+159687,亚太精选ETF南方 [hfq],东财 K 线多次断连，近端窗口仍空回复,https://push2his.eastmoney.com/api/qt/stock/kline/get
+159688,恒生互联网ETF华安 [hfq],东财 K 线多次断连，近端窗口仍空回复,https://push2his.eastmoney.com/api/qt/stock/kline/get
+159822,新经济ETF银华 [hfq],东财 K 线多次断连，近端窗口仍空回复,https://push2his.eastmoney.com/api/qt/stock/kline/get
+160125,南方香港优选股票型证券投资基金 [hfq],东财 K 线多次断连，近端窗口仍空回复,https://push2his.eastmoney.com/api/qt/stock/kline/get
+160644,鹏华香港美国互联网股票型证券投资基金(LOF) [hfq],东财 K 线多次断连，近端窗口仍空回复,https://push2his.eastmoney.com/api/qt/stock/kline/get
+520900,港股通红利ETF广发 [raw],后复权已写入；不复权行情东财断连。库内没有另一来源的 raw 可留,https://push2his.eastmoney.com/api/qt/stock/kline/get
+526090,港股通金融ETF富国 [window],上市日 2026-10-16，晚于补数截止日 2026-09-30，窗口内不补,https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST

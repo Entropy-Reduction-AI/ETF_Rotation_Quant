@@ -38,7 +38,7 @@ def _ledger_bytes() -> bytes | None:
     return LEDGER.read_bytes()
 # `python -m src.v3.data emit` 写出的登记表。手改 toml 会让这行失败。Reviewer 重签之前，这不是冻结 SHA。
 # D17 按附录 1 重新 emit（8 只纳入、净值行数更新）之后换成下面这一份。
-UNIVERSE_SHA = "d3b761c9a0c298f83a8e6f3936a325ef709387acaed691e3fa3b291d1f4f585e"
+UNIVERSE_SHA = "3fb37205f6ebb852906ec68bde5751bdbe331cf2ba491e6d1685b7bc24879477"
 FREEZE = "bfeb49cc65eb0ba419bc98348f1d643fac1211f6"
 CASH = 0.02 / 252
 
