@@ -1,19 +1,24 @@
 """U-可交易载体。开关关闭时不调用。
 
-顺序是预注册第 2.1 版 §3.2：
+顺序是预注册第 2.2 版 §3.2：
 
-1. 跟踪同一指数的场内 ETF，有后复权，并且满足 v3 §3.3 的可交易首日和当天流动性。
+1. 跟踪同一指数（或同一组）的场内 ETF、LOF，有后复权，并且满足 v3 §3.3 的可交易首日和当天流动性。
    可交易首日 = max(上市日后第 60 个上交所交易日, 首次「近 20 个自身交易日成交额中位数 ≥ 3000 万元」)。
    上市日取原始 K 线第一根正收盘，第 60 个交易日不含上市日当天。
    流动性是当天的条件：这一天对应的近 20 个自身交易日成交额中位数仍然 ≥ 3000 万元。
    同一档多只时，近 20 日成交额中位数高的优先，再按代码升序。不够 3000 万就看下一档（D16-1）。
+   已持有的第 1 档只要还在这个可用名单里就留住（D19-2），不因别的基金成交额更高而换。
 2. 跟踪同一指数的场外纯指数基金，含非增强的联接基金（D16-2）。增强型不用。
    成立日早的优先，再取第一笔净值早的，再按代码升序。
+   没有可投资指数的容器：登记表 `maps_to` 已经指向该容器的场外基金同样放在这一档。
 3. 已经决定的相近替身，只有 161211 和 510880。不把拒绝入库的指数升成替身。
    登记表顺序，再按代码升序。场内的同样要过第 1 档的流动性。
 4. 美股行业才用美国的 SPDR，后复权。可用的后复权收盘严格早于 D。
 
 都没有的那天，该容器不进 U-可交易排名。
+
+没有可投资指数历史的容器，研究序列用当天这只基金自己的日收益往下接（§3.1）。
+QDII 用 T−2 单位净值。换载体时接收益，不把两只基金的价格水平拼成一条。
 """
 from __future__ import annotations
 
@@ -24,6 +29,8 @@ import numpy as np
 import pandas as pd
 
 from src.v3.engine.limits import board_of
+from src.v3.engine.prices import lag_asof, returns_from_level
+from src.v3.engine.universe import is_qdii
 from src.v4.data.r1b import EXACT_INDEX
 
 # 14 个 A 股容器之外，执行层跟踪标的就是容器自己的指数。
@@ -221,6 +228,25 @@ class _Candidate:
     available: pd.Series
     median: pd.Series
     board: str
+    qdii: bool = False
+
+
+def has_investable_index(container: dict) -> bool:
+    """有可投资指数历史才用指数做研究序列。取不到代码或状态的容器改接基金日收益。"""
+    research = container.get("research") or {}
+    code = str(research.get("series_code") or "").strip()
+    status = str(research.get("series_status") or "").strip()
+    if code in {"", "取不到", "TBD"}:
+        return False
+    if status == "取不到":
+        return False
+    return True
+
+
+def _marks_qdii(name: str, container: dict) -> bool:
+    if is_qdii(container):
+        return True
+    return "QDII" in str(name or "").upper()
 
 
 def _mask(calendar: pd.DatetimeIndex, predicate) -> pd.Series:
@@ -232,18 +258,23 @@ def build_candidates(con: sqlite3.Connection, containers: list[dict], calendar: 
                      end: str, *, us_spdr: tuple[tuple[str, str], ...] = ()) -> dict[str, list[_Candidate]]:
     """每个容器一串按档位排好的候选。`available` 是上交所交易日上的布尔序列。"""
     grouped: dict[str, list[_Candidate]] = {}
+    by_id = {str(container.get("id") or ""): container for container in containers}
     etfs = _execution_etfs(containers)
     for identity, rows in etfs.items():
+        container = by_id.get(identity, {})
         for row in rows:
             grouped.setdefault(identity, []).append(_etf_candidate(
                 con, identity, row["code"], row["order"], calendar, end, tier=1, vehicle="etf",
-                track=row["tracks"]))
+                track=row["tracks"], qdii=_marks_qdii(row["name"], container)))
+    _add_indexless_etfs(con, containers, grouped, calendar, end)
     for row in _listings(con):
         identity = str(row["maps_to"])
         track = str(row["tracked_index"] or "")
+        container = by_id.get(identity, {})
         if int(row["enhanced"] or 0) == 1 or "增强" in str(row["name"] or ""):
             continue
-        if track not in index_names(identity):
+        linked_without_index = bool(container) and not has_investable_index(container)
+        if track not in index_names(identity) and not linked_without_index:
             continue
         nav_start = otc_nav_start(con, str(row["code"]), end)
         inception = str(row["inception"] or "")
@@ -254,7 +285,7 @@ def build_candidates(con: sqlite3.Connection, containers: list[dict], calendar: 
         grouped.setdefault(identity, []).append(_Candidate(
             container=identity, code=str(row["code"]), vehicle="otc", tier=2,
             inception=inception, nav_start=str(nav_start.date()), order=0, available=available,
-            median=pd.Series(dtype=float), board="none"))
+            median=pd.Series(dtype=float), board="none", qdii=_marks_qdii(row["name"], container)))
     for order, row in enumerate(SUBSTITUTES):
         identity = row["container"]
         if row["vehicle"] == "etf":
@@ -296,8 +327,32 @@ def build_candidates(con: sqlite3.Connection, containers: list[dict], calendar: 
     return grouped
 
 
+def _add_indexless_etfs(con, containers: list[dict], grouped: dict[str, list[_Candidate]],
+                        calendar: pd.DatetimeIndex, end: str) -> None:
+    """没有指数历史的容器，执行层里的场内基金就是关联基金，不再要求跟踪标的对上指数名。"""
+    for container in containers:
+        if container.get("arm") not in {None, "main"}:
+            continue
+        if container.get("asset_class") == "现金":
+            continue
+        if has_investable_index(container):
+            continue
+        identity = str(container.get("id") or "")
+        have = {item.code for item in grouped.get(identity, [])}
+        order = len(grouped.get(identity, []))
+        for row in container.get("execution") or []:
+            code = str(row.get("code") or "")
+            if code in {"", "取不到", "TBD"} or code in have:
+                continue
+            grouped.setdefault(identity, []).append(_etf_candidate(
+                con, identity, code, order, calendar, end, tier=1, vehicle="etf",
+                track=str(row.get("track") or ""), qdii=_marks_qdii(str(row.get("name") or ""), container)))
+            have.add(code)
+            order += 1
+
+
 def _etf_candidate(con, identity, code, order, calendar, end, *, tier: int, vehicle: str,
-                   track: str = "") -> _Candidate:
+                   track: str = "", qdii: bool = False) -> _Candidate:
     prints = raw_dates(con, code, end)
     median = amount_median(con, code, end)
     backward = hfq_dates(con, code, end)
@@ -308,7 +363,7 @@ def _etf_candidate(con, identity, code, order, calendar, end, *, tier: int, vehi
     return _Candidate(
         container=identity, code=code, vehicle=vehicle, tier=tier,
         inception="", nav_start="", order=order, available=available,
-        median=median, board=board_of(track, code))
+        median=median, board=board_of(track, code), qdii=qdii)
 
 
 def _median_on(item: _Candidate, day: pd.Timestamp) -> float:
@@ -322,8 +377,31 @@ def _median_on(item: _Candidate, day: pd.Timestamp) -> float:
     return float(known.iloc[-1])
 
 
-def choose_on(candidates: list[_Candidate], day: pd.Timestamp) -> CarrierChoice | None:
-    """当天可用的最低一档。第 1 档按成交额中位数、再按代码；不够 3000 万的不在可用名单里。"""
+def _kept_holding(candidates: list[_Candidate], day: pd.Timestamp,
+                  held: CarrierChoice | None) -> CarrierChoice | None:
+    """第 1 档仍在当天可用名单里就留住。名单含 3000 万资格；掉出去才允许换。"""
+    if held is None:
+        return None
+    stamp = pd.Timestamp(day)
+    for item in candidates:
+        if item.tier != 1 or item.code != held.code or item.vehicle != held.vehicle:
+            continue
+        if stamp not in item.available.index or not bool(item.available.at[stamp]):
+            continue
+        return CarrierChoice(item.vehicle, item.code, item.board)
+    return None
+
+
+def choose_on(candidates: list[_Candidate], day: pd.Timestamp,
+              held: CarrierChoice | None = None) -> CarrierChoice | None:
+    """当天可用的最低一档。没有持仓时，第 1 档按成交额中位数、再按代码。
+
+    已持有的第 1 档只要还满足 3000 万（仍在可用名单里）就留住，不因别的基金近 20 日
+    成交额更高而换。失去资格、停牌或没有后复权时掉出名单，再按原规则重选。
+    """
+    kept = _kept_holding(candidates, day, held)
+    if kept is not None:
+        return kept
     stamp = pd.Timestamp(day)
     ready = []
     for item in candidates:
@@ -347,7 +425,22 @@ def choose_on(candidates: list[_Candidate], day: pd.Timestamp) -> CarrierChoice 
 
 def choices_on(grouped: dict[str, list[_Candidate]], day: pd.Timestamp,
                containers: list[str]) -> dict[str, CarrierChoice | None]:
+    """单独一天、没有已持有载体。年末载体表用这个，不把路径依赖写进对照。"""
     return {identity: choose_on(grouped.get(identity, []), day) for identity in containers}
+
+
+def choose_path(candidates: list[_Candidate], days) -> list[CarrierChoice | None]:
+    """从第一天起递推。上一天选中的载体就是下一天的「已持有」。
+
+    不看组合权重。研究序列要在排名之前定下来，不能等知道当天持不持仓再选基金。
+    """
+    held: CarrierChoice | None = None
+    chosen: list[CarrierChoice | None] = []
+    for day in days:
+        choice = choose_on(candidates, pd.Timestamp(day), held=held)
+        chosen.append(choice)
+        held = choice
+    return chosen
 
 
 @dataclass(frozen=True)
@@ -381,7 +474,7 @@ def _close_and_prev(series: pd.Series | None, day, *, strict_before: bool) -> tu
 
 def stitch_fills(grouped: dict[str, list[_Candidate]], days, prints: dict[str, pd.Series],
                  assets: dict[str, str]) -> dict[str, StitchedFill]:
-    """每个容器用当天选中的载体自己的收盘。港股、美股容器不设涨跌停。"""
+    """每个容器用路径上选中的载体自己的收盘。港股、美股容器不设涨跌停。"""
     index = pd.DatetimeIndex(pd.to_datetime(days))
     out: dict[str, StitchedFill] = {}
     for name, rows in grouped.items():
@@ -390,8 +483,7 @@ def stitch_fills(grouped: dict[str, list[_Candidate]], days, prints: dict[str, p
         closes = []
         prevs = []
         boards = []
-        for day in index:
-            choice = choose_on(rows, day)
+        for day, choice in zip(index, choose_path(rows, index)):
             if choice is None:
                 closes.append(np.nan)
                 prevs.append(np.nan)
@@ -458,3 +550,88 @@ def prints_for(con: sqlite3.Connection, grouped: dict[str, list[_Candidate]], en
         "AND code IN ({marks})",
         back_codes)
     return found
+
+
+def splice_returns(choices: list[CarrierChoice | None], days,
+                   returns_by_code: dict[str, pd.Series]) -> pd.Series:
+    """换载体那天用新基金自己的日收益。不用上一只的价格去除这一只的价格。"""
+    index = pd.DatetimeIndex(pd.to_datetime(days))
+    out = np.full(len(index), np.nan)
+    for pos, (day, choice) in enumerate(zip(index, choices)):
+        if choice is None:
+            continue
+        series = returns_by_code.get(choice.code)
+        if series is None or series.empty:
+            continue
+        stamp = pd.Timestamp(day)
+        if stamp not in series.index:
+            continue
+        value = series.loc[stamp]
+        if hasattr(value, "iloc"):
+            value = value.iloc[-1]
+        if value == value:
+            out[pos] = float(value)
+    return pd.Series(out, index=index, dtype=float)
+
+
+def _event_returns(level: pd.Series, calendar: pd.DatetimeIndex) -> pd.Series:
+    """收益记在这只基金自己的打印日上，再对齐到上交所日历。缺日是空，不把价格填过去。"""
+    if level is None or len(level) == 0:
+        return pd.Series(np.nan, index=calendar, dtype=float)
+    ordered = level.dropna().sort_index()
+    ordered = ordered[~ordered.index.duplicated(keep="last")]
+    values = ordered.to_numpy(dtype=float)
+    ordered = ordered[np.isfinite(values) & (values > 0)]
+    if ordered.empty:
+        return pd.Series(np.nan, index=calendar, dtype=float)
+    ret = ordered.astype(float) / ordered.astype(float).shift(1) - 1.0
+    return ret.reindex(calendar)
+
+
+def lagged_nav_returns(nav: pd.Series, calendar: pd.DatetimeIndex, lag: int) -> pd.Series:
+    """QDII：决策日 T 的研究收益是 T−lag 单位净值水平自己的涨跌，不是场内收盘。"""
+    level = lag_asof(nav, pd.DatetimeIndex(calendar), int(lag))
+    return returns_from_level(level).reindex(calendar)
+
+
+def _load_nav(con: sqlite3.Connection, code: str, end: str) -> pd.Series:
+    frame = pd.read_sql_query(
+        "SELECT date, unit_nav FROM fund_nav WHERE code = ? AND unit_nav > 0 AND date <= ? ORDER BY date",
+        con, params=(code, end))
+    if frame.empty:
+        return pd.Series(dtype=float)
+    series = pd.Series(frame["unit_nav"].to_numpy(dtype=float), index=pd.to_datetime(frame["date"]))
+    return series[np.isfinite(series.to_numpy(dtype=float)) & (series > 0)].sort_index()
+
+
+def _load_kind(con: sqlite3.Connection, code: str, kind: str, end: str) -> pd.Series:
+    frame = pd.read_sql_query(
+        "SELECT date, close FROM v4_series WHERE code = ? AND kind = ? AND close > 0 AND date <= ? ORDER BY date",
+        con, params=(code, kind, end))
+    if frame.empty:
+        return pd.Series(dtype=float)
+    series = pd.Series(frame["close"].to_numpy(dtype=float), index=pd.to_datetime(frame["date"]))
+    return series[np.isfinite(series.to_numpy(dtype=float)) & (series > 0)].sort_index()
+
+
+def research_return(con: sqlite3.Connection, item: _Candidate, calendar: pd.DatetimeIndex,
+                    end: str, nav_lag: int) -> pd.Series:
+    """一只关联基金自己的研究日收益。QDII 用 T−lag 净值，场内用后复权，场外用复权净值。"""
+    if item.qdii:
+        return lagged_nav_returns(_load_nav(con, item.code, end), calendar, nav_lag)
+    if item.vehicle == "otc" or (item.vehicle == "near" and item.board == "none"):
+        return _event_returns(_load_kind(con, item.code, "otc_nav", end), calendar)
+    return _event_returns(_load_kind(con, item.code, "backward", end), calendar)
+
+
+def spliced_research(con: sqlite3.Connection, rows: list[_Candidate], days, end: str, *,
+                     nav_lag: int) -> pd.Series:
+    """无指数容器的研究序列：按日用当天载体自己的收益接起来。"""
+    calendar = pd.DatetimeIndex(pd.to_datetime(days))
+    choices = choose_path(rows, calendar)
+    returns: dict[str, pd.Series] = {}
+    for item in rows:
+        if item.code in returns:
+            continue
+        returns[item.code] = research_return(con, item, calendar, end, nav_lag)
+    return splice_returns(choices, calendar, returns)
