@@ -302,6 +302,53 @@ class Parse(unittest.TestCase):
         self.assertEqual(got["setup_date"], "2019-11-26")
         self.assertEqual(got["list_date"], "")
 
+    def test_jbgk_keeps_the_whole_track_cell(self):
+        html = "<th>跟踪标的</th><td>MSCI USA 50 Index</td><th>业绩比较基准</th><td>MSCI美国50指数收益率</td>"
+        got = parse.parse_jbgk(html)
+        self.assertEqual(got["track"], "MSCI USA 50 Index")
+        self.assertEqual(got["single_index"], "single_index")
+        self.assertEqual(parse.appendix1_decision("美国50ETF", "指数型-海外股票", got["track"]), "include")
+
+    def test_truncated_track_uses_the_single_benchmark_index(self):
+        html = (
+            "<td>基金全称</td><td>嘉实标普石油天然气勘探及生产精选行业交易型开放式指数证券投资基金(QDII)</td>"
+            "<td>基金类型</td><td>指数型-海外股票</td>"
+            "<td>跟踪标的</td><td>S&P Oil &amp; Gas Exploration &amp; Production Select Industry</td>"
+            "<td>业绩比较基准</td><td>经估值汇率调整后的标普石油天然气勘探及生产精选行业指数收益率</td>"
+        )
+        got = parse.parse_jbgk(html)
+        self.assertEqual(got["track_cell"], "S&P Oil & Gas Exploration & Production Select Industry")
+        self.assertEqual(got["track"], "标普石油天然气勘探及生产精选行业指数")
+        self.assertEqual(parse.classify_track(got["track"]), "single_index")
+
+    def test_benchmark_with_two_indexes_is_not_recovered(self):
+        self.assertEqual(parse.index_from_benchmark("沪深300指数和中证500指数"), "")
+        self.assertEqual(parse.index_from_benchmark("标普石油天然气上游股票指数(全收益指数)"), "标普石油天然气上游股票指数")
+
+    def test_active_fund_without_a_benchmark_index_stays_out(self):
+        self.assertEqual(
+            parse.appendix1_decision("景顺长城全球半导体芯片", "QDII-普通股票", "该基金无跟踪标的"),
+            "exclude:跟踪标的不是单一指数",
+        )
+
+    def test_saved_d17_pages_include_eight_single_indexes(self):
+        from src.v3.data.d17_qdii import TRACK_CODES, track_rows
+        from src.v3.data.emit_universe import load_jbgk
+
+        rows = {row["code"]: row for row in track_rows(load_jbgk())}
+        self.assertEqual(set(rows), set(TRACK_CODES))
+        for code in TRACK_CODES:
+            self.assertEqual(rows[code]["decision"], "include", code)
+        self.assertEqual(rows["159518"]["track"], rows["513350"]["track"])
+        self.assertEqual(rows["159577"]["track"], rows["513850"]["track"])
+        self.assertNotEqual(rows["162411"]["track"], rows["159518"]["track"])
+        self.assertNotEqual(rows["159100"]["track"], rows["520870"]["track"])
+        active = load_jbgk()["501225"]
+        self.assertNotEqual(
+            parse.appendix1_decision(active["full_name"], active["fund_type"], active["track"]),
+            "include",
+        )
+
 
 class WriteSeries(unittest.TestCase):
     def setUp(self):

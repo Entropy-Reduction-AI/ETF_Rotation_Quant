@@ -893,7 +893,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "标准普尔500指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161125.html.gz"
-note = "附录 1：跟踪标的「标准普尔500指数」与容器 spx 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2377 行，来源 tencent_etf。"
+note = "附录 1：跟踪标的「标准普尔500指数」与容器 spx 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 2384 行。收盘价 2377 行，来源 tencent_etf。"
 
 [[container.execution]]
 code = "159655"
@@ -1118,6 +1118,80 @@ track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/511880.html.gz"
 note = "预注册举例。"
 
 [[container]]
+id = "theme-MSCI USA 50 Index"
+asset_class = "美股和全球主题"
+name = "MSCI USA 50 Index"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "MSCI USA 50 Index"
+index_name = "MSCI USA 50 Index"
+return_basis = "unit_nav"
+publish_date = "2024-02-23"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "159577"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-28-d17-qdii/raw/jbgk/159577.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159577 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159577、513850。净值 650 行。"
+
+[[container.execution]]
+code = "159577"
+name = "汇添富MSCI美国50交易型开放式指数证券投资基金(QDII)"
+list_date = "2024-02-23"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "MSCI USA 50 Index"
+track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/159577.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 650 行。收盘价 634 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "513850"
+name = "易方达MSCI美国50交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/513850.html.gz"
+bars_status = "in_db"
+track = "MSCI USA 50 Index"
+track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/513850.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 716 行。收盘价 697 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-iEdge Emerging Asia Select 50 Index"
+asset_class = "美股和全球主题"
+name = "iEdge Emerging Asia Select 50 Index"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "iEdge Emerging Asia Select 50 Index"
+index_name = "iEdge Emerging Asia Select 50 Index"
+return_basis = "unit_nav"
+publish_date = "取不到"
+publish_date_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/520580.html.gz"
+base_date = "取不到"
+base_date_source = ""
+series_code = "520580"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-28-d17-qdii/raw/jbgk/520580.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 520580 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 520580。净值 414 行。"
+
+[[container.execution]]
+code = "520580"
+name = "招商利安新兴亚洲精选交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/520580.html.gz"
+bars_status = "in_db"
+track = "iEdge Emerging Asia Select 50 Index"
+track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/520580.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 414 行。收盘价 395 行，来源 tencent_etf。"
+
+[[container]]
 id = "theme-东京日经225指数"
 asset_class = "美股和全球主题"
 name = "东京日经225指数"
@@ -1157,7 +1231,7 @@ list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513000.html.gz"
 bars_status = "in_db"
 track = "东京日经225指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513000.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 1766 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1784 行。收盘价 1766 行，来源 tencent_etf。"
 
 [[container.execution]]
 code = "513520"
@@ -1177,7 +1251,7 @@ list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513880.html.gz"
 bars_status = "in_db"
 track = "东京日经225指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513880.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 1766 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1787 行。收盘价 1766 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-东证指数"
@@ -1199,7 +1273,7 @@ series_code = "513800"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513800.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513800 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513800。净值 1408 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513800 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513800。净值 1787 行。"
 
 [[container.execution]]
 code = "513800"
@@ -1209,7 +1283,7 @@ list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513800.html.gz"
 bars_status = "in_db"
 track = "东证指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513800.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 1766 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1787 行。收盘价 1766 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-中证全球中国互联网人民币指数"
@@ -1337,7 +1411,7 @@ series_code = "513050"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513050 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513050。净值 1407 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513050 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513050。净值 2350 行。"
 
 [[container.execution]]
 code = "513050"
@@ -1347,7 +1421,7 @@ list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
 bars_status = "in_db"
 track = "中证海外中国互联网50人民币指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2356 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2350 行。收盘价 2356 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-中证海外中国互联网指数"
@@ -1369,7 +1443,7 @@ series_code = "164906"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/164906.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 164906 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 164906。净值 1407 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 164906 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 164906。净值 2760 行。"
 
 [[container.execution]]
 code = "164906"
@@ -1379,7 +1453,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "中证海外中国互联网指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/164906.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2729 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2760 行。收盘价 2729 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-中证港股通金融服务指数"
@@ -1668,6 +1742,70 @@ track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520830.html.gz"
 note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 552 行。收盘价 537 行，来源 tencent_etf。"
 
 [[container]]
+id = "theme-巴西IBOVESPA指数"
+asset_class = "美股和全球主题"
+name = "巴西IBOVESPA指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "巴西IBOVESPA指数"
+index_name = "巴西IBOVESPA指数"
+return_basis = "unit_nav"
+publish_date = "取不到"
+publish_date_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/520870.html.gz"
+base_date = "取不到"
+base_date_source = ""
+series_code = "520870"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-28-d17-qdii/raw/jbgk/520870.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 520870 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 520870。净值 232 行。"
+
+[[container.execution]]
+code = "520870"
+name = "易方达伊塔乌巴西IBOVESPA交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/520870.html.gz"
+bars_status = "in_db"
+track = "巴西IBOVESPA指数"
+track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/520870.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 232 行。收盘价 216 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-巴西伊博维斯帕指数"
+asset_class = "美股和全球主题"
+name = "巴西伊博维斯帕指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "巴西伊博维斯帕指数"
+index_name = "巴西伊博维斯帕指数"
+return_basis = "unit_nav"
+publish_date = "2025-11-13"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "159100"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-28-d17-qdii/raw/jbgk/159100.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159100 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159100。净值 230 行。"
+
+[[container.execution]]
+code = "159100"
+name = "华夏布拉德斯科巴西伊博维斯帕交易型开放式指数证券投资基金(QDII)"
+list_date = "2025-11-13"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "巴西伊博维斯帕指数"
+track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/159100.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 230 行。收盘价 216 行，来源 tencent_etf。"
+
+[[container]]
 id = "theme-恒生中国企业指数"
 asset_class = "美股和全球主题"
 name = "恒生中国企业指数"
@@ -1687,7 +1825,7 @@ series_code = "160717"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/160717.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 160717 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 160717、161831、159850、510900。净值 1408 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 160717 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 160717、161831、159850、510900。净值 3900 行。"
 
 [[container.execution]]
 code = "160717"
@@ -1697,7 +1835,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "恒生中国企业指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160717.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 3826 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 3900 行。收盘价 3826 行，来源 tencent_etf。"
 
 [[container.execution]]
 code = "161831"
@@ -1707,7 +1845,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "恒生中国企业指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161831.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1365 行。收盘价 2762 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2959 行。收盘价 2762 行，来源 tencent_etf。"
 
 [[container.execution]]
 code = "159850"
@@ -1727,7 +1865,7 @@ list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/510900.html.gz"
 bars_status = "in_db"
 track = "恒生中国企业指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/510900.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 3388 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 3377 行。收盘价 3388 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-恒生中国央企指数"
@@ -2043,7 +2181,7 @@ series_code = "161124"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161124.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 161124 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 161124。净值 1408 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 161124 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 161124。净值 2402 行。"
 
 [[container.execution]]
 code = "161124"
@@ -2053,7 +2191,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "恒生综合小型股指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161124.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 2137 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2402 行。收盘价 2137 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-新交所泛东南亚科技指数"
@@ -2107,7 +2245,7 @@ series_code = "161128"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161128.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 161128 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 161128。净值 1408 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 161128 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 161128。净值 2378 行。"
 
 [[container.execution]]
 code = "161128"
@@ -2117,7 +2255,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "标普500信息科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161128.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1408 行。收盘价 2361 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2378 行。收盘价 2361 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-标普500医疗保健等权重指数"
@@ -2139,7 +2277,7 @@ series_code = "161126"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161126.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 161126 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 161126。净值 1407 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 161126 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 161126。净值 2385 行。"
 
 [[container.execution]]
 code = "161126"
@@ -2149,7 +2287,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "标普500医疗保健等权重指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161126.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2336 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2385 行。收盘价 2336 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-标普500消费精选指数"
@@ -2203,7 +2341,7 @@ series_code = "159822"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159822.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159822 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159822。净值 1328 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159822 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159822。净值 1381 行。"
 
 [[container.execution]]
 code = "159822"
@@ -2213,7 +2351,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "标普中国新经济行业指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159822.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1328 行。收盘价 1443 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1381 行。收盘价 1443 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-标普全球石油指数"
@@ -2235,7 +2373,7 @@ series_code = "160416"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/160416.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 160416 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 160416。净值 1407 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 160416 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 160416。净值 3535 行。"
 
 [[container.execution]]
 code = "160416"
@@ -2245,7 +2383,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "标普全球石油指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160416.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 3342 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 3535 行。收盘价 3342 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-标普生物科技精选行业指数"
@@ -2267,7 +2405,7 @@ series_code = "161127"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/161127.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 161127 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 161127、159502。净值 1407 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 161127 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 161127、159502。净值 2377 行。"
 
 [[container.execution]]
 code = "161127"
@@ -2277,7 +2415,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "标普生物科技精选行业指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/161127.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2369 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2377 行。收盘价 2369 行，来源 tencent_etf。"
 
 [[container.execution]]
 code = "159502"
@@ -2288,6 +2426,80 @@ bars_status = "in_db"
 track = "标普生物科技精选行业指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159502.html.gz"
 note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 677 行。收盘价 660 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-标普石油天然气上游股票指数"
+asset_class = "美股和全球主题"
+name = "标普石油天然气上游股票指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "标普石油天然气上游股票指数"
+index_name = "标普石油天然气上游股票指数"
+return_basis = "unit_nav"
+publish_date = "2012-06-08"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "162411"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-28-d17-qdii/raw/jbgk/162411.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 162411 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 162411。净值 3657 行。"
+
+[[container.execution]]
+code = "162411"
+name = "华宝标普石油天然气上游股票指数证券投资基金(LOF)"
+list_date = "2012-06-08"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "标普石油天然气上游股票指数"
+track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/162411.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 3657 行。收盘价 3328 行，来源 tencent_etf。"
+
+[[container]]
+id = "theme-标普石油天然气勘探及生产精选行业指数"
+asset_class = "美股和全球主题"
+name = "标普石油天然气勘探及生产精选行业指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "标普石油天然气勘探及生产精选行业指数"
+index_name = "标普石油天然气勘探及生产精选行业指数"
+return_basis = "unit_nav"
+publish_date = "2023-11-15"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "159518"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "incoming/2026-10-28-d17-qdii/raw/jbgk/159518.html.gz"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159518 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159518、513350。净值 716 行。"
+
+[[container.execution]]
+code = "159518"
+name = "嘉实标普石油天然气勘探及生产精选行业交易型开放式指数证券投资基金(QDII)"
+list_date = "2023-11-15"
+list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "标普石油天然气勘探及生产精选行业指数"
+track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/159518.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 716 行。收盘价 697 行，来源 tencent_etf。"
+
+[[container.execution]]
+code = "513350"
+name = "富国标普石油天然气勘探及生产精选行业交易型开放式指数证券投资基金(QDII)"
+list_date = "取不到"
+list_date_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/513350.html.gz"
+bars_status = "in_db"
+track = "标普石油天然气勘探及生产精选行业指数"
+track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/513350.html.gz"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 706 行。收盘价 689 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-标普美国品质消费股票指数"
@@ -2309,7 +2521,7 @@ series_code = "162415"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/162415.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 162415 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 162415。净值 1407 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 162415 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 162415。净值 2581 行。"
 
 [[container.execution]]
 code = "162415"
@@ -2319,7 +2531,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "标普美国品质消费股票指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/162415.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2546 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2581 行。收盘价 2546 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-法兰克福DAX指数"
@@ -2361,7 +2573,7 @@ list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513030.html.gz"
 bars_status = "in_db"
 track = "法兰克福DAX指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513030.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2932 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2959 行。收盘价 2932 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-法国CAC40指数"
@@ -2383,7 +2595,7 @@ series_code = "513080"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513080 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513080。净值 1407 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513080 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513080。净值 1547 行。"
 
 [[container.execution]]
 code = "513080"
@@ -2393,7 +2605,7 @@ list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
 bars_status = "in_db"
 track = "法国CAC40指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 1529 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1547 行。收盘价 1529 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-纳斯达克生物科技指数"
@@ -2511,7 +2723,7 @@ series_code = "162719"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/162719.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 162719 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 162719。净值 1407 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 162719 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 162719。净值 2328 行。"
 
 [[container.execution]]
 code = "162719"
@@ -2521,7 +2733,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "道琼斯美国石油开发与生产指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/162719.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2311 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2328 行。收盘价 2311 行，来源 tencent_etf。"
 
 [[container]]
 id = "theme-道琼斯美国精选REIT指数"
@@ -2543,7 +2755,7 @@ series_code = "160140"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/160140.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 160140 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 160140、160141。净值 1407 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 160140 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 160140、160141。净值 2173 行。"
 
 [[container.execution]]
 code = "160140"
@@ -2553,7 +2765,7 @@ list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON
 bars_status = "in_db"
 track = "道琼斯美国精选REIT指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/160140.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1407 行。收盘价 2141 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2173 行。收盘价 2141 行，来源 tencent_etf。"
 
 [[container.execution]]
 code = "160141"
@@ -3079,10 +3291,7 @@ note = "执行主代码来自 config/portfolio.toml 的 primary。上市日不�
 
 # 附录 1 排除（不进入海外主题）
 
-# 159100 华夏布拉德斯科巴西伊博维斯帕交易型开放式指数证券投资基金(QDII) exclude:跟踪标的不是单一指数 track=巴西BOVESPA list=2025-11-13
-# 159518 嘉实标普石油天然气勘探及生产精选行业交易型开放式指数证券投资基金(QDII) exclude:跟踪标的不是单一指数 track=S&P list=2023-11-15
 # 159557 恒生医疗ETF嘉实 exclude:跟踪标的不是单一指数 track= list=2024-05-22
-# 159577 汇添富MSCI美国50交易型开放式指数证券投资基金(QDII) exclude:跟踪标的不是单一指数 track=MSCI list=2024-02-23
 # 160125 南方香港优选股票型证券投资基金 exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=2011-11-01
 # 160126 南方香港优选股票型证券投资基金 exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=取不到
 # 160216 国泰大宗商品配置证券投资基金(LOF) exclude:跨境商品，归入商品大类 track=该基金无跟踪标的 list=2015-04-07
@@ -3094,7 +3303,6 @@ note = "执行主代码来自 config/portfolio.toml 的 primary。上市日不�
 # 161229 国投瑞银中国价值发现股票型证券投资基金(LOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=2016-01-04
 # 161620 融通核心价值混合型证券投资基金(QDII) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=取不到
 # 161815 银华抗通胀主题证券投资基金(LOF) exclude:跨境商品，归入商品大类 track=该基金无跟踪标的 list=2010-12-20
-# 162411 华宝标普石油天然气上游股票指数证券投资基金(LOF) exclude:跟踪标的不是单一指数 track=S&P list=2012-06-08
 # 163208 诺安油气能源股票证券投资基金(LOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=2015-02-17
 # 163813 中银全球策略证券投资基金(FOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=取不到
 # 164212 天弘全球新能源汽车股票型证券投资基金(QDII-LOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=取不到
@@ -3106,10 +3314,6 @@ note = "执行主代码来自 config/portfolio.toml 的 primary。上市日不�
 # 501226 长城全球新能源汽车股票型发起式证券投资基金(QDII-LOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=取不到
 # 501300 海富通全球美元收益债券型证券投资基金(LOF) exclude:债券、货币或REITs track=该基金无跟踪标的 list=取不到
 # 501312 华宝海外科技股票型证券投资基金(QDII-LOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=取不到
-# 513350 富国标普石油天然气勘探及生产精选行业交易型开放式指数证券投资基金(QDII) exclude:跟踪标的不是单一指数 track=S&P list=取不到
-# 513850 易方达MSCI美国50交易型开放式指数证券投资基金(QDII) exclude:跟踪标的不是单一指数 track=MSCI list=取不到
-# 520580 招商利安新兴亚洲精选交易型开放式指数证券投资基金(QDII) exclude:跟踪标的不是单一指数 track=iEdge list=取不到
-# 520870 易方达伊塔乌巴西IBOVESPA交易型开放式指数证券投资基金(QDII) exclude:跟踪标的不是单一指数 track=巴西BOVESPA list=取不到
 
 # 已入库、但名称对不上 §3.2 容器的序列（不进入 U-指数 / U-可交易）
 # 参考序列 CBA00601 中债-国债总指数 财富 6190 行 2002-01-04→2026-09-30。不是预注册 §3.2 的 10 年或 5 年容器，不进入池。

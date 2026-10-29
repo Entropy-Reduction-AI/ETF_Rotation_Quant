@@ -5,6 +5,7 @@
 """
 from __future__ import annotations
 
+import calendar
 from datetime import date, timedelta
 
 WINDOW_START = "2016-01-01"
@@ -182,6 +183,40 @@ def adj_discontinuity(raw: list[dict], adjusted: list[dict], events: list[dict])
             if bad:
                 found.append({"date": day, "check": "adj_discontinuous", "detail": f"{kind} {detail}"})
     return found
+
+
+def _iso(day: str) -> bool:
+    if not day or len(day) != 10:
+        return False
+    try:
+        date.fromisoformat(day)
+    except ValueError:
+        return False
+    return True
+
+
+def add_months(day: str, months: int) -> str:
+    """日历月。目标月没有这一天时用该月最后一天。"""
+    year, month, dom = (int(part) for part in day.split("-"))
+    month += months
+    year += (month - 1) // 12
+    month = (month - 1) % 12 + 1
+    dom = min(dom, calendar.monthrange(year, month)[1])
+    return f"{year:04d}-{month:02d}-{dom:02d}"
+
+
+def nav_late_vs_list(list_date: str, first_nav: str) -> dict | None:
+    """单位净值起点严格晚于上市日一个日历月才记。上市日不是日期的不记。"""
+    if not _iso(list_date) or not _iso(first_nav):
+        return None
+    limit = add_months(list_date, 1)
+    if first_nav > limit:
+        return {
+            "check": "nav_starts_after_list_date",
+            "date": first_nav,
+            "detail": f"list_date={list_date} first_nav={first_nav} limit={limit}",
+        }
+    return None
 
 
 def list_date_findings(code: str, list_date: str, first_bar: str) -> list[dict]:

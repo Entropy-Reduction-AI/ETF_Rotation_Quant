@@ -75,3 +75,39 @@ class Pagination(unittest.TestCase):
             self.assertIsNone(blank[1])
         finally:
             con.close()
+
+    def test_store_missing_keeps_existing_rows(self):
+        con = open_db(self.db)
+        try:
+            fund_nav.store_code(con, 1, [{
+                "code": "160717", "date": "2021-01-04", "unit_nav": 0.8097, "accum_nav": 0.8097,
+                "subscribe_status": "开放申购", "redeem_status": "开放赎回", "source": fund_nav.SOURCE,
+            }], "2026-10-24T00:00:00+00:00")
+            incoming = [
+                {"code": "160717", "date": "2021-01-04", "unit_nav": 9.9, "accum_nav": 9.9},
+                {"code": "160717", "date": "2010-09-30", "unit_nav": 1.0, "accum_nav": 1.0},
+            ]
+            blocked = fund_nav.store_missing(con, 2, incoming, "2026-10-28T00:00:00+00:00")
+            self.assertEqual(blocked["inserted"], 0)
+            self.assertEqual(blocked["conflicts"], ["2021-01-04"])
+            self.assertEqual(tuple(con.execute(
+                "SELECT unit_nav, source FROM fund_nav WHERE date='2021-01-04'").fetchone()),
+                (0.8097, fund_nav.SOURCE))
+            matched = [
+                {"code": "160717", "date": "2021-01-04", "unit_nav": 0.8097, "accum_nav": 0.8097},
+                {"code": "160717", "date": "2010-09-30", "unit_nav": 1.0, "accum_nav": 1.0},
+                {"code": "160717", "date": "2026-10-01", "unit_nav": 0.5, "accum_nav": 0.5},
+            ]
+            wrote = fund_nav.store_missing(con, 3, matched, "2026-10-28T00:00:00+00:00")
+            self.assertEqual(wrote["inserted"], 1)
+            self.assertEqual(wrote["first"], "2010-09-30")
+            self.assertIsNone(con.execute("SELECT 1 FROM fund_nav WHERE date='2026-10-01'").fetchone())
+            kept = tuple(con.execute(
+                "SELECT unit_nav, source FROM fund_nav WHERE date='2021-01-04'").fetchone())
+            self.assertEqual(kept, (0.8097, fund_nav.SOURCE))
+            added = tuple(con.execute(
+                "SELECT unit_nav, source FROM fund_nav WHERE date='2010-09-30'").fetchone())
+            self.assertEqual(added[0], 1.0)
+            self.assertEqual(added[1], "eastmoney_pingzhongdata")
+        finally:
+            con.close()
