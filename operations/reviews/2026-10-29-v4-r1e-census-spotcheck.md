@@ -114,4 +114,4 @@
 ## 链接
 
 - Dev PR：https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/105
-- Review PR：https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/106 · head `f7ee41d`
+- Review PR：https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/106 · head `d69ed72`
