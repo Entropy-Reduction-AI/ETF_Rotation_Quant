@@ -98,4 +98,4 @@ Reviewer 用 `incoming/.../sse/520900-raw.json.gz` **解压 JSON SHA256** `6ea74
 ## 链接
 
 - Dev PR：https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/108
-- Review PR：（本分支推送后填写）
+- Review PR：https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/109 · head `5257c8b`
