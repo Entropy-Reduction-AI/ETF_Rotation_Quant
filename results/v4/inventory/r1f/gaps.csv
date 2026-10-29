@@ -1,0 +1,7 @@
+code,name,reason,source
+159501,kind=backward 仍是原序列,还原已写入 backward_rebuild（801 行，方法 no_corporate_action_factor_1）。原 kind=backward 来源 eastmoney_fhsp，801 行未改，收盘与还原逐行相同（容差 1e-6）。研究读取仍用 kind=backward。,https://fundf10.eastmoney.com/fhsp_159501.html
+159687,kind=backward 仍是原序列,还原已写入 backward_rebuild（906 行，方法 no_corporate_action_factor_1）。原 kind=backward 来源 eastmoney_fhsp，906 行未改，收盘与还原逐行相同（容差 1e-6）。研究读取仍用 kind=backward。,https://fundf10.eastmoney.com/fhsp_159687.html
+159688,kind=backward 仍是原序列,还原已写入 backward_rebuild（882 行，方法 no_corporate_action_factor_1）。原 kind=backward 来源 eastmoney_fhsp，882 行未改，收盘与还原逐行相同（容差 1e-6）。研究读取仍用 kind=backward。,https://fundf10.eastmoney.com/fhsp_159688.html
+159822,kind=backward 仍是原序列,还原已写入 backward_rebuild（1443 行，方法 no_corporate_action_factor_1）。原 kind=backward 来源 eastmoney_fhsp，1443 行未改，收盘与还原逐行相同（容差 1e-6）。研究读取仍用 kind=backward。,https://fundf10.eastmoney.com/fhsp_159822.html
+160125,kind=backward 仍是原序列,还原已写入 backward_rebuild（3360 行，方法 ex_date_factor_prev_close_over_prev_minus_dps）。原 kind=backward 来源 tencent_etf_hfq、tencent_etf_hfq_carry，3360 行未改，收盘与还原不同，重叠日最大绝对差 0.033655。研究读取仍用 kind=backward。,https://fundf10.eastmoney.com/fhsp_160125.html
+160644,kind=backward 仍是原序列,还原已写入 backward_rebuild（1918 行，方法 ex_date_factor_prev_close_over_prev_minus_dps）。原 kind=backward 来源 tencent_etf_hfq，1918 行未改，收盘与还原不同，重叠日最大绝对差 0.004080。研究读取仍用 kind=backward。,https://fundf10.eastmoney.com/fhsp_160644.html
