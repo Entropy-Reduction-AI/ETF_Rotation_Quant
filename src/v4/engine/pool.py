@@ -20,6 +20,7 @@ from src.v3.engine.score import lookback_panel
 from src.v3.engine.sessions import decision_dates
 from src.v3.engine.spec import Spec
 from src.v4.data.catalog import ETFS, HSI_SUB
+from src.v4.data.hfq import canonical_closes
 
 US_SECTORS = tuple((item["container_id"], item["code"]) for item in ETFS)
 HK_SECTORS = tuple((item["container_id"], item["code"]) for item in HSI_SUB)
@@ -45,10 +46,11 @@ def load_mid(con: sqlite3.Connection, code: str, end: str, *, filled: bool) -> p
 
 def _closes_frame(con: sqlite3.Connection, code: str, end: str, *, kind: str) -> pd.DataFrame:
     if kind == "backward":
-        frame = pd.read_sql_query(
-            "SELECT date, close FROM v4_series WHERE code = ? AND kind = 'backward' AND close > 0 "
-            "AND date <= ? ORDER BY date",
-            con, params=(code, end))
+        closes = canonical_closes(con, code, end)
+        if closes.empty:
+            frame = pd.DataFrame(columns=["date", "close"])
+        else:
+            frame = pd.DataFrame({"date": closes.index, "close": closes.to_numpy(dtype=float)})
     else:
         frame = pd.read_sql_query(
             "SELECT date, close FROM bars WHERE code = ? AND adj = 'raw' AND close > 0 "

@@ -34,6 +34,7 @@ import pandas as pd
 from src.v3.engine.limits import board_of
 from src.v3.engine.prices import lag_asof, returns_from_level
 from src.v3.engine.universe import is_qdii
+from src.v4.data.hfq import canonical_closes
 from src.v4.data.r1b import EXACT_INDEX
 
 # 14 个 A 股容器之外，执行层跟踪标的就是容器自己的指数。
@@ -93,10 +94,11 @@ def _positive_dates(con: sqlite3.Connection, sql: str, code: str, end: str) -> p
 
 
 def hfq_dates(con: sqlite3.Connection, code: str, end: str) -> pd.DatetimeIndex:
-    return _positive_dates(
-        con,
-        "SELECT date FROM v4_series WHERE code = ? AND kind = 'backward' AND close > 0 AND date <= ? ORDER BY date",
-        code, end)
+    """后复权已有收盘的日期。场内基金走 D22 的统一入口，不直接挑来源。"""
+    closes = canonical_closes(con, code, end)
+    if closes.empty:
+        return pd.DatetimeIndex([])
+    return pd.DatetimeIndex(closes.index)
 
 
 def raw_dates(con: sqlite3.Connection, code: str, end: str) -> pd.DatetimeIndex:
@@ -535,7 +537,7 @@ def _positive_series(frame: pd.DataFrame) -> dict[str, pd.Series]:
 
 
 def prints_for(con: sqlite3.Connection, grouped: dict[str, list[_Candidate]], end: str) -> dict[str, pd.Series]:
-    """场内用原始收盘，场外用复权净值，美股 SPDR 用后复权。"""
+    """场内用原始收盘，场外用复权净值，美股 SPDR 的后复权走统一入口。"""
     raw_codes: list[str] = []
     nav_codes: list[str] = []
     back_codes: list[str] = []
@@ -564,10 +566,10 @@ def prints_for(con: sqlite3.Connection, grouped: dict[str, list[_Candidate]], en
         "SELECT code, date, close FROM v4_series WHERE kind = 'otc_nav' AND close > 0 AND date <= ? "
         "AND code IN ({marks})",
         nav_codes)
-    pull(
-        "SELECT code, date, close FROM v4_series WHERE kind = 'backward' AND close > 0 AND date <= ? "
-        "AND code IN ({marks})",
-        back_codes)
+    for code in dict.fromkeys(back_codes):
+        closes = canonical_closes(con, code, end)
+        if len(closes):
+            found[code] = closes
     return found
 
 
@@ -635,12 +637,12 @@ def _load_kind(con: sqlite3.Connection, code: str, kind: str, end: str) -> pd.Se
 
 def research_return(con: sqlite3.Connection, item: _Candidate, calendar: pd.DatetimeIndex,
                     end: str, nav_lag: int) -> pd.Series:
-    """一只关联基金自己的研究日收益。QDII 用 T−lag 净值，场内用后复权，场外用复权净值。"""
+    """一只关联基金自己的研究日收益。QDII 用 T−lag 净值，场内后复权走统一入口，场外用复权净值。"""
     if item.qdii:
         return lagged_nav_returns(_load_nav(con, item.code, end), calendar, nav_lag)
     if item.vehicle == "otc" or (item.vehicle == "near" and item.board == "none"):
         return _event_returns(_load_kind(con, item.code, "otc_nav", end), calendar)
-    return _event_returns(_load_kind(con, item.code, "backward", end), calendar)
+    return _event_returns(canonical_closes(con, item.code, end), calendar)
 
 
 def spliced_research(con: sqlite3.Connection, rows: list[_Candidate], days, end: str, *,
