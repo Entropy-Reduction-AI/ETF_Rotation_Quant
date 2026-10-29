@@ -910,7 +910,7 @@ def summarize(rows: list[dict], diff_rows: list[dict], fill_rows: list[dict] | N
         "missing": count("add"),
         "previously_excluded_now_include": count("include_previously_excluded"),
         "moved": count("move"),
-        "groups": len({row["group_key"] for row in rows}),
+        "groups": len({row["group_key"] for row in diff_rows}),
         "filled_codes": filled,
         "unfillable": unfillable,
         "inserted_rows": sum(int(row.get("inserted") or 0) for row in fill_rows),

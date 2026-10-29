@@ -10,67 +10,62 @@
   "filled_codes": {
     "hfq": 189,
     "nav": 91,
-    "raw": 77
+    "raw": 78
   },
   "unfillable": [
     {
+      "code": "526090",
+      "kind": "hfq",
+      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.526090&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+    },
+    {
+      "code": "526090",
+      "kind": "raw",
+      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.526090&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+    },
+    {
       "code": "513820",
       "kind": "hfq",
-      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.513820&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+      "reason": "东财 K 线 RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.513820&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2 上交所 dayk 是不复权 OHLC。2026-09-30 收盘 1.22 与库内 eastmoney_etf 一致。成交量单位是股，成交额单位是元。没有后复权列。 天天基金分红送配页 https://fundf10.eastmoney.com/fhsp_513820.html 分红 28 次、拆分 0 次，没有场内后复权 K 线。 基金公司页面 https://www.99fund.com/main/products/pofund/513820/index.shtml 取不到：FetchError HTTPError: HTTP Error 404: Not Found  ← https://www.99fund.com/main/products/pofund/513820/index.shtml 未写入 adj=hfq。"
     },
     {
       "code": "513910",
       "kind": "hfq",
-      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.513910&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
-    },
-    {
-      "code": "520900",
-      "kind": "raw",
-      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.520900&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
-    },
-    {
-      "code": "526090",
-      "kind": "hfq",
-      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.526090&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
-    },
-    {
-      "code": "526090",
-      "kind": "raw",
-      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.526090&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+      "reason": "东财 K 线 RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.513910&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2 上交所 dayk 是不复权 OHLC。2026-09-30 收盘 1.577 与库内 eastmoney_etf 一致。成交量单位是股，成交额单位是元。没有后复权列。 天天基金分红送配页 https://fundf10.eastmoney.com/fhsp_513910.html 分红 0 次、拆分 0 次，没有场内后复权 K 线。 基金公司页面 https://www.chinaamc.com/fund/513910/index.shtml 已保存，正文没有场内后复权 K 线。 未写入 adj=hfq。"
     },
     {
       "code": "159501",
       "kind": "hfq",
-      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159501&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+      "reason": "东财 K 线 RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159501&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2 深交所基金日行情 2026-09-30 今收 2.205 与库内 tencent_etf 一致。字段是开高低收，没有后复权列。 天天基金分红送配页 https://fundf10.eastmoney.com/fhsp_159501.html 分红 0 次、拆分 0 次，没有场内后复权 K 线。 基金公司页面 https://www.jsfund.cn/main/fund/funddetail.shtml?fundcode=159501 已保存，正文没有场内后复权 K 线。 未写入 adj=hfq。"
     },
     {
       "code": "159687",
       "kind": "hfq",
-      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159687&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+      "reason": "东财 K 线 RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159687&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2 深交所基金日行情 2026-09-30 今收 1.871 与库内 tencent_etf 一致。字段是开高低收，没有后复权列。 天天基金分红送配页 https://fundf10.eastmoney.com/fhsp_159687.html 分红 0 次、拆分 0 次，没有场内后复权 K 线。 基金公司页面 https://www.nffund.com/new/fund/index.html#/detail?fundcode=159687 已保存，正文没有场内后复权 K 线。 未写入 adj=hfq。"
     },
     {
       "code": "159688",
       "kind": "hfq",
-      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159688&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+      "reason": "东财 K 线 RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159688&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2 深交所基金日行情 2026-09-30 今收 0.694 与库内 tencent_etf 一致。字段是开高低收，没有后复权列。 天天基金分红送配页 https://fundf10.eastmoney.com/fhsp_159688.html 分红 0 次、拆分 0 次，没有场内后复权 K 线。 基金公司页面 https://www.huaan.com.cn/funds/159688/index.shtml 已保存，正文没有场内后复权 K 线。 未写入 adj=hfq。"
     },
     {
       "code": "159822",
       "kind": "hfq",
-      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159822&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+      "reason": "东财 K 线 RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159822&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2 深交所基金日行情 2026-09-30 今收 0.564 与库内 tencent_etf 一致。字段是开高低收，没有后复权列。 天天基金分红送配页 https://fundf10.eastmoney.com/fhsp_159822.html 分红 0 次、拆分 0 次，没有场内后复权 K 线。 基金公司页面 https://www.yhfund.com.cn/main/fund/funddetail.shtml?fundcode=159822 取不到：FetchError HTTPError: HTTP Error 521:   ← https://www.yhfund.com.cn/main/fund/funddetail.shtml?fundcode=159822 未写入 adj=hfq。"
     },
     {
       "code": "160125",
       "kind": "hfq",
-      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.160125&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+      "reason": "东财 K 线 RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.160125&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2 深交所基金日行情 2026-09-30 今收 1.514 与库内 tencent_etf 一致。字段是开高低收，没有后复权列。 天天基金分红送配页 https://fundf10.eastmoney.com/fhsp_160125.html 分红 4 次、拆分 0 次，没有场内后复权 K 线。 基金公司页面 https://www.nffund.com/new/fund/index.html#/detail?fundcode=160125 已保存，正文没有场内后复权 K 线。 未写入 adj=hfq。"
     },
     {
       "code": "160644",
       "kind": "hfq",
-      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.160644&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+      "reason": "东财 K 线 RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.160644&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2 深交所基金日行情 2026-09-30 今收 1.978 与库内 tencent_etf 一致。字段是开高低收，没有后复权列。 天天基金分红送配页 https://fundf10.eastmoney.com/fhsp_160644.html 分红 1 次、拆分 0 次，没有场内后复权 K 线。 基金公司页面 https://www.phfund.com.cn/fund/160644/index.shtml 已保存，正文没有场内后复权 K 线。 未写入 adj=hfq。"
     }
   ],
-  "inserted_rows": 315510,
+  "inserted_rows": 316052,
   "integrity": "ok",
-  "sha256": "f5ac99449cb966bc32edda103d5f2769bd2313db2f5fdbbc49757ba155a91451",
-  "bytes": 290242560
+  "sha256": "5bbb9eba6095e6066ce7d01bc8e3bba4ec63a2fa3109449b6de759eb0367de27",
+  "bytes": 290332672
 }
