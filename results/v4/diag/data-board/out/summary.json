@@ -1,6 +1,6 @@
 {
  "generated": "2026-10-29",
- "db_sha256": "1adb6d43384be3336a3f58e993dd31ed3d75e705935aa2ff16c575a30fc00e27",
+ "db_sha256": "79ae5a47e1a6eb0977a18f13efb21211d24b48e393ad567f615130d89c8f00cd",
  "cutoff": "2026-09-30",
  "containers_total": 117,
  "containers_v3": 102,
@@ -272,7 +272,7 @@
   "未分类": 11
  },
  "bars_rows": 1039735,
- "series_rows": 565739,
+ "series_rows": 590427,
  "nav_rows": 236540,
  "open_issues": [
   {

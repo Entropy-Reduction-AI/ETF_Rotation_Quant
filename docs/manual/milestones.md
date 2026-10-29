@@ -7,7 +7,7 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Manager
-- Last updated: 2026-10-29
+- Last updated: 2026-10-29（草案追加 `milestone/v4-code-freeze`，标签未创建）
 - Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`
 
 ## Purpose
@@ -58,6 +58,20 @@
 | `milestone/v4-prereg-freeze` | `830320d03712df3a4098f352be8932e0553b5eeb` | `6bcba53e36e74ec81dd21fb7ee7b8cea695038fb` | D23-1 Owner 批准 v4 预注册第 2.3 版；合入 PR #118 后的 main | 保留 | v4 规则冻结。名字按 `milestone/<版本>-prereg-freeze` |
 
 核对见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`。
+
+## 草案 · `milestone/v4-code-freeze`（尚未创建）
+
+2026-10-29，v4-R5b。Reviewer 对 D24 U-可交易修复的结论是 `approve_with_follow_up`（PR #127，提交 `4a541df328361e967dcc87acb2b01892f4fcaae9`；修复在 PR #126，提交 `82f97453`）。
+
+**本标签还没有创建。** 本条目是草案。Manager 在收尾 PR（简报、数据看板、本索引）**rebase-merge 进 `main` 之后**，把附注标签打在合入后的 `main` 尖端。那个提交现在还不存在，所以指向提交留空，合入后由 Manager 填上标签对象 SHA 和 `^{}`。不要在 PR 分支上先打标签再移动。
+
+打标签时核对：设计期上界 2015-12-31；仓库里没有 `results/v4/LOCK`；没有 2016-01-01 及以后的组合收益汇总；`milestone/v4-prereg-freeze` 仍指向 `6bcba53e36e74ec81dd21fb7ee7b8cea695038fb`；三个保留标签的对象 SHA 与清理后索引一致。
+
+| 标签 | 标签对象 SHA | 指向提交 SHA | 说明 | 处置 | 理由 |
+| --- | --- | --- | --- | --- | --- |
+| `milestone/v4-code-freeze` | （合入后填写；现在为空） | （本收尾 PR rebase-merge 之后的 `main` 尖端；现在为空） | v4 ⑦ 代码冻结。D24 已签收。U-指数 20 条 `net_sha256` 相对 v4-R5 不变；过关表 SHA `32058828…`；库指纹 `79ae5a47…` | 草案，未创建 | 名字按 `milestone/<版本>-code-freeze`。Manager 合入后再打，避免移动标签 |
+
+本运行没有创建、移动或删除任何标签。
 
 ## Related Files
 

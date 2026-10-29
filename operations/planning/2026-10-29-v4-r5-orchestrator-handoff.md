@@ -11,7 +11,9 @@
 
 ## Goal / Summary
 
-Manager 已把设计期数字写入 `operations/reports/v4-r5-design-period-brief.md`。下一步是 Orchestrator 写面向 Owner 的五段体检。下面只列仍然开着的非阻塞项。本交接不改规则，不重跑，不写 LOCK，不移动标签。
+2026-10-29 续：D24 之后的交接是 `operations/planning/2026-10-29-v4-r5b-orchestrator-handoff.md`。五段汇报的分工以那份为准（Orchestrator 体检，Manager 在体检之后写五段）。下面仍是当时开着的非阻塞项，正文不改。
+
+Manager 已把设计期数字写入 `operations/reports/v4-r5-design-period-brief.md`。本文件当时的下一步是 Orchestrator 写面向 Owner 的五段体检。下面只列当时仍然开着的非阻塞项。本交接不改规则，不重跑，不写 LOCK，不移动标签。
 
 ## 1. D22-2 后复权冲突日（开着，非阻塞）
 
