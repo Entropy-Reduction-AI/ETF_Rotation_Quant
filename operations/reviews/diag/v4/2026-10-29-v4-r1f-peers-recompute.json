@@ -1,0 +1,118 @@
+{
+  "dev_tip_note": "run against checkout HEAD",
+  "month_end_rule": "sse-last-session-of-calendar-month",
+  "sf6_status": "pending-manager",
+  "scenarios": {
+    "a1_twelve_month_bond": {
+      "decision_target_cgb": 1.0,
+      "close_held_at_execute": {
+        "2006-02-10": {
+          "spx": 0.0,
+          "csi300": 0.0,
+          "cgb-10y": 1.0,
+          "cash": 0.0
+        }
+      },
+      "cost_decision": 0.0,
+      "cost_execute": 0.001,
+      "leg_cost_expected_execute": 0.001,
+      "cost_matches_leg_cost": true
+    },
+    "a1_crash_no_exit": {
+      "close_held_spx_crash": 1.0,
+      "signal_spx_crash": 1.0,
+      "cost_crash": 0.0,
+      "net_crash": -0.46153846153846156,
+      "expected_net": -0.46153846153846156
+    },
+    "a1_limit_up_defer": {
+      "close_held_blocked": {
+        "2006-02-10": {
+          "spx": 0.0,
+          "csi300": 0.0,
+          "cgb-10y": 0.0,
+          "cash": 1.0
+        }
+      },
+      "close_held_retry": {
+        "2006-02-15": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      "cost_blocked": 0.0,
+      "cost_retry": 0.001
+    },
+    "a2_ten_month_sleeves": {
+      "decision_spx": 0.2,
+      "close_held_fill": {
+        "2005-11-10": {
+          "spx": 0.2,
+          "hsi": 0.2,
+          "csi300": 0.0,
+          "cgb-10y": 0.0,
+          "gold": 0.2,
+          "cash": 0.4
+        }
+      },
+      "signal_drop_spx": 0.0,
+      "close_held_drop_spx": 0.05882352941176471,
+      "close_held_drop_fill_spx": 0.0,
+      "cost_fill": 0.0008000000000000001,
+      "leg_cost_expected_fill": 0.0008,
+      "cost_matches": true
+    }
+  },
+  "sf6_alignment": {
+    "open": [
+      "2006-01-31",
+      "2006-02-01",
+      "2006-04-28"
+    ],
+    "closed": [
+      "2006-01-31",
+      "2006-02-01",
+      "2006-04-28",
+      "2006-05-08"
+    ],
+    "decision_dates_month": [
+      "2006-01-31",
+      "2006-02-01",
+      "2006-04-28",
+      "2006-05-08"
+    ],
+    "closed_equals_decision_dates": true
+  },
+  "four_runs": [
+    {
+      "peer_id": "A1",
+      "pool": "index",
+      "exit_module": false,
+      "premium_module": false,
+      "t1_turn": false
+    },
+    {
+      "peer_id": "A1",
+      "pool": "tradable",
+      "exit_module": false,
+      "premium_module": false,
+      "t1_turn": false
+    },
+    {
+      "peer_id": "A2",
+      "pool": "index",
+      "exit_module": false,
+      "premium_module": false,
+      "t1_turn": false
+    },
+    {
+      "peer_id": "A2",
+      "pool": "tradable",
+      "exit_module": false,
+      "premium_module": false,
+      "t1_turn": false
+    }
+  ]
+}
