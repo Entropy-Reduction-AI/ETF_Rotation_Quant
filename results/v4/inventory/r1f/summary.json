@@ -1,0 +1,182 @@
+{
+  "job": "v4-r1f-d21-hfq-rebuild",
+  "end": "2026-09-30",
+  "source": "还原",
+  "before_sha256": "5bbb9eba6095e6066ce7d01bc8e3bba4ec63a2fa3109449b6de759eb0367de27",
+  "before_bytes": 290332672,
+  "sha256": "1adb6d43384be3336a3f58e993dd31ed3d75e705935aa2ff16c575a30fc00e27",
+  "bytes": 292618240,
+  "bars_rows": 1039735,
+  "v4_series_before": 555221,
+  "v4_series_after": 565739,
+  "inserted_rows": 10518,
+  "integrity": "ok",
+  "fill_sha256": "6348093d486c759444f29abd7b8faa54c20cb85f845a36c9bf90938d253aae93",
+  "gaps_sha256": "fd6a097a677821898b20c2be258007bc38dac3c148082d757ea20e238860bdb3",
+  "dividends_sha256": "089d883d68f3a03daf6d7c0f5b52b46ee5b0adbb1fa9d9e0126c4f6892775eaa",
+  "crosscheck_sha256": "2ff2448ac9fc138fb74c8242e983a9ad4ea5b5c80f40441758c60070042e1426",
+  "pages": [
+    {
+      "code": "513910",
+      "sha256": "2a11cd50fe6735760edea766ad380f00dacafe075fa3360e811c0e66c132d64a",
+      "origin": "live",
+      "url": "https://fundf10.eastmoney.com/fhsp_513910.html"
+    },
+    {
+      "code": "159501",
+      "sha256": "34603edcea47189c2411021544033b8b24e274b91d64a654cc259f5f11b63c92",
+      "origin": "live",
+      "url": "https://fundf10.eastmoney.com/fhsp_159501.html"
+    },
+    {
+      "code": "159687",
+      "sha256": "0edcaccfdfa826d1ee52beb8202dff50f18698513e40ba27e8e5381cd1892c73",
+      "origin": "live",
+      "url": "https://fundf10.eastmoney.com/fhsp_159687.html"
+    },
+    {
+      "code": "159688",
+      "sha256": "d1bb9546b4a694567575784d869a6db22c6a2189e50753595c3c3fb238722b70",
+      "origin": "live",
+      "url": "https://fundf10.eastmoney.com/fhsp_159688.html"
+    },
+    {
+      "code": "159822",
+      "sha256": "5d327b1d41cddc33ed065ca2f8b38eda451358e3998aeb214c6d8a902ef56bf8",
+      "origin": "live",
+      "url": "https://fundf10.eastmoney.com/fhsp_159822.html"
+    },
+    {
+      "code": "513820",
+      "sha256": "6e69945beb1415960729b34a90afab1082ef4c3ce05b58519dbe41520903030a",
+      "origin": "live",
+      "url": "https://fundf10.eastmoney.com/fhsp_513820.html"
+    },
+    {
+      "code": "160125",
+      "sha256": "8aadf6cdfe149b0e92d170071d7e7eb044470144dab5dbdf5e14857317607cf8",
+      "origin": "live",
+      "url": "https://fundf10.eastmoney.com/fhsp_160125.html"
+    },
+    {
+      "code": "160644",
+      "sha256": "54dfff095767b1d9fe3de86e915ec157d97b7e2ddbffce963d9361e33069b5b8",
+      "origin": "live",
+      "url": "https://fundf10.eastmoney.com/fhsp_160644.html"
+    }
+  ],
+  "reports": [
+    {
+      "code": "513910",
+      "kind": "backward",
+      "source": "还原",
+      "source_url": "https://fundf10.eastmoney.com/fhsp_513910.html",
+      "sha256": "ca3789f04e0606293c62e443247d9a7409eba2d4631f4596db8ef8087fb56f46",
+      "method": "no_corporate_action_factor_1",
+      "first": "2024-03-04",
+      "last": "2026-09-30",
+      "status": "in_db",
+      "inserted": 628,
+      "kept": 0,
+      "reason": ""
+    },
+    {
+      "code": "159501",
+      "kind": "backward_rebuild",
+      "source": "还原",
+      "source_url": "https://fundf10.eastmoney.com/fhsp_159501.html",
+      "sha256": "b620ae0fefbad296f796716368d99e3f66d2587c2c908d4f9bdfff9672422b70",
+      "method": "no_corporate_action_factor_1",
+      "first": "2023-06-14",
+      "last": "2026-09-30",
+      "status": "in_db",
+      "inserted": 801,
+      "kept": 0,
+      "reason": "kind=backward 已有行，不覆盖。还原序列写入 backward_rebuild。"
+    },
+    {
+      "code": "159687",
+      "kind": "backward_rebuild",
+      "source": "还原",
+      "source_url": "https://fundf10.eastmoney.com/fhsp_159687.html",
+      "sha256": "79c9b63ff2e673e1b91349b71dc92ea99157cef8c973a6efde2da17bd1cd003e",
+      "method": "no_corporate_action_factor_1",
+      "first": "2022-12-30",
+      "last": "2026-09-30",
+      "status": "in_db",
+      "inserted": 906,
+      "kept": 0,
+      "reason": "kind=backward 已有行，不覆盖。还原序列写入 backward_rebuild。"
+    },
+    {
+      "code": "159688",
+      "kind": "backward_rebuild",
+      "source": "还原",
+      "source_url": "https://fundf10.eastmoney.com/fhsp_159688.html",
+      "sha256": "0cbc5f0b6048549d5941bf3f390d6fa6e0a8edce2d21a4118125eafe09664992",
+      "method": "no_corporate_action_factor_1",
+      "first": "2023-02-15",
+      "last": "2026-09-30",
+      "status": "in_db",
+      "inserted": 882,
+      "kept": 0,
+      "reason": "kind=backward 已有行，不覆盖。还原序列写入 backward_rebuild。"
+    },
+    {
+      "code": "159822",
+      "kind": "backward_rebuild",
+      "source": "还原",
+      "source_url": "https://fundf10.eastmoney.com/fhsp_159822.html",
+      "sha256": "c696d449e5ded3be3be1f05e013b931dadd0b190f28d7a0f962a5ca2d21474c6",
+      "method": "no_corporate_action_factor_1",
+      "first": "2020-10-23",
+      "last": "2026-09-30",
+      "status": "in_db",
+      "inserted": 1443,
+      "kept": 0,
+      "reason": "kind=backward 已有行，不覆盖。还原序列写入 backward_rebuild。"
+    },
+    {
+      "code": "513820",
+      "kind": "backward",
+      "source": "还原",
+      "source_url": "https://fundf10.eastmoney.com/fhsp_513820.html",
+      "sha256": "dcbfa372f39464fea14e534b3f40f44496cfb28992af94530a7ebc85dc0f2c8f",
+      "method": "ex_date_factor_prev_close_over_prev_minus_dps",
+      "first": "2024-05-16",
+      "last": "2026-09-30",
+      "status": "in_db",
+      "inserted": 580,
+      "kept": 0,
+      "reason": ""
+    },
+    {
+      "code": "160125",
+      "kind": "backward_rebuild",
+      "source": "还原",
+      "source_url": "https://fundf10.eastmoney.com/fhsp_160125.html",
+      "sha256": "2b674dacf02b49e16d622da0063378259538223704dcd7562bf113e423298765",
+      "method": "ex_date_factor_prev_close_over_prev_minus_dps",
+      "first": "2011-11-01",
+      "last": "2026-09-30",
+      "status": "in_db",
+      "inserted": 3360,
+      "kept": 0,
+      "reason": "kind=backward 已有行，不覆盖。还原序列写入 backward_rebuild。"
+    },
+    {
+      "code": "160644",
+      "kind": "backward_rebuild",
+      "source": "还原",
+      "source_url": "https://fundf10.eastmoney.com/fhsp_160644.html",
+      "sha256": "e79ad184e368b61fd564aac80a5e87541b68936b77e3fd724dbd97b40ccf7d53",
+      "method": "ex_date_factor_prev_close_over_prev_minus_dps",
+      "first": "2017-12-29",
+      "last": "2026-09-30",
+      "status": "in_db",
+      "inserted": 1918,
+      "kept": 0,
+      "reason": "kind=backward 已有行，不覆盖。还原序列写入 backward_rebuild。"
+    }
+  ]
+}

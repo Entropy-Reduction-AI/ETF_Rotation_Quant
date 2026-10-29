@@ -1,4 +1,4 @@
-"""python -m src.v4.data ingest|r1b|r1c|hash CODE
+"""python -m src.v4.data ingest|r1b|r1c|r1e|r1f|hash CODE
 
 不提供回测或组合收益命令。
 """
@@ -17,9 +17,11 @@ def main(argv: list[str] | None = None) -> int:
     if any(token in {"backtest", "returns", "pnl", "timing"} for token in argv):
         print("v4 只取数和登记，不计算组合收益。")
         return 2
-    if not argv or argv[0] not in {"ingest", "r1b", "r1c", "r1e", "hash"}:
-        print("用法: python -m src.v4.data ingest|r1b|r1c|r1e|hash CODE")
+    if not argv or argv[0] not in {"ingest", "r1b", "r1c", "r1e", "r1f", "hash"}:
+        print("用法: python -m src.v4.data ingest|r1b|r1c|r1e|r1f|hash CODE")
         return 2
+    if argv[0] == "r1f":
+        return _r1f()
     if argv[0] == "r1e":
         return _r1e(argv[1] if len(argv) > 1 else "all")
     if argv[0] == "r1b":
@@ -62,6 +64,12 @@ def _r1c() -> int:
     finally:
         con.close()
     print(COVERAGE)
+    return 0
+
+
+def _r1f() -> int:
+    from .r1f import run as run_r1f
+    run_r1f()
     return 0
 
 
