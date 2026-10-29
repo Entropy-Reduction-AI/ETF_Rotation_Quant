@@ -1,0 +1,76 @@
+{
+  "exchange_total": 198,
+  "listed": 198,
+  "delisted_or_absent": 0,
+  "previously_included": 104,
+  "missing": 79,
+  "previously_excluded_now_include": 15,
+  "moved": 2,
+  "groups": 87,
+  "filled_codes": {
+    "hfq": 189,
+    "nav": 91,
+    "raw": 77
+  },
+  "unfillable": [
+    {
+      "code": "513820",
+      "kind": "hfq",
+      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.513820&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+    },
+    {
+      "code": "513910",
+      "kind": "hfq",
+      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.513910&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+    },
+    {
+      "code": "520900",
+      "kind": "raw",
+      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.520900&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+    },
+    {
+      "code": "526090",
+      "kind": "hfq",
+      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.526090&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+    },
+    {
+      "code": "526090",
+      "kind": "raw",
+      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.526090&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+    },
+    {
+      "code": "159501",
+      "kind": "hfq",
+      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159501&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+    },
+    {
+      "code": "159687",
+      "kind": "hfq",
+      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159687&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+    },
+    {
+      "code": "159688",
+      "kind": "hfq",
+      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159688&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+    },
+    {
+      "code": "159822",
+      "kind": "hfq",
+      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.159822&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+    },
+    {
+      "code": "160125",
+      "kind": "hfq",
+      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.160125&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+    },
+    {
+      "code": "160644",
+      "kind": "hfq",
+      "reason": "RemoteDisconnected: Remote end closed connection without response  ← https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.160644&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2C"
+    }
+  ],
+  "inserted_rows": 315510,
+  "integrity": "ok",
+  "sha256": "f5ac99449cb966bc32edda103d5f2769bd2313db2f5fdbbc49757ba155a91451",
+  "bytes": 290242560
+}

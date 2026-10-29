@@ -1,4 +1,5 @@
 # 机械生成。来源：docs/prereg/etf-multiasset-rotation-prereg-v3.md §3 与附录 1–2。
+# v4-R1e：场内 QDII、LOF 的纳入和分组由 python -m src.v4.data r1e 机械写入。
 # 不要手改。更新用 python -m src.v3.data emit。
 # 冻结预注册 B1：每条都有代码、发布日、口径、来源；缺失写「取不到」。
 # §3.2：一个容器一个底层指数。同一指数的 ETF 只写在该容器的 execution。
@@ -186,7 +187,6 @@ series_source = "csi"
 series_status = "in_db"
 source_url = "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00986"
 note = "代码和日期来自本次中证 index-basic-info 原件。 价格指数 000986，见 incoming/2026-10-24-v3-l1/raw/csi/000986.json。 行情 5302 行 2005-01-01→2026-09-30，来源 csi。"
-
 [[container]]
 id = "allshare-materials"
 asset_class = "A股行业"
@@ -240,7 +240,6 @@ series_source = "csi"
 series_status = "in_db"
 source_url = "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00988"
 note = "代码和日期来自本次中证 index-basic-info 原件。 价格指数 000988，见 incoming/2026-10-24-v3-l1/raw/csi/000988.json。 行情 5302 行 2005-01-01→2026-09-30，来源 csi。"
-
 [[container]]
 id = "allshare-discretionary"
 asset_class = "A股行业"
@@ -294,7 +293,6 @@ series_source = "csi"
 series_status = "in_db"
 source_url = "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00990"
 note = "代码和日期来自本次中证 index-basic-info 原件。 价格指数 000990，见 incoming/2026-10-24-v3-l1/raw/csi/000990.json。 行情 5302 行 2005-01-01→2026-09-30，来源 csi。"
-
 [[container]]
 id = "allshare-healthcare"
 asset_class = "A股行业"
@@ -316,7 +314,6 @@ series_source = "csi"
 series_status = "in_db"
 source_url = "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00991"
 note = "代码和日期来自本次中证 index-basic-info 原件。 价格指数 000991，见 incoming/2026-10-24-v3-l1/raw/csi/000991.json。 行情 5302 行 2005-01-01→2026-09-30，来源 csi。"
-
 [[container]]
 id = "allshare-financials-re"
 asset_class = "A股行业"
@@ -370,7 +367,6 @@ series_source = "csi"
 series_status = "in_db"
 source_url = "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00993"
 note = "代码和日期来自本次中证 index-basic-info 原件。 价格指数 000993，见 incoming/2026-10-24-v3-l1/raw/csi/000993.json。 行情 5302 行 2005-01-01→2026-09-30，来源 csi。"
-
 [[container]]
 id = "allshare-communication"
 asset_class = "A股行业"
@@ -392,7 +388,6 @@ series_source = "csi"
 series_status = "in_db"
 source_url = "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00994"
 note = "代码和日期来自本次中证 index-basic-info 原件。 价格指数 000994，见 incoming/2026-10-24-v3-l1/raw/csi/000994.json。 行情 5302 行 2005-01-01→2026-09-30，来源 csi。"
-
 [[container]]
 id = "allshare-utilities"
 asset_class = "A股行业"
@@ -414,7 +409,6 @@ series_source = "csi"
 series_status = "in_db"
 source_url = "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00995"
 note = "代码和日期来自本次中证 index-basic-info 原件。 价格指数 000995，见 incoming/2026-10-24-v3-l1/raw/csi/000995.json。 行情 5302 行 2005-01-01→2026-09-30，来源 csi。"
-
 [[container]]
 id = "csi-dividend"
 asset_class = "A股红利"
@@ -477,7 +471,7 @@ series_code = "HSI"
 series_source = "tencent_hk_index"
 series_status = "in_db"
 source_url = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
-note = "腾讯行情名称是恒生指数。恒生公司事实表 URL 返回 404，发布日和基日记取不到。hkHSITR 本次 day 为空，全收益取不到。 行情 6592 行 2000-01-03→2026-09-30。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。"
+note = "腾讯行情名称是恒生指数。恒生公司事实表 URL 返回 404，发布日和基日记取不到。hkHSITR 本次 day 为空，全收益取不到。 行情 6592 行 2000-01-03→2026-09-30。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。 D19 分组：HSI（learned_benchmark）。 D19 分组：HSI（learned_index_name）。"
 
 [[container.execution]]
 code = "159920"
@@ -512,13 +506,42 @@ note = "概况页跟踪标的与价格指数全称一致。"
 [[container.execution]]
 code = "513210"
 name = "易方达恒生交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2024-04-22"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513210.html.gz"
-note = "概况页跟踪标的与价格指数全称一致。"
+note = "概况页跟踪标的与价格指数全称一致。 D19 分组：HSI（learned_index_name）。"
 
+[[container.execution]]
+code = "160125"
+name = "南方香港优选股票型证券投资基金"
+list_date = "2011-11-01"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_160125.html"
+note = "D19-4 纳入。分组 HSI（learned_benchmark）。净值 3609 行。行情 3360 行，来源 tencent_etf。 D19 分组：HSI（learned_benchmark）。"
+
+[[container.execution]]
+code = "513600"
+name = "恒生指数ETF南方"
+list_date = "2015-01-26"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSI（learned_index_name）。净值 2831 行。行情 2839 行，来源 eastmoney_etf_hfq。 D19 分组：HSI（learned_index_name）。"
+
+[[container.execution]]
+code = "513660"
+name = "恒生ETF华夏"
+list_date = "2015-01-26"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSI（learned_index_name）。净值 2757 行。行情 2837 行，来源 eastmoney_etf_hfq。 D19 分组：HSI（learned_index_name）。"
 [[container]]
 id = "hstech"
 asset_class = "港股"
@@ -539,27 +562,27 @@ series_code = "HSTECH"
 series_source = "tencent_hk_index"
 series_status = "in_db"
 source_url = "https://www.hsi.com.hk/static/uploads/contents/en/dl_centre/methodologies/IM_hsteche.pdf"
-note = "发布日和基日读自仓库里已有的 index_launch.csv（来源 URL 见 source_url）。本次没有 pdftotext，没有重抽编制方案正文。行情来自腾讯 hkHSTECH。 1522 行 2020-07-27→2026-09-30。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。"
+note = "发布日和基日读自仓库里已有的 index_launch.csv（来源 URL 见 source_url）。本次没有 pdftotext，没有重抽编制方案正文。行情来自腾讯 hkHSTECH。 1522 行 2020-07-27→2026-09-30。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。 D19 分组：HSTECH（learned_index_name）。"
 
 [[container.execution]]
 code = "513130"
 name = "华泰柏瑞南方东英恒生科技指数交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2021-06-01"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513130.html.gz"
-note = "预注册举例。 bars 1296 行，来源 tencent_etf。 跟踪标的「恒生科技指数」与研究指数「Hang Seng TECH Index」不一致。"
+note = "预注册举例。 bars 1296 行，来源 tencent_etf。 跟踪标的「恒生科技指数」与研究指数「Hang Seng TECH Index」不一致。 D19 分组：HSTECH（learned_index_name）。"
 
 [[container.execution]]
 code = "513180"
 name = "华夏恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2021-05-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513180.html.gz"
-note = "预注册举例。 bars 1301 行，来源 tencent_etf。 跟踪标的「恒生科技指数」与研究指数「Hang Seng TECH Index」不一致。"
+note = "预注册举例。 bars 1301 行，来源 tencent_etf。 跟踪标的「恒生科技指数」与研究指数「Hang Seng TECH Index」不一致。 D19 分组：HSTECH（learned_index_name）。"
 
 [[container.execution]]
 code = "158042"
@@ -604,83 +627,82 @@ note = "概况页跟踪标的与价格指数全称一致。"
 [[container.execution]]
 code = "513010"
 name = "易方达恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2021-05-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513010.html.gz"
-note = "概况页跟踪标的与价格指数全称一致。"
+note = "概况页跟踪标的与价格指数全称一致。 D19 分组：HSTECH（learned_index_name）。"
 
 [[container.execution]]
 code = "513260"
 name = "汇添富恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2022-09-13"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513260.html.gz"
-note = "概况页跟踪标的与价格指数全称一致。"
+note = "概况页跟踪标的与价格指数全称一致。 D19 分组：HSTECH（learned_index_name）。"
 
 [[container.execution]]
 code = "513380"
 name = "广发恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2022-05-12"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513380.html.gz"
-note = "概况页跟踪标的与价格指数全称一致。"
+note = "概况页跟踪标的与价格指数全称一致。 D19 分组：HSTECH（learned_index_name）。"
 
 [[container.execution]]
 code = "513580"
 name = "华安恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2021-05-27"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513580.html.gz"
-note = "概况页跟踪标的与价格指数全称一致。"
+note = "概况页跟踪标的与价格指数全称一致。 D19 分组：HSTECH（learned_index_name）。"
 
 [[container.execution]]
 code = "513890"
 name = "摩根恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2022-01-21"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513890.html.gz"
-note = "概况页跟踪标的与价格指数全称一致。"
+note = "概况页跟踪标的与价格指数全称一致。 D19 分组：HSTECH（learned_index_name）。"
 
 [[container.execution]]
 code = "520570"
 name = "南方恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2025-11-17"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520570.html.gz"
-note = "概况页跟踪标的与价格指数全称一致。"
+note = "概况页跟踪标的与价格指数全称一致。 D19 分组：HSTECH（learned_index_name）。"
 
 [[container.execution]]
 code = "520590"
 name = "鹏华恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2025-12-01"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520590.html.gz"
-note = "概况页跟踪标的与价格指数全称一致。"
+note = "概况页跟踪标的与价格指数全称一致。 D19 分组：HSTECH（learned_index_name）。"
 
 [[container.execution]]
 code = "520920"
 name = "天弘恒生科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2025-09-30"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520920.html.gz"
-note = "概况页跟踪标的与价格指数全称一致。"
-
+note = "概况页跟踪标的与价格指数全称一致。 D19 分组：HSTECH（learned_index_name）。"
 [[container]]
 id = "ndx100"
 asset_class = "美股宽基"
@@ -701,17 +723,17 @@ series_code = "XNDX"
 series_source = "nasdaq"
 series_status = "in_db"
 source_url = "https://indexes.nasdaqomx.com/Index/ExportHistory/XNDX"
-note = "库内序列是美元全收益，来源 nasdaq，5469 行 2005-01-04→2026-09-30。预注册写人民币全收益。没有单独的人民币发布序列，不把该序列与 USDCNY 乘成新序列。发布日本次没有指数公司原件。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。"
+note = "库内序列是美元全收益，来源 nasdaq，5469 行 2005-01-04→2026-09-30。预注册写人民币全收益。没有单独的人民币发布序列，不把该序列与 USDCNY 乘成新序列。发布日本次没有指数公司原件。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。 D19 分组：NDX（learned_benchmark）。 D19 分组：NDX（learned_index_name）。"
 
 [[container.execution]]
 code = "513100"
 name = "纳斯达克100交易型开放式指数证券投资基金"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2013-05-15"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "纳斯达克100指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513100.html.gz"
-note = "预注册举例。 bars 3254 行，来源 tencent_etf。 跟踪标的「纳斯达克100指数」与研究指数「Nasdaq-100 Total Return」不一致。"
+note = "预注册举例。 bars 3254 行，来源 tencent_etf。 跟踪标的「纳斯达克100指数」与研究指数「Nasdaq-100 Total Return」不一致。 D19 分组：NDX（learned_index_name）。"
 
 [[container.execution]]
 code = "159941"
@@ -726,12 +748,12 @@ note = "预注册举例。 bars 2728 行，来源 tencent_etf。 跟踪标的「
 [[container.execution]]
 code = "513300"
 name = "华夏纳斯达克100交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2020-11-05"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "纳斯达克100指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513300.html.gz"
-note = "预注册举例。 bars 1434 行，来源 tencent_etf。 跟踪标的「纳斯达克100指数」与研究指数「Nasdaq-100 Total Return」不一致。"
+note = "预注册举例。 bars 1434 行，来源 tencent_etf。 跟踪标的「纳斯达克100指数」与研究指数「Nasdaq-100 Total Return」不一致。 D19 分组：NDX（learned_index_name）。"
 
 [[container.execution]]
 code = "159632"
@@ -806,33 +828,42 @@ note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是�
 [[container.execution]]
 code = "513110"
 name = "华泰柏瑞纳斯达克100交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513110.html.gz"
+list_date = "2023-03-20"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "纳斯达克100指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513110.html.gz"
-note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 878 行。收盘价 859 行，来源 tencent_etf。"
+note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 878 行。收盘价 859 行，来源 tencent_etf。 D19 分组：NDX（learned_index_name）。"
 
 [[container.execution]]
 code = "513390"
 name = "博时纳斯达克100交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513390.html.gz"
+list_date = "2023-05-08"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "纳斯达克100指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513390.html.gz"
-note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 846 行。收盘价 828 行，来源 tencent_etf。"
+note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 846 行。收盘价 828 行，来源 tencent_etf。 D19 分组：NDX（learned_index_name）。"
 
 [[container.execution]]
 code = "513870"
 name = "富国纳斯达克100交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513870.html.gz"
+list_date = "2023-11-02"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "纳斯达克100指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513870.html.gz"
-note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 725 行。收盘价 708 行，来源 tencent_etf。"
+note = "附录 1：跟踪标的「纳斯达克100指数」与容器 ndx100 是同一底层指数，并入执行名单。附录 1 纳入。同一跟踪标的只占一个容器。净值 725 行。收盘价 708 行，来源 tencent_etf。 D19 分组：NDX（learned_index_name）。"
 
+[[container.execution]]
+code = "501312"
+name = "华宝海外科技股票型证券投资基金(QDII-LOF)"
+list_date = "2023-04-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_501312.html"
+note = "D19-4 纳入。分组 NDX（learned_benchmark）。净值 852 行。行情 834 行，来源 eastmoney_etf_hfq。 D19 分组：NDX（learned_benchmark）。"
 [[container]]
 id = "spx"
 asset_class = "美股宽基"
@@ -853,17 +884,17 @@ series_code = "^SP500TR"
 series_source = "yahoo"
 series_status = "in_db"
 source_url = "https://query1.finance.yahoo.com/v8/finance/chart/%5ESP500TR"
-note = "库内序列是美元全收益，来源 yahoo，6726 行 2000-01-03→2026-09-30。预注册写人民币全收益。没有单独的人民币发布序列，不把该序列与 USDCNY 乘成新序列。发布日本次没有指数公司原件。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。"
+note = "库内序列是美元全收益，来源 yahoo，6726 行 2000-01-03→2026-09-30。预注册写人民币全收益。没有单独的人民币发布序列，不把该序列与 USDCNY 乘成新序列。发布日本次没有指数公司原件。 附录 1 将跟踪同一底层指数的场内 ETF 并入本容器执行名单，不再另开容器。 D19 分组：SPX（learned_index_name）。"
 
 [[container.execution]]
 code = "513500"
 name = "博时标普500交易型开放式指数证券投资基金"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2014-01-15"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "标准普尔500指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513500.html.gz"
-note = "预注册举例。 bars 3090 行，来源 tencent_etf。 跟踪标的「标准普尔500指数」与研究指数「S&P 500 (TR)」不一致。"
+note = "预注册举例。 bars 3090 行，来源 tencent_etf。 跟踪标的「标准普尔500指数」与研究指数「S&P 500 (TR)」不一致。 D19 分组：SPX（learned_index_name）。"
 
 [[container.execution]]
 code = "159612"
@@ -878,12 +909,12 @@ note = "预注册举例。 bars 1060 行，来源 tencent_etf。 跟踪标的「
 [[container.execution]]
 code = "513650"
 name = "南方标普500交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2023-04-04"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "标准普尔500指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513650.html.gz"
-note = "预注册举例。 bars 848 行，来源 tencent_etf。 跟踪标的「标准普尔500指数」与研究指数「S&P 500 (TR)」不一致。"
+note = "预注册举例。 bars 848 行，来源 tencent_etf。 跟踪标的「标准普尔500指数」与研究指数「S&P 500 (TR)」不一致。 D19 分组：SPX（learned_index_name）。"
 
 [[container.execution]]
 code = "161125"
@@ -925,7 +956,7 @@ series_code = "Au99.99"
 series_source = "sge_daily"
 series_status = "partial"
 source_url = "https://www.sge.com.cn/graph/Dailyhq?instid=Au99.99"
-note = "预注册写上金所 Au9999。Dailyhq 与 2024 年后日行情的合约字段是 Au99.99；更早的历史行情文章写成 Au9999。两处都是同一只 99.99 现货，重叠日收盘一致，研究序列只用 Au99.99。发布日和基日页面没有给出。 历史行情页合约写法：Au99.99 116 行、Au9999 1953 行。 行情 4402 行 2008-08-11→2026-09-30。 历史行情列表第 374 页止于 2008-08-11，下一页是 2003-04-15，中间没有页。2003-01-02→2003-04-15 的片段没有写入研究序列，避免把五年涨跌记成一个交易日。2012-04-13 与 2016-04-12 的文章没有 Au99.99/Au9999 行。首日晚于 2006-01-04 时 status=partial：这一天之前的设计期没有黄金。"
+note = "预注册写上金所 Au9999。Dailyhq 与 2024 年后日行情的合约字段是 Au99.99；更早的历史行情文章写成 Au9999。两处都是同一只 99.99 现货，重叠日收盘一致，研究序列只用 Au99.99。发布日和基日页面没有给出。 历史行情页合约写法：Au99.99 116 行、Au9999 1953 行。 行情 4402 行 2008-08-11→2026-09-30。 历史行情列表第 374 页止于 2008-08-11，下一页是 2003-04-15，中间没有页。2003-01-02→2003-04-15 的片段没有写入研究序列，避免把五年涨跌记成一个交易日。2012-04-13 与 2016-04-12 的文章没有 Au99.99/Au9999 行。首日晚于 2006-01-04 时 status=partial：这一天之前的设计期没有黄金。 D19 分组：gold（cross_border_commodity）。"
 
 [[container.execution]]
 code = "518880"
@@ -937,6 +968,35 @@ track = "黄金9999"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/518880.html.gz"
 note = "预注册举例。"
 
+[[container.execution]]
+code = "160719"
+name = "嘉实黄金证券投资基金(LOF)"
+list_date = "2012-02-10"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_160719.html"
+note = "D19-4 纳入。分组 gold（cross_border_commodity）。净值 3582 行。行情 3521 行，来源 eastmoney_etf_hfq。 D19 分组：gold（cross_border_commodity）。"
+
+[[container.execution]]
+code = "161116"
+name = "易方达黄金主题证券投资基金(LOF)"
+list_date = "2011-11-08"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_161116.html"
+note = "D19-4 纳入。分组 gold（cross_border_commodity）。净值 3540 行。行情 3577 行，来源 eastmoney_etf_hfq。 D19 分组：gold（cross_border_commodity）。"
+
+[[container.execution]]
+code = "164701"
+name = "汇添富黄金及贵金属证券投资基金(LOF)"
+list_date = "2012-03-01"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_164701.html"
+note = "D19-4 纳入。分组 gold（cross_border_commodity）。净值 3568 行。行情 3461 行，来源 eastmoney_etf_hfq。 D19 分组：gold（cross_border_commodity）。"
 [[container]]
 id = "soymeal"
 asset_class = "商品"
@@ -989,7 +1049,7 @@ series_code = ""
 series_source = ""
 series_status = "取不到"
 source_url = "http://www.ccidx.com/zs/zsxx/202412/t20241205_1593.html"
-note = "预注册没有给出发布机构代码。中证商品期货指数是一篮子，不是原油单品种。不使用库内 BRENT。"
+note = "预注册没有给出发布机构代码。中证商品期货指数是一篮子，不是原油单品种。不使用库内 BRENT。 D19 分组：crude-oil（cross_border_commodity）。"
 
 [[container.execution]]
 code = "161129"
@@ -1014,13 +1074,12 @@ note = "预注册举例。"
 [[container.execution]]
 code = "501018"
 name = "南方原油证券投资基金"
-list_date = "取不到"
-list_date_source = ""
+list_date = "2016-06-28"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "该基金无跟踪标的"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/501018.html.gz"
-note = "预注册举例。"
-
+note = "预注册举例。 D19 分组：crude-oil（cross_border_commodity）。"
 [[container]]
 id = "cgb-10y"
 asset_class = "债券"
@@ -1137,7 +1196,7 @@ series_code = "159577"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-28-d17-qdii/raw/jbgk/159577.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159577 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159577、513850。净值 650 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159577 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159577、513850。净值 650 行。 D19 分组：MSCI美国50指数（index_name）。"
 
 [[container.execution]]
 code = "159577"
@@ -1152,13 +1211,12 @@ note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按�
 [[container.execution]]
 code = "513850"
 name = "易方达MSCI美国50交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/513850.html.gz"
+list_date = "2023-11-17"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "MSCI USA 50 Index"
 track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/513850.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 716 行。收盘价 697 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 716 行。收盘价 697 行，来源 tencent_etf。 D19 分组：MSCI美国50指数（index_name）。"
 [[container]]
 id = "theme-iEdge Emerging Asia Select 50 Index"
 asset_class = "美股和全球主题"
@@ -1179,18 +1237,17 @@ series_code = "520580"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-28-d17-qdii/raw/jbgk/520580.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 520580 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 520580。净值 414 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 520580 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 520580。净值 414 行。 D19 分组：EMASIAUP（learned_index_name）。"
 
 [[container.execution]]
 code = "520580"
 name = "招商利安新兴亚洲精选交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/520580.html.gz"
+list_date = "2025-02-20"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "iEdge Emerging Asia Select 50 Index"
 track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/520580.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 414 行。收盘价 395 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 414 行。收盘价 395 行，来源 tencent_etf。 D19 分组：EMASIAUP（learned_index_name）。"
 [[container]]
 id = "theme-东京日经225指数"
 asset_class = "美股和全球主题"
@@ -1211,7 +1268,7 @@ series_code = "159866"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159866.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159866 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159866、513000、513520、513880。净值 1350 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159866 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159866、513000、513520、513880。净值 1350 行。 D19 分组：N225（learned_index_name）。"
 
 [[container.execution]]
 code = "159866"
@@ -1226,33 +1283,32 @@ note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按�
 [[container.execution]]
 code = "513000"
 name = "易方达奥明日经225交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513000.html.gz"
+list_date = "2019-06-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "东京日经225指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513000.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1784 行。收盘价 1766 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1784 行。收盘价 1766 行，来源 tencent_etf。 D19 分组：N225（learned_index_name）。"
 
 [[container.execution]]
 code = "513520"
 name = "华夏野村日经225交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513520.html.gz"
+list_date = "2019-06-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "东京日经225指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513520.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1772 行。收盘价 1766 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1772 行。收盘价 1766 行，来源 tencent_etf。 D19 分组：N225（learned_index_name）。"
 
 [[container.execution]]
 code = "513880"
 name = "华安三菱日联日经225交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513880.html.gz"
+list_date = "2019-06-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "东京日经225指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513880.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1787 行。收盘价 1766 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1787 行。收盘价 1766 行，来源 tencent_etf。 D19 分组：N225（learned_index_name）。"
 [[container]]
 id = "theme-东证指数"
 asset_class = "美股和全球主题"
@@ -1273,18 +1329,17 @@ series_code = "513800"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513800.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513800 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513800。净值 1787 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513800 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513800。净值 1787 行。 D19 分组：TPX（learned_index_name）。"
 
 [[container.execution]]
 code = "513800"
 name = "南方顶峰TOPIX交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513800.html.gz"
+list_date = "2019-06-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "东证指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513800.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1787 行。收盘价 1766 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1787 行。收盘价 1766 行，来源 tencent_etf。 D19 分组：TPX（learned_index_name）。"
 [[container]]
 id = "theme-中证全球中国互联网人民币指数"
 asset_class = "美股和全球主题"
@@ -1305,18 +1360,17 @@ series_code = "513220"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513220.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513220 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513220。净值 1041 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513220 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513220。净值 1041 行。 D19 分组：中证全球中国互联网指数（index_name）。"
 
 [[container.execution]]
 code = "513220"
 name = "招商中证全球中国互联网交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513220.html.gz"
+list_date = "2022-07-15"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "中证全球中国互联网人民币指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513220.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1041 行。收盘价 1023 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1041 行。收盘价 1023 行，来源 tencent_etf。 D19 分组：中证全球中国互联网指数（index_name）。"
 [[container]]
 id = "theme-中证全球中国教育主题人民币指数"
 asset_class = "美股和全球主题"
@@ -1337,18 +1391,17 @@ series_code = "513360"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513360.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513360 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513360。净值 1294 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513360 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513360。净值 1294 行。 D19 分组：中证全球中国教育主题指数（index_name）。"
 
 [[container.execution]]
 code = "513360"
 name = "博时中证全球中国教育主题交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513360.html.gz"
+list_date = "2021-06-17"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "中证全球中国教育主题人民币指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513360.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1294 行。收盘价 1284 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1294 行。收盘价 1284 行，来源 tencent_etf。 D19 分组：中证全球中国教育主题指数（index_name）。"
 [[container]]
 id = "theme-中证海外中国互联网30人民币指数"
 asset_class = "美股和全球主题"
@@ -1411,18 +1464,17 @@ series_code = "513050"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513050 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513050。净值 2350 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513050 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513050。净值 2350 行。 D19 分组：H30533（learned_index_name）。"
 
 [[container.execution]]
 code = "513050"
 name = "易方达中证海外中国互联网50交易型开放式指数证券投资基金"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
+list_date = "2017-01-18"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "中证海外中国互联网50人民币指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513050.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2350 行。收盘价 2356 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2350 行。收盘价 2356 行，来源 tencent_etf。 D19 分组：H30533（learned_index_name）。"
 [[container]]
 id = "theme-中证海外中国互联网指数"
 asset_class = "美股和全球主题"
@@ -1443,7 +1495,7 @@ series_code = "164906"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/164906.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 164906 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 164906。净值 2760 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 164906 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 164906。净值 2760 行。 D19 分组：中证海外中国互联网指数（benchmark_max_weight）。"
 
 [[container.execution]]
 code = "164906"
@@ -1455,6 +1507,15 @@ track = "中证海外中国互联网指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/164906.html.gz"
 note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2760 行。收盘价 2729 行，来源 tencent_etf。"
 
+[[container.execution]]
+code = "160644"
+name = "鹏华香港美国互联网股票型证券投资基金(LOF)"
+list_date = "2017-12-29"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_160644.html"
+note = "D19-4 纳入。分组 中证海外中国互联网指数（benchmark_max_weight）。净值 2105 行。行情 1918 行，来源 tencent_etf。 D19 分组：中证海外中国互联网指数（benchmark_max_weight）。"
 [[container]]
 id = "theme-中证港股通金融服务指数"
 asset_class = "美股和全球主题"
@@ -1475,18 +1536,17 @@ series_code = "513140"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513140.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513140 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513140。净值 921 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513140 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513140。净值 921 行。 D19 分组：H30106（learned_index_name）。"
 
 [[container.execution]]
 code = "513140"
 name = "华泰柏瑞中证港股通金融服务交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513140.html.gz"
+list_date = "2023-01-12"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "中证港股通金融服务指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513140.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 921 行。收盘价 901 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 921 行。收盘价 901 行，来源 tencent_etf。 D19 分组：H30106（learned_index_name）。"
 [[container]]
 id = "theme-中证港股通高股息投资港元指数"
 asset_class = "美股和全球主题"
@@ -1507,18 +1567,47 @@ series_code = "513530"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513530.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513530 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513530。净值 1097 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513530 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513530。净值 1097 行。 D19 分组：中证港股通高股息投资指数（index_name）。"
 
 [[container.execution]]
 code = "513530"
 name = "华泰柏瑞中证港股通高股息投资交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513530.html.gz"
+list_date = "2022-04-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "中证港股通高股息投资港元指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513530.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1097 行。收盘价 1078 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1097 行。收盘价 1078 行，来源 tencent_etf。 D19 分组：中证港股通高股息投资指数（index_name）。"
 
+[[container.execution]]
+code = "513820"
+name = "港股通红利ETF汇添富"
+list_date = "2024-05-16"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通高股息投资指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通高股息投资指数（index_name）。净值 581 行。行情 580 行，来源 eastmoney_etf。 D19 分组：中证港股通高股息投资指数（index_name）。"
+
+[[container.execution]]
+code = "513830"
+name = "港股通高股息ETF嘉实"
+list_date = "2025-03-07"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通高股息投资指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通高股息投资指数（index_name）。净值 384 行。行情 384 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通高股息投资指数（index_name）。"
+
+[[container.execution]]
+code = "520810"
+name = "港股通红利ETF易方达"
+list_date = "2026-01-12"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通高股息投资指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通高股息投资指数（index_name）。净值 176 行。行情 176 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通高股息投资指数（index_name）。"
 [[container]]
 id = "theme-中证韩交所中韩半导体指数"
 asset_class = "美股和全球主题"
@@ -1539,18 +1628,17 @@ series_code = "513310"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513310.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513310 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513310。净值 940 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513310 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513310。净值 940 行。 D19 分组：中证韩交所中韩半导体指数（index_name）。"
 
 [[container.execution]]
 code = "513310"
 name = "华泰柏瑞中证韩交所中韩半导体交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513310.html.gz"
+list_date = "2022-12-22"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "中证韩交所中韩半导体指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513310.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 940 行。收盘价 915 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 940 行。收盘价 915 行，来源 tencent_etf。 D19 分组：中证韩交所中韩半导体指数（index_name）。"
 [[container]]
 id = "theme-中证香港内地国有企业港元指数"
 asset_class = "美股和全球主题"
@@ -1571,7 +1659,7 @@ series_code = "159519"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159519.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159519 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159519、513810。净值 765 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159519 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159519、513810。净值 765 行。 D19 分组：H11153（learned_index_name）。"
 
 [[container.execution]]
 code = "159519"
@@ -1586,13 +1674,12 @@ note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按�
 [[container.execution]]
 code = "513810"
 name = "华夏中证香港内地国有企业交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513810.html.gz"
+list_date = "2023-09-01"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "中证香港内地国有企业港元指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513810.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 763 行。收盘价 746 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 763 行。收盘价 746 行，来源 tencent_etf。 D19 分组：H11153（learned_index_name）。"
 [[container]]
 id = "theme-中证香港创新药港币指数"
 asset_class = "美股和全球主题"
@@ -1613,18 +1700,17 @@ series_code = "513120"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513120.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513120 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513120。净值 1045 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513120 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513120。净值 1045 行。 D19 分组：中证香港创新药指数（index_name）。"
 
 [[container.execution]]
 code = "513120"
 name = "广发中证香港创新药交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513120.html.gz"
+list_date = "2022-07-12"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "中证香港创新药港币指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513120.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1045 行。收盘价 1026 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1045 行。收盘价 1026 行，来源 tencent_etf。 D19 分组：中证香港创新药指数（index_name）。"
 [[container]]
 id = "theme-中证香港科技指数指数"
 asset_class = "美股和全球主题"
@@ -1719,7 +1805,7 @@ series_code = "159329"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159329.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159329 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159329、520830。净值 553 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159329 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159329、520830。净值 553 行。 D19 分组：WISAUNT（learned_index_name）。"
 
 [[container.execution]]
 code = "159329"
@@ -1734,13 +1820,12 @@ note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按�
 [[container.execution]]
 code = "520830"
 name = "华泰柏瑞南方东英沙特阿拉伯交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520830.html.gz"
+list_date = "2024-07-16"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "富时沙特阿拉伯指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520830.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 552 行。收盘价 537 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 552 行。收盘价 537 行，来源 tencent_etf。 D19 分组：WISAUNT（learned_index_name）。"
 [[container]]
 id = "theme-巴西IBOVESPA指数"
 asset_class = "美股和全球主题"
@@ -1761,50 +1846,27 @@ series_code = "520870"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-28-d17-qdii/raw/jbgk/520870.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 520870 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 520870。净值 232 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 520870 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 520870。净值 232 行。 D19 分组：Ibovespa Index（mandated_code）。"
 
 [[container.execution]]
 code = "520870"
 name = "易方达伊塔乌巴西IBOVESPA交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/520870.html.gz"
+list_date = "2025-11-13"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "巴西IBOVESPA指数"
 track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/520870.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 232 行。收盘价 216 行，来源 tencent_etf。"
-
-[[container]]
-id = "theme-巴西伊博维斯帕指数"
-asset_class = "美股和全球主题"
-name = "巴西伊博维斯帕指数"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "巴西伊博维斯帕指数"
-index_name = "巴西伊博维斯帕指数"
-return_basis = "unit_nav"
-publish_date = "2025-11-13"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "159100"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-28-d17-qdii/raw/jbgk/159100.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159100 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159100。净值 230 行。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 232 行。收盘价 216 行，来源 tencent_etf。 D19 分组：Ibovespa Index（mandated_code）。"
 
 [[container.execution]]
 code = "159100"
-name = "华夏布拉德斯科巴西伊博维斯帕交易型开放式指数证券投资基金(QDII)"
+name = "巴西ETF华夏"
 list_date = "2025-11-13"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
 bars_status = "in_db"
-track = "巴西伊博维斯帕指数"
-track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/159100.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 230 行。收盘价 216 行，来源 tencent_etf。"
-
+track = "Ibovespa Index"
+track_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+note = "D19-4 纳入。分组 Ibovespa Index（mandated_code）。净值 230 行。行情 216 行，来源 eastmoney_etf_hfq。 D19 分组：Ibovespa Index（mandated_code）。"
 [[container]]
 id = "theme-恒生中国企业指数"
 asset_class = "美股和全球主题"
@@ -1825,7 +1887,7 @@ series_code = "160717"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/160717.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 160717 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 160717、161831、159850、510900。净值 3900 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 160717 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 160717、161831、159850、510900。净值 3900 行。 D19 分组：HSCEI（learned_index_name）。"
 
 [[container.execution]]
 code = "160717"
@@ -1860,13 +1922,12 @@ note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按�
 [[container.execution]]
 code = "510900"
 name = "易方达恒生中国企业交易型开放式指数证券投资基金"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/510900.html.gz"
+list_date = "2012-10-22"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生中国企业指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/510900.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 3377 行。收盘价 3388 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 3377 行。收盘价 3388 行，来源 tencent_etf。 D19 分组：HSCEI（learned_index_name）。"
 [[container]]
 id = "theme-恒生中国央企指数"
 asset_class = "美股和全球主题"
@@ -1887,18 +1948,17 @@ series_code = "513170"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513170.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513170 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513170。净值 612 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513170 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513170。净值 612 行。 D19 分组：HSCSOE（learned_index_name）。"
 
 [[container.execution]]
 code = "513170"
 name = "鹏华恒生中国央企交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513170.html.gz"
+list_date = "2024-04-19"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生中国央企指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513170.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 612 行。收盘价 596 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 612 行。收盘价 596 行，来源 tencent_etf。 D19 分组：HSCSOE（learned_index_name）。"
 [[container]]
 id = "theme-恒生互联网科技业指数"
 asset_class = "美股和全球主题"
@@ -1919,7 +1979,7 @@ series_code = "159688"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159688.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159688 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159688、159202、513330。净值 902 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159688 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159688、159202、513330。净值 902 行。 D19 分组：HSIII（learned_index_name）。"
 
 [[container.execution]]
 code = "159688"
@@ -1944,13 +2004,12 @@ note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按�
 [[container.execution]]
 code = "513330"
 name = "华夏恒生互联网科技业交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513330.html.gz"
+list_date = "2021-02-08"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生互联网科技业指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513330.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1387 行。收盘价 1368 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1387 行。收盘价 1368 行，来源 tencent_etf。 D19 分组：HSIII（learned_index_name）。"
 [[container]]
 id = "theme-恒生创新药指数"
 asset_class = "美股和全球主题"
@@ -1971,18 +2030,17 @@ series_code = "520500"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/520500.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 520500 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 520500。净值 442 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 520500 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 520500。净值 442 行。 D19 分组：HSIDI（learned_index_name）。"
 
 [[container.execution]]
 code = "520500"
 name = "华泰柏瑞恒生创新药交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520500.html.gz"
+list_date = "2024-12-27"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生创新药指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520500.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 442 行。收盘价 427 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 442 行。收盘价 427 行，来源 tencent_etf。 D19 分组：HSIDI（learned_index_name）。"
 [[container]]
 id = "theme-恒生医疗保健指数"
 asset_class = "美股和全球主题"
@@ -2003,7 +2061,7 @@ series_code = "159303"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159303.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159303 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159303、513060。净值 567 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159303 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159303、513060。净值 567 行。 D19 分组：HSHCI（index_code）。 D19 分组：HSHCI（learned_index_name）。"
 
 [[container.execution]]
 code = "159303"
@@ -2018,13 +2076,22 @@ note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按�
 [[container.execution]]
 code = "513060"
 name = "博时恒生医疗保健交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513060.html.gz"
+list_date = "2021-03-29"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生医疗保健指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513060.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1357 行。收盘价 1338 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1357 行。收盘价 1338 行，来源 tencent_etf。 D19 分组：HSHCI（learned_index_name）。"
 
+[[container.execution]]
+code = "159557"
+name = "恒生医疗ETF嘉实"
+list_date = "2024-05-22"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "恒生医疗保健指数"
+track_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+note = "D19-4 纳入。分组 HSHCI（index_code）。净值 592 行。行情 576 行，来源 eastmoney_etf_hfq。 D19 分组：HSHCI（index_code）。"
 [[container]]
 id = "theme-恒生消费指数"
 asset_class = "美股和全球主题"
@@ -2045,7 +2112,7 @@ series_code = "159699"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159699.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159699 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159699、513970、520520。净值 772 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159699 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159699、513970、520520。净值 772 行。 D19 分组：HSCGSI（learned_index_name）。"
 
 [[container.execution]]
 code = "159699"
@@ -2060,23 +2127,32 @@ note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按�
 [[container.execution]]
 code = "513970"
 name = "景顺长城恒生消费交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513970.html.gz"
+list_date = "2023-04-21"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生消费指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513970.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 853 行。收盘价 836 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 853 行。收盘价 836 行，来源 tencent_etf。 D19 分组：HSCGSI（learned_index_name）。"
 
 [[container.execution]]
 code = "520520"
 name = "华泰柏瑞恒生消费交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520520.html.gz"
+list_date = "2024-11-01"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生消费指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/520520.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 482 行。收盘价 467 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 482 行。收盘价 467 行，来源 tencent_etf。 D19 分组：HSCGSI（learned_index_name）。"
 
+[[container.execution]]
+code = "520620"
+name = "恒生消费ETF嘉实"
+list_date = "2025-08-19"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生消费指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSCGSI（learned_index_name）。净值 272 行。行情 272 行，来源 eastmoney_etf_hfq。 D19 分组：HSCGSI（learned_index_name）。"
 [[container]]
 id = "theme-恒生港股通红利低波动指数"
 asset_class = "美股和全球主题"
@@ -2097,18 +2173,37 @@ series_code = "513950"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513950.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513950 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513950。净值 848 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513950 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513950。净值 848 行。 D19 分组：HSHYLV（learned_index_name）。"
 
 [[container.execution]]
 code = "513950"
 name = "富国恒生港股通红利低波动交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513950.html.gz"
+list_date = "2023-04-28"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生港股通红利低波动指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513950.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 848 行。收盘价 831 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 848 行。收盘价 831 行，来源 tencent_etf。 D19 分组：HSHYLV（learned_index_name）。"
 
+[[container.execution]]
+code = "520550"
+name = "港股红利低波ETF招商"
+list_date = "2025-01-24"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生港股通高股息低波动指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSHYLV（learned_index_name）。净值 408 行。行情 408 行，来源 eastmoney_etf_hfq。 D19 分组：HSHYLV（learned_index_name）。"
+
+[[container.execution]]
+code = "520890"
+name = "港股通红利低波ETF华泰柏瑞"
+list_date = "2024-09-20"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生港股通高股息低波动指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSHYLV（learned_index_name）。净值 492 行。行情 492 行，来源 eastmoney_etf_hfq。 D19 分组：HSHYLV（learned_index_name）。"
 [[container]]
 id = "theme-恒生生物科技指数"
 asset_class = "美股和全球主题"
@@ -2129,7 +2224,7 @@ series_code = "159892"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159892.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159892 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159892、159615、513280。净值 1225 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159892 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159892、159615、513280。净值 1225 行。 D19 分组：HSHKBIO（learned_index_name）。 D19 分组：HSBIO（learned_index_name）。"
 
 [[container.execution]]
 code = "159892"
@@ -2154,13 +2249,42 @@ note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按�
 [[container.execution]]
 code = "513280"
 name = "汇添富恒生生物科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513280.html.gz"
+list_date = "2022-07-18"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "恒生生物科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513280.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1040 行。收盘价 1022 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1040 行。收盘价 1022 行，来源 tencent_etf。 D19 分组：HSHKBIO（learned_index_name）。"
 
+[[container.execution]]
+code = "513930"
+name = "恒生生物科技ETF华泰柏瑞"
+list_date = "2026-03-18"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生生物科技指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSBIO（learned_index_name）。净值 135 行。行情 135 行，来源 eastmoney_etf_hfq。 D19 分组：HSBIO（learned_index_name）。"
+
+[[container.execution]]
+code = "520760"
+name = "恒生生物科技ETF摩根"
+list_date = "2026-03-02"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生生物科技指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSBIO（learned_index_name）。净值 147 行。行情 147 行，来源 eastmoney_etf_hfq。 D19 分组：HSBIO（learned_index_name）。"
+
+[[container.execution]]
+code = "520930"
+name = "恒生生物科技ETF国泰"
+list_date = "2026-02-24"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生生物科技指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSBIO（learned_index_name）。净值 151 行。行情 151 行，来源 eastmoney_etf_hfq。 D19 分组：HSBIO（learned_index_name）。"
 [[container]]
 id = "theme-恒生综合小型股指数"
 asset_class = "美股和全球主题"
@@ -2213,18 +2337,17 @@ series_code = "513730"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513730.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513730 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513730。净值 705 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513730 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513730。净值 705 行。 D19 分组：ASIATECN（learned_index_name）。"
 
 [[container.execution]]
 code = "513730"
 name = "华泰柏瑞南方东英新交所泛东南亚科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513730.html.gz"
+list_date = "2023-12-01"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "新交所泛东南亚科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513730.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 705 行。收盘价 687 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 705 行。收盘价 687 行，来源 tencent_etf。 D19 分组：ASIATECN（learned_index_name）。"
 [[container]]
 id = "theme-标普500信息科技指数"
 asset_class = "美股和全球主题"
@@ -2428,38 +2551,6 @@ track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/159502.html.gz"
 note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 677 行。收盘价 660 行，来源 tencent_etf。"
 
 [[container]]
-id = "theme-标普石油天然气上游股票指数"
-asset_class = "美股和全球主题"
-name = "标普石油天然气上游股票指数"
-arm = "main"
-in_pool_index = true
-in_pool_tradable = true
-
-[container.research]
-index_code = "标普石油天然气上游股票指数"
-index_name = "标普石油天然气上游股票指数"
-return_basis = "unit_nav"
-publish_date = "2012-06-08"
-publish_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-base_date = "取不到"
-base_date_source = ""
-series_code = "162411"
-series_source = "eastmoney_f10_lsjz"
-series_status = "in_db"
-source_url = "incoming/2026-10-28-d17-qdii/raw/jbgk/162411.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 162411 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 162411。净值 3657 行。"
-
-[[container.execution]]
-code = "162411"
-name = "华宝标普石油天然气上游股票指数证券投资基金(LOF)"
-list_date = "2012-06-08"
-list_date_source = "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1105&TABKEY=tab1"
-bars_status = "in_db"
-track = "标普石油天然气上游股票指数"
-track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/162411.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 3657 行。收盘价 3328 行，来源 tencent_etf。"
-
-[[container]]
 id = "theme-标普石油天然气勘探及生产精选行业指数"
 asset_class = "美股和全球主题"
 name = "标普石油天然气勘探及生产精选行业指数"
@@ -2479,7 +2570,7 @@ series_code = "159518"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-28-d17-qdii/raw/jbgk/159518.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159518 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159518、513350。净值 716 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159518 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159518、513350。净值 716 行。 D19 分组：S&P Oil & Gas Exploration & Production Select Industry Index（mandated）。 D19 分组：S&P Oil & Gas Exploration & Production Select Industry Index（mandated_code）。"
 
 [[container.execution]]
 code = "159518"
@@ -2494,13 +2585,22 @@ note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按�
 [[container.execution]]
 code = "513350"
 name = "富国标普石油天然气勘探及生产精选行业交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/513350.html.gz"
+list_date = "2023-11-28"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "标普石油天然气勘探及生产精选行业指数"
 track_source = "incoming/2026-10-28-d17-qdii/raw/jbgk/513350.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 706 行。收盘价 689 行，来源 tencent_etf。"
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 706 行。收盘价 689 行，来源 tencent_etf。 D19 分组：S&P Oil & Gas Exploration & Production Select Industry Index（mandated_code）。"
 
+[[container.execution]]
+code = "162411"
+name = "华宝标普石油天然气上游股票指数证券投资基金(LOF)"
+list_date = "2012-06-08"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "标普石油天然气上游股票指数"
+track_source = "https://fundf10.eastmoney.com/jbgk_162411.html"
+note = "D19-4 纳入。分组 S&P Oil & Gas Exploration & Production Select Industry Index（mandated）。净值 3657 行。行情 3329 行，来源 eastmoney_etf_hfq。 D19 分组：S&P Oil & Gas Exploration & Production Select Industry Index（mandated）。"
 [[container]]
 id = "theme-标普美国品质消费股票指数"
 asset_class = "美股和全球主题"
@@ -2553,7 +2653,7 @@ series_code = "159561"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/159561.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159561 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159561、513030。净值 606 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 159561 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 159561、513030。净值 606 行。 D19 分组：GDAXI（learned_index_name）。"
 
 [[container.execution]]
 code = "159561"
@@ -2568,13 +2668,12 @@ note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按�
 [[container.execution]]
 code = "513030"
 name = "华安国际龙头(DAX)交易型开放式指数证券投资基金"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513030.html.gz"
+list_date = "2014-09-05"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "法兰克福DAX指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513030.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2959 行。收盘价 2932 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 2959 行。收盘价 2932 行，来源 tencent_etf。 D19 分组：GDAXI（learned_index_name）。"
 [[container]]
 id = "theme-法国CAC40指数"
 asset_class = "美股和全球主题"
@@ -2595,18 +2694,17 @@ series_code = "513080"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513080 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513080。净值 1547 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513080 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513080。净值 1547 行。 D19 分组：FCHI（learned_index_name）。"
 
 [[container.execution]]
 code = "513080"
 name = "华安法国CAC40交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
+list_date = "2020-06-12"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "法国CAC40指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513080.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1547 行。收盘价 1529 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1547 行。收盘价 1529 行，来源 tencent_etf。 D19 分组：FCHI（learned_index_name）。"
 [[container]]
 id = "theme-纳斯达克生物科技指数"
 asset_class = "美股和全球主题"
@@ -2627,18 +2725,17 @@ series_code = "513290"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513290.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513290 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513290。净值 1010 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513290 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513290。净值 1010 行。 D19 分组：NBI（learned_index_name）。"
 
 [[container.execution]]
 code = "513290"
 name = "汇添富纳斯达克生物科技交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513290.html.gz"
+list_date = "2022-08-29"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "纳斯达克生物科技指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513290.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1010 行。收盘价 992 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 1010 行。收盘价 992 行，来源 tencent_etf。 D19 分组：NBI（learned_index_name）。"
 [[container]]
 id = "theme-纳斯达克科技市值加权指数"
 asset_class = "美股和全球主题"
@@ -2691,18 +2788,17 @@ series_code = "513400"
 series_source = "eastmoney_f10_lsjz"
 series_status = "in_db"
 source_url = "incoming/2026-10-24-v3-l1/raw/jbgk/513400.html.gz"
-note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513400 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513400。净值 660 行。"
+note = "附录 1：同一跟踪标的的场内 ETF 合成一个容器。U-指数从执行名单第一只 513400 的上市日起，研究净值用这一只。上市日为「取不到」的代码不参与最早上市日比较，也不把成立日期写成上市日。不用上市前的海外指数。指数公司发布日取不到。执行代码 513400。净值 660 行。 D19 分组：DJIA（learned_index_name）。"
 
 [[container.execution]]
 code = "513400"
 name = "鹏华道琼斯工业平均交易型开放式指数证券投资基金(QDII)"
-list_date = "取不到"
-list_date_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513400.html.gz"
+list_date = "2024-02-02"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
 bars_status = "in_db"
 track = "道琼斯工业平均指数"
 track_source = "incoming/2026-10-24-v3-l1/raw/jbgk/513400.html.gz"
-note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 660 行。收盘价 643 行，来源 tencent_etf。"
-
+note = "同一跟踪标的的执行 ETF。容器按底层指数合并，不按代码拆开。 附录 1 纳入。同一跟踪标的只占一个容器。净值 660 行。收盘价 643 行，来源 tencent_etf。 D19 分组：DJIA（learned_index_name）。"
 [[container]]
 id = "theme-道琼斯美国石油开发与生产指数"
 asset_class = "美股和全球主题"
@@ -3289,31 +3385,1468 @@ track = "取不到"
 track_source = ""
 note = "执行主代码来自 config/portfolio.toml 的 primary。上市日不从该文件的备选 list_date 挪来。"
 
+[[container]]
+id = "cross-border-commodity"
+asset_class = "商品"
+name = "跨境商品"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "cross-border-commodity"
+index_name = "跨境商品"
+return_basis = "unit_nav"
+publish_date = "2010-12-20"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "161815"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "https://fundf10.eastmoney.com/jbgk_161815.html"
+note = "D19 §3.1：跨境商品。研究序列用上市最早的 161815 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：cross-border-commodity（cross_border_commodity）。"
+
+[[container.execution]]
+code = "160216"
+name = "国泰大宗商品配置证券投资基金(LOF)"
+list_date = "2015-04-07"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_160216.html"
+note = "D19-4 纳入。分组 cross-border-commodity（cross_border_commodity）。净值 2785 行。行情 2795 行，来源 eastmoney_etf_hfq。 D19 分组：cross-border-commodity（cross_border_commodity）。"
+
+[[container.execution]]
+code = "161815"
+name = "银华抗通胀主题证券投资基金(LOF)"
+list_date = "2010-12-20"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_161815.html"
+note = "D19-4 纳入。分组 cross-border-commodity（cross_border_commodity）。净值 3677 行。行情 3485 行，来源 eastmoney_etf_hfq。 D19 分组：cross-border-commodity（cross_border_commodity）。"
+
+[[container.execution]]
+code = "165513"
+name = "中信保诚全球商品主题证券投资基金(LOF)"
+list_date = "2012-01-13"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_165513.html"
+note = "D19-4 纳入。分组 cross-border-commodity（cross_border_commodity）。净值 3483 行。行情 3408 行，来源 eastmoney_etf_hfq。 D19 分组：cross-border-commodity（cross_border_commodity）。"
+[[container]]
+id = "theme-CES100"
+asset_class = "美股和全球主题"
+name = "中华交易服务港股通精选100指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "CES100"
+index_name = "中华交易服务港股通精选100指数"
+return_basis = "unit_nav"
+publish_date = "2018-05-25"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513900"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中华交易服务港股通精选100指数。研究序列用上市最早的 513900 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：CES100（learned_index_name）。"
+
+[[container.execution]]
+code = "513900"
+name = "港股通100ETF华安"
+list_date = "2018-05-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中华交易服务港股通精选100指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 CES100（learned_index_name）。净值 2035 行。行情 2018 行，来源 eastmoney_etf_hfq。 D19 分组：CES100（learned_index_name）。"
+[[container]]
+id = "theme-H11146"
+asset_class = "美股和全球主题"
+name = "中证港股通内地金融指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "H11146"
+index_name = "中证港股通内地金融指数"
+return_basis = "unit_nav"
+publish_date = "2023-10-11"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513190"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证港股通内地金融指数。研究序列用上市最早的 513190 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：H11146（learned_index_name）。"
+
+[[container.execution]]
+code = "513190"
+name = "港股通金融ETF华夏"
+list_date = "2023-10-11"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通内地金融指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 H11146（learned_index_name）。净值 726 行。行情 724 行，来源 eastmoney_etf_hfq。 D19 分组：H11146（learned_index_name）。"
+
+[[container.execution]]
+code = "526090"
+name = "港股通金融ETF富国"
+list_date = "2026-10-16"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "取不到"
+track = "中证港股通内地金融指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 H11146（learned_index_name）。净值 0 行。行情 0 行，来源 无。 D19 分组：H11146（learned_index_name）。"
+[[container]]
+id = "theme-H50069"
+asset_class = "美股和全球主题"
+name = "上证港股通指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "H50069"
+index_name = "上证港股通指数"
+return_basis = "unit_nav"
+publish_date = "2020-08-18"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513990"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：上证港股通指数。研究序列用上市最早的 513990 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：H50069（learned_index_name）。"
+
+[[container.execution]]
+code = "513990"
+name = "港股通ETF招商"
+list_date = "2020-08-18"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "上证港股通指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 H50069（learned_index_name）。净值 1488 行。行情 1485 行，来源 eastmoney_etf_hfq。 D19 分组：H50069（learned_index_name）。"
+[[container]]
+id = "theme-HSFML25"
+asset_class = "美股和全球主题"
+name = "恒生中国（香港上市）30指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "HSFML25"
+index_name = "恒生中国（香港上市）30指数"
+return_basis = "unit_nav"
+publish_date = "2025-10-13"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "520560"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：恒生中国（香港上市）30指数。研究序列用上市最早的 520560 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：HSFML25（learned_index_name）。"
+
+[[container.execution]]
+code = "520560"
+name = "香港大盘30ETF华宝"
+list_date = "2025-10-13"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生中国（香港上市）30指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSFML25（learned_index_name）。净值 239 行。行情 239 行，来源 eastmoney_etf_hfq。 D19 分组：HSFML25（learned_index_name）。"
+[[container]]
+id = "theme-HSISC"
+asset_class = "美股和全球主题"
+name = "恒指港股通指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "HSISC"
+index_name = "恒指港股通指数"
+return_basis = "unit_nav"
+publish_date = "2025-06-09"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "520940"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：恒指港股通指数。研究序列用上市最早的 520940 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：HSISC（learned_index_name）。"
+
+[[container.execution]]
+code = "520770"
+name = "恒指港股通ETF建信"
+list_date = "2026-01-26"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒指港股通指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSISC（learned_index_name）。净值 166 行。行情 166 行，来源 eastmoney_etf_hfq。 D19 分组：HSISC（learned_index_name）。"
+
+[[container.execution]]
+code = "520820"
+name = "恒指港股通ETF汇添富"
+list_date = "2025-12-15"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒指港股通指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSISC（learned_index_name）。净值 194 行。行情 194 行，来源 eastmoney_etf_hfq。 D19 分组：HSISC（learned_index_name）。"
+
+[[container.execution]]
+code = "520940"
+name = "港股通恒生ETF华安"
+list_date = "2025-06-09"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒指港股通指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSISC（learned_index_name）。净值 323 行。行情 323 行，来源 eastmoney_etf_hfq。 D19 分组：HSISC（learned_index_name）。"
+
+[[container.execution]]
+code = "520960"
+name = "恒指港股通ETF嘉实"
+list_date = "2025-10-31"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒指港股通指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSISC（learned_index_name）。净值 225 行。行情 225 行，来源 eastmoney_etf_hfq。 D19 分组：HSISC（learned_index_name）。"
+
+[[container.execution]]
+code = "526070"
+name = "恒指港股通ETF博时"
+list_date = "2026-05-29"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒指港股通指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSISC（learned_index_name）。净值 87 行。行情 87 行，来源 eastmoney_etf_hfq。 D19 分组：HSISC（learned_index_name）。"
+[[container]]
+id = "theme-HSSC50"
+asset_class = "美股和全球主题"
+name = "恒生港股通50指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "HSSC50"
+index_name = "恒生港股通50指数"
+return_basis = "unit_nav"
+publish_date = "2025-11-25"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "520950"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：恒生港股通50指数。研究序列用上市最早的 520950 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：HSSC50（learned_index_name）。"
+
+[[container.execution]]
+code = "520950"
+name = "港股通50ETF摩根"
+list_date = "2025-11-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生港股通50指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSSC50（learned_index_name）。净值 208 行。行情 208 行，来源 eastmoney_etf_hfq。 D19 分组：HSSC50（learned_index_name）。"
+[[container]]
+id = "theme-HSSCAMHI"
+asset_class = "美股和全球主题"
+name = "恒生港股通汽车主题指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "HSSCAMHI"
+index_name = "恒生港股通汽车主题指数"
+return_basis = "unit_nav"
+publish_date = "2026-05-15"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "520730"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：恒生港股通汽车主题指数。研究序列用上市最早的 520730 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：HSSCAMHI（learned_index_name）。"
+
+[[container.execution]]
+code = "520730"
+name = "港股通汽车ETF万家"
+list_date = "2026-05-15"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生港股通汽车主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSSCAMHI（learned_index_name）。净值 97 行。行情 97 行，来源 eastmoney_etf_hfq。 D19 分组：HSSCAMHI（learned_index_name）。"
+[[container]]
+id = "theme-HSSCHKY"
+asset_class = "美股和全球主题"
+name = "恒生港股通高股息率指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "HSSCHKY"
+index_name = "恒生港股通高股息率指数"
+return_basis = "unit_nav"
+publish_date = "2021-05-20"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513690"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：恒生港股通高股息率指数。研究序列用上市最早的 513690 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：HSSCHKY（learned_index_name）。"
+
+[[container.execution]]
+code = "513690"
+name = "港股红利ETF博时"
+list_date = "2021-05-20"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生港股通高股息率指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSSCHKY（learned_index_name）。净值 1307 行。行情 1304 行，来源 eastmoney_etf_hfq。 D19 分组：HSSCHKY（learned_index_name）。"
+[[container]]
+id = "theme-HSSCITI"
+asset_class = "美股和全球主题"
+name = "恒生港股通科技主题指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "HSSCITI"
+index_name = "恒生港股通科技主题指数"
+return_basis = "unit_nav"
+publish_date = "2025-08-19"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "520670"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：恒生港股通科技主题指数。研究序列用上市最早的 520670 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：HSSCITI（learned_index_name）。"
+
+[[container.execution]]
+code = "520670"
+name = "港股通科技ETF嘉实"
+list_date = "2025-08-19"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生港股通科技主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSSCITI（learned_index_name）。净值 272 行。行情 272 行，来源 eastmoney_etf_hfq。 D19 分组：HSSCITI（learned_index_name）。"
+
+[[container.execution]]
+code = "520840"
+name = "港股通恒生科技ETF华安"
+list_date = "2025-08-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生港股通科技主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSSCITI（learned_index_name）。净值 268 行。行情 268 行，来源 eastmoney_etf_hfq。 D19 分组：HSSCITI（learned_index_name）。"
+[[container]]
+id = "theme-HSSCNE"
+asset_class = "美股和全球主题"
+name = "恒生港股通新经济指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "HSSCNE"
+index_name = "恒生港股通新经济指数"
+return_basis = "unit_nav"
+publish_date = "2022-03-21"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513320"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：恒生港股通新经济指数。研究序列用上市最早的 513320 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：HSSCNE（learned_index_name）。"
+
+[[container.execution]]
+code = "513320"
+name = "港股通新经济ETF易方达"
+list_date = "2022-03-21"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生港股通新经济指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSSCNE（learned_index_name）。净值 1104 行。行情 1101 行，来源 eastmoney_etf_hfq。 D19 分组：HSSCNE（learned_index_name）。"
+[[container]]
+id = "theme-HSSCPB"
+asset_class = "美股和全球主题"
+name = "恒生港股通创新药精选指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "HSSCPB"
+index_name = "恒生港股通创新药精选指数"
+return_basis = "unit_nav"
+publish_date = "2025-07-07"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "520880"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：恒生港股通创新药精选指数。研究序列用上市最早的 520880 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：HSSCPB（learned_index_name）。"
+
+[[container.execution]]
+code = "520690"
+name = "港股创新药ETF博时"
+list_date = "2025-08-01"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生港股通创新药精选指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSSCPB（learned_index_name）。净值 284 行。行情 284 行，来源 eastmoney_etf_hfq。 D19 分组：HSSCPB（learned_index_name）。"
+
+[[container.execution]]
+code = "520880"
+name = "港股通创新药ETF华宝"
+list_date = "2025-07-07"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生港股通创新药精选指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSSCPB（learned_index_name）。净值 303 行。行情 303 行，来源 eastmoney_etf_hfq。 D19 分组：HSSCPB（learned_index_name）。"
+[[container]]
+id = "theme-HSSCSOY"
+asset_class = "美股和全球主题"
+name = "恒生港股通中国央企红利指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "HSSCSOY"
+index_name = "恒生港股通中国央企红利指数"
+return_basis = "unit_nav"
+publish_date = "2024-01-05"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513920"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：恒生港股通中国央企红利指数。研究序列用上市最早的 513920 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：HSSCSOY（learned_index_name）。"
+
+[[container.execution]]
+code = "513920"
+name = "港股通央企红利ETF华安"
+list_date = "2024-01-05"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生港股通中国央企红利指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSSCSOY（learned_index_name）。净值 664 行。行情 663 行，来源 eastmoney_etf_hfq。 D19 分组：HSSCSOY（learned_index_name）。"
+[[container]]
+id = "theme-HSSCT"
+asset_class = "美股和全球主题"
+name = "恒生港股通中国科技指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "HSSCT"
+index_name = "恒生港股通中国科技指数"
+return_basis = "unit_nav"
+publish_date = "2022-02-09"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513160"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：恒生港股通中国科技指数。研究序列用上市最早的 513160 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：HSSCT（learned_index_name）。"
+
+[[container.execution]]
+code = "513160"
+name = "港股科技ETF银华"
+list_date = "2022-02-09"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生港股通中国科技指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSSCT（learned_index_name）。净值 1132 行。行情 1129 行，来源 eastmoney_etf_hfq。 D19 分组：HSSCT（learned_index_name）。"
+
+[[container.execution]]
+code = "520980"
+name = "港股通科技ETF汇添富"
+list_date = "2025-07-02"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "恒生港股通中国科技指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 HSSCT（learned_index_name）。净值 306 行。行情 306 行，来源 eastmoney_etf_hfq。 D19 分组：HSSCT（learned_index_name）。"
+[[container]]
+id = "theme-MSCI China Value Weighted Index"
+asset_class = "美股和全球主题"
+name = "MSCI China Value Weighted Index"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "MSCI China Value Weighted Index"
+index_name = "MSCI China Value Weighted Index"
+return_basis = "unit_nav"
+publish_date = "2016-01-04"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "161229"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "https://fundf10.eastmoney.com/jbgk_161229.html"
+note = "D19 §3.1：MSCI China Value Weighted Index。研究序列用上市最早的 161229 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：MSCI China Value Weighted Index（benchmark_max_weight）。"
+
+[[container.execution]]
+code = "161229"
+name = "国投瑞银中国价值发现股票型证券投资基金(LOF)"
+list_date = "2016-01-04"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_161229.html"
+note = "D19-4 纳入。分组 MSCI China Value Weighted Index（benchmark_max_weight）。净值 2608 行。行情 2266 行，来源 eastmoney_etf_hfq。 D19 分组：MSCI China Value Weighted Index（benchmark_max_weight）。"
+[[container]]
+id = "theme-PHLX Semiconductor Sector Index"
+asset_class = "美股和全球主题"
+name = "PHLX Semiconductor Sector Index"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "PHLX Semiconductor Sector Index"
+index_name = "PHLX Semiconductor Sector Index"
+return_basis = "unit_nav"
+publish_date = "2023-04-14"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "501225"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "https://fundf10.eastmoney.com/jbgk_501225.html"
+note = "D19 §3.1：PHLX Semiconductor Sector Index。研究序列用上市最早的 501225 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：PHLX Semiconductor Sector Index（mandated）。"
+
+[[container.execution]]
+code = "501225"
+name = "景顺长城全球半导体芯片产业股票型证券投资基金(QDII-LOF)"
+list_date = "2023-04-14"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_501225.html"
+note = "D19-4 纳入。分组 PHLX Semiconductor Sector Index（mandated）。净值 859 行。行情 841 行，来源 eastmoney_etf_hfq。 D19 分组：PHLX Semiconductor Sector Index（mandated）。"
+[[container]]
+id = "theme-S&P 500 Energy Sector Index(NTR)"
+asset_class = "美股和全球主题"
+name = "S&P 500 Energy Sector Index(NTR)"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "S&P 500 Energy Sector Index(NTR)"
+index_name = "S&P 500 Energy Sector Index(NTR)"
+return_basis = "unit_nav"
+publish_date = "2015-02-17"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "163208"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "https://fundf10.eastmoney.com/jbgk_163208.html"
+note = "D19 §3.1：S&P 500 Energy Sector Index(NTR)。研究序列用上市最早的 163208 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：S&P 500 Energy Sector Index(NTR)（benchmark_max_weight）。"
+
+[[container.execution]]
+code = "163208"
+name = "诺安油气能源股票证券投资基金(LOF)"
+list_date = "2015-02-17"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_163208.html"
+note = "D19-4 纳入。分组 S&P 500 Energy Sector Index(NTR)（benchmark_max_weight）。净值 2814 行。行情 2773 行，来源 eastmoney_etf_hfq。 D19 分组：S&P 500 Energy Sector Index(NTR)（benchmark_max_weight）。"
+[[container]]
+id = "theme-SPAHLVCP"
+asset_class = "美股和全球主题"
+name = "标普港股通低波红利指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "SPAHLVCP"
+index_name = "标普港股通低波红利指数"
+return_basis = "unit_nav"
+publish_date = "2023-12-08"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513630"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：标普港股通低波红利指数。研究序列用上市最早的 513630 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：SPAHLVCP（learned_index_name）。"
+
+[[container.execution]]
+code = "513630"
+name = "港股低波红利ETF摩根"
+list_date = "2023-12-08"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "标普港股通低波红利指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 SPAHLVCP（learned_index_name）。净值 684 行。行情 682 行，来源 eastmoney_etf_hfq。 D19 分组：SPAHLVCP（learned_index_name）。"
+
+[[container.execution]]
+code = "520610"
+name = "港股红利低波ETF银华"
+list_date = "2026-02-09"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "标普港股通低波红利指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 SPAHLVCP（learned_index_name）。净值 156 行。行情 156 行，来源 eastmoney_etf_hfq。 D19 分组：SPAHLVCP（learned_index_name）。"
+[[container]]
+id = "theme-中信证券印度ETP指数"
+asset_class = "美股和全球主题"
+name = "该基金无跟踪标的"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中信证券印度ETP指数"
+index_name = "该基金无跟踪标的"
+return_basis = "unit_nav"
+publish_date = "2018-08-01"
+publish_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+base_date = "取不到"
+base_date_source = ""
+series_code = "164824"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "https://fundf10.eastmoney.com/jbgk_164824.html"
+note = "D19 §3.1：该基金无跟踪标的。研究序列用上市最早的 164824 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中信证券印度ETP指数（benchmark_max_weight）。"
+
+[[container.execution]]
+code = "164824"
+name = "工银瑞信印度市场证券投资基金(LOF)"
+list_date = "2018-08-01"
+list_date_source = "https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=1105&TABKEY=tab1"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_164824.html"
+note = "D19-4 纳入。分组 中信证券印度ETP指数（benchmark_max_weight）。净值 1953 行。行情 1981 行，来源 eastmoney_etf_hfq。 D19 分组：中信证券印度ETP指数（benchmark_max_weight）。"
+[[container]]
+id = "theme-中证国新港股通央企红利指数"
+asset_class = "美股和全球主题"
+name = "中证国新港股通央企红利指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证国新港股通央企红利指数"
+index_name = "中证国新港股通央企红利指数"
+return_basis = "unit_nav"
+publish_date = "2024-07-10"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "520660"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证国新港股通央企红利指数。研究序列用上市最早的 520660 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中证国新港股通央企红利指数（index_name）。"
+
+[[container.execution]]
+code = "520660"
+name = "港股通央企红利ETF南方"
+list_date = "2024-07-10"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证国新港股通央企红利指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证国新港股通央企红利指数（index_name）。净值 542 行。行情 542 行，来源 eastmoney_etf_hfq。 D19 分组：中证国新港股通央企红利指数（index_name）。"
+
+[[container.execution]]
+code = "520900"
+name = "港股通红利ETF广发"
+list_date = "2024-07-10"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证国新港股通央企红利指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证国新港股通央企红利指数（index_name）。净值 542 行。行情 542 行，来源 eastmoney_etf_hfq。 D19 分组：中证国新港股通央企红利指数（index_name）。"
+
+[[container.execution]]
+code = "520990"
+name = "港股央企红利ETF景顺"
+list_date = "2024-07-10"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证国新港股通央企红利指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证国新港股通央企红利指数（index_name）。净值 542 行。行情 542 行，来源 eastmoney_etf_hfq。 D19 分组：中证国新港股通央企红利指数（index_name）。"
+[[container]]
+id = "theme-中证港股通50指数"
+asset_class = "美股和全球主题"
+name = "中证港股通50指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证港股通50指数"
+index_name = "中证港股通50指数"
+return_basis = "unit_nav"
+publish_date = "2021-01-13"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513550"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证港股通50指数。研究序列用上市最早的 513550 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中证港股通50指数（index_name）。"
+
+[[container.execution]]
+code = "513550"
+name = "港股通50ETF华泰柏瑞"
+list_date = "2021-01-13"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通50指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通50指数（index_name）。净值 1389 行。行情 1386 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通50指数（index_name）。"
+[[container]]
+id = "theme-中证港股通互联网指数"
+asset_class = "美股和全球主题"
+name = "中证港股通互联网指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证港股通互联网指数"
+index_name = "中证港股通互联网指数"
+return_basis = "unit_nav"
+publish_date = "2022-02-18"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513770"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证港股通互联网指数。研究序列用上市最早的 513770 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中证港股通互联网指数（index_name）。"
+
+[[container.execution]]
+code = "513040"
+name = "港股通互联网ETF易方达"
+list_date = "2023-06-12"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通互联网指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通互联网指数（index_name）。净值 805 行。行情 803 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通互联网指数（index_name）。"
+
+[[container.execution]]
+code = "513720"
+name = "港股互联网ETF国泰"
+list_date = "2026-01-09"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通互联网指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通互联网指数（index_name）。净值 177 行。行情 177 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通互联网指数（index_name）。"
+
+[[container.execution]]
+code = "513770"
+name = "港股互联网ETF华宝"
+list_date = "2022-02-18"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通互联网指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通互联网指数（index_name）。净值 1125 行。行情 1122 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通互联网指数（index_name）。"
+
+[[container.execution]]
+code = "520630"
+name = "港股通互联网ETF广发"
+list_date = "2025-12-22"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通互联网指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通互联网指数（index_name）。净值 189 行。行情 189 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通互联网指数（index_name）。"
+
+[[container.execution]]
+code = "520650"
+name = "港股通互联网ETF南方"
+list_date = "2025-11-10"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通互联网指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通互联网指数（index_name）。净值 219 行。行情 219 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通互联网指数（index_name）。"
+
+[[container.execution]]
+code = "520740"
+name = "港股通互联网ETF华安"
+list_date = "2026-08-10"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通互联网指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通互联网指数（index_name）。净值 37 行。行情 37 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通互联网指数（index_name）。"
+
+[[container.execution]]
+code = "520790"
+name = "港股通互联网ETF兴业"
+list_date = "2026-03-30"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通互联网指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通互联网指数（index_name）。净值 127 行。行情 127 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通互联网指数（index_name）。"
+
+[[container.execution]]
+code = "520910"
+name = "港股通互联网ETF华夏"
+list_date = "2026-02-02"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通互联网指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通互联网指数（index_name）。净值 161 行。行情 161 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通互联网指数（index_name）。"
+[[container]]
+id = "theme-中证港股通信息技术综合指数"
+asset_class = "美股和全球主题"
+name = "中证港股通信息技术综合指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证港股通信息技术综合指数"
+index_name = "中证港股通信息技术综合指数"
+return_basis = "unit_nav"
+publish_date = "2026-04-10"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "526000"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证港股通信息技术综合指数。研究序列用上市最早的 526000 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中证港股通信息技术综合指数（index_name）。"
+
+[[container.execution]]
+code = "513240"
+name = "港股通信息技术ETF华安"
+list_date = "2026-05-08"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通信息技术综合指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通信息技术综合指数（index_name）。净值 102 行。行情 102 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通信息技术综合指数（index_name）。"
+
+[[container.execution]]
+code = "520710"
+name = "港股通信息技术ETF广发"
+list_date = "2026-06-01"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通信息技术综合指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通信息技术综合指数（index_name）。净值 86 行。行情 86 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通信息技术综合指数（index_name）。"
+
+[[container.execution]]
+code = "520750"
+name = "港股通信息ETF华富"
+list_date = "2026-07-10"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通信息技术综合指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通信息技术综合指数（index_name）。净值 58 行。行情 58 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通信息技术综合指数（index_name）。"
+
+[[container.execution]]
+code = "526000"
+name = "港股通信息技术ETF华夏"
+list_date = "2026-04-10"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通信息技术综合指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通信息技术综合指数（index_name）。净值 119 行。行情 119 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通信息技术综合指数（index_name）。"
+
+[[container.execution]]
+code = "526030"
+name = "港股通信息技术ETF汇添富"
+list_date = "2026-06-26"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通信息技术综合指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通信息技术综合指数（index_name）。净值 68 行。行情 68 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通信息技术综合指数（index_name）。"
+
+[[container.execution]]
+code = "526050"
+name = "港股通信息技术ETF招商"
+list_date = "2026-04-30"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通信息技术综合指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通信息技术综合指数（index_name）。净值 105 行。行情 105 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通信息技术综合指数（index_name）。"
+
+[[container.execution]]
+code = "526060"
+name = "港股通信息技术ETF华泰柏瑞"
+list_date = "2026-09-04"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通信息技术综合指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通信息技术综合指数（index_name）。净值 18 行。行情 18 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通信息技术综合指数（index_name）。"
+[[container]]
+id = "theme-中证港股通创新药指数"
+asset_class = "美股和全球主题"
+name = "中证港股通创新药指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证港股通创新药指数"
+index_name = "中证港股通创新药指数"
+return_basis = "unit_nav"
+publish_date = "2024-10-14"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "520700"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证港股通创新药指数。研究序列用上市最早的 520700 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中证港股通创新药指数（index_name）。"
+
+[[container.execution]]
+code = "513780"
+name = "港股创新药ETF景顺"
+list_date = "2024-10-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通创新药指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通创新药指数（index_name）。净值 472 行。行情 472 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通创新药指数（index_name）。"
+
+[[container.execution]]
+code = "520700"
+name = "港股通创新药ETF万家"
+list_date = "2024-10-14"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通创新药指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通创新药指数（index_name）。净值 481 行。行情 481 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通创新药指数（index_name）。"
+
+[[container.execution]]
+code = "520970"
+name = "港股通创新药ETF嘉实"
+list_date = "2025-08-07"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通创新药指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通创新药指数（index_name）。净值 280 行。行情 181 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通创新药指数（index_name）。"
+[[container]]
+id = "theme-中证港股通医疗主题指数"
+asset_class = "美股和全球主题"
+name = "中证港股通医疗主题指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证港股通医疗主题指数"
+index_name = "中证港股通医疗主题指数"
+return_basis = "unit_nav"
+publish_date = "2025-08-07"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "520510"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证港股通医疗主题指数。研究序列用上市最早的 520510 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中证港股通医疗主题指数（index_name）。"
+
+[[container.execution]]
+code = "513620"
+name = "港股医疗ETF银华"
+list_date = "2026-05-18"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通医疗主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通医疗主题指数（index_name）。净值 96 行。行情 96 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通医疗主题指数（index_name）。"
+
+[[container.execution]]
+code = "520510"
+name = "港股通医疗ETF华夏"
+list_date = "2025-08-07"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通医疗主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通医疗主题指数（index_name）。净值 280 行。行情 280 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通医疗主题指数（index_name）。"
+
+[[container.execution]]
+code = "520850"
+name = "港股通医疗ETF易方达"
+list_date = "2026-01-19"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通医疗主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通医疗主题指数（index_name）。净值 171 行。行情 171 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通医疗主题指数（index_name）。"
+
+[[container.execution]]
+code = "526010"
+name = "港股通医疗ETF汇添富"
+list_date = "2026-04-17"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通医疗主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通医疗主题指数（index_name）。净值 114 行。行情 114 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通医疗主题指数（index_name）。"
+[[container]]
+id = "theme-中证港股通医药卫生综合指数"
+asset_class = "美股和全球主题"
+name = "中证港股通医药卫生综合指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证港股通医药卫生综合指数"
+index_name = "中证港股通医药卫生综合指数"
+return_basis = "unit_nav"
+publish_date = "2021-08-06"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513700"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证港股通医药卫生综合指数。研究序列用上市最早的 513700 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中证港股通医药卫生综合指数（index_name）。"
+
+[[container.execution]]
+code = "513200"
+name = "港股通医药ETF易方达"
+list_date = "2022-02-11"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通医药卫生综合指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通医药卫生综合指数（index_name）。净值 1130 行。行情 1127 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通医药卫生综合指数（index_name）。"
+
+[[container.execution]]
+code = "513700"
+name = "港股通医药ETF鹏华"
+list_date = "2021-08-06"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通医药卫生综合指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通医药卫生综合指数（index_name）。净值 1252 行。行情 1249 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通医药卫生综合指数（index_name）。"
+[[container]]
+id = "theme-中证港股通央企红利指数"
+asset_class = "美股和全球主题"
+name = "中证港股通央企红利指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证港股通央企红利指数"
+index_name = "中证港股通央企红利指数"
+return_basis = "unit_nav"
+publish_date = "2024-03-04"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513910"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证港股通央企红利指数。研究序列用上市最早的 513910 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中证港股通央企红利指数（index_name）。"
+
+[[container.execution]]
+code = "513910"
+name = "港股通央企红利ETF华夏"
+list_date = "2024-03-04"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通央企红利指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通央企红利指数（index_name）。净值 629 行。行情 628 行，来源 eastmoney_etf。 D19 分组：中证港股通央企红利指数（index_name）。"
+[[container]]
+id = "theme-中证港股通汽车产业主题指数"
+asset_class = "美股和全球主题"
+name = "中证港股通汽车产业主题指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证港股通汽车产业主题指数"
+index_name = "中证港股通汽车产业主题指数"
+return_basis = "unit_nav"
+publish_date = "2024-12-30"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "520600"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证港股通汽车产业主题指数。研究序列用上市最早的 520600 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中证港股通汽车产业主题指数（index_name）。"
+
+[[container.execution]]
+code = "520600"
+name = "港股通汽车ETF广发"
+list_date = "2024-12-30"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通汽车产业主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通汽车产业主题指数（index_name）。净值 426 行。行情 426 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通汽车产业主题指数（index_name）。"
+
+[[container.execution]]
+code = "520680"
+name = "港股通汽车ETF南方"
+list_date = "2026-03-26"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通汽车产业主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通汽车产业主题指数（index_name）。净值 129 行。行情 129 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通汽车产业主题指数（index_name）。"
+
+[[container.execution]]
+code = "520720"
+name = "港股汽车ETF国泰"
+list_date = "2025-09-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通汽车产业主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通汽车产业主题指数（index_name）。净值 245 行。行情 245 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通汽车产业主题指数（index_name）。"
+
+[[container.execution]]
+code = "520780"
+name = "港股通汽车ETF华宝"
+list_date = "2025-12-29"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通汽车产业主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通汽车产业主题指数（index_name）。净值 184 行。行情 184 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通汽车产业主题指数（index_name）。"
+[[container]]
+id = "theme-中证港股通消费主题指数"
+asset_class = "美股和全球主题"
+name = "中证港股通消费主题指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证港股通消费主题指数"
+index_name = "中证港股通消费主题指数"
+return_basis = "unit_nav"
+publish_date = "2021-08-19"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513590"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证港股通消费主题指数。研究序列用上市最早的 513590 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中证港股通消费主题指数（index_name）。"
+
+[[container.execution]]
+code = "513070"
+name = "港股通消费ETF易方达"
+list_date = "2022-03-24"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通消费主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通消费主题指数（index_name）。净值 1101 行。行情 1098 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通消费主题指数（index_name）。"
+
+[[container.execution]]
+code = "513230"
+name = "港股通消费ETF华夏"
+list_date = "2022-01-24"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通消费主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通消费主题指数（index_name）。净值 1139 行。行情 1136 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通消费主题指数（index_name）。"
+
+[[container.execution]]
+code = "513590"
+name = "港股通消费ETF鹏华"
+list_date = "2021-08-19"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通消费主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通消费主题指数（index_name）。净值 1243 行。行情 1240 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通消费主题指数（index_name）。"
+[[container]]
+id = "theme-中证港股通科技指数"
+asset_class = "美股和全球主题"
+name = "中证港股通科技指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证港股通科技指数"
+index_name = "中证港股通科技指数"
+return_basis = "unit_nav"
+publish_date = "2021-07-02"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513860"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证港股通科技指数。研究序列用上市最早的 513860 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中证港股通科技指数（index_name）。"
+
+[[container.execution]]
+code = "513020"
+name = "港股科技ETF国泰"
+list_date = "2022-02-08"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通科技指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通科技指数（index_name）。净值 1133 行。行情 1130 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通科技指数（index_name）。"
+
+[[container.execution]]
+code = "513150"
+name = "港股通科技ETF华泰柏瑞"
+list_date = "2022-02-11"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通科技指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通科技指数（index_name）。净值 1130 行。行情 1127 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通科技指数（index_name）。"
+
+[[container.execution]]
+code = "513560"
+name = "香港科技ETF兴银"
+list_date = "2023-02-13"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通科技指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通科技指数（index_name）。净值 886 行。行情 884 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通科技指数（index_name）。"
+
+[[container.execution]]
+code = "513860"
+name = "港股通科技ETF海富通"
+list_date = "2021-07-02"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通科技指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通科技指数（index_name）。净值 1277 行。行情 1274 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通科技指数（index_name）。"
+
+[[container.execution]]
+code = "513980"
+name = "港股科技ETF景顺"
+list_date = "2021-07-02"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通科技指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通科技指数（index_name）。净值 1277 行。行情 1274 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通科技指数（index_name）。"
+
+[[container.execution]]
+code = "520530"
+name = "港股通科技ETF东财"
+list_date = "2025-12-08"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通科技指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通科技指数（index_name）。净值 199 行。行情 199 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通科技指数（index_name）。"
+
+[[container.execution]]
+code = "520860"
+name = "港股通科技ETF富国"
+list_date = "2025-07-25"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通科技指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通科技指数（index_name）。净值 289 行。行情 289 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通科技指数（index_name）。"
+[[container]]
+id = "theme-中证港股通非银行金融主题指数"
+asset_class = "美股和全球主题"
+name = "中证港股通非银行金融主题指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证港股通非银行金融主题指数"
+index_name = "中证港股通非银行金融主题指数"
+return_basis = "unit_nav"
+publish_date = "2023-11-27"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513750"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证港股通非银行金融主题指数。研究序列用上市最早的 513750 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中证港股通非银行金融主题指数（index_name）。"
+
+[[container.execution]]
+code = "513750"
+name = "港股通非银ETF广发"
+list_date = "2023-11-27"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证港股通非银行金融主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证港股通非银行金融主题指数（index_name）。净值 693 行。行情 691 行，来源 eastmoney_etf_hfq。 D19 分组：中证港股通非银行金融主题指数（index_name）。"
+[[container]]
+id = "theme-中证香港证券投资主题指数"
+asset_class = "美股和全球主题"
+name = "中证香港证券投资主题指数"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "中证香港证券投资主题指数"
+index_name = "中证香港证券投资主题指数"
+return_basis = "unit_nav"
+publish_date = "2020-03-26"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "513090"
+series_source = "eastmoney_pingzhongdata"
+series_status = "in_db"
+source_url = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19 §3.1：中证香港证券投资主题指数。研究序列用上市最早的 513090 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：中证香港证券投资主题指数（index_name）。"
+
+[[container.execution]]
+code = "513090"
+name = "香港证券ETF易方达"
+list_date = "2020-03-26"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "中证香港证券投资主题指数"
+track_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+note = "D19-4 纳入。分组 中证香港证券投资主题指数（index_name）。净值 1585 行。行情 1582 行，来源 eastmoney_etf_hfq。 D19 分组：中证香港证券投资主题指数（index_name）。"
+[[container]]
+id = "theme-巴克莱资本美国综合债券指数"
+asset_class = "美股和全球主题"
+name = "该基金无跟踪标的"
+arm = "main"
+in_pool_index = true
+in_pool_tradable = true
+
+[container.research]
+index_code = "巴克莱资本美国综合债券指数"
+index_name = "该基金无跟踪标的"
+return_basis = "unit_nav"
+publish_date = "2017-02-16"
+publish_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+base_date = "取不到"
+base_date_source = ""
+series_code = "501300"
+series_source = "eastmoney_f10_lsjz"
+series_status = "in_db"
+source_url = "https://fundf10.eastmoney.com/jbgk_501300.html"
+note = "D19 §3.1：该基金无跟踪标的。研究序列用上市最早的 501300 的单位净值，从上市日起。没有把上市前的海外指数接进来。不计算收益。 D19 分组：巴克莱资本美国综合债券指数（benchmark_max_weight）。"
+
+[[container.execution]]
+code = "501300"
+name = "海富通全球美元收益债券型证券投资基金(LOF)"
+list_date = "2017-02-16"
+list_date_source = "https://query.sse.com.cn/commonSoaQuery.do?sqlId=FUND_LIST"
+bars_status = "in_db"
+track = "该基金无跟踪标的"
+track_source = "https://fundf10.eastmoney.com/jbgk_501300.html"
+note = "D19-4 纳入。分组 巴克莱资本美国综合债券指数（benchmark_max_weight）。净值 2358 行。行情 2330 行，来源 eastmoney_etf_hfq。 D19 分组：巴克莱资本美国综合债券指数（benchmark_max_weight）。"
 # 附录 1 排除（不进入海外主题）
 
-# 159557 恒生医疗ETF嘉实 exclude:跟踪标的不是单一指数 track= list=2024-05-22
-# 160125 南方香港优选股票型证券投资基金 exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=2011-11-01
 # 160126 南方香港优选股票型证券投资基金 exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=取不到
-# 160216 国泰大宗商品配置证券投资基金(LOF) exclude:跨境商品，归入商品大类 track=该基金无跟踪标的 list=2015-04-07
-# 160644 鹏华香港美国互联网股票型证券投资基金(LOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=2017-12-29
-# 160719 嘉实黄金证券投资基金(LOF) exclude:跨境商品，归入商品大类 track=该基金无跟踪标的 list=2012-02-10
 # 160723 嘉实原油证券投资基金(QDII-LOF) exclude:跨境商品，归入商品大类 track=该基金无跟踪标的 list=2017-05-05
-# 161116 易方达黄金主题证券投资基金(LOF) exclude:跨境商品，归入商品大类 track=该基金无跟踪标的 list=2011-11-08
 # 161129 易方达原油证券投资基金(QDII) exclude:跨境商品，归入商品大类 track=该基金无跟踪标的 list=2017-02-15
-# 161229 国投瑞银中国价值发现股票型证券投资基金(LOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=2016-01-04
 # 161620 融通核心价值混合型证券投资基金(QDII) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=取不到
-# 161815 银华抗通胀主题证券投资基金(LOF) exclude:跨境商品，归入商品大类 track=该基金无跟踪标的 list=2010-12-20
-# 163208 诺安油气能源股票证券投资基金(LOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=2015-02-17
 # 163813 中银全球策略证券投资基金(FOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=取不到
 # 164212 天弘全球新能源汽车股票型证券投资基金(QDII-LOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=取不到
-# 164701 汇添富黄金及贵金属证券投资基金(LOF) exclude:跨境商品，归入商品大类 track=该基金无跟踪标的 list=2012-03-01
-# 164824 工银瑞信印度市场证券投资基金(LOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=2018-08-01
-# 165513 中信保诚全球商品主题证券投资基金(LOF) exclude:跨境商品，归入商品大类 track=该基金无跟踪标的 list=2012-01-13
-# 501018 南方原油证券投资基金 exclude:跨境商品，归入商品大类 track=该基金无跟踪标的 list=取不到
-# 501225 景顺长城全球半导体芯片产业股票型证券投资基金(QDII-LOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=取不到
 # 501226 长城全球新能源汽车股票型发起式证券投资基金(QDII-LOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=取不到
-# 501300 海富通全球美元收益债券型证券投资基金(LOF) exclude:债券、货币或REITs track=该基金无跟踪标的 list=取不到
-# 501312 华宝海外科技股票型证券投资基金(QDII-LOF) exclude:跟踪标的不是单一指数 track=该基金无跟踪标的 list=取不到
 
 # 已入库、但名称对不上 §3.2 容器的序列（不进入 U-指数 / U-可交易）
 # 参考序列 CBA00601 中债-国债总指数 财富 6190 行 2002-01-04→2026-09-30。不是预注册 §3.2 的 10 年或 5 年容器，不进入池。

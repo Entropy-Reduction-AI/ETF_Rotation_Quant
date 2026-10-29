@@ -1,0 +1,88 @@
+group_key,group_name,group_rule,target_id,asset_class,codes,names
+ASIATECN,新交所泛东南亚科技指数,learned_index_name,theme-新交所泛东南亚科技指数,美股和全球主题,513730,东南亚科技ETF华泰柏瑞
+CES100,中华交易服务港股通精选100指数,learned_index_name,theme-CES100,美股和全球主题,513900,港股通100ETF华安
+DAX,DAX,index_code,theme-法兰克福DAX指数,美股和全球主题,159561,德国ETF嘉实
+DJIA,道琼斯工业平均指数,learned_index_name,theme-道琼斯工业平均指数,美股和全球主题,513400,道琼斯ETF鹏华
+EMASIAUP,新交所新兴亚洲精选50指数,learned_index_name,theme-iEdge Emerging Asia Select 50 Index,美股和全球主题,520580,新兴亚洲ETF招商
+FCHI,CAC40指数,learned_index_name,theme-法国CAC40指数,美股和全球主题,513080,法国ETF华安
+FSSAULM,FSSAULM,index_code,theme-富时沙特阿拉伯指数,美股和全球主题,159329,沙特ETF南方
+GDAXI,德国DAX指数,learned_index_name,theme-法兰克福DAX指数,美股和全球主题,513030,德国ETF华安
+GPCSP006,GPCSP006,index_code,theme-富时亚太低碳精选指数,美股和全球主题,159687,亚太精选ETF南方
+H11146,中证港股通内地金融指数,learned_index_name,theme-H11146,美股和全球主题,513190 526090,港股通金融ETF华夏 | 港股通金融ETF富国
+H11153,中证香港内地国有企业指数,learned_index_name,theme-中证香港内地国有企业港元指数,美股和全球主题,513810 159519,港股国企ETF华夏 | 港股国企ETF国泰
+H30106,中证香港300金融服务指数,learned_index_name,theme-中证港股通金融服务指数,美股和全球主题,513140,港股通金融ETF华泰柏瑞
+H30533,中证海外中国互联网50指数,learned_index_name,theme-中证海外中国互联网50人民币指数,美股和全球主题,513050,中概互联网ETF易方达
+H50069,上证港股通指数,learned_index_name,theme-H50069,美股和全球主题,513990,港股通ETF招商
+HSBIO,恒生生物科技指数,learned_index_name,theme-恒生生物科技指数,美股和全球主题,513930 520760 520930 159615 159892,恒生生物科技ETF华泰柏瑞 | 恒生生物科技ETF摩根 | 恒生生物科技ETF国泰 | 恒生生物科技ETF南方 | 恒生医药ETF华夏
+HSCEI,恒生中国企业指数,learned_index_name,theme-恒生中国企业指数,美股和全球主题,510900 159850 160717 161831,恒生中国企业ETF易方达 | 恒生国企ETF华夏 | 嘉实恒生中国企业指数证券投资基金(QDII-LOF) | 银华恒生中国企业指数证券投资基金(QDII-LOF)
+HSCGSI,恒生消费指数,learned_index_name,theme-恒生消费指数,美股和全球主题,513970 520520 520620 159699,恒生消费ETF景顺 | 恒生消费ETF华泰柏瑞 | 恒生消费ETF嘉实 | 恒生消费ETF广发
+HSCSOE,恒生中国央企,learned_index_name,theme-恒生中国央企指数,美股和全球主题,513170,恒生央企ETF鹏华
+HSFML25,恒生中国（香港上市）30指数,learned_index_name,theme-HSFML25,美股和全球主题,520560,香港大盘30ETF华宝
+HSHCI,恒生医疗保健指数,learned_index_name,theme-恒生医疗保健指数,美股和全球主题,513060 159303 159557,恒生医疗ETF博时 | 恒生医疗ETF大成 | 恒生医疗ETF嘉实
+HSHKBIO,恒生香港上巿生物科技指数,learned_index_name,theme-恒生生物科技指数,美股和全球主题,513280,恒生生物科技ETF汇添富
+HSHYLV,恒生港股通高股息低波动指数,learned_index_name,theme-恒生港股通红利低波动指数,美股和全球主题,513950 520550 520890,恒生红利ETF富国 | 港股红利低波ETF招商 | 港股通红利低波ETF华泰柏瑞
+HSI,恒生指数,learned_index_name,hsi,美股和全球主题,513210 513600 513660 159920 160125 160924 164705,恒生ETF易方达 | 恒生指数ETF南方 | 恒生ETF华夏 | 恒生ETF华夏 | 南方香港优选股票型证券投资基金 | 大成恒生指数证券投资基金(LOF) | 汇添富恒生指数型证券投资基金(QDII-LOF)
+HSIDI,恒生创新药指数,learned_index_name,theme-恒生创新药指数,美股和全球主题,520500,恒生创新药ETF华泰柏瑞
+HSIII,恒生互联网科技业指数,learned_index_name,theme-恒生互联网科技业指数,美股和全球主题,513330 159202 159688,恒生互联网ETF华夏 | 恒生互联网ETF万家 | 恒生互联网ETF华安
+HSISC,恒指港股通指数,learned_index_name,theme-HSISC,美股和全球主题,520770 520820 520940 520960 526070,恒指港股通ETF建信 | 恒指港股通ETF汇添富 | 港股通恒生ETF华安 | 恒指港股通ETF嘉实 | 恒指港股通ETF博时
+HSSC50,恒生港股通50指数,learned_index_name,theme-HSSC50,美股和全球主题,520950,港股通50ETF摩根
+HSSCAMHI,恒生港股通汽车主题指数,learned_index_name,theme-HSSCAMHI,美股和全球主题,520730,港股通汽车ETF万家
+HSSCHKY,恒生港股通高股息率指数,learned_index_name,theme-HSSCHKY,美股和全球主题,513690,港股红利ETF博时
+HSSCITI,恒生港股通科技主题指数,learned_index_name,theme-HSSCITI,美股和全球主题,520670 520840,港股通科技ETF嘉实 | 港股通恒生科技ETF华安
+HSSCNE,恒生港股通新经济指数,learned_index_name,theme-HSSCNE,美股和全球主题,513320,港股通新经济ETF易方达
+HSSCPB,恒生港股通创新药精选指数,learned_index_name,theme-HSSCPB,美股和全球主题,520690 520880,港股创新药ETF博时 | 港股通创新药ETF华宝
+HSSCSOY,恒生港股通中国央企红利指数,learned_index_name,theme-HSSCSOY,美股和全球主题,513920,港股通央企红利ETF华安
+HSSCT,恒生港股通中国科技指数,learned_index_name,theme-HSSCT,美股和全球主题,513160 520980,港股科技ETF银华 | 港股通科技ETF汇添富
+HSTECH,恒生科技指数,learned_index_name,hstech,美股和全球主题,513010 513130 513180 513260 513380 513580 513890 520570 520590 520920 158042 159740 159741 159742,恒生科技ETF易方达 | 恒生科技ETF华泰柏瑞 | 恒生科技ETF华夏 | 恒生科技ETF汇添富 | 恒生科技ETF广发 | 恒生科技ETF华安 | 恒生科技ETF摩根 | 恒生科技ETF南方 | 恒生科技ETF鹏华 | 恒生科技ETF天弘 | 恒生科技ETF富国 | 恒生科技ETF大成 | 恒生科技ETF嘉实 | 恒生科技ETF博时
+Ibovespa Index,Ibovespa Index,mandated_code,theme-巴西IBOVESPA指数,美股和全球主题,520870 159100,巴西ETF易方达 | 巴西ETF华夏
+MSCI China Value Weighted Index,MSCI China Value Weighted Index,benchmark_max_weight,theme-MSCI China Value Weighted Index,美股和全球主题,161229,国投瑞银中国价值发现股票型证券投资基金(LOF)
+MSCI美国50指数,MSCI USA 50 Index,index_name,theme-MSCI USA 50 Index,美股和全球主题,513850 159577,美国50ETF易方达 | 汇添富MSCI美国50交易型开放式指数证券投资基金(QDII)
+N225,日经225指数,learned_index_name,theme-东京日经225指数,美股和全球主题,513000 513520 513880 159866,日经225ETF易方达 | 日经ETF华夏 | 日经225ETF华安 | 日经ETF工银
+NBI,纳斯达克生物科技指数,learned_index_name,theme-纳斯达克生物科技指数,美股和全球主题,513290,纳指生物科技ETF汇添富
+NDX,纳斯达克100指数,learned_index_name,ndx100,美股和全球主题,513100 513110 513300 513390 513870 501312 159501 159513 159632 159659 159660 159696 159941,纳指ETF国泰 | 纳指ETF华泰柏瑞 | 纳斯达克ETF华夏 | 纳指100ETF博时 | 纳指ETF富国 | 华宝海外科技股票型证券投资基金(QDII-LOF) | 纳指ETF嘉实 | 纳斯达克100ETF大成 | 纳斯达克ETF华安 | 纳斯达克100ETF招商 | 纳指ETF汇添富 | 纳指ETF易方达 | 纳指ETF广发
+NDXTMC,NDXTMC,index_code,theme-纳斯达克科技市值加权指数,美股和全球主题,159509,纳指科技ETF景顺
+PHLX Semiconductor Sector Index,PHLX Semiconductor Sector Index,mandated,theme-PHLX Semiconductor Sector Index,美股和全球主题,501225,景顺长城全球半导体芯片产业股票型证券投资基金(QDII-LOF)
+S&P 500 Energy Sector Index(NTR),S&P 500 Energy Sector Index(NTR),benchmark_max_weight,theme-S&P 500 Energy Sector Index(NTR),美股和全球主题,163208,诺安油气能源股票证券投资基金(LOF)
+S&P Global Oil Index Net Total Return,S&P Global Oil Index Net Total Return,benchmark_max_weight,theme-标普全球石油指数,美股和全球主题,160416,华安标普全球石油指数证券投资基金(LOF)
+S&P Oil & Gas Exploration & Production Select Industry Index,S&P Oil & Gas Exploration & Production Select Industry Index,mandated_code,theme-标普石油天然气勘探及生产精选行业指数,美股和全球主题,513350 159518 162411,标普油气ETF富国 | 标普油气ETF嘉实 | 华宝标普石油天然气上游股票指数证券投资基金(LOF)
+SP5CSSUP,SP5CSSUP,index_code,theme-标普500消费精选指数,美股和全球主题,159529,标普消费ETF景顺
+SPAHLVCP,标普港股通低波红利指数,learned_index_name,theme-SPAHLVCP,美股和全球主题,513630 520610,港股低波红利ETF摩根 | 港股红利低波ETF银华
+SPNCSCHN,SPNCSCHN,index_code,theme-标普中国新经济行业指数,美股和全球主题,159822,新经济ETF银华
+SPSIBI,SPSIBI,index_code,theme-标普生物科技精选行业指数,美股和全球主题,159502,标普生物科技ETF嘉实
+SPX,标准普尔500指数,learned_index_name,spx,美股和全球主题,513500 513650 161125,标普500ETF博时 | 标普500ETF南方 | 易方达标普500指数证券投资基金(LOF)
+SPXNTR,SPXNTR,index_code,spx,美股和全球主题,159612 159655,标普500ETF国泰 | 标普500ETF华夏
+TPX,东证指数,learned_index_name,theme-东证指数,美股和全球主题,513800,日本东证指数ETF南方
+WISAUNT,富时沙特阿拉伯指数,learned_index_name,theme-富时沙特阿拉伯指数,美股和全球主题,520830,沙特ETF华泰柏瑞
+cross-border-commodity,跨境商品,cross_border_commodity,cross-border-commodity,商品,160216 161815 165513,国泰大宗商品配置证券投资基金(LOF) | 银华抗通胀主题证券投资基金(LOF) | 中信保诚全球商品主题证券投资基金(LOF)
+crude-oil,原油,cross_border_commodity,crude-oil,商品,501018 160723 161129,南方原油证券投资基金 | 嘉实原油证券投资基金(QDII-LOF) | 易方达原油证券投资基金(QDII)
+gold,黄金,cross_border_commodity,gold,商品,160719 161116 164701,嘉实黄金证券投资基金(LOF) | 易方达黄金主题证券投资基金(LOF) | 汇添富黄金及贵金属证券投资基金(LOF)
+中信证券印度ETP指数,该基金无跟踪标的,benchmark_max_weight,theme-中信证券印度ETP指数,美股和全球主题,164824,工银瑞信印度市场证券投资基金(LOF)
+中证全球中国互联网指数,中证全球中国互联网指数,index_name,theme-中证全球中国互联网人民币指数,美股和全球主题,513220,中概互联ETF招商
+中证全球中国教育主题指数,中证全球中国教育主题指数,index_name,theme-中证全球中国教育主题人民币指数,美股和全球主题,513360,教育ETF博时
+中证国新港股通央企红利指数,中证国新港股通央企红利指数,index_name,theme-中证国新港股通央企红利指数,美股和全球主题,520660 520900 520990,港股通央企红利ETF南方 | 港股通红利ETF广发 | 港股央企红利ETF景顺
+中证海外中国互联网30指数,中证海外中国互联网30人民币指数,benchmark_max_weight,theme-中证海外中国互联网30人民币指数,美股和全球主题,159605 159607,广发中证海外中国互联网30交易型开放式指数证券投资基金(QDII) | 嘉实中证海外中国互联网30交易型开放式指数证券投资基金(QDII)
+中证海外中国互联网指数,该基金无跟踪标的,benchmark_max_weight,theme-中证海外中国互联网指数,美股和全球主题,160644 164906,鹏华香港美国互联网股票型证券投资基金(LOF) | 交银施罗德中证海外中国互联网指数型证券投资基金(LOF)
+中证港股通50指数,中证港股通50指数,index_name,theme-中证港股通50指数,美股和全球主题,513550,港股通50ETF华泰柏瑞
+中证港股通互联网指数,中证港股通互联网指数,index_name,theme-中证港股通互联网指数,美股和全球主题,513040 513720 513770 520630 520650 520740 520790 520910,港股通互联网ETF易方达 | 港股互联网ETF国泰 | 港股互联网ETF华宝 | 港股通互联网ETF广发 | 港股通互联网ETF南方 | 港股通互联网ETF华安 | 港股通互联网ETF兴业 | 港股通互联网ETF华夏
+中证港股通信息技术综合指数,中证港股通信息技术综合指数,index_name,theme-中证港股通信息技术综合指数,美股和全球主题,513240 520710 520750 526000 526030 526050 526060,港股通信息技术ETF华安 | 港股通信息技术ETF广发 | 港股通信息ETF华富 | 港股通信息技术ETF华夏 | 港股通信息技术ETF汇添富 | 港股通信息技术ETF招商 | 港股通信息技术ETF华泰柏瑞
+中证港股通创新药指数,中证港股通创新药指数,index_name,theme-中证港股通创新药指数,美股和全球主题,513780 520700 520970,港股创新药ETF景顺 | 港股通创新药ETF万家 | 港股通创新药ETF嘉实
+中证港股通医疗主题指数,中证港股通医疗主题指数,index_name,theme-中证港股通医疗主题指数,美股和全球主题,513620 520510 520850 526010,港股医疗ETF银华 | 港股通医疗ETF华夏 | 港股通医疗ETF易方达 | 港股通医疗ETF汇添富
+中证港股通医药卫生综合指数,中证港股通医药卫生综合指数,index_name,theme-中证港股通医药卫生综合指数,美股和全球主题,513200 513700,港股通医药ETF易方达 | 港股通医药ETF鹏华
+中证港股通央企红利指数,中证港股通央企红利指数,index_name,theme-中证港股通央企红利指数,美股和全球主题,513910,港股通央企红利ETF华夏
+中证港股通汽车产业主题指数,中证港股通汽车产业主题指数,index_name,theme-中证港股通汽车产业主题指数,美股和全球主题,520600 520680 520720 520780,港股通汽车ETF广发 | 港股通汽车ETF南方 | 港股汽车ETF国泰 | 港股通汽车ETF华宝
+中证港股通消费主题指数,中证港股通消费主题指数,index_name,theme-中证港股通消费主题指数,美股和全球主题,513070 513230 513590,港股通消费ETF易方达 | 港股通消费ETF华夏 | 港股通消费ETF鹏华
+中证港股通科技指数,中证港股通科技指数,index_name,theme-中证港股通科技指数,美股和全球主题,513020 513150 513560 513860 513980 520530 520860,港股科技ETF国泰 | 港股通科技ETF华泰柏瑞 | 香港科技ETF兴银 | 港股通科技ETF海富通 | 港股科技ETF景顺 | 港股通科技ETF东财 | 港股通科技ETF富国
+中证港股通非银行金融主题指数,中证港股通非银行金融主题指数,index_name,theme-中证港股通非银行金融主题指数,美股和全球主题,513750,港股通非银ETF广发
+中证港股通高股息投资指数,中证港股通高股息投资指数,index_name,theme-中证港股通高股息投资港元指数,美股和全球主题,513530 513820 513830 520810,港股通红利ETF华泰柏瑞 | 港股通红利ETF汇添富 | 港股通高股息ETF嘉实 | 港股通红利ETF易方达
+中证韩交所中韩半导体指数,中证韩交所中韩半导体指数,index_name,theme-中证韩交所中韩半导体指数,美股和全球主题,513310,中韩半导体ETF华泰柏瑞
+中证香港创新药指数,中证香港创新药指数,index_name,theme-中证香港创新药港币指数,美股和全球主题,513120,港股创新药ETF广发
+中证香港科技指数,中证香港科技指数指数,benchmark_max_weight,theme-中证香港科技指数指数,美股和全球主题,159747 159750,南方中证香港科技交易型开放式指数证券投资基金(QDII) | 招商中证香港科技交易型开放式指数证券投资基金(QDII)
+中证香港证券投资主题指数,中证香港证券投资主题指数,index_name,theme-中证香港证券投资主题指数,美股和全球主题,513090,香港证券ETF易方达
+巴克莱资本美国综合债券指数,该基金无跟踪标的,benchmark_max_weight,theme-巴克莱资本美国综合债券指数,美股和全球主题,501300,海富通全球美元收益债券型证券投资基金(LOF)
+恒生综合小型股指数,恒生综合小型股指数,benchmark_max_weight,theme-恒生综合小型股指数,美股和全球主题,161124,易方达香港恒生综合小型股指数证券投资基金(LOF)
+标普500信息科技指数,标普500信息科技指数,benchmark_max_weight,theme-标普500信息科技指数,美股和全球主题,161128,易方达标普信息科技指数证券投资基金(LOF)
+标普500医疗保健等权重指数,标普500医疗保健等权重指数,benchmark_max_weight,theme-标普500医疗保健等权重指数,美股和全球主题,161126,易方达标普医疗保健指数证券投资基金(LOF)
+标普生物科技精选行业指数,标普生物科技精选行业指数,benchmark_max_weight,theme-标普生物科技精选行业指数,美股和全球主题,161127,易方达标普生物科技指数证券投资基金(LOF)
+标普美国品质消费股票指数,标普美国品质消费股票指数,benchmark_max_weight,theme-标普美国品质消费股票指数,美股和全球主题,162415,华宝标普美国品质消费股票指数证券投资基金(LOF)
+的道琼斯美国石油开发与生产指数,道琼斯美国石油开发与生产指数,benchmark_max_weight,theme-道琼斯美国石油开发与生产指数,美股和全球主题,162719,广发道琼斯美国石油开发与生产指数证券投资基金(QDII-LOF)
+道琼斯美国精选REIT指数,道琼斯美国精选REIT指数,benchmark_max_weight,theme-道琼斯美国精选REIT指数,美股和全球主题,160140,南方道琼斯美国精选REIT指数证券投资基金(QDII-LOF)
