@@ -132,8 +132,8 @@ def _runs_from(raw: dict, spec) -> list[PeerRun]:
         raise PeerError("peers.toml 把离场、溢价或 T1–T4 打开了")
     cash = raw["cash"]
     calendar = raw["calendar"]
-    if str(calendar["id"]) != MONTH_END_RULE or str(calendar["sf6"]) != "pending-manager":
-        raise PeerError("日历必须仍是待确认的 SF-6 上交所月末")
+    if str(calendar["id"]) != MONTH_END_RULE or str(calendar["sf6"]) != "confirmed":
+        raise PeerError("日历必须是已确认的 SF-6 上交所月末")
     if list(raw["shared"]["pools"]) != list(POOLS):
         raise PeerError("两条规则都要在两个池上各有一条运行")
     if int(cash["trading_days"]) != int(spec.trading_days) or float(cash["annual"]) != float(spec.cash_annual):

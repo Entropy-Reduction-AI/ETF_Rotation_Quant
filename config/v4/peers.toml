@@ -2,7 +2,7 @@
 # 交易条件、成本、现金与 v4 相同。不接 10% 离场、溢价模块、T1–T4。
 # 本文件只声明规则。不读行情库，不产生真实组合收益。
 #
-# SF-6（待 Manager 确认）：月末决策日 = 上交所交易日历中，每个自然月的最后一个交易日。
+# SF-6（Manager 已确认）：月末决策日 = 上交所交易日历中，每个自然月的最后一个交易日。
 # 不是各腿自己交易所的月末，也不是自然月的最后一天（当天休市则不是决策日）。
 # 确认方式：下一上交所交易日已经落在更晚的自然月；或者调用方声明日历已收到该月最后一个交易日
 # （calendar_closed，与 src/v3/engine/sessions.decision_dates(..., "month") 相同）。
@@ -10,7 +10,7 @@
 
 [calendar]
 id = "sse-last-session-of-calendar-month"
-sf6 = "pending-manager"
+sf6 = "confirmed"
 decision = "上交所交易日历中每个自然月的最后一个交易日"
 execution = "决策日之后的下一个上交所交易日收盘"
 partial_month = "下一交易日仍在同一个月，或日历在月中截断且未声明 calendar_closed 时，这个月没有决策日"

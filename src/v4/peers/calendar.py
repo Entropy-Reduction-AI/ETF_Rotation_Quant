@@ -1,4 +1,4 @@
-"""附表 A 的月末。SF-6，待 Manager 确认。
+"""附表 A 的月末。SF-6，Manager 已确认。
 
 月末决策日是上交所交易日历里、每个自然月的最后一个交易日。调用方传入的
 `dates` 就是这本日历，不是某一条腿自己的打印日，也不是自然月的最后一天。
@@ -17,7 +17,7 @@ import pandas as pd
 from src.v3.engine.sessions import next_session
 
 MONTH_END_RULE = "sse-last-session-of-calendar-month"
-SF6_STATUS = "pending-manager"
+SF6_STATUS = "confirmed"
 
 
 def month_end_sessions(dates, *, calendar_closed: bool = False) -> pd.DatetimeIndex:

@@ -76,7 +76,7 @@ class Calendar(unittest.TestCase):
         self.assertNotIn(pd.Timestamp("2006-05-08"), ends)
         closed = month_end_sessions(dates, calendar_closed=True)
         self.assertEqual(list(closed), list(decision_dates(dates, "month")))
-        self.assertEqual(SF6_STATUS, "pending-manager")
+        self.assertEqual(SF6_STATUS, "confirmed")
         self.assertEqual(MONTH_END_RULE, "sse-last-session-of-calendar-month")
 
     def test_partial_month_does_not_decide_or_trade(self):
