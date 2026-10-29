@@ -14,7 +14,15 @@ from src.v3.engine.costs import leg_fee
 from src.v3.engine.market import _split_bars, _usd_level, levels_from_returns
 from src.v3.engine.prices import USD_CODES, returns_from_level, signal_returns
 from src.v3.engine.universe import parse_date, research_code
-from src.v4.engine.carriers import build_candidates, choose_on, prints_for, sse_calendar, stitch_fills
+from src.v4.engine.carriers import (
+    build_candidates,
+    choose_path,
+    has_investable_index,
+    prints_for,
+    spliced_research,
+    sse_calendar,
+    stitch_fills,
+)
 from src.v4.engine.pool import HK_SECTORS, US_SECTORS, added_signals, bm_nav_level, load_mid
 from src.v4.engine.pool import _hk_level
 
@@ -110,7 +118,7 @@ def _add_pool(market, con, spec, end: str) -> None:
             market.liquidity[name] = fresh[name]
 
 
-def _gate(market, con, containers, end: str, switches) -> None:
+def _grouped(con, containers, end: str, switches):
     calendar = sse_calendar(con, end)
     spdr = US_SECTORS if switches.t4_pool else ()
     grouped = build_candidates(con, containers, calendar, end, us_spdr=spdr)
@@ -119,6 +127,35 @@ def _gate(market, con, containers, end: str, switches) -> None:
             key: [row for row in rows if row.tier != 3]
             for key, rows in grouped.items()
         }
+    return grouped
+
+
+def _splice_indexless(market, con, containers, spec, end: str, grouped) -> None:
+    """没有可投资指数的容器，研究序列改成关联基金的日收益拼接。有指数的不动。"""
+    for container in containers:
+        identity = str(container.get("id") or "")
+        if not identity or identity not in market.signal.columns:
+            continue
+        if has_investable_index(container):
+            continue
+        rows = grouped.get(identity) or []
+        if not rows:
+            continue
+        series = spliced_research(con, rows, market.dates, end, nav_lag=int(spec.nav_lag))
+        series = series.reindex(market.dates)
+        if not bool(series.notna().any()):
+            continue
+        series.name = identity
+        market.signal[identity] = series
+        market.pnl[identity] = series
+        market.levels[identity] = _levels_for(series, market.dates)
+        if market.liquidity is not None and identity in market.liquidity.columns:
+            market.liquidity[identity] = series.notna().fillna(False).to_numpy()
+
+
+def _gate(market, con, containers, end: str, switches, grouped=None) -> None:
+    if grouped is None:
+        grouped = _grouped(con, containers, end, switches)
     hk_ids = {name for name, _code in HK_SECTORS}
     assets = {str(row.get("id") or ""): str(row.get("asset_class") or "") for row in containers}
     if market.fill_close is None:
@@ -133,13 +170,12 @@ def _gate(market, con, containers, end: str, switches) -> None:
         market.fill_board_by_day[name] = fill.board
     for name in list(market.names):
         rows = grouped.get(name, [])
+        path = choose_path(rows, market.dates)
         flags = []
-        for day in market.dates:
-            stamp = pd.Timestamp(day)
+        for choice, _day in zip(path, market.dates):
             if name in hk_ids:
                 flags.append(False)
                 continue
-            choice = choose_on(rows, stamp)
             flags.append(choice is not None)
         mask = pd.Series(flags, index=market.dates, dtype=bool)
         if market.liquidity is not None and name in market.liquidity.columns:
@@ -161,8 +197,11 @@ def apply_market(market, switches, *, db, containers: list[dict], spec, pool: st
             _reprice(market, con, containers, spec, end)
         if switches.t4_pool:
             _add_pool(market, con, spec, end)
-        if switches.carriers and pool == "tradable":
-            _gate(market, con, containers, end, switches)
+        if switches.carriers:
+            grouped = _grouped(con, containers, end, switches)
+            _splice_indexless(market, con, containers, spec, end, grouped)
+            if pool == "tradable":
+                _gate(market, con, containers, end, switches, grouped)
     finally:
         con.close()
     return market
