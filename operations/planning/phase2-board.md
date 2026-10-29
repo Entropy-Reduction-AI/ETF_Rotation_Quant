@@ -9,35 +9,38 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: ETF Rotation Manager
-- Date: 2026-10-28
+- Date: 2026-10-29
 - 权威顺序: `AGENTS.md` > 已冻结预注册 > 本看板 > 群聊
 - 命名: `docs/manual/roadmap-and-naming.md`（D13-4）
-- 决定: `operations/planning/2026-10-28-d13-owner-decisions.md`；D14：`operations/planning/2026-10-28-d14-owner-decisions.md`
-- v4 任务: `operations/planning/2026-10-28-v4-dev-plan.md`；v4-R1b：`operations/planning/2026-10-28-v4-r1b-plan.md`（已收口）
-- Owner 看板: `docs/owner/phase2-owner-board.md`
-- 收口主线: `3d5ce322899576c1dbb7d0e3d456b7c7c8eac1bd`（PR #75 rebase-merge 之后的 `origin/main`）
+- 决定: `operations/planning/2026-10-28-d13-owner-decisions.md`；D14：`operations/planning/2026-10-28-d14-owner-decisions.md`；D23：`operations/planning/2026-10-29-d23-v4-prereg-approval.md`
+- v4 任务: `operations/planning/2026-10-28-v4-dev-plan.md`；v4-R5：`operations/planning/2026-10-29-v4-r5-plan.md`
+- 设计期简报: `operations/reports/v4-r5-design-period-brief.md`
+- Orchestrator 交接: `operations/planning/2026-10-29-v4-r5-orchestrator-handoff.md`
+- 数据看板: `docs/owner/data-board.md`
+- Owner 看板: `docs/owner/phase2-owner-board.md`（五段体检尚未改；由 Orchestrator 写）
+- 收口主线: `cbd94df42c1016737fb2c078d8f83e78222eae03`（#123 签收 rebase-merge 之后的 `origin/main`）
 - 旧流水: `operations/work_logs/2026-10-28-phase2-board-ledger.md`（main `9fd6f67` 上本文件的原文）
 
 ## 现在的位置
 
 v3.1 已停在 **⑦ 代码冻结**。tag `milestone/v3-code-freeze` → `b1f84d899f4a37914c1ce4ef0ab16484f0ef7cdb`（附注标签对象 `f1d3d0c170ecbd5eb3b463c26834bafd5dc40254`）。R3 签收 `approve`：`operations/reviews/2026-10-27-v3.1-code-freeze-r3.md`（PR #56，已在 main）。⑧ 一次性检验未批准（D11-5）。D13 收口把复核正文、两份只在分支上的记录和本看板改写进 main；收口记录是 `operations/work_logs/2026-10-28-v3.1-closeout.md`。
 
-v4 的 R1、R2、R3、R1b 已合入上面这条主线。**D14 / v4-R1b 关闭。** 预注册（v4-R4）还没开始。下一闸门是等 Owner 或 Orchestrator 给出 v4-R4 之前的路径。在此之前不新开 Dev 或 Reviewer 任务，不起草预注册，不打 `milestone/v4-prereg-freeze`。预注册冻结之前不运行任何 v4 候选看收益。
+v4 预注册已冻结：`milestone/v4-prereg-freeze` 指向 `6bcba53e36e74ec81dd21fb7ee7b8cea695038fb`（附注对象 `830320d03712df3a4098f352be8932e0553b5eeb`）。设计期运行在 #122（`09fe9add4ce806f07c88ec64693106df3ff72802`），过关与 §7.5 签收在 #123（`cbd94df42c1016737fb2c078d8f83e78222eae03`，Decision `approve`）。Manager 简报：`operations/reports/v4-r5-design-period-brief.md`。最终版 = E2 新口径 B0（T1–T4 没有一条同时通过三条规则）。面向 Owner 的五段还没写。D14 / v4-R1b 的收口原文在下方专节，日期仍是 2026-10-28。
 
 | 版本 | ① 规则定稿 | ② 标的池 | ③ 交易引擎 | ④ 溢价控制 | ⑤ 打分卡 | ⑥ 业务体检 | ⑦ 代码冻结 | ⑧ 一次性检验 | ⑨ 结论 | ⑩ 模拟盘 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | v3.1 | 完成 | 完成 | 完成 | 完成 | 完成 | 完成 | 完成 | 暂停 | — | — |
-| v4 | v4-R4 未开始 | v4-R1、v4-R1b 已合入 | v4-R2 已合入 | v4-R2 已合入 | v4-R3 已合入 | v4-R5 未开始 | — | — | — | — |
+| v4 | 已冻结 | v4-R1、v4-R1b 已合入 | v4-R2 已合入 | v4-R2 已合入 | v4-R3 已合入 | v4-R5 进行中 | — | — | — | — |
 
 状态只用这五个词：未开始 / 进行中 / 待评审 / 已合入 / 阻塞。
 
 ## 硬边界
 
-- 不运行任何 v4 候选规则来看组合收益。v4-R4 冻结前只做数据、代码和工具。
-- 不计算、不落盘 2016-01-01 及以后的组合收益。涉及收益的探索统计只用 ≤2015-12-31。
-- 不写 `results/v3/LOCK`。模拟盘和真钱须 Owner 另作明确批准。
-- 不移动任何 tag。删除只按 Owner 的决定记录执行，并且先写入 `docs/manual/milestones.md`。`milestone/phase1-archive` 永不删除、不移动。D14-2 列出的 9 个已经删除（#71、#72）。不强推、不改写 main。合入用 `--ff-only` 或 squash。
-- 汇报五段：本轮完成 / 能做什么不能做什么 / 业务信号 / 风险卡点 / 需要 Owner 的事。
+- 设计期（end ≤ 2015-12-31）的 v4 运行已经在 main 上。本看板不重跑、不改规则。新的组合收益运行须另有授权。
+- 不计算、不落盘 2016-01-01 及以后的组合收益。涉及收益的读数只用 ≤2015-12-31。
+- 不写 `results/v3/LOCK`，也不写 `results/v4/LOCK`。模拟盘和真钱须 Owner 另作明确批准。一次性检验仍待研究封板（D20-4）。
+- 不移动任何 tag。删除只按 Owner 的决定记录执行，并且先写入 `docs/manual/milestones.md`。`milestone/phase1-archive` 永不删除、不移动。`milestone/v4-prereg-freeze` 保持指向 `6bcba53`。不强推、不改写 main。
+- 面向 Owner 的五段由 Orchestrator 写。本看板只登记进度和指针，不判定策略好坏。
 
 ## v4 轮次
 
@@ -49,12 +52,28 @@ v4 的 R1、R2、R3、R1b 已合入上面这条主线。**D14 / v4-R1b 关闭。
 | v4-R1b | ② 标的池 | 已合入 | D14。#59 计划，#70 IC `numbers_ok`，#71 / #72 标签清理 `approve`，#73 取数，#74 抽查 `approve_with_follow_up`，#75 探索。主线 `3d5ce322899576c1dbb7d0e3d456b7c7c8eac1bd` | 见下方收口。取数后 `data/market.sqlite` SHA256 `af4c5a376d084cd6254187c1107c6179d0cfd9647c008bff84b4c26f52045b78` |
 | v4-R2 | ③ 交易引擎、④ 溢价控制 | 已合入 | D12-1、D13-5。#67 实现，#68 `approve` | 成交限制、跨境成本、T1–T3 做成开关。开关全关时与 `milestone/v3-code-freeze` 的 v3.1 结果逐日一致 |
 | v4-R3 | ⑤ 打分卡 | 已合入 | D13-2、D13-5。#63 实现，#60 `numbers_ok_with_notes`，#64 `approve` | 任意起点和四种市场状态工具，能复现已登记的 E2 参考数字；Reviewer 独立复算 |
-| v4-R4 | ① 规则定稿 | 未开始 | D13-2、D13-5 | v4 预注册写完、复核通过、Owner 批准，再打 `milestone/v4-prereg-freeze`。等 Owner 或 Orchestrator 给出路径。本看板不派这条任务 |
-| v4-R5 | ⑥ 业务体检 | 未开始 | D13-5 | 预注册冻结后，设计期 end≤2015-12-31 的体检报告。等 R4 |
+| v4-R4 | ① 规则定稿 | 已合入 | D23-1。预注册第 2.3 版，`milestone/v4-prereg-freeze` → `6bcba53e36e74ec81dd21fb7ee7b8cea695038fb` | 索引：`docs/manual/milestones.md`；登记：`operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md` |
+| v4-R5 | ⑥ 业务体检 | 进行中 | D23-2。#122 设计期运行 `09fe9ad`；#123 签收 `approve`，`cbd94df`。过关：T1–T4 均未同时通过三条，最终版 = B0 | 简报 `operations/reports/v4-r5-design-period-brief.md` 已交。Owner 五段和 `milestone/v4-code-freeze` 还没做 |
 
-v4 候选是 T1–T4（旧称 D1–D4）。决定编号仍是 D13、D14 这一类，不进路线图。
+v4 候选是 T1–T4（旧称 D1–D4）。决定编号仍是 D13、D14 这一类，不进路线图。R1c–R1f、R2b、R2c、R4b 的计划与签收仍在 `operations/planning/` 和 `operations/reviews/`，本表不另开一套轮次编号。
+
+## v4-R5 设计期包（2026-10-29）
+
+| 项 | 指针 |
+| --- | --- |
+| 简报 | `operations/reports/v4-r5-design-period-brief.md` |
+| 签收 | `operations/reviews/2026-10-29-v4-r5-design-gate-signoff.md`（Decision `approve`） |
+| 复算 JSON | `operations/reviews/diag/v4/v4-r5-gate-scorecard-recompute.json` |
+| Dev 运行记录 | `operations/work_logs/2026-10-29-v4-r5-design-runs.md` |
+| 过关表 | `results/v4/r5/candidate-gate.csv`（SHA256 `32058828326f5155ce9b9a678746d2f55d7a4a023b3d20a883e01676383c1b42`） |
+| 交接 | `operations/planning/2026-10-29-v4-r5-orchestrator-handoff.md`（D22-2 冲突日 CSV；SF-5 原项已改） |
+| 数据看板 | `docs/owner/data-board.md` 第 5 节。本看板不抄组合收益 |
+
+账本 41 行。库指纹仍是 `1adb6d43…`。没有 `results/v4/LOCK`。没有 2016-01-01 及以后的组合收益汇总。标签未移动。
 
 ## D14 / v4-R1b 收口
+
+下面这一节是 2026-10-28 的收口原文。当时的「下一闸门」已经过去：预注册已冻结，设计期已跑完并打包。现行位置以上面的表为准。
 
 2026-10-28（Asia/Taipei）。主线 `3d5ce322899576c1dbb7d0e3d456b7c7c8eac1bd`。origin 上的标签只剩三个，对象 SHA 与清理前一致：`milestone/phase1-archive`、`milestone/v3.1-prereg-freeze` → `1040035ee1d707368b58687994894189753843ac`、`milestone/v3-code-freeze` → `b1f84d899f4a37914c1ce4ef0ab16484f0ef7cdb`。
 
@@ -113,13 +132,14 @@ v4 候选是 T1–T4（旧称 D1–D4）。决定编号仍是 D13、D14 这一�
 
 ## 里程碑
 
-origin 上现存的标签只有这三行。对象 SHA 与 D14-2 清理前一致，清理之后没有移动。
+2026-10-28 收口时 origin 上的标签是下面三行。对象 SHA 与 D14-2 清理前一致，清理之后没有移动。2026-10-29 按 D23-1 新建了 `milestone/v4-prereg-freeze`。登记在 `docs/manual/milestones.md`。本简报包没有创建、移动或删除任何标签。
 
 | 标签 | 标签对象 | 指向提交 | 含义 |
 | --- | --- | --- | --- |
 | `milestone/phase1-archive` | `4812115867d0e9176175bd45d21b2dae19c10979` | `0dd93fa13e0aa79b09ef16ba80676c022004be02` | 第一阶段封存。永不删除、不移动 |
 | `milestone/v3.1-prereg-freeze` | `e3b55a7b8ce967a43341a3c9d02e6a0a42e2b508` | `1040035ee1d707368b58687994894189753843ac` | v3.1 ① 预注册冻结 |
 | `milestone/v3-code-freeze` | `f1d3d0c170ecbd5eb3b463c26834bafd5dc40254` | `b1f84d899f4a37914c1ce4ef0ab16484f0ef7cdb` | v3.1 ⑦ 代码冻结 |
+| `milestone/v4-prereg-freeze` | `830320d03712df3a4098f352be8932e0553b5eeb` | `6bcba53e36e74ec81dd21fb7ee7b8cea695038fb` | v4 ① 预注册冻结（D23-1，2026-10-29 新建） |
 
 D14-2 删掉的 9 个仍登记在 `docs/manual/milestones.md`（清理前的 12 行）。执行记录是 `operations/work_logs/2026-10-28-tag-cleanup.md`，核对是 `operations/reviews/2026-10-28-v4-r1b-tag-cleanup-verify.md`（#72，`approve`）。
 
@@ -143,5 +163,7 @@ D14-2 删掉的 9 个仍登记在 `docs/manual/milestones.md`（清理前的 12 
 - `operations/work_logs/2026-10-28-v4-r1b-exploration.md`
 
 ## 最近更新
+
+2026-10-29（Asia/Taipei），Manager。v4-R4 改为已冻结，v4-R5 改为进行中。设计期简报指向 `operations/reports/v4-r5-design-period-brief.md`，数据看板第 5 节加上 D22-2 指针。主线 `cbd94df42c1016737fb2c078d8f83e78222eae03`。不重跑，不改规则，不写 `results/v4/LOCK`，不写 2016 及以后的组合收益，不改 tag。Owner 五段留给 Orchestrator。
 
 2026-10-28（Asia/Taipei），Manager，D14 / v4-R1b 收口。v4-R1、v4-R2、v4-R3、v4-R1b 改为已合入，主线 `3d5ce322899576c1dbb7d0e3d456b7c7c8eac1bd`。8 条口径跟进留给 Orchestrator，不送 Owner，不新开 Dev 或 Reviewer 任务。下一闸门是 v4-R4 之前的路径。不写组合收益，不写 `results/v3/LOCK`，不改 `src/`，不改 `data/`，不改 tag。
