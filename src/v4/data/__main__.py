@@ -67,8 +67,12 @@ def _r1c() -> int:
 
 def _r1e(stage: str) -> int:
     from .r1e import run
+    if stage == "followup":
+        from .r1e_followup import run as run_followup
+        run_followup()
+        return 0
     if stage not in {"all", "census", "fill", "register", "regroup", "retry"}:
-        print("用法: python -m src.v4.data r1e [all|census|fill|register|regroup|retry]")
+        print("用法: python -m src.v4.data r1e [all|census|fill|register|regroup|retry|followup]")
         return 2
     run(stage)
     return 0
