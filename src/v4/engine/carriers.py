@@ -2,7 +2,8 @@
 
 顺序是预注册第 2.3 版 §3.2：
 
-1. 跟踪同一指数（或同一组）的场内 ETF、LOF，有后复权，并且满足 v3 §3.3 的可交易首日和当天流动性。
+1. 跟踪同一指数（或同一组，§3.1）的场内 ETF、LOF。名单来自登记表里已经分好组的执行层，
+   不限于 EXACT_INDEX / OWN_TRACK 那 16 个容器。有后复权，并且满足 v3 §3.3 的可交易首日和当天流动性。
    可交易首日 = max(上市日后第 60 个上交所交易日, 首次「近 20 个自身交易日成交额中位数 ≥ 3000 万元」)。
    上市日取原始 K 线第一根正收盘，第 60 个交易日不含上市日当天。
    流动性是当天的条件：这一天对应的近 20 个自身交易日成交额中位数仍然 ≥ 3000 万元。
@@ -55,6 +56,8 @@ LIST_LAG = 60
 STALE_DAYS = 5
 # 和载体表一样：H00300 的 2005-01-01 是周六，交易日从 2005-01-04 起。
 CALENDAR_FROM = "2005-01-04"
+_JUNK_TRACK = frozenset({"", "取不到", "TBD", "该基金无跟踪标的"})
+_SUB_CODES = frozenset(row["code"] for row in SUBSTITUTES)
 
 
 @dataclass(frozen=True)
@@ -193,8 +196,41 @@ def _listings(con: sqlite3.Connection) -> list[dict]:
     } for row in rows]
 
 
+def accepted_tracks(container: dict) -> frozenset[str]:
+    """第 2 档用来对「同一指数」的名称和代码。
+
+    有 EXACT_INDEX / OWN_TRACK 时，只认这些正式名称，再加登记表的指数名称和代码。
+    没有这张正式名称表的容器，场内执行层的跟踪标的就是 §3.1 分组留下的名称。
+    相近替身自己的跟踪标的不拿来扩大这一档。
+    """
+    identity = str(container.get("id") or "")
+    labels = set(index_names(identity))
+    research = container.get("research") or {}
+    for key in ("index_name", "index_code"):
+        text = str(research.get(key) or "").strip()
+        if text not in _JUNK_TRACK:
+            labels.add(text)
+    if index_names(identity):
+        return frozenset(labels)
+    for row in container.get("execution") or []:
+        if str(row.get("code") or "") in _SUB_CODES:
+            continue
+        track = str(row.get("track") or "").strip()
+        if track not in _JUNK_TRACK:
+            labels.add(track)
+    return frozenset(labels)
+
+
+def _enhanced_name(name: str) -> bool:
+    return "增强" in str(name or "")
+
+
 def _execution_etfs(containers: list[dict]) -> dict[str, list[dict]]:
-    """arm=main 的执行层里，跟踪标的全称和容器指数一致的场内 ETF。510880 对不上，不会进这里。"""
+    """每个容器的第 1 档场内 ETF、LOF。来源是登记表里已经按 §3.1 分好的执行层。
+
+    不再只留下 EXACT_INDEX / OWN_TRACK 对得上名字的容器。510880 是相近替身，留在第 3 档。
+    有正式指数全称的容器，跟踪标的对不上的代码不进第 1 档。增强型名称不进。
+    """
     out: dict[str, list[dict]] = {}
     for container in containers:
         if container.get("arm") not in {None, "main"}:
@@ -202,18 +238,24 @@ def _execution_etfs(containers: list[dict]) -> dict[str, list[dict]]:
         if container.get("asset_class") == "现金":
             continue
         identity = str(container.get("id") or "")
-        names = index_names(identity)
-        if not names:
+        if not identity:
             continue
+        strict = bool(index_names(identity))
+        labels = accepted_tracks(container) if strict else frozenset()
         order = 0
         for row in container.get("execution") or []:
             code = str(row.get("code") or "")
+            if code in {"", "取不到", "TBD"} or code in _SUB_CODES:
+                continue
+            name = str(row.get("name") or "")
+            if _enhanced_name(name):
+                continue
             track = str(row.get("track") or "")
-            if code in {"", "取不到", "TBD"} or track not in names:
+            if strict and track not in labels:
                 continue
             out.setdefault(identity, []).append({
                 "code": code,
-                "name": str(row.get("name") or ""),
+                "name": name,
                 "order": order,
                 "tracks": track,
             })
@@ -279,7 +321,13 @@ def build_candidates(con: sqlite3.Connection, containers: list[dict], calendar: 
         if int(row["enhanced"] or 0) == 1 or "增强" in str(row["name"] or ""):
             continue
         linked_without_index = bool(container) and not has_investable_index(container)
-        if track not in index_names(identity) and not linked_without_index:
+        labels = accepted_tracks(container) if container else frozenset()
+        execution_codes = {
+            str(item.get("code") or "") for item in (container.get("execution") or [])
+        }
+        # 概况页用英文正式名称、登记表用中文跟踪标的时，同一只已分组的基金仍算第 2 档。
+        same_fund = str(row["code"]) in execution_codes
+        if not linked_without_index and track not in labels and not same_fund:
             continue
         nav_start = otc_nav_start(con, str(row["code"]), end)
         inception = str(row["inception"] or "")
@@ -658,4 +706,59 @@ def spliced_research(con: sqlite3.Connection, rows: list[_Candidate], days, end:
         if item.code in returns:
             continue
         returns[item.code] = research_return(con, item, calendar, end, nav_lag)
+    return splice_returns(earning_path(choose_path(rows, calendar)), calendar, returns)
+
+
+def compound_level(returns: pd.Series, index: pd.DatetimeIndex) -> pd.Series:
+    """日收益连乘成连续水平。没有收益的日子水平不动，不把两只基金的价格接在一起。"""
+    current = 100.0
+    values = []
+    aligned = returns.reindex(index)
+    for raw in aligned.to_numpy(dtype=float):
+        if raw == raw and float(raw) > -1.0:
+            current *= 1.0 + float(raw)
+        values.append(current)
+    return pd.Series(values, index=index, dtype=float)
+
+
+def portfolio_return(con: sqlite3.Connection, item: _Candidate, calendar: pd.DatetimeIndex,
+                     end: str, nav_lag: int, *, usd: pd.Series | None = None,
+                     stale_limit: int = 5) -> pd.Series:
+    """U-可交易的计价收益：场内后复权，场外复权净值，QDII 再按 v3 §4.1 滞后。
+
+    美股 SPDR 用和 U-指数相同的人民币口径（严格早于 D 的后复权乘当天或之前的美元中间价）。
+    不改研究序列用的 `research_return`。
+    """
+    if item.vehicle == "spdr":
+        from src.v3.engine.market import _usd_level
+        from src.v4.engine.pool import _closes_frame
+        if usd is None:
+            return pd.Series(np.nan, index=calendar, dtype=float)
+        block = _closes_frame(con, item.code, end, kind="backward")
+        if block.empty:
+            return pd.Series(np.nan, index=calendar, dtype=float)
+        level, _fresh, _gaps = _usd_level(block, usd, calendar, int(stale_limit), None)
+        return returns_from_level(level).reindex(calendar)
+    otc = item.vehicle == "otc" or (item.vehicle == "near" and item.board == "none")
+    if otc:
+        level = _load_kind(con, item.code, "otc_nav", end)
+        if item.qdii:
+            return lagged_nav_returns(level, calendar, nav_lag)
+        return _event_returns(level, calendar)
+    if item.qdii:
+        return lagged_nav_returns(_load_nav(con, item.code, end), calendar, nav_lag)
+    return _event_returns(canonical_closes(con, item.code, end), calendar)
+
+
+def spliced_portfolio(con: sqlite3.Connection, rows: list[_Candidate], days, end: str, *,
+                      nav_lag: int, usd: pd.Series | None = None,
+                      stale_limit: int = 5) -> pd.Series:
+    """U-可交易组合收益。D 日用 D−1 选定的载体，新载体从 D+1 起。"""
+    calendar = pd.DatetimeIndex(pd.to_datetime(days))
+    returns: dict[str, pd.Series] = {}
+    for item in rows:
+        if item.code in returns:
+            continue
+        returns[item.code] = portfolio_return(
+            con, item, calendar, end, nav_lag, usd=usd, stale_limit=stale_limit)
     return splice_returns(earning_path(choose_path(rows, calendar)), calendar, returns)

@@ -17,8 +17,10 @@ from src.v3.engine.universe import parse_date, research_code
 from src.v4.engine.carriers import (
     build_candidates,
     choose_path,
+    compound_level,
     has_investable_index,
     prints_for,
+    spliced_portfolio,
     spliced_research,
     sse_calendar,
     stitch_fills,
@@ -185,6 +187,37 @@ def _gate(market, con, containers, end: str, switches, grouped=None) -> None:
             market.liquidity[name] = market.liquidity[name].astype(bool) & mask.to_numpy()
 
 
+def _replace_carrier_pnl(market, con, spec, end: str, grouped) -> None:
+    """U-可交易的计价收益改成选定载体自己的日收益。排名用的信号不动。"""
+    usd = load_mid(con, "USDCNY", end, filled=True)
+    calendar = market.dates
+    for name in list(market.names):
+        if name == market.cash_id:
+            continue
+        rows = grouped.get(name) or []
+        series = spliced_portfolio(
+            con, rows, calendar, end,
+            nav_lag=int(spec.nav_lag), usd=usd, stale_limit=int(spec.stale_limit))
+        series = series.reindex(calendar)
+        series.name = name
+        market.pnl[name] = series
+        if name in market.levels.columns:
+            market.levels[name] = compound_level(series, calendar)
+
+
+def apply_tradable_execution(market, switches, *, db, containers: list[dict], spec):
+    """在已经装好的 U-指数研究序列上，改计价收益和可交易掩码。不改信号。"""
+    end = str(pd.Timestamp(market.dates.max()).date())
+    con = _connect(Path(db))
+    try:
+        grouped = _grouped(con, containers, end, switches)
+        _gate(market, con, containers, end, switches, grouped)
+        _replace_carrier_pnl(market, con, spec, end, grouped)
+    finally:
+        con.close()
+    return market
+
+
 def apply_market(market, switches, *, db, containers: list[dict], spec, pool: str = "index"):
     """按打开的开关改行情。全关时原样返回。"""
     if switches is None:
@@ -205,6 +238,7 @@ def apply_market(market, switches, *, db, containers: list[dict], spec, pool: st
             _splice_indexless(market, con, containers, spec, end, grouped)
             if pool == "tradable":
                 _gate(market, con, containers, end, switches, grouped)
+                _replace_carrier_pnl(market, con, spec, end, grouped)
     finally:
         con.close()
     return market

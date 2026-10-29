@@ -1,12 +1,12 @@
 {
   "allow_substitute": true,
-  "cagr": 0.03188462200562303,
-  "cagr_from_2006": 0.03305600696353328,
+  "cagr": 0.0629484399601159,
+  "cagr_from_2006": 0.06730429987433895,
   "case": "drop-best-1",
   "cost_multiplier": 1.0,
   "decision_delay": 0,
   "dropped": [
-    "chinext"
+    "csi300"
   ],
   "end": "2015-12-31",
   "exit_drawdown": 0.1,
@@ -17,9 +17,9 @@
     120,
     250
   ],
-  "max_drawdown": -0.23264560009805835,
+  "max_drawdown": -0.31268491058192205,
   "n": 2671,
-  "net_sha256": "56b1604892740835ee04f9c74166670dd31bb109c354b1798ecc981f6fd3894b",
+  "net_sha256": "d05897166139d5d6d589b2904712b4d078ef9877d346a09c31f7babb78f3dbf0",
   "passed": [],
   "pool": "tradable",
   "start": "2005-01-04",
