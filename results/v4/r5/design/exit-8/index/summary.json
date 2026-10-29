@@ -1,0 +1,29 @@
+{
+  "allow_substitute": true,
+  "cagr": 0.18503591406193065,
+  "cagr_from_2006": 0.2055240714515465,
+  "case": "exit-8",
+  "cost_multiplier": 1.0,
+  "decision_delay": 0,
+  "dropped": [],
+  "end": "2015-12-31",
+  "exit_drawdown": 0.08,
+  "kind": "robustness",
+  "lookbacks": [
+    20,
+    60,
+    120,
+    250
+  ],
+  "max_drawdown": -0.38797491506616033,
+  "n": 2671,
+  "net_sha256": "f01d5ff10119cb7ff4776b4ae8cb2b5fc40b92592500f299dc1e79ab9dddfa72",
+  "passed": [],
+  "pool": "index",
+  "start": "2005-01-04",
+  "t1_turn": false,
+  "t2_state_weights": false,
+  "t3_refill": false,
+  "t4_pool": false,
+  "us_dividend_retained": 1.0
+}

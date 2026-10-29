@@ -1,0 +1,17 @@
+{
+  "cagr": 0.2002472070350152,
+  "case": "A1",
+  "end": "2015-12-31",
+  "exit_module": false,
+  "kind": "peer",
+  "max_drawdown": -0.42860837824643305,
+  "n": 2671,
+  "net_sha256": "a2bca03c142db76b36af7b7789ec9e4fcd0b2fbc71a4c1270189e9d7cb83f13b",
+  "pool": "tradable",
+  "premium_module": false,
+  "start": "2005-01-04",
+  "t1_turn": false,
+  "t2_state_weights": false,
+  "t3_refill": false,
+  "t4_pool": false
+}

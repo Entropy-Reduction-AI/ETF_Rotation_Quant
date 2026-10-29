@@ -1,0 +1,31 @@
+{
+  "allow_substitute": true,
+  "cagr": 0.19498706897630536,
+  "cagr_from_2006": 0.21678909787897904,
+  "case": "drop-best-1",
+  "cost_multiplier": 1.0,
+  "decision_delay": 0,
+  "dropped": [
+    "allshare-healthcare"
+  ],
+  "end": "2015-12-31",
+  "exit_drawdown": 0.1,
+  "kind": "robustness",
+  "lookbacks": [
+    20,
+    60,
+    120,
+    250
+  ],
+  "max_drawdown": -0.39013342503523685,
+  "n": 2671,
+  "net_sha256": "c1f2b0c997b8a8c8b4881f08ec478ca2a844b821acfe713eeee09f93c0ae9db4",
+  "passed": [],
+  "pool": "index",
+  "start": "2005-01-04",
+  "t1_turn": false,
+  "t2_state_weights": false,
+  "t3_refill": false,
+  "t4_pool": false,
+  "us_dividend_retained": 1.0
+}
