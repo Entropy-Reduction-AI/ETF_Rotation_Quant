@@ -1,0 +1,117 @@
+# 附表 A 公开同行的两条独立运行。预注册 v4 §7.4。
+# 交易条件、成本、现金与 v4 相同。不接 10% 离场、溢价模块、T1–T4。
+# 本文件只声明规则。不读行情库，不产生真实组合收益。
+#
+# SF-6（待 Manager 确认）：月末决策日 = 上交所交易日历中，每个自然月的最后一个交易日。
+# 不是各腿自己交易所的月末，也不是自然月的最后一天（当天休市则不是决策日）。
+# 确认方式：下一上交所交易日已经落在更晚的自然月；或者调用方声明日历已收到该月最后一个交易日
+# （calendar_closed，与 src/v3/engine/sessions.decision_dates(..., "month") 相同）。
+# 成交 = 该决策日之后的下一个上交所交易日，按收盘成交。
+
+[calendar]
+id = "sse-last-session-of-calendar-month"
+sf6 = "pending-manager"
+decision = "上交所交易日历中每个自然月的最后一个交易日"
+execution = "决策日之后的下一个上交所交易日收盘"
+partial_month = "下一交易日仍在同一个月，或日历在月中截断且未声明 calendar_closed 时，这个月没有决策日"
+
+[disabled]
+exit_module = false
+premium_module = false
+t1_turn = false
+t2_state_weights = false
+t3_refill = false
+t4_pool = false
+
+[costs]
+source = "config/v3/arms.toml"
+via = "src.v3.engine.spec.Spec.fee"
+note = "v3 §4.3 / v4 §5。这些腿不是美股行业 ETF，不用 0.15% 的行业档。"
+
+[cash]
+id = "cash"
+annual = 0.02
+trading_days = 252
+rule = "v3 §3.2：511880 上市后用其全收益；上市前每个上交所交易日 annual/trading_days。本模块不读行情库。缺省现金序列用 annual/trading_days；调用方可以传入已经对齐的现金日收益。"
+
+[shared]
+trade_eps_source = "config/v3/arms.toml"
+pools = ["index", "tradable"]
+fill_limits = "§4.5。只在调用方传入报价时顺延；不传报价表示这组序列没有涨跌停。不调用离场模块。"
+
+[peers.A1]
+rule = "dual-momentum"
+citation = "Antonacci 2014, Global Equities Momentum"
+lookback_months = 12
+absolute_leg = "spx"
+defense_leg = "cgb-10y"
+tie_break = "spx"
+# 12 个月收益相同则持有规则正文里先写到的标普500。「高于」是严格大于。
+# 标普500 或现金的 12 个月收益算不出来，全仓现金。
+# 标普500 高于现金、但沪深300 的 12 个月收益算不出来，全仓现金。
+# 标普500 不高于现金时不需要沪深300；10 年国债当天没有正的收盘，用现金代替。
+
+[[peers.A1.leg]]
+id = "spx"
+container_id = "spx"
+series_code = "^SP500TR"
+asset_class = "美股宽基"
+role = "us-equity"
+
+[[peers.A1.leg]]
+id = "csi300"
+container_id = "csi300"
+series_code = "H00300"
+asset_class = "A股宽基"
+role = "other-equity"
+
+[[peers.A1.leg]]
+id = "cgb-10y"
+container_id = "cgb-10y"
+series_code = "CBA04501"
+asset_class = "债券"
+role = "defense"
+
+[peers.A2]
+rule = "ten-month-ma"
+citation = "Faber 2007, A Quantitative Approach to Tactical Asset Allocation"
+lookback_months = 10
+ma_includes_current = true
+sleeve_weight = 0.2
+# 简单平均含当月月末收盘，共 10 个点。月末收盘严格高于该平均才持有。
+# 这 10 个点里缺任何一个，这一份拿现金。五份各 20%，空出来的不重新分配给其他份。
+
+[[peers.A2.leg]]
+id = "spx"
+container_id = "spx"
+series_code = "^SP500TR"
+asset_class = "美股宽基"
+role = "us-equity"
+
+[[peers.A2.leg]]
+id = "hsi"
+container_id = "hsi"
+series_code = "HSI"
+asset_class = "港股"
+role = "overseas-equity"
+
+[[peers.A2.leg]]
+id = "csi300"
+container_id = "csi300"
+series_code = "H00300"
+asset_class = "A股宽基"
+role = "a-share"
+
+[[peers.A2.leg]]
+id = "cgb-10y"
+container_id = "cgb-10y"
+series_code = "CBA04501"
+asset_class = "债券"
+role = "bond"
+
+[[peers.A2.leg]]
+id = "gold"
+container_id = "gold"
+series_code = "Au99.99"
+asset_class = "商品"
+role = "commodity"
