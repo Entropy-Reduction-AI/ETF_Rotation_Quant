@@ -1,13 +1,14 @@
 """U-可交易载体。开关关闭时不调用。
 
-顺序是预注册第 2.2 版 §3.2：
+顺序是预注册第 2.3 版 §3.2：
 
 1. 跟踪同一指数（或同一组）的场内 ETF、LOF，有后复权，并且满足 v3 §3.3 的可交易首日和当天流动性。
    可交易首日 = max(上市日后第 60 个上交所交易日, 首次「近 20 个自身交易日成交额中位数 ≥ 3000 万元」)。
    上市日取原始 K 线第一根正收盘，第 60 个交易日不含上市日当天。
    流动性是当天的条件：这一天对应的近 20 个自身交易日成交额中位数仍然 ≥ 3000 万元。
    同一档多只时，近 20 日成交额中位数高的优先，再按代码升序。不够 3000 万就看下一档（D16-1）。
-   已持有的第 1 档只要还在这个可用名单里就留住（D19-2），不因别的基金成交额更高而换。
+   已选定的第 1 档只要还在这个可用名单里就留住（D19-2、D21-5），不因别的基金成交额更高而换。
+   「已选定」是该容器前一交易日选定的载体，与组合有没有持有这个容器无关。
 2. 跟踪同一指数的场外纯指数基金，含非增强的联接基金（D16-2）。增强型不用。
    成立日早的优先，再取第一笔净值早的，再按代码升序。
    没有可投资指数的容器：登记表 `maps_to` 已经指向该容器的场外基金同样放在这一档。
@@ -17,8 +18,10 @@
 
 都没有的那天，该容器不进 U-可交易排名。
 
-没有可投资指数历史的容器，研究序列用当天这只基金自己的日收益往下接（§3.1）。
-QDII 用 T−2 单位净值。换载体时接收益，不把两只基金的价格水平拼成一条。
+没有可投资指数历史的容器，研究序列走和 §3.2 同一条粘性路径（§3.1，MF-6）。
+D 日收盘后用 D 日及以前的信息更新载体；D 日的收益仍来自 D−1 选定的载体，
+新载体从 D+1 起计收益，然后再拿这条收益去排名。
+QDII 用 T−2 单位净值。换载体时接那只基金自己的日收益，不把两只基金的价格水平拼成一条。
 """
 from __future__ import annotations
 
@@ -377,14 +380,14 @@ def _median_on(item: _Candidate, day: pd.Timestamp) -> float:
     return float(known.iloc[-1])
 
 
-def _kept_holding(candidates: list[_Candidate], day: pd.Timestamp,
-                  held: CarrierChoice | None) -> CarrierChoice | None:
+def _kept_prior(candidates: list[_Candidate], day: pd.Timestamp,
+                prior: CarrierChoice | None) -> CarrierChoice | None:
     """第 1 档仍在当天可用名单里就留住。名单含 3000 万资格；掉出去才允许换。"""
-    if held is None:
+    if prior is None:
         return None
     stamp = pd.Timestamp(day)
     for item in candidates:
-        if item.tier != 1 or item.code != held.code or item.vehicle != held.vehicle:
+        if item.tier != 1 or item.code != prior.code or item.vehicle != prior.vehicle:
             continue
         if stamp not in item.available.index or not bool(item.available.at[stamp]):
             continue
@@ -393,13 +396,14 @@ def _kept_holding(candidates: list[_Candidate], day: pd.Timestamp,
 
 
 def choose_on(candidates: list[_Candidate], day: pd.Timestamp,
-              held: CarrierChoice | None = None) -> CarrierChoice | None:
-    """当天可用的最低一档。没有持仓时，第 1 档按成交额中位数、再按代码。
+              prior: CarrierChoice | None = None) -> CarrierChoice | None:
+    """当天可用的最低一档。没有前一日选定时，第 1 档按成交额中位数、再按代码。
 
-    已持有的第 1 档只要还满足 3000 万（仍在可用名单里）就留住，不因别的基金近 20 日
-    成交额更高而换。失去资格、停牌或没有后复权时掉出名单，再按原规则重选。
+    「已选定」是前一交易日选定的载体，不是组合权重。第 1 档只要还满足 3000 万
+    （仍在可用名单里）就留住，不因别的基金近 20 日成交额更高而换。失去资格、停牌
+    或没有后复权时掉出名单，再按原规则重选。
     """
-    kept = _kept_holding(candidates, day, held)
+    kept = _kept_prior(candidates, day, prior)
     if kept is not None:
         return kept
     stamp = pd.Timestamp(day)
@@ -425,22 +429,34 @@ def choose_on(candidates: list[_Candidate], day: pd.Timestamp,
 
 def choices_on(grouped: dict[str, list[_Candidate]], day: pd.Timestamp,
                containers: list[str]) -> dict[str, CarrierChoice | None]:
-    """单独一天、没有已持有载体。年末载体表用这个，不把路径依赖写进对照。"""
+    """单独一天、没有前一日选定的载体。年末载体表用这个，不把路径依赖写进对照。"""
     return {identity: choose_on(grouped.get(identity, []), day) for identity in containers}
 
 
 def choose_path(candidates: list[_Candidate], days) -> list[CarrierChoice | None]:
-    """从第一天起递推。上一天选中的载体就是下一天的「已持有」。
+    """从第一天起递推。前一交易日选定的载体就是今天的「已选定」。
 
-    不看组合权重。研究序列要在排名之前定下来，不能等知道当天持不持仓再选基金。
+    不看组合权重。研究序列和可交易池走同一条路径，排名之前就能定下来。
+    返回值是当天收盘后更新出来的载体；这一天的研究收益用 `earning_path`。
     """
-    held: CarrierChoice | None = None
+    prior: CarrierChoice | None = None
     chosen: list[CarrierChoice | None] = []
     for day in days:
-        choice = choose_on(candidates, pd.Timestamp(day), held=held)
+        choice = choose_on(candidates, pd.Timestamp(day), prior=prior)
         chosen.append(choice)
-        held = choice
+        prior = choice
     return chosen
+
+
+def earning_path(selected: list[CarrierChoice | None]) -> list[CarrierChoice | None]:
+    """D 日研究收益用的载体是 D−1 收盘后选定的那只。
+
+    `selected[i]` 用了 i 当天及以前的信息。i 当天的收益仍记在 `selected[i-1]` 上，
+    新载体从下一天起计。第一天没有前一日，收益为空。
+    """
+    if not selected:
+        return []
+    return [None, *selected[:-1]]
 
 
 @dataclass(frozen=True)
@@ -474,7 +490,10 @@ def _close_and_prev(series: pd.Series | None, day, *, strict_before: bool) -> tu
 
 def stitch_fills(grouped: dict[str, list[_Candidate]], days, prints: dict[str, pd.Series],
                  assets: dict[str, str]) -> dict[str, StitchedFill]:
-    """每个容器用路径上选中的载体自己的收盘。港股、美股容器不设涨跌停。"""
+    """每个容器用当天收盘后选定的载体自己的收盘。港股、美股容器不设涨跌停。
+
+    研究收益比这只滞后一天，见 `earning_path`。这里的报价是执行价，不是研究收益。
+    """
     index = pd.DatetimeIndex(pd.to_datetime(days))
     out: dict[str, StitchedFill] = {}
     for name, rows in grouped.items():
@@ -554,7 +573,7 @@ def prints_for(con: sqlite3.Connection, grouped: dict[str, list[_Candidate]], en
 
 def splice_returns(choices: list[CarrierChoice | None], days,
                    returns_by_code: dict[str, pd.Series]) -> pd.Series:
-    """换载体那天用新基金自己的日收益。不用上一只的价格去除这一只的价格。"""
+    """用传入那只基金自己的日收益。不用上一只的价格去除这一只的价格。"""
     index = pd.DatetimeIndex(pd.to_datetime(days))
     out = np.full(len(index), np.nan)
     for pos, (day, choice) in enumerate(zip(index, choices)):
@@ -626,12 +645,15 @@ def research_return(con: sqlite3.Connection, item: _Candidate, calendar: pd.Date
 
 def spliced_research(con: sqlite3.Connection, rows: list[_Candidate], days, end: str, *,
                      nav_lag: int) -> pd.Series:
-    """无指数容器的研究序列：按日用当天载体自己的收益接起来。"""
+    """无指数容器的研究序列。
+
+    先按 §3.2 更新载体（与可交易池同一条粘性路径），再把 D 日收益记在 D−1 选定的那只上。
+    换载体时用那只基金自己的日收益，不拼价格水平。
+    """
     calendar = pd.DatetimeIndex(pd.to_datetime(days))
-    choices = choose_path(rows, calendar)
     returns: dict[str, pd.Series] = {}
     for item in rows:
         if item.code in returns:
             continue
         returns[item.code] = research_return(con, item, calendar, end, nav_lag)
-    return splice_returns(choices, calendar, returns)
+    return splice_returns(earning_path(choose_path(rows, calendar)), calendar, returns)

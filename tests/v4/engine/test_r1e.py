@@ -19,6 +19,7 @@ from src.v4.engine.carriers import (
     build_candidates,
     choose_on,
     choose_path,
+    earning_path,
     has_investable_index,
     lagged_nav_returns,
     research_return,
@@ -93,6 +94,20 @@ class HeldCarrier(unittest.TestCase):
         self.assertAlmostEqual(float(stitched["oil"].close.iloc[1]), 11.0)
         self.assertAlmostEqual(float(stitched["oil"].prev.iloc[1]), 10.0)
         self.assertNotAlmostEqual(float(stitched["oil"].close.iloc[1]), 130.0)
+
+    def test_prior_day_selection_sticks_without_a_portfolio_weight(self):
+        import inspect
+        self.assertNotIn("weight", inspect.signature(choose_on).parameters)
+        self.assertNotIn("weight", inspect.signature(choose_path).parameters)
+        days = pd.to_datetime(["2006-01-04", "2006-01-05"])
+        old = _candidate("510300", days, [50e6, 50e6])
+        peer = _candidate("159919", days, [40e6, 90e6])
+        prior = CarrierChoice("etf", "510300", "main")
+        # 没有权重参数。前一日选定的 510300 仍有资格就留下；没有前一日才改选更活跃的 159919。
+        self.assertEqual(choose_on([old, peer], days[1], prior=prior).label, "etf:510300")
+        self.assertEqual(choose_on([old, peer], days[1]).label, "etf:159919")
+        self.assertEqual(earning_path([]), [])
+        self.assertIsNone(earning_path([prior])[0])
 
 
 class SplicedResearch(unittest.TestCase):
@@ -232,7 +247,8 @@ class ApplySplice(unittest.TestCase):
             text = str(day.date())
             bars.append(("H00300", "raw", text, 1000.0, None))
             bars.append(("159985", "raw", text, 10.0, 40_000_000.0))
-            price = 50.0 if i < 60 else 55.0
+            # 第 60 个交易日才能入选。入选当天的收益仍空，涨幅放在下一天。
+            price = 50.0 if i < 61 else 55.0
             bars.append(("159986", "raw", text, price, 80_000_000.0))
             backward.append(("159985", "backward", text, 10.0))
             backward.append(("159986", "backward", text, price))
@@ -260,48 +276,74 @@ class ApplySplice(unittest.TestCase):
             },
         ]
         spec = load_spec()
-        before = market.signal.copy()
+        before_signal = market.signal.copy()
+        before_pnl = market.pnl.copy()
+        before_levels = market.levels.copy()
         apply_market(market, EngineSwitches(), db=path, containers=containers, spec=spec, pool="index")
-        self.assertTrue(market.signal.equals(before))
+        self.assertTrue(market.signal.equals(before_signal))
+        self.assertTrue(market.pnl.equals(before_pnl))
+        self.assertTrue(market.levels.equals(before_levels))
         apply_market(
             market, EngineSwitches(carriers=True), db=path, containers=containers, spec=spec, pool="index")
+        # 可交易首日选定 159986，但这天还没有 D−1 载体，收益为空。下一天才记它自己的 +10%。
         self.assertTrue(pd.isna(market.signal.loc[dates[59], "oil"]))
-        self.assertAlmostEqual(float(market.signal.loc[dates[60], "oil"]), 0.10)
-        self.assertAlmostEqual(float(market.signal.loc[dates[61], "oil"]), 0.0)
-        self.assertNotAlmostEqual(float(market.signal.loc[dates[60], "oil"]), 55.0 / 10.0 - 1.0)
-        self.assertAlmostEqual(float(market.levels.loc[dates[60], "oil"]), 110.0)
-        self.assertNotAlmostEqual(float(market.levels.loc[dates[60], "oil"]), 55.0)
-        self.assertTrue(bool(market.liquidity.loc[dates[60], "oil"]))
-        self.assertFalse(bool(market.liquidity.loc[dates[59], "oil"]))
+        self.assertTrue(pd.isna(market.signal.loc[dates[60], "oil"]))
+        self.assertAlmostEqual(float(market.signal.loc[dates[61], "oil"]), 0.10)
+        self.assertAlmostEqual(float(market.signal.loc[dates[62], "oil"]), 0.0)
+        self.assertNotAlmostEqual(float(market.signal.loc[dates[61], "oil"]), 55.0 / 10.0 - 1.0)
+        self.assertTrue(pd.isna(market.levels.loc[dates[60], "oil"]))
+        self.assertAlmostEqual(float(market.levels.loc[dates[61], "oil"]), 110.0)
+        self.assertNotAlmostEqual(float(market.levels.loc[dates[61], "oil"]), 55.0)
+        self.assertFalse(bool(market.liquidity.loc[dates[60], "oil"]))
+        self.assertTrue(bool(market.liquidity.loc[dates[61], "oil"]))
         self.assertTrue((market.signal["csi300"] == 0.0123).all())
-        # 同一条路径再走 U-可交易，成交价是被选中那只自己的收盘。
+        # 同一条路径再走 U-可交易。研究收益同样滞后；成交价是当天选定那只自己的收盘。
         traded = market_from_returns(signal, fees, liquidity=liquidity.copy())
         apply_market(
             traded, EngineSwitches(carriers=True), db=path, containers=containers, spec=spec,
             pool="tradable")
-        self.assertAlmostEqual(float(traded.signal.loc[dates[60], "oil"]), 0.10)
-        self.assertAlmostEqual(float(traded.fill_close["oil"].loc[dates[60]]), 55.0)
-        self.assertAlmostEqual(float(traded.fill_prev["oil"].loc[dates[60]]), 50.0)
+        self.assertTrue(pd.isna(traded.signal.loc[dates[60], "oil"]))
+        self.assertAlmostEqual(float(traded.signal.loc[dates[61], "oil"]), 0.10)
+        self.assertAlmostEqual(float(traded.fill_close["oil"].loc[dates[60]]), 50.0)
+        self.assertNotAlmostEqual(float(traded.fill_close["oil"].loc[dates[60]]), 10.0)
+        self.assertAlmostEqual(float(traded.fill_close["oil"].loc[dates[61]]), 55.0)
+        self.assertAlmostEqual(float(traded.fill_prev["oil"].loc[dates[61]]), 50.0)
 
 
 class SplicedFromCandidates(unittest.TestCase):
-    def test_path_splice_matches_the_held_funds_hfq_return(self):
-        """直接用候选的后复权收益接研究序列，换日不是价格水平相除。"""
+    def test_path_splice_uses_prior_day_carrier_then_the_new_fund(self):
+        """D 日收益是 D−1 的载体。换日当天仍是旧基金，新基金从下一天起，且不拼价格。"""
         con = sqlite3.connect(":memory:")
         con.execute("CREATE TABLE v4_series (code TEXT, kind TEXT, date TEXT, close REAL)")
-        days = pd.to_datetime(["2006-01-04", "2006-01-05", "2006-01-06"])
+        days = pd.to_datetime(["2006-01-04", "2006-01-05", "2006-01-06", "2006-01-09"])
         rows = []
-        for code, closes in (("510300", [10.0, 11.0, 11.0]), ("159919", [100.0, 100.0, 80.0])):
-            for day, close in zip(days, closes):
+        closes = {
+            "510300": [10.0, 11.0, 12.0, 12.0],
+            "159919": [100.0, 100.0, 80.0, 88.0],
+        }
+        for code, series in closes.items():
+            for day, close in zip(days, series):
                 rows.append((code, "backward", str(day.date()), close))
         con.executemany("INSERT INTO v4_series VALUES (?, ?, ?, ?)", rows)
-        held = _candidate("510300", days, [80e6, 50e6, 10e6])
-        peer = _candidate("159919", days, [40e6, 90e6, 90e6])
-        series = spliced_research(con, [held, peer], days, "2006-01-06", nav_lag=2)
+        # 01-06 起 510300 掉出 3000 万，当天更新成 159919；01-09 510300 回到 1 亿也不换回。
+        old = _candidate("510300", days, [80e6, 50e6, 10e6, 100e6])
+        peer = _candidate("159919", days, [40e6, 90e6, 90e6, 90e6])
+        selected = choose_path([old, peer], days)
+        self.assertEqual([item.label for item in selected], [
+            "etf:510300", "etf:510300", "etf:159919", "etf:159919"])
+        earned = earning_path(selected)
+        self.assertIsNone(earned[0])
+        self.assertEqual([item.label for item in earned[1:]], [
+            "etf:510300", "etf:510300", "etf:159919"])
+        series = spliced_research(con, [old, peer], days, "2006-01-09", nav_lag=2)
         self.assertTrue(pd.isna(series.iloc[0]))
         self.assertAlmostEqual(float(series.iloc[1]), 0.10)
-        self.assertAlmostEqual(float(series.iloc[2]), -0.20)
-        self.assertNotAlmostEqual(float(series.iloc[2]), 80.0 / 11.0 - 1.0)
+        # 01-06 已经换成 159919，但这天的收益仍是 510300 的 12/11−1，不是 159919 的 −20%。
+        self.assertAlmostEqual(float(series.iloc[2]), 12.0 / 11.0 - 1.0)
+        self.assertNotAlmostEqual(float(series.iloc[2]), -0.20)
+        # 01-09 才开始计 159919 自己的 88/80−1，不是 88/12−1。
+        self.assertAlmostEqual(float(series.iloc[3]), 88.0 / 80.0 - 1.0)
+        self.assertNotAlmostEqual(float(series.iloc[3]), 88.0 / 12.0 - 1.0)
 
 
 if __name__ == "__main__":
