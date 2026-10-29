@@ -1,0 +1,32 @@
+{
+  "allow_substitute": true,
+  "cagr": 0.03188462200562303,
+  "cagr_from_2006": 0.03305600696353328,
+  "case": "drop-best-2",
+  "cost_multiplier": 1.0,
+  "decision_delay": 0,
+  "dropped": [
+    "chinext",
+    "ndx100"
+  ],
+  "end": "2015-12-31",
+  "exit_drawdown": 0.1,
+  "kind": "robustness",
+  "lookbacks": [
+    20,
+    60,
+    120,
+    250
+  ],
+  "max_drawdown": -0.23264560009805835,
+  "n": 2671,
+  "net_sha256": "56b1604892740835ee04f9c74166670dd31bb109c354b1798ecc981f6fd3894b",
+  "passed": [],
+  "pool": "tradable",
+  "start": "2005-01-04",
+  "t1_turn": false,
+  "t2_state_weights": false,
+  "t3_refill": false,
+  "t4_pool": false,
+  "us_dividend_retained": 1.0
+}
