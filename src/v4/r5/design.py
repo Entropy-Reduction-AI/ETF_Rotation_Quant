@@ -173,7 +173,12 @@ class Job:
         if self.pool == "index":
             payload["fix"] = "D25-1"
         elif self.pool == "tradable":
-            payload["fix"] = "D25-3"
+            # 去掉最好的 2、3 个容器时，名单里含创业板。第 2 档联接不进入剩下的账，
+            # 日收益与 D24 相同，重跑原因仍是 D24-1。
+            if self.case in {"drop-best-2", "drop-best-3"}:
+                payload["fix"] = "D24-1"
+            else:
+                payload["fix"] = "D25-3"
         return payload
 
 
