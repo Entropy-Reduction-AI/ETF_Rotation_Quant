@@ -195,8 +195,11 @@ class CarrierTable(unittest.TestCase):
                     self.assertEqual(_label(got[identity]), expected[year], f"{identity} {year}")
                 for identity in NONE_IDS:
                     self.assertEqual(_label(got[identity]), "", f"{identity} {year}")
-                if year < 2013:
+                # 2011-06-10 起第 2 档是 050021。场内 159915 当天不够第 1 档时落到这只。
+                if year < 2011:
                     self.assertEqual(_label(got["chinext"]), "")
+                elif year < 2013:
+                    self.assertEqual(_label(got["chinext"]), "otc:050021")
                 else:
                     self.assertEqual(_label(got["chinext"]), "etf:159915")
                 self.assertEqual(_label(got["star50"]), "")
@@ -215,8 +218,8 @@ class CarrierTable(unittest.TestCase):
                 ("2010-02-01", "csi-dividend"): "near:510880",
                 ("2010-02-02", "csi-dividend"): "otc:090010",
                 ("2012-06-29", "chinext"): "etf:159915",
-                ("2012-12-31", "chinext"): "",
-                ("2013-01-04", "chinext"): "",
+                ("2012-12-31", "chinext"): "otc:050021",
+                ("2013-01-04", "chinext"): "otc:050021",
                 ("2013-01-22", "chinext"): "etf:159915",
             }
             for (text, identity), expected in spots.items():

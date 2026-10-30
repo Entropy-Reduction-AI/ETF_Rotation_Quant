@@ -31,7 +31,6 @@ from .prices import (
 )
 from .spec import Spec
 from .universe import (
-    A_SHARE,
     execution_code,
     fee_for,
     parse_date,
@@ -176,8 +175,14 @@ def _liquidity(amount: pd.Series, calendar: pd.DatetimeIndex, list_date: pd.Time
 
 
 def index_pool_fill_close(pool: str, asset_class: str, research: pd.Series, traded: pd.Series) -> pd.Series:
-    """U-指数的 A 股容器用研究序列收盘判断涨跌停。其余用成交工具自己的收盘。"""
-    if pool == "index" and asset_class in A_SHARE:
+    """U-指数每个容器的自身成交价是研究序列，不用场内 ETF 的原始收盘。
+
+    债券、黄金、没有研究代码的容器也一样。研究代码为空时这里返回空序列，
+    拼接出来的研究水平由 v4 在研究序列装好之后补上。U-可交易仍用成交工具自己的收盘。
+    板块由 `fill_board_for` 按资产类别和场内代码决定，不由这条价格决定。
+    """
+    _ = asset_class
+    if pool == "index":
         return research
     return traded
 

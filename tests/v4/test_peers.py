@@ -426,5 +426,39 @@ class TenMonth(unittest.TestCase):
         self.assertGreater(hurdle, 0.0)
 
 
+class TradableResearchSignal(unittest.TestCase):
+    def test_a1_holds_csi300_when_spx_has_no_carrier_but_csi300_is_stronger(self):
+        """月末判断用研究序列。标普没有载体、沪深300 更强且当天有载体时，持有沪深300。
+
+        持有之后的日收益用载体水平，不用研究序列上的价格。
+        """
+        dates = _calendar()
+        peer = load_peer("A1", "tradable")
+        names = [leg.leg_id for leg in peer.legs]
+        research = _levels(
+            dates, names,
+            jumps=(
+                ("2006-01-20", "spx", 130.0),
+                ("2006-01-20", "csi300", 200.0),
+            ),
+        )
+        carrier = _levels(dates, names, jumps=(("2006-02-20", "csi300", 110.0),))
+        mask = pd.DataFrame(False, index=dates, columns=names)
+        mask["csi300"] = True
+        result = run_peer(
+            peer, dates, carrier, signal_levels=research,
+            cash=_zero_cash(dates), carriers=mask)
+        decision = pd.Timestamp("2006-01-20")
+        fill = pd.Timestamp("2006-02-10")
+        later = pd.Timestamp("2006-02-20")
+        self.assertEqual(float(result.decisions.loc[decision, "csi300"]), 1.0)
+        self.assertEqual(float(result.decisions.loc[decision, "spx"]), 0.0)
+        self.assertEqual(float(result.decisions.loc[decision, "cash"]), 0.0)
+        self.assertEqual(float(result.close_held.loc[fill, "csi300"]), 1.0)
+        self.assertEqual(float(result.close_held.loc[fill, "cash"]), 0.0)
+        self.assertAlmostEqual(float(result.net.loc[later]), 0.10)
+        self.assertEqual(float(result.cost.loc[later]), 0.0)
+
+
 if __name__ == "__main__":
     unittest.main()
