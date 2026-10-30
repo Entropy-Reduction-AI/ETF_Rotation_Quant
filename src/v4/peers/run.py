@@ -76,16 +76,25 @@ def run_peer(peer: PeerRun, sessions, levels: pd.DataFrame, *,
              cash: pd.Series | None = None,
              carriers: pd.DataFrame | None = None,
              quotes: dict | None = None,
-             calendar_closed: bool = False) -> PeerResult:
-    """手造或调用方给的序列。`net` 只是这些序列上的费用核对，不是策略成绩。"""
+             calendar_closed: bool = False,
+             signal_levels: pd.DataFrame | None = None) -> PeerResult:
+    """手造或调用方给的序列。`net` 只是这些序列上的费用核对，不是策略成绩。
+
+    `levels` 是持有和日收益。`signal_levels` 只用于月末判断；不传时判断和收益用同一条序列。
+    U-可交易传入研究序列做判断、载体水平做收益。没有载体的那一腿仍由 `carriers` 改成现金。
+    """
     if peer.exit_module or peer.premium_module or peer.t1_turn or peer.t2_state_weights or peer.t3_refill or peer.t4_pool:
         raise PeerError("附表 A 不接离场、溢价或 T1–T4")
     calendar = _sessions(sessions)
     panel, cash_series = _aligned(peer, calendar, levels, cash)
+    if signal_levels is None:
+        judged = panel
+    else:
+        judged, _ignored = _aligned(peer, calendar, signal_levels, cash)
     if carriers is not None:
         assert_window(carriers.index, False)
     decisions = decision_targets(
-        peer, calendar, panel, cash_series, carriers=carriers, calendar_closed=calendar_closed)
+        peer, calendar, judged, cash_series, carriers=carriers, calendar_closed=calendar_closed)
     execution = {}
     for day in decisions.index:
         nxt = next_session(calendar, pd.Timestamp(day))
