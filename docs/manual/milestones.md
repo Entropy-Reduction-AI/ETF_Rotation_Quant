@@ -7,7 +7,7 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Manager
-- Last updated: 2026-10-29（`milestone/v4-code-freeze` 已打在 `476abd7`，本索引补上标签对象 SHA）
+- Last updated: 2026-10-30（D25-5：注明 `milestone/v4-code-freeze` 不移动；新标签名 `milestone/v4-code-freeze-2` 尚未创建）
 - Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`
 
 ## Purpose
@@ -73,10 +73,20 @@
 
 本索引提交只补上表。没有移动、删除或改写任何标签，也没有改写 `main`。
 
+### D25-5 · `milestone/v4-code-freeze-2`（尚未创建）
+
+2026-10-30，v4-R5c。D25 按 v3 §9.4 把两处实现当成程序错误：U-指数成交价改回研究序列，A1 / A2 的 U-可交易月末判断改回附表 A 的研究序列；创业板指第 2 档非增强基金入库。Reviewer 对 PR #132 的结论是 `approve_with_follow_up`（PR #133，提交 `dff13f20d817abd2461603d4fcd09ac42c598647`；重跑在 `9c3e41c`）。过关仍是 B0。账本仍是 41 行。设计期上界仍是 2015-12-31。没有 `results/v4/LOCK`。没有 2016-01-01 及以后的组合收益。
+
+上表的 `milestone/v4-code-freeze` **不移动、不删除、不改写**。它仍是附注对象 `4ce2f2919b7c1bcf12dcd1bdd3eee77ae964a603`，指向 `476abd7cb63395506c6a9bb5fdad0f7b16827f66`。R5c 之后的代码冻结用新名字 **`milestone/v4-code-freeze-2`**。本索引只登记这个名字和原因。标签本身等收尾 PR rebase-merge 之后，打在合入后的 `main` 尖端上。本提交不创建它，因此这里没有标签对象 SHA，也没有指向提交 SHA。
+
+`milestone/phase1-archive`、`milestone/v3-code-freeze`、`milestone/v3.1-prereg-freeze`、`milestone/v4-prereg-freeze` 的对象 SHA 与上表一致，本说明不改它们。
+
 ## Related Files
 
 - `operations/planning/2026-10-28-d14-owner-decisions.md`
 - `operations/work_logs/2026-10-28-tag-cleanup.md`
 - `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`
+- `operations/planning/2026-10-30-v4-r5c-plan.md`
+- `operations/reviews/2026-10-30-v4-r5c-d25-signoff.md`
 - `docs/manual/roadmap-and-naming.md`
 - `AGENTS.md`
