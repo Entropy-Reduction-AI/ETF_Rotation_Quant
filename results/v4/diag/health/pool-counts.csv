@@ -1,0 +1,299 @@
+pool,year,id,group
+index,2005,csi300,A 股
+index,2005,csi500,A 股
+index,2005,csi1000,A 股
+index,2005,allshare-energy,A 股
+index,2005,allshare-materials,A 股
+index,2005,allshare-industrials,A 股
+index,2005,allshare-discretionary,A 股
+index,2005,allshare-staples,A 股
+index,2005,allshare-healthcare,A 股
+index,2005,allshare-financials-re,A 股
+index,2005,allshare-it,A 股
+index,2005,allshare-communication,A 股
+index,2005,allshare-utilities,A 股
+index,2005,csi-dividend,A 股
+index,2005,hsi,港股
+index,2006,csi300,A 股
+index,2006,csi500,A 股
+index,2006,csi1000,A 股
+index,2006,allshare-energy,A 股
+index,2006,allshare-materials,A 股
+index,2006,allshare-industrials,A 股
+index,2006,allshare-discretionary,A 股
+index,2006,allshare-staples,A 股
+index,2006,allshare-healthcare,A 股
+index,2006,allshare-financials-re,A 股
+index,2006,allshare-it,A 股
+index,2006,allshare-communication,A 股
+index,2006,allshare-utilities,A 股
+index,2006,csi-dividend,A 股
+index,2006,hsi,港股
+index,2006,ndx100,美股
+index,2006,spx,美股
+index,2007,csi300,A 股
+index,2007,csi500,A 股
+index,2007,csi1000,A 股
+index,2007,allshare-energy,A 股
+index,2007,allshare-materials,A 股
+index,2007,allshare-industrials,A 股
+index,2007,allshare-discretionary,A 股
+index,2007,allshare-staples,A 股
+index,2007,allshare-healthcare,A 股
+index,2007,allshare-financials-re,A 股
+index,2007,allshare-it,A 股
+index,2007,allshare-communication,A 股
+index,2007,allshare-utilities,A 股
+index,2007,csi-dividend,A 股
+index,2007,hsi,港股
+index,2007,ndx100,美股
+index,2007,spx,美股
+index,2008,csi300,A 股
+index,2008,csi500,A 股
+index,2008,csi1000,A 股
+index,2008,allshare-energy,A 股
+index,2008,allshare-materials,A 股
+index,2008,allshare-industrials,A 股
+index,2008,allshare-discretionary,A 股
+index,2008,allshare-staples,A 股
+index,2008,allshare-healthcare,A 股
+index,2008,allshare-financials-re,A 股
+index,2008,allshare-it,A 股
+index,2008,allshare-communication,A 股
+index,2008,allshare-utilities,A 股
+index,2008,csi-dividend,A 股
+index,2008,hsi,港股
+index,2008,ndx100,美股
+index,2008,spx,美股
+index,2008,gold,商品、债券、现金
+index,2008,cgb-10y,商品、债券、现金
+index,2008,cgb-5y,商品、债券、现金
+index,2009,csi300,A 股
+index,2009,csi500,A 股
+index,2009,csi1000,A 股
+index,2009,allshare-energy,A 股
+index,2009,allshare-materials,A 股
+index,2009,allshare-industrials,A 股
+index,2009,allshare-discretionary,A 股
+index,2009,allshare-staples,A 股
+index,2009,allshare-healthcare,A 股
+index,2009,allshare-financials-re,A 股
+index,2009,allshare-it,A 股
+index,2009,allshare-communication,A 股
+index,2009,allshare-utilities,A 股
+index,2009,csi-dividend,A 股
+index,2009,hsi,港股
+index,2009,ndx100,美股
+index,2009,spx,美股
+index,2009,gold,商品、债券、现金
+index,2009,cgb-10y,商品、债券、现金
+index,2009,cgb-5y,商品、债券、现金
+index,2010,csi300,A 股
+index,2010,csi500,A 股
+index,2010,csi1000,A 股
+index,2010,allshare-energy,A 股
+index,2010,allshare-materials,A 股
+index,2010,allshare-industrials,A 股
+index,2010,allshare-discretionary,A 股
+index,2010,allshare-staples,A 股
+index,2010,allshare-healthcare,A 股
+index,2010,allshare-financials-re,A 股
+index,2010,allshare-it,A 股
+index,2010,allshare-communication,A 股
+index,2010,allshare-utilities,A 股
+index,2010,csi-dividend,A 股
+index,2010,hsi,港股
+index,2010,ndx100,美股
+index,2010,spx,美股
+index,2010,gold,商品、债券、现金
+index,2010,cgb-10y,商品、债券、现金
+index,2010,cgb-5y,商品、债券、现金
+index,2010,theme-恒生中国企业指数,海外主题（QDII、LOF）
+index,2011,csi300,A 股
+index,2011,csi500,A 股
+index,2011,csi1000,A 股
+index,2011,allshare-energy,A 股
+index,2011,allshare-materials,A 股
+index,2011,allshare-industrials,A 股
+index,2011,allshare-discretionary,A 股
+index,2011,allshare-staples,A 股
+index,2011,allshare-healthcare,A 股
+index,2011,allshare-financials-re,A 股
+index,2011,allshare-it,A 股
+index,2011,allshare-communication,A 股
+index,2011,allshare-utilities,A 股
+index,2011,csi-dividend,A 股
+index,2011,hsi,港股
+index,2011,ndx100,美股
+index,2011,spx,美股
+index,2011,gold,商品、债券、现金
+index,2011,cgb-10y,商品、债券、现金
+index,2011,cgb-5y,商品、债券、现金
+index,2011,theme-恒生中国企业指数,海外主题（QDII、LOF）
+index,2012,csi300,A 股
+index,2012,csi500,A 股
+index,2012,csi1000,A 股
+index,2012,chinext,A 股
+index,2012,allshare-energy,A 股
+index,2012,allshare-materials,A 股
+index,2012,allshare-industrials,A 股
+index,2012,allshare-discretionary,A 股
+index,2012,allshare-staples,A 股
+index,2012,allshare-healthcare,A 股
+index,2012,allshare-financials-re,A 股
+index,2012,allshare-it,A 股
+index,2012,allshare-communication,A 股
+index,2012,allshare-utilities,A 股
+index,2012,csi-dividend,A 股
+index,2012,hsi,港股
+index,2012,ndx100,美股
+index,2012,spx,美股
+index,2012,gold,商品、债券、现金
+index,2012,cgb-10y,商品、债券、现金
+index,2012,cgb-5y,商品、债券、现金
+index,2012,theme-恒生中国企业指数,海外主题（QDII、LOF）
+index,2012,theme-标普全球石油指数,海外主题（QDII、LOF）
+index,2013,csi300,A 股
+index,2013,csi500,A 股
+index,2013,csi1000,A 股
+index,2013,chinext,A 股
+index,2013,allshare-energy,A 股
+index,2013,allshare-materials,A 股
+index,2013,allshare-industrials,A 股
+index,2013,allshare-discretionary,A 股
+index,2013,allshare-staples,A 股
+index,2013,allshare-healthcare,A 股
+index,2013,allshare-financials-re,A 股
+index,2013,allshare-it,A 股
+index,2013,allshare-communication,A 股
+index,2013,allshare-utilities,A 股
+index,2013,csi-dividend,A 股
+index,2013,hsi,港股
+index,2013,ndx100,美股
+index,2013,spx,美股
+index,2013,gold,商品、债券、现金
+index,2013,cgb-10y,商品、债券、现金
+index,2013,cgb-5y,商品、债券、现金
+index,2013,theme-恒生中国企业指数,海外主题（QDII、LOF）
+index,2013,theme-标普全球石油指数,海外主题（QDII、LOF）
+index,2014,csi300,A 股
+index,2014,csi500,A 股
+index,2014,csi1000,A 股
+index,2014,chinext,A 股
+index,2014,allshare-energy,A 股
+index,2014,allshare-materials,A 股
+index,2014,allshare-industrials,A 股
+index,2014,allshare-discretionary,A 股
+index,2014,allshare-staples,A 股
+index,2014,allshare-healthcare,A 股
+index,2014,allshare-financials-re,A 股
+index,2014,allshare-it,A 股
+index,2014,allshare-communication,A 股
+index,2014,allshare-utilities,A 股
+index,2014,csi-dividend,A 股
+index,2014,hsi,港股
+index,2014,ndx100,美股
+index,2014,spx,美股
+index,2014,gold,商品、债券、现金
+index,2014,cgb-10y,商品、债券、现金
+index,2014,cgb-5y,商品、债券、现金
+index,2014,theme-恒生中国企业指数,海外主题（QDII、LOF）
+index,2014,theme-标普全球石油指数,海外主题（QDII、LOF）
+index,2015,csi300,A 股
+index,2015,csi500,A 股
+index,2015,csi1000,A 股
+index,2015,chinext,A 股
+index,2015,allshare-energy,A 股
+index,2015,allshare-materials,A 股
+index,2015,allshare-industrials,A 股
+index,2015,allshare-discretionary,A 股
+index,2015,allshare-staples,A 股
+index,2015,allshare-healthcare,A 股
+index,2015,allshare-financials-re,A 股
+index,2015,allshare-it,A 股
+index,2015,allshare-communication,A 股
+index,2015,allshare-utilities,A 股
+index,2015,csi-dividend,A 股
+index,2015,hsi,港股
+index,2015,ndx100,美股
+index,2015,spx,美股
+index,2015,gold,商品、债券、现金
+index,2015,cgb-10y,商品、债券、现金
+index,2015,cgb-5y,商品、债券、现金
+index,2015,theme-中证海外中国互联网指数,海外主题（QDII、LOF）
+index,2015,theme-恒生中国企业指数,海外主题（QDII、LOF）
+index,2015,theme-标普全球石油指数,海外主题（QDII、LOF）
+index,2015,cross-border-commodity,商品、债券、现金
+index,2015,theme-S&P 500 Energy Sector Index(NTR),海外主题（QDII、LOF）
+tradable,2005,csi300,A 股
+tradable,2006,csi300,A 股
+tradable,2007,csi300,A 股
+tradable,2007,csi-dividend,A 股
+tradable,2008,csi300,A 股
+tradable,2008,csi-dividend,A 股
+tradable,2009,csi300,A 股
+tradable,2009,csi500,A 股
+tradable,2009,csi-dividend,A 股
+tradable,2010,csi300,A 股
+tradable,2010,csi500,A 股
+tradable,2010,allshare-financials-re,A 股
+tradable,2010,csi-dividend,A 股
+tradable,2010,ndx100,美股
+tradable,2010,theme-恒生中国企业指数,海外主题（QDII、LOF）
+tradable,2011,csi300,A 股
+tradable,2011,csi500,A 股
+tradable,2011,allshare-financials-re,A 股
+tradable,2011,csi-dividend,A 股
+tradable,2011,ndx100,美股
+tradable,2011,theme-恒生中国企业指数,海外主题（QDII、LOF）
+tradable,2012,csi300,A 股
+tradable,2012,csi500,A 股
+tradable,2012,chinext,A 股
+tradable,2012,allshare-financials-re,A 股
+tradable,2012,csi-dividend,A 股
+tradable,2012,hsi,港股
+tradable,2012,ndx100,美股
+tradable,2012,spx,美股
+tradable,2012,theme-恒生中国企业指数,海外主题（QDII、LOF）
+tradable,2012,theme-标普全球石油指数,海外主题（QDII、LOF）
+tradable,2013,csi300,A 股
+tradable,2013,csi500,A 股
+tradable,2013,chinext,A 股
+tradable,2013,allshare-financials-re,A 股
+tradable,2013,csi-dividend,A 股
+tradable,2013,hsi,港股
+tradable,2013,ndx100,美股
+tradable,2013,spx,美股
+tradable,2013,gold,商品、债券、现金
+tradable,2013,cgb-5y,商品、债券、现金
+tradable,2013,theme-恒生中国企业指数,海外主题（QDII、LOF）
+tradable,2013,theme-标普全球石油指数,海外主题（QDII、LOF）
+tradable,2014,csi300,A 股
+tradable,2014,csi500,A 股
+tradable,2014,chinext,A 股
+tradable,2014,allshare-financials-re,A 股
+tradable,2014,csi-dividend,A 股
+tradable,2014,hsi,港股
+tradable,2014,ndx100,美股
+tradable,2014,spx,美股
+tradable,2014,gold,商品、债券、现金
+tradable,2014,cgb-5y,商品、债券、现金
+tradable,2014,theme-恒生中国企业指数,海外主题（QDII、LOF）
+tradable,2014,theme-标普全球石油指数,海外主题（QDII、LOF）
+tradable,2015,csi300,A 股
+tradable,2015,csi500,A 股
+tradable,2015,chinext,A 股
+tradable,2015,allshare-discretionary,A 股
+tradable,2015,allshare-healthcare,A 股
+tradable,2015,allshare-financials-re,A 股
+tradable,2015,allshare-it,A 股
+tradable,2015,csi-dividend,A 股
+tradable,2015,hsi,港股
+tradable,2015,ndx100,美股
+tradable,2015,spx,美股
+tradable,2015,gold,商品、债券、现金
+tradable,2015,cgb-5y,商品、债券、现金
+tradable,2015,theme-中证海外中国互联网指数,海外主题（QDII、LOF）
+tradable,2015,theme-恒生中国企业指数,海外主题（QDII、LOF）
+tradable,2015,theme-标普全球石油指数,海外主题（QDII、LOF）
+tradable,2015,cross-border-commodity,商品、债券、现金
