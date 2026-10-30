@@ -167,6 +167,68 @@ def chart_robust():
     fig.text(.125, 1.005, '每行只改一处，其余和 E2 新口径原样相同。点在灰带里 = 差别在 1 个百分点以内。设计期 2006–2015。', fontsize=10.5, color=MUTED, va='bottom')
     fig.savefig(OUT / 'h5-robust.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
 
+# ---------- h0 两个池子每年能参加排名的容器（按大类） ----------
+GCOL = {'A 股': '#2563eb', '港股': '#0d9488', '美股': '#7c3aed', '海外主题（QDII、LOF）': '#d97706', '商品、债券、现金': '#9ca3af'}
+def chart_pools():
+    f = pathlib.Path(__file__).with_name('pool-counts.csv')
+    if not f.exists(): return
+    d = pd.read_csv(f); years = list(range(2006, 2016))
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4.6), sharey=True, gridspec_kw={'wspace': .06})
+    for ax, pool in zip(axes, ['index', 'tradable']):
+        t = d[d.pool == pool].groupby(['year', 'group']).size().unstack(fill_value=0).reindex(years, fill_value=0)
+        base = np.zeros(len(years))
+        for gname, c in GCOL.items():
+            v = t[gname].values if gname in t else np.zeros(len(years))
+            ax.bar(years, v, .72, bottom=base, color=c, edgecolor='white', linewidth=1, zorder=2, label=gname); base += v
+        for x, v in zip(years, base): ax.text(x, v + .4, str(int(v)), ha='center', fontsize=10, weight='bold', color=INK)
+        ax.set_xticks(years); ax.set_xticklabels([str(y) for y in years], fontsize=9.5); ax.grid(axis='x', visible=False)
+        ax.set_title(POOL[pool], loc='left', fontsize=12.5, weight='bold', color=IDX if pool == 'index' else TRD, pad=6)
+    axes[0].set_ylabel('当年能参加排名的容器数'); axes[0].set_ylim(0, 30)
+    h, l = axes[0].get_legend_handles_labels()
+    fig.legend(h, l, loc='lower center', ncol=5, frameon=False, bbox_to_anchor=(.5, -.08), fontsize=10)
+    fig.suptitle('能排名的一开始就有 17 个；当年真能买到的，2006 年只有沪深300 一个', x=.125, ha='left', va='bottom', y=1.04, fontsize=14.5, weight='bold', color=INK)
+    fig.text(.125, 1.005, '不含 T4 的美股行业和港股分类，不含现金。可交易池按当天有没有载体（含 3,000 万成交额门槛）统计，一年里有一天能买就算。', fontsize=10.5, color=MUTED, va='bottom')
+    fig.savefig(OUT / 'h0-pools.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
+
+# ---------- h6 两次大跌：从沪深300 高点算起的跌幅和现金 ----------
+def chart_crash():
+    f = pathlib.Path(__file__).with_name('b0-cash-weights.csv')
+    if not f.exists(): return
+    cw = pd.read_csv(f, index_col=0, parse_dates=True)
+    lines = {'沪深300': (cw['csi300_level'].pct_change().fillna(0), INK, 1.6), 'A1 双动量': (rd('A1', 'index'), A1C, 1.6),
+             'E2 · U-指数': (rd('B0', 'index'), IDX, 2.3), 'E2 · U-可交易': (rd('B0', 'tradable'), TRD, 2.3)}
+    eps = [('2008：跌了一年', '2007-10-16', 290), ('2015：三周跌掉一半', '2015-06-08', 140)]
+    fig, axes = plt.subplots(2, 2, figsize=(12, 7.2), sharex=True, gridspec_kw={'height_ratios': [2.4, 1], 'hspace': .1, 'wspace': .12})
+    for j, (title, peak, n) in enumerate(eps):
+        ax, bx = axes[0, j], axes[1, j]
+        idx = cw.index; i0 = idx.get_loc(pd.Timestamp(peak)); lo = max(i0 - 20, 0); hi = min(i0 + n, len(idx) - 1)
+        win = idx[lo:hi + 1]; x = np.arange(lo, hi + 1) - i0
+        ends = []
+        for k, (r, c, lw) in lines.items():
+            r = r.reindex(win).fillna(0); lvl = (1 + r).cumprod(); lvl = lvl / lvl.loc[pd.Timestamp(peak)] - 1
+            ax.plot(x, lvl.values * 100, color=c, lw=lw, label=k)
+            ends.append([lvl.values[-1] * 100, k, c])
+        ends.sort(key=lambda e: -e[0])
+        for a in range(1, len(ends)):
+            ends[a][0] = min(ends[a][0], ends[a - 1][0] - 5.5)
+        for v, k, c in ends:
+            ax.text(x[-1] + 3, v, minus(f'{k} {v:+.0f}%') if False else k, color=c, fontsize=9.5, weight='bold', va='center')
+        ax.axvline(0, color=MUTED, lw=.8, ls='--'); ax.axhline(0, color=INK, lw=.6)
+        ax.set_title(title, loc='left', fontsize=12.5, weight='bold', color=INK, pad=6); ax.set_ylim(-75, 25)
+        for k, cc in (('index_cash', IDX), ('tradable_cash', TRD)):
+            bx.plot(x, cw[k].reindex(win).values * 100, color=cc, lw=1.6)
+        bx.set_ylim(0, 105); bx.axvline(0, color=MUTED, lw=.8, ls='--'); bx.set_xlim(-20, 330)
+        bx.set_xlabel('沪深300 见顶后的交易日（0 = 见顶那天）', fontsize=10.5)
+    axes[0, 0].set_ylabel('从沪深300 见顶那天算起（%）'); axes[1, 0].set_ylabel('E2 现金（%）')
+    axes[0, 0].annotate('A1：标普500 的 12 个月\n先跌破现金，全部换国债', xy=(32, -18), xytext=(5, -62), fontsize=9.5, color=A1C, arrowprops=dict(arrowstyle='->', color=A1C))
+    axes[0, 1].annotate('A1：沪深300 过去 12 个月\n仍涨 115%，一直满仓', xy=(15, -20), xytext=(70, 12), fontsize=9.5, color=A1C, arrowprops=dict(arrowstyle='->', color=A1C))
+    axes[1, 0].text(115, 4, 'U-指数：2008 年 1 月、3 月\n反弹时两次买回去', fontsize=9.5, color=IDX)
+    axes[0, 0].annotate('这一跳是数据错误：红利 ETF\n2008-01-02 一笔错价（R5c 修）', xy=(55, 18), xytext=(120, 18), fontsize=9.5, color=TRD, va='center', arrowprops=dict(arrowstyle='->', color=TRD))
+    axes[1, 1].text(60, 80, '前 10 天现金还不到 20%', fontsize=9.5, color=IDX)
+    fig.suptitle('同样的规则，2008 年有时间反应，2015 年来不及', x=.125, ha='left', va='bottom', y=1.0, fontsize=14.5, weight='bold', color=INK)
+    fig.text(.125, .965, '上：从沪深300 见顶那天起各自的涨跌。下：E2 新口径的现金仓位（蓝 = U-指数池，绿 = U-可交易池）。两张图的横轴长度相同，可以直接比速度。', fontsize=10.5, color=MUTED, va='bottom')
+    fig.savefig(OUT / 'h6-crash.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
+
 if __name__ == '__main__':
-    chart_nav(); chart_states(); chart_anystart(); chart_yearly(); chart_robust()
+    chart_nav(); chart_states(); chart_anystart(); chart_yearly(); chart_robust(); chart_pools(); chart_crash()
     print('written to', OUT)
