@@ -7,8 +7,8 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Manager
-- Last updated: 2026-10-30（D25-5：注明 `milestone/v4-code-freeze` 不移动；新标签名 `milestone/v4-code-freeze-2` 尚未创建）
-- Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`
+- Last updated: 2026-10-31（D26-5：`milestone/v4-code-freeze-2` 指向 `c9f4e44`，不含 D25-8 的 510880 修正与尖刺检查；标签不移动）
+- Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`；D26-5 见 `operations/planning/2026-10-31-d26-v5-direction.md`
 
 ## Purpose
 
@@ -73,13 +73,25 @@
 
 本索引提交只补上表。没有移动、删除或改写任何标签，也没有改写 `main`。
 
-### D25-5 · `milestone/v4-code-freeze-2`（尚未创建）
+### D25-5 · `milestone/v4-code-freeze-2`
 
 2026-10-30，v4-R5c。D25 按 v3 §9.4 把两处实现当成程序错误：U-指数成交价改回研究序列，A1 / A2 的 U-可交易月末判断改回附表 A 的研究序列；创业板指第 2 档非增强基金入库。Reviewer 对 PR #132 的结论是 `approve_with_follow_up`（PR #133，提交 `dff13f20d817abd2461603d4fcd09ac42c598647`；重跑在 `9c3e41c`）。过关仍是 B0。账本仍是 41 行。设计期上界仍是 2015-12-31。没有 `results/v4/LOCK`。没有 2016-01-01 及以后的组合收益。
 
-上表的 `milestone/v4-code-freeze` **不移动、不删除、不改写**。它仍是附注对象 `4ce2f2919b7c1bcf12dcd1bdd3eee77ae964a603`，指向 `476abd7cb63395506c6a9bb5fdad0f7b16827f66`。R5c 之后的代码冻结用新名字 **`milestone/v4-code-freeze-2`**。本索引只登记这个名字和原因。标签本身等收尾 PR rebase-merge 之后，打在合入后的 `main` 尖端上。本提交不创建它，因此这里没有标签对象 SHA，也没有指向提交 SHA。
+上表的 `milestone/v4-code-freeze` **不移动、不删除、不改写**。它仍是附注对象 `4ce2f2919b7c1bcf12dcd1bdd3eee77ae964a603`，指向 `476abd7cb63395506c6a9bb5fdad0f7b16827f66`。R5c 之后的代码冻结用新名字 **`milestone/v4-code-freeze-2`**。
+
+该附注标签已在 origin 上。标签对象 `aa72a148b8a598fa2cf9b488dcb21e5a9943d6c5`，指向 `c9f4e44c94c54922b6927b6f4d4902edf79e5dd8`。附注说明：`v4-R5c D25 U-index fill + A1/A2 peer口径 signed off; design-period ≤2015-12-31; no LOCK; no 2016+`。标签日期 2026-10-30（Asia/Taipei）。本索引不移动、不删除、不重建它。
+
+D26-5 / v5-R1（决定 `operations/planning/2026-10-31-d26-v5-direction.md`；任务 `operations/planning/2026-10-31-v5-r1-plan.md` §1）：`c9f4e44` 不包含 D25-8 的 510880 `close_correction` 插入（`src/v4/data/d25_8.py` 的 `INSERT INTO v4_series`），也不包含完整性尖刺检查代码（`src/v4/data/spike_check.py`）。插入与尖刺检查在 #136 进入 `main`（插入提交 `af8edfd`，rebase-merge 尖端 `aa1d89f`）。#137（`a728a08`）签收，#138（`3b2d3b5`）刷新体检输入与可交易池读数。#139 rebase-merge 之后，`main` 尖端是 `0e82225b5155af735e53311f5f415b0eca7a3f3c`。标签仍停在 `c9f4e44`。
+
+设计期上界仍是 2015-12-31。`c9f4e44` 里没有 `results/v4/LOCK`。没有 2016-01-01 及以后的组合收益。
 
 `milestone/phase1-archive`、`milestone/v3-code-freeze`、`milestone/v3.1-prereg-freeze`、`milestone/v4-prereg-freeze` 的对象 SHA 与上表一致，本说明不改它们。
+
+| 标签 | 标签对象 SHA | 指向提交 SHA | 说明 | 处置 | 理由 |
+| --- | --- | --- | --- | --- | --- |
+| `milestone/v4-code-freeze-2` | `aa72a148b8a598fa2cf9b488dcb21e5a9943d6c5` | `c9f4e44c94c54922b6927b6f4d4902edf79e5dd8` | v4-R5c 代码冻结名。指向 `c9f4e44`，不含 D25-8 的 510880 `close_correction` 插入与尖刺检查。设计期 ≤2015-12-31；无 LOCK；无 2016+ | 保留 | D25-5 登记的新名字。D26-5 注明实际指向，不改指向 |
+
+本索引提交只补上面的注明。没有移动、删除或改写任何标签，也没有改写 `main`。
 
 ## Related Files
 
@@ -88,5 +100,7 @@
 - `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`
 - `operations/planning/2026-10-30-v4-r5c-plan.md`
 - `operations/reviews/2026-10-30-v4-r5c-d25-signoff.md`
+- `operations/planning/2026-10-31-d26-v5-direction.md`
+- `operations/planning/2026-10-31-v5-r1-plan.md`
 - `docs/manual/roadmap-and-naming.md`
 - `AGENTS.md`
