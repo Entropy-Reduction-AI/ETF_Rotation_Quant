@@ -1,0 +1,22 @@
+probe_id,target,source_url,result,observed_first,observed_last,n_obs,detail
+yahoo-xle-daily,XLE,https://query1.finance.yahoo.com/v8/finance/chart/XLE?period1=912000000&period2=1800000000&interval=1d,ok,1998-12-22,2026-10-30,7007,样本文件。末日 close=adjclose；首日两者不同。
+yahoo-spx-1927,^GSPC,https://query1.finance.yahoo.com/v8/finance/chart/^GSPC,ok,1927-12-30,1935-02-21,1780,窄窗口，用来核实 1927 年有日线，不是整段文件。
+yahoo-spxtr-first,^SP500TR,https://query1.finance.yahoo.com/v8/finance/chart/^SP500TR,ok,1988-01-04,,,第一根日线；close 与 adjclose 相同。
+yahoo-dax-first,^GDAXI,https://query1.finance.yahoo.com/v8/finance/chart/^GDAXI,ok,1987-12-30,,,第一根日线；名称 DAX P；close 与 adjclose 相同。
+yahoo-ndx-1985,^NDX,https://query1.finance.yahoo.com/v8/finance/chart/^NDX,ok,1985-10-01,1985-11-04,25,1985 年 1–9 月没有日线。
+yahoo-xndx,^XNDX,https://query1.finance.yahoo.com/v8/finance/chart/^XNDX,no_history,,2026-10-30,0,"validRanges 只有 1d,5d。"
+yahoo-sp500-10,^SP500-10,https://query1.finance.yahoo.com/v8/finance/chart/^SP500-10,http_404,,,,能源价格指数改用 ^GSPE。
+yahoo-tpx,^TPX,https://query1.finance.yahoo.com/v8/finance/chart/^TPX,http_404,,,,TOPIX 改用 JPX 页面。
+fred-xndx,NASDAQXNDX,https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQXNDX,ok,1999-03-04,2026-10-29,6958,第一行点位 1933.03。整段没有写入仓库。
+fred-wti,DCOILWTICO,https://fred.stlouisfed.org/graph/fredgraph.csv?id=DCOILWTICO,ok,1986-01-02,2026-10-27,9532,现货。整段没有写入仓库。
+fred-brent,DCOILBRENTEU,https://fred.stlouisfed.org/graph/fredgraph.csv?id=DCOILBRENTEU,ok,1987-05-20,2026-10-27,9117,现货。整段没有写入仓库。
+fred-sp500,SP500,https://fred.stlouisfed.org/graph/fredgraph.csv?id=SP500,ok_but_short,2016-10-31,2026-10-29,2513,不是长历史。
+fred-gold-am,GOLDAMGBD228NLBM,https://fred.stlouisfed.org/graph/fredgraph.csv?id=GOLDAMGBD228NLBM,http_404,,,,旧日度金价代码取不到。
+fred-gold-pm,GOLDPMGBD228NLBM,https://fred.stlouisfed.org/graph/fredgraph.csv?id=GOLDPMGBD228NLBM,http_404,,,,旧日度金价代码取不到。
+wb-gold,PINK_GOLD,https://thedocs.worldbank.org/en/doc/5d903e848db1d1b83e0ec8f744e55570-0350012021/related/CMO-Historical-Data-Monthly.xlsx,ok,1960-01,2024-12,780,样本文件。工作簿更新日 2025-01-03。
+french-12,12_Industry_Portfolios,https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/12_Industry_Portfolios_CSV.zip,ok,1926-07,2026-09,1203,只记录市值加权月度区块的起止月份，收益率没有入库。
+sse-risk-20150209,510050,http://query.sse.com.cn/commonQuery.do?sqlId=SSE_ZQPZ_YSP_GGQQZSXT_YSHQ_QQFXZB_DATE_L,ok,2015-02-09,2015-02-09,40,隐含波动率字段 40 条都有值。仓库里只留前 3 行。
+sina-10000001,10000001,https://stock.finance.sina.com.cn/futures/api/jsonp_v2.php/var/StockOptionDaylineService.getSymbolInfo,ok,2015-02-09,2015-03-25,30,"字段 d,o,h,l,c,v。首日收盘为 0。价格没有入库。"
+cffex-csv,IO,http://www.cffex.com.cn/sj/hqsj/rtj/201912/20191223_1.csv,html_not_csv,,,,返回 HTML，不是结算文件。
+stooq-gold,xauusd,https://stooq.com/q/d/l/?s=xauusd&i=d,js_challenge,,,,没有拿到 CSV。
+sseinfo,sseinfo,https://www.sseinfo.com/services/assortment/options/,licensed_feed,,,,页面说明收盘文件含收盘价和结算价，属于行情产品。
