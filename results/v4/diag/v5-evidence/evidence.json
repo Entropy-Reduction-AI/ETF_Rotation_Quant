@@ -1,0 +1,71 @@
+{
+ "breadth": {
+  "a_share_n": 14,
+  "a_share_avg_pair_corr": 0.835,
+  "a_share_effective": 1.37,
+  "all_n": 20,
+  "all_effective": 2.35
+ },
+ "cross_sectional_ic": {
+  "within_a_share": {
+   "months": 119,
+   "mean": 0.068,
+   "t": 1.61
+  },
+  "across_classes": {
+   "months": 95,
+   "mean": 0.057,
+   "t": 1.05
+  }
+ },
+ "time_series_trend": {
+  "class_reps": {
+   "up_next_month_excess_pct": 1.2,
+   "down_next_month_excess_pct": -0.22,
+   "t_naive": 2.4,
+   "n_up": 431,
+   "n_down": 227
+  },
+  "a_share_pooled": {
+   "up_next_month_excess_pct": 3.35,
+   "down_next_month_excess_pct": -0.53,
+   "t_naive": 7.09,
+   "n_up": 1013,
+   "n_down": 534
+  }
+ },
+ "sharpe": {
+  "E2_index": 0.96,
+  "E2_tradable": 0.54,
+  "A1_index": 1.02,
+  "A1_tradable": 1.0,
+  "A2_index": 0.83,
+  "BM": 0.59
+ },
+ "t_stats": {
+  "E2_index_vs_BM": {
+   "excess_pct_yr": 6.5,
+   "t": 1.29
+  },
+  "E2_index_vs_BM_2009_2015": {
+   "excess_pct_yr": -4.7,
+   "t": -0.93
+  },
+  "E2_tradable_vs_BM": {
+   "excess_pct_yr": -8.7,
+   "t": -1.47
+  },
+  "E2_index_vs_A1_index": {
+   "excess_pct_yr": -1.7,
+   "t": -0.36
+  },
+  "E2_tradable_vs_A1_tradable": {
+   "excess_pct_yr": -13.9,
+   "t": -2.95
+  },
+  "E2_index_vs_A2_index": {
+   "excess_pct_yr": 15.5,
+   "t": 2.8
+  }
+ }
+}
