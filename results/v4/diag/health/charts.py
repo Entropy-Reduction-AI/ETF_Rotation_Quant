@@ -15,11 +15,12 @@ IDX, TRD, A1C, A2C = '#1d4ed8', '#0d9488', '#d97706', '#7c3aed'
 GOOD, BAD, CASH = '#16a34a', '#ea580c', '#9ca3af'
 POOL = {'index': 'U-指数池（能排名的）', 'tradable': 'U-可交易池（当年真能买到的）'}
 
-# 设计期简报 R5c（2026-10-30）：拿现金、选标的，1 位小数，单位百分点。
+# 设计期简报：拿现金、选标的，1 位小数，单位百分点。
 # 分项相加与合计 excess 可能差 0.1，来自各自四舍五入。
+# U-可交易的「回调」在 D25-8 之后按同一套 scorecard 重算（2008-01-02 错价落在这一格）。
 STATES = {
     'index':    {'牛市': (-24.6, 22.7), '回调': (21.0, 6.4), '熊市': (45.3, 49.7), '反弹': (-23.1, -30.9)},
-    'tradable': {'牛市': (-170.9, -5.6), '回调': (70.7, 12.0), '熊市': (97.3, 14.2), '反弹': (-63.2, -7.5)},
+    'tradable': {'牛市': (-170.9, -5.6), '回调': (71.5, -14.5), '熊市': (97.3, 14.2), '反弹': (-63.2, -7.5)},
 }
 
 g = pd.read_csv(R / 'gate-inputs.csv', index_col=0, parse_dates=True)
@@ -163,7 +164,7 @@ def chart_robust():
     axes[0].set_yticks(yy); axes[0].set_yticklabels(ylab, fontsize=10.5)
     h = [plt.Line2D([], [], marker='o', ls='', color=IDX, ms=8), plt.Line2D([], [], marker='D', ls='', color=TRD, ms=7), plt.Rectangle((0, 0), 1, 1, color='#f3f4f6')]
     fig.legend(h, [f'U-指数池（原样年化 {base["index"][0]*100:.1f}%）', f'U-可交易池（原样年化 {base["tradable"][0]*100:.1f}%）', '±1 个百分点以内'], loc='lower center', ncol=3, frameon=False, bbox_to_anchor=(.55, -.03), fontsize=10.5)
-    fig.suptitle('改参数不会塌；可交易池更怕“少了最好的那只”和“晚一天成交”', x=.125, ha='left', va='bottom', y=1.04, fontsize=14.5, weight='bold', color=INK)
+    fig.suptitle('改参数不会塌；可交易池更怕“少了最好的那只”', x=.125, ha='left', va='bottom', y=1.04, fontsize=14.5, weight='bold', color=INK)
     fig.text(.125, 1.005, '每行只改一处，其余和 E2 新口径原样相同。点在灰带里 = 差别在 1 个百分点以内。设计期 2006–2015。', fontsize=10.5, color=MUTED, va='bottom')
     fig.savefig(OUT / 'h5-robust.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
 

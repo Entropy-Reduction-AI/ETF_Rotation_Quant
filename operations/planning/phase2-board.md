@@ -14,23 +14,23 @@
 - 命名: `docs/manual/roadmap-and-naming.md`（D13-4）
 - 决定: `operations/planning/2026-10-28-d13-owner-decisions.md`；D14：`operations/planning/2026-10-28-d14-owner-decisions.md`；D23：`operations/planning/2026-10-29-d23-v4-prereg-approval.md`；D25：`operations/planning/2026-10-30-d25-v4-r5b-review.md`
 - v4 任务: `operations/planning/2026-10-28-v4-dev-plan.md`；v4-R5：`operations/planning/2026-10-29-v4-r5-plan.md`；v4-R5b：`operations/planning/2026-10-29-v4-r5b-plan.md`；v4-R5c：`operations/planning/2026-10-30-v4-r5c-plan.md`
-- 设计期简报: `operations/reports/v4-r5-design-period-brief.md`（已按 D25 更新两个池）
+- 设计期简报: `operations/reports/v4-r5-design-period-brief.md`（U-指数仍是 D25；U-可交易已按 D25-8 刷新）
 - Orchestrator 交接: `operations/planning/2026-10-30-v4-r5c-orchestrator-handoff.md`（R5、R5b 那两份仍留着，分工以 R5c 这份为准）
-- 数据看板: `docs/owner/data-board.md`（库指纹 `550c1aee…`）
-- Owner 看板: `docs/owner/phase2-owner-board.md`（五段还没写；等体检报告第 3 版）
-- 收口主线: `dff13f20d817abd2461603d4fcd09ac42c598647`（#133 签收 rebase-merge 之后的 `main`）。`milestone/v4-code-freeze` 仍指向 `476abd7`，不移动。`milestone/v4-code-freeze-2` 等本收尾 PR 合入后再打
+- 数据看板: `docs/owner/data-board.md`（库指纹 `167d4e39…`）
+- Owner 看板: `docs/owner/phase2-owner-board.md`（五段还没写；体检报告第 3 版的可交易池读数已按 D25-8 刷新）
+- 收口主线: `a728a085f1777239751bf85baca545b2dd6304a4`（#137 签收 rebase-merge 之后的 `main`）。`milestone/v4-code-freeze` 仍指向 `476abd7`，`milestone/v4-code-freeze-2` 仍指向 `c9f4e44`。本收尾不移动它们
 - 旧流水: `operations/work_logs/2026-10-28-phase2-board-ledger.md`（main `9fd6f67` 上本文件的原文）
 
 ## 现在的位置
 
 v3.1 已停在 **⑦ 代码冻结**。tag `milestone/v3-code-freeze` → `b1f84d899f4a37914c1ce4ef0ab16484f0ef7cdb`（附注标签对象 `f1d3d0c170ecbd5eb3b463c26834bafd5dc40254`）。R3 签收 `approve`：`operations/reviews/2026-10-27-v3.1-code-freeze-r3.md`（PR #56，已在 main）。⑧ 一次性检验未批准（D11-5）。D13 收口把复核正文、两份只在分支上的记录和本看板改写进 main；收口记录是 `operations/work_logs/2026-10-28-v3.1-closeout.md`。
 
-v4 预注册已冻结：`milestone/v4-prereg-freeze` 指向 `6bcba53e36e74ec81dd21fb7ee7b8cea695038fb`（附注对象 `830320d03712df3a4098f352be8932e0553b5eeb`）。`milestone/v4-code-freeze` 已打在 `476abd7cb63395506c6a9bb5fdad0f7b16827f66`（附注对象 `4ce2f2919b7c1bcf12dcd1bdd3eee77ae964a603`），本轮不移动。D25 程序修复在 #132（`9c3e41c`），Reviewer 签收在 #133（`dff13f20d817abd2461603d4fcd09ac42c598647`，Decision `approve_with_follow_up`）。最终版仍是 E2 新口径 B0。B0 U-指数自 2006 年化 24.88%，最大回撤 −35.28%；B0 U-可交易全日历年化 9.97%，最大回撤 −31.70%（设计期，≤2015-12-31）。简报已换成这组数字。下一步是 Orchestrator 的体检报告第 3 版；五段等那份报告。`milestone/v4-code-freeze-2` 只在里程碑索引里有说明，标签还没打。D14 / v4-R1b 的收口原文在下方专节，日期仍是 2026-10-28。
+v4 预注册已冻结：`milestone/v4-prereg-freeze` 指向 `6bcba53e36e74ec81dd21fb7ee7b8cea695038fb`（附注对象 `830320d03712df3a4098f352be8932e0553b5eeb`）。`milestone/v4-code-freeze` 已打在 `476abd7cb63395506c6a9bb5fdad0f7b16827f66`（附注对象 `4ce2f2919b7c1bcf12dcd1bdd3eee77ae964a603`），本轮不移动。D25 程序修复在 #132（`9c3e41c`），Reviewer 签收在 #133（`dff13f20d817abd2461603d4fcd09ac42c598647`，Decision `approve_with_follow_up`）。最终版仍是 E2 新口径 B0。B0 U-指数自 2006 年化 24.88%，最大回撤 −35.28%。B0 U-可交易在 D25-8 之后：全日历年化 7.97%，自 2006 年化 8.66%，最大回撤 −31.70%（设计期，≤2015-12-31）。`milestone/v4-code-freeze` 仍指向 `476abd7`。`milestone/v4-code-freeze-2` 仍指向 `c9f4e44`。本收尾不移动这两个标签。D14 / v4-R1b 的收口原文在下方专节，日期仍是 2026-10-28。
 
 | 版本 | ① 规则定稿 | ② 标的池 | ③ 交易引擎 | ④ 溢价控制 | ⑤ 打分卡 | ⑥ 业务体检 | ⑦ 代码冻结 | ⑧ 一次性检验 | ⑨ 结论 | ⑩ 模拟盘 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | v3.1 | 完成 | 完成 | 完成 | 完成 | 完成 | 完成 | 完成 | 暂停 | — | — |
-| v4 | 已冻结 | v4-R1、v4-R1b 已合入 | v4-R2 已合入 | v4-R2 已合入 | v4-R3 已合入 | v4-R5c 已签收，待体检第 3 版 | `v4-code-freeze` 已打；`v4-code-freeze-2` 待本收尾 PR 合入后打 | — | — | — |
+| v4 | 已冻结 | v4-R1、v4-R1b 已合入 | v4-R2 已合入 | v4-R2 已合入 | v4-R3 已合入 | v4-R5c 已签收；体检第 3 版已按 D25-8 刷新可交易池 | `v4-code-freeze` 与 `v4-code-freeze-2` 都已打，本收尾不移动 | — | — | — |
 
 状态只用这五个词：未开始 / 进行中 / 待评审 / 已合入 / 阻塞。
 
@@ -55,7 +55,7 @@ v4 预注册已冻结：`milestone/v4-prereg-freeze` 指向 `6bcba53e36e74ec81dd
 | v4-R4 | ① 规则定稿 | 已合入 | D23-1。预注册第 2.3 版，`milestone/v4-prereg-freeze` → `6bcba53e36e74ec81dd21fb7ee7b8cea695038fb` | 索引：`docs/manual/milestones.md`；登记：`operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md` |
 | v4-R5 | ⑥ 业务体检 | 已合入 | D23-2。#122 设计期运行 `09fe9ad`；#123 签收 `approve`，`cbd94df`。过关：T1–T4 均未同时通过三条，最终版 = B0 | U-指数包已在 main。现行两个池的读数以 v4-R5c 为准 |
 | v4-R5b | ⑥ 业务体检 | 已合入 | D24。#126 `82f97453`；#127 签收 `approve_with_follow_up`，`4a541df`。当时 B0 U-可交易 9.62% / −31.70%。`milestone/v4-code-freeze` → `476abd7` | 修复、签收和代码冻结标签已在 main。现行读数以 v4-R5c 为准 |
-| v4-R5c | ⑥ 业务体检 | 已合入 | D25。#132 `9c3e41c`；#133 签收 `approve_with_follow_up`，`dff13f20`。B0 仍是最终版。U-指数自 2006 为 24.88% / −35.28%；U-可交易全日历 9.97% / −31.70% | 重跑和签收已在 main。简报、数据看板和体检输入随本收尾 PR 更新。`milestone/v4-code-freeze` 不移动。`milestone/v4-code-freeze-2` 等该 PR rebase-merge 之后再打。五段等体检报告第 3 版 |
+| v4-R5c | ⑥ 业务体检 | 已合入 | D25。#132 `9c3e41c`；#133 签收 `approve_with_follow_up`，`dff13f20`。D25-8：#136、#137 签收 `approve_with_follow_up`。B0 仍是最终版。U-指数自 2006 为 24.88% / −35.28%；U-可交易全日历 7.97%、自 2006 8.66%、回撤 −31.70% | 重跑和签收已在 main。简报、数据看板和体检输入已按 D25-8 刷新。两个代码冻结标签都不移动。五段仍待 Manager |
 
 v4 候选是 T1–T4（旧称 D1–D4）。决定编号仍是 D13、D14 这一类，不进路线图。R1c–R1f、R2b、R2c、R4b 的计划与签收仍在 `operations/planning/` 和 `operations/reviews/`，本表不另开一套轮次编号。
 
@@ -63,17 +63,17 @@ v4 候选是 T1–T4（旧称 D1–D4）。决定编号仍是 D13、D14 这一�
 
 | 项 | 指针 |
 | --- | --- |
-| 简报 | `operations/reports/v4-r5-design-period-brief.md`（两个池都是 D25 之后的数字） |
+| 简报 | `operations/reports/v4-r5-design-period-brief.md`（U-指数是 D25；U-可交易是 D25-8：全日历 7.97%，自 2006 8.66%，回撤 −31.70%） |
 | D25 签收 | `operations/reviews/2026-10-30-v4-r5c-d25-signoff.md`（Decision `approve_with_follow_up`） |
 | 复算 JSON | `operations/reviews/diag/v4/v4-r5c-d25-review.json` |
 | Dev 运行记录 | `operations/work_logs/2026-10-30-v4-r5c-index-fill.md` |
 | 过关表 | `results/v4/r5/candidate-gate.csv`（SHA256 `52fc1c9d653c27236df258cd0789ada7e4c4b27a842b2e82b004380bde445d74`） |
 | 交接 | `operations/planning/2026-10-30-v4-r5c-orchestrator-handoff.md` |
-| 数据看板 | `docs/owner/data-board.md`。库指纹 `550c1aee17a099dfc206876503ef436456bc5e87441db6947692abd3d6868c6c`。`summary.json` 的 `series_rows` 为 593480。本看板不抄组合收益 |
+| 数据看板 | `docs/owner/data-board.md`。库指纹 `167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3`。`summary.json` 的 `series_rows` 为 593481。本看板不抄组合收益 |
 | 体检输入 | `results/v4/diag/health/numbers.json`；`results/v4/diag/health/out/` |
 | 代码冻结 | `milestone/v4-code-freeze` 仍指向 `476abd7`。`milestone/v4-code-freeze-2` 见 `docs/manual/milestones.md` 的 D25-5，标签未创建 |
 
-账本 41 行：`fix: D25-1` ×20，`D25-3` ×17，`D25-2` ×2，`D24-1` ×2。账本 SHA256 `7a7620aa2cc34c207e3b32360a0f55f4246659945365e228c68c7847294b623d`。没有 `results/v4/LOCK`。没有 2016-01-01 及以后的组合收益汇总。既有标签未移动。
+账本 41 行：`fix: D25-1` ×20（U-指数），`fix: D25-8` ×21（U-可交易）。账本 SHA256 `2ccf64284d98f48ec2cd127c363403b855113792f066b553867a62902997469b`。B0 U-可交易 `net_sha256` `f02d20ca7e848d0a1c817022a594e5c404c2d1012d8ceb8bb77e30bd79a42bab`。B0 U-指数 `net_sha256` 仍是 `77fc2f7bdeae577f6329924fa590a5813414a65d626b4c9cf393c16cc3015482`。没有 `results/v4/LOCK`。没有 2016-01-01 及以后的组合收益汇总。既有标签未移动。
 
 R5 / R5b 的签收和交接文件仍在 `operations/reviews/` 与 `operations/planning/`。现行数字以本节和简报为准。
 
@@ -170,6 +170,8 @@ D14-2 删掉的 9 个仍登记在 `docs/manual/milestones.md`（清理前的 12 
 - `operations/work_logs/2026-10-28-v4-r1b-exploration.md`
 
 ## 最近更新
+
+2026-10-31（Asia/Taipei），Manager。D25-8 / D25-9 已在 main：#136 开发，#137 签收 `approve_with_follow_up`。行情库指纹 `167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3`，`series_rows` 593481。B0 U-可交易全日历 7.97%，自 2006 8.66%，最大回撤 −31.70%。U-指数自 2006 仍是 24.88% / −35.28%。账本仍是 41 行，U-可交易 `fix: D25-8`。体检输入、设计期简报、数据看板和体检报告第 3 版的可交易池读数已换成这组数字。给 Orchestrator。没有写 `results/v4/LOCK`。没有移动标签。设计期上界 2015-12-31。
 
 2026-10-30（Asia/Taipei），Manager。v4-R5c 改为已合入：#132 `9c3e41c`，#133 `dff13f20`，Decision `approve_with_follow_up`。最终版仍是 B0。U-指数自 2006 为 24.88% / −35.28%，U-可交易全日历 9.97% / −31.70%。数据看板库指纹改为 `550c1aee…`，`series_rows` 593480。简报两个池已换成 D25 之后的读数。体检输入在 `results/v4/diag/health/`。⑥ 等 Orchestrator 体检报告第 3 版，之后由 Manager 写五段。`milestone/v4-code-freeze` 不移动。`milestone/v4-code-freeze-2` 在索引里有 D25-5 说明，标签等本收尾 PR 合入后再打。设计期上界 2015-12-31。仓库里没有 `results/v4/LOCK`。本更新没有移动标签。
 
