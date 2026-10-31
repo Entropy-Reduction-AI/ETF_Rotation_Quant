@@ -4,9 +4,21 @@
 只统计数据的起止、覆盖和状态，不计算任何收益。每次数据轮次结束后重跑：
     python results/v4/diag/data-board/build_data_board.py
 输出：results/v4/diag/data-board/out/{summary.json,containers.csv}、docs/assets/data-board/*.png
+
+buy_first 与 U-可交易的载体名单同源（src/v4/engine/carriers.py）：
+场外读 v4_listing 的非增强基金（含联接）和相近替身里的场外基金，
+可买日是上交所交易日里不早于 max(成立日, 首笔 otc_nav) 的第一天。
+场内用原始 K 线第一根正收盘，不用登记表上市日。
+不套 v3 §3.3 的上市后 60 个交易日和 3,000 万成交额；那两道只决定场内何时进入排名。
 """
-import csv, json, sqlite3, hashlib, tomllib, collections, pathlib, datetime
+import csv, json, sqlite3, hashlib, tomllib, collections, pathlib, datetime, sys
 ROOT = pathlib.Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(ROOT))
+import pandas as pd
+from src.v4.engine.carriers import (
+    SUBSTITUTES, _enhanced_name, _listings, accepted_tracks, has_investable_index,
+    otc_nav_start, raw_dates, sse_calendar,
+)
 OUT = ROOT / 'results/v4/diag/data-board/out'; OUT.mkdir(parents=True, exist_ok=True)
 ASSET = ROOT / 'docs/assets/data-board'; ASSET.mkdir(parents=True, exist_ok=True)
 DB = ROOT / 'data/market.sqlite'
@@ -36,27 +48,84 @@ def hfq_source(code):
     if con.execute("select 1 from v4_series where code=? and kind='backward_rebuild' limit 1", (code,)).fetchone(): return '还原'
     return '缺'
 
+def session_on_or_after(calendar, opened):
+    hit = calendar[calendar >= pd.Timestamp(opened)]
+    if len(hit) == 0:
+        return None
+    return str(pd.Timestamp(hit[0]).date())
+
+def first_raw_print(code):
+    """引擎的场内上市日：原始 K 线第一根正收盘。没有原始成交就没有可买日。"""
+    dates = raw_dates(con, code, CUT)
+    if len(dates) == 0:
+        return None
+    return str(pd.Timestamp(dates[0]).date())
+
+def listing_opens(containers, calendar):
+    """第 2 档 v4_listing，以及第 3 档场外相近替身。条件与 build_candidates 相同。"""
+    by_id = {str(c.get('id') or ''): c for c in containers}
+    found = collections.defaultdict(list)
+    listings = _listings(con)
+
+    def add(identity, code, inception, nav_start, kind):
+        opened = max(pd.Timestamp(inception), nav_start)
+        day = session_on_or_after(calendar, opened)
+        if day is None or day > CUT:
+            return
+        found[identity].append(dict(
+            code=str(code), day=day, inception=str(inception),
+            nav_start=str(pd.Timestamp(nav_start).date()), kind=kind,
+            opened=str(opened.date())))
+
+    for row in listings:
+        identity = str(row['maps_to'])
+        container = by_id.get(identity)
+        if container is None:
+            continue
+        if int(row['enhanced'] or 0) == 1 or _enhanced_name(row['name']):
+            continue
+        linked_without_index = not has_investable_index(container)
+        labels = accepted_tracks(container)
+        execution_codes = {str(item.get('code') or '') for item in (container.get('execution') or [])}
+        same_fund = str(row['code']) in execution_codes
+        track = str(row['tracked_index'] or '')
+        if not linked_without_index and track not in labels and not same_fund:
+            continue
+        nav_start = otc_nav_start(con, str(row['code']), CUT)
+        inception = str(row['inception'] or '')
+        if nav_start is None or not inception:
+            continue
+        add(identity, row['code'], inception, nav_start, 'v4_listing')
+    for row in SUBSTITUTES:
+        if row['vehicle'] != 'otc':
+            continue
+        nav_start = otc_nav_start(con, row['code'], CUT)
+        inception = str(nav_start.date()) if nav_start is not None else ''
+        listed = next((item for item in listings if item['code'] == row['code']), None)
+        if listed is not None and listed.get('inception'):
+            inception = str(listed['inception'])
+        if nav_start is None or not inception:
+            continue
+        add(row['container'], row['code'], inception, nav_start, 'substitute')
+    return found
+
 GROUP = {'A股宽基': 'A 股', 'A股行业': 'A 股', 'A股红利': 'A 股', '港股': '港股', '美股宽基': '美股', '美股和全球主题': '海外主题（QDII、LOF）',
          '商品': '商品、债券、现金', '债券': '商品、债券、现金', '现金': '商品、债券、现金'}
 u3 = tomllib.load(open(ROOT / 'config/v3/universe.toml', 'rb'))['container']
 u4 = tomllib.load(open(ROOT / 'config/v4/universe.toml', 'rb'))['container']
-otc = collections.defaultdict(list)
-for r in u4:
-    if r.get('instrument_type') == 'otc_fund' and '增强' not in r['name']:
-        otc[r.get('maps_to')].append(r)
+main_containers = [c for c in u3 if c.get('arm') == 'main']
+OPENS = listing_opens(main_containers, sse_calendar(con, CUT))
 rows = []
-for c in u3:
-    if c.get('arm') != 'main': continue
+for c in main_containers:
     rs = c['research']; code = rs.get('series_code') or ''
     f, l, n = first_last(code) if code else (None, None, 0)
     mem = []
     for e in c.get('execution', []):
-        ld = e.get('list_date') or ''
-        fb = con.execute("select min(date) from bars where code=? and close>0", (e['code'],)).fetchone()[0]
-        start = ld if ld[:2] in ('19', '20') else fb
-        mem.append(dict(code=e['code'], name=e.get('name', ''), start=start, hfq=has_hfq(e['code']), src=hfq_source(e['code'])))
-    otcs = [dict(code=o['code'], name=o['name'], start=o.get('first_date') or o.get('official_launch')) for o in otc.get(c['id'], [])]
-    starts = [m['start'] for m in mem if m['start']] + [o['start'] for o in otcs if o['start']]
+        code_e = str(e.get('code') or '')
+        start = first_raw_print(code_e) if code_e not in ('', '取不到', 'TBD') else None
+        mem.append(dict(code=code_e, name=e.get('name', ''), start=start, hfq=has_hfq(code_e), src=hfq_source(code_e)))
+    opens = OPENS.get(c['id'], [])
+    starts = [m['start'] for m in mem if m['start']] + [o['day'] for o in opens]
     buy = min(starts) if starts else None
     issues = []
     st = rs.get('series_status')
@@ -65,7 +134,7 @@ for c in u3:
     if miss: issues.append('后复权缺：' + '、'.join(miss))
     rows.append(dict(group=GROUP.get(c['asset_class'], c['asset_class']), id=c['id'], name=c['name'], asset_class=c['asset_class'],
                      research=code, basis=rs.get('return_basis'), research_first=f, research_last=l, research_rows=n,
-                     buy_first=buy, members=len(mem), otc=len(otcs), member_codes='、'.join(m['code'] for m in mem),
+                     buy_first=buy, members=len(mem), otc=len({o['code'] for o in opens}), member_codes='、'.join(m['code'] for m in mem),
                      issues='；'.join(issues), pool='v3 起'))
 seen = set()
 for r in u4:
@@ -131,6 +200,6 @@ for ax, cnt, t in [(axs[0], res_cnt, '研究池：有数据可以排名的容器
     ax.set_xticks([2006, 2010, 2015, 2020, 2026]); ax.set_xticklabels(['2006', '2010', '2015', '2020', '2026'])
 axs[0].set_ylabel('容器个数（年末）'); axs[1].legend(frameon=False, fontsize=9.5, loc='upper left')
 fig.suptitle('池子随时代长大：设计期里能排名的多，当年真能买到的少', x=.125, ha='left', y=1.06, fontsize=14.5, weight='bold', color='#111827')
-fig.text(.125, .975, f'每年年末累计。“能买到”只看有没有上市或成立，未套 3,000 万成交额门槛。数据截至 {CUT}，只统计起止日，不含任何收益。', fontsize=10, color='#6b7280')
+fig.text(.125, .975, f'每年年末累计。场外按 v4_listing（非增强，含联接）的成立日与首笔净值，对齐到上交所交易日；场内按首个原始正收盘。未套 3,000 万成交额门槛。数据截至 {CUT}，只统计起止日，不含任何收益。', fontsize=10, color='#6b7280')
 fig.savefig(ASSET / 'd1-pool-growth.png', dpi=200, bbox_inches='tight', facecolor='white')
 print(json.dumps({k: summary[k] for k in ('containers_total', 'containers_v3', 'containers_t4', 'by_group', 'census_listed', 'hfq_ok', 'nav_ok', 'hfq_source', 'integrity')}, ensure_ascii=False))
