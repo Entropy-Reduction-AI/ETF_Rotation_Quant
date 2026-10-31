@@ -48,7 +48,7 @@ def chart_nav():
             bx.plot(n.index, (n / n.cummax() - 1) * 100, color=col[k], lw=1.8 if k == 'E2 新口径' else 1.3)
         ends.sort(reverse=True); last = None
         for v, k, c, d in ends:
-            y = v if last is None else min(v, last / 1.22); last = y
+            y = v if last is None else min(v, last / 1.38); last = y
             ax.text(pd.Timestamp('2016-02-01'), y, f'{k}\n{v:.1f} 倍 · 年化 {c*100:.1f}%', color=col[k], fontsize=10, weight='bold', va='center')
         ax.set_yscale('log'); ax.set_yticks([1, 2, 4, 8]); ax.set_yticklabels(['1', '2', '4', '8']); ax.set_ylim(.85, 13)
         ax.set_title(POOL[pool], loc='left', fontsize=12.5, weight='bold', color=col['E2 新口径'])
@@ -85,7 +85,7 @@ def chart_states():
     axes[0].set_ylabel('相对基准的超额（百分点，按月相加）')
     h = [plt.Rectangle((0, 0), 1, 1, color=CASH), plt.Rectangle((0, 0), 1, 1, color=IDX), plt.Rectangle((0, 0), 1, 1, color=TRD)]
     fig.legend(h, ['拿现金带来的', '选标的带来的（U-指数）', '选标的带来的（U-可交易）'], loc='lower center', ncol=3, frameon=False, bbox_to_anchor=(.5, -.1), fontsize=10.5)
-    fig.suptitle('熊市靠拿现金大赢；牛市和反弹也是同一笔现金在拖后腿', x=.125, ha='left', va='bottom', y=1.04, fontsize=14.5, weight='bold', color=INK)
+    fig.suptitle('熊市两头都赢；牛市里指数池打平，可交易池被现金拖累 176 个百分点', x=.125, ha='left', va='bottom', y=1.04, fontsize=14.5, weight='bold', color=INK)
     fig.text(.125, 1.005, 'E2 新口径，设计期 2006–2015 的 120 个月，按沪深300 全收益的 12 个月和 1 个月涨跌，只用当时的数据分成四种行情。', fontsize=10.5, color=MUTED, va='bottom')
     fig.savefig(OUT / 'h3-states.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
 
@@ -222,9 +222,10 @@ def chart_crash():
     axes[0, 0].set_ylabel('从沪深300 见顶那天算起（%）'); axes[1, 0].set_ylabel('E2 现金（%）')
     axes[0, 0].annotate('A1：标普500 的 12 个月\n先跌破现金，全部换国债', xy=(32, -18), xytext=(5, -62), fontsize=9.5, color=A1C, arrowprops=dict(arrowstyle='->', color=A1C))
     axes[0, 1].annotate('A1：沪深300 过去 12 个月\n仍涨 115%，一直满仓', xy=(15, -20), xytext=(70, 12), fontsize=9.5, color=A1C, arrowprops=dict(arrowstyle='->', color=A1C))
-    axes[1, 0].text(115, 4, 'U-指数：2008 年 1 月、3 月\n反弹时两次买回去', fontsize=9.5, color=IDX)
-    axes[0, 0].annotate('这一跳是数据错误：红利 ETF\n2008-01-02 一笔错价（R5c 修）', xy=(55, 18), xytext=(120, 18), fontsize=9.5, color=TRD, va='center', arrowprops=dict(arrowstyle='->', color=TRD))
-    axes[1, 1].text(60, 80, '前 10 天现金还不到 20%', fontsize=9.5, color=IDX)
+    axes[1, 0].text(115, 4, 'U-指数：2008 年 1–2 月\n反弹时又几乎满仓买回', fontsize=9.5, color=IDX)
+    if float(rd('B0', 'tradable').get(pd.Timestamp('2008-01-03'), 0)) > 0.2:
+        axes[0, 0].annotate('这一跳是数据错误：红利 ETF\n2008-01-02 一笔错价（R5c 修）', xy=(55, 18), xytext=(120, 18), fontsize=9.5, color=TRD, va='center', arrowprops=dict(arrowstyle='->', color=TRD))
+    axes[1, 1].text(30, 80, '第 10 天现金升到一半时，U-指数已经亏了 20%', fontsize=9.5, color=IDX)
     fig.suptitle('同样的规则，2008 年有时间反应，2015 年来不及', x=.125, ha='left', va='bottom', y=1.0, fontsize=14.5, weight='bold', color=INK)
     fig.text(.125, .965, '上：从沪深300 见顶那天起各自的涨跌。下：E2 新口径的现金仓位（蓝 = U-指数池，绿 = U-可交易池）。两张图的横轴长度相同，可以直接比速度。', fontsize=10.5, color=MUTED, va='bottom')
     fig.savefig(OUT / 'h6-crash.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
