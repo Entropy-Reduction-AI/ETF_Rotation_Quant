@@ -112,6 +112,7 @@ index,2010,theme-恒生中国企业指数,海外主题（QDII、LOF）
 index,2011,csi300,A 股
 index,2011,csi500,A 股
 index,2011,csi1000,A 股
+index,2011,chinext,A 股
 index,2011,allshare-energy,A 股
 index,2011,allshare-materials,A 股
 index,2011,allshare-industrials,A 股
@@ -242,6 +243,7 @@ tradable,2010,ndx100,美股
 tradable,2010,theme-恒生中国企业指数,海外主题（QDII、LOF）
 tradable,2011,csi300,A 股
 tradable,2011,csi500,A 股
+tradable,2011,chinext,A 股
 tradable,2011,allshare-financials-re,A 股
 tradable,2011,csi-dividend,A 股
 tradable,2011,ndx100,美股
