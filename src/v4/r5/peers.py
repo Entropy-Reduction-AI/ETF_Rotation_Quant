@@ -174,10 +174,10 @@ def _summary(peer_id: str, pool: str, net: pd.Series) -> dict:
     }
 
 
-def run_peers(spec: Spec, *, resume: bool = True) -> None:
+def run_peers(spec: Spec, *, resume: bool = True, pools: tuple[str, ...] = POOLS) -> None:
     panel = None
     for peer_id in ("A1", "A2"):
-        for pool in POOLS:
+        for pool in pools:
             folder = run_dir(peer_id, pool)
             if resume and (folder / "net.csv").exists():
                 read_net(peer_id, pool)

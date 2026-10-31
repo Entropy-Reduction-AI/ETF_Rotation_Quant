@@ -1,0 +1,6 @@
+source,date,field,value,kept,note
+bars.raw tencent_etf,2008-01-02,close,1.467,yes,错价，不覆盖
+v4_series tencent_etf_hfq,2008-01-02,close,0.961,yes,错价，不覆盖
+eastmoney kline fqt=0,2008-01-02,close,4.649,,"开 4.640 高 4.692 低 4.581；前一日 4.637，后一日 4.794；https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.510880&klt=101&fqt=0&beg=20071228&end=20080104&fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61"
+tiantian lsjz unit_nav,2008-01-02,unit_nav,4.6650,,相对 2007-12-28 单位净值 4.6390 上涨 0.56%，无分红标记；https://api.fund.eastmoney.com/f10/lsjz?fundCode=510880&pageIndex=1&pageSize=20&startDate=2007-12-20&endDate=2008-01-15
+d25-8-eastmoney-kline,2008-01-02,hfq_close,3.04686456761,inserted,D25-8。2008-01-02 腾讯不复权收盘 1.467、腾讯后复权 0.961 为错价；前一日不复权 4.637，后一日 4.794。东财日 K 不复权收盘 4.649（开 4.640 高 4.692 低 4.581，涨跌 +0.26%）。天天基金单位净值 4.6650，相对 2007-12-28 的 4.6390 上涨 0.56%，无分红标记。修正后复权 = 2007-12-28 腾讯后复权 3.039 × 4.649/4.637，仍用腾讯刻度。不覆盖 bars，不覆盖 tencent_etf_hfq。
