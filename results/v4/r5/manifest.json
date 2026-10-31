@@ -2,6 +2,6 @@
   "end": "2015-12-31",
   "passed": [],
   "ledger_rows": 41,
-  "db_sha256": "550c1aee17a099dfc206876503ef436456bc5e87441db6947692abd3d6868c6c",
+  "db_sha256": "167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3",
   "gate": "/workspace/results/v4/r5/candidate-gate.csv"
 }
