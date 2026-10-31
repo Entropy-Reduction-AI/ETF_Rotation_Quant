@@ -11,6 +11,7 @@ import pandas as pd
 
 from src.v3.data.history import history_floor
 from src.v3.engine.costs import leg_fee
+from src.v3.engine.limits import fill_board_for
 from src.v3.engine.market import _split_bars, _usd_level, levels_from_returns
 from src.v3.engine.prices import USD_CODES, returns_from_level, signal_returns
 from src.v3.engine.universe import parse_date, research_code
@@ -205,6 +206,44 @@ def _replace_carrier_pnl(market, con, spec, end: str, grouped) -> None:
             market.levels[name] = compound_level(series, calendar)
 
 
+def _has_own_print(series: pd.Series | None) -> bool:
+    if series is None or len(series) == 0:
+        return False
+    values = pd.to_numeric(series, errors="coerce")
+    return bool(((values > 0) & values.notna()).any())
+
+
+def _index_research_fills(market, containers: list[dict]) -> None:
+    """U-指数：还没有自身成交价的容器，用已经装好的研究序列。
+
+    有研究代码的容器在 `load_market` 里已经写成研究收盘，这里不覆盖。
+    没有研究代码的（创业板、豆粕、原油）研究序列是载体日收益拼接，只在当天有收益时打印。
+    板块仍用登记表里对应场内 ETF；调用方没写板块时按同一条规则补。
+    """
+    if market.fill_close is None:
+        market.fill_close = {}
+    if market.fill_board is None:
+        market.fill_board = {}
+    by_id = {str(row.get("id") or ""): row for row in containers}
+    for name in list(market.names):
+        if name == market.cash_id:
+            continue
+        container = by_id.get(name) or {}
+        if name not in market.fill_board:
+            executions = container.get("execution") or []
+            track = str(executions[0].get("track") or "") if executions else ""
+            traded = str(executions[0].get("code") or "") if executions else ""
+            asset = str(container.get("asset_class") or "")
+            market.fill_board[name] = fill_board_for(track, traded, asset)
+        if _has_own_print(market.fill_close.get(name)):
+            continue
+        if name not in market.levels.columns or name not in market.signal.columns:
+            continue
+        level = market.levels[name].reindex(market.dates)
+        signal = market.signal[name].reindex(market.dates)
+        market.fill_close[name] = level.where(signal.notna() & level.notna() & (level > 0))
+
+
 def apply_tradable_execution(market, switches, *, db, containers: list[dict], spec):
     """在已经装好的 U-指数研究序列上，改计价收益和可交易掩码。不改信号。"""
     end = str(pd.Timestamp(market.dates.max()).date())
@@ -239,6 +278,8 @@ def apply_market(market, switches, *, db, containers: list[dict], spec, pool: st
             if pool == "tradable":
                 _gate(market, con, containers, end, switches, grouped)
                 _replace_carrier_pnl(market, con, spec, end, grouped)
+        if pool != "tradable":
+            _index_research_fills(market, containers)
     finally:
         con.close()
     return market

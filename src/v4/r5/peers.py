@@ -1,8 +1,8 @@
 """附表 A 在设计期的真实行情。信号用与 v4 相同的收盘时点和汇率。
 
-U-指数用研究序列。U-可交易的月末判断和日收益都用选定载体自己的复权路径；
-当天没有载体的那一腿拿现金。不接离场、溢价和 T1–T4。
-日期晚于 2015-12-31 的序列直接拒绝。
+U-指数的月末判断、持有和日收益都用研究序列。U-可交易的月末判断用附表 A 指定的
+研究序列（与 U-指数相同）；持有和日收益用选定载体自己的复权路径。当天没有载体的
+那一腿拿现金。不接离场、溢价和 T1–T4。日期晚于 2015-12-31 的序列直接拒绝。
 """
 from __future__ import annotations
 
@@ -192,8 +192,9 @@ def run_peers(spec: Spec, *, resume: bool = True) -> None:
             carriers = panel["carriers"] if pool == "tradable" else None
             quotes = panel["tradable_quotes"] if pool == "tradable" else panel["index_quotes"]
             levels = panel["tradable_levels"] if pool == "tradable" else panel["levels"]
+            signal_levels = panel["levels"] if pool == "tradable" else None
             result = run_peer(
-                peer, panel["calendar"], levels,
+                peer, panel["calendar"], levels, signal_levels=signal_levels,
                 cash=panel["cash"], carriers=carriers, quotes=quotes, calendar_closed=True)
             net = result.net.astype(float)
             require_design_index(net.index, what=f"{peer_id}/{pool}")

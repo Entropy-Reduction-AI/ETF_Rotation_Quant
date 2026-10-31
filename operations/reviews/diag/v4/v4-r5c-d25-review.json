@@ -1,0 +1,2679 @@
+{
+  "design_end": "2015-12-31",
+  "dev_head_note": "Run at Dev PR #132 head for frozen DB",
+  "db_sha256": "550c1aee17a099dfc206876503ef436456bc5e87441db6947692abd3d6868c6c",
+  "db_sha_matches": true,
+  "gate_sha256": "52fc1c9d653c27236df258cd0789ada7e4c4b27a842b2e82b004380bde445d74",
+  "gate_sha_matches": true,
+  "gate_independent_vs_dev": {
+    "match": true,
+    "mismatches": []
+  },
+  "gate_dev_impl_vs_independent": {
+    "match": true,
+    "mismatches": []
+  },
+  "independent_gate_records": [
+    {
+      "arm": "B0",
+      "pool": "index",
+      "ann_excess_s1": 0.19591977410266526,
+      "ann_excess_s2": 0.005391526982834627,
+      "pp_bull": -2.4016516569839164,
+      "pp_correction": 27.33164427222895,
+      "pp_bear": 95.0135140485812,
+      "pp_rebound": -54.00320855236005,
+      "pass_segments": null,
+      "pass_target": null,
+      "pass_bear": null,
+      "pass": null
+    },
+    {
+      "arm": "T1",
+      "pool": "index",
+      "ann_excess_s1": 0.22567045300056443,
+      "ann_excess_s2": -0.010010070891695477,
+      "pp_bull": 0.06376591948860089,
+      "pp_correction": 25.63145274631564,
+      "pp_bear": 91.27840674569723,
+      "pp_rebound": -47.08858701830978,
+      "pass_segments": false,
+      "pass_target": true,
+      "pass_bear": true,
+      "pass": false
+    },
+    {
+      "arm": "T2",
+      "pool": "index",
+      "ann_excess_s1": 0.20076160424522338,
+      "ann_excess_s2": 0.01532626427449868,
+      "pp_bull": 7.998924415258818,
+      "pp_correction": 25.098098178643504,
+      "pp_bear": 96.21795371044996,
+      "pp_rebound": -56.94170439873749,
+      "pass_segments": true,
+      "pass_target": false,
+      "pass_bear": true,
+      "pass": false
+    },
+    {
+      "arm": "T3",
+      "pool": "index",
+      "ann_excess_s1": 0.1964473266967961,
+      "ann_excess_s2": 0.002775858346629745,
+      "pp_bull": -0.25984105144759573,
+      "pp_correction": 24.814296060431253,
+      "pp_bear": 94.22725480979835,
+      "pp_rebound": -53.46184547420414,
+      "pass_segments": false,
+      "pass_target": true,
+      "pass_bear": true,
+      "pass": false
+    },
+    {
+      "arm": "T4",
+      "pool": "index",
+      "ann_excess_s1": 0.11136098193019395,
+      "ann_excess_s2": -0.002575984427865663,
+      "pp_bull": -58.111953036834805,
+      "pp_correction": 35.81303411225452,
+      "pp_bear": 112.76185263190447,
+      "pp_rebound": -59.57003729239466,
+      "pass_segments": false,
+      "pass_target": false,
+      "pass_bear": true,
+      "pass": false
+    }
+  ],
+  "any_candidate_pass": false,
+  "b0_final_index_identical": true,
+  "b0_index_reexec_max_diff": 4.9731052609303106e-14,
+  "b0_index_yearly_weights": {
+    "yearly_avg_pct": {
+      "2005": {
+        "cgb-5y": 0.0,
+        "cgb-10y": 0.0,
+        "gold": 0.0,
+        "chinext": 0.0,
+        "cash": 72.38262684633166
+      },
+      "2006": {
+        "cgb-5y": 0.0,
+        "cgb-10y": 0.0,
+        "gold": 0.0,
+        "chinext": 0.0,
+        "cash": 4.334733116320801
+      },
+      "2007": {
+        "cgb-5y": 0.0,
+        "cgb-10y": 0.0,
+        "gold": 0.0,
+        "chinext": 0.0,
+        "cash": 7.795478147562328
+      },
+      "2008": {
+        "cgb-5y": 8.412306866157865,
+        "cgb-10y": 7.899538396381475,
+        "gold": 0.46757015653221456,
+        "chinext": 0.0,
+        "cash": 51.31739093492285
+      },
+      "2009": {
+        "cgb-5y": 7.917305394706112,
+        "cgb-10y": 7.700638920823409,
+        "gold": 4.735056340377235,
+        "chinext": 0.0,
+        "cash": 11.762647201679302
+      },
+      "2010": {
+        "cgb-5y": 12.270651141321954,
+        "cgb-10y": 12.376746111099608,
+        "gold": 10.078204490568417,
+        "chinext": 0.0,
+        "cash": 8.352512035222363
+      },
+      "2011": {
+        "cgb-5y": 10.080714047475277,
+        "cgb-10y": 10.215569664763509,
+        "gold": 15.793349088038559,
+        "chinext": 0.0,
+        "cash": 18.414165792038904
+      },
+      "2012": {
+        "cgb-5y": 16.435063818548656,
+        "cgb-10y": 16.6051841185615,
+        "gold": 5.842275519273316,
+        "chinext": 0.5883661211844865,
+        "cash": 11.377508140301657
+      },
+      "2013": {
+        "cgb-5y": 8.052454792006854,
+        "cgb-10y": 8.278648716252354,
+        "gold": 0.6176141163848405,
+        "chinext": 9.317363939574207,
+        "cash": 3.4899555542279868
+      },
+      "2014": {
+        "cgb-5y": 10.242449214476718,
+        "cgb-10y": 9.21068048620394,
+        "gold": 2.0538908025219835,
+        "chinext": 3.3252632728945755,
+        "cash": 1.8196636613490205
+      },
+      "2015": {
+        "cgb-5y": 13.77072210896535,
+        "cgb-10y": 10.738757474931669,
+        "gold": 1.3108911070223337,
+        "chinext": 1.7849647890333307,
+        "cash": 13.25003815246866
+      }
+    },
+    "zero_weight_years_by_container": {
+      "cgb-5y": [
+        2005,
+        2006,
+        2007
+      ],
+      "cgb-10y": [
+        2005,
+        2006,
+        2007
+      ],
+      "gold": [
+        2005,
+        2006,
+        2007
+      ],
+      "chinext": [
+        2005,
+        2006,
+        2007,
+        2008,
+        2009,
+        2010,
+        2011
+      ]
+    }
+  },
+  "b0_index_first_hold": {
+    "cgb-5y": "2008-02-04",
+    "cgb-10y": "2008-02-04",
+    "gold": "2008-09-23",
+    "chinext": "2012-03-13"
+  },
+  "b0_index_metrics": {
+    "cagr_full": 0.22360401841138633,
+    "cagr_from_2006": 0.24880336722676422,
+    "max_drawdown": -0.3527657225911136,
+    "mdd_trough": "2015-09-15",
+    "published_cagr_full": 0.22360401841134991,
+    "published_cagr_from_2006": 0.2488033672267147,
+    "published_mdd": -0.35276572259112904,
+    "net_sha256": "77fc2f7bdeae577f6329924fa590a5813414a65d626b4c9cf393c16cc3015482",
+    "net_sha256_recomputed": "77fc2f7bdeae577f6329924fa590a5813414a65d626b4c9cf393c16cc3015482"
+  },
+  "b0_tradable_metrics": {
+    "cagr_full": 0.09965741809348483,
+    "cagr_from_2006": 0.10873192831817224,
+    "max_drawdown": -0.31700247981515506,
+    "mdd_trough": "2015-09-15",
+    "published_cagr_full": 0.09965741809355544,
+    "published_cagr_from_2006": 0.10873192831825107,
+    "published_mdd": -0.31700247981513785,
+    "net_sha256": "afd24150b7217488e5ac99f907fe33ebbe5c5f8a79b817c19cd71059697dd923",
+    "net_sha256_recomputed": "afd24150b7217488e5ac99f907fe33ebbe5c5f8a79b817c19cd71059697dd923"
+  },
+  "vs_orchestrator_diagnostic": {
+    "orch_cagr_from_2006": 0.246,
+    "orch_mdd": -0.353,
+    "reviewer_cagr_from_2006": 0.24880336722676422,
+    "reviewer_mdd": -0.3527657225911136,
+    "cagr_gap_pp": 0.28033672267642196,
+    "mdd_gap_pp": 0.023427740888637416
+  },
+  "a1_tradable_2006_07": {
+    "n_month_ends": 24,
+    "counts": {
+      "cash": 4,
+      "csi300": 20
+    },
+    "detail": [
+      {
+        "month_end": "2006-01-25",
+        "winner": "cash",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 0.0,
+          "cgb-10y": 0.0,
+          "cash": 1.0
+        }
+      },
+      {
+        "month_end": "2006-02-28",
+        "winner": "cash",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 0.0,
+          "cgb-10y": 0.0,
+          "cash": 1.0
+        }
+      },
+      {
+        "month_end": "2006-03-31",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2006-04-28",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2006-05-31",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2006-06-30",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2006-07-31",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2006-08-31",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2006-09-29",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2006-10-31",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2006-11-30",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2006-12-29",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2007-01-31",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2007-02-28",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2007-03-30",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2007-04-30",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2007-05-31",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2007-06-29",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2007-07-31",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2007-08-31",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2007-09-28",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2007-10-31",
+        "winner": "csi300",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 1.0,
+          "cgb-10y": 0.0,
+          "cash": 0.0
+        }
+      },
+      {
+        "month_end": "2007-11-30",
+        "winner": "cash",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 0.0,
+          "cgb-10y": 0.0,
+          "cash": 1.0
+        }
+      },
+      {
+        "month_end": "2007-12-28",
+        "winner": "cash",
+        "weights": {
+          "spx": 0.0,
+          "csi300": 0.0,
+          "cgb-10y": 0.0,
+          "cash": 1.0
+        }
+      }
+    ]
+  },
+  "yearly_census": {
+    "B0": {
+      "2005": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.9646291602433278,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.03537083975667231
+          ]
+        ],
+        "board_buy_total": 1
+      },
+      "2006": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.8027393190053332,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.197260680994667
+          ]
+        ],
+        "board_buy_total": 1
+      },
+      "2007": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 2
+        },
+        "avg_cash_weight": 0.6754998425421206,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.19909475859237652
+          ],
+          [
+            "csi-dividend",
+            0.12540539886550314
+          ]
+        ],
+        "board_buy_total": 2
+      },
+      "2008": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 2
+        },
+        "avg_cash_weight": 0.9057937647120569,
+        "top5_mean_weight": [
+          [
+            "csi-dividend",
+            0.05513926143463454
+          ],
+          [
+            "csi300",
+            0.039066973853308755
+          ]
+        ],
+        "board_buy_total": 2
+      },
+      "2009": {
+        "tradable_containers_ever": 3,
+        "tradable_by_group": {
+          "A 股": 3
+        },
+        "avg_cash_weight": 0.6475558148735295,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.1541851941319501
+          ],
+          [
+            "csi-dividend",
+            0.15215421150870326
+          ],
+          [
+            "csi500",
+            0.04610477948581742
+          ]
+        ],
+        "board_buy_total": 3
+      },
+      "2010": {
+        "tradable_containers_ever": 6,
+        "tradable_by_group": {
+          "A 股": 4,
+          "美股": 1,
+          "海外主题（QDII、LOF）": 1
+        },
+        "avg_cash_weight": 0.5658357751165539,
+        "top5_mean_weight": [
+          [
+            "csi500",
+            0.14689381988379813
+          ],
+          [
+            "ndx100",
+            0.09206275782960748
+          ],
+          [
+            "csi300",
+            0.0886166270073288
+          ],
+          [
+            "csi-dividend",
+            0.08646163195348885
+          ],
+          [
+            "allshare-financials-re",
+            0.020129388209222932
+          ]
+        ],
+        "board_buy_total": 6
+      },
+      "2011": {
+        "tradable_containers_ever": 7,
+        "tradable_by_group": {
+          "A 股": 5,
+          "美股": 1,
+          "海外主题（QDII、LOF）": 1
+        },
+        "avg_cash_weight": 0.6110414107556633,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.1280910275124772
+          ],
+          [
+            "csi-dividend",
+            0.07933368863819867
+          ],
+          [
+            "csi500",
+            0.06732537424171722
+          ],
+          [
+            "csi300",
+            0.05041750431643505
+          ],
+          [
+            "allshare-financials-re",
+            0.03673343017654758
+          ]
+        ],
+        "board_buy_total": 9
+      },
+      "2012": {
+        "tradable_containers_ever": 10,
+        "tradable_by_group": {
+          "A 股": 5,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.4345288579046284,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.16187024148539997
+          ],
+          [
+            "spx",
+            0.09578677102136612
+          ],
+          [
+            "theme-恒生中国企业指数",
+            0.07053223232676303
+          ],
+          [
+            "allshare-financials-re",
+            0.06149300419460726
+          ],
+          [
+            "hsi",
+            0.05290806623423107
+          ]
+        ],
+        "board_buy_total": 11
+      },
+      "2013": {
+        "tradable_containers_ever": 12,
+        "tradable_by_group": {
+          "A 股": 5,
+          "商品、债券、现金": 2,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.11208264545852924,
+        "top5_mean_weight": [
+          [
+            "spx",
+            0.16941012774393613
+          ],
+          [
+            "ndx100",
+            0.14742388195531403
+          ],
+          [
+            "chinext",
+            0.14519464866037626
+          ],
+          [
+            "allshare-financials-re",
+            0.0747443602710045
+          ],
+          [
+            "csi500",
+            0.07223254967643236
+          ]
+        ],
+        "board_buy_total": 14
+      },
+      "2014": {
+        "tradable_containers_ever": 12,
+        "tradable_by_group": {
+          "A 股": 5,
+          "商品、债券、现金": 2,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.08096340905564962,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.14198222556170684
+          ],
+          [
+            "spx",
+            0.13717607166495385
+          ],
+          [
+            "cgb-5y",
+            0.11096038273052868
+          ],
+          [
+            "theme-标普全球石油指数",
+            0.10425174837369777
+          ],
+          [
+            "csi500",
+            0.09112971267414705
+          ]
+        ],
+        "board_buy_total": 17
+      },
+      "2015": {
+        "tradable_containers_ever": 17,
+        "tradable_by_group": {
+          "A 股": 8,
+          "商品、债券、现金": 3,
+          "海外主题（QDII、LOF）": 3,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.1563952736424818,
+        "top5_mean_weight": [
+          [
+            "cgb-5y",
+            0.14758017250994884
+          ],
+          [
+            "csi-dividend",
+            0.11047883169756767
+          ],
+          [
+            "csi500",
+            0.08925715949619246
+          ],
+          [
+            "allshare-it",
+            0.08408455595830219
+          ],
+          [
+            "csi300",
+            0.07529355826770287
+          ]
+        ],
+        "board_buy_total": 20
+      }
+    },
+    "T1": {
+      "2005": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.9593075574057968,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.040692442594203265
+          ]
+        ],
+        "board_buy_total": 1
+      },
+      "2006": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.8033595633584142,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.19664043664158595
+          ]
+        ],
+        "board_buy_total": 1
+      },
+      "2007": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 2
+        },
+        "avg_cash_weight": 0.6913320508490267,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.19012143894418942
+          ],
+          [
+            "csi-dividend",
+            0.11854651020678417
+          ]
+        ],
+        "board_buy_total": 2
+      },
+      "2008": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 2
+        },
+        "avg_cash_weight": 0.9259539448356219,
+        "top5_mean_weight": [
+          [
+            "csi-dividend",
+            0.04474930290347307
+          ],
+          [
+            "csi300",
+            0.02929675226090491
+          ]
+        ],
+        "board_buy_total": 2
+      },
+      "2009": {
+        "tradable_containers_ever": 3,
+        "tradable_by_group": {
+          "A 股": 3
+        },
+        "avg_cash_weight": 0.5912361019394694,
+        "top5_mean_weight": [
+          [
+            "csi-dividend",
+            0.18360109491484727
+          ],
+          [
+            "csi300",
+            0.1792818285039677
+          ],
+          [
+            "csi500",
+            0.045880974641715866
+          ]
+        ],
+        "board_buy_total": 3
+      },
+      "2010": {
+        "tradable_containers_ever": 6,
+        "tradable_by_group": {
+          "A 股": 4,
+          "美股": 1,
+          "海外主题（QDII、LOF）": 1
+        },
+        "avg_cash_weight": 0.5931145389309771,
+        "top5_mean_weight": [
+          [
+            "csi500",
+            0.14169891322242317
+          ],
+          [
+            "csi300",
+            0.08705578042197443
+          ],
+          [
+            "ndx100",
+            0.08141625127625564
+          ],
+          [
+            "csi-dividend",
+            0.07533801245149445
+          ],
+          [
+            "allshare-financials-re",
+            0.021376503696875385
+          ]
+        ],
+        "board_buy_total": 6
+      },
+      "2011": {
+        "tradable_containers_ever": 7,
+        "tradable_by_group": {
+          "A 股": 5,
+          "美股": 1,
+          "海外主题（QDII、LOF）": 1
+        },
+        "avg_cash_weight": 0.6402710939498183,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.10971580632569292
+          ],
+          [
+            "csi-dividend",
+            0.07168244934421987
+          ],
+          [
+            "csi500",
+            0.05750439770726573
+          ],
+          [
+            "allshare-financials-re",
+            0.044367338118629134
+          ],
+          [
+            "csi300",
+            0.04411804428380502
+          ]
+        ],
+        "board_buy_total": 9
+      },
+      "2012": {
+        "tradable_containers_ever": 10,
+        "tradable_by_group": {
+          "A 股": 5,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.3952312671912403,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.1439772280720592
+          ],
+          [
+            "theme-恒生中国企业指数",
+            0.09224917768517929
+          ],
+          [
+            "spx",
+            0.0922165630286776
+          ],
+          [
+            "allshare-financials-re",
+            0.07313436692006013
+          ],
+          [
+            "hsi",
+            0.05456795994289507
+          ]
+        ],
+        "board_buy_total": 11
+      },
+      "2013": {
+        "tradable_containers_ever": 12,
+        "tradable_by_group": {
+          "A 股": 5,
+          "商品、债券、现金": 2,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.1299319695819793,
+        "top5_mean_weight": [
+          [
+            "spx",
+            0.15871096128248197
+          ],
+          [
+            "ndx100",
+            0.1516140026409832
+          ],
+          [
+            "chinext",
+            0.14503554998407522
+          ],
+          [
+            "csi500",
+            0.07357653808866123
+          ],
+          [
+            "allshare-financials-re",
+            0.06915761698542866
+          ]
+        ],
+        "board_buy_total": 14
+      },
+      "2014": {
+        "tradable_containers_ever": 12,
+        "tradable_by_group": {
+          "A 股": 5,
+          "商品、债券、现金": 2,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.0842674709727266,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.1302587464159706
+          ],
+          [
+            "spx",
+            0.12784415404189156
+          ],
+          [
+            "cgb-5y",
+            0.12538080772699978
+          ],
+          [
+            "theme-标普全球石油指数",
+            0.0987809060139487
+          ],
+          [
+            "csi500",
+            0.08819342494646765
+          ]
+        ],
+        "board_buy_total": 17
+      },
+      "2015": {
+        "tradable_containers_ever": 17,
+        "tradable_by_group": {
+          "A 股": 8,
+          "商品、债券、现金": 3,
+          "海外主题（QDII、LOF）": 3,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.17842203790894437,
+        "top5_mean_weight": [
+          [
+            "cgb-5y",
+            0.14585803675275583
+          ],
+          [
+            "csi-dividend",
+            0.10008953742633178
+          ],
+          [
+            "csi500",
+            0.08490559202766224
+          ],
+          [
+            "allshare-it",
+            0.07533039947004416
+          ],
+          [
+            "csi300",
+            0.06833651198794843
+          ]
+        ],
+        "board_buy_total": 20
+      }
+    },
+    "T2": {
+      "2005": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.9646291602433278,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.03537083975667231
+          ]
+        ],
+        "board_buy_total": 1
+      },
+      "2006": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.7987744419006796,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.20122555809932058
+          ]
+        ],
+        "board_buy_total": 1
+      },
+      "2007": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 2
+        },
+        "avg_cash_weight": 0.668184195781314,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.20306710335475409
+          ],
+          [
+            "csi-dividend",
+            0.1287487008639321
+          ]
+        ],
+        "board_buy_total": 2
+      },
+      "2008": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 2
+        },
+        "avg_cash_weight": 0.9029063307910825,
+        "top5_mean_weight": [
+          [
+            "csi-dividend",
+            0.05712776796790472
+          ],
+          [
+            "csi300",
+            0.03996590124101291
+          ]
+        ],
+        "board_buy_total": 2
+      },
+      "2009": {
+        "tradable_containers_ever": 3,
+        "tradable_by_group": {
+          "A 股": 3
+        },
+        "avg_cash_weight": 0.6378183196800886,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.15758488440491292
+          ],
+          [
+            "csi-dividend",
+            0.15622675909469383
+          ],
+          [
+            "csi500",
+            0.048370036820304975
+          ]
+        ],
+        "board_buy_total": 3
+      },
+      "2010": {
+        "tradable_containers_ever": 6,
+        "tradable_by_group": {
+          "A 股": 4,
+          "美股": 1,
+          "海外主题（QDII、LOF）": 1
+        },
+        "avg_cash_weight": 0.5524534605021537,
+        "top5_mean_weight": [
+          [
+            "csi500",
+            0.14819193864254465
+          ],
+          [
+            "ndx100",
+            0.09472818471329392
+          ],
+          [
+            "csi300",
+            0.09329206266703878
+          ],
+          [
+            "csi-dividend",
+            0.09093362358238637
+          ],
+          [
+            "allshare-financials-re",
+            0.020400729892582747
+          ]
+        ],
+        "board_buy_total": 6
+      },
+      "2011": {
+        "tradable_containers_ever": 7,
+        "tradable_by_group": {
+          "A 股": 5,
+          "美股": 1,
+          "海外主题（QDII、LOF）": 1
+        },
+        "avg_cash_weight": 0.6103745269177702,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.13336673621162498
+          ],
+          [
+            "csi-dividend",
+            0.0803100481035444
+          ],
+          [
+            "csi500",
+            0.07136219211137959
+          ],
+          [
+            "csi300",
+            0.04932642815215389
+          ],
+          [
+            "allshare-financials-re",
+            0.0335385052313965
+          ]
+        ],
+        "board_buy_total": 9
+      },
+      "2012": {
+        "tradable_containers_ever": 10,
+        "tradable_by_group": {
+          "A 股": 5,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.4373375531179287,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.17292438916786593
+          ],
+          [
+            "spx",
+            0.1012450547404962
+          ],
+          [
+            "theme-恒生中国企业指数",
+            0.0649486568792944
+          ],
+          [
+            "allshare-financials-re",
+            0.05827280853692702
+          ],
+          [
+            "hsi",
+            0.053862839690618676
+          ]
+        ],
+        "board_buy_total": 11
+      },
+      "2013": {
+        "tradable_containers_ever": 12,
+        "tradable_by_group": {
+          "A 股": 5,
+          "商品、债券、现金": 2,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.10413809292638869,
+        "top5_mean_weight": [
+          [
+            "spx",
+            0.17011182534818067
+          ],
+          [
+            "chinext",
+            0.1506379009385039
+          ],
+          [
+            "ndx100",
+            0.14316213378223186
+          ],
+          [
+            "allshare-financials-re",
+            0.07841216137374199
+          ],
+          [
+            "csi500",
+            0.0730038530962892
+          ]
+        ],
+        "board_buy_total": 14
+      },
+      "2014": {
+        "tradable_containers_ever": 12,
+        "tradable_by_group": {
+          "A 股": 5,
+          "商品、债券、现金": 2,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.08267240388633675,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.14548170711953393
+          ],
+          [
+            "spx",
+            0.13810289779721457
+          ],
+          [
+            "cgb-5y",
+            0.09964885832744715
+          ],
+          [
+            "theme-标普全球石油指数",
+            0.09760967060218284
+          ],
+          [
+            "csi500",
+            0.09260310462381555
+          ]
+        ],
+        "board_buy_total": 17
+      },
+      "2015": {
+        "tradable_containers_ever": 17,
+        "tradable_by_group": {
+          "A 股": 8,
+          "商品、债券、现金": 3,
+          "海外主题（QDII、LOF）": 3,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.1532929156835295,
+        "top5_mean_weight": [
+          [
+            "cgb-5y",
+            0.14427278259230247
+          ],
+          [
+            "csi-dividend",
+            0.10950042933025467
+          ],
+          [
+            "allshare-it",
+            0.08757594367170643
+          ],
+          [
+            "csi500",
+            0.08663435545027483
+          ],
+          [
+            "csi300",
+            0.07228810129000862
+          ]
+        ],
+        "board_buy_total": 20
+      }
+    },
+    "T3": {
+      "2005": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.9646291602433278,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.03537083975667231
+          ]
+        ],
+        "board_buy_total": 1
+      },
+      "2006": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.8027393190053332,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.197260680994667
+          ]
+        ],
+        "board_buy_total": 1
+      },
+      "2007": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 2
+        },
+        "avg_cash_weight": 0.6754998425421206,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.19909475859237652
+          ],
+          [
+            "csi-dividend",
+            0.12540539886550314
+          ]
+        ],
+        "board_buy_total": 2
+      },
+      "2008": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 2
+        },
+        "avg_cash_weight": 0.9057937647120569,
+        "top5_mean_weight": [
+          [
+            "csi-dividend",
+            0.05513926143463454
+          ],
+          [
+            "csi300",
+            0.039066973853308755
+          ]
+        ],
+        "board_buy_total": 2
+      },
+      "2009": {
+        "tradable_containers_ever": 3,
+        "tradable_by_group": {
+          "A 股": 3
+        },
+        "avg_cash_weight": 0.6472185539445678,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.1541851941319501
+          ],
+          [
+            "csi-dividend",
+            0.15215421150870326
+          ],
+          [
+            "csi500",
+            0.046442040414779166
+          ]
+        ],
+        "board_buy_total": 3
+      },
+      "2010": {
+        "tradable_containers_ever": 6,
+        "tradable_by_group": {
+          "A 股": 4,
+          "美股": 1,
+          "海外主题（QDII、LOF）": 1
+        },
+        "avg_cash_weight": 0.5658357751165539,
+        "top5_mean_weight": [
+          [
+            "csi500",
+            0.14689381988379813
+          ],
+          [
+            "ndx100",
+            0.09206275782960748
+          ],
+          [
+            "csi300",
+            0.0886166270073288
+          ],
+          [
+            "csi-dividend",
+            0.08646163195348885
+          ],
+          [
+            "allshare-financials-re",
+            0.020129388209222932
+          ]
+        ],
+        "board_buy_total": 6
+      },
+      "2011": {
+        "tradable_containers_ever": 7,
+        "tradable_by_group": {
+          "A 股": 5,
+          "美股": 1,
+          "海外主题（QDII、LOF）": 1
+        },
+        "avg_cash_weight": 0.6099540632042459,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.12809351378626962
+          ],
+          [
+            "csi-dividend",
+            0.07933484887543722
+          ],
+          [
+            "csi500",
+            0.06774431316650875
+          ],
+          [
+            "csi300",
+            0.050418278627765066
+          ],
+          [
+            "allshare-financials-re",
+            0.03673365333704302
+          ]
+        ],
+        "board_buy_total": 9
+      },
+      "2012": {
+        "tradable_containers_ever": 10,
+        "tradable_by_group": {
+          "A 股": 5,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.434471701983275,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.16187024148539997
+          ],
+          [
+            "spx",
+            0.09578677102136612
+          ],
+          [
+            "theme-恒生中国企业指数",
+            0.07053223232676303
+          ],
+          [
+            "allshare-financials-re",
+            0.06149300419460726
+          ],
+          [
+            "hsi",
+            0.05290806623423107
+          ]
+        ],
+        "board_buy_total": 11
+      },
+      "2013": {
+        "tradable_containers_ever": 12,
+        "tradable_by_group": {
+          "A 股": 5,
+          "商品、债券、现金": 2,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.11121946858096603,
+        "top5_mean_weight": [
+          [
+            "spx",
+            0.1694098027014088
+          ],
+          [
+            "ndx100",
+            0.14742384485576393
+          ],
+          [
+            "chinext",
+            0.14554276742837438
+          ],
+          [
+            "allshare-financials-re",
+            0.07481438828220897
+          ],
+          [
+            "csi500",
+            0.07249059676930163
+          ]
+        ],
+        "board_buy_total": 14
+      },
+      "2014": {
+        "tradable_containers_ever": 12,
+        "tradable_by_group": {
+          "A 股": 5,
+          "商品、债券、现金": 2,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.08053182874335149,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.14198182613100624
+          ],
+          [
+            "spx",
+            0.13717567567055938
+          ],
+          [
+            "cgb-5y",
+            0.1109600845578962
+          ],
+          [
+            "theme-标普全球石油指数",
+            0.1042513524971059
+          ],
+          [
+            "csi500",
+            0.09112945789659872
+          ]
+        ],
+        "board_buy_total": 17
+      },
+      "2015": {
+        "tradable_containers_ever": 17,
+        "tradable_by_group": {
+          "A 股": 8,
+          "商品、债券、现金": 3,
+          "海外主题（QDII、LOF）": 3,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.14354079873118164,
+        "top5_mean_weight": [
+          [
+            "cgb-5y",
+            0.14786218137698962
+          ],
+          [
+            "csi-dividend",
+            0.11047639591505748
+          ],
+          [
+            "csi500",
+            0.08925997886988347
+          ],
+          [
+            "allshare-it",
+            0.0840845372931515
+          ],
+          [
+            "csi300",
+            0.07657963782278576
+          ]
+        ],
+        "board_buy_total": 20
+      }
+    },
+    "T4": {
+      "2005": {
+        "tradable_containers_ever": 10,
+        "tradable_by_group": {
+          "A 股": 1,
+          "美股": 9
+        },
+        "avg_cash_weight": 0.6079371095821704,
+        "top5_mean_weight": [
+          [
+            "us-xle",
+            0.07565218284180276
+          ],
+          [
+            "us-xlu",
+            0.06752508699967376
+          ],
+          [
+            "us-xlk",
+            0.05007524911419724
+          ],
+          [
+            "us-xlf",
+            0.045665869819237856
+          ],
+          [
+            "us-xlv",
+            0.04045013569339543
+          ]
+        ],
+        "board_buy_total": 10
+      },
+      "2006": {
+        "tradable_containers_ever": 10,
+        "tradable_by_group": {
+          "A 股": 1,
+          "美股": 9
+        },
+        "avg_cash_weight": 0.08412026843570185,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.16904772737997983
+          ],
+          [
+            "us-xlf",
+            0.10846756638257127
+          ],
+          [
+            "us-xlb",
+            0.10267703206576216
+          ],
+          [
+            "us-xli",
+            0.10122356162719588
+          ],
+          [
+            "us-xlu",
+            0.10031700408114397
+          ]
+        ],
+        "board_buy_total": 10
+      },
+      "2007": {
+        "tradable_containers_ever": 11,
+        "tradable_by_group": {
+          "A 股": 2,
+          "美股": 9
+        },
+        "avg_cash_weight": 0.09057625116947701,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.19136512413522622
+          ],
+          [
+            "csi-dividend",
+            0.11805044004342302
+          ],
+          [
+            "us-xlu",
+            0.10551953546129186
+          ],
+          [
+            "us-xle",
+            0.09281087430455268
+          ],
+          [
+            "us-xlb",
+            0.0926003858888728
+          ]
+        ],
+        "board_buy_total": 11
+      },
+      "2008": {
+        "tradable_containers_ever": 11,
+        "tradable_by_group": {
+          "A 股": 2,
+          "美股": 9
+        },
+        "avg_cash_weight": 0.6439449845871447,
+        "top5_mean_weight": [
+          [
+            "us-xle",
+            0.08550422142330022
+          ],
+          [
+            "csi-dividend",
+            0.052856396848619785
+          ],
+          [
+            "us-xlb",
+            0.04827318723108619
+          ],
+          [
+            "csi300",
+            0.033075825171411784
+          ],
+          [
+            "us-xlp",
+            0.0296783223021128
+          ]
+        ],
+        "board_buy_total": 11
+      },
+      "2009": {
+        "tradable_containers_ever": 12,
+        "tradable_by_group": {
+          "A 股": 3,
+          "美股": 9
+        },
+        "avg_cash_weight": 0.3164563184555754,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.11519180792704463
+          ],
+          [
+            "csi-dividend",
+            0.10597976423030377
+          ],
+          [
+            "us-xlk",
+            0.0903889411480092
+          ],
+          [
+            "us-xlv",
+            0.06492892038072609
+          ],
+          [
+            "us-xly",
+            0.06332190640524037
+          ]
+        ],
+        "board_buy_total": 12
+      },
+      "2010": {
+        "tradable_containers_ever": 15,
+        "tradable_by_group": {
+          "A 股": 4,
+          "美股": 10,
+          "海外主题（QDII、LOF）": 1
+        },
+        "avg_cash_weight": 0.1932757515625925,
+        "top5_mean_weight": [
+          [
+            "us-xly",
+            0.13929265610048167
+          ],
+          [
+            "us-xli",
+            0.10673518960938314
+          ],
+          [
+            "us-xlp",
+            0.08726163237994884
+          ],
+          [
+            "csi500",
+            0.08372783954796297
+          ],
+          [
+            "ndx100",
+            0.07070689609161626
+          ]
+        ],
+        "board_buy_total": 15
+      },
+      "2011": {
+        "tradable_containers_ever": 16,
+        "tradable_by_group": {
+          "A 股": 5,
+          "美股": 10,
+          "海外主题（QDII、LOF）": 1
+        },
+        "avg_cash_weight": 0.22085920284364116,
+        "top5_mean_weight": [
+          [
+            "us-xlp",
+            0.11228353769206409
+          ],
+          [
+            "us-xle",
+            0.11018618616820153
+          ],
+          [
+            "us-xlu",
+            0.10099512620097141
+          ],
+          [
+            "ndx100",
+            0.07546340870720801
+          ],
+          [
+            "us-xly",
+            0.07288111841034546
+          ]
+        ],
+        "board_buy_total": 18
+      },
+      "2012": {
+        "tradable_containers_ever": 19,
+        "tradable_by_group": {
+          "美股": 11,
+          "港股": 1,
+          "海外主题（QDII、LOF）": 2,
+          "A 股": 5
+        },
+        "avg_cash_weight": 0.06541014556692364,
+        "top5_mean_weight": [
+          [
+            "us-xlp",
+            0.15354960316067598
+          ],
+          [
+            "us-xlv",
+            0.13544383797598233
+          ],
+          [
+            "us-xly",
+            0.10419551443618
+          ],
+          [
+            "us-xlu",
+            0.10249270436912031
+          ],
+          [
+            "us-xlk",
+            0.08886013629277846
+          ]
+        ],
+        "board_buy_total": 20
+      },
+      "2013": {
+        "tradable_containers_ever": 21,
+        "tradable_by_group": {
+          "美股": 11,
+          "港股": 1,
+          "海外主题（QDII、LOF）": 2,
+          "商品、债券、现金": 2,
+          "A 股": 5
+        },
+        "avg_cash_weight": 0.024964713631521387,
+        "top5_mean_weight": [
+          [
+            "us-xlv",
+            0.14856021114541587
+          ],
+          [
+            "us-xly",
+            0.13361456907775948
+          ],
+          [
+            "us-xlf",
+            0.0958131345143432
+          ],
+          [
+            "us-xli",
+            0.08368537964920084
+          ],
+          [
+            "us-xlp",
+            0.07288929468118775
+          ]
+        ],
+        "board_buy_total": 23
+      },
+      "2014": {
+        "tradable_containers_ever": 21,
+        "tradable_by_group": {
+          "美股": 11,
+          "港股": 1,
+          "海外主题（QDII、LOF）": 2,
+          "商品、债券、现金": 2,
+          "A 股": 5
+        },
+        "avg_cash_weight": 0.0066668075149319455,
+        "top5_mean_weight": [
+          [
+            "cgb-5y",
+            0.10592594831521496
+          ],
+          [
+            "ndx100",
+            0.09862781106423611
+          ],
+          [
+            "us-xlv",
+            0.08761156519147278
+          ],
+          [
+            "us-xlk",
+            0.08110875773765555
+          ],
+          [
+            "us-xlu",
+            0.05635153298898576
+          ]
+        ],
+        "board_buy_total": 26
+      },
+      "2015": {
+        "tradable_containers_ever": 27,
+        "tradable_by_group": {
+          "美股": 12,
+          "港股": 1,
+          "海外主题（QDII、LOF）": 3,
+          "商品、债券、现金": 3,
+          "A 股": 8
+        },
+        "avg_cash_weight": 0.09865535035625712,
+        "top5_mean_weight": [
+          [
+            "cgb-5y",
+            0.14530145871634587
+          ],
+          [
+            "csi-dividend",
+            0.10077133305353676
+          ],
+          [
+            "allshare-it",
+            0.0777172893645234
+          ],
+          [
+            "csi500",
+            0.07730657401738479
+          ],
+          [
+            "csi300",
+            0.0717384697008757
+          ]
+        ],
+        "board_buy_total": 30
+      }
+    },
+    "final": {
+      "2005": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.9646291602433278,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.03537083975667231
+          ]
+        ],
+        "board_buy_total": 1
+      },
+      "2006": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.8027393190053332,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.197260680994667
+          ]
+        ],
+        "board_buy_total": 1
+      },
+      "2007": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 2
+        },
+        "avg_cash_weight": 0.6754998425421206,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.19909475859237652
+          ],
+          [
+            "csi-dividend",
+            0.12540539886550314
+          ]
+        ],
+        "board_buy_total": 2
+      },
+      "2008": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 2
+        },
+        "avg_cash_weight": 0.9057937647120569,
+        "top5_mean_weight": [
+          [
+            "csi-dividend",
+            0.05513926143463454
+          ],
+          [
+            "csi300",
+            0.039066973853308755
+          ]
+        ],
+        "board_buy_total": 2
+      },
+      "2009": {
+        "tradable_containers_ever": 3,
+        "tradable_by_group": {
+          "A 股": 3
+        },
+        "avg_cash_weight": 0.6475558148735295,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.1541851941319501
+          ],
+          [
+            "csi-dividend",
+            0.15215421150870326
+          ],
+          [
+            "csi500",
+            0.04610477948581742
+          ]
+        ],
+        "board_buy_total": 3
+      },
+      "2010": {
+        "tradable_containers_ever": 6,
+        "tradable_by_group": {
+          "A 股": 4,
+          "美股": 1,
+          "海外主题（QDII、LOF）": 1
+        },
+        "avg_cash_weight": 0.5658357751165539,
+        "top5_mean_weight": [
+          [
+            "csi500",
+            0.14689381988379813
+          ],
+          [
+            "ndx100",
+            0.09206275782960748
+          ],
+          [
+            "csi300",
+            0.0886166270073288
+          ],
+          [
+            "csi-dividend",
+            0.08646163195348885
+          ],
+          [
+            "allshare-financials-re",
+            0.020129388209222932
+          ]
+        ],
+        "board_buy_total": 6
+      },
+      "2011": {
+        "tradable_containers_ever": 7,
+        "tradable_by_group": {
+          "A 股": 5,
+          "美股": 1,
+          "海外主题（QDII、LOF）": 1
+        },
+        "avg_cash_weight": 0.6110414107556633,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.1280910275124772
+          ],
+          [
+            "csi-dividend",
+            0.07933368863819867
+          ],
+          [
+            "csi500",
+            0.06732537424171722
+          ],
+          [
+            "csi300",
+            0.05041750431643505
+          ],
+          [
+            "allshare-financials-re",
+            0.03673343017654758
+          ]
+        ],
+        "board_buy_total": 9
+      },
+      "2012": {
+        "tradable_containers_ever": 10,
+        "tradable_by_group": {
+          "A 股": 5,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.4345288579046284,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.16187024148539997
+          ],
+          [
+            "spx",
+            0.09578677102136612
+          ],
+          [
+            "theme-恒生中国企业指数",
+            0.07053223232676303
+          ],
+          [
+            "allshare-financials-re",
+            0.06149300419460726
+          ],
+          [
+            "hsi",
+            0.05290806623423107
+          ]
+        ],
+        "board_buy_total": 11
+      },
+      "2013": {
+        "tradable_containers_ever": 12,
+        "tradable_by_group": {
+          "A 股": 5,
+          "商品、债券、现金": 2,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.11208264545852924,
+        "top5_mean_weight": [
+          [
+            "spx",
+            0.16941012774393613
+          ],
+          [
+            "ndx100",
+            0.14742388195531403
+          ],
+          [
+            "chinext",
+            0.14519464866037626
+          ],
+          [
+            "allshare-financials-re",
+            0.0747443602710045
+          ],
+          [
+            "csi500",
+            0.07223254967643236
+          ]
+        ],
+        "board_buy_total": 14
+      },
+      "2014": {
+        "tradable_containers_ever": 12,
+        "tradable_by_group": {
+          "A 股": 5,
+          "商品、债券、现金": 2,
+          "海外主题（QDII、LOF）": 2,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.08096340905564962,
+        "top5_mean_weight": [
+          [
+            "ndx100",
+            0.14198222556170684
+          ],
+          [
+            "spx",
+            0.13717607166495385
+          ],
+          [
+            "cgb-5y",
+            0.11096038273052868
+          ],
+          [
+            "theme-标普全球石油指数",
+            0.10425174837369777
+          ],
+          [
+            "csi500",
+            0.09112971267414705
+          ]
+        ],
+        "board_buy_total": 17
+      },
+      "2015": {
+        "tradable_containers_ever": 17,
+        "tradable_by_group": {
+          "A 股": 8,
+          "商品、债券、现金": 3,
+          "海外主题（QDII、LOF）": 3,
+          "美股": 2,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.1563952736424818,
+        "top5_mean_weight": [
+          [
+            "cgb-5y",
+            0.14758017250994884
+          ],
+          [
+            "csi-dividend",
+            0.11047883169756767
+          ],
+          [
+            "csi500",
+            0.08925715949619246
+          ],
+          [
+            "allshare-it",
+            0.08408455595830219
+          ],
+          [
+            "csi300",
+            0.07529355826770287
+          ]
+        ],
+        "board_buy_total": 20
+      }
+    },
+    "A1": {
+      "2005": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 1.0,
+        "top5_mean_weight": [],
+        "board_buy_total": 1
+      },
+      "2006": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.23651452282157676,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.7634854771784232
+          ]
+        ],
+        "board_buy_total": 1
+      },
+      "2007": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.07851239669421488,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.9214876033057852
+          ]
+        ],
+        "board_buy_total": 2
+      },
+      "2008": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 1.0,
+        "top5_mean_weight": [],
+        "board_buy_total": 2
+      },
+      "2009": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.8237704918032787,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.1762295081967213
+          ]
+        ],
+        "board_buy_total": 3
+      },
+      "2010": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.756198347107438,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.24380165289256198
+          ]
+        ],
+        "board_buy_total": 6
+      },
+      "2011": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 1.0,
+        "top5_mean_weight": [],
+        "board_buy_total": 9
+      },
+      "2012": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 1,
+          "美股": 1
+        },
+        "avg_cash_weight": 0.5761316872427984,
+        "top5_mean_weight": [
+          [
+            "spx",
+            0.42386831275720166
+          ]
+        ],
+        "board_buy_total": 11
+      },
+      "2013": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 1,
+          "美股": 1
+        },
+        "avg_cash_weight": 0.0,
+        "top5_mean_weight": [
+          [
+            "spx",
+            1.0
+          ]
+        ],
+        "board_buy_total": 14
+      },
+      "2014": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 1,
+          "美股": 1
+        },
+        "avg_cash_weight": 0.0,
+        "top5_mean_weight": [
+          [
+            "spx",
+            0.9102040816326531
+          ],
+          [
+            "csi300",
+            0.08979591836734693
+          ]
+        ],
+        "board_buy_total": 17
+      },
+      "2015": {
+        "tradable_containers_ever": 2,
+        "tradable_by_group": {
+          "A 股": 1,
+          "美股": 1
+        },
+        "avg_cash_weight": 0.06967213114754098,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.930327868852459
+          ]
+        ],
+        "board_buy_total": 20
+      }
+    },
+    "A2": {
+      "2005": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 1.0,
+        "top5_mean_weight": [],
+        "board_buy_total": 1
+      },
+      "2006": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.7980572439492998,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.20194275605070072
+          ]
+        ],
+        "board_buy_total": 1
+      },
+      "2007": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.793881386032061,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.20611861396793932
+          ]
+        ],
+        "board_buy_total": 2
+      },
+      "2008": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.9815823072952338,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.01841769270476618
+          ]
+        ],
+        "board_buy_total": 2
+      },
+      "2009": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.8448808891674101,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.15511911083259017
+          ]
+        ],
+        "board_buy_total": 3
+      },
+      "2010": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.8990601245869736,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.10093987541302657
+          ]
+        ],
+        "board_buy_total": 6
+      },
+      "2011": {
+        "tradable_containers_ever": 1,
+        "tradable_by_group": {
+          "A 股": 1
+        },
+        "avg_cash_weight": 0.9195142465895738,
+        "top5_mean_weight": [
+          [
+            "csi300",
+            0.0804857534104263
+          ]
+        ],
+        "board_buy_total": 9
+      },
+      "2012": {
+        "tradable_containers_ever": 3,
+        "tradable_by_group": {
+          "A 股": 1,
+          "美股": 1,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.8198212398655859,
+        "top5_mean_weight": [
+          [
+            "spx",
+            0.09998260548073022
+          ],
+          [
+            "hsi",
+            0.04632230416345873
+          ],
+          [
+            "csi300",
+            0.03387385049022547
+          ]
+        ],
+        "board_buy_total": 11
+      },
+      "2013": {
+        "tradable_containers_ever": 4,
+        "tradable_by_group": {
+          "A 股": 1,
+          "美股": 1,
+          "商品、债券、现金": 1,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.5557469684814121,
+        "top5_mean_weight": [
+          [
+            "spx",
+            0.20211688007809808
+          ],
+          [
+            "hsi",
+            0.13055737925308744
+          ],
+          [
+            "csi300",
+            0.1115787721874024
+          ]
+        ],
+        "board_buy_total": 14
+      },
+      "2014": {
+        "tradable_containers_ever": 4,
+        "tradable_by_group": {
+          "A 股": 1,
+          "美股": 1,
+          "商品、债券、现金": 1,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.4728962131837212,
+        "top5_mean_weight": [
+          [
+            "spx",
+            0.2000952503798225
+          ],
+          [
+            "hsi",
+            0.1374949236778866
+          ],
+          [
+            "gold",
+            0.10291534267114917
+          ],
+          [
+            "csi300",
+            0.08659827008742055
+          ]
+        ],
+        "board_buy_total": 17
+      },
+      "2015": {
+        "tradable_containers_ever": 4,
+        "tradable_by_group": {
+          "A 股": 1,
+          "美股": 1,
+          "商品、债券、现金": 1,
+          "港股": 1
+        },
+        "avg_cash_weight": 0.5507935235888648,
+        "top5_mean_weight": [
+          [
+            "spx",
+            0.18600976884134818
+          ],
+          [
+            "csi300",
+            0.134830004145055
+          ],
+          [
+            "hsi",
+            0.11646356238294694
+          ],
+          [
+            "gold",
+            0.011903141041784998
+          ]
+        ],
+        "board_buy_total": 20
+      }
+    }
+  },
+  "path_checks": [
+    {
+      "container": "csi300",
+      "day": "2006-06-30",
+      "path": "otc:050002"
+    },
+    {
+      "container": "hsi",
+      "day": "2012-12-31",
+      "path": "otc:000071"
+    },
+    {
+      "container": "ndx100",
+      "day": "2013-12-31",
+      "path": "otc:160213"
+    },
+    {
+      "container": "gold",
+      "day": "2013-12-31",
+      "path": "otc:000216"
+    },
+    {
+      "container": "theme-标普全球石油指数",
+      "day": "2012-12-31",
+      "path": "otc:160416"
+    },
+    {
+      "container": "chinext",
+      "day": "2012-03-13",
+      "path": "etf:159915"
+    }
+  ],
+  "chinext_otc_present": [
+    "050021",
+    "110026",
+    "161022",
+    "160637",
+    "001592",
+    "001593"
+  ],
+  "ledger": {
+    "ledger_rows": 41,
+    "index_fix_d25_1": 0,
+    "tradable_fix_d25_3": 0,
+    "peer_tradable_fix_d25_2": 0,
+    "git_shas": [
+      "c700ca095057baa524be01f6566d342c43976bea"
+    ],
+    "git_sha_single": true
+  },
+  "lock_exists": false,
+  "gate_inputs_max_date": "2015-12-31"
+}

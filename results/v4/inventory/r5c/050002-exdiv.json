@@ -1,0 +1,36 @@
+{
+  "code": "050002",
+  "day": "2015-12-29",
+  "stored_return": 0.010709999999999997,
+  "stored_source": "eastmoney_pingzhongdata",
+  "stored_source_url": "https://fund.eastmoney.com/pingzhongdata/050002.js",
+  "ping_return": 0.010709999999999999,
+  "ping_unit_money": 0.0,
+  "lsjz_return": 0.010700000000000001,
+  "lsjz_accum_return": 0.004089660339660295,
+  "lsjz_bonus": "",
+  "stored_minus_jzzzl": 9.999999999996123e-06,
+  "stored_minus_ljjz": 0.0066203396603397024,
+  "level_gap_2015_12_28": {
+    "date": "2015-12-28",
+    "prev": "2015-12-25",
+    "unit_point": -0.03489999999999993,
+    "accum_point": -0.034900000000000375,
+    "unit_return": -0.027740243223909,
+    "accum_return": -0.010777925326580506,
+    "unit_minus_accum": -0.016962317897328494
+  },
+  "level_gap_2015_12_29": {
+    "date": "2015-12-29",
+    "prev": "2015-12-28",
+    "unit_point": 0.01309999999999989,
+    "accum_point": 0.013100000000000112,
+    "unit_return": 0.010709614126880318,
+    "accum_return": 0.004089660339660295,
+    "unit_minus_accum": 0.006619953787220023
+  },
+  "conclusion": "050002 2015-12-29 不是分红除息日。pingzhong unitMoney=0.0，lsjz 没有分红字段（FHFCZ / FHSP 均未出现）。单位净值与累计净值同一天都上涨，点数相同。库内复权净值日收益 0.010709999999999997 与 pingzhong 日增长率、lsjz 日增长率 JZZZL 一致（和 JZZZL 相差 9.999999999996123e-06）。相对上一公布日 2015-12-28 的累计净值涨跌是 0.004089660339660295，与库内日收益相差 0.0066203396603397024。差来自累计净值的分母更大，不是除息。2015-12-28 单位净值与累计净值同跌 0.0349，百分比差约 1.70 个百分点，同样没有分红标记；D25 写的约 1.7 个百分点对得上这一天的口径差，不是 12-29 的除息。序列不改。",
+  "ping_url": "https://fund.eastmoney.com/pingzhongdata/050002.js",
+  "lsjz_url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=050002&startDate=2015-12-01&endDate=2015-12-31",
+  "jbgk": "https://fundf10.eastmoney.com/jbgk_050002.html"
+}

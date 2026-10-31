@@ -15,10 +15,11 @@ IDX, TRD, A1C, A2C = '#1d4ed8', '#0d9488', '#d97706', '#7c3aed'
 GOOD, BAD, CASH = '#16a34a', '#ea580c', '#9ca3af'
 POOL = {'index': 'U-指数池（能排名的）', 'tradable': 'U-可交易池（当年真能买到的）'}
 
-# 签收 C2（U-指数）与设计期简报 R5b 节（U-可交易）：拿现金、选标的，单位百分点
+# 设计期简报 R5c（2026-10-30）：拿现金、选标的，1 位小数，单位百分点。
+# 分项相加与合计 excess 可能差 0.1，来自各自四舍五入。
 STATES = {
-    'index':    {'牛市': (-55.3, 45.1), '回调': (28.1, -15.5), '熊市': (81.5, 9.6), '反弹': (-54.2, -0.8)},
-    'tradable': {'牛市': (-171.1, -7.7), '回调': (70.6, 11.4), '熊市': (97.5, 14.1), '反弹': (-63.4, -8.1)},
+    'index':    {'牛市': (-24.6, 22.7), '回调': (21.0, 6.4), '熊市': (45.3, 49.7), '反弹': (-23.1, -30.9)},
+    'tradable': {'牛市': (-170.9, -5.6), '回调': (70.7, 12.0), '熊市': (97.3, 14.2), '反弹': (-63.2, -7.5)},
 }
 
 g = pd.read_csv(R / 'gate-inputs.csv', index_col=0, parse_dates=True)
@@ -36,8 +37,7 @@ def minus(s): return s.replace('-', '−')
 def chart_nav():
     fig, axes = plt.subplots(2, 2, figsize=(12, 7.4), sharex=True, sharey='row', gridspec_kw={'height_ratios': [2.5, 1], 'hspace': .08, 'wspace': .32})
     for j, pool in enumerate(['index', 'tradable']):
-        ser = {'E2 新口径': rd('B0', pool), '基准': BM}
-        if pool == 'index': ser.update({'A1 双动量': rd('A1', pool), 'A2 五腿均线': rd('A2', pool)})
+        ser = {'E2 新口径': rd('B0', pool), '基准': BM, 'A1 双动量': rd('A1', pool), 'A2 五腿均线': rd('A2', pool)}
         col = {'E2 新口径': IDX if pool == 'index' else TRD, '基准': INK, 'A1 双动量': A1C, 'A2 五腿均线': A2C}
         ax, bx = axes[0, j], axes[1, j]
         ends = []
@@ -58,8 +58,8 @@ def chart_nav():
         bx.set_xticks([pd.Timestamp(f'{y}-01-01') for y in (2006, 2008, 2010, 2012, 2014, 2016)])
         bx.set_xticklabels(['2006', '2008', '2010', '2012', '2014', '2016'])
     axes[0, 0].set_ylabel('净值（对数，2006 年初 = 1）'); axes[1, 0].set_ylabel('从高点回撤（%）')
-    fig.suptitle('能排名的池子里跑赢基准；换成当年真能买到的，十年没跑过基准', x=.125, ha='left', va='bottom', y=1.04, fontsize=14.5, weight='bold', color=INK)
-    fig.text(.125, 1.005, '设计期 2006–2015，人民币、含分红、扣成本。A1、A2 是公开同行，只做对照；它们的可交易池数字待 R5c 修正，暂不画。', fontsize=10.5, color=MUTED, va='bottom')
+    fig.suptitle('E2 新口径：能排名的池子跑赢基准；换成当年真能买到的，十年没跑过基准', x=.125, ha='left', va='bottom', y=1.04, fontsize=14.5, weight='bold', color=INK)
+    fig.text(.125, 1.005, '设计期 2006–2015，人民币、含分红、扣成本。A1、A2 是公开同行，只做对照；两个池都用 R5c 签收后的净值。', fontsize=10.5, color=MUTED, va='bottom')
     fig.savefig(OUT / 'h1-nav.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
 
 # ---------- h3 四种行情：两个池并排，拿现金 / 选标的 ----------
