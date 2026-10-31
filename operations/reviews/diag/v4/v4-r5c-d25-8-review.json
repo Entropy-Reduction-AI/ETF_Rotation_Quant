@@ -1,0 +1,84 @@
+{
+  "design_end": "2015-12-31",
+  "dev_pr": 136,
+  "dev_head_note": "Run at Dev PR #136 head (7dbc3ce…)",
+  "db_sha256": "167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3",
+  "db_sha_matches": true,
+  "insert": {
+    "v4_series_row_count": 593481,
+    "v4_series_row_count_ok": true,
+    "bars_raw_close": 1.467,
+    "tencent_backward_close": 0.961,
+    "correction_close": 3.0468645676083677,
+    "correction_source": "d25-8-eastmoney-kline",
+    "canonical_tier": "tencent",
+    "canonical_close_day": 3.0468645676083677,
+    "expected_correction_close": 3.0468645676083677,
+    "raw_unchanged": true,
+    "hfq_row_unchanged": true,
+    "canonical_uses_correction": true,
+    "neighbor_prev_close": 3.039,
+    "neighbor_next_close": 3.141,
+    "ret_prev_to_day": 0.0025878800948888614,
+    "ret_day_to_next": 0.030895837442989516
+  },
+  "spikes": {
+    "n_rows": 4,
+    "unique_codes": [
+      "XLF"
+    ],
+    "xlf_rows": 4,
+    "510880_present": false,
+    "any_affects_holding_yes": 0,
+    "all_affects_holding_no": true,
+    "dates": [
+      "2008-10-28",
+      "2008-12-01",
+      "2009-01-20",
+      "2009-03-23"
+    ]
+  },
+  "b0_tradable_metrics": {
+    "cagr_full": 0.07970188072262774,
+    "cagr_from_2006": 0.08662725953617656,
+    "max_drawdown": -0.31700247981515484,
+    "mdd_trough": "2015-09-15",
+    "published_cagr_full": 0.07970188072265949,
+    "published_cagr_from_2006": 0.08662725953621364,
+    "published_mdd": -0.3170024798151373,
+    "net_sha256": "f02d20ca7e848d0a1c817022a594e5c404c2d1012d8ceb8bb77e30bd79a42bab",
+    "net_sha256_recomputed": "f02d20ca7e848d0a1c817022a594e5c404c2d1012d8ceb8bb77e30bd79a42bab",
+    "net_sha256_ok": true
+  },
+  "b0_index_net_sha256": {
+    "published": "77fc2f7bdeae577f6329924fa590a5813414a65d626b4c9cf393c16cc3015482",
+    "recomputed": "77fc2f7bdeae577f6329924fa590a5813414a65d626b4c9cf393c16cc3015482",
+    "expected": "77fc2f7bdeae577f6329924fa590a5813414a65d626b4c9cf393c16cc3015482",
+    "unchanged": true
+  },
+  "final_vs_b0_tradable": {
+    "max_abs_diff": 0.0,
+    "net_csv_identical": true
+  },
+  "b0_tradable_reexec_max_diff": 4.998258751331974e-14,
+  "vs_orchestrator_tradable": {
+    "orch_cagr_from_2006_approx": 0.09,
+    "reviewer_cagr_from_2006": 0.08662725953617656,
+    "cagr_gap_pp": -0.3372740463823437
+  },
+  "ledger": {
+    "ledger_rows": 41,
+    "index_fix_d25_1": 20,
+    "tradable_fix_d25_8": 21,
+    "tradable_fix_d25_3_remaining": 0,
+    "tradable_git_shas": [
+      "38d8c20d666e2b180841b40c58b417e0c6b6653e"
+    ],
+    "index_git_shas": [
+      "c700ca095057baa524be01f6566d342c43976bea"
+    ],
+    "tradable_sha_is_d25_8_commit": true,
+    "index_sha_unchanged": true
+  },
+  "lock_exists": false
+}
