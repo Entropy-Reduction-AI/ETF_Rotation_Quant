@@ -63,6 +63,12 @@ class Budget(unittest.TestCase):
         self.assertTrue(found[("T3", "index")].t3)
         self.assertTrue(found[("T4", "index")].t4)
         self.assertFalse(found[("T4", "index")].t1)
+        self.assertEqual(found[("B0", "index")].params()["fix"], "D25-1")
+        self.assertEqual(found[("B0", "tradable")].params()["fix"], "D25-8")
+        dropped = [job for job in robustness_jobs(final_jobs([])[0]) if job.case == "drop-best-3"]
+        self.assertEqual([job.params()["fix"] for job in dropped], ["D25-1", "D25-8"])
+        self.assertEqual(peer_params("A1", "tradable")["fix"], "D25-8")
+        self.assertEqual(peer_params("A2", "index")["fix"], "D25-1")
 
     def test_default_lookbacks_are_written_into_the_ledger_payload(self):
         spec = load_spec()

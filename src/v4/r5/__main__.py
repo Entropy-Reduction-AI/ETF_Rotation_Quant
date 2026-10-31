@@ -44,8 +44,14 @@ def _print_net(case: str, pool: str, net, started: float) -> None:
     )
 
 
-def step2(markets: Markets, *, resume: bool) -> None:
-    for job in single_jobs():
+def _pool_jobs(jobs, pool: str | None):
+    if not pool:
+        return list(jobs)
+    return [job for job in jobs if job.pool == pool]
+
+
+def step2(markets: Markets, *, resume: bool, pool: str | None = None) -> None:
+    for job in _pool_jobs(single_jobs(), pool):
         started = time.perf_counter()
         net = run_job(job, markets, resume=resume)
         _print_net(job.case, job.pool, net, started)
@@ -65,8 +71,8 @@ def step3() -> list[str]:
     return passed
 
 
-def step4(markets: Markets, passed: list[str], *, resume: bool) -> None:
-    finals = final_jobs(passed)
+def step4(markets: Markets, passed: list[str], *, resume: bool, pool: str | None = None) -> None:
+    finals = _pool_jobs(final_jobs(passed), pool)
     expected = len(budget_jobs(passed)) + 4
     if expected > 60:
         raise RunnerError(f"ledger 预计 {expected} 行，超过 60")
@@ -75,8 +81,10 @@ def step4(markets: Markets, passed: list[str], *, resume: bool) -> None:
         net = run_job(job, markets, resume=resume)
         _print_net(job.case, job.pool, net, started)
     print("公开同行", flush=True)
-    run_peers(markets.spec, resume=resume)
-    for job in robustness_jobs(finals[0]):
+    peer_pools = (pool,) if pool else ("index", "tradable")
+    run_peers(markets.spec, resume=resume, pools=peer_pools)
+    anchor = final_jobs(passed)[0]
+    for job in _pool_jobs(robustness_jobs(anchor), pool):
         started = time.perf_counter()
         net = run_job(job, markets, resume=resume)
         _print_net(job.case, job.pool, net, started)
@@ -100,22 +108,28 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="v4-R5 设计期运行")
     parser.add_argument("step", choices=["step2", "step3", "step4", "all"])
     parser.add_argument("--no-resume", action="store_true")
+    parser.add_argument("--pool", choices=["index", "tradable"], default=None)
     args = parser.parse_args(argv)
     try:
         digest = require_frozen_db()
         print(f"db {digest[:12]} end={DESIGN_END}", flush=True)
         markets = Markets(load_spec())
         resume = not args.no_resume
+        pool = args.pool
         if args.step == "step2":
-            step2(markets, resume=resume)
+            step2(markets, resume=resume, pool=pool)
         elif args.step == "step3":
             step3()
         elif args.step == "step4":
-            step4(markets, passed_from_table(load_gate_table()), resume=resume)
+            step4(markets, passed_from_table(load_gate_table()), resume=resume, pool=pool)
         else:
-            step2(markets, resume=resume)
-            passed = step3()
-            step4(markets, passed, resume=resume)
+            step2(markets, resume=resume, pool=pool)
+            if pool == "tradable":
+                passed = passed_from_table(load_gate_table())
+                print("U-指数未重跑，过关表不重写", flush=True)
+            else:
+                passed = step3()
+            step4(markets, passed, resume=resume, pool=pool)
         require_frozen_db()
     except (RunnerError, ScorecardError) as exc:
         print(str(exc), file=sys.stderr)

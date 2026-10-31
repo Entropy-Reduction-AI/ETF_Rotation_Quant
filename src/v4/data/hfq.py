@@ -11,6 +11,8 @@
 这三条都没有、且 `kind=backward` 只剩一种来源（`eastmoney_fhsp`、`yahoo`，或测试夹具没有 source 列）时，用那一条。剩下两种以上时不自动挑。
 
 同一只有两条以上上述来源时，`return_conflicts` 只列出日收益差超过 0.1 个百分点的日期（D22-2）。清单不改选用的那一条，也不按日换源。
+
+D25-8：`v4_series.kind=close_correction` 是登记过的修正收盘，不覆盖原行。选用顺序不变。只有选中腾讯后复权、并且那一天本来就有收盘时，才用修正收盘替换这一天。
 """
 from __future__ import annotations
 
@@ -35,6 +37,9 @@ REBUILD_SOURCE = "还原"
 REBUILD_KIND = "backward_rebuild"
 # 不在三条顺序里。只在前三条都没有、且只剩这一种时才用作那一条序列。
 SOLE_SOURCES = ("eastmoney_fhsp", "yahoo")
+# 只替换腾讯后复权上已有的日期。不进入 D22 的三条顺序，也不按日换源。
+CORRECTION_KIND = "close_correction"
+CORRECTION_TIER = "tencent"
 COMPARE_END = "2026-09-30"
 OUT = Path(__file__).resolve().parents[3] / "results" / "v4" / "inventory" / "r5"
 DEFAULT_CODES = ("160125", "160644")
@@ -183,14 +188,56 @@ def _sole_backward(con: sqlite3.Connection, code: str, end: str) -> HfqRead | No
     return HfqRead(code, tier, _series(groups[name]), (name,))
 
 
+def correction_closes(con: sqlite3.Connection, code: str, end: str) -> dict[str, float]:
+    """已登记的修正收盘。没有这张表或这种 kind 时是空的。"""
+    cols = _columns(con, "v4_series")
+    if {"code", "kind", "date", "close"} > cols:
+        return {}
+    found: dict[str, float] = {}
+    for day, close in con.execute(
+            """SELECT date, close FROM v4_series
+               WHERE code = ? AND kind = ? AND close > 0 AND date <= ?
+               ORDER BY date""",
+            (code, CORRECTION_KIND, end)):
+        found[str(day)] = float(close)
+    return found
+
+
+def apply_corrections(chosen: HfqRead, fixes: dict[str, float]) -> HfqRead:
+    """腾讯后复权上，用登记的修正收盘替换同一天。别的档位不动。"""
+    if chosen.tier != CORRECTION_TIER or not fixes or chosen.closes.empty:
+        return chosen
+    closes = chosen.closes.copy()
+    applied = False
+    for day, close in fixes.items():
+        stamp = pd.Timestamp(day)
+        if stamp not in closes.index:
+            continue
+        closes.loc[stamp] = float(close)
+        applied = True
+    if not applied:
+        return chosen
+    parts = tuple(dict.fromkeys((*chosen.parts, CORRECTION_KIND)))
+    return HfqRead(chosen.code, chosen.tier, closes, parts)
+
+
 def canonical_hfq(con: sqlite3.Connection, code: str, end: str) -> HfqRead | None:
-    """按 D22-1 取第一条有收盘的后复权。冲突日不参与这个选择。"""
+    """按 D22-1 取第一条有收盘的后复权。冲突日不参与这个选择。
+
+    选中腾讯之后，D25-8 的修正收盘只替换已经有的那一天。
+    """
     priority = load_priority(con, code, end)
+    chosen: HfqRead | None = None
     for tier in PRIORITY:
         series = priority.get(tier)
         if series is not None and len(series):
-            return HfqRead(code, tier, series, ())
-    return _sole_backward(con, code, end)
+            chosen = HfqRead(code, tier, series, ())
+            break
+    if chosen is None:
+        chosen = _sole_backward(con, code, end)
+    if chosen is None:
+        return None
+    return apply_corrections(chosen, correction_closes(con, code, end))
 
 
 def _parts(con: sqlite3.Connection, code: str, tier: str) -> tuple[str, ...]:
