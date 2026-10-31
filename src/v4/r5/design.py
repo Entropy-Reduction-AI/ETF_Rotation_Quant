@@ -54,8 +54,9 @@ ROOT = Path(__file__).resolve().parents[3]
 DESIGN_END = "2015-12-31"
 # D22 曾登记 1adb6d43384be3336a3f58e993dd31ed3d75e705935aa2ff16c575a30fc00e27。
 # D24-1 插入第 2 档后是 79ae5a47e1a6eb0977a18f13efb21211d24b48e393ad567f615130d89c8f00cd。
-# D25-3 只再插入创业板指第 2 档非增强基金，没有改已有行。对不上就停。
-DB_SHA256 = "550c1aee17a099dfc206876503ef436456bc5e87441db6947692abd3d6868c6c"
+# D25-3 只再插入创业板指第 2 档非增强基金，没有改已有行。
+# D25-8 只插入 510880 2008-01-02 的修正收盘，没有改已有行。对不上就停。
+DB_SHA256 = "167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3"
 LEDGER = ROOT / "results" / "v4" / "trial-ledger.csv"
 OUT = ROOT / "results" / "v4" / "r5"
 SEGMENT = "design"
@@ -173,12 +174,7 @@ class Job:
         if self.pool == "index":
             payload["fix"] = "D25-1"
         elif self.pool == "tradable":
-            # 去掉最好的 2、3 个容器时，名单里含创业板。第 2 档联接不进入剩下的账，
-            # 日收益与 D24 相同，重跑原因仍是 D24-1。
-            if self.case in {"drop-best-2", "drop-best-3"}:
-                payload["fix"] = "D24-1"
-            else:
-                payload["fix"] = "D25-3"
+            payload["fix"] = "D25-8"
         return payload
 
 
@@ -254,7 +250,7 @@ def peer_params(peer_id: str, pool: str) -> dict:
     if pool == "index":
         payload["fix"] = "D25-1"
     elif pool == "tradable":
-        payload["fix"] = "D25-2"
+        payload["fix"] = "D25-8"
     return payload
 
 
