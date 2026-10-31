@@ -1,7 +1,7 @@
 {
   "allow_substitute": true,
-  "cagr": 0.09557488107749634,
-  "cagr_from_2006": 0.10420644222347453,
+  "cagr": 0.07569342970706927,
+  "cagr_from_2006": 0.08219199756924311,
   "case": "us-div-90",
   "cost_multiplier": 1.0,
   "decision_delay": 0,
@@ -15,9 +15,9 @@
     120,
     250
   ],
-  "max_drawdown": -0.31798129851368284,
+  "max_drawdown": -0.31798129851368273,
   "n": 2671,
-  "net_sha256": "3c15cb2309131a83aea3c07d3cba80c7d236f0d964d7c1166fd7895bbeed72f6",
+  "net_sha256": "b10792395c62021e2c109b46ce4de2e51a24cdb9d9d67d481a98a643cd435419",
   "passed": [],
   "pool": "tradable",
   "start": "2005-01-04",
