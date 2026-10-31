@@ -1,0 +1,4 @@
+file,sha256,bytes,rows,first_date,last_date,what_it_verifies
+samples/xle-yahoo-daily.csv,cc28eddb2e29e5c0b8e0e739d74499bdb4adc2e5d1c4a93a4e80b497dc4da83f,271223,7007,1998-12-22,2026-10-30,美国能源行业 ETF。close 与 adjclose 不同，说明 Yahoo 调整价含分红；不是官方全收益指数。
+samples/worldbank-gold-monthly.csv,6222f04118705b152db78eaf8ca81dc715c1f6d6a10664b12da13fbb01463b68,14841,780,1960-01-01,2024-12-01,伦敦下午定盘的月平均，美元/盎司。文件内月份写成该月 1 日。工作簿停在 2024-12。
+samples/sse-50etf-option-risk-20150209-head.csv,d8b72a3e2b060b1fad17b46e5b65e357a73207e6fd1903c550e7107bdd2ab2b0,438,3,2015-02-09,2015-02-09,上证50ETF期权上市日风险指标的前 3 行，用来看字段。当天共 40 行，没有整段入库。
