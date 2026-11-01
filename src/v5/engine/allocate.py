@@ -133,14 +133,14 @@ def _fixed_budget(sleeves: list[Sleeve], risk: dict[str, Sleeve | None],
                   defense: dict[str, Sleeve | None], cash_id: str) -> dict[str, float]:
     """参加排名的风险大类共 m 个，每类预算 1/m。没开着的那份走 k=0 的防守位。
 
-    m = 0 时 1/m 没有定义。预注册没写这一支，这里把该组做成全现金。
+    m = 0 时没有 1/m。退回 S0 的 k = 0：开着的防守大类等分，都没开着才拿现金。
     """
     participating = [
         kind for kind in RISK_CLASSES
         if any(row.class_name == kind and row.participates for row in sleeves)
     ]
     if not participating:
-        return {cash_id: 1.0}
+        return _place_defense(defense, 1.0, cash_id)
     share = 1.0 / len(participating)
     weights = {cash_id: 0.0}
     closed = 0
@@ -310,7 +310,8 @@ def path_decisions(panels: dict[int, Lookback], dates, freq: str, names: list[st
                    class_of: dict[str, str], cash_id: str, *,
                    liquidity: pd.DataFrame | None = None,
                    structure: str = STRUCTURE_S0,
-                   returns: pd.DataFrame | None = None) -> pd.DataFrame:
+                   returns: pd.DataFrame | None = None,
+                   lookbacks: tuple[int, ...] = LOOKBACKS) -> pd.DataFrame:
     """一条路的常规调仓目标。`returns` 给了就乘 C1，不给就是 S0 或结构对照。"""
     assert_window(dates, allow_after=False)
     if freq not in {"week", "month"}:
@@ -323,7 +324,7 @@ def path_decisions(panels: dict[int, Lookback], dates, freq: str, names: list[st
     for day in days:
         stamp = pd.Timestamp(day).normalize()
         groups = []
-        for length in LOOKBACKS:
+        for length in lookbacks:
             panel = panels.get(length)
             if panel is None or stamp not in panel.score.index:
                 groups.append({cash_id: 1.0})

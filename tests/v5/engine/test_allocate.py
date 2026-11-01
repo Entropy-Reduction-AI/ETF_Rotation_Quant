@@ -129,11 +129,22 @@ class GroupWeights(unittest.TestCase):
         self.assertAlmostEqual(weights["cgb-10y"], 0.25)
         self.assertAlmostEqual(weights["gold"], 0.25)
         self.assertAlmostEqual(sum(weights.values()), 1.0)
-        empty = group_weights([
+        idle = [
             sleeve("csi300", "A股", 1.0, participates=False),
+            sleeve("cgb-10y", "国债", 2.0),
             sleeve("gold", "黄金", 1.0),
+        ]
+        parked = group_weights(idle, structure="fixed_budget")
+        self.assertEqual(parked, group_weights(idle))
+        self.assertAlmostEqual(parked["cgb-10y"], 0.5)
+        self.assertAlmostEqual(parked["gold"], 0.5)
+        self.assertAlmostEqual(parked["cash"], 0.0)
+        cash = group_weights([
+            sleeve("csi300", "A股", 1.0, participates=False),
+            sleeve("gold", "黄金", 1.0, beats=False),
+            sleeve("cgb-10y", "国债", 1.0, participates=False),
         ], structure="fixed_budget")
-        self.assertEqual(empty, {"cash": 1.0})
+        self.assertEqual(cash, {"cash": 1.0})
 
     def test_no_defense_is_cash_when_no_risk_class_is_open(self):
         rows = [

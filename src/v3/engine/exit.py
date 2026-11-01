@@ -18,11 +18,15 @@ from .limits import executable_weights, legs_clear, session_tradable
 
 EXIT_DRAWDOWN = 0.10
 ALLOWED_DRAWDOWNS = (0.08, 0.10, 0.12, 0.15)
+# None 表示这条路不离场。默认仍是 10%。已有调用不传这个值，成交和离场都不变。
+NO_EXIT = None
 # 只吸收二进制误差，不把真实的更低价当成相等。
 _EQUAL_ABS = 1e-9
 
 
-def check_drawdown(drawdown: float) -> float:
+def check_drawdown(drawdown: float | None) -> float | None:
+    if drawdown is None:
+        return None
     for item in ALLOWED_DRAWDOWNS:
         if math.isclose(float(drawdown), item, rel_tol=0.0, abs_tol=_EQUAL_ABS):
             return item
@@ -255,7 +259,7 @@ def _execution_cost(before: dict[str, float], after: dict[str, float],
 def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str, float], cash_id: str, *,
                   targets: pd.DataFrame | None = None, decisions: pd.DataFrame | None = None,
                   premium=None, code_levels=None, code_returns=None,
-                  exit_drawdown: float = EXIT_DRAWDOWN, trade_eps: float = 1e-12,
+                  exit_drawdown: float | None = EXIT_DRAWDOWN, trade_eps: float = 1e-12,
                   cost_multiplier: float = 1.0, allow_after: bool = False,
                   weight_eps: float = 1e-6, fill_limits: bool = False,
                   fill_quotes: dict | None = None, refill_targets: pd.DataFrame | None = None,
@@ -266,6 +270,7 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
     `targets` 已经是成交日权重，无溢价时直接用。有溢价上下文时，`decisions` 是决策日的
     §4 权重：决策日收盘后改一次，下一交易日成交，成交日不再跑溢价状态机。
 
+    `exit_drawdown=None` 时不挂离场单，其余成交不变。不传则仍是 10%。
     `fill_limits`、`refill_targets`、`cross_border` 默认关闭。关闭时下面的分支不改权重和费用。
     `refill_targets` 打开时，离场卖单在 t 日收盘成交，补位买单在 t+1 日收盘成交。
     """
@@ -506,7 +511,11 @@ def simulate_path(pnl: pd.DataFrame, levels: pd.DataFrame | None, fees: dict[str
                     peaks[name] = float(mark)
                     continue
                 peaks[name] = max(float(peaks[name]), float(mark))
-                if triggered(float(mark), float(peaks[name]), drawdown) and name not in stopped:
+                if (
+                    drawdown is not None
+                    and triggered(float(mark), float(peaks[name]), drawdown)
+                    and name not in stopped
+                ):
                     stopped.add(name)
                     tosell.append(name)
                     exits.append({

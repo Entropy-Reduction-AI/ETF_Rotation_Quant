@@ -1,4 +1,4 @@
-"""v5 配权。S0、C1、结构对照和两路合成。不算组合收益。"""
+"""v5 配权、两路成交和结构对照。"""
 
 from .allocate import (
     LOOKBACKS,
