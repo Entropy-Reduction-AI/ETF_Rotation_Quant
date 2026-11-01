@@ -5,11 +5,11 @@
     python results/v4/diag/data-board/build_data_board.py
 输出：results/v4/diag/data-board/out/{summary.json,containers.csv}、docs/assets/data-board/*.png
 
-buy_first 与 U-可交易的载体名单同源（src/v4/engine/carriers.py）：
-场外读 v4_listing 的非增强基金（含联接）和相近替身里的场外基金，
-可买日是上交所交易日里不早于 max(成立日, 首笔 otc_nav) 的第一天。
+containers.csv 的「上市日（不含流动性门槛）」与 U-可交易的载体名单同源
+（src/v4/engine/carriers.py）：场外读 v4_listing 的非增强基金（含联接）和相近替身里的场外基金，
+日期是上交所交易日里不早于 max(成立日, 首笔 otc_nav) 的第一天。
 场内用原始 K 线第一根正收盘，不用登记表上市日。
-不套 v3 §3.3 的上市后 60 个交易日和 3,000 万成交额；那两道只决定场内何时进入排名。
+不套 v3 §3.3 的上市后 60 个交易日和 3,000 万成交额；那两道只决定引擎的「首次可持有日」。
 """
 import csv, json, sqlite3, hashlib, tomllib, collections, pathlib, datetime, sys
 ROOT = pathlib.Path(__file__).resolve().parents[4]
@@ -24,6 +24,13 @@ ASSET = ROOT / 'docs/assets/data-board'; ASSET.mkdir(parents=True, exist_ok=True
 DB = ROOT / 'data/market.sqlite'
 con = sqlite3.connect(f'file:{DB}?mode=ro', uri=True)
 CUT = '2026-09-30'
+LISTING_COL = '上市日（不含流动性门槛）'
+LISTING_NOTE = (
+    '「上市日（不含流动性门槛）」是看板这一列：场外取 v4_listing 非增强基金（含联接）成立日与首笔净值的较晚者，对齐到上交所交易日；'
+    '场内取原始 K 线第一根大于零的收盘；美股原生 ETF 用官方成立日。它不套上市满 60 个交易日，也不套近 20 个交易日成交额中位数 3,000 万。'
+    '引擎「首次可持有日」是载体第一次满足可交易条件的交易日，场内要套这两道。'
+    '例：恒生港股通科技主题指数（theme-HSSCITI）看板上市日是 2025-08-25（520840），引擎首次可持有日是 2025-11-25。'
+)
 
 def first_last(code):
     best = None
@@ -134,7 +141,7 @@ for c in main_containers:
     if miss: issues.append('后复权缺：' + '、'.join(miss))
     rows.append(dict(group=GROUP.get(c['asset_class'], c['asset_class']), id=c['id'], name=c['name'], asset_class=c['asset_class'],
                      research=code, basis=rs.get('return_basis'), research_first=f, research_last=l, research_rows=n,
-                     buy_first=buy, members=len(mem), otc=len({o['code'] for o in opens}), member_codes='、'.join(m['code'] for m in mem),
+                     **{LISTING_COL: buy}, members=len(mem), otc=len({o['code'] for o in opens}), member_codes='、'.join(m['code'] for m in mem),
                      issues='；'.join(issues), pool='v3 起'))
 seen = set()
 for r in u4:
@@ -146,9 +153,9 @@ for r in u4:
             hb = con.execute("select min(date) from v4_series where code=? and kind='backward'", (r['code'],)).fetchone()[0]
         rows.append(dict(group='美股' if r['id'].startswith('us-') else '港股', id=r['id'], name=r['name'], asset_class='美股行业' if r['id'].startswith('us-') else '港股分类',
                          research=r['code'], basis='后复权' if r['id'].startswith('us-') else 'price', research_first=f, research_last=l, research_rows=n,
-                         buy_first=(r.get('official_launch') or f) if r['id'].startswith('us-') else None, members=1 if r['id'].startswith('us-') else 0, otc=0,
+                         **{LISTING_COL: (r.get('official_launch') or f) if r['id'].startswith('us-') else None}, members=1 if r['id'].startswith('us-') else 0, otc=0,
                          member_codes=r['code'] if r['id'].startswith('us-') else '', issues='', pool='v4 新池（T4）'))
-with open(OUT / 'containers.csv', 'w', newline='') as fh:
+with open(OUT / 'containers.csv', 'w', newline='', encoding='utf-8') as fh:
     w = csv.DictWriter(fh, fieldnames=list(rows[0].keys())); w.writeheader(); w.writerows(rows)
 
 years = list(range(2005, 2027))
@@ -160,7 +167,7 @@ def count(field):
         for g in groups:
             out[g].append(sum(1 for r in rows if r['group'] == g and r[field] and r[field] <= end))
     return out
-res_cnt, buy_cnt = count('research_first'), count('buy_first')
+res_cnt, buy_cnt = count('research_first'), count(LISTING_COL)
 
 census = list(csv.DictReader(open(ROOT / 'results/v4/inventory/r1e/census.csv')))
 listed = [c for c in census if c.get('list_date', '') <= CUT]
@@ -173,7 +180,10 @@ summary = dict(
     generated=datetime.date.today().isoformat(), db_sha256=sha, cutoff=CUT,
     containers_total=len(rows), containers_v3=sum(r['pool'] == 'v3 起' for r in rows), containers_t4=sum(r['pool'] != 'v3 起' for r in rows),
     by_group={g: sum(r['group'] == g for r in rows) for g in groups},
-    research_by_year={g: dict(zip(years, v)) for g, v in res_cnt.items()}, buy_by_year={g: dict(zip(years, v)) for g, v in buy_cnt.items()},
+    research_by_year={g: dict(zip(years, v)) for g, v in res_cnt.items()},
+    listing_date_column=LISTING_COL, listing_date_note=LISTING_NOTE,
+    buy_by_year={g: dict(zip(years, v)) for g, v in buy_cnt.items()},
+    buy_by_year_note='按「上市日（不含流动性门槛）」累计的年末容器个数，不是引擎首次可持有日。',
     census_total=len(census), census_listed=len(listed), hfq_ok=hfq_ok, nav_ok=nav_ok, hfq_source=dict(src_mix),
     integrity=dict(integ), bars_rows=con.execute('select count(*) from bars').fetchone()[0],
     series_rows=con.execute('select count(*) from v4_series').fetchone()[0], nav_rows=con.execute('select count(*) from fund_nav').fetchone()[0],
@@ -182,11 +192,11 @@ summary = dict(
 json.dump(summary, open(OUT / 'summary.json', 'w'), ensure_ascii=False, indent=1)
 
 import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
-plt.rcParams.update({'font.family': ['Noto Sans CJK SC'], 'axes.unicode_minus': False, 'axes.spines.top': False, 'axes.spines.right': False,
+plt.rcParams.update({'font.family': 'sans-serif', 'font.sans-serif': ['Noto Sans CJK SC', 'WenQuanYi Micro Hei', 'Droid Sans Fallback', 'DejaVu Sans'], 'axes.unicode_minus': False, 'axes.spines.top': False, 'axes.spines.right': False,
                      'axes.grid': True, 'grid.alpha': .22, 'font.size': 11, 'axes.edgecolor': '#9ca3af'})
 COL = {'A 股': '#2563eb', '港股': '#0d9488', '美股': '#7c3aed', '海外主题（QDII、LOF）': '#d97706', '商品、债券、现金': '#9ca3af'}
-fig, axs = plt.subplots(1, 2, figsize=(12, 4.6), sharey=True, gridspec_kw=dict(wspace=.08))
-for ax, cnt, t in [(axs[0], res_cnt, '研究池：有数据可以排名的容器'), (axs[1], buy_cnt, '当年真能买到的容器（场内、场外、美股原生 ETF）')]:
+fig, axs = plt.subplots(1, 2, figsize=(12, 6.6), sharey=True, gridspec_kw=dict(wspace=.08))
+for ax, cnt, t in [(axs[0], res_cnt, '研究池：有数据可以排名的容器'), (axs[1], buy_cnt, '上市日（不含流动性门槛）已到的容器')]:
     base = [0] * len(years)
     for g in groups:
         top = [b + v for b, v in zip(base, cnt[g])]
@@ -198,8 +208,19 @@ for ax, cnt, t in [(axs[0], res_cnt, '研究池：有数据可以排名的容器
         i = years.index(y); ax.text(y + .1, base[i] + 1.5, str(base[i]), fontsize=10, weight='bold', color='#111827')
     ax.set_title(t, loc='left', fontsize=12, weight='bold', color='#111827'); ax.set_xlim(2005, 2026.9); ax.grid(axis='x', visible=False)
     ax.set_xticks([2006, 2010, 2015, 2020, 2026]); ax.set_xticklabels(['2006', '2010', '2015', '2020', '2026'])
-axs[0].set_ylabel('容器个数（年末）'); axs[1].legend(frameon=False, fontsize=9.5, loc='upper left')
-fig.suptitle('池子随时代长大：设计期里能排名的多，当年真能买到的少', x=.125, ha='left', y=1.06, fontsize=14.5, weight='bold', color='#111827')
-fig.text(.125, .975, f'每年年末累计。场外按 v4_listing（非增强，含联接）的成立日与首笔净值，对齐到上交所交易日；场内按首个原始正收盘。未套 3,000 万成交额门槛。数据截至 {CUT}，只统计起止日，不含任何收益。', fontsize=10, color='#6b7280')
+axs[0].set_ylabel('容器个数（年末）'); axs[1].legend(frameon=False, fontsize=9, loc='upper left')
+caption = (
+    '每年年末累计。右图是看板列「上市日（不含流动性门槛）」：场外按 v4_listing（非增强，含联接）的成立日与首笔净值，对齐到上交所交易日；'
+    '场内按第一根大于零的原始收盘；美股原生 ETF 用官方成立日。这一列不套上市满 60 个交易日，也不套近 20 个交易日成交额中位数 3,000 万。'
+    '引擎「首次可持有日」要套这两道。例：恒生港股通科技主题指数（theme-HSSCITI）看板是 2025-08-25（520840），引擎是 2025-11-25。'
+    f'数据截至 {CUT}，只统计起止日，不含任何收益。'
+)
+import textwrap
+wrapped = '\n'.join(textwrap.wrap(caption, width=52))
+nlines = wrapped.count('\n') + 1
+foot = 0.02 + nlines * 0.026
+fig.subplots_adjust(left=0.07, right=0.98, top=0.88, bottom=foot + 0.11)
+fig.suptitle('池子随时代长大：左图按研究序列起点，右图按上市日（不含流动性门槛）', x=0.07, ha='left', y=0.98, fontsize=13.5, weight='bold', color='#111827')
+fig.text(0.07, foot, wrapped, fontsize=8.5, color='#6b7280', va='top', ha='left')
 fig.savefig(ASSET / 'd1-pool-growth.png', dpi=200, bbox_inches='tight', facecolor='white')
 print(json.dumps({k: summary[k] for k in ('containers_total', 'containers_v3', 'containers_t4', 'by_group', 'census_listed', 'hfq_ok', 'nav_ok', 'hfq_source', 'integrity')}, ensure_ascii=False))
