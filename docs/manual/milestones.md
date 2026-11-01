@@ -7,8 +7,8 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Manager
-- Last updated: 2026-10-31（D26-5：`milestone/v4-code-freeze-2` 指向 `c9f4e44`，不含 D25-8 的 510880 修正与尖刺检查；标签不移动）
-- Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`；D26-5 见 `operations/planning/2026-10-31-d26-v5-direction.md`
+- Last updated: 2026-11-01（`milestone/v5-prereg-freeze` 指向 `f2ab4f5`：D29 四处选择，#156 大类草稿经 #157 签收；无 `results/v5/LOCK`；设计期 ≤2015-12-31；既有标签不移动）
+- Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`；D26-5 见 `operations/planning/2026-10-31-d26-v5-direction.md`；2026-11-01 新增见 `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`
 
 ## Purpose
 
@@ -93,11 +93,29 @@ D26-5 / v5-R1（决定 `operations/planning/2026-10-31-d26-v5-direction.md`；�
 
 本索引提交只补上面的注明。没有移动、删除或改写任何标签，也没有改写 `main`。
 
+## `milestone/v5-prereg-freeze`
+
+2026-11-01。附注标签打在 #157 squash-merge 之后的 `main` 尖端 `f2ab4f527b3081b0b73ebc860f3aedd8ee54523e`。尖端提交写入 Reviewer 对大类草稿的 `approve`（`operations/reviews/2026-11-01-v5-classes-draft-signoff.md`）。父历史含 D29（`aad13a60b1c6bd7aa7e19548da234d62094a0b82`，PR #156 rebase-merge：Owner 批准 v5 预注册四处选择）。新建时 origin 上还没有这个名字。`milestone/phase1-archive`、`milestone/v3-code-freeze`、`milestone/v3.1-prereg-freeze`、`milestone/v4-prereg-freeze`、`milestone/v4-code-freeze`、`milestone/v4-code-freeze-2` 的对象 SHA 与上表一致，没有移动。
+
+附注说明：`v5 prereg freeze (D29 Owner four choices; #156 classes-draft signed #157; design-period ≤2015-12-31; no LOCK; no 2016+)`。标签日期 2026-11-01（Asia/Taipei）。
+
+打标签时核对过：该提交的预注册写明中国数据的设计期运行只允许 end ≤ 2015-12-31；树里没有 `results/v5/LOCK`。`results/v5/inventory/classes-draft.csv` 为 117 行，六条原 `manual_rule` 已定类；标普全球石油指数归美股（美国为最大上市国别权重）。没有跑回测，没有改写 `main`。
+
+| 标签 | 标签对象 SHA | 指向提交 SHA | 说明 | 处置 | 理由 |
+| --- | --- | --- | --- | --- | --- |
+| `milestone/v5-prereg-freeze` | `40aac3ced0f1f7e710403cd49076a0fb4a91c51c` | `f2ab4f527b3081b0b73ebc860f3aedd8ee54523e` | D29 Owner 批准 v5 预注册四处选择；#156 大类草稿 117 行经 #157 Reviewer approve 后的 main。无 `results/v5/LOCK`。设计期 ≤2015-12-31 | 保留 | v5 规则冻结。名字按 `milestone/<版本>-prereg-freeze` |
+
+本索引提交只补上表。没有移动、删除或改写任何标签，也没有改写 `main`。
+
+核对见 `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`。
+
 ## Related Files
 
 - `operations/planning/2026-10-28-d14-owner-decisions.md`
 - `operations/work_logs/2026-10-28-tag-cleanup.md`
 - `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`
+- `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`
+- `operations/reviews/2026-11-01-v5-classes-draft-signoff.md`
 - `operations/planning/2026-10-30-v4-r5c-plan.md`
 - `operations/reviews/2026-10-30-v4-r5c-d25-signoff.md`
 - `operations/planning/2026-10-31-d26-v5-direction.md`
