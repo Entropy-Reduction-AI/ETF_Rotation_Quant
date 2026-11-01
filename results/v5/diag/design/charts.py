@@ -68,3 +68,40 @@ ax.grid(axis='y', alpha=.22)
 title(fig, '十年只有 12 段领先期，优势几乎全来自 2006–07 年 A 股那一段：只靠这三个市场，证明不了“押最强的大市场”是机制',
       '设计期 2006–2015，沪深300、恒生、标普500（人民币）。每月看过去 12 个月谁涨得最多，下个月持有它，和三者平均比；一段 = 同一个市场连续领先的月份。不扣成本，只作诊断。')
 fig.tight_layout(); fig.savefig(OUT / 'm11-leader.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
+# m12 动态周期 vs E2 式：关键转折
+import json as _json
+J = _json.loads((D / 'adaptive-vol.json').read_text())['csi300']['规则']
+def get(rule, key):
+    return {r['转折']: r for r in J[rule]['转折']}.get(key)
+EV = [('2007-10 真顶', '2007 年 10 月见顶', 'top'), ('2009-12 真顶', '2009 年 12 月见顶', 'top'), ('2015-06 未定', '2015 年 6 月见顶', 'top'),
+      ('2008-11 真底', '2008 年 11 月见底', 'bot'), ('2012-12 真底', '2012 年 12 月见底', 'bot'), ('2014-03 真底', '2014 年 3 月见底（平静）', 'bot')]
+fig, axs = plt.subplots(1, 2, figsize=(13, 4.6))
+for ax, kind, ttl, sign in ((axs[0], 'top', '见顶后，离场时已经跌了多少', -1), (axs[1], 'bot', '见底后，回场时已经涨了多少', 1)):
+    ev = [e for e in EV if e[2] == kind]; y = np.arange(len(ev))
+    for off, rule, col, lab in ((-.2, 'E2 式（四个过半）', GREY, 'E2 式：1、3、6、12 个月四道门过半'), (.2, '动态周期', '#15803d', '动态周期：按波动伸缩')):
+        vals = [abs(get(rule, e[0])['涨跌']) * 100 for e in ev]; days_ = [get(rule, e[0])['晚几天'] for e in ev]
+        ax.barh(y + off, vals, .38, color=col, label=lab, zorder=2)
+        for yy, v, dd in zip(y + off, vals, days_): ax.text(v + .8, yy, f'{v:.0f}%（晚 {dd} 天）', va='center', fontsize=9.5, color=INK)
+    ax.set_yticks(y, [e[1] for e in ev]); ax.invert_yaxis(); ax.set_xlim(0, 50); ax.grid(axis='x', alpha=.22)
+    ax.set_title(ttl, loc='left', fontsize=12.5, weight='bold', color=INK)
+axs[0].legend(frameon=False, fontsize=9.5, loc='center right')
+title(fig, '动态周期：牛市末段离场少痛，大跌后回场更快；平静中慢慢形成的底会晚',
+      '设计期沪深300（人民币），只看价格：过去 L 天跑赢现金就持有。动态周期的 L 由最近 1 个月波动 ÷ 过去一年波动决定，在 1–12 个月之间伸缩。不算收益。')
+fig.tight_layout(); fig.savefig(OUT / 'm12-adaptive.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
+# m13 第一层画像
+L1 = pd.read_csv(D / 'layer1-yearly.csv', index_col=0)
+fig, ax = plt.subplots(figsize=(13, 4.4))
+COLS1 = [('A 股', '#c2410c'), ('港股', '#0d9488'), ('美股', '#1d4ed8'), ('国债', '#475569'), ('黄金', '#ca8a04'), ('现金', '#d1d5db')]
+bot = np.zeros(len(L1)); x = np.arange(len(L1))
+for k, col in COLS1:
+    v = L1[k].values if k in L1 else np.zeros(len(L1))
+    ax.bar(x, v, .7, bottom=bot, color=col, label=k, zorder=2)
+    for xi, vi, bi in zip(x, v, bot):
+        if vi >= 15: ax.text(xi, bi + vi / 2, f'{vi:.0f}', ha='center', va='center', fontsize=9.5, color='white', weight='bold')
+    bot += v
+for xi, s in zip(x, L1['每年换几次']): ax.text(xi, 102, f'换 {s} 次', ha='center', fontsize=9, color=MUTED)
+ax.set_xticks(x, [str(v)[2:] if v != 2006 else '2006' for v in L1.index]); ax.set_ylim(0, 110); ax.set_ylabel('一年里持有它的周数占比 %', color=MUTED)
+ax.legend(frameon=False, fontsize=10, loc='center left', bbox_to_anchor=(1.01, .5))
+title(fig, '第一层的样子：2006–07 年押 A 股，2008 年拿现金，2010–14 年转到美股；震荡年份换得太勤',
+      '设计期每周决策，信号层面“想持有什么”，不算收益。A 股 = 沪深300，港股 = 恒生，美股 = 标普500；国债数据 2008 年还不满一年，那年防守只能拿现金。')
+fig.tight_layout(); fig.savefig(OUT / 'm13-layer1.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
