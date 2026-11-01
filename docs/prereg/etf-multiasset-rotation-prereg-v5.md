@@ -3,7 +3,7 @@
 ## Metadata
 
 - Project: ETF_Rotation_Quant · Owner: L. Loric · 起草：Orchestrator（Claude）
-- 状态：**草案第 2 版，按 R1（`operations/reviews/2026-11-01-v5-prereg-r1.md`）闭合 4 条 must-fix、14 条 should-fix，待 Reviewer 复审（R1b）和 Owner 批准；尚未冻结**。冻结前不运行任何 v5 规则看收益，也不做别的市场检验。
+- 状态：**草案第 2 版，Reviewer R1b 签收（`approve`），Owner 2026-11-01 批准 §10 四处选择（D29）**。冻结待 Reviewer 签收大类表草稿（§3.2、§9.4）后由 Manager 打 `milestone/v5-prereg-freeze`。冻结前不运行任何 v5 规则看收益。
 - 母版：`docs/prereg/etf-multiasset-rotation-prereg-v4.md`（`milestone/v4-prereg-freeze`）。本文只写增量；没有写到的条款沿用 v4（以及 v4 未改的 v3.1、v3 条款）。
 - 尝试登记：本项目第 5 次正式尝试（第 4 次为 v4）。按 D27-1，v5 是研究封板前最后一个研究版本，之后只允许一次修程序错误的 v5.1。
 - 依据：D26（v5 换架构）、D27（封板条件）；`docs/owner/v5-research-memo.md` 第 6 版；`results/v4/diag/v5-evidence/evidence.json`；《v4 体检报告》第 3.1 版；v5-R1 普查（`results/v5/inventory/r1/`）。
@@ -262,7 +262,7 @@ C1 预测：熊市状态改善，反弹状态变差，整体年化略降，最�
 5. 封板后的一次性检验用 `milestone/v5-code-freeze` 指向的代码，不用 `milestone/v4-code-freeze-2`（后者不含 D25-8 的数据修正）。B0 在同一份代码里运行。届时须 Owner 单独批准，写 `results/v5/LOCK`，规则同 v3 §9.7。
 6. 实现以本文为准；与 v4 引擎不一致的地方由 Dev 按本文改，Reviewer 签收。
 
-## §10 请 Owner 批准的几处选择
+## §10 Owner 批准的几处选择（D29，2026-11-01 已批准）
 
 1. **去掉部件 ②（小仓试错）**（§4.5）。D26 原计划逐个加 ⑤、③、②、10% 离场；现在 ⑤ 并进起点，② 不进 v5。
 2. **部件过关加两条保护**（§6.2 第 3、4 条）：牛市、反弹不比上一版差 10 个百分点以上；能买的池子两段都不比上一版差 2 个百分点以上。
