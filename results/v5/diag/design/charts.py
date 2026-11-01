@@ -51,3 +51,20 @@ axs[0].set_ylabel('目标仓位 %', color=MUTED)
 title(fig, '冠军赛把可交易池里闲着的钱收回来了；代价是能排名的池子里，后五年国债占得更多',
       '设计期 2006–2015，信号层面的目标持仓，不含离场和成交，不算收益。冠军赛 = 每类一只冠军、冠军之间排名、取前 k 名平分（k=1、2、3 平均）。')
 fig.tight_layout(); fig.savefig(OUT / 'm10-champion.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
+# m11 领先期
+sp = pd.read_csv(D / 'leader-spells-250.csv', header=0, names=['spell', 'lead', 'start', 'n', 'x'], parse_dates=['start'])
+NAME = {'csi300': '沪深300', 'spx': '标普500', 'hsi': '恒生'}; COLS = {'csi300': '#c2410c', 'spx': '#1d4ed8', 'hsi': '#0d9488'}
+fig, ax = plt.subplots(figsize=(13, 4.4))
+for i, r in sp.iterrows():
+    v = r.x * 100
+    ax.bar(i, v, color=COLS[r.lead], width=.7, zorder=2)
+    ax.text(i, v + (2 if v >= 0 else -2), f'{v:+.0f}'.replace('-', '−'), ha='center', va='bottom' if v >= 0 else 'top', fontsize=10, color=INK)
+    ax.text(i, -32, f"{r.start:%Y-%m}\n{r.n} 个月", ha='center', va='top', fontsize=8.5, color=MUTED)
+from matplotlib.patches import Patch
+handles = [Patch(color=c, label=NAME[k]) for k, c in COLS.items()]
+ax.axhline(0, color=INK, lw=.8); ax.set_xticks([]); ax.set_ylim(-45, 100); ax.set_ylabel('这一段领先市场比三者平均多赚 %', color=MUTED)
+ax.legend(handles=handles, frameon=False, fontsize=10.5, loc='upper right', title='领先的市场（按过去 12 个月涨幅）', title_fontsize=10)
+ax.grid(axis='y', alpha=.22)
+title(fig, '十年只有 12 段领先期，优势几乎全来自 2006–07 年 A 股那一段：只靠这三个市场，证明不了“押最强的大市场”是机制',
+      '设计期 2006–2015，沪深300、恒生、标普500（人民币）。每月看过去 12 个月谁涨得最多，下个月持有它，和三者平均比；一段 = 同一个市场连续领先的月份。不扣成本，只作诊断。')
+fig.tight_layout(); fig.savefig(OUT / 'm11-leader.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
