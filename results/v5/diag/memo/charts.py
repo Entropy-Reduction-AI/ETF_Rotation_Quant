@@ -142,3 +142,32 @@ if RB.exists():
         title(fig, f'随机满仓也有约 {med:.0f}% 的年化，但回撤都超过 −55%；E2 收益更高、回撤少一半',
               '指数池 2006–2015。随机：每月末从当时有数据的风险容器里随机挑 5 只、等权、满仓，不扣成本（对随机更有利）。')
         fig.tight_layout(); fig.savefig(OUT / 'm6-random.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
+
+# m7 设计硬伤：钱按类别分给了谁，它们下个月赚了多少（flaws.py 的输出）
+W = pd.read_csv(D / 'v5/diag/memo/class-weights.csv', index_col=0, parse_dates=True).loc['2006':'2015']
+PK = pd.read_csv(D / 'v5/diag/memo/flaws/picks.csv').dropna(subset=['fwd'])
+cats = [('A 股', ['A股']), ('港股', ['港股']), ('美股', ['美股']), ('国债、黄金', ['国债', '黄金']), ('现金', ['现金'])]
+fig, (ax, bx) = plt.subplots(1, 2, figsize=(13, 4.6), gridspec_kw={'width_ratios': [1.15, 1]})
+y = np.arange(len(cats))
+for off, arm, col in ((-.19, 'E2', COL['E2 新口径']), (.19, 'v5', COL['v5 最终版'])):
+    v = [sum(W[f'{arm}:{c}'].mean() for c in cs) * 100 for _, cs in cats]
+    ax.barh(y + off, v, height=.36, color=col, zorder=2, label='E2 新口径' if arm == 'E2' else 'v5 最终版')
+    for yy, vv in zip(y + off, v): ax.text(vv + .8, yy, f'{vv:.0f}%', va='center', fontsize=10.5, color=col, weight='bold')
+ax.set_yticks(y, [c for c, _ in cats]); ax.invert_yaxis(); ax.set_xlim(0, 60)
+ax.set_title('十年平均仓位（指数池）', loc='left', fontsize=12.5, weight='bold', color=INK)
+ax.legend(frameon=False, loc='lower right', fontsize=10.5)
+r5 = PK[(PK.arm == 'v5') & PK.cls.isin(['A股', '港股', '美股', '商品', '其他海外'])]
+wav = lambda d: np.average(d.fwd, weights=d.w) * 100
+bars = [('E2：每天排名表的前 5 名', PK[PK.arm == 'E2top5'].fwd.mean() * 100, COL['E2 新口径']),
+        ('v5：全部风险持仓', wav(r5), COL['v5 最终版']),
+        ('　其中 A 股那份', wav(r5[r5.cls == 'A股']), '#e8916a'),
+        ('　其中美股那份', wav(r5[r5.cls == '美股']), '#e8916a'),
+        ('　其中港股那份', wav(r5[r5.cls == '港股']), '#e8916a')]
+yb = np.arange(len(bars))
+bx.barh(yb, [b[1] for b in bars], color=[b[2] for b in bars], height=.6, zorder=2)
+for yy, (_, v, c) in zip(yb, bars): bx.text(v + .06, yy, f'{v:.1f}%', va='center', fontsize=10.5, weight='bold', color=INK)
+bx.set_yticks(yb, [b[0] for b in bars]); bx.invert_yaxis(); bx.set_xlim(0, 3.8)
+bx.set_title('被选中后，下个月比现金多赚（月均）', loc='left', fontsize=12.5, weight='bold', color=INK)
+title(fig, 'v5 按“类别”分钱，不按“强弱”分钱：港股、美股拿走一半仓位，下个月只比现金多赚 0.3–0.6%',
+      '设计期 2006–2015，指数池，月度决策日、四个回看期合并统计。右图是挑选当天之后 21 个交易日的收益减现金，不扣成本，只作归因。')
+fig.tight_layout(); fig.savefig(OUT / 'm7-flaws.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
