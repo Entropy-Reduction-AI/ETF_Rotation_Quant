@@ -43,15 +43,15 @@ theme-HSSCNE,港股,第1步。跟踪恒生港股通新经济指数（HSSCNE）�
 theme-HSSCPB,港股,第1步。跟踪恒生港股通创新药精选指数（HSSCPB），成分在香港交易所上市。,https://fundf10.eastmoney.com/jbgk_520690.html
 theme-HSSCSOY,港股,第1步。跟踪恒生港股通中国央企红利指数（HSSCSOY），成分在香港交易所上市。,https://fundf10.eastmoney.com/jbgk_513920.html
 theme-HSSCT,港股,第1步。跟踪恒生港股通中国科技指数（HSSCT），成分在香港交易所上市。,https://fundf10.eastmoney.com/jbgk_513160.html
-theme-MSCI China Value Weighted Index,,manual_rule,https://fundf10.eastmoney.com/jbgk_161229.html
+theme-MSCI China Value Weighted Index,港股,manual_rule（Orchestrator 2026-11-01）：MSCI China 以香港上市的中国公司为主，A 股按纳入因子只占一部分；前十名均为 H 股或香港上市。归港股。,https://fundf10.eastmoney.com/jbgk_161229.html
 theme-MSCI USA 50 Index,美股,第1步。跟踪MSCI USA 50 Index，成分在美国交易所上市。,https://fundf10.eastmoney.com/jbgk_159577.html
 theme-PHLX Semiconductor Sector Index,美股,第2步。无跟踪指数。基准里费城半导体指数 70% 最大，成分在美国上市。中证芯片 20% 不改变最大项。归美股。,https://fundf10.eastmoney.com/jbgk_501225.html
 theme-S&P 500 Energy Sector Index(NTR),美股,第2步。无跟踪指数。基准是标普500能源行业指数（净收益），成分是美国上市的标普500股票。归美股，不归商品。,https://fundf10.eastmoney.com/jbgk_163208.html
 theme-SPAHLVCP,港股,第1步。跟踪标普港股通低波红利指数（SPAHLVCP），成分在香港交易所上市。,https://fundf10.eastmoney.com/jbgk_513630.html
-theme-iEdge Emerging Asia Select 50 Index,,manual_rule,https://api2.sgx.com/sites/default/files/2026-09/iEdge%20EM%20Asia_Factsheet_20260831.pdf
+theme-iEdge Emerging Asia Select 50 Index,其他海外,manual_rule（Orchestrator 2026-11-01）：成分是印度、印尼、马来西亚、泰国等新兴亚洲公司，部分以美国存托凭证上市。按第 3 步的投资范围，风险来源是新兴亚洲，不是美股。,https://api2.sgx.com/sites/default/files/2026-09/iEdge%20EM%20Asia_Factsheet_20260831.pdf
 theme-东京日经225指数,其他海外,第1步。跟踪东京日经225指数，成分主要在东京证券交易所上市。归其他海外。,https://fundf10.eastmoney.com/jbgk_159866.html
 theme-东证指数,其他海外,第1步。跟踪东证指数，成分主要在东京证券交易所上市。归其他海外。,https://fundf10.eastmoney.com/jbgk_513800.html
-theme-中信证券印度ETP指数,,manual_rule,https://fundf10.eastmoney.com/jbgk_164824.html
+theme-中信证券印度ETP指数,其他海外,manual_rule（Orchestrator 2026-11-01）：投资于境外跟踪印度市场的 ETP，按第 3 步的投资范围，风险来源是印度股票。,https://fundf10.eastmoney.com/jbgk_164824.html
 theme-中证全球中国互联网人民币指数,港股,第1步。跟踪中证全球中国互联网指数（930796）。2026-09-30 收盘权重：香港 73.660%，美国 14.245%（纳斯达克 10.997% + 纽交所 3.248%），沪深 12.093%（深交所 11.382% + 上交所 0.711%）。最大上市市场是香港。,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/closeweight/930796closeweight.xls
 theme-中证全球中国教育主题人民币指数,A股,第1步。跟踪中证全球中国教育主题指数（931456）。2026-09-30 收盘权重：沪深 57.040%（深交所 55.255% + 上交所 1.785%），香港 24.960%，纽交所 17.998%。最大上市市场是沪深。,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/closeweight/931456closeweight.xls
 theme-中证国新港股通央企红利指数,港股,第1步。跟踪中证国新港股通央企红利指数，成分在香港交易所上市。,https://fundf10.eastmoney.com/jbgk_520660.html
@@ -71,7 +71,7 @@ theme-中证港股通科技指数,港股,第1步。跟踪中证港股通科技�
 theme-中证港股通金融服务指数,港股,第1步。跟踪中证港股通金融服务指数，成分在香港交易所上市。,https://fundf10.eastmoney.com/jbgk_513140.html
 theme-中证港股通非银行金融主题指数,港股,第1步。跟踪中证港股通非银行金融主题指数，成分在香港交易所上市。,https://fundf10.eastmoney.com/jbgk_513750.html
 theme-中证港股通高股息投资港元指数,港股,第1步。跟踪中证港股通高股息投资港元指数，成分在香港交易所上市。,https://fundf10.eastmoney.com/jbgk_513530.html
-theme-中证韩交所中韩半导体指数,,manual_rule,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/931790
+theme-中证韩交所中韩半导体指数,其他海外,manual_rule（Orchestrator 2026-11-01）：中证半导体 15 与 KRX 半导体 15 等权，内地与韩国打平。基金是 QDII，用途是境外敞口，A 股大类已有信息技术；打平时归非 A 股的一侧。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/931790
 theme-中证香港内地国有企业港元指数,港股,第1步。跟踪中证香港内地国有企业港元指数，成分在香港交易所上市。,https://fundf10.eastmoney.com/jbgk_159519.html
 theme-中证香港创新药港币指数,港股,第1步。跟踪中证香港创新药港币指数，成分在香港交易所上市。,https://fundf10.eastmoney.com/jbgk_513120.html
 theme-中证香港科技指数指数,港股,第1步。跟踪中证香港科技指数指数，成分在香港交易所上市。,https://fundf10.eastmoney.com/jbgk_159747.html
@@ -93,8 +93,8 @@ theme-新交所泛东南亚科技指数,美股,第1步。跟踪 iEdge Southeast 
 theme-标普500信息科技指数,美股,第1步。跟踪标普500信息科技指数，成分在美国交易所上市。,https://fundf10.eastmoney.com/jbgk_161128.html
 theme-标普500医疗保健等权重指数,美股,第1步。跟踪标普500医疗保健等权重指数，成分在美国交易所上市。,https://fundf10.eastmoney.com/jbgk_161126.html
 theme-标普500消费精选指数,美股,第1步。跟踪标普500消费精选指数，成分在美国交易所上市。,https://fundf10.eastmoney.com/jbgk_159529.html
-theme-标普中国新经济行业指数,,manual_rule,https://www.spglobal.com/spdji/en/indices/equity/sp-new-china-sectors-a-shares-capped-index/
-theme-标普全球石油指数,,manual_rule,https://www.spglobal.com/spdji/en/indices/equity/sp-global-oil-index/
+theme-标普中国新经济行业指数,港股,manual_rule（Orchestrator 2026-11-01）：成分是中国新经济公司，A 股合计上限 15%，其余在香港、美国上市，以香港为主。与海外中国互联网系列一致，归港股。,https://www.spglobal.com/spdji/en/indices/equity/sp-new-china-sectors-a-shares-capped-index/
+theme-标普全球石油指数,美股,manual_rule（Orchestrator 2026-11-01）：全球石油公司股票，不是原油期货；美国上市的大型石油公司是最大一组。若 Reviewer 查到国别权重另有最大者，按第 1 步改。,https://www.spglobal.com/spdji/en/indices/equity/sp-global-oil-index/
 theme-标普生物科技精选行业指数,美股,第1步。跟踪标普生物科技精选行业指数，成分在美国交易所上市。,https://fundf10.eastmoney.com/jbgk_161127.html
 theme-标普石油天然气勘探及生产精选行业指数,美股,第1步。跟踪标普石油天然气勘探及生产精选行业指数，成分是美国上市股票。归美股，不归商品。,https://fundf10.eastmoney.com/jbgk_159518.html
 theme-标普美国品质消费股票指数,美股,第1步。跟踪标普美国品质消费股票指数，成分在美国交易所上市。,https://fundf10.eastmoney.com/jbgk_162415.html
