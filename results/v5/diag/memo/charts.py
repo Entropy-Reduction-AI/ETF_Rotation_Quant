@@ -123,3 +123,22 @@ title(fig, '只有“只持最强的一类”明显更好，但仍追不上 E2 �
       '指数池，每项只改一处；只报告，不改判（预注册 §7.1）。')
 fig.tight_layout(); fig.savefig(OUT / 'm5-robust.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
 print('ok')
+
+# m6 随机对照
+RB = D / 'v5/diag/memo/random-baseline.csv'
+if RB.exists():
+    rb = pd.read_csv(RB)
+    if 'mdd' in rb:
+        fig, ax = plt.subplots(figsize=(10.5, 5.6))
+        ax.scatter(rb.mdd * 100, rb.cagr * 100, s=8, color='#cbd5e1', alpha=.7, zorder=1, label='随机挑 5 只、满仓（2000 次）')
+        pts = {'E2 新口径': (-35.3, 24.9), 'v5 最终版': (-39.9, 12.7), '基准': (-65.5, 15.6), 'A1': (-43.0, 27.0)}
+        for k, (x_, y_) in pts.items():
+            ax.scatter([x_], [y_], s=110, color=COL[k], edgecolor='white', linewidth=1.5, zorder=3)
+            ax.text(x_ + 1, y_, k, fontsize=11, weight='bold', color=COL[k], va='center', zorder=4)
+        med = rb.cagr.median() * 100
+        ax.axhline(med, color=MUTED, lw=1, ls='--'); ax.text(ax.get_xlim()[0] + 1, med + .4, f'随机的中位数 {med:.1f}%', color=MUTED, fontsize=10)
+        ax.set_xlabel('最大回撤（%，越靠右越好）', color=MUTED); ax.set_ylabel('设计期年化（%）', color=MUTED)
+        ax.legend(frameon=False, loc='upper right', fontsize=10.5)
+        title(fig, f'随机满仓也有约 {med:.0f}% 的年化，但回撤都超过 −55%；E2 收益更高、回撤少一半',
+              '指数池 2006–2015。随机：每月末从当时有数据的风险容器里随机挑 5 只、等权、满仓，不扣成本（对随机更有利）。')
+        fig.tight_layout(); fig.savefig(OUT / 'm6-random.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
