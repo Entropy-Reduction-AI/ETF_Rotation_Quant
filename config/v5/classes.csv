@@ -1,0 +1,112 @@
+container_id,class,basis,source_url
+allshare-communication,A股,跟踪指数为中证全指通信服务全收益指数（H00994）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00994
+allshare-discretionary,A股,跟踪指数为中证全指可选消费全收益指数（H00989）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00989
+allshare-energy,A股,跟踪指数为中证全指能源全收益指数（H00986）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00986
+allshare-financials-re,A股,跟踪指数为中证全指金融地产全收益指数（H00992）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00992
+allshare-healthcare,A股,跟踪指数为中证全指医药卫生全收益指数（H00991）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00991
+allshare-industrials,A股,跟踪指数为中证全指工业全收益指数（H00988）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00988
+allshare-it,A股,跟踪指数为中证全指信息技术全收益指数（H00993）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00993
+allshare-materials,A股,跟踪指数为中证全指原材料全收益指数（H00987）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00987
+allshare-staples,A股,跟踪指数为中证全指主要消费全收益指数（H00990）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00990
+allshare-utilities,A股,跟踪指数为中证全指公用事业全收益指数（H00995）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00995
+cash,现金,现金序列。上市后用银华交易型货币基金 511880，上市前按 v3 §3 的现金规则。不参加排名。,https://fundf10.eastmoney.com/jbgk_511880.html
+cgb-10y,国债,跟踪中债-10年期国债指数（CBA04501）。对应草案里的 10 年国债。,https://indices.chinabond.com.cn/cbweb-mn/indices/single_index_query?locale=zh_CN
+cgb-5y,国债,跟踪中债-5年期国债指数（CBA03101）。对应草案里的 5 年国债。,https://indices.chinabond.com.cn/cbweb-mn/indices/single_index_query?locale=zh_CN
+chinext,A股,场内跟踪标的为创业板指数（价格）。样本是深交所创业板上市证券，单一上市市场。研究序列登记为取不到，分类不使用该序列。,https://fundf10.eastmoney.com/jbgk_159915.html
+cross-border-commodity,商品,容器内三只基金都没有跟踪指数。业绩比较基准分别是国泰大宗商品配置指数（160216）、标普高盛商品总指数（161815）、中证CME中国商品消费指数（165513）。三者都是跨境商品指数，不是黄金，也不是国债。,https://fundf10.eastmoney.com/jbgk_161815.html
+crude-oil,商品,跟踪原油期货超额收益指数。标的是原油期货，归商品。,http://www.ccidx.com/zs/zsxx/202412/t20241205_1593.html
+csi-dividend,A股,研究指数为中证红利全收益指数（H00922），样本是 A 股。场内另登记上证红利指数，也是沪市 A 股。两个指数都不是港股或海外红利。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00922
+csi1000,A股,跟踪指数为中证1000全收益指数（H00852）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00852
+csi300,A股,跟踪指数为沪深300全收益指数（H00300）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00300
+csi500,A股,跟踪指数为中证小盘500全收益指数（H00905）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H00905
+gold,黄金,跟踪上海黄金交易所 Au99.99。草案把黄金单独成类，不并进商品。,https://www.sge.com.cn/graph/Dailyhq?instid=Au99.99
+hk-hsc,港股,跟踪恒生工商分类指数。v4 登记说明这四个分类是恒生指数的子指数，成分在香港上市，不是恒生综合行业的 12 个行业。,https://www.hsi.com.hk/eng/indexes/all-indexes/hsi
+hk-hsf,港股,跟踪恒生金融分类指数。v4 登记说明这四个分类是恒生指数的子指数，成分在香港上市，不是恒生综合行业的 12 个行业。,https://www.hsi.com.hk/eng/indexes/all-indexes/hsi
+hk-hsp,港股,跟踪恒生地产分类指数。v4 登记说明这四个分类是恒生指数的子指数，成分在香港上市，不是恒生综合行业的 12 个行业。,https://www.hsi.com.hk/eng/indexes/all-indexes/hsi
+hk-hsu,港股,跟踪恒生公用事业分类指数。v4 登记说明这四个分类是恒生指数的子指数，成分在香港上市，不是恒生综合行业的 12 个行业。,https://www.hsi.com.hk/eng/indexes/all-indexes/hsi
+hsi,港股,跟踪指数为恒生指数。恒生指数的成分在香港交易所上市。,https://www.hsi.com.hk/eng/indexes/all-indexes/hsi
+hstech,港股,跟踪指数为Hang Seng TECH Index。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://www.hsi.com.hk/static/uploads/contents/en/dl_centre/methodologies/IM_hsteche.pdf
+ndx100,美股,跟踪指数为Nasdaq-100 Total Return。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。,https://indexes.nasdaqomx.com/Index/Overview/NDX
+soymeal,商品,跟踪大商所豆粕期货价格指数。标的是豆粕期货，归商品，不是 A 股行业。,https://www.dce.com.cn/
+spx,美股,跟踪指数为S&P 500 (TR)。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。,https://www.spglobal.com/spdji/en/indices/equity/sp-500/
+star50,A股,跟踪指数为上证科创板50成份指数（000688）。这是内地交易所上市 A 股的指数，单一上市市场。,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/000688
+theme-CES100,港股,跟踪指数为中华交易服务港股通精选100指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513900.html
+theme-H11146,港股,跟踪指数为中证港股通内地金融指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513190.html
+theme-H50069,港股,跟踪指数为上证港股通指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513990.html
+theme-HSFML25,港股,跟踪指数为恒生中国（香港上市）30指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_520560.html
+theme-HSISC,港股,跟踪指数为恒指港股通指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_520770.html
+theme-HSSC50,港股,跟踪指数为恒生港股通50指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_520950.html
+theme-HSSCAMHI,港股,跟踪指数为恒生港股通汽车主题指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_520730.html
+theme-HSSCHKY,港股,跟踪指数为恒生港股通高股息率指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513690.html
+theme-HSSCITI,港股,跟踪指数为恒生港股通科技主题指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_520670.html
+theme-HSSCNE,港股,跟踪指数为恒生港股通新经济指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513320.html
+theme-HSSCPB,港股,跟踪指数为恒生港股通创新药精选指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_520690.html
+theme-HSSCSOY,港股,跟踪指数为恒生港股通中国央企红利指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513920.html
+theme-HSSCT,港股,跟踪指数为恒生港股通中国科技指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513160.html
+theme-MSCI USA 50 Index,美股,跟踪指数为MSCI USA 50 Index。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。,https://fundf10.eastmoney.com/jbgk_159577.html
+theme-PHLX Semiconductor Sector Index,美股,没有跟踪指数。业绩比较基准为费城半导体指数 70% + 中证芯片产业指数 20% + 活期存款 10%。权重最大的指数是费城半导体指数，其成分是美国上市的半导体股票。20% 的中证芯片不改变最大项。,https://fundf10.eastmoney.com/jbgk_501225.html
+theme-S&P 500 Energy Sector Index(NTR),美股,跟踪指数为S&P 500 Energy Sector Index(NTR)。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。这是股票指数，不是原油期货，所以不归商品。,https://fundf10.eastmoney.com/jbgk_163208.html
+theme-SPAHLVCP,港股,跟踪指数为标普港股通低波红利指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513630.html
+theme-东京日经225指数,其他海外,跟踪指数为东京日经225指数。成分主要在东京证券交易所上市，不在中国内地、美国或香港。,https://fundf10.eastmoney.com/jbgk_159866.html
+theme-东证指数,其他海外,跟踪指数为东证指数。成分主要在东京证券交易所上市，不在中国内地、美国或香港。,https://fundf10.eastmoney.com/jbgk_513800.html
+theme-中证全球中国互联网人民币指数,港股,跟踪中证全球中国互联网指数（930796；登记名称为人民币指数）。中证 2026-09-30 收盘权重：香港交易所 73.66%，美国 14.24%，沪深交易所 12.09%。最大上市市场是香港。,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/closeweight/930796closeweight.xls
+theme-中证全球中国教育主题人民币指数,A股,跟踪中证全球中国教育主题指数（931456）。中证 2026-09-30 收盘权重：沪深交易所 57.04%，香港交易所 24.96%，纽约证券交易所 18.00%。权重最大的上市市场是沪深，归 A 股。,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/closeweight/931456closeweight.xls
+theme-中证国新港股通央企红利指数,港股,跟踪指数为中证国新港股通央企红利指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_520660.html
+theme-中证海外中国互联网30人民币指数,港股,跟踪中证海外中国互联网30指数（930604）。基本信息写明样本来自香港及其他海外交易所。中证 2026-09-30 收盘权重：香港交易所 83.66%，美国（纳斯达克 12.37% + 纽交所 3.96%）16.33%。最大上市市场是香港。,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/closeweight/930604closeweight.xls
+theme-中证海外中国互联网50人民币指数,港股,跟踪中证海外中国互联网50指数（H30533）。基本信息写明从香港及其他海外交易所选取。中证 2026-09-30 收盘权重：香港交易所 89.67%，美国 10.33%。最大上市市场是香港。,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/closeweight/H30533closeweight.xls
+theme-中证海外中国互联网指数,港股,跟踪中证海外中国互联网指数（H11136）。基本信息写明样本在香港及其他海外交易所上市。中证 2026-09-30 收盘权重：香港交易所 77.50%，美国 22.50%。最大上市市场是香港。,https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/closeweight/H11136closeweight.xls
+theme-中证港股通50指数,港股,跟踪指数为中证港股通50指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513550.html
+theme-中证港股通互联网指数,港股,跟踪指数为中证港股通互联网指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513040.html
+theme-中证港股通信息技术综合指数,港股,跟踪指数为中证港股通信息技术综合指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513240.html
+theme-中证港股通创新药指数,港股,跟踪指数为中证港股通创新药指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513780.html
+theme-中证港股通医疗主题指数,港股,跟踪指数为中证港股通医疗主题指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513620.html
+theme-中证港股通医药卫生综合指数,港股,跟踪指数为中证港股通医药卫生综合指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513200.html
+theme-中证港股通央企红利指数,港股,跟踪指数为中证港股通央企红利指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513910.html
+theme-中证港股通汽车产业主题指数,港股,跟踪指数为中证港股通汽车产业主题指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_520600.html
+theme-中证港股通消费主题指数,港股,跟踪指数为中证港股通消费主题指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513070.html
+theme-中证港股通科技指数,港股,跟踪指数为中证港股通科技指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513020.html
+theme-中证港股通金融服务指数,港股,跟踪指数为中证港股通金融服务指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513140.html
+theme-中证港股通非银行金融主题指数,港股,跟踪指数为中证港股通非银行金融主题指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513750.html
+theme-中证港股通高股息投资港元指数,港股,跟踪指数为中证港股通高股息投资港元指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513530.html
+theme-中证香港内地国有企业港元指数,港股,跟踪指数为中证香港内地国有企业港元指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_159519.html
+theme-中证香港创新药港币指数,港股,跟踪指数为中证香港创新药港币指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513120.html
+theme-中证香港科技指数指数,港股,跟踪指数为中证香港科技指数指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_159747.html
+theme-中证香港证券投资主题指数,港股,跟踪指数为中证香港证券投资主题指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513090.html
+theme-富时亚太低碳精选指数,其他海外,跟踪富时亚太精选指数（基金概况亦称富时亚太低碳精选；代码 GPCSP006）。富时罗素 2026-09-30 事实表的国家/市场权重里，日本 36.80% 最大，其后是台湾 20.88%、韩国 17.24%、中国 10.81%、澳大利亚 7.53%、香港 2.16%。即使把「中国」整桶算成 A 股或整桶算成香港上市，仍然小于日本。最大上市市场是日本。,https://research.ftserussell.com/Analytics/Factsheets/Home/DownloadSingleIssue?IsManual=false&issueName=GPCSP006
+theme-富时沙特阿拉伯指数,其他海外,跟踪指数为富时沙特阿拉伯指数。成分主要在沙特上市，不在中国内地、美国或香港。,https://fundf10.eastmoney.com/jbgk_159329.html
+theme-巴克莱资本美国综合债券指数,其他海外,没有跟踪指数。业绩比较基准为巴克莱资本美国综合债券指数 90% + 活期存款 10%。这是海外债券基金，草案把海外债券放在其他海外，不放进 5 年或 10 年国债。,https://fundf10.eastmoney.com/jbgk_501300.html
+theme-巴西IBOVESPA指数,其他海外,跟踪指数为巴西IBOVESPA指数。成分主要在巴西圣保罗上市，不在中国内地、美国或香港。,https://fundf10.eastmoney.com/jbgk_520870.html
+theme-恒生中国企业指数,港股,跟踪指数为恒生中国企业指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_160717.html
+theme-恒生中国央企指数,港股,跟踪指数为恒生中国央企指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513170.html
+theme-恒生互联网科技业指数,港股,跟踪指数为恒生互联网科技业指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_159688.html
+theme-恒生创新药指数,港股,跟踪指数为恒生创新药指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_520500.html
+theme-恒生医疗保健指数,港股,跟踪指数为恒生医疗保健指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_159303.html
+theme-恒生消费指数,港股,跟踪指数为恒生消费指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_159699.html
+theme-恒生港股通红利低波动指数,港股,跟踪指数为恒生港股通红利低波动指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_513950.html
+theme-恒生生物科技指数,港股,跟踪指数为恒生生物科技指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_159892.html
+theme-恒生综合小型股指数,港股,跟踪指数为恒生综合小型股指数。指数范围是香港上市证券（恒生、恒生港股通、中证港股通、中证香港或标普港股通），不是用基金名称里的主题词。,https://fundf10.eastmoney.com/jbgk_161124.html
+theme-新交所泛东南亚科技指数,美股,跟踪新交所 iEdge Southeast Asia+ TECH（ASIATECN）。编制规则允许新加坡、印尼、泰国、马来西亚当地上市，印度和越南公司必须在美国上市。2026-08-31 事实表前十的上市地权重：美国 43.07%（Sea 13.58、Grab 9.88、Wipro 9.85、Infosys 9.76），其余前十合计 37.31%，表外剩余 19.62%。任一非美国上市地即使吃进全部剩余权重，也低于 43.07%，所以最大上市市场是美国。,https://api2.sgx.com/sites/default/files/2026-09/iEdge%20Southeast%20Asia%2B%20TECH_Factsheet_20260831.pdf
+theme-标普500信息科技指数,美股,跟踪指数为标普500信息科技指数。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。,https://fundf10.eastmoney.com/jbgk_161128.html
+theme-标普500医疗保健等权重指数,美股,跟踪指数为标普500医疗保健等权重指数。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。,https://fundf10.eastmoney.com/jbgk_161126.html
+theme-标普500消费精选指数,美股,跟踪指数为标普500消费精选指数。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。,https://fundf10.eastmoney.com/jbgk_159529.html
+theme-标普生物科技精选行业指数,美股,跟踪指数为标普生物科技精选行业指数。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。,https://fundf10.eastmoney.com/jbgk_161127.html
+theme-标普石油天然气勘探及生产精选行业指数,美股,跟踪指数为标普石油天然气勘探及生产精选行业指数。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。这是股票指数，不是原油期货，所以不归商品。,https://fundf10.eastmoney.com/jbgk_159518.html
+theme-标普美国品质消费股票指数,美股,跟踪指数为标普美国品质消费股票指数。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。,https://fundf10.eastmoney.com/jbgk_162415.html
+theme-法兰克福DAX指数,其他海外,跟踪指数为法兰克福DAX指数。成分主要在德国上市，不在中国内地、美国或香港。,https://fundf10.eastmoney.com/jbgk_159561.html
+theme-法国CAC40指数,其他海外,跟踪指数为法国CAC40指数。成分主要在法国上市，不在中国内地、美国或香港。,https://fundf10.eastmoney.com/jbgk_513080.html
+theme-纳斯达克生物科技指数,美股,跟踪指数为纳斯达克生物科技指数。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。,https://fundf10.eastmoney.com/jbgk_513290.html
+theme-纳斯达克科技市值加权指数,美股,跟踪指数为纳斯达克科技市值加权指数。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。,https://fundf10.eastmoney.com/jbgk_159509.html
+theme-道琼斯工业平均指数,美股,跟踪指数为道琼斯工业平均指数。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。,https://fundf10.eastmoney.com/jbgk_513400.html
+theme-道琼斯美国石油开发与生产指数,美股,跟踪指数为道琼斯美国石油开发与生产指数。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。这是股票指数，不是原油期货，所以不归商品。,https://fundf10.eastmoney.com/jbgk_162719.html
+theme-道琼斯美国精选REIT指数,美股,跟踪指数为道琼斯美国精选REIT指数。样本空间是美国上市证券（标普500及其行业、纳斯达克、道琼斯美国系列、MSCI USA 或 Select Sector）。这是美国上市 REIT 股票指数，不是国债，也不是商品。,https://fundf10.eastmoney.com/jbgk_160140.html
+us-xlb,美股,登记代码 XLB。v4 登记说明：跟踪有上限的 Select Sector 指数（Materials（15）），成分来自在美国上市的标普500股票。,https://www.sectorspdrs.com/sector/xlb
+us-xlc,美股,登记代码 XLC。v4 登记说明：跟踪有上限的 Select Sector 指数（Communication Services（50）），成分来自在美国上市的标普500股票。,https://www.sectorspdrs.com/sector/xlc
+us-xle,美股,登记代码 XLE。v4 登记说明：跟踪有上限的 Select Sector 指数（Energy（10）），成分来自在美国上市的标普500股票。这是股票指数，不是原油期货，所以不归商品。,https://www.sectorspdrs.com/sector/xle
+us-xlf,美股,登记代码 XLF。v4 登记说明：跟踪有上限的 Select Sector 指数（Financials（40）），成分来自在美国上市的标普500股票。,https://www.sectorspdrs.com/sector/xlf
+us-xli,美股,登记代码 XLI。v4 登记说明：跟踪有上限的 Select Sector 指数（Industrials（20）），成分来自在美国上市的标普500股票。,https://www.sectorspdrs.com/sector/xli
+us-xlk,美股,登记代码 XLK。v4 登记说明：跟踪有上限的 Select Sector 指数（Information Technology（45）），成分来自在美国上市的标普500股票。,https://www.sectorspdrs.com/sector/xlk
+us-xlp,美股,登记代码 XLP。v4 登记说明：跟踪有上限的 Select Sector 指数（Consumer Staples（30）），成分来自在美国上市的标普500股票。,https://www.sectorspdrs.com/sector/xlp
+us-xlre,美股,登记代码 XLRE。v4 登记说明：跟踪有上限的 Select Sector 指数（Real Estate（60）），成分来自在美国上市的标普500股票。,https://www.sectorspdrs.com/sector/xlre
+us-xlu,美股,登记代码 XLU。v4 登记说明：跟踪有上限的 Select Sector 指数（Utilities（55）），成分来自在美国上市的标普500股票。,https://www.sectorspdrs.com/sector/xlu
+us-xlv,美股,登记代码 XLV。v4 登记说明：跟踪有上限的 Select Sector 指数（Health Care（35）），成分来自在美国上市的标普500股票。,https://www.sectorspdrs.com/sector/xlv
+us-xly,美股,登记代码 XLY。v4 登记说明：跟踪有上限的 Select Sector 指数（Consumer Discretionary（25）），成分来自在美国上市的标普500股票。,https://www.sectorspdrs.com/sector/xly
