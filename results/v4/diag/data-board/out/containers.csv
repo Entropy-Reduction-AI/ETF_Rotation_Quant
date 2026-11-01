@@ -1,4 +1,4 @@
-group,id,name,asset_class,research,basis,research_first,research_last,research_rows,buy_first,members,otc,member_codes,issues,pool
+group,id,name,asset_class,research,basis,research_first,research_last,research_rows,上市日（不含流动性门槛）,members,otc,member_codes,issues,pool
 A 股,csi300,沪深300,A股宽基,H00300,total_return,2005-01-01,2026-09-30,5283,2005-01-04,1,20,510300,,v3 起
 A 股,csi500,中证500,A股宽基,H00905,total_return,2005-01-01,2026-09-30,5280,2009-09-25,1,12,510500,,v3 起
 A 股,csi1000,中证1000,A股宽基,H00852,total_return,2005-01-01,2026-09-30,5280,2016-11-04,1,0,512100,,v3 起
