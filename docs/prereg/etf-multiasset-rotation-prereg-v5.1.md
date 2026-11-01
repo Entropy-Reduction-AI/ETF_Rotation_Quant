@@ -3,7 +3,7 @@
 ## Metadata
 
 - Project: ETF_Rotation_Quant · Owner: L. Loric · 起草：Orchestrator（Claude）
-- 状态：**草案第 1 版，待 Reviewer R1 与 Owner 批准**。冻结后由 Manager 打 `milestone/v5.1-prereg-freeze`。冻结前不运行任何 v5.1 规则看收益。
+- 状态：**讨论稿（Owner 2026-11-01：v5 策略先讨论清楚再继续），不送 R1、不冻结**。冻结前不运行任何 v5.1 规则看收益。
 - 母版：`docs/prereg/etf-multiasset-rotation-prereg-v5.md`（`milestone/v5-prereg-freeze`）和 v4。本文只写增量；没有写到的条款沿用 v5、v4、v3.1、v3。
 - 尝试登记：本项目第 5 次正式尝试的设计修正（D30-2）。v5 原版（两层 + 防守位）的设计期结果已登记、不撤回，它的尝试次数照算；v5.1 的运行另记账本，计入同一次尝试的 L5。
 - 依据：D27、D29、D30；《v5 研究备忘》第 10.3 版第 7 节（四处结构硬伤）；`docs/reference/strategy-design-review.md`；事前画像脚本 `results/v5/diag/v51/profile.py`。

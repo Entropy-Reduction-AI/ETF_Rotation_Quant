@@ -13,7 +13,6 @@ ROWS = [  # 名称, 指数池年化, 指数池回撤, 可交易池年化, 颜色
     ('E1 · 补全池子', 22.6, -44, None, '#9ca3af'),
     ('E2 · 加 10% 离场', 25.1, -34, 5.2, '#1d4ed8'),
     ('v4 · E2 新口径（真实条件）', 24.9, -35, 8.7, '#1d4ed8'),
-    ('v5 · 两层 + 防守位', 12.7, -40, 17.4, '#c2410c'),
 ]
 fig, axs = plt.subplots(1, 2, figsize=(13, 4.2), gridspec_kw={'width_ratios': [1.6, 1]}, sharey=True)
 y = list(range(len(ROWS)))[::-1]
@@ -34,6 +33,6 @@ ax.set_title('设计期年化（指数池；圆点 = 可交易池）', loc='left
 bx.set_title('最大回撤（指数池）', loc='left', fontsize=12, weight='bold', color=INK, pad=22)
 for a_ in axs: a_.grid(axis='x', alpha=.22); a_.set_axisbelow(True)
 h = fig.get_figheight()
-fig.text(.02, 1 + .42 / h, 'E2 至今仍是最好的一版：v4 的微调没赢过它，v5 的换架构退回到基准以下', fontsize=14.5, weight='bold', color=INK)
-fig.text(.02, 1 + .12 / h, '设计期 2006–2015，人民币、含分红、扣成本。灰 = 探索阶段，蓝 = E2 系列，橙 = v5。', fontsize=10.5, color=MUTED)
+fig.text(.02, 1 + .42 / h, 'E2 至今仍是最好的一版：补全池子和 10% 离场是两次真改进，v4 的四个微调都没赢过它', fontsize=14.5, weight='bold', color=INK)
+fig.text(.02, 1 + .12 / h, '设计期 2006–2015，人民币、含分红、扣成本。灰 = 探索阶段，蓝 = E2 系列。', fontsize=10.5, color=MUTED)
 fig.tight_layout(); fig.savefig(sys.argv[1], dpi=200, bbox_inches='tight', facecolor='white')
