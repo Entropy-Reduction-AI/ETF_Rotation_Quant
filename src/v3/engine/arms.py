@@ -244,7 +244,7 @@ def _schedule(market, spec: Spec, prepared, premium_spec):
 
 
 def _run_path(market, spec: Spec, decisions: pd.DataFrame, *, allow_after: bool,
-              exit_drawdown: float, premium, switches=None, fill_quotes=None,
+              exit_drawdown: float | None, premium, switches=None, fill_quotes=None,
               refill_targets=None, cross_border_names=None, dividend_yield=None) -> Book:
     use_premium = premium is not None
     extra = {}
