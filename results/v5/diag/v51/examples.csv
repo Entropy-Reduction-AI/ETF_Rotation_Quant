@@ -1,0 +1,11 @@
+date,arm,picks
+2007-05-31,E2,allshare-healthcare（A股） · allshare-energy（A股） · csi1000（A股） · allshare-industrials（A股） · allshare-discretionary（A股）
+2007-05-31,v5.1,allshare-healthcare（A股） · allshare-energy（A股） · csi1000（A股） · spx（美股） · ndx100（美股）
+2009-03-31,E2,csi1000（A股） · csi500（A股） · allshare-it（A股） · allshare-materials（A股） · allshare-discretionary（A股）
+2009-03-31,v5.1,csi1000（A股） · csi500（A股） · allshare-it（A股） · gold（黄金） · ndx100（美股）
+2011-07-29,E2,allshare-staples（A股） · gold（黄金） · allshare-energy（A股）
+2011-07-29,v5.1,allshare-staples（A股） · gold（黄金） · allshare-energy（A股）
+2012-05-31,E2,cgb-10y（国债） · cgb-5y（国债） · allshare-staples（A股） · allshare-financials-re（A股） · allshare-healthcare（A股）
+2012-05-31,v5.1,cgb-10y（国债） · cgb-5y（国债） · allshare-staples（A股） · allshare-financials-re（A股） · allshare-healthcare（A股）
+2015-06-30,E2,allshare-utilities（A股） · cgb-5y（国债） · csi1000（A股） · allshare-staples（A股） · csi-dividend（A股）
+2015-06-30,v5.1,allshare-utilities（A股） · cgb-5y（国债） · csi1000（A股） · allshare-staples（A股） · hsi（港股）
