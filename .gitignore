@@ -41,3 +41,5 @@ __pycache__/
 /data/*
 !/data/market.sqlite
 !/data/universe.csv
+!/data/options/
+!/data/options/**
