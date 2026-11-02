@@ -1,1 +1,3 @@
 series,date,reason
+^VIX,2026-05-25,"present_but_spy_closed; Memorial Day, NYSE closed, Yahoo still sent a ^VIX bar"
+^VIX,2026-09-07,"present_but_spy_closed; Labor Day, NYSE closed, Yahoo still sent a ^VIX bar"
