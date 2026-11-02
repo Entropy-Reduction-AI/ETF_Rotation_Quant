@@ -1,0 +1,34 @@
+{
+ "月数": 92,
+ "最热与最强是同一个的比例": 0.27,
+ "最热_下月超额": -0.21,
+ "最热_可信度": -0.3,
+ "最强_下月超额": 0.11,
+ "最强_可信度": 0.16,
+ "最热_前五年": -0.96,
+ "最热_后五年": 0.67,
+ "最热之后3个月最大回撤": -0.154,
+ "行业平均之后3个月最大回撤": -0.145,
+ "最热行业出现次数": {
+  "allshare-it": 26,
+  "allshare-communication": 24,
+  "allshare-energy": 18,
+  "allshare-financials-re": 14,
+  "allshare-healthcare": 4,
+  "allshare-utilities": 3,
+  "allshare-materials": 2,
+  "allshare-staples": 1
+ },
+ "按年最热": {
+  "2006": "allshare-communication",
+  "2007": "allshare-communication",
+  "2008": "allshare-communication",
+  "2009": "allshare-energy",
+  "2010": "allshare-it",
+  "2011": "allshare-energy",
+  "2012": "allshare-it",
+  "2013": "allshare-communication",
+  "2014": "allshare-it",
+  "2015": "allshare-financials-re"
+ }
+}
