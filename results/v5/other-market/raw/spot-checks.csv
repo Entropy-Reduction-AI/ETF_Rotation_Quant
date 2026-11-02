@@ -1,0 +1,7 @@
+series,date,stored,live_source,live,result
+SPY,2026-09-30,close 762.630005; open 766.450012; high 769.409973; low 762.179993; volume 62110000,https://api.nasdaq.com/api/quote/SPY/historical?assetclass=etf&fromdate=2026-09-01&todate=2026-09-30,close 762.63; open 766.45; high 769.41; low 762.18; volume 62110040,ohlc matches at the displayed cent; volume differs by 40 shares
+DTB3,2026-10-29,4.00 in the same H.15 zip series RIFSGFSM03_N.B (not in the stored csv which stops at 2026-09-30),https://www.federalreserve.gov/releases/h15/ 3-month Treasury bill secondary market,4.00,match
+DTB3,2026-10-23,4.04,H.15 daily page column 2026-10-23,4.04,match
+DTB3,2026-10-26,4.05,H.15 daily page column 2026-10-26,4.05,match
+DTB3,2026-10-27,4.05,H.15 daily page column 2026-10-27,4.05,match
+DTB3,2026-10-28,4.01,H.15 daily page column 2026-10-28,4.01,match

@@ -1,0 +1,33 @@
+ticker,url,result,detail
+QQQ,https://query1.finance.yahoo.com/v8/finance/chart/QQQ?period1=0&period2=1790985600&interval=1d&includeAdjustedClose=true,http_429,Too Many Requests. A later five-year period1 window and range=5y/10y sometimes returned HTTP 200, then the same chart host returned 429 again after retries. Full history from listing was not stored.
+IWM,https://query1.finance.yahoo.com/v8/finance/chart/IWM,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+EFA,https://query1.finance.yahoo.com/v8/finance/chart/EFA,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+EEM,https://query1.finance.yahoo.com/v8/finance/chart/EEM,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+EWJ,https://query1.finance.yahoo.com/v8/finance/chart/EWJ,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+EWU,https://query1.finance.yahoo.com/v8/finance/chart/EWU,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+EWG,https://query1.finance.yahoo.com/v8/finance/chart/EWG,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+EWQ,https://query1.finance.yahoo.com/v8/finance/chart/EWQ,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+FEZ,https://query1.finance.yahoo.com/v8/finance/chart/FEZ,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+VGK,https://query1.finance.yahoo.com/v8/finance/chart/VGK,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+EWZ,https://query1.finance.yahoo.com/v8/finance/chart/EWZ,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+INDA,https://query1.finance.yahoo.com/v8/finance/chart/INDA,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+FXI,https://query1.finance.yahoo.com/v8/finance/chart/FXI,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+EWH,https://query1.finance.yahoo.com/v8/finance/chart/EWH,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+DBC,https://query1.finance.yahoo.com/v8/finance/chart/DBC,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+IEF,https://query1.finance.yahoo.com/v8/finance/chart/IEF,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+TLT,https://query1.finance.yahoo.com/v8/finance/chart/TLT,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+SHY,https://query1.finance.yahoo.com/v8/finance/chart/SHY,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+GLD,https://query1.finance.yahoo.com/v8/finance/chart/GLD,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+XLB,https://query1.finance.yahoo.com/v8/finance/chart/XLB,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+XLE,https://query1.finance.yahoo.com/v8/finance/chart/XLE,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+XLF,https://query1.finance.yahoo.com/v8/finance/chart/XLF,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+XLI,https://query1.finance.yahoo.com/v8/finance/chart/XLI,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+XLK,https://query1.finance.yahoo.com/v8/finance/chart/XLK,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+XLP,https://query1.finance.yahoo.com/v8/finance/chart/XLP,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+XLU,https://query1.finance.yahoo.com/v8/finance/chart/XLU,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+XLV,https://query1.finance.yahoo.com/v8/finance/chart/XLV,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+XLY,https://query1.finance.yahoo.com/v8/finance/chart/XLY,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+XLRE,https://query1.finance.yahoo.com/v8/finance/chart/XLRE,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+XLC,https://query1.finance.yahoo.com/v8/finance/chart/XLC,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+^VIX,https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX,http_429,Not downloaded. Same Yahoo chart host limit as QQQ.
+DTB3-fredgraph,https://fred.stlouisfed.org/graph/fredgraph.csv?id=DTB3,timeout,TLS to fred.stlouisfed.org completed, then the HTTP body did not arrive (full series and short windows). api.stlouisfed.org answered HTTP 400 because api_key is not set. The stored file is the Board H.15 series instead.

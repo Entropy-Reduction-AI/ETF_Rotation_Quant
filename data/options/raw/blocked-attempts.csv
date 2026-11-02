@@ -1,0 +1,9 @@
+target,url,result,detail
+ivx-sse-page,https://www.sse.com.cn/assortment/options/volatility/,http_404,Page not found. No downloadable iVX file at this path.
+ivx-sohu,https://q.stock.sohu.com/hisHq?code=zs_000188&start=20150209&end=20180214,not_listed,"Sohu returned status 2: zs_000188 non-existent."
+ivx-eastmoney-000188,https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.000188,connection_closed,Remote end closed the connection. No bars stored from this host.
+ivx-netease,https://quotes.money.163.com/service/chddata.html?code=0000188&start=20150209&end=20180214,http_502,Bad gateway. No file stored.
+ivx-sina-before-2016-12-05,https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol=sh000188&scale=240&ma=no&datalen=3000,partial,datalen=3000 returned 296 rows, 2016-12-05 through 2018-02-14, and nothing earlier. Tencent fqkline with an end date in 2015 or 2016 returned an empty day array.
+szse-sina-null,https://stock.finance.sina.com.cn/futures/api/jsonp.php/var%20_x=/StockOptionDaylineService.getSymbolInfo?symbol={contract_id},null_payload,"1295 SZSE contract ids returned var _x=(null). No daily bars were invented for them. SSE had 2 such ids."
+szse-ohlcv-settlement,https://www.szse.cn/api/report/ShowReport?SHOWTYPE=xlsx&CATALOGID=option_hyfxzb,no_ohlcv_column,"The public workbook is greeks only: Delta Theta Gamma Vega Rho. It has no open, high, low, close, settlement, or implied vol. Daily OHLCV that Sina did return is stored separately."
+cffex-old-url,http://www.cffex.com.cn/sj/hqsj/rtj/201912/20191223_1.csv,html_not_csv,The path without the day folder returns an HTML page. The working path is /{yyyymm}/{dd}/{yyyymmdd}_1.csv.
