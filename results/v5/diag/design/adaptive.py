@@ -5,14 +5,15 @@
   门槛：过去 L 天跑赢现金就持有，否则不持有。对照：固定 20、60、250 天，以及 E2 式（四个周期里过半跑赢才持有）。
 指标：每个转折点离场、回场晚几天、那时已跌/已涨多少；假底回场后到再次离场的涨跌（假信号的代价）；每年切换次数。
 第二版（同一次登记的修正，原因：效率在 V 形底附近反而变低）：python ... results/v5/diag/design vol，速度改用 20 天波动 ÷ 250 天波动，其余不变。
-用法：python results/v5/diag/design/adaptive.py results/v5/diag/design [er|vol]
+第三项（Owner 2026-11-02 问：最短 1 个月能否适配牛市尾部、熊市头尾）：周期下限改为 10 天、5 天，其余不变，同一诊断登记。
+用法：python results/v5/diag/design/adaptive.py results/v5/diag/design [er|vol] [最短天数，默认 20]
 """
 import sys, pathlib, json
 ROOT = pathlib.Path(__file__).resolve().parents[4]; sys.path.insert(0, str(ROOT))
 import pandas as pd, numpy as np
 from src.v3.engine.spec import load_spec
 from src.v4.r5.design import Markets
-out = pathlib.Path(sys.argv[1]); GAUGE = sys.argv[2] if len(sys.argv) > 2 else 'er'; m = Markets(load_spec()).get('index', t4=False, allow_substitute=True)
+out = pathlib.Path(sys.argv[1]); GAUGE = sys.argv[2] if len(sys.argv) > 2 else 'er'; LMIN = int(sys.argv[3]) if len(sys.argv) > 3 else 20; m = Markets(load_spec()).get('index', t4=False, allow_substitute=True)
 ret = m.signal.loc[:'2015-12-31']; cash = m.cash_id
 clr = np.log1p(ret[cash].fillna(0)).cumsum()
 def swings(p, th=0.2):
@@ -37,7 +38,7 @@ for c in ('csi300', 'spx'):
     for t, v in hist.items():
         if len(vals) >= 250: q[t] = (np.array(vals) < v).mean()
         vals.append(v)
-    L = np.round(250 ** (1 - q) * 20 ** q).astype(int)
+    L = np.round(250 ** (1 - q) * LMIN ** q).astype(int)
     def gate_fixed(n): return (cl - cl.shift(n)) > (clr - clr.shift(n))
     idx = np.arange(len(cl))
     shift_idx = np.clip(idx - L.values, 0, None)
@@ -68,7 +69,7 @@ for c in ('csi300', 'spx'):
         tab[name] = dict(转折=rows, 每年切换=flips.groupby(flips.index.year).sum().to_dict(), 持有占比=round(s.mean(), 2))
     Ly = L.loc['2006':].groupby(L.loc['2006':].index.year).median().to_dict()
     res[c] = dict(周期中位数每年=Ly, 规则=tab)
-(out / f'adaptive-{GAUGE}.json').write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str))
+(out / (f'adaptive-{GAUGE}.json' if LMIN == 20 else f'adaptive-{GAUGE}-min{LMIN}.json')).write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str))
 for c, v in res.items():
     print('=====', c, '每年周期中位数', v['周期中位数每年'])
     rows = []
