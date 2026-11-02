@@ -1,3 +1,34 @@
-series,first_date,last_date,row_count,weekday_gaps,note
-DTB3,1954-01-04,2026-09-30,18978,0,every weekday in the span is present; weekends are not in the H.15 business-day series
-SPY,1993-01-29,2026-09-30,8475,not_counted,no independent NYSE calendar was stored; endpoints match the Yahoo listing bar and 2026-09-30
+series,first_date,last_date,row_count,weekday_gaps,missing_vs_spy,note
+DTB3,1954-01-04,2026-09-30,18978,0,not_applicable,every weekday in the span is present; weekends are not in the H.15 business-day series
+SPY,1993-01-29,2026-09-30,8475,not_counted,0,reference calendar (G day = SPY session); gaps vs itself = 0
+QQQ,1999-03-10,2026-09-30,6933,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+IWM,2000-05-26,2026-09-30,6625,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+EFA,2001-08-27,2026-09-30,6310,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+EEM,2003-04-14,2026-09-30,5904,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+EWJ,1996-03-18,2026-09-30,7684,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+EWU,1996-03-18,2026-09-30,7684,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+EWG,1996-03-18,2026-09-30,7684,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+EWQ,1996-03-18,2026-09-30,7684,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+FEZ,2002-10-21,2026-09-30,6024,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+VGK,2005-03-10,2026-09-30,5424,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+EWZ,2000-07-14,2026-09-30,6592,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+INDA,2012-02-03,2026-09-30,3685,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+FXI,2004-10-08,2026-09-30,5529,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+EWH,1996-03-18,2026-09-30,7684,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+DBC,2006-02-06,2026-09-30,5195,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+IEF,2002-07-30,2026-09-30,6082,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+TLT,2002-07-30,2026-09-30,6082,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+SHY,2002-07-30,2026-09-30,6082,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+GLD,2004-11-18,2026-09-30,5500,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=no
+XLB,1998-12-22,2026-09-30,6985,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+XLE,1998-12-22,2026-09-30,6985,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+XLF,1998-12-22,2026-09-30,6985,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+XLI,1998-12-22,2026-09-30,6985,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+XLK,1998-12-22,2026-09-30,6985,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+XLP,1998-12-22,2026-09-30,6985,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+XLU,1998-12-22,2026-09-30,6985,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+XLV,1998-12-22,2026-09-30,6985,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+XLY,1998-12-22,2026-09-30,6985,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+XLRE,2015-10-08,2026-09-30,2760,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+XLC,2018-06-19,2026-09-30,2082,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=0; close_ne_adjclose=yes
+^VIX,1990-01-02,2026-09-30,9256,not_counted,0,source=got (Yahoo); missing_vs_spy=0; extra_vs_spy=2; close_ne_adjclose=no
