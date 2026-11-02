@@ -93,7 +93,7 @@ title(fig, '六次关键转折里，动态周期三次少付很多、两次差�
       '设计期沪深300（人民币），只看价格：过去 L 天跑赢现金就持有。动态周期的 L 由最近 1 个月波动 ÷ 过去一年波动决定，在 1–12 个月之间伸缩。不算收益。')
 fig.tight_layout(); fig.savefig(OUT / 'm12-adaptive.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
 # m13 第一层画像
-L1 = pd.read_csv(D / 'layer1-yearly.csv', index_col=0)
+L1 = pd.read_csv(D / 'layer1-band-swap-1-yearly.csv', index_col=0).rename(columns={'csi300': 'A 股', 'hsi': '港股', 'spx': '美股', 'cgb-10y': '国债', 'gold': '黄金', 'cash': '现金', '换几次': '每年换几次'})
 fig, ax = plt.subplots(figsize=(13, 4.4))
 COLS1 = [('A 股', '#c2410c'), ('港股', '#0d9488'), ('美股', '#1d4ed8'), ('国债', '#475569'), ('黄金', '#ca8a04'), ('现金', '#d1d5db')]
 bot = np.zeros(len(L1)); x = np.arange(len(L1))
@@ -106,8 +106,8 @@ for k, col in COLS1:
 for xi, s in zip(x, L1['每年换几次']): ax.text(xi, 102, f'换 {s} 次', ha='center', fontsize=9, color=MUTED)
 ax.set_xticks(x, [str(v)[2:] if v != 2006 else '2006' for v in L1.index]); ax.set_ylim(0, 110); ax.set_ylabel('一年里持有它的周数占比 %', color=MUTED)
 ax.legend(frameon=False, fontsize=10, loc='center left', bbox_to_anchor=(1.01, .5))
-title(fig, '第一层的样子：2006–07 年押 A 股，2008 年拿现金，2010–14 年转到美股；震荡年份换得太勤',
-      '设计期每周决策，信号层面“想持有什么”，不算收益。A 股 = 沪深300，港股 = 恒生，美股 = 标普500；国债数据 2008 年还不满一年，那年防守只能拿现金。')
+title(fig, '第一层的样子：2006–07 年押 A 股，2008 年拿现金，2009 年先回港股，2012–14 年七成在美股；换市场加了噪音带',
+      '设计期每周决策，信号层面“想持有什么”，不算收益。换市场要求强度差超过一倍噪音，进出场按强度正负。A 股 = 沪深300，港股 = 恒生，美股 = 标普500；国债数据 2008 年还不满一年。')
 fig.tight_layout(); fig.savefig(OUT / 'm13-layer1.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
 # m14 哪把尺子在响
 A = pd.read_csv(D / 'scales-csi300.csv', index_col=0, parse_dates=True)
