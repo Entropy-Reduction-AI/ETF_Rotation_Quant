@@ -8,6 +8,7 @@ import matplotlib; matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 plt.rcParams.update({'font.family': ['Noto Sans CJK SC'], 'axes.unicode_minus': False, 'axes.spines.top': False,
                      'axes.spines.right': False, 'font.size': 11.5, 'axes.edgecolor': '#9ca3af'})
+GOOD = '#15803d'
 INK, MUTED, BLUE, GREY, BAD, A1C = '#151b26', '#5d6676', '#1d4ed8', '#9ca3af', '#c2410c', '#d97706'
 OUT = pathlib.Path(sys.argv[1]); D = ROOT / 'results/v5/diag/design'
 yr = pd.read_csv(D / 'e2-targets-yearly.csv', header=[0, 1], index_col=0)
@@ -68,24 +69,27 @@ ax.grid(axis='y', alpha=.22)
 title(fig, '十年只有 12 段领先期，优势几乎全来自 2006–07 年 A 股那一段：只靠这三个市场，证明不了“押最强的大市场”是机制',
       '设计期 2006–2015，沪深300、恒生、标普500（人民币）。每月看过去 12 个月谁涨得最多，下个月持有它，和三者平均比；一段 = 同一个市场连续领先的月份。不扣成本，只作诊断。')
 fig.tight_layout(); fig.savefig(OUT / 'm11-leader.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
-# m12 动态周期 vs E2 式：关键转折
+# m12 代价对比（哑铃图，越短越好）
 import json as _json
 J = _json.loads((D / 'adaptive-vol.json').read_text())['csi300']['规则']
 def get(rule, key):
     return {r['转折']: r for r in J[rule]['转折']}.get(key)
-EV = [('2007-10 真顶', '2007 年 10 月见顶', 'top'), ('2009-12 真顶', '2009 年 12 月见顶', 'top'), ('2015-06 未定', '2015 年 6 月见顶', 'top'),
-      ('2008-11 真底', '2008 年 11 月见底', 'bot'), ('2012-12 真底', '2012 年 12 月见底', 'bot'), ('2014-03 真底', '2014 年 3 月见底（平静）', 'bot')]
-fig, axs = plt.subplots(1, 2, figsize=(13, 4.6))
-for ax, kind, ttl, sign in ((axs[0], 'top', '见顶后，离场时已经跌了多少', -1), (axs[1], 'bot', '见底后，回场时已经涨了多少', 1)):
-    ev = [e for e in EV if e[2] == kind]; y = np.arange(len(ev))
-    for off, rule, col, lab in ((-.2, 'E2 式（四个过半）', GREY, 'E2 式：1、3、6、12 个月四道门过半'), (.2, '动态周期', '#15803d', '动态周期：按波动伸缩')):
-        vals = [abs(get(rule, e[0])['涨跌']) * 100 for e in ev]; days_ = [get(rule, e[0])['晚几天'] for e in ev]
-        ax.barh(y + off, vals, .38, color=col, label=lab, zorder=2)
-        for yy, v, dd in zip(y + off, vals, days_): ax.text(v + .8, yy, f'{v:.0f}%（晚 {dd} 天）', va='center', fontsize=9.5, color=INK)
-    ax.set_yticks(y, [e[1] for e in ev]); ax.invert_yaxis(); ax.set_xlim(0, 50); ax.grid(axis='x', alpha=.22)
-    ax.set_title(ttl, loc='left', fontsize=12.5, weight='bold', color=INK)
-axs[0].legend(frameon=False, fontsize=9.5, loc='center right')
-title(fig, '动态周期：牛市末段离场少痛，大跌后回场更快；平静中慢慢形成的底会晚',
+EV = [('2007-10 真顶', '2007 年 10 月见顶', '离场前多跌'), ('2009-12 真顶', '2009 年 12 月见顶', '离场前多跌'), ('2015-06 未定', '2015 年 6 月见顶', '离场前多跌'),
+      ('2008-11 真底', '2008 年 11 月见底', '回场前错过'), ('2012-12 真底', '2012 年 12 月见底', '回场前错过'), ('2014-03 真底', '2014 年 3 月见底（平静）', '回场前错过')]
+fig, ax = plt.subplots(figsize=(13, 4.9))
+for i_, (k, lab, what) in enumerate(EV):
+    e = abs(get('E2 式（四个过半）', k)['涨跌']) * 100; d = abs(get('动态周期', k)['涨跌']) * 100
+    diff = d - e; col = GOOD if diff < -2 else (BAD if diff > 2 else MUTED)
+    ax.plot([e, d], [i_, i_], color='#d1d5db', lw=6, solid_capstyle='round', zorder=1)
+    ax.scatter([e], [i_], s=120, color='#6b7280', zorder=3); ax.scatter([d], [i_], s=150, color=col, zorder=4)
+    verdict = f'少付 {abs(diff):.0f} 个点' if diff < -2 else (f'多付 {diff:.0f} 个点' if diff > 2 else '差不多')
+    ax.text(42, i_, verdict, va='center', fontsize=11, weight='bold', color=col)
+    ax.text(-1, i_, f'{lab}\n{what}', va='center', ha='right', fontsize=10.5, color=INK)
+ax.scatter([], [], s=100, color='#6b7280', label='E2 式（1、3、6、12 个月四道门过半）'); ax.scatter([], [], s=120, color=GOOD, label='动态周期（按波动伸缩）')
+ax.set_yticks([]); ax.invert_yaxis(); ax.set_xlim(0, 52); ax.set_xlabel('付出的代价：见顶后离场前多跌了多少 / 见底后回场前错过了多少（%，越小越好）', color=MUTED)
+ax.axhline(2.5, color='#e5e7eb', lw=1); ax.grid(axis='x', alpha=.22); ax.spines['left'].set_visible(False)
+ax.legend(frameon=False, fontsize=10, loc='upper center', bbox_to_anchor=(.5, -.16), ncol=2)
+title(fig, '六次关键转折里，动态周期三次少付很多、两次差不多、一次多付（平静中慢慢形成的底）',
       '设计期沪深300（人民币），只看价格：过去 L 天跑赢现金就持有。动态周期的 L 由最近 1 个月波动 ÷ 过去一年波动决定，在 1–12 个月之间伸缩。不算收益。')
 fig.tight_layout(); fig.savefig(OUT / 'm12-adaptive.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
 # m13 第一层画像
@@ -105,3 +109,20 @@ ax.legend(frameon=False, fontsize=10, loc='center left', bbox_to_anchor=(1.01, .
 title(fig, '第一层的样子：2006–07 年押 A 股，2008 年拿现金，2010–14 年转到美股；震荡年份换得太勤',
       '设计期每周决策，信号层面“想持有什么”，不算收益。A 股 = 沪深300，港股 = 恒生，美股 = 标普500；国债数据 2008 年还不满一年，那年防守只能拿现金。')
 fig.tight_layout(); fig.savefig(OUT / 'm13-layer1.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
+# m14 哪把尺子在响
+A = pd.read_csv(D / 'scales-csi300.csv', index_col=0, parse_dates=True)
+PH = [('牛市前段', '2006-01', '2007-06', '加速度刚出现'), ('牛市末段', '2007-07', '2007-10-16', '长尺子先熄火'), ('熊市', '2007-10-17', '2008-10', '长尺子向下最响'),
+      ('底部前后', '2008-10', '2009-01', '各尺子都在减弱'), ('反弹', '2009-02', '2009-07', '长尺子响、短尺子静'), ('震荡', '2011-01', '2014-06', '全是噪音'),
+      ('2015 加速', '2014-11', '2015-06-08', '各尺子都响'), ('2015 急跌', '2015-06-09', '2015-08-26', '中短尺子最响')]
+G = pd.DataFrame({ph: A.loc[a:b].abs().mean() / 0.8 for ph, a, b, _ in PH}).T
+fig, ax = plt.subplots(figsize=(13, 4.8))
+im = ax.imshow(G.values, cmap='YlOrRd', vmin=0.4, vmax=2.4, aspect='auto')
+for r in range(G.shape[0]):
+    for c_ in range(G.shape[1]):
+        v = G.values[r, c_]; ax.text(c_, r, f'{v:.1f}', ha='center', va='center', fontsize=10, color='white' if v > 1.7 else INK, weight='bold' if v >= 1.4 else None)
+ax.set_xticks(range(G.shape[1]), [f'{n} 天' for n in G.columns]); ax.set_yticks(range(G.shape[0]), [f'{ph}（{note}）' for ph, _, _, note in PH])
+ax.set_xlabel('量加速度的尺子', color=MUTED); ax.spines[:].set_visible(False)
+cb = fig.colorbar(im, ax=ax, fraction=.025, pad=.01); cb.set_label('响度：1 = 纯噪音的水平', color=MUTED, fontsize=9.5)
+title(fig, '一轮走势里，加速度出现在哪把尺子上会变：牛市末段长尺子先熄火，急跌时中短尺子最响，震荡时全是噪音',
+      '设计期沪深300（人民币），只用价格。加速度 = 最近 n 天涨幅 − 再之前 n 天涨幅，按平常波动折算；格子是这一段里的平均响度，1.0 相当于纯噪音，1.4 以上加粗。')
+fig.tight_layout(); fig.savefig(OUT / 'm14-scales.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
