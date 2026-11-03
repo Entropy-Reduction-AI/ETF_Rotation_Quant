@@ -8,7 +8,10 @@
 第二版（同一诊断，看到第一版后按机制修正，两版都登记）：第一版里“前沿过半”和“水平 ≤ 0”几乎同时发生，半仓档很少触发；
 大跌后长尺子长期为负，水平要很久才回正，2008 年底 94 天后才回场。改为对称的两条腿：前沿 < 0.5 和 水平 > 0 各占一半仓位，
 两条都满足满仓、满足一条半仓、都不满足离场；有资格 = 至少满足一条；选市场仍按水平最高，噪音带不变。
-用法：python results/v5/diag/design/profile3.py results/v5/diag/design [sym]
+第三版（同一诊断，Owner 2026-11-03“见顶见底是镜像”；跑前写死）：两条腿都按“传导”，涨跌对称——
+腿一 = 速度的传导前沿：转负的尺子不到一半（= 转正的过半）；腿二 = 长尺子的加速度：60 天以上尺子的平均速度比 20 个交易日前高（Owner 的 P4：从中长尺子起，向下的加速度逐步放缓）。
+每条腿一半仓位；有资格 = 至少一条腿满足；选市场仍按水平最高，噪音带不变。依据：镜像检验里长尺子变化区分反转与熊市反弹的 AUC 0.68–0.79。
+用法：python results/v5/diag/design/profile3.py results/v5/diag/design [sym|mirror]
 """
 import sys, pathlib, json
 ROOT = pathlib.Path(__file__).resolve().parents[4]; sys.path.insert(0, str(ROOT))
@@ -16,16 +19,17 @@ import pandas as pd, numpy as np
 from src.v3.engine.spec import load_spec
 from src.v3.engine.sessions import decision_dates
 from src.v4.r5.design import Markets
-out = pathlib.Path(sys.argv[1]); SYM = len(sys.argv) > 2 and sys.argv[2] == 'sym'; TAG = '-sym' if SYM else ''; m = Markets(load_spec()).get('index', t4=False, allow_substitute=True)
+out = pathlib.Path(sys.argv[1]); ARG = sys.argv[2] if len(sys.argv) > 2 else ''; SYM = ARG == 'sym'; MIR = ARG == 'mirror'; TAG = f'-{ARG}' if ARG else ''; m = Markets(load_spec()).get('index', t4=False, allow_substitute=True)
 ret = m.signal.loc[:'2015-12-31']; cash = m.cash_id
 RISK = ['csi300', 'hsi', 'spx']; DEF = ['cgb-10y', 'gold']
 NAME = {'csi300': 'A 股', 'hsi': '港股', 'spx': '美股', 'cgb-10y': '国债', 'gold': '黄金', 'cash': '现金'}
 G = sorted(set(np.round(np.geomspace(3, 250, 30)).astype(int)))
 cl = np.log1p(ret[cash].fillna(0))
-LV, FR = {}, {}
+LV, FR, LA = {}, {}, {}
 for c in RISK + DEF:
     lr = np.log1p(ret[c]); valid = lr.notna().rolling(250, min_periods=1).sum().ge(250); x = lr.fillna(0) - cl; sig = lr.fillna(0).rolling(250).std().shift(1)
     V = pd.DataFrame({n: x.rolling(n).sum() / (sig * np.sqrt(n)) for n in G}).where(valid)
+    lm = V[[n for n in G if n >= 60]].mean(axis=1, skipna=False); LA[c] = lm - lm.shift(20)
     LV[c] = V.mean(axis=1, skipna=False); FR[c] = (V < 0).mean(axis=1).where(V.notna().all(axis=1))
 days = [pd.Timestamp(d).normalize() for d in decision_dates(pd.DatetimeIndex(m.dates), 'week')]
 days = [d for d in days if pd.Timestamp('2006-01-01') <= d <= pd.Timestamp('2015-12-31')]
@@ -33,12 +37,14 @@ h, dh, rows = None, None, []
 for t in days:
     lv = {c: LV[c].get(t) for c in RISK + DEF}; lv = {k: v for k, v in lv.items() if pd.notna(v)}
     fr = {k: FR[k].get(t) for k in RISK}
-    ok = [k for k in RISK if k in lv and (lv[k] > 0 or (SYM and fr[k] < 0.5))]
+    la = {k: LA[k].get(t) for k in RISK}
+    ok = [k for k in RISK if k in lv and ((fr[k] < 0.5 or la[k] > 0) if MIR else (lv[k] > 0 or (SYM and fr[k] < 0.5)))]
     if h not in ok: h = max(ok, key=lambda k: lv[k]) if ok else None
     elif ok:
         best = max(ok, key=lambda k: lv[k])
         if best != h and lv[best] - lv[h] > 1: h = best
     if h is None: w = 0.0
+    elif MIR: w = 0.5 * (fr[h] < 0.5) + 0.5 * (la[h] > 0)
     elif SYM: w = 0.5 * (lv[h] > 0) + 0.5 * (fr[h] < 0.5)
     else: w = 0.5 if fr[h] >= 0.5 else 1.0
     d = [k for k in DEF if k in lv and lv[k] > 0]
