@@ -43,3 +43,5 @@ __pycache__/
 !/data/universe.csv
 !/data/options/
 !/data/options/**
+!/data/research/
+!/data/research/**
