@@ -1,0 +1,3 @@
+contract_id,security_id,underlying,adjustment_flag,first_risk_date,last_risk_date,strike_yuan,reason,detail
+510050C2201M02900,10003765,510050,M,2021-11-29,2022-01-25,2.900,not_ex_div_adjustment,合约代码仍是 M，行权价仍是挂牌行权价，风险指标从除息日当天才出现。r2 的 HYXG 和 HYTZ 没有这个合约代码的单位行。除息公式会把代码改成 A 并改行权价，用在这张合约上对不上。不把标准新挂单位 10000 填进去。
+510050P2201M02900,10003774,510050,M,2021-11-29,2022-01-25,2.900,not_ex_div_adjustment,合约代码仍是 M，行权价仍是挂牌行权价，风险指标从除息日当天才出现。r2 的 HYXG 和 HYTZ 没有这个合约代码的单位行。除息公式会把代码改成 A 并改行权价，用在这张合约上对不上。不把标准新挂单位 10000 填进去。
