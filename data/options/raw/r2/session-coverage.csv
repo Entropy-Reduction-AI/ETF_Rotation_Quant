@@ -1,0 +1,25 @@
+series,product,requested_start,requested_end,first_observed,last_observed,calendar_sessions,sessions_with_rows,missing_sessions,note
+szse-ohlcv-gap,159919,2019-12-23,2022-12-09,,,720,0,720,No new daily bars stored. Official history API and Sina returned nothing for these contracts.
+szse-ohlcv-gap,159915,2022-09-19,2022-12-09,,,55,0,55,No new daily bars stored. Official history API and Sina returned nothing for these contracts.
+szse-ohlcv-gap,159922,2022-09-19,2022-12-09,,,55,0,55,No new daily bars stored. Official history API and Sina returned nothing for these contracts.
+sse-open-interest,510050,2015-02-09,2026-09-30,2015-02-09,2026-09-30,2830,2828,2,Calendar is existing SSE risk sessions through 2026-09-30. Open interest from yunhq dayk. Missing 2015-03-24 and 2016-03-31.
+sse-open-interest,510300,2019-12-23,2026-09-30,2019-12-23,2026-09-30,1643,1643,0,Calendar is existing SSE risk sessions through 2026-09-30. Open interest from yunhq dayk.
+sse-open-interest,510500,2022-09-19,2026-09-30,2022-09-19,2026-09-30,978,978,0,Calendar is existing SSE risk sessions through 2026-09-30. Open interest from yunhq dayk.
+sse-open-interest,588000,2023-06-05,2026-09-30,2023-06-05,2026-09-30,808,808,0,Calendar is existing SSE risk sessions through 2026-09-30. Open interest from yunhq dayk.
+sse-open-interest,588080,2023-06-05,2026-09-30,2023-06-05,2026-09-30,808,808,0,Calendar is existing SSE risk sessions through 2026-09-30. Open interest from yunhq dayk.
+sse-daily-settlement,510050,2015-02-09,2026-09-30,,,2830,0,2830,yunhq settlement field is null on historical bars. Current DRHY snapshot is not this history.
+sse-daily-settlement,510300,2019-12-23,2026-09-30,,,1643,0,1643,yunhq settlement field is null on historical bars. Current DRHY snapshot is not this history.
+sse-daily-settlement,510500,2022-09-19,2026-09-30,,,978,0,978,yunhq settlement field is null on historical bars. Current DRHY snapshot is not this history.
+sse-daily-settlement,588000,2023-06-05,2026-09-30,,,808,0,808,yunhq settlement field is null on historical bars. Current DRHY snapshot is not this history.
+sse-daily-settlement,588080,2023-06-05,2026-09-30,,,808,0,808,yunhq settlement field is null on historical bars. Current DRHY snapshot is not this history.
+szse-daily-settlement,159901,2022-12-12,2026-09-30,,,923,0,923,No historical per-contract settlement file on the public SZSE report API.
+szse-open-interest,159901,2022-12-12,2026-09-30,,,923,0,923,option_drhy xlsx has 合约总持仓 for the current day only.
+szse-daily-settlement,159915,2022-09-19,2026-09-30,,,978,0,978,No historical per-contract settlement file on the public SZSE report API.
+szse-open-interest,159915,2022-09-19,2026-09-30,,,978,0,978,option_drhy xlsx has 合约总持仓 for the current day only.
+szse-daily-settlement,159919,2019-12-23,2026-09-30,,,1643,0,1643,No historical per-contract settlement file on the public SZSE report API.
+szse-open-interest,159919,2019-12-23,2026-09-30,,,1643,0,1643,option_drhy xlsx has 合约总持仓 for the current day only.
+szse-daily-settlement,159922,2022-09-19,2026-09-30,,,978,0,978,No historical per-contract settlement file on the public SZSE report API.
+szse-open-interest,159922,2022-09-19,2026-09-30,,,978,0,978,option_drhy xlsx has 合约总持仓 for the current day only.
+shibor,ON-1Y,2015-01-01,2026-09-30,2015-01-04,2026-09-30,2930,2930,0,"calendar_sessions is China Money publication days stored, not exchange sessions. blank tenor cells=0. Eastmoney overnight dates in range missing from China Money: 0. China Money overnight dates missing on Eastmoney: 0."
+sse-contract-unit,all,2015-02-09,2026-09-30,,,13000,12906,94,"Counts are contracts, not trading days. Unit comes from HYXG listing or HYTZ adjustment."
+szse-contract-unit,all,2019-12-23,2026-09-30,,,8434,8434,0,"Counts are contracts, not trading days. Standard listings from option_hybg tab1. Adjusted Class A codes from option_hybg tab3, joined on the exchange contract code."
