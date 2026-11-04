@@ -153,7 +153,7 @@ def _distribution(matrix: np.ndarray, dates: pd.DatetimeIndex) -> pd.DataFrame:
 
 
 def _quantile(series: pd.Series, q: float) -> float:
-    return float(series.quantile(q, method="linear"))
+    return float(series.quantile(q, interpolation="linear"))
 
 
 def _check_book(market, spec, decisions: pd.DatetimeIndex, picks: list[str], nets: np.ndarray, row: int) -> None:
@@ -353,7 +353,7 @@ def run_controls(*, ledger: Path = LEDGER, out: Path = OUT, gate: Path = GATE) -
             "decision": "每月最后一个交易日",
             "execution": "下一交易日收盘；涨跌停与 A 臂相同",
             "eligibility": "第一层三个市场的成员，当天 H、F、E 都有定义；可交易池还要当天可买",
-            "metrics": "src.report.metrics cagr / max_drawdown / calmar；pandas quantile(0.95, method=linear)",
+            "metrics": "src.report.metrics cagr / max_drawdown / calmar；pandas quantile(0.95, interpolation=linear)",
         },
         "equal_weight": "§2 第 3 条改为 28 把永远等权，其余同 v5.1",
         "vol_ratio": "强度为 L 日对数超额；历史不足 250 时 q=0.5；第一层按强度持最强，z 差大于 1 才换；离场看强度正负；第二层和单只离场同 v5.1；只跑 U-指数",
