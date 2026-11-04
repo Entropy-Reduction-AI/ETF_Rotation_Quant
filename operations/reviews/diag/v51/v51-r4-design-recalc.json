@@ -1,0 +1,130 @@
+{
+  "head_note": "复算基于 checkout 上的 results/v5.1/design/",
+  "date_fence": {
+    "results/v5.1/design/index/daily.csv": {
+      "min": "2005-01-04",
+      "max": "2015-12-31"
+    },
+    "results/v5.1/design/index/decisions.csv": {
+      "min": "2005-01-07",
+      "max": "2015-12-31"
+    },
+    "results/v5.1/design/index/held.csv": {
+      "min": "2005-01-04",
+      "max": "2015-12-31"
+    },
+    "results/v5.1/design/tradable/daily.csv": {
+      "min": "2005-01-04",
+      "max": "2015-12-31"
+    },
+    "results/v5.1/design/tradable/decisions.csv": {
+      "min": "2005-01-07",
+      "max": "2015-12-31"
+    },
+    "results/v5.1/design/tradable/held.csv": {
+      "min": "2005-01-04",
+      "max": "2015-12-31"
+    }
+  },
+  "metrics": [
+    {
+      "pool": "index",
+      "segment": "full",
+      "cagr": 0.30141914990865204,
+      "max_drawdown": -0.2585187957856401,
+      "calmar": 1.1659467505743153,
+      "bm_cagr": 0.15649582160030429,
+      "bm_max_drawdown": -0.6546241458032984,
+      "bm_calmar": 0.2390620978519912,
+      "monthly_excess_t": 1.6071902325591516,
+      "n": 2429,
+      "n_months": 120
+    },
+    {
+      "pool": "index",
+      "segment": "s1",
+      "cagr": 0.40390599917600656,
+      "max_drawdown": -0.2585187957856401,
+      "calmar": 1.5623854271351294,
+      "bm_cagr": 0.2228522811954856,
+      "bm_max_drawdown": -0.6546241458032984,
+      "bm_calmar": 0.3404278357652397,
+      "monthly_excess_t": 1.0536001334992149,
+      "n": 1215,
+      "n_months": 60
+    },
+    {
+      "pool": "index",
+      "segment": "s2",
+      "cagr": 0.20633863856760026,
+      "max_drawdown": -0.2508190645714149,
+      "calmar": 0.8226593098900986,
+      "bm_cagr": 0.09368984383929924,
+      "bm_max_drawdown": -0.33320362867061715,
+      "bm_calmar": 0.2811789421774718,
+      "monthly_excess_t": 1.3173773542236344,
+      "n": 1214,
+      "n_months": 60
+    },
+    {
+      "pool": "tradable",
+      "segment": "full",
+      "cagr": 0.1581458996956524,
+      "max_drawdown": -0.3707849242283504,
+      "calmar": 0.42651653117983074,
+      "bm_cagr": 0.15649582160030429,
+      "bm_max_drawdown": -0.6546241458032984,
+      "bm_calmar": 0.2390620978519912,
+      "monthly_excess_t": -0.08851009142973464,
+      "n": 2429,
+      "n_months": 120
+    },
+    {
+      "pool": "tradable",
+      "segment": "s1",
+      "cagr": 0.2000140436460358,
+      "max_drawdown": -0.34380861282833564,
+      "calmar": 0.5817598401640486,
+      "bm_cagr": 0.2228522811954856,
+      "bm_max_drawdown": -0.6546241458032984,
+      "bm_calmar": 0.3404278357652397,
+      "monthly_excess_t": -0.2698597641378747,
+      "n": 1215,
+      "n_months": 60
+    },
+    {
+      "pool": "tradable",
+      "segment": "s2",
+      "cagr": 0.11770582671469154,
+      "max_drawdown": -0.21835021049299996,
+      "calmar": 0.5390689866931228,
+      "bm_cagr": 0.09368984383929924,
+      "bm_max_drawdown": -0.33320362867061715,
+      "bm_calmar": 0.2811789421774718,
+      "monthly_excess_t": 0.25954942256274827,
+      "n": 1214,
+      "n_months": 60
+    }
+  ],
+  "summary_mismatches": [],
+  "gate_item_6_index": {
+    "牛市": -28.415366429067966,
+    "回调": 44.97818443847302,
+    "熊市": 130.81002223280296,
+    "反弹": -37.33978886964235,
+    "rebound_t": -2.3630574813990686,
+    "rebound_n": 19
+  },
+  "pr_body_spot": {
+    "index_full": {
+      "cagr_pct": 30.14,
+      "mdd_pct": -25.85,
+      "calmar": 1.17
+    },
+    "tradable_full": {
+      "cagr_pct": 15.81,
+      "mdd_pct": -37.08,
+      "calmar": 0.43
+    }
+  }
+}
