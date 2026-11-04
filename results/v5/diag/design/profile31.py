@@ -8,7 +8,9 @@
   持 H 最高的有资格的风险市场（沪深300、恒生、标普500 代表 A、港、美）；换到另一个市场要求 H 差 > 1。其余仓位去防守：国债、黄金 H > 0 取高者（换另一只要求差 > 1），都不行拿现金。
 第二层：选中的市场里，该大类全部有数据的容器按 H 排名，取 H > 0 的前 3 只平分；不足 3 只就平分给够格的；一只都没有就持该市场宽基。
 单只离场（每天看）：持有的容器从买入后的最高点回落 10%：当天宽基 F < 0.5 → 换成排名下一只、未持有、H > 0 的容器（没有就宽基）；F ≥ 0.5 → 当天重做第一层判断。本画像只统计两种情况各触发几次，不改写周度目标。
-用法：python results/v5/diag/design/profile31.py results/v5/diag/design
+第三次运行（Owner 2026-11-03 同意改“长尺子放缓”）：E 改为连续两个月都在放缓 = 60 天以上尺子的平均速度高于 20 个交易日前，且 20 个交易日前也高于 40 个交易日前（“一波比一波弱”），不新增数字。参数 e2m。
+另外两次运行都加一项：把第 6 条（单只回落 10% 且市场共振 → 当天重做第一层）真正作用到每日风险仓位上，统计每年的日均风险仓位（周度画像不变）。
+用法：python results/v5/diag/design/profile31.py results/v5/diag/design [e2m]
 """
 import sys, pathlib, json, bisect
 ROOT = pathlib.Path(__file__).resolve().parents[4]; sys.path.insert(0, str(ROOT))
@@ -17,7 +19,7 @@ from src.v3.engine.spec import load_spec
 from src.v3.engine.sessions import decision_dates
 from src.v4.r5.design import Markets
 from src.v5.campaign import classes_for, class_map
-out = pathlib.Path(sys.argv[1]); m = Markets(load_spec()).get('index', t4=False, allow_substitute=True)
+out = pathlib.Path(sys.argv[1]); E2M = len(sys.argv) > 2 and sys.argv[2] == 'e2m'; TAG = '-e2m' if E2M else ''; m = Markets(load_spec()).get('index', t4=False, allow_substitute=True)
 ret = m.signal.loc[:'2015-12-31']; cash = m.cash_id; cls = classes_for(list(m.names), cash, class_map())
 BROAD = {'A股': 'csi300', '港股': 'hsi', '美股': 'spx'}; RISK = list(BROAD.values()); DEF = ['cgb-10y', 'gold']
 NAME = {'csi300': 'A 股', 'hsi': '港股', 'spx': '美股', 'cgb-10y': '国债', 'gold': '黄金', 'cash': '现金'}
@@ -38,7 +40,7 @@ def state(c):
     W = Q.div(Q.sum(axis=1), axis=0)
     eq = Q.isna().any(axis=1) & V.notna().all(axis=1); W.loc[eq] = 1.0 / len(G)
     H = (W * V).sum(axis=1, min_count=len(G)); F = (V < 0).mean(axis=1).where(V.notna().all(axis=1))
-    lm = V[LONG].mean(axis=1, skipna=False); E = (lm > lm.shift(20)).where(lm.notna() & lm.shift(20).notna())
+    lm = V[LONG].mean(axis=1, skipna=False); E = ((lm > lm.shift(20)) & ((lm.shift(20) > lm.shift(40)) if E2M else True)).where(lm.notna() & lm.shift(40 if E2M else 20).notna())
     return pd.DataFrame({'H': H, 'F': F, 'E': E})
 uni = {k: [c for c in m.names if cls.get(c) == k and ret[c].notna().any()] for k in BROAD}
 S = {c: state(c) for c in set(sum(uni.values(), [])) | set(DEF)}
@@ -69,7 +71,7 @@ for t in days:
         rk = sorted([(g(c, t, 'H'), c) for c in uni[k] if g(c, t, 'H') is not None and g(c, t, 'H') > 0], reverse=True)
         picks = [c for _, c in rk[:3]] or [h]
     rows.append(dict(t=t, y=t.year, market=h or '无', w=wr, defense=dh or 'cash', picks='|'.join(picks), n=len(picks), legs=f"{int(F[h] < 0.5) if h else ''}{int((H[h] > 0) or bool(E[h])) if h else ''}"))
-d = pd.DataFrame(rows); d.to_csv(out / 'profile31-weekly.csv', index=False)
+d = pd.DataFrame(rows); d.to_csv(out / ('profile31' + TAG + '-weekly.csv'), index=False)
 # 单只离场：每周持仓在下一周内，每天看从买入后最高点的回落（买入 = 首次进入持仓的那周）
 stops = []; entry_hi = {}
 for i, r in d.iterrows():
@@ -85,7 +87,19 @@ for i, r in d.iterrows():
                 fb = g(BROAD[[k for k, b in BROAD.items() if b == r.market][0]], tt, 'F') if r.market != '无' else None
                 stops.append(dict(t=tt, y=tt.year, id=c, market=r.market, 市场共振=(fb is not None and fb >= 0.5))); hi = v; break
         entry_hi[c] = hi
-st = pd.DataFrame(stops); st.to_csv(out / 'profile31-stops.csv', index=False)
+# 第 6 条作用到每日风险仓位：共振止损当天按当天读数重算第一层的风险仓位，持续到下一个周度决策日
+dd = pd.Series(np.nan, index=px['csi300'].loc['2006-01-01':'2015-12-31'].index)
+for i, r in d.iterrows():
+    t1 = d.t.iloc[i + 1] if i + 1 < len(d) else dd.index[-1] + pd.Timedelta(days=1)
+    dd.loc[(dd.index > r.t) & (dd.index <= t1)] = r.w if r.market != '无' else 0.0
+for s0 in stops:
+    if s0['市场共振'] and s0['market'] != '无':
+        tt = s0['t']; c = s0['market']; Hc, Fc, Ec = g(c, tt, 'H'), g(c, tt, 'F'), g(c, tt, 'E')
+        wn = 0.5 * (Fc < 0.5) + 0.5 * ((Hc > 0) or bool(Ec)) if None not in (Hc, Fc, Ec) else 0.0
+        nxt = d.t[d.t > tt]; t1 = nxt.iloc[0] if len(nxt) else dd.index[-1]
+        m2 = (dd.index > tt) & (dd.index <= t1); dd.loc[m2] = np.minimum(dd.loc[m2], wn)
+daily = (dd.groupby(dd.index.year).mean() * 100).round(0)
+st = pd.DataFrame(stops); st.to_csv(out / ('profile31' + TAG + '-stops.csv'), index=False)
 alloc = []
 for _, r in d.iterrows():
     a = {k: 0.0 for k in NAME}
@@ -101,7 +115,8 @@ yr['A股里持宽基%'] = (a.groupby('y').picks.apply(lambda s: s.str.contains('
 yr['第二层换手'] = d.groupby('y').picks.apply(lambda s: int(sum(len(set(x.split('|')) - set(y.split('|'))) for x, y in zip(s.iloc[1:], s.iloc[:-1]) if x and y)))
 yr['止损_自身'] = st[~st.市场共振].groupby('y').size().reindex(yr.index).fillna(0).astype(int) if len(st) else 0
 yr['止损_共振'] = st[st.市场共振].groupby('y').size().reindex(yr.index).fillna(0).astype(int) if len(st) else 0
-yr.columns = [NAME.get(c, c) for c in yr.columns]; yr.to_csv(out / 'profile31-yearly.csv')
+yr['日均风险_含第6条'] = daily.reindex(yr.index).values
+yr.columns = [NAME.get(c, c) for c in yr.columns]; yr.to_csv(out / ('profile31' + TAG + '-yearly.csv'))
 p300 = px['csi300']
 def turn(t0, kind):
     t0 = pd.Timestamp(t0); x = d[d.t >= t0]; risk = x.w.where(x.market != '无', 0)
@@ -116,5 +131,5 @@ pk = d[d.market == 'csi300'].picks.str.split('|').explode().value_counts(normali
 res = dict(十年换市场=int(yr['换市场'].sum()), 十年档位变动=int(yr['档位变动'].sum()), 平均风险仓位=float(yr['风险仓位'].mean().round(0)),
            第二层平均持几只=round(float(d[d.market != '无'].n.mean()), 2), A股时最常持有=pk,
            单只止损=dict(合计=len(st), 自身问题=int((~st.市场共振).sum()) if len(st) else 0, 市场共振=int(st.市场共振.sum()) if len(st) else 0), 转折=T)
-(out / 'profile31.json').write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str))
+(out / ('profile31' + TAG + '.json')).write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str))
 print(json.dumps(res, ensure_ascii=False, indent=1, default=str)); print(yr.to_string())
