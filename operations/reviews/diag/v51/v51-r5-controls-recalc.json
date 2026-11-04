@@ -1,0 +1,108 @@
+{
+  "dev_head": "a2ce5a8f0ade6f2e4e7c9390bb1410e91bcfb704",
+  "ledger_run_sha_claimed": "bad40ae1e7a7b6212c43a3b9d523b91e50ec5b9d",
+  "r0": {
+    "index": {
+      "pool": "index",
+      "n_sims": 2000,
+      "seed": 20261101,
+      "cagr_median": 0.146361835351111,
+      "calmar_p95": 0.4253884247935426,
+      "summary_cagr_median": 0.146361835351111,
+      "summary_calmar_p95": 0.4253884247935426,
+      "median_match": true,
+      "p95_match": true
+    },
+    "tradable": {
+      "pool": "tradable",
+      "n_sims": 2000,
+      "seed": 20261101,
+      "cagr_median": 0.111470269685883,
+      "calmar_p95": 0.27216321472519,
+      "summary_cagr_median": 0.111470269685883,
+      "summary_calmar_p95": 0.27216321472519,
+      "median_match": true,
+      "p95_match": true
+    }
+  },
+  "item0": {
+    "index": {
+      "pool": "index",
+      "strategy_cagr": 0.301419149909,
+      "strategy_calmar": 1.16594675057,
+      "r0_cagr_median": 0.146361835351111,
+      "r0_calmar_p95": 0.4253884247935426,
+      "cagr_pass": true,
+      "calmar_pass": true,
+      "item0_pass": true
+    },
+    "tradable": {
+      "pool": "tradable",
+      "strategy_cagr": 0.158145899696,
+      "strategy_calmar": 0.426516531179,
+      "r0_cagr_median": 0.111470269685883,
+      "r0_calmar_p95": 0.27216321472519,
+      "cagr_pass": true,
+      "calmar_pass": true,
+      "item0_pass": true
+    }
+  },
+  "item3": {
+    "u_index_cagr": 0.301419149909,
+    "c_equal_cagr_daily": 0.28477644504496413,
+    "c_equal_cagr_summary": 0.284776445044963,
+    "c_vol_cagr_daily": 0.14444079862096393,
+    "c_vol_cagr_summary": 0.1444407986210285,
+    "ordering_ok": true,
+    "equal_daily_matches_summary": true,
+    "vol_daily_matches_summary": true,
+    "c_vol_tradable_dir_exists": false
+  },
+  "date_fence": [
+    {
+      "path": "results/v5.1/controls/equal/index/daily.csv",
+      "min": "2005-01-04",
+      "max": "2015-12-31",
+      "china_end_ok": true
+    },
+    {
+      "path": "results/v5.1/controls/equal/tradable/daily.csv",
+      "min": "2005-01-04",
+      "max": "2015-12-31",
+      "china_end_ok": true
+    },
+    {
+      "path": "results/v5.1/controls/vol/index/daily.csv",
+      "min": "2005-01-04",
+      "max": "2015-12-31",
+      "china_end_ok": true
+    },
+    {
+      "path": "results/v5.1/controls/r0/index/sims.csv",
+      "min": "2005-01-31",
+      "max": "2015-12-31",
+      "china_end_ok": true
+    }
+  ],
+  "ledger": {
+    "row_count": 7,
+    "design_v51_rows": 2,
+    "lock_rows": 0,
+    "git_shas": [
+      "abbecce164e314e5a9993486ce0d1ec328a8e92c",
+      "bad40ae1e7a7b6212c43a3b9d523b91e50ec5b9d"
+    ],
+    "arms": [
+      "v5.1",
+      "v5.1",
+      "C-等权",
+      "C-波动比",
+      "R0",
+      "C-等权",
+      "R0"
+    ]
+  },
+  "gate_item0_status": "通过",
+  "gate_item3_status": "通过",
+  "all_ok": true
+}
