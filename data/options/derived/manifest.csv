@@ -1,0 +1,5 @@
+path,line_count,sha256,role
+data/options/derived/README.md,69,263c5001bfbdf97e46a88fa076b1d5755c482d6f97fc02b81020aa74b880379c,method
+data/options/derived/multipliers-derived.csv,93,5edbb8ea5e39c54231607e8c82cf49f272d925130c1a0b1ff34ac0767ac5b172,derived-units
+data/options/derived/spot-checks.csv,24,df2799b0739f075a999bb6b6b7097c49d06f1212d9b4e6e4a43ea5d44adf810b,published-unit-checks
+data/options/derived/blocked-attempts.csv,3,ad517075fdbf56eaeb1da0011503c8fa638280fdc43986bbc88c2bd731da5929,not-derived
