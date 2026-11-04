@@ -1,0 +1,120 @@
+{
+  "cases": [
+    {
+      "change": "成本加倍",
+      "cost_multiplier": 2.0,
+      "id": "S1",
+      "pool": "index"
+    },
+    {
+      "change": "决策日延后 1 天",
+      "decision_delay": 1,
+      "id": "S2",
+      "pool": "index"
+    },
+    {
+      "change": "去掉最好的 1 个容器",
+      "drop_best": 1,
+      "id": "S3",
+      "pool": "index"
+    },
+    {
+      "change": "去掉最好的 2 个容器",
+      "drop_best": 2,
+      "id": "S4",
+      "pool": "index"
+    },
+    {
+      "change": "去掉最好的 3 个容器",
+      "drop_best": 3,
+      "id": "S5",
+      "pool": "index"
+    },
+    {
+      "change": "前沿门槛 0.4",
+      "frontier": 0.4,
+      "id": "S6",
+      "pool": "index"
+    },
+    {
+      "change": "前沿门槛 0.6",
+      "frontier": 0.6,
+      "id": "S7",
+      "pool": "index"
+    },
+    {
+      "change": "长尺子放缓比 10 个交易日之前",
+      "id": "S8",
+      "pool": "index",
+      "slow_gap": 10
+    },
+    {
+      "change": "长尺子放缓比 40 个交易日之前",
+      "id": "S9",
+      "pool": "index",
+      "slow_gap": 40
+    },
+    {
+      "change": "噪音带 0.5",
+      "id": "S10",
+      "noise_band": 0.5,
+      "pool": "index"
+    },
+    {
+      "change": "噪音带 2",
+      "id": "S11",
+      "noise_band": 2.0,
+      "pool": "index"
+    },
+    {
+      "change": "第一层改为 B",
+      "id": "S12",
+      "pool": "index",
+      "selection": "all"
+    },
+    {
+      "change": "只在周度决策日减仓",
+      "daily_look": false,
+      "id": "S13",
+      "pool": "index"
+    },
+    {
+      "change": "硬闸门 8%",
+      "hard_stop": 0.08,
+      "id": "S14",
+      "pool": "index"
+    },
+    {
+      "change": "硬闸门 12%",
+      "hard_stop": 0.12,
+      "id": "S15",
+      "pool": "index"
+    },
+    {
+      "change": "硬闸门不设",
+      "hard_stop": null,
+      "id": "S16",
+      "pool": "index"
+    },
+    {
+      "allow_substitute": false,
+      "change": "不含相近替身",
+      "id": "S17",
+      "pool": "tradable"
+    }
+  ],
+  "changes_pass_fail": false,
+  "db_sha256": "167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3",
+  "gate": "不改",
+  "lock": false,
+  "report_only": true,
+  "rules": "v5.1",
+  "s12": "不先锁定一个市场。够格市场里 H>0 且 F<前沿的 ETF 按 H 一起取前 3，风险仓位是这些市场 r 的平均，平分。每天只减不加。一只都不够格时，持有资格市场里 H 最高的那个市场的代表。",
+  "s13": "减仓、前沿、硬闸门和换防守只在周度决策日做。",
+  "s3_s5": "最好 = 2006-01-01→2015-12-31 有限日收益的累计，平局按名字升序。现金不参加。代表被去掉的市场退出第一层。",
+  "section": "7.1",
+  "window": [
+    "2006-01-01",
+    "2015-12-31"
+  ]
+}

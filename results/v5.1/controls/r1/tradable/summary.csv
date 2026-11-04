@@ -1,0 +1,2 @@
+pool,n,seed,decisions,cagr_median,cagr_p95,calmar_median,calmar_p95,max_drawdown_median,v51_cagr,v51_calmar,v51_cagr_percentile,v51_calmar_percentile,cagr_ge_median,calmar_gt_p95
+tradable,2000,20261101,672,0.07930717739322857,0.1205410202206453,0.1814144010789236,0.3356043864521996,-0.441614626917788,0.158145899696,0.426516531179,0.9985000000000001,0.998,True,True
