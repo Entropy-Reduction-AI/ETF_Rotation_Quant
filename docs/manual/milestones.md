@@ -7,8 +7,8 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Manager
-- Last updated: 2026-11-04（`milestone/v5.1-prereg-freeze` 指向 `1174e475`：R1b approve #230，#228 R1b 稿；无 `results/v5.1/LOCK`；设计期 ≤2015-12-31；既有标签不移动）
-- Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`；D26-5 见 `operations/planning/2026-10-31-d26-v5-direction.md`；2026-11-01 新增见 `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`；2026-11-04 新增见 `operations/work_logs/2026-11-04-v5.1-prereg-freeze-tag.md`
+- Last updated: 2026-11-04（`milestone/v5-code-freeze` 指向 `8970bcbc`：D34-1 #251+#252；无 `results/v5/LOCK`；设计期 ≤2015-12-31；过关 B0；既有标签不移动）
+- Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`；D26-5 见 `operations/planning/2026-10-31-d26-v5-direction.md`；2026-11-01 新增见 `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`；2026-11-04 新增见 `operations/work_logs/2026-11-04-v5.1-prereg-freeze-tag.md`；2026-11-04 代码冻结见 `operations/work_logs/2026-11-04-v5-code-freeze-tag.md`
 
 ## Purpose
 
@@ -125,6 +125,22 @@ D26-5 / v5-R1（决定 `operations/planning/2026-10-31-d26-v5-direction.md`；�
 
 核对见 `operations/work_logs/2026-11-04-v5.1-prereg-freeze-tag.md`。
 
+## `milestone/v5-code-freeze`
+
+2026-11-04。附注标签打在 #252 rebase-merge 之后的 `main` 尖端 `8970bcbc7986c9a67d9ca535ca58a8855c910495`。尖端提交是 Reviewer 对 D34-1 换手「合计」双计修复的 `approve`。父提交 `6df9b9b4a8470d18117807484cb5328f72d1bc24` 是 #251 的 rebase-merge（合计只加一次来源）。新建时 origin 上还没有这个名字。`milestone/phase1-archive`、`milestone/v3-code-freeze`、`milestone/v3.1-prereg-freeze`、`milestone/v4-prereg-freeze`、`milestone/v4-code-freeze`、`milestone/v4-code-freeze-2`、`milestone/v5-prereg-freeze`、`milestone/v5.1-prereg-freeze` 的对象 SHA 与上表一致，没有移动。
+
+附注说明：`v5 code freeze (D34-1 turnover total signed #251+#252; wrap+SF1 on main; gate B0; design-period ≤2015-12-31; no results/v5/LOCK; no 2016+)`。标签日期 2026-11-04（Asia/Taipei）。
+
+打标签时核对过：该提交的预注册 v5 与 v5.1 都写明中国数据只允许 end ≤ 2015-12-31。树里没有 `results/v5/LOCK`，也没有 `results/v5.1/LOCK`。`results/v5.1/design/gate.csv` 的入围名单是 B0。wrap 签收 `5a4678127bedea72c88b503de4e4f496d83f6899`（Dev #241）与 SF1 账本测试签收 `753d34ab3dfef7f7ab12010218effa22ce3b3fd2`（Dev #243）已在该提交的历史上。没有跑回测，没有改写 `main`。
+
+| 标签 | 标签对象 SHA | 指向提交 SHA | 说明 | 处置 | 理由 |
+| --- | --- | --- | --- | --- | --- |
+| `milestone/v5-code-freeze` | `0aeae744177074c84bce68206021c21c6963341a` | `8970bcbc7986c9a67d9ca535ca58a8855c910495` | D34-1 #251 合计只加一次来源，#252 Reviewer approve。wrap 与 SF1 已在 main。过关名单 B0。无 `results/v5/LOCK`。设计期 ≤2015-12-31 | 保留 | v5 代码冻结。名字按 `milestone/<版本>-code-freeze` |
+
+本索引提交只补上表。没有移动、删除或改写任何标签，也没有改写 `main`。
+
+核对见 `operations/work_logs/2026-11-04-v5-code-freeze-tag.md`。
+
 ## Related Files
 
 - `operations/planning/2026-10-28-d14-owner-decisions.md`
@@ -132,6 +148,7 @@ D26-5 / v5-R1（决定 `operations/planning/2026-10-31-d26-v5-direction.md`；�
 - `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`
 - `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`
 - `operations/work_logs/2026-11-04-v5.1-prereg-freeze-tag.md`
+- `operations/work_logs/2026-11-04-v5-code-freeze-tag.md`
 - `operations/reviews/2026-11-01-v5-classes-draft-signoff.md`
 - `operations/planning/2026-10-30-v4-r5c-plan.md`
 - `operations/reviews/2026-10-30-v4-r5c-d25-signoff.md`
