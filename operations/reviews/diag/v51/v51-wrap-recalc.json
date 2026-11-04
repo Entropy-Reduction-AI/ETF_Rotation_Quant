@@ -1,0 +1,282 @@
+{
+  "r1": {
+    "index": {
+      "pool": "index",
+      "n_sims": 2000,
+      "seed": 20261101,
+      "cagr_median": 0.08814709859585101,
+      "calmar_p95": 0.5454509625375731,
+      "summary_cagr_median": 0.08814709859585101,
+      "summary_calmar_p95": 0.5454509625375731,
+      "v51_cagr": 0.301419149909,
+      "v51_calmar": 1.16594675057,
+      "median_match": true,
+      "p95_match": true,
+      "cagr_above_median": true,
+      "calmar_above_p95": true
+    },
+    "tradable": {
+      "pool": "tradable",
+      "n_sims": 2000,
+      "seed": 20261101,
+      "cagr_median": 0.07930717739322857,
+      "calmar_p95": 0.33560438645219964,
+      "summary_cagr_median": 0.07930717739322857,
+      "summary_calmar_p95": 0.3356043864521996,
+      "v51_cagr": 0.158145899696,
+      "v51_calmar": 0.426516531179,
+      "median_match": true,
+      "p95_match": true,
+      "cagr_above_median": true,
+      "calmar_above_p95": true
+    }
+  },
+  "robustness": {
+    "n_rows": 51,
+    "cases": [
+      "S1",
+      "S10",
+      "S11",
+      "S12",
+      "S13",
+      "S14",
+      "S15",
+      "S16",
+      "S17",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S6",
+      "S7",
+      "S8",
+      "S9"
+    ],
+    "n_cases": 17,
+    "full_rows": 17
+  },
+  "spot_cagr": [
+    {
+      "case": "S1",
+      "pool": "index",
+      "cagr_recalc": 0.2583839387927347,
+      "cagr_summary": 0.258383938793,
+      "match": true
+    },
+    {
+      "case": "S2",
+      "pool": "index",
+      "cagr_recalc": 0.38044809974320204,
+      "cagr_summary": 0.380448099743,
+      "match": true
+    },
+    {
+      "case": "S17",
+      "pool": "tradable",
+      "cagr_recalc": 0.18379697054015054,
+      "cagr_summary": 0.18379697054,
+      "match": true
+    }
+  ],
+  "turnover": [
+    {
+      "pool": "index",
+      "sources_present": [
+        "前沿离场",
+        "周度替换",
+        "换市场",
+        "换防守",
+        "未分解",
+        "硬闸门",
+        "第一层档位"
+      ],
+      "expected_ok": true,
+      "year_sum_turnover": 229.78084883649998,
+      "grand_total": 229.780848837,
+      "totals_reconcile": true
+    },
+    {
+      "pool": "tradable",
+      "sources_present": [
+        "前沿离场",
+        "周度替换",
+        "换市场",
+        "换防守",
+        "未分解",
+        "硬闸门",
+        "第一层档位"
+      ],
+      "expected_ok": true,
+      "year_sum_turnover": 184.51315729897001,
+      "grand_total": 184.513157299,
+      "totals_reconcile": true
+    },
+    {
+      "pool": "G",
+      "sources_present": [
+        "前沿离场",
+        "周度替换",
+        "换市场",
+        "换防守",
+        "未分解",
+        "硬闸门",
+        "第一层档位"
+      ],
+      "expected_ok": true,
+      "year_sum_turnover": 681.2991530102,
+      "grand_total": 681.29915301,
+      "totals_reconcile": true
+    }
+  ],
+  "turnover_daily_cost": [
+    {
+      "pool": "index",
+      "daily_cost_sum": 0.3246928458220993,
+      "turnover_total_cost": 0.324692845822,
+      "match": true
+    },
+    {
+      "pool": "tradable",
+      "daily_cost_sum": 0.22065149212927784,
+      "turnover_total_cost": 0.220651492129,
+      "match": true
+    }
+  ],
+  "gate": {
+    "n_draft": 47,
+    "n_final": 47,
+    "changed_rows": [
+      {
+        "row": 48,
+        "item": "入围",
+        "draft_status": "未完成",
+        "final_status": "不入围"
+      }
+    ],
+    "entry_final_status": "不入围",
+    "entry_final_note": "v5.1 不入围。第 5 条和第 6 条未通过。第 2 条通过，A1 退路不启用。入围名单 = B0。",
+    "items_0_4_unchanged": true,
+    "items_5_6_fail": true
+  },
+  "ledger": {
+    "total_rows": 30,
+    "r1_rows": 2,
+    "s_rows": 17,
+    "arm_counts": {
+      "v5.1": 3,
+      "C-等权": 2,
+      "C-波动比": 1,
+      "R0": 3,
+      "E2式": 1,
+      "A1": 1,
+      "R1": 2,
+      "S1": 1,
+      "S2": 1,
+      "S3": 1,
+      "S4": 1,
+      "S5": 1,
+      "S6": 1,
+      "S7": 1,
+      "S8": 1,
+      "S9": 1,
+      "S10": 1,
+      "S11": 1,
+      "S12": 1,
+      "S13": 1,
+      "S14": 1,
+      "S15": 1,
+      "S16": 1,
+      "S17": 1
+    },
+    "r1_sha": [
+      "e0a63cda3014e6cf4804ad77c530c57585b61f01"
+    ],
+    "s_sha": [
+      "e0a63cda3014e6cf4804ad77c530c57585b61f01"
+    ]
+  },
+  "date_fence": [
+    {
+      "path": "results/v5.1/robustness/S1/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S2/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S3/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S4/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S5/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S6/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S7/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S8/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S9/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S10/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S11/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S12/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S13/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S14/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S15/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S16/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/robustness/S17/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/design/index/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/design/tradable/daily.csv",
+      "max_date": "2015-12-31"
+    },
+    {
+      "path": "results/v5.1/controls/r1/index/sims.csv",
+      "max_date": "2015-12-31"
+    }
+  ],
+  "design_index_cagr": 0.301419149909,
+  "s2_above_design": true
+}
