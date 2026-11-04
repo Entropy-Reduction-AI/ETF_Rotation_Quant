@@ -1,0 +1,55 @@
+{
+  "case": "R1",
+  "copied": "v5.1 的风险仓位档位、调仓日、防守容器",
+  "db_sha256": "167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3",
+  "eligibility": "市场 r>0 且当天至少一只可买；名字 H>0、F<前沿、可买。不够格则持代表。不沿用信号路径的卖出名单",
+  "execution": "下一交易日收盘；漂移和扣费与 book.simulate 相同，前两条模拟逐日对照",
+  "gate": "不改 §6.3。和 R0 同一口径的比较只写在 summary，供对照",
+  "generator": "numpy.random.Generator",
+  "lock": false,
+  "n": 2000,
+  "pools": [
+    {
+      "cagr_ge_median": true,
+      "cagr_median": 0.08814709859585101,
+      "cagr_p95": 0.16502239441736216,
+      "calmar_gt_p95": true,
+      "calmar_median": 0.24405582442391177,
+      "calmar_p95": 0.5454509625375731,
+      "decisions": 680,
+      "max_drawdown_median": -0.35891368339093127,
+      "n": 2000,
+      "pool": "index",
+      "seed": 20261101,
+      "v51_cagr": 0.301419149909,
+      "v51_cagr_percentile": 1.0,
+      "v51_calmar": 1.16594675057,
+      "v51_calmar_percentile": 1.0
+    },
+    {
+      "cagr_ge_median": true,
+      "cagr_median": 0.07930717739322857,
+      "cagr_p95": 0.1205410202206453,
+      "calmar_gt_p95": true,
+      "calmar_median": 0.1814144010789236,
+      "calmar_p95": 0.33560438645219964,
+      "decisions": 672,
+      "max_drawdown_median": -0.441614626917788,
+      "n": 2000,
+      "pool": "tradable",
+      "seed": 20261101,
+      "v51_cagr": 0.158145899696,
+      "v51_cagr_percentile": 0.9985,
+      "v51_calmar": 0.426516531179,
+      "v51_calmar_percentile": 0.998
+    }
+  ],
+  "redraw": "只在周度调仓日重抽第一层市场和第二层最多 3 只；周中调仓沿用上次抽中的名字，缩放到当天档位",
+  "rules": "v5.1",
+  "seed": 20261101,
+  "stream": "每次模拟先走完所有调仓日，再开始下一次；两个池各起一条种子相同的流",
+  "window": [
+    "2006-01-01",
+    "2015-12-31"
+  ]
+}
