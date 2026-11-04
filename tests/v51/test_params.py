@@ -57,11 +57,12 @@ class Params(unittest.TestCase):
         with path.open(encoding="utf-8", newline="") as handle:
             rows = list(csv.DictReader(handle))
         self.assertEqual(list(rows[0]), COLUMNS)
-        self.assertEqual(len(rows), 2)
         spec = load_spec()
+        design = [row for row in rows if row["arm"] == "v5.1"]
+        controls = [row for row in rows if row["arm"] != "v5.1"]
+        self.assertEqual(len(design), 2)
         pools = set()
-        for row in rows:
-            self.assertEqual(row["arm"], "v5.1")
+        for row in design:
             self.assertEqual(row["segment"], "design")
             self.assertEqual(row["runner"], "dev")
             self.assertEqual(len(row["git_sha"]), 40)
@@ -69,5 +70,26 @@ class Params(unittest.TestCase):
             pools.add(payload["pool"])
             self.assertEqual(payload, design_params(payload["pool"], spec))
             self.assertEqual(payload["end"], "2015-12-31")
-            self.assertLessEqual(payload["end"], "2015-12-31")
         self.assertEqual(pools, {"index", "tradable"})
+        arms = {}
+        seen = set()
+        for row in controls:
+            self.assertEqual(row["segment"], "design")
+            self.assertEqual(row["runner"], "dev")
+            self.assertEqual(len(row["git_sha"]), 40)
+            payload = json.loads(row["params"])
+            self.assertEqual(payload["kind"], "control")
+            self.assertEqual(payload["end"], "2015-12-31")
+            self.assertLessEqual(payload["end"], "2015-12-31")
+            key = (row["arm"], payload["pool"])
+            self.assertNotIn(key, seen)
+            seen.add(key)
+            arms.setdefault(row["arm"], set()).add(payload["pool"])
+        self.assertEqual(arms, {
+            "R0": {"index", "tradable"},
+            "C-等权": {"index", "tradable"},
+            "C-波动比": {"index"},
+        })
+        r0 = next(json.loads(row["params"]) for row in controls if row["arm"] == "R0")
+        self.assertEqual(r0["n"], 2000)
+        self.assertEqual(r0["seed"], 20261101)

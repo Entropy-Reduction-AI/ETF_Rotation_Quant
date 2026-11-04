@@ -1,0 +1,28 @@
+{
+  "db_sha256": "167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3",
+  "equal_weight": "§2 第 3 条改为 28 把永远等权，其余同 v5.1",
+  "excluded": [
+    "R1",
+    "G",
+    "robustness"
+  ],
+  "git_sha": "bad40ae1e7a7b6212c43a3b9d523b91e50ec5b9d",
+  "lock": false,
+  "r0": {
+    "decision": "每月最后一个交易日",
+    "draw": "choice(sorted ids, size=1, replace=False)；空月为现金且不抽",
+    "eligibility": "第一层三个市场的成员，当天 H、F、E 都有定义；可交易池还要当天可买",
+    "execution": "下一交易日收盘；涨跌停与 A 臂相同",
+    "generator": "numpy.random.Generator",
+    "metrics": "src.report.metrics cagr / max_drawdown / calmar；pandas quantile(0.95, interpolation=linear)",
+    "n": 2000,
+    "seed": 20261101,
+    "stream": "每次模拟先走完所有月末，再开始下一次；两个池各起一条种子相同的流"
+  },
+  "rules": "v5.1",
+  "vol_ratio": "强度为 L 日对数超额；历史不足 250 时 q=0.5；第一层按强度持最强，z 差大于 1 才换；离场看强度正负；第二层和单只离场同 v5.1；只跑 U-指数",
+  "window": [
+    "2006-01-01",
+    "2015-12-31"
+  ]
+}
