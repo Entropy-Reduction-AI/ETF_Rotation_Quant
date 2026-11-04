@@ -14,6 +14,7 @@ from src.v3.engine.ledger import COLUMNS
 from src.v5.engine.classes import load_classes
 from src.v3.engine.spec import load_spec
 from src.v51.design import design_params
+from src.v51.gpool import CHINA_IDS
 from src.v51.params import RULERS, load_params, long_rulers
 from src.v51.universe import universe_from_names
 
@@ -58,8 +59,9 @@ class Params(unittest.TestCase):
             rows = list(csv.DictReader(handle))
         self.assertEqual(list(rows[0]), COLUMNS)
         spec = load_spec()
-        design = [row for row in rows if row["arm"] == "v5.1"]
-        controls = [row for row in rows if row["arm"] != "v5.1"]
+        design = [row for row in rows if row["segment"] == "design" and row["arm"] == "v5.1"]
+        controls = [row for row in rows if row["segment"] == "design" and row["arm"] != "v5.1"]
+        other = [row for row in rows if row["segment"] == "other-market"]
         self.assertEqual(len(design), 2)
         pools = set()
         for row in design:
@@ -93,3 +95,12 @@ class Params(unittest.TestCase):
         r0 = next(json.loads(row["params"]) for row in controls if row["arm"] == "R0")
         self.assertEqual(r0["n"], 2000)
         self.assertEqual(r0["seed"], 20261101)
+        self.assertEqual({row["arm"] for row in other}, {"v5.1", "E2式", "A1", "R0"})
+        for row in other:
+            payload = json.loads(row["params"])
+            self.assertEqual(payload["pool"], "G")
+            self.assertEqual(payload["kind"], "other-market")
+            self.assertEqual(payload["end"], "2026-09-30")
+            self.assertFalse(payload["china_pnl"])
+            self.assertFalse(payload["robustness"])
+            self.assertFalse(CHINA_IDS & set(payload["members"]["美国"]))

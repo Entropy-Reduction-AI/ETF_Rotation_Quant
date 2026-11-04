@@ -131,7 +131,11 @@ class DesignWiring(unittest.TestCase):
         self.assertTrue((gate.loc[gate["item"] == "0", "status"] == "通过").all())
         self.assertTrue((gate.loc[gate["item"] == "3", "status"] == "通过").all())
         self.assertTrue(gate.loc[gate["item"] == "0", "benchmark"].map(float).notna().all())
-        self.assertTrue((gate.loc[gate["item"] == "5", "status"] == "待 R6").all())
+        five = gate.loc[gate["item"] == "5"]
+        self.assertEqual(set(five["status"]), {"未通过"})
+        self.assertTrue(five["strategy"].map(float).notna().all())
+        self.assertTrue(five["benchmark"].map(float).notna().all())
+        self.assertEqual(gate.loc[gate["item"] == "6", "status"].iloc[0], "未通过")
         self.assertEqual(gate.loc[gate["item"] == "入围", "status"].iloc[0], "未完成")
         for pool in ("index", "tradable"):
             daily = pd.read_csv(
