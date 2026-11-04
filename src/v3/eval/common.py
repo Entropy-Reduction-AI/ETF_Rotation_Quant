@@ -25,9 +25,12 @@ class EvalError(RuntimeError):
     pass
 
 
-def require_design_period(index) -> None:
-    """组合收益的日期不得晚于 2015-12-31。空序列放过。"""
-    if index is None:
+def require_design_period(index, *, allow_after: bool = False) -> None:
+    """组合收益的日期不得晚于 2015-12-31。空序列放过。
+
+    `allow_after` 只给已授权的一次性检验。设计期调用不传。
+    """
+    if allow_after or index is None:
         return
     stamps = pd.DatetimeIndex(pd.to_datetime(index))
     stamps = stamps[~stamps.isna()]

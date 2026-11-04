@@ -5,8 +5,10 @@ python -m src.v51 r1
 python -m src.v51 robustness
 python -m src.v51 turnover
 python -m src.v51 gate
+python -m src.v51 oneshot
 
 设计期、R5 对照、G 池、R1、稳健性和换手。gate 只收草稿的最后一行。
+oneshot 只在 results/v5/LOCK 已经在当前树上、且还没跑过时，跑 2016-01-01 → 2026-09-30。
 不写 LOCK，不打标签。
 """
 from __future__ import annotations
@@ -20,7 +22,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="v5.1 设计期、对照、稳健性和入围结论")
     parser.add_argument(
         "step",
-        choices=["design", "controls", "gpool", "r1", "robustness", "turnover", "gate"],
+        choices=["design", "controls", "gpool", "r1", "robustness", "turnover", "gate", "oneshot"],
     )
     args = parser.parse_args(argv)
     if args.step == "design":
@@ -59,6 +61,15 @@ def main(argv: list[str] | None = None) -> int:
         summary = run_turnover()
         for pool, row in summary.items():
             print(f"{pool} turnover={row['turnover_one_way']:.6f} cost={row['cost']:.6f}", flush=True)
+    elif args.step == "oneshot":
+        from src.v51.oneshot import run_oneshot
+
+        summary = run_oneshot()
+        print(
+            f"window={summary['window'][0]}→{summary['window'][1]} "
+            f"primary={summary['primary']} pass_1={summary['pass_1']} pass_6={summary['pass_6']}",
+            flush=True,
+        )
     else:
         from src.v51.gate import write_gate
 

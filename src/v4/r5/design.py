@@ -375,14 +375,18 @@ def attach_prev_closes(market) -> None:
     market.fill_prev = prevs
 
 
-def prepare_market(pool: str, *, t4: bool, allow_substitute: bool, spec: Spec):
+def prepare_market(pool: str, *, t4: bool, allow_substitute: bool, spec: Spec,
+                   end: str = DESIGN_END, allow_after: bool = False):
     """装好 B0 的数据开关。T2 的净值在这里附上，权重仍由执行时的开关决定。
 
     两个池的排名信号都从 U-指数的研究序列出发。U-可交易再把计价收益换成载体自己的日收益，
     并且只有当天选得到载体才进排名。不含相近替身只影响载体，不改研究序列。
+    设计期不传 `end`。一次性检验才把结束日放到 2026-09-30，并打开 `allow_after`。
     """
     if pool not in POOLS:
         raise RunnerError(f"未知的池 {pool}")
+    if not allow_after and pd.Timestamp(end) > pd.Timestamp(DESIGN_END):
+        raise RunnerError(f"设计期拒绝结束日 {end}")
     containers = load_containers()
     signal_switches = EngineSwitches(
         fill_limits=True,
@@ -393,8 +397,8 @@ def prepare_market(pool: str, *, t4: bool, allow_substitute: bool, spec: Spec):
         t2_state_weights=True,
     )
     market = load_market(
-        DB.MARKET_DB, containers, "A", "index", DESIGN_END, spec,
-        cost_multiplier=1.0, allow_after=False, history_mode=OFFICIAL,
+        DB.MARKET_DB, containers, "A", "index", end, spec,
+        cost_multiplier=1.0, allow_after=allow_after, history_mode=OFFICIAL,
     )
     market = apply_market(
         market, signal_switches, db=DB.MARKET_DB, containers=containers, spec=spec, pool="index")
@@ -410,7 +414,14 @@ def prepare_market(pool: str, *, t4: bool, allow_substitute: bool, spec: Spec):
         market = apply_tradable_execution(
             market, carrier_switches, db=DB.MARKET_DB, containers=containers, spec=spec)
     attach_prev_closes(market)
-    require_design_index(market.dates, what="行情")
+    if allow_after:
+        stamps = pd.DatetimeIndex(pd.to_datetime(market.dates)).dropna()
+        if len(stamps) == 0:
+            raise RunnerError("行情没有日期")
+        if pd.Timestamp(stamps.max()) > pd.Timestamp(end):
+            raise RunnerError(f"行情晚于 {end}")
+    else:
+        require_design_index(market.dates, what="行情")
     return market
 
 
@@ -677,37 +688,61 @@ def run_job(job: Job, markets: Markets, *, resume: bool = True) -> pd.Series:
     return net
 
 
-def benchmark_returns() -> pd.Series:
-    """与 T2 同一条 BM-主：补齐后的美元中间价，美股严格早于 D。返回日收益，不是净值。"""
+def reference_frame(*, end: str = DESIGN_END, allow_after: bool = False) -> pd.DataFrame:
+    """沪深300、纳指100、标普500 的人民币日收益。列名沿用再平衡用的代码。"""
+    if not allow_after and pd.Timestamp(end) > pd.Timestamp(DESIGN_END):
+        raise RunnerError(f"参照指数拒绝结束日 {end}")
     con = _connect()
     try:
         from src.v3.engine.benchmark import _calendar
-        calendar = _calendar(con, DESIGN_END)
-        fx = load_mid(con, "USDCNY", DESIGN_END, filled=True)
-        h00300 = _level_returns(_closes(con, "H00300", calendar, DESIGN_END))
-        xndx = _cny_returns(cny_from_usd(_ohlc(con, "XNDX", DESIGN_END), fx, calendar))
-        spx = _cny_returns(cny_from_usd(_ohlc(con, "^SP500TR", DESIGN_END), fx, calendar))
+        calendar = _calendar(con, end)
+        fx = load_mid(con, "USDCNY", end, filled=True)
+        h00300 = _level_returns(_closes(con, "H00300", calendar, end))
+        xndx = _cny_returns(cny_from_usd(_ohlc(con, "XNDX", end), fx, calendar))
+        spx = _cny_returns(cny_from_usd(_ohlc(con, "^SP500TR", end), fx, calendar))
     finally:
         con.close()
     parts = pd.concat([
         h00300.rename("H00300"), xndx.rename("XNDX"), spx.rename("SP500TR"),
-    ], axis=1).dropna()
+    ], axis=1)
+    present = parts.dropna(how="all")
+    if len(present) and pd.Timestamp(present.index.max()) > pd.Timestamp(end):
+        raise RunnerError(f"参照指数晚于 {end}")
+    if not allow_after:
+        require_design_index(present.index, what="参照指数")
+    return parts
+
+
+def benchmark_returns(*, end: str = DESIGN_END, allow_after: bool = False) -> pd.Series:
+    """与 T2 同一条 BM-主：补齐后的美元中间价，美股严格早于 D。返回日收益，不是净值。"""
+    parts = reference_frame(end=end, allow_after=allow_after).dropna()
     series, _weights = monthly_rebalance(parts, WEIGHTS)
     series = series.sort_index().astype(float)
-    require_design_index(series.index, what="BM-主")
+    if allow_after:
+        if len(series) and pd.Timestamp(series.index.max()) > pd.Timestamp(end):
+            raise RunnerError(f"BM-主 晚于 {end}")
+    else:
+        require_design_index(series.index, what="BM-主")
     return series
 
 
-def month_states() -> pd.Series:
+def month_states(*, end: str = DESIGN_END, allow_after: bool = False) -> pd.Series:
+    if not allow_after and pd.Timestamp(end) > pd.Timestamp(DESIGN_END):
+        raise RunnerError(f"月份状态拒绝结束日 {end}")
     con = _connect()
     try:
         from src.v3.engine.benchmark import _calendar
-        calendar = _calendar(con, DESIGN_END)
-        level = _closes(con, "H00300", calendar, DESIGN_END)
+        calendar = _calendar(con, end)
+        level = _closes(con, "H00300", calendar, end)
     finally:
         con.close()
     states = classify_months(level)
-    require_design_index(states.dropna().index, what="月份状态")
+    labeled = states.dropna()
+    if allow_after:
+        if len(labeled) and pd.Timestamp(labeled.index.max()) > pd.Timestamp(end):
+            raise RunnerError(f"月份状态晚于 {end}")
+    else:
+        require_design_index(labeled.index, what="月份状态")
     return states
 
 
@@ -762,7 +797,13 @@ def load_gate_table(path: Path | None = None) -> pd.DataFrame:
     return frame
 
 
-def cash_on(calendar, spec: Spec) -> pd.Series:
-    series = cash_returns(DB.MARKET_DB, pd.DatetimeIndex(calendar), DESIGN_END, spec.cash_annual)
-    require_design_index(series.index, what="现金")
+def cash_on(calendar, spec: Spec, *, end: str = DESIGN_END, allow_after: bool = False) -> pd.Series:
+    if not allow_after and pd.Timestamp(end) > pd.Timestamp(DESIGN_END):
+        raise RunnerError(f"现金拒绝结束日 {end}")
+    series = cash_returns(DB.MARKET_DB, pd.DatetimeIndex(calendar), end, spec.cash_annual)
+    if allow_after:
+        if len(series) and pd.Timestamp(series.index.max()) > pd.Timestamp(end):
+            raise RunnerError(f"现金晚于 {end}")
+    else:
+        require_design_index(series.index, what="现金")
     return series.astype(float)
