@@ -169,6 +169,7 @@ def decompose(daily: pd.DataFrame, exits: pd.DataFrame, fees: dict[str, float], 
     """按成交日所在年份汇总。成本和买入额用账上的数，按目标拆分的比例分。
 
     涨跌停改日成交的那部分对不上目标调仓日，记在未分解，好让合计等于日账。
+    「全部」只把各来源加一次。逐年「合计」已经是这些来源的和，不能再加进去。
     """
     frame = daily.copy()
     frame.index = pd.DatetimeIndex(pd.to_datetime(frame.index)).normalize()
@@ -240,7 +241,11 @@ def decompose(daily: pd.DataFrame, exits: pd.DataFrame, fees: dict[str, float], 
             slot["turnover_one_way"] += book_buy * share_turn
     rows = []
     years = sorted({year for year, _source in buckets})
+    grand_turn = 0.0
+    grand_cost = 0.0
     for year in years:
+        year_turn = 0.0
+        year_cost = 0.0
         for source in SOURCES:
             item = buckets.get((year, source), {"turnover_one_way": 0.0, "cost": 0.0, "days": 0})
             rows.append({
@@ -250,21 +255,34 @@ def decompose(daily: pd.DataFrame, exits: pd.DataFrame, fees: dict[str, float], 
                 "cost": item["cost"],
                 "days": int(item["days"]),
             })
+            year_turn += item["turnover_one_way"]
+            year_cost += item["cost"]
         rows.append({
             "year": year,
             "source": "合计",
-            "turnover_one_way": sum(buckets.get((year, source), {}).get("turnover_one_way", 0.0) for source in SOURCES),
-            "cost": sum(buckets.get((year, source), {}).get("cost", 0.0) for source in SOURCES),
+            "turnover_one_way": year_turn,
+            "cost": year_cost,
             "days": "",
         })
+        grand_turn += year_turn
+        grand_cost += year_cost
     if years:
         rows.append({
             "year": "全部",
             "source": "合计",
-            "turnover_one_way": sum(row["turnover_one_way"] for row in rows if row["source"] == "合计"),
-            "cost": sum(row["cost"] for row in rows if row["source"] == "合计"),
+            "turnover_one_way": grand_turn,
+            "cost": grand_cost,
             "days": "",
         })
+        source_turn = sum(row["turnover_one_way"] for row in rows if row["source"] != "合计")
+        source_cost = sum(row["cost"] for row in rows if row["source"] != "合计")
+        if abs(grand_turn - source_turn) > 1e-8 or abs(grand_cost - source_cost) > 1e-8:
+            if source_turn > EPS and abs(grand_turn - 2.0 * source_turn) <= 1e-6:
+                raise V51Error("合计把来源加了两遍")
+            raise V51Error(
+                f"合计不等于来源之和（换手 {grand_turn:.6g} 对 {source_turn:.6g}，"
+                f"成本 {grand_cost:.6g} 对 {source_cost:.6g}）"
+            )
     return pd.DataFrame(rows)
 
 
