@@ -46,6 +46,15 @@ def _metrics():
 
 
 class DesignWiring(unittest.TestCase):
+    def test_runner_symbols_resolve(self):
+        from src.v51.allocate import target_weights
+        from src.v51.execute import open_market, run_book, universe_for
+
+        self.assertTrue(callable(target_weights))
+        self.assertTrue(callable(open_market))
+        self.assertTrue(callable(run_book))
+        self.assertTrue(callable(universe_for))
+
     def test_window_rejects_2016(self):
         series = pd.Series([0.01, 0.01], index=pd.to_datetime(["2015-12-31", "2016-01-04"]))
         with self.assertRaises(V51Error):
