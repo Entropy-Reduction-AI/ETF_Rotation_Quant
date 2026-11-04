@@ -17,8 +17,8 @@ def net(f, col='net'):
 v = net(R / 'v5.1/design/index/daily.csv').loc['2006':'2015']
 b0 = net(R / 'v4/r5/design/B0/index/net.csv').loc['2006':'2015']; a1 = net(R / 'v4/r5/design/A1/index/net.csv').loc['2006':'2015']
 bm = net(R / 'v5.1/design/benchmark.csv', 'benchmark').loc['2006':'2015']
-df = pd.DataFrame({'v5.1': v, 'B0（E2 新口径）': b0, 'A1': a1, '基准': bm}).fillna(0); nav = (1 + df).cumprod()
-cols = {'v5.1': BAD, 'B0（E2 新口径）': BLUE, 'A1': A1C, '基准': GREY}
+df = pd.DataFrame({'v5.1': v, 'E2 新口径': b0, 'A1': a1, '基准': bm}).fillna(0); nav = (1 + df).cumprod()
+cols = {'v5.1': BAD, 'E2 新口径': BLUE, 'A1': A1C, '基准': GREY}
 fig, (ax, bx) = plt.subplots(2, 1, figsize=(13, 6.4), sharex=True, gridspec_kw={'height_ratios': [2.2, 1]})
 for c in nav:
     ax.plot(nav.index, nav[c], color=cols[c], lw=2.8 if c == 'v5.1' else 1.8, label=c)
@@ -29,7 +29,7 @@ bx.set_ylabel('回撤 %', color=MUTED); bx.grid(axis='y', alpha=.22); bx.axhline
 bx.text(nav.index[-1] + pd.Timedelta(days=40), -26, 'v5.1 最深 −26%', color=BAD, fontsize=10, weight='bold'); bx.text(nav.index[-1] + pd.Timedelta(days=40), -62, '基准最深 −65%', color=GREY, fontsize=10)
 ax.set_title('① 净值', loc='left', fontsize=12.5, weight='bold', color=INK); bx.set_title('② 回撤', loc='left', fontsize=12.5, weight='bold', color=INK)
 title(fig, '中国设计期：v5.1 年化 30%、最深回撤 −26%，是项目到目前最好的一版',
-      '能排名的池子（U-指数），2006–2015，扣费后。基准 = 70% 沪深300 + 15% 纳指100 + 15% 标普500。B0、A1 引用 v4 账本。')
+      '能排名的池子（U-指数），2006–2015，扣费后。基准 = 70% 沪深300 + 15% 纳指100 + 15% 标普500。E2 新口径、A1 引用 v4 账本。')
 fig.tight_layout(); fig.savefig(OUT / 'm18-v51-china.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
 # m19
 rows = []
