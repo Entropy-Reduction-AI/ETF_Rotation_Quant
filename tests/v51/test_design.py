@@ -128,9 +128,11 @@ class DesignWiring(unittest.TestCase):
     def test_committed_artifacts_stay_inside_2015(self):
         gate = pd.read_csv(ROOT / "results" / "v5.1" / "design" / "gate-draft.csv")
         gate["item"] = gate["item"].astype(str)
-        self.assertTrue((gate.loc[gate["item"] == "0", "status"] == "待 R5").all())
-        self.assertTrue((gate.loc[gate["item"] == "3", "status"] == "待 R5").all())
+        self.assertTrue((gate.loc[gate["item"] == "0", "status"] == "通过").all())
+        self.assertTrue((gate.loc[gate["item"] == "3", "status"] == "通过").all())
+        self.assertTrue(gate.loc[gate["item"] == "0", "benchmark"].map(float).notna().all())
         self.assertTrue((gate.loc[gate["item"] == "5", "status"] == "待 R6").all())
+        self.assertEqual(gate.loc[gate["item"] == "入围", "status"].iloc[0], "未完成")
         for pool in ("index", "tradable"):
             daily = pd.read_csv(
                 ROOT / "results" / "v5.1" / "design" / pool / "daily.csv",
@@ -139,6 +141,19 @@ class DesignWiring(unittest.TestCase):
             self.assertLessEqual(pd.Timestamp(daily.index.max()), pd.Timestamp("2015-12-31"))
             self.assertIn("nav", daily.columns)
             self.assertFalse(daily["net"].isna().any())
+        for path in (
+            ROOT / "results" / "v5.1" / "controls" / "equal" / "index" / "daily.csv",
+            ROOT / "results" / "v5.1" / "controls" / "equal" / "tradable" / "daily.csv",
+            ROOT / "results" / "v5.1" / "controls" / "vol" / "index" / "daily.csv",
+        ):
+            daily = pd.read_csv(path, parse_dates=["date"], index_col="date")
+            self.assertLessEqual(pd.Timestamp(daily.index.max()), pd.Timestamp("2015-12-31"))
+            self.assertFalse(daily["net"].isna().any())
+        for pool in ("index", "tradable"):
+            sims = pd.read_csv(ROOT / "results" / "v5.1" / "controls" / "r0" / pool / "sims.csv")
+            self.assertEqual(len(sims), 2000)
+            self.assertTrue(sims["cagr"].notna().all())
+            self.assertTrue(sims["calmar"].notna().all())
 
     def test_metric_block_rejects_a_later_benchmark(self):
         index = pd.bdate_range("2015-12-01", periods=5)
