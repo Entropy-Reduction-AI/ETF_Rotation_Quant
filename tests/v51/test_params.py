@@ -1,6 +1,8 @@
-"""冻结参数、大类表和空账本。"""
+"""冻结参数、大类表和设计期账本。"""
 from __future__ import annotations
 
+import csv
+import json
 import unittest
 from pathlib import Path
 
@@ -10,6 +12,8 @@ from src.v3.engine.book import DESIGN_END
 from src.v3.engine.exit import EXIT_DRAWDOWN
 from src.v3.engine.ledger import COLUMNS
 from src.v5.engine.classes import load_classes
+from src.v3.engine.spec import load_spec
+from src.v51.design import design_params
 from src.v51.params import RULERS, load_params, long_rulers
 from src.v51.universe import universe_from_names
 
@@ -48,6 +52,22 @@ class Params(unittest.TestCase):
         self.assertEqual(members, {"csi300", "hsi", "spx"})
         self.assertEqual(universe.bond, "cgb-10y")
 
-    def test_ledger_is_only_a_header(self):
-        text = (ROOT / "results" / "v5.1" / "trial-ledger.csv").read_text(encoding="utf-8")
-        self.assertEqual(text.splitlines(), [",".join(COLUMNS)])
+    def test_ledger_is_the_two_design_rows(self):
+        path = ROOT / "results" / "v5.1" / "trial-ledger.csv"
+        with path.open(encoding="utf-8", newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        self.assertEqual(list(rows[0]), COLUMNS)
+        self.assertEqual(len(rows), 2)
+        spec = load_spec()
+        pools = set()
+        for row in rows:
+            self.assertEqual(row["arm"], "v5.1")
+            self.assertEqual(row["segment"], "design")
+            self.assertEqual(row["runner"], "dev")
+            self.assertEqual(len(row["git_sha"]), 40)
+            payload = json.loads(row["params"])
+            pools.add(payload["pool"])
+            self.assertEqual(payload, design_params(payload["pool"], spec))
+            self.assertEqual(payload["end"], "2015-12-31")
+            self.assertLessEqual(payload["end"], "2015-12-31")
+        self.assertEqual(pools, {"index", "tradable"})
