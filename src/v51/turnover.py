@@ -166,7 +166,10 @@ def _exit_map(exits: pd.DataFrame) -> dict[pd.Timestamp, dict[str, str]]:
 
 def decompose(daily: pd.DataFrame, exits: pd.DataFrame, fees: dict[str, float], *,
               cash_id: str = "cash") -> pd.DataFrame:
-    """按成交日所在年份汇总。成本和买入额用账上的数，按目标拆分的比例分。"""
+    """按成交日所在年份汇总。成本和买入额用账上的数，按目标拆分的比例分。
+
+    涨跌停改日成交的那部分对不上目标调仓日，记在未分解，好让合计等于日账。
+    """
     frame = daily.copy()
     frame.index = pd.DatetimeIndex(pd.to_datetime(frame.index)).normalize()
     if frame.index.has_duplicates or not frame.index.is_monotonic_increasing:
@@ -177,7 +180,7 @@ def decompose(daily: pd.DataFrame, exits: pd.DataFrame, fees: dict[str, float], 
     prev_risk = 0.0
     prev_market = ""
     prev_defense = cash_id
-    buckets: dict[tuple[int, str], dict[str, float]] = {}
+    planned: dict[pd.Timestamp, dict] = {}
     for pos, day in enumerate(frame.index):
         row = frame.iloc[pos]
         risk = float(row["risk"])
@@ -189,10 +192,6 @@ def decompose(daily: pd.DataFrame, exits: pd.DataFrame, fees: dict[str, float], 
             for name in set(weights) | set(previous)
         )
         if (changed or day in weekly) and pos + 1 < len(frame.index):
-            exec_day = frame.index[pos + 1]
-            book_cost = float(frame.at[exec_day, "cost"])
-            book_buy = float(frame.at[exec_day, "buy"])
-            year = int(exec_day.year)
             if changed:
                 parts = split_trade(
                     previous, weights, risk_before=prev_risk, risk_after=risk,
@@ -203,30 +202,42 @@ def decompose(daily: pd.DataFrame, exits: pd.DataFrame, fees: dict[str, float], 
             else:
                 parts = {source: {"turnover_one_way": 0.0, "cost": 0.0} for source in SOURCES}
                 parts["未分解"] = {"turnover_one_way": 1.0, "cost": 1.0}
-            model_cost = sum(item["cost"] for item in parts.values())
-            model_turn = sum(item["turnover_one_way"] for item in parts.values())
-            for source in SOURCES:
-                slot = buckets.setdefault((year, source), {"turnover_one_way": 0.0, "cost": 0.0, "days": 0})
-                if model_cost > EPS:
-                    share_cost = parts[source]["cost"] / model_cost
-                elif source == "未分解":
-                    share_cost = 1.0
-                else:
-                    share_cost = 0.0
-                if model_turn > EPS:
-                    share_turn = parts[source]["turnover_one_way"] / model_turn
-                elif source == "未分解":
-                    share_turn = 1.0
-                else:
-                    share_turn = 0.0
-                if book_cost * share_cost > EPS or book_buy * share_turn > EPS:
-                    slot["days"] += 1
-                slot["cost"] += book_cost * share_cost
-                slot["turnover_one_way"] += book_buy * share_turn
+            planned[frame.index[pos + 1]] = parts
         previous = weights
         prev_risk = risk
         prev_market = market
         prev_defense = defense
+    buckets: dict[tuple[int, str], dict[str, float]] = {}
+    for day in frame.index:
+        book_cost = float(frame.at[day, "cost"])
+        book_buy = float(frame.at[day, "buy"])
+        if book_cost <= EPS and book_buy <= EPS:
+            continue
+        parts = planned.get(day)
+        if parts is None:
+            parts = {source: {"turnover_one_way": 0.0, "cost": 0.0} for source in SOURCES}
+            parts["未分解"] = {"turnover_one_way": 1.0, "cost": 1.0}
+        model_cost = sum(item["cost"] for item in parts.values())
+        model_turn = sum(item["turnover_one_way"] for item in parts.values())
+        year = int(day.year)
+        for source in SOURCES:
+            slot = buckets.setdefault((year, source), {"turnover_one_way": 0.0, "cost": 0.0, "days": 0})
+            if model_cost > EPS:
+                share_cost = parts[source]["cost"] / model_cost
+            elif source == "未分解":
+                share_cost = 1.0
+            else:
+                share_cost = 0.0
+            if model_turn > EPS:
+                share_turn = parts[source]["turnover_one_way"] / model_turn
+            elif source == "未分解":
+                share_turn = 1.0
+            else:
+                share_turn = 0.0
+            if book_cost * share_cost > EPS or book_buy * share_turn > EPS:
+                slot["days"] += 1
+            slot["cost"] += book_cost * share_cost
+            slot["turnover_one_way"] += book_buy * share_turn
     rows = []
     years = sorted({year for year, _source in buckets})
     for year in years:
@@ -295,8 +306,9 @@ def run_turnover(*, out: Path = OUT) -> dict:
             "cost": float(total["cost"].iloc[0]),
         }
         book_cost = float(daily["cost"].sum())
-        if abs(written[pool]["cost"] - book_cost) > 1e-6:
-            raise V51Error(f"{pool} 拆开的成本和日账对不上")
+        book_buy = float(daily["buy"].sum())
+        if abs(written[pool]["cost"] - book_cost) > 1e-6 or abs(written[pool]["turnover_one_way"] - book_buy) > 1e-6:
+            raise V51Error(f"{pool} 拆开的成本或换手和日账对不上")
     print("换手 G", flush=True)
     daily = _load_daily(G_DAILY / "daily.csv")
     exits = pd.read_csv(G_DAILY / "exits.csv", parse_dates=["t"])
@@ -317,8 +329,9 @@ def run_turnover(*, out: Path = OUT) -> dict:
         "cost": float(total["cost"].iloc[0]),
     }
     book_cost = float(daily["cost"].sum())
-    if abs(written["G"]["cost"] - book_cost) > 1e-6:
-        raise V51Error("G 池拆开的成本和日账对不上")
+    book_buy = float(daily["buy"].sum())
+    if abs(written["G"]["cost"] - book_cost) > 1e-6 or abs(written["G"]["turnover_one_way"] - book_buy) > 1e-6:
+        raise V51Error("G 池拆开的成本或换手和日账对不上")
     summary = pd.concat(frames, ignore_index=True)
     summary.to_csv(out / "summary.csv", index=False, float_format="%.12g")
     return written
