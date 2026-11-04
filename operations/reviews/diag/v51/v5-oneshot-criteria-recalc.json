@@ -1,0 +1,31 @@
+{
+  "window": [
+    "2016-01-01",
+    "2026-09-30"
+  ],
+  "criteria_rows": 12,
+  "all_match": true,
+  "mismatch_count": 0,
+  "mismatches": [],
+  "attempts": {
+    "L3": 10,
+    "L4": 41,
+    "L5_v5_ledger": 0,
+    "L5_dev_oneshot": 0,
+    "C": 0,
+    "exploration": 28,
+    "diagnostic": 35,
+    "evidence": 1,
+    "attempts_dev_formula": 115,
+    "v5_ledger_present": false,
+    "v51_dedup_rows_total": 30,
+    "v51_design_other_market_dedup": 6,
+    "v51_arms_design_om": [
+      "A1",
+      "E2式",
+      "R0",
+      "v5.1"
+    ]
+  },
+  "formal_pass": false
+}
