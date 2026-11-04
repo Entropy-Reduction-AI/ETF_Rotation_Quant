@@ -1,7 +1,7 @@
 """复核：设计稿第 3.1 版在 2003 年以前的长历史上（不在任何检验段里）。只看信号层面的仓位，不算收益。计入诊断次数 1。
 跑之前写死（2026-11-03，Owner 同意“复核只判过不过，不再调规则；不过就退回等权”）：
 数据：标普500（^GSPC）1955-01 → 2003-06-30，现金 = 美国 3 个月国库券 DTB3；恒生（^HSI）1987-01 → 2015-12-31，现金同 DTB3（港元 1983 年起挂钩美元）；
-  日经（^N225）等日本现金利率到了再补跑。只有收盘价。
+  日经（^N225）1987-01 → 2015-12-31，现金 = 日本银行无担保隔夜拆借利率（1998 年起日次，之前用月平均），补跑，只报告、不进判定（2026-11-04 加）。只有收盘价。
 单一市场版本的第 3.1 版：每周最后一个交易日，风险仓位 = 0.5·[转负前沿 < 0.5] + 0.5·[水平 > 0 或 长尺子放缓]，其余拿现金。
 两种权重只差这一处：响度加权（第 3.1 版）vs 等权（退路）。另列 12 个月涨幅高于现金就满仓（A1 式）作参照，不参与判定。
 熊市 = 收盘从高点回落 ≥ 20%，到低点后反弹 ≥ 20% 结束（机械识别）；牛市 = 其余时间。
@@ -24,9 +24,14 @@ def pct_past(a):
         if len(h) >= 250: o[i] = bisect.bisect_left(h, x) / len(h)
         bisect.insort(h, x)
     return o
-def states(px):
+def jp_rate():
+    dd = pd.read_csv(RAW / 'FM01-STRDCLUCON.csv', parse_dates=['date']).set_index('date').iloc[:, 0]
+    mm = pd.read_csv(RAW / 'FM02-STRACLUCON.csv'); mm.index = pd.to_datetime(mm.iloc[:, 0].astype(str)); mm = mm.iloc[:, 1]
+    mm = mm[mm.index < dd.index[0]]
+    return pd.concat([mm, dd]).sort_index().astype(float)
+def states(px, cash=None):
     lr = np.log(px).diff().fillna(0)
-    rate = dtb.reindex(px.index, method='ffill').ffill() / 100
+    rate = (dtb if cash is None else cash).reindex(px.index, method='ffill').ffill() / 100
     gap = px.index.to_series().diff().dt.days.fillna(1).values
     cl = np.log1p(rate.shift(1).fillna(rate) * gap / 360)
     x = lr - cl; sig = lr.rolling(250).std().shift(1)
@@ -49,9 +54,11 @@ def bears(px):
             elif p >= ext * 1.2: out.append((peak_t, ext_t, round(ext / peak - 1, 3))); mode, ext, ext_t = 'up', p, t
     return out
 res, rows = {}, []
-for name, f, a, b in (('标普500', '^GSPC.csv', '1955-01-01', '2003-06-30'), ('恒生', '^HSI.csv', '1987-01-01', '2015-12-31')):
+JP = len(sys.argv) > 2 and sys.argv[2] == 'jp'
+SETS = (('日经', '^N225.csv', '1987-01-01', '2015-12-31'),) if JP else (('标普500', '^GSPC.csv', '1955-01-01', '2003-06-30'), ('恒生', '^HSI.csv', '1987-01-01', '2015-12-31'))
+for name, f, a, b in SETS:
     px = pd.read_csv(RAW / f, parse_dates=['date']).set_index('date')['close'].loc[:b]
-    S = states(px)
+    S = states(px, jp_rate() if JP else None)
     wk = px.index.to_series().groupby(px.index.to_period('W')).max().values
     wk = pd.DatetimeIndex(wk); wk = wk[(wk >= pd.Timestamp(a)) & S['F'].reindex(wk).notna().values]
     W = {}
@@ -89,6 +96,7 @@ L, Q = agg['loud'], agg['eq']
 ok = {'①牛市仓位': L['牛市平均仓位'] >= Q['牛市平均仓位'] - 5, '②熊市仓位': L['熊市平均仓位'] <= Q['熊市平均仓位'] + 5,
       '③见底回场': L['见底后回到半仓_天_中位'] <= Q['见底后回到半仓_天_中位'], '④见顶减仓': L['见顶后减到半仓_天_中位'] <= Q['见顶后减到半仓_天_中位'] + 10}
 res['汇总'] = agg; res['判定'] = {k: bool(v) for k, v in ok.items()}; res['结论'] = '通过：保留响度加权' if all(ok.values()) else '不通过：改用等权'
-d.drop(columns=['逐次见顶', '逐次见底']).to_csv(out / 'longhist.csv', index=False)
-(out / 'longhist.json').write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str))
+TAG = '-jp' if JP else ''
+d.drop(columns=['逐次见顶', '逐次见底']).to_csv(out / f'longhist{TAG}.csv', index=False)
+(out / f'longhist{TAG}.json').write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str))
 print(d.to_string()); print(json.dumps(res, ensure_ascii=False, indent=1, default=str))
