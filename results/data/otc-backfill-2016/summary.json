@@ -1,0 +1,332 @@
+{
+  "job": "otc-nav-backfill-2016",
+  "seam": "2015-12-31",
+  "end": "2026-09-30",
+  "source": "eastmoney_pingzhongdata",
+  "method": "equity_return_compound",
+  "portfolio_returns": false,
+  "append_only": true,
+  "funds": 63,
+  "expected_about": 57,
+  "count_note": "kind=otc_nav 且 MAX(date)=2015-12-31 的代码是 63 只。其中 6 只 LOF 同时有场内 bars 接到 2026-09-30：160416、160717、161831、162411、164705、164906。这 6 只的场外净值序列仍然停在接缝日，所以一并续接。63-6=57。",
+  "by_status": {
+    "extended": 63
+  },
+  "reached_end": 63,
+  "inserted_rows": 164550,
+  "v4_series_before": 593481,
+  "v4_series_after": 758031,
+  "before_sha256": "167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3",
+  "before_bytes": 298328064,
+  "sha256": "1fe4925e7993eb18d93a5cf359185242a98f7114583f7225033a9ec119ec288f",
+  "bytes": 332390400,
+  "integrity": "ok",
+  "pre_otc_sha256": "21e626f8921e6e7a6cbf8fcc91e4f1f49ea719e4ac94569b2ba7783cc8684793",
+  "pre_otc_rows": 82362,
+  "run_id": 26,
+  "roster_sha256": "24b7dec1618a82e38c7a2886da76293513b578403a7b30a951c60f0789dc6ddc",
+  "stale_sha256": "a9845241274b4a4519f3298aa0a13abeef717f352cef0904d1b1ba95a9ccf53d",
+  "spotcheck_sha256": "6a52d468ba5973ed2f587cca2672605cecc5ffa3d0abfe77b88707e5d5f4378f",
+  "stale_rows": 3,
+  "carrier_use_before": [
+    {
+      "container": "allshare-discretionary",
+      "otc_days": 2611,
+      "trunc_days": 2611,
+      "otc_carrier": "otc:001133",
+      "from": "2016-01-04",
+      "to": "2026-09-30"
+    },
+    {
+      "container": "allshare-financials-re",
+      "otc_days": 2611,
+      "trunc_days": 2611,
+      "otc_carrier": "otc:001469",
+      "from": "2016-01-04",
+      "to": "2026-09-30"
+    },
+    {
+      "container": "allshare-healthcare",
+      "otc_days": 2611,
+      "trunc_days": 2611,
+      "otc_carrier": "otc:001180",
+      "from": "2016-01-04",
+      "to": "2026-09-30"
+    },
+    {
+      "container": "allshare-it",
+      "otc_days": 2611,
+      "trunc_days": 2611,
+      "otc_carrier": "otc:000942",
+      "from": "2016-01-04",
+      "to": "2026-09-30"
+    },
+    {
+      "container": "theme-标普全球石油指数",
+      "otc_days": 2410,
+      "trunc_days": 2611,
+      "otc_carrier": "otc:160416",
+      "from": "2016-01-04",
+      "to": "2026-09-30"
+    },
+    {
+      "container": "theme-纳斯达克生物科技指数",
+      "otc_days": 1959,
+      "trunc_days": 1959,
+      "otc_carrier": "otc:001092",
+      "from": "2016-01-04",
+      "to": "2024-06-17"
+    },
+    {
+      "container": "theme-中证海外中国互联网指数",
+      "otc_days": 1924,
+      "trunc_days": 2516,
+      "otc_carrier": "otc:164906",
+      "from": "2016-01-04",
+      "to": "2026-05-18"
+    },
+    {
+      "container": "theme-法兰克福DAX指数",
+      "otc_days": 1839,
+      "trunc_days": 1839,
+      "otc_carrier": "otc:000614",
+      "from": "2016-01-04",
+      "to": "2023-12-27"
+    },
+    {
+      "container": "csi-dividend",
+      "otc_days": 1440,
+      "trunc_days": 0,
+      "otc_carrier": "otc:090010",
+      "from": "2016-01-04",
+      "to": "2022-01-07"
+    },
+    {
+      "container": "spx",
+      "otc_days": 764,
+      "trunc_days": 764,
+      "otc_carrier": "otc:050025",
+      "from": "2016-01-04",
+      "to": "2021-11-23"
+    },
+    {
+      "container": "ndx100",
+      "otc_days": 671,
+      "trunc_days": 671,
+      "otc_carrier": "otc:160213",
+      "from": "2016-01-04",
+      "to": "2019-12-18"
+    },
+    {
+      "container": "hsi",
+      "otc_days": 333,
+      "trunc_days": 333,
+      "otc_carrier": "otc:000071",
+      "from": "2016-01-04",
+      "to": "2019-07-01"
+    },
+    {
+      "container": "theme-标普石油天然气勘探及生产精选行业指数",
+      "otc_days": 293,
+      "trunc_days": 2442,
+      "otc_carrier": "otc:162411",
+      "from": "2017-01-09",
+      "to": "2024-09-12"
+    },
+    {
+      "container": "gold",
+      "otc_days": 14,
+      "trunc_days": 14,
+      "otc_carrier": "otc:000216",
+      "from": "2016-01-04",
+      "to": "2019-07-01"
+    },
+    {
+      "container": "chinext",
+      "otc_days": 11,
+      "trunc_days": 11,
+      "otc_carrier": "otc:050021",
+      "from": "2019-01-09",
+      "to": "2019-07-01"
+    },
+    {
+      "container": "theme-恒生中国企业指数",
+      "otc_days": 11,
+      "trunc_days": 11,
+      "otc_carrier": "otc:160717",
+      "from": "2019-01-09",
+      "to": "2019-07-01"
+    },
+    {
+      "container": "csi300",
+      "otc_days": 11,
+      "trunc_days": 0,
+      "otc_carrier": "otc:050002",
+      "from": "2019-01-09",
+      "to": "2019-07-01"
+    },
+    {
+      "container": "csi500",
+      "otc_days": 11,
+      "trunc_days": 0,
+      "otc_carrier": "otc:160119",
+      "from": "2019-01-09",
+      "to": "2019-07-01"
+    }
+  ],
+  "carrier_use_after": [
+    {
+      "container": "allshare-discretionary",
+      "otc_days": 2611,
+      "trunc_days": 0,
+      "otc_carrier": "otc:001133",
+      "from": "2016-01-04",
+      "to": "2026-09-30"
+    },
+    {
+      "container": "allshare-financials-re",
+      "otc_days": 2611,
+      "trunc_days": 0,
+      "otc_carrier": "otc:001469",
+      "from": "2016-01-04",
+      "to": "2026-09-30"
+    },
+    {
+      "container": "allshare-healthcare",
+      "otc_days": 2611,
+      "trunc_days": 0,
+      "otc_carrier": "otc:001180",
+      "from": "2016-01-04",
+      "to": "2026-09-30"
+    },
+    {
+      "container": "allshare-it",
+      "otc_days": 2611,
+      "trunc_days": 0,
+      "otc_carrier": "otc:000942",
+      "from": "2016-01-04",
+      "to": "2026-09-30"
+    },
+    {
+      "container": "theme-标普全球石油指数",
+      "otc_days": 2410,
+      "trunc_days": 0,
+      "otc_carrier": "otc:160416",
+      "from": "2016-01-04",
+      "to": "2026-09-30"
+    },
+    {
+      "container": "theme-纳斯达克生物科技指数",
+      "otc_days": 1959,
+      "trunc_days": 0,
+      "otc_carrier": "otc:001092",
+      "from": "2016-01-04",
+      "to": "2024-06-17"
+    },
+    {
+      "container": "theme-中证海外中国互联网指数",
+      "otc_days": 1924,
+      "trunc_days": 0,
+      "otc_carrier": "otc:164906",
+      "from": "2016-01-04",
+      "to": "2026-05-18"
+    },
+    {
+      "container": "theme-法兰克福DAX指数",
+      "otc_days": 1839,
+      "trunc_days": 0,
+      "otc_carrier": "otc:000614",
+      "from": "2016-01-04",
+      "to": "2023-12-27"
+    },
+    {
+      "container": "csi-dividend",
+      "otc_days": 1440,
+      "trunc_days": 0,
+      "otc_carrier": "otc:090010",
+      "from": "2016-01-04",
+      "to": "2022-01-07"
+    },
+    {
+      "container": "spx",
+      "otc_days": 764,
+      "trunc_days": 0,
+      "otc_carrier": "otc:050025",
+      "from": "2016-01-04",
+      "to": "2021-11-23"
+    },
+    {
+      "container": "ndx100",
+      "otc_days": 671,
+      "trunc_days": 0,
+      "otc_carrier": "otc:160213",
+      "from": "2016-01-04",
+      "to": "2019-12-18"
+    },
+    {
+      "container": "hsi",
+      "otc_days": 333,
+      "trunc_days": 0,
+      "otc_carrier": "otc:000071",
+      "from": "2016-01-04",
+      "to": "2019-07-01"
+    },
+    {
+      "container": "theme-标普石油天然气勘探及生产精选行业指数",
+      "otc_days": 293,
+      "trunc_days": 0,
+      "otc_carrier": "otc:162411",
+      "from": "2017-01-09",
+      "to": "2024-09-12"
+    },
+    {
+      "container": "gold",
+      "otc_days": 14,
+      "trunc_days": 0,
+      "otc_carrier": "otc:000216",
+      "from": "2016-01-04",
+      "to": "2019-07-01"
+    },
+    {
+      "container": "chinext",
+      "otc_days": 11,
+      "trunc_days": 0,
+      "otc_carrier": "otc:050021",
+      "from": "2019-01-09",
+      "to": "2019-07-01"
+    },
+    {
+      "container": "csi300",
+      "otc_days": 11,
+      "trunc_days": 0,
+      "otc_carrier": "otc:050002",
+      "from": "2019-01-09",
+      "to": "2019-07-01"
+    },
+    {
+      "container": "csi500",
+      "otc_days": 11,
+      "trunc_days": 0,
+      "otc_carrier": "otc:160119",
+      "from": "2019-01-09",
+      "to": "2019-07-01"
+    },
+    {
+      "container": "theme-恒生中国企业指数",
+      "otc_days": 11,
+      "trunc_days": 0,
+      "otc_carrier": "otc:160717",
+      "from": "2019-01-09",
+      "to": "2019-07-01"
+    }
+  ],
+  "spot_codes": [
+    "000942",
+    "001469",
+    "001133",
+    "050025",
+    "160416"
+  ],
+  "spot_error": "",
+  "spot_method": "天天基金历史净值表按单日查询。页面复权净值 = 库内上一公布日复权净值 × (1 + 日增长率/100)。单位净值、累计净值直接对照表内数字。"
+}
