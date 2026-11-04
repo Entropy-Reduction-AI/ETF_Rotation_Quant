@@ -1,0 +1,16 @@
+{
+  "L3": 10,
+  "L4": 41,
+  "L5": 0,
+  "C": 0,
+  "exploration": 28,
+  "diagnostic": 35,
+  "evidence": 1,
+  "attempts": 115,
+  "v5_ledger_present": false,
+  "excluded_from_L5": [
+    "v5.1",
+    "A1"
+  ],
+  "note": "D34-3：v5.1 不计入判据⑤。入围名单只有 E2/B0，所以 A1 也不加 1 行。L5 只数本提交上的 results/v5/trial-ledger.csv；该文件不在 main，也不在代码冻结上，所以 L5=0。没有用未并入的设计期账本补行。"
+}
