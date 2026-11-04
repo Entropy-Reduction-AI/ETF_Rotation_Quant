@@ -76,8 +76,10 @@ def _bars(con, codes: list[str], end: str) -> dict[str, pd.DataFrame]:
     return _split_bars(frame)
 
 
-def research_panel(spec: Spec) -> dict:
+def research_panel(spec: Spec, *, end: str = DESIGN_END, allow_after: bool = False) -> dict:
     """五条腿的研究序列，已经换成人民币并对齐到上交所交易日。"""
+    if not allow_after and pd.Timestamp(end) > pd.Timestamp(DESIGN_END):
+        raise RunnerError(f"附表 A 拒绝结束日 {end}")
     containers = load_containers()
     by_id = {str(row.get("id") or ""): row for row in containers}
     names = _legs()
@@ -86,17 +88,17 @@ def research_panel(spec: Spec) -> dict:
         raise RunnerError(f"附表 A 的容器不在登记表里：{missing}")
     con = _connect()
     try:
-        calendar = _calendar(con, DESIGN_END)
-        usd = load_mid(con, "USDCNY", DESIGN_END, filled=True)
-        hkd = load_mid(con, "HKDCNY", DESIGN_END, filled=True)
+        calendar = _calendar(con, end)
+        usd = load_mid(con, "USDCNY", end, filled=True)
+        hkd = load_mid(con, "HKDCNY", end, filled=True)
         codes = []
         for name in names:
             code = research_code(by_id[name])
             if not code:
                 raise RunnerError(f"{name} 没有研究序列")
             codes.append(code)
-        bars = _bars(con, codes, DESIGN_END)
-        divs = _dividends(con, DESIGN_END)
+        bars = _bars(con, codes, end)
+        divs = _dividends(con, end)
         levels = {}
         quotes = {}
         for name in names:
@@ -123,22 +125,26 @@ def research_panel(spec: Spec) -> dict:
                 close = level.where(fresh)
             quotes[name] = FillQuote(close=close, board=board)
         grouped = {name: [] for name in names}
-        built = build_candidates(con, containers, calendar, DESIGN_END)
+        built = build_candidates(con, containers, calendar, end)
         for name in names:
             grouped[name] = built.get(name) or []
         assets = {name: str(by_id[name].get("asset_class") or "") for name in names}
-        prints = prints_for(con, grouped, DESIGN_END)
+        prints = prints_for(con, grouped, end)
         fills = stitch_fills(grouped, calendar, prints, assets)
         tradable_levels = {}
         for name in names:
             series = spliced_portfolio(
-                con, grouped[name], calendar, DESIGN_END,
+                con, grouped[name], calendar, end,
                 nav_lag=int(spec.nav_lag), usd=usd, stale_limit=int(spec.stale_limit))
             tradable_levels[name] = compound_level(series, pd.DatetimeIndex(calendar))
     finally:
         con.close()
     level_frame = pd.DataFrame(levels, index=calendar)
-    require_design_index(level_frame.index, what="同行收盘")
+    if allow_after:
+        if len(level_frame) and pd.Timestamp(level_frame.index.max()) > pd.Timestamp(end):
+            raise RunnerError(f"同行收盘晚于 {end}")
+    else:
+        require_design_index(level_frame.index, what="同行收盘")
     mask = {}
     traded_quotes = {}
     for name, fill in fills.items():
@@ -149,7 +155,7 @@ def research_panel(spec: Spec) -> dict:
     return {
         "levels": level_frame,
         "calendar": pd.DatetimeIndex(calendar),
-        "cash": cash_on(calendar, spec),
+        "cash": cash_on(calendar, spec, end=end, allow_after=allow_after),
         "index_quotes": quotes,
         "tradable_quotes": traded_quotes,
         "carriers": pd.DataFrame(mask, index=calendar),

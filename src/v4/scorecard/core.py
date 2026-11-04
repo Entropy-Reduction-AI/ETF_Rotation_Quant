@@ -168,6 +168,7 @@ def any_start(
     *,
     strategy: str = "E2",
     horizons: tuple[int, ...] = HORIZONS,
+    allow_after: bool = False,
 ) -> dict[int, pd.DataFrame]:
     """每个月初持有 `horizons` 里的整年。终点超过最后一天就停止，与 anystart.py 的 break 相同。"""
     if strategy not in navs:
@@ -175,7 +176,8 @@ def any_start(
     index = pd.DatetimeIndex(navs[strategy].index).sort_values().unique()
     if len(index) == 0:
         raise ScorecardError("没有净值")
-    refuse_portfolio_dates(index)
+    if not allow_after:
+        refuse_portfolio_dates(index)
     starts = pd.Series(index, index=index).groupby([index.year, index.month]).first().values
     tables: dict[int, pd.DataFrame] = {}
     for years in horizons:

@@ -218,7 +218,7 @@ class PremiumGate:
         }
 
 
-def _schedule(market, spec: Spec, prepared, premium_spec):
+def _schedule(market, spec: Spec, prepared, premium_spec, *, allow_after: bool = False):
     """显式 (W, θ) 或测试用的状态表直接用。否则在 A 臂上按 §7.1 逐年选择。"""
     static = _static_premium(market, prepared, premium_spec)
     if premium_spec is not None or getattr(market, "premium_panels", None):
@@ -232,13 +232,13 @@ def _schedule(market, spec: Spec, prepared, premium_spec):
     for window, theta in premium_keys():
         chosen = PremiumSpec(window, theta)
         book = execute(
-            market, spec, "A", allow_after=False, premium_spec=chosen,
+            market, spec, "A", allow_after=allow_after, premium_spec=chosen,
             exit_drawdown=EXIT_DRAWDOWN, _selecting=True)
         series[(window, theta)] = book.net
     benchmark = market.benchmark if market.benchmark is not None else pd.Series(0.0, index=market.dates)
     picked = walk_forward(
         series, benchmark, train_start=spec.b_train_start, first_apply_year=spec.b_first_year,
-        dates=market.dates, keys=list(premium_keys()))
+        dates=market.dates, keys=list(premium_keys()), allow_after=allow_after)
     return PremiumGate(
         choices=picked["choices"], inputs=inputs, market=market, prepared=prepared)
 
@@ -401,7 +401,8 @@ def execute(market, spec: Spec, arm: str, *, n: int | None = None, freq: str | N
                 market.liquidity, spec.lookbacks,
                 switches=None if idle else switches, market_level=level, weight_eps=spec.weight_eps,
                 every_session=True)
-    premium = None if _selecting else _schedule(market, spec, prepared, premium_spec)
+    premium = None if _selecting else _schedule(
+        market, spec, prepared, premium_spec, allow_after=allow_after)
 
     def one(key) -> Book:
         return _run_path(

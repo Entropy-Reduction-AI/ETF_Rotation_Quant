@@ -36,14 +36,15 @@ def month_bounds(calendar) -> dict[tuple[int, int], tuple[pd.Timestamp, pd.Times
     return bounds
 
 
-def rolling_windows(calendar, months: int) -> list[tuple[pd.Timestamp, pd.Timestamp]]:
+def rolling_windows(calendar, months: int, *, end_limit=None) -> list[tuple[pd.Timestamp, pd.Timestamp]]:
     """起点是该月第一个交易日，终点是第 `months` 个月的最后一个交易日。
 
     中间任何一个自然月在交易日序列里不存在，这个窗口就不要。
-    终点晚于 2015-12-31 的窗口不打开。
+    终点晚于上限的窗口不打开。不传上限时，上限仍是 2015-12-31。
     """
     if months not in SPANS:
         raise EvalError("随机起点只接受 36 或 60 个月")
+    limit = DESIGN_END if end_limit is None else pd.Timestamp(end_limit)
     bounds = month_bounds(calendar)
     windows = []
     for year, month in sorted(bounds):
@@ -51,7 +52,7 @@ def rolling_windows(calendar, months: int) -> list[tuple[pd.Timestamp, pd.Timest
         if any(key not in bounds for key in keys):
             continue
         end = bounds[keys[-1]][1]
-        if end > DESIGN_END:
+        if end > limit:
             continue
         windows.append((bounds[(year, month)][0], end))
     return windows

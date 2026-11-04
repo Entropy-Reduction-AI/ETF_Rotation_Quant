@@ -34,16 +34,16 @@ PBO_BLOCKS = 16
 
 
 def walk_forward(candidates: dict, benchmark, *, train_start: str, first_apply_year: int,
-                 dates, keys: list | None = None) -> dict:
+                 dates, keys: list | None = None, allow_after: bool = False) -> dict:
     """每年一个选择。`candidates` 的值是各候选自己的扣成本日收益。"""
-    require_design_period(pd.Series(benchmark).index)
-    require_design_period(dates)
+    require_design_period(pd.Series(benchmark).index, allow_after=allow_after)
+    require_design_period(dates, allow_after=allow_after)
     order = list(candidates) if keys is None else list(keys)
     missing = [key for key in order if key not in candidates]
     if missing:
         raise EvalError(f"候选里没有 {missing[0]}")
     for key in order:
-        require_design_period(pd.Series(candidates[key]).index)
+        require_design_period(pd.Series(candidates[key]).index, allow_after=allow_after)
     span = pd.DatetimeIndex(pd.to_datetime(dates)).sort_values()
     if len(span) == 0:
         raise EvalError("没有交易日")

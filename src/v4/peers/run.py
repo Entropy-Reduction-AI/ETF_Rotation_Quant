@@ -54,18 +54,19 @@ def _same(left: dict[str, float], right: dict[str, float], eps: float) -> bool:
     return all(abs(float(left.get(name, 0.0)) - float(right.get(name, 0.0))) <= eps for name in names)
 
 
-def _aligned(peer: PeerRun, sessions, levels: pd.DataFrame, cash: pd.Series | None) -> tuple[pd.DataFrame, pd.Series]:
+def _aligned(peer: PeerRun, sessions, levels: pd.DataFrame, cash: pd.Series | None,
+             allow_after: bool = False) -> tuple[pd.DataFrame, pd.Series]:
     names = [leg.leg_id for leg in peer.legs]
     missing = [name for name in names if name not in levels.columns]
     if missing:
         raise PeerError(f"收盘缺腿 {missing}")
     frame = levels.loc[:, names].reindex(sessions)
-    assert_window(levels.index, False)
-    assert_window(sessions, False)
+    assert_window(levels.index, allow_after)
+    assert_window(sessions, allow_after)
     if cash is None:
         series = pd.Series(peer.cash_annual / peer.trading_days, index=sessions, dtype=float)
     else:
-        assert_window(cash.index, False)
+        assert_window(cash.index, allow_after)
         series = cash.reindex(sessions).astype(float)
         if not np.isfinite(series.to_numpy(dtype=float)).all():
             raise PeerError("现金日收益有缺日")
@@ -77,7 +78,8 @@ def run_peer(peer: PeerRun, sessions, levels: pd.DataFrame, *,
              carriers: pd.DataFrame | None = None,
              quotes: dict | None = None,
              calendar_closed: bool = False,
-             signal_levels: pd.DataFrame | None = None) -> PeerResult:
+             signal_levels: pd.DataFrame | None = None,
+             allow_after: bool = False) -> PeerResult:
     """手造或调用方给的序列。`net` 只是这些序列上的费用核对，不是策略成绩。
 
     `levels` 是持有和日收益。`signal_levels` 只用于月末判断；不传时判断和收益用同一条序列。
@@ -86,13 +88,13 @@ def run_peer(peer: PeerRun, sessions, levels: pd.DataFrame, *,
     if peer.exit_module or peer.premium_module or peer.t1_turn or peer.t2_state_weights or peer.t3_refill or peer.t4_pool:
         raise PeerError("附表 A 不接离场、溢价或 T1–T4")
     calendar = _sessions(sessions)
-    panel, cash_series = _aligned(peer, calendar, levels, cash)
+    panel, cash_series = _aligned(peer, calendar, levels, cash, allow_after)
     if signal_levels is None:
         judged = panel
     else:
-        judged, _ignored = _aligned(peer, calendar, signal_levels, cash)
+        judged, _ignored = _aligned(peer, calendar, signal_levels, cash, allow_after)
     if carriers is not None:
-        assert_window(carriers.index, False)
+        assert_window(carriers.index, allow_after)
     decisions = decision_targets(
         peer, calendar, judged, cash_series, carriers=carriers, calendar_closed=calendar_closed)
     execution = {}

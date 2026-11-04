@@ -41,15 +41,19 @@ def universe_for(market, class_of: dict[str, str] | None = None) -> Universe:
 
 
 def run_book(market, spec, decisions: pd.DataFrame, *, switches=None,
-             decision_delay: int = 0, cost_multiplier: float = 1.0) -> Book:
-    """一条路的成交。决策日的下一交易日收盘换仓。日期晚于 2015-12-31 直接拒绝。"""
+             decision_delay: int = 0, cost_multiplier: float = 1.0,
+             allow_after: bool = False) -> Book:
+    """一条路的成交。决策日的下一交易日收盘换仓。日期晚于 2015-12-31 直接拒绝。
+
+    `allow_after` 只给一次性检验。设计期保持关闭。
+    """
     from src.v5.engine.execute import b0_switches
     from src.v5.engine.paths import delay_book, resolve_exit
 
     if decision_delay not in {0, 1}:
         raise V51Error("决策日只延后 0 天或 1 天")
-    assert_window(market.dates, allow_after=False)
-    assert_window(decisions.index, allow_after=False)
+    assert_window(market.dates, allow_after)
+    assert_window(decisions.index, allow_after)
     running = copy.copy(market)
     running.cost_multiplier = float(cost_multiplier)
     chosen = switches if switches is not None else b0_switches()
@@ -57,7 +61,7 @@ def run_book(market, spec, decisions: pd.DataFrame, *, switches=None,
     panels = {
         length: lookback_panel(running.signal, running.cash_id, length) for length in lengths
     }
-    premium = _schedule(running, spec, panels, None)
+    premium = _schedule(running, spec, panels, None, allow_after=allow_after)
     quotes = quotes_from_market(running) if chosen.fill_limits else None
     border = None
     dividend = None
@@ -66,7 +70,7 @@ def run_book(market, spec, decisions: pd.DataFrame, *, switches=None,
         dividend = getattr(running, "dividend_yield", None)
     # C2 关着。硬闸门已经在目标权重里处理过。
     book = _run_path(
-        running, spec, decisions, allow_after=False, exit_drawdown=resolve_exit(False, None),
+        running, spec, decisions, allow_after=allow_after, exit_drawdown=resolve_exit(False, None),
         premium=premium, switches=chosen, fill_quotes=quotes, refill_targets=None,
         cross_border_names=border, dividend_yield=dividend,
     )
