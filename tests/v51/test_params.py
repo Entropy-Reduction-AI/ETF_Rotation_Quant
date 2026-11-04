@@ -53,48 +53,70 @@ class Params(unittest.TestCase):
         self.assertEqual(members, {"csi300", "hsi", "spx"})
         self.assertEqual(universe.bond, "cgb-10y")
 
-    def test_ledger_is_the_two_design_rows(self):
+    def test_ledger_holds_the_wrapup_rows(self):
+        """设计期 2 行、R5 对照、R1、S1–S17，加 G 池 4 行。多一行或少一行都失败。"""
         path = ROOT / "results" / "v5.1" / "trial-ledger.csv"
         with path.open(encoding="utf-8", newline="") as handle:
             rows = list(csv.DictReader(handle))
         self.assertEqual(list(rows[0]), COLUMNS)
+        self.assertEqual(len(rows), 30)
         spec = load_spec()
-        design = [row for row in rows if row["segment"] == "design" and row["arm"] == "v5.1"]
-        controls = [row for row in rows if row["segment"] == "design" and row["arm"] != "v5.1"]
-        other = [row for row in rows if row["segment"] == "other-market"]
-        self.assertEqual(len(design), 2)
-        pools = set()
-        for row in design:
-            self.assertEqual(row["segment"], "design")
-            self.assertEqual(row["runner"], "dev")
-            self.assertEqual(len(row["git_sha"]), 40)
-            payload = json.loads(row["params"])
-            pools.add(payload["pool"])
-            self.assertEqual(payload, design_params(payload["pool"], spec))
-            self.assertEqual(payload["end"], "2015-12-31")
-        self.assertEqual(pools, {"index", "tradable"})
-        arms = {}
+        design_pools = set()
+        control_pools: dict[str, set[str]] = {}
+        robust_pools: dict[str, set[str]] = {}
+        other = []
         seen = set()
-        for row in controls:
-            self.assertEqual(row["segment"], "design")
+        for row in rows:
             self.assertEqual(row["runner"], "dev")
             self.assertEqual(len(row["git_sha"]), 40)
             payload = json.loads(row["params"])
-            self.assertEqual(payload["kind"], "control")
-            self.assertEqual(payload["end"], "2015-12-31")
-            self.assertLessEqual(payload["end"], "2015-12-31")
-            key = (row["arm"], payload["pool"])
+            self.assertEqual(payload["rules"], "v5.1")
+            self.assertEqual(payload["case"], row["arm"])
+            key = (row["segment"], row["arm"], payload["pool"])
             self.assertNotIn(key, seen)
             seen.add(key)
-            arms.setdefault(row["arm"], set()).add(payload["pool"])
-        self.assertEqual(arms, {
+            if row["segment"] == "design":
+                self.assertEqual(payload["end"], "2015-12-31")
+                if row["arm"] == "v5.1":
+                    self.assertEqual(payload["kind"], "design")
+                    self.assertEqual(payload, design_params(payload["pool"], spec))
+                    design_pools.add(payload["pool"])
+                elif payload["kind"] == "control":
+                    control_pools.setdefault(row["arm"], set()).add(payload["pool"])
+                elif payload["kind"] == "robustness":
+                    self.assertEqual(payload["pass_fail"], "只报告")
+                    robust_pools.setdefault(row["arm"], set()).add(payload["pool"])
+                else:
+                    self.fail(f"设计期出现了未登记的种类：{payload['kind']}")
+            elif row["segment"] == "other-market":
+                other.append(row)
+            else:
+                self.fail(f"未登记的段：{row['segment']}")
+        self.assertEqual(design_pools, {"index", "tradable"})
+        self.assertEqual(control_pools, {
             "R0": {"index", "tradable"},
+            "R1": {"index", "tradable"},
             "C-等权": {"index", "tradable"},
             "C-波动比": {"index"},
         })
-        r0 = next(json.loads(row["params"]) for row in controls if row["arm"] == "R0")
-        self.assertEqual(r0["n"], 2000)
-        self.assertEqual(r0["seed"], 20261101)
+        self.assertEqual(robust_pools, {
+            **{f"S{i}": {"index"} for i in range(1, 17)},
+            "S17": {"tradable"},
+        })
+        for arm in ("R0", "R1"):
+            matched = [
+                json.loads(row["params"]) for row in rows
+                if row["arm"] == arm and row["segment"] == "design"
+            ]
+            self.assertEqual(len(matched), 2)
+            for payload in matched:
+                self.assertEqual(payload["n"], 2000)
+                self.assertEqual(payload["seed"], 20261101)
+                self.assertEqual(payload["kind"], "control")
+        s17 = next(json.loads(row["params"]) for row in rows if row["arm"] == "S17")
+        self.assertEqual(s17["pool"], "tradable")
+        self.assertFalse(s17["allow_substitute"])
+        self.assertEqual(len(other), 4)
         self.assertEqual({row["arm"] for row in other}, {"v5.1", "E2式", "A1", "R0"})
         for row in other:
             payload = json.loads(row["params"])
@@ -104,3 +126,4 @@ class Params(unittest.TestCase):
             self.assertFalse(payload["china_pnl"])
             self.assertFalse(payload["robustness"])
             self.assertFalse(CHINA_IDS & set(payload["members"]["美国"]))
+        self.assertEqual(len(seen), 30)
