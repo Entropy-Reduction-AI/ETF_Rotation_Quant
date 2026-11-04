@@ -1,0 +1,50 @@
+{
+  "tip": "6c958d3d70dd0e7d8a0a77d1f404c03ac3827aad",
+  "sequences": [
+    "csi300",
+    "hsi",
+    "spx",
+    "cgb-10y",
+    "gold"
+  ],
+  "dates": [
+    "2011-07-01",
+    "2014-02-28",
+    "2014-07-10",
+    "2015-04-17",
+    "2015-10-14"
+  ],
+  "readings_5x5": {
+    "cells_per_metric": 25,
+    "H_match": 25,
+    "F_match": 25,
+    "E_match": 25,
+    "total_match": 75,
+    "total_cells": 75,
+    "misses": []
+  },
+  "breadth_3x5": {
+    "match": 15,
+    "total": 15,
+    "misses": []
+  },
+  "holdings_5_dates": {
+    "match": 5,
+    "miss": []
+  },
+  "sold_list_synthetic": {
+    "section_3_3_spot_pass": true,
+    "rules": {
+      "a_sold_on_F_day": true,
+      "a_on_sold_list_same_day": true,
+      "a_not_rebought_before_next_weekly_after_w1": true,
+      "sold_list_cleared_for_a_by_w2": true,
+      "a_back_in_picks_w2": true,
+      "weekly_normal_swap_w3": true,
+      "exit_reason_a_is_F": true
+    }
+  },
+  "notes": {
+    "profile33_hard_gate": "profile33.py 用 PX/hi-1<=-0.10；引擎与独立复算用 triggered(strict<90%)。"
+  }
+}
