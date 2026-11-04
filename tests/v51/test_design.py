@@ -23,6 +23,8 @@ from src.v51.design import (
 )
 from src.v51.params import V51Error
 
+ROOT = Path(__file__).resolve().parents[2]
+
 
 def _spec():
     return SimpleNamespace(lookbacks=(20, 60, 120, 250), trade_eps=1e-12, weight_eps=1e-6)
@@ -122,6 +124,21 @@ class DesignWiring(unittest.TestCase):
         self.assertIn("未完成", set(draft[draft["item"] == "入围"]["status"]))
         reported = draft[(draft["item"] == "报告") & (draft["metric"] == "calmar")]
         self.assertEqual(len(reported), 6)
+
+    def test_committed_artifacts_stay_inside_2015(self):
+        gate = pd.read_csv(ROOT / "results" / "v5.1" / "design" / "gate-draft.csv")
+        gate["item"] = gate["item"].astype(str)
+        self.assertTrue((gate.loc[gate["item"] == "0", "status"] == "待 R5").all())
+        self.assertTrue((gate.loc[gate["item"] == "3", "status"] == "待 R5").all())
+        self.assertTrue((gate.loc[gate["item"] == "5", "status"] == "待 R6").all())
+        for pool in ("index", "tradable"):
+            daily = pd.read_csv(
+                ROOT / "results" / "v5.1" / "design" / pool / "daily.csv",
+                parse_dates=["date"], index_col="date",
+            )
+            self.assertLessEqual(pd.Timestamp(daily.index.max()), pd.Timestamp("2015-12-31"))
+            self.assertIn("nav", daily.columns)
+            self.assertFalse(daily["net"].isna().any())
 
     def test_metric_block_rejects_a_later_benchmark(self):
         index = pd.bdate_range("2015-12-01", periods=5)
