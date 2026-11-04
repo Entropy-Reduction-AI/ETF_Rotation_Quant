@@ -117,7 +117,8 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
              universe: Universe, *, prices: pd.DataFrame | None = None,
              returns: pd.DataFrame | None = None, weekly: pd.DatetimeIndex | None = None,
              eligible: pd.DataFrame | None = None, params: Params | None = None,
-             allow_after: bool = False) -> Allocation:
+             allow_after: bool = False, mode: str = "legs",
+             strength: pd.DataFrame | None = None, noise: pd.DataFrame | None = None) -> Allocation:
     """按交易日走到收盘。不算组合收益。"""
     frozen = Params() if params is None else params
     days = pd.DatetimeIndex(pd.to_datetime(index))
@@ -127,9 +128,14 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
     if days.has_duplicates or not days.is_monotonic_increasing:
         raise V51Error("交易日要按时间唯一排好")
     assert_window(days, allow_after)
+    if mode not in {"legs", "vol_ratio"}:
+        raise V51Error(f"没有这种持仓模式：{mode}")
+    if mode == "vol_ratio" and (strength is None or noise is None):
+        raise V51Error("波动比对照要带强度和噪音")
     if weekly is None:
         weekly = decision_dates(days, "week")
     week_set = {pd.Timestamp(day).normalize() for day in weekly}
+    by_rep = {market.representative: market for market in universe.markets}
     bands = {
         market.representative: breadth(
             frontier_share, market.members, eligible=eligible,
@@ -248,20 +254,30 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
             exit_rows.append((stamp, name, why))
 
         if stamp in week_set:
-            scores = {market.representative: market_legs(market, stamp) for market in universe.markets}
-            open_markets = [
-                market for market in universe.markets
-                if scores[market.representative] and any(buyable(name, stamp) for name in market.members)
-            ]
-            if held not in open_markets:
-                held = _best(open_markets, stamp, level)
+            if mode == "vol_ratio":
+                held_id, defense = select_vol_market(
+                    None if held is None else held.representative, defense, stamp,
+                    universe.markets, universe.bond, universe.gold, universe.cash,
+                    strength, noise, frozen.noise_band,
+                )
+                held = None if held_id is None else by_rep[held_id]
+                risk = 1.0 if held is not None else 0.0
             else:
-                challenger = _best(open_markets, stamp, level)
-                if challenger is not None and challenger != held:
-                    gap = _cell(level, stamp, challenger.representative) - _cell(level, stamp, held.representative)
-                    if gap > frozen.noise_band:
-                        held = challenger
-            risk = float(scores[held.representative]) if held is not None else 0.0
+                scores = {market.representative: market_legs(market, stamp) for market in universe.markets}
+                open_markets = [
+                    market for market in universe.markets
+                    if scores[market.representative] and any(buyable(name, stamp) for name in market.members)
+                ]
+                if held not in open_markets:
+                    held = _best(open_markets, stamp, level)
+                else:
+                    challenger = _best(open_markets, stamp, level)
+                    if challenger is not None and challenger != held:
+                        gap = _cell(level, stamp, challenger.representative) - _cell(level, stamp, held.representative)
+                        if gap > frozen.noise_band:
+                            held = challenger
+                risk = float(scores[held.representative]) if held is not None else 0.0
+                defense = defense_of(stamp, defense)
             if held is None:
                 new: list[str] = []
             else:
@@ -280,7 +296,21 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
                 held = None
                 risk = 0.0
             blocked = set(sold_today)
-            defense = defense_of(stamp, defense)
+        elif held is not None and mode == "vol_ratio":
+            while len(picks) < frozen.top_n:
+                if len(picks) >= previous_count:
+                    break
+                ranked = [name for name in qualified(held, stamp, blocked) if name not in picks]
+                if not ranked:
+                    break
+                picks.append(ranked[0])
+            if not picks:
+                stand = fallback(held, stamp, blocked, check_frontier=True)
+                if stand:
+                    picks = [stand]
+                else:
+                    held = None
+                    risk = 0.0
         elif held is not None:
             updated = market_legs(held, stamp)
             if updated is not None and updated < risk:
@@ -314,19 +344,89 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
             decision_rows.append(weights)
             decision_index.append(stamp)
         previous_weights = weights
-        state_rows.append({
+        row = {
             "market": "" if held is None else held.representative,
             "market_name": "" if held is None else held.name,
             "risk": 0.0 if held is None else risk,
             "defense": defense,
             "picks": "|".join(picks),
             "blocked": "|".join(sorted(blocked)),
-        })
+        }
+        if mode == "vol_ratio":
+            focus = held.representative if held is not None else defense
+            row["strength"] = _cell(strength, stamp, focus)
+            row["noise"] = _cell(noise, stamp, focus)
+        state_rows.append(row)
 
     state = pd.DataFrame(state_rows, index=days)
     exits = pd.DataFrame(exit_rows, columns=["t", "id", "why"])
     decisions = _decision_frame(decision_rows, decision_index, universe.cash)
     return Allocation(state=state, decisions=decisions, exits=exits)
+
+
+def _finite_number(value: float) -> bool:
+    return value == value and np.isfinite(value)
+
+
+def _best_id(names: list[str], day, score: pd.DataFrame) -> str:
+    """强度高的在前。同分按容器 id 升序。"""
+    return sorted(names, key=lambda name: (-_cell(score, day, name), name))[0]
+
+
+def select_vol_market(held: str | None, defense: str, day, markets: tuple[Market, ...],
+                      bond: str, gold: str, cash: str, strength: pd.DataFrame,
+                      noise: pd.DataFrame, band: float) -> tuple[str | None, str]:
+    """C-波动比的第一层。返回（市场代表或空，防守容器）。
+
+    强度 M 高的才算最强。资格和离场看 M 的正负。换市场、换防守才看噪音 z 的差，
+    要大于 `band`（冻稿的噪音带 1）。已经持有的市场，M 还没转负时不因为噪音不够而离场。
+    """
+    risk_ids = [market.representative for market in markets]
+    held_id = held if held in risk_ids else None
+    if held_id is not None:
+        height = _cell(strength, day, held_id)
+        if _finite_number(height) and height < 0.0:
+            held_id = None
+        else:
+            base = _cell(noise, day, held_id)
+            challengers = []
+            for name in risk_ids:
+                if name == held_id:
+                    continue
+                score = _cell(noise, day, name)
+                if not _finite_number(score) or not (score > 0.0):
+                    continue
+                if not _finite_number(_cell(strength, day, name)):
+                    continue
+                if _finite_number(base) and not (score - base > band):
+                    continue
+                challengers.append(name)
+            if challengers:
+                held_id = _best_id(challengers, day, strength)
+    if held_id is not None:
+        return held_id, defense
+    entrants = []
+    for name in risk_ids:
+        height = _cell(strength, day, name)
+        score = _cell(noise, day, name)
+        if _finite_number(height) and height > 0.0 and _finite_number(score):
+            entrants.append(name)
+    if entrants:
+        return _best_id(entrants, day, strength), defense
+    sleeves = []
+    for name in (bond, gold):
+        height = _cell(strength, day, name)
+        score = _cell(noise, day, name)
+        if _finite_number(height) and height > 0.0 and _finite_number(score):
+            sleeves.append(name)
+    if not sleeves:
+        return None, cash
+    if defense in sleeves:
+        best = _best_id(sleeves, day, strength)
+        if best != defense and _cell(noise, day, best) - _cell(noise, day, defense) > band:
+            defense = best
+        return None, defense
+    return None, _best_id(sleeves, day, strength)
 
 
 def _best(markets: list[Market], day, level: pd.DataFrame) -> Market | None:
@@ -352,10 +452,12 @@ def _decision_frame(rows: list[dict[str, float]], index: list, cash: str) -> pd.
 
 def target_weights(returns: pd.DataFrame, universe: Universe, *,
                    eligible: pd.DataFrame | None = None, params: Params | None = None,
-                   allow_after: bool = False) -> Allocation:
-    """先算 §2 的读数，再走 §3。不成交。"""
+                   allow_after: bool = False, equal_weight: bool = False) -> Allocation:
+    """先算 §2 的读数，再走 §3。不成交。`equal_weight` 只给 C-等权。"""
     frozen = Params() if params is None else params
-    panel = read_panel(returns, universe.cash, allow_after=allow_after, params=frozen)
+    panel = read_panel(
+        returns, universe.cash, allow_after=allow_after, params=frozen, equal_weight=equal_weight,
+    )
     return allocate(
         panel.H.index, panel.H, panel.F, panel.E, universe,
         prices=level_index(returns), returns=returns, eligible=eligible,

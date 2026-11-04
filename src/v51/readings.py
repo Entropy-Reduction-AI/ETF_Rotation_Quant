@@ -52,8 +52,12 @@ def _prepare(returns: pd.DataFrame) -> pd.DataFrame:
     return frame
 
 
-def read_series(asset: pd.Series, cash_log: pd.Series, params: Params | None = None) -> dict[str, pd.Series | pd.DataFrame | bool]:
-    """一条序列的速度、权重和三个读数。现金对数收益由调用方先算好。"""
+def read_series(asset: pd.Series, cash_log: pd.Series, params: Params | None = None, *,
+                equal_weight: bool = False) -> dict[str, pd.Series | pd.DataFrame | bool]:
+    """一条序列的速度、权重和三个读数。现金对数收益由调用方先算好。
+
+    `equal_weight` 是 §6.2 的 C-等权：§2 第 3 条改成 28 把永远等权，F 和 E 不动。
+    """
     frozen = Params() if params is None else params
     rulers = list(frozen.rulers)
     logged = np.log1p(asset.astype(float))
@@ -65,13 +69,19 @@ def read_series(asset: pd.Series, cash_log: pd.Series, params: Params | None = N
         {n: excess.rolling(n).sum() / (sigma * np.sqrt(n)) for n in rulers},
         index=filled.index,
     ).where(ready, axis=0)
-    loudness = pd.DataFrame(
-        {n: _percentile(velocity[n].abs().rolling(n).mean().to_numpy(dtype=float), frozen.quantile_min) for n in rulers},
-        index=velocity.index,
-    )
-    weight = loudness.div(loudness.sum(axis=1), axis=0)
-    warmup = loudness.isna().any(axis=1) & velocity.notna().all(axis=1)
-    weight.loc[warmup] = 1.0 / len(rulers)
+    defined = velocity.notna().all(axis=1)
+    if equal_weight:
+        weight = pd.DataFrame(np.nan, index=velocity.index, columns=velocity.columns, dtype=float)
+        weight.loc[defined] = 1.0 / len(rulers)
+        warmup = defined
+    else:
+        loudness = pd.DataFrame(
+            {n: _percentile(velocity[n].abs().rolling(n).mean().to_numpy(dtype=float), frozen.quantile_min) for n in rulers},
+            index=velocity.index,
+        )
+        weight = loudness.div(loudness.sum(axis=1), axis=0)
+        warmup = loudness.isna().any(axis=1) & defined
+        weight.loc[warmup] = 1.0 / len(rulers)
     level = (weight * velocity).sum(axis=1, min_count=len(rulers))
     frontier = (velocity < 0).mean(axis=1).where(velocity.notna().all(axis=1))
     slow = velocity.loc[:, list(long_rulers(frozen.rulers, frozen.long_min_days))].mean(axis=1, skipna=False)
@@ -91,7 +101,7 @@ def read_series(asset: pd.Series, cash_log: pd.Series, params: Params | None = N
 
 
 def read_panel(returns: pd.DataFrame, cash_id: str, *, allow_after: bool = False,
-               params: Params | None = None) -> PanelReadings:
+               params: Params | None = None, equal_weight: bool = False) -> PanelReadings:
     """面板上除现金外的每一列。默认拒绝晚于 2015-12-31 的日期。"""
     frozen = Params() if params is None else params
     frame = _prepare(returns)
@@ -107,7 +117,7 @@ def read_panel(returns: pd.DataFrame, cash_id: str, *, allow_after: bool = False
     for name in frame.columns:
         if name == cash_id:
             continue
-        one = read_series(frame[name], cash_log, frozen)
+        one = read_series(frame[name], cash_log, frozen, equal_weight=equal_weight)
         level[name] = one["H"]
         turned[name] = one["F"]
         easing[name] = one["E"]
