@@ -9,7 +9,9 @@
 5. 防守：没放进风险市场的部分默认放 10 年国债（像 A1）；黄金 H > 0 且比国债高 1 以上才换黄金；国债两条腿都不成立（自己在下跌）才拿现金；国债数据不够时拿现金。
 第二次运行（同一探索）：第一次把“国债读数还没有（预热不足一年）”当成拿现金，2008 年国债 0%；Owner 的意思是像 A1 一样直接用国债，改为“国债有价格就默认持有，只有国债两条腿都不成立才拿现金”。
 输出：每年日均风险仓位、防守构成、减仓与档位变动次数、单只替换次数；见顶、见底时点（用日度风险仓位）。
-用法：python results/v5/diag/design/profile32.py results/v5/diag/design
+第三次运行（2026-11-04，折中，参数 mid）：每天只在“面上的回撤”时减仓——该市场有宽度时 B ≥ 0.5，没有宽度时代表自己的 F ≥ 0.5——当天把腿一关掉；其余变化（腿二、单只替换）都等周度决策日。
+第四次运行（2026-11-04，参数 two）：在第二次运行（每天看）的基础上，腿一和宽度都要连续两个交易日越过 0.5 才算失效（市场和单只都一样），看噪音能少多少、转折慢多少。
+用法：python results/v5/diag/design/profile32.py results/v5/diag/design [mid|two]
 """
 import sys, pathlib, json, bisect
 ROOT = pathlib.Path(__file__).resolve().parents[4]; sys.path.insert(0, str(ROOT))
@@ -18,7 +20,7 @@ from src.v3.engine.spec import load_spec
 from src.v3.engine.sessions import decision_dates
 from src.v4.r5.design import Markets
 from src.v5.campaign import classes_for, class_map
-out = pathlib.Path(sys.argv[1]); m = Markets(load_spec()).get('index', t4=False, allow_substitute=True)
+out = pathlib.Path(sys.argv[1]); MID = len(sys.argv) > 2 and sys.argv[2] == 'mid'; TWO = len(sys.argv) > 2 and sys.argv[2] == 'two'; TAG = '-mid' if MID else '-two' if TWO else ''; m = Markets(load_spec()).get('index', t4=False, allow_substitute=True)
 ret = m.signal.loc[:'2015-12-31']; cash = m.cash_id; cls = classes_for(list(m.names), cash, class_map())
 BROAD = {'A股': 'csi300', '港股': 'hsi', '美股': 'spx'}; RISK = list(BROAD.values()); MK = {v: k for k, v in BROAD.items()}
 G = sorted(set(np.round(np.geomspace(3, 250, 30)).astype(int))); LONG = [n for n in G if n >= 60]
@@ -47,6 +49,9 @@ B = {}
 for k, mem in uni.items():
     f = Fd[mem]; n = f.notna().sum(axis=1); B[BROAD[k]] = ((f >= 0.5).sum(axis=1) / n).where(n >= 3)
 B = pd.DataFrame(B)
+if TWO:
+    Fd = pd.concat([Fd, Fd.shift(1)]).groupby(level=0).min().reindex(idx)
+    B = pd.concat([B, B.shift(1)]).groupby(level=0).min().reindex(idx)
 def legs(c, t):
     h, f, e = Hd.at[t, c], Fd.at[t, c], Ed.at[t, c]
     if pd.isna(h) or pd.isna(f) or pd.isna(e): return None
@@ -77,6 +82,14 @@ for t in idx:
             picks = [c for _, c in rk[:3]] or [h]
         else: picks = []
         dh = defense(t, dh)
+    elif h and MID:
+        b = B.at[t, h] if h in B else np.nan
+        surf = (pd.notna(b) and b >= 0.5) or (pd.isna(b) and pd.notna(Fd.at[t, h]) and Fd.at[t, h] >= 0.5)
+        if surf and w > 0:
+            wn = w - 0.5 if w == 1.0 and legs(h, t) is not None and legs(h, t) < 1 else (0.0 if legs(h, t) == 0 else w)
+            if wn < w: w = wn; nred.append(t)
+            if w == 0: h, picks = None, []
+        dh = defense(t, dh)
     elif h:
         wn = legs(h, t)
         if wn is not None and wn < w: w = wn; nred.append(t)
@@ -90,14 +103,14 @@ for t in idx:
         if not picks: w = 0.0; h = None
         dh = defense(t, dh)
     rows.append(dict(t=t, y=t.year, market=h or '无', w=w if h else 0.0, defense=dh, picks='|'.join(picks)))
-d = pd.DataFrame(rows); d.to_csv(out / 'profile32-daily.csv', index=False)
+d = pd.DataFrame(rows); d.to_csv(out / ('profile32' + TAG + '-daily.csv'), index=False)
 yr = pd.DataFrame({'风险仓位': d.groupby('y').w.mean() * 100})
 for c, nm in (('csi300', 'A 股'), ('hsi', '港股'), ('spx', '美股')): yr[nm] = d.assign(v=np.where(d.market == c, d.w, 0)).groupby('y').v.mean() * 100
 for c, nm in (('cgb-10y', '国债'), ('gold', '黄金'), ('cash', '现金')): yr[nm] = d.assign(v=np.where(d.defense == c, 1 - d.w, 0)).groupby('y').v.mean() * 100
 yr['档位变动'] = d.groupby('y').w.apply(lambda s: int((s != s.shift()).iloc[1:].sum()))
 yr['当天减仓'] = pd.Series([t.year for t in nred]).value_counts().reindex(yr.index).fillna(0).astype(int)
 yr['单只替换'] = pd.Series([t.year for t in nrep]).value_counts().reindex(yr.index).fillna(0).astype(int)
-yr = yr.round(0); yr.to_csv(out / 'profile32-yearly.csv')
+yr = yr.round(0); yr.to_csv(out / ('profile32' + TAG + '-yearly.csv'))
 p300 = np.exp(np.log1p(ret['csi300'].fillna(0)).cumsum()); ws = d.set_index('t').w
 def turn(t0, kind):
     t0 = pd.Timestamp(t0); x = ws.loc[t0:]
@@ -108,5 +121,5 @@ def turn(t0, kind):
     return {'减到半仓或以下': f(x <= 0.5), '风险清零': f(x == 0)} if kind == 'top' else {'回到半仓或以上': f(x >= 0.5), '满仓': f(x == 1)}
 T = {'2007-10 顶': turn('2007-10-16', 'top'), '2009-08 顶': turn('2009-08-04', 'top'), '2015-06 顶': turn('2015-06-12', 'top'), '2008-11 底': turn('2008-11-04', 'bot')}
 res = dict(平均风险仓位=round(float(yr['风险仓位'].mean()), 0), 十年档位变动=int(yr['档位变动'].sum()), 十年单只替换=len(nrep), 十年当天减仓=len(nred), 转折=T)
-(out / 'profile32.json').write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str))
+(out / ('profile32' + TAG + '.json')).write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str))
 print(json.dumps(res, ensure_ascii=False, indent=1, default=str)); print(yr.to_string())
