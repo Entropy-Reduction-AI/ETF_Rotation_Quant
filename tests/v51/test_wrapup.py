@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -13,7 +14,7 @@ from src.v51.gate import conclude
 from src.v51.params import V51Error
 from src.v51.robustness import knobs, rank_best
 from src.v51.structure import Slot, draw_paths, portfolio_nets
-from src.v51.turnover import split_trade, target_weights
+from src.v51.turnover import decompose, split_trade, target_weights
 from src.v51.universe import Market, Universe
 
 
@@ -176,6 +177,69 @@ class TurnoverSplit(unittest.TestCase):
         )
         self.assertAlmostEqual(parts["换防守"]["turnover_one_way"], 0.5)
         self.assertEqual(parts["第一层档位"]["turnover_one_way"], 0.0)
+
+    def test_grand_total_equals_sources_not_twice(self):
+        index = pd.bdate_range("2014-12-29", "2015-01-09")
+        frame = pd.DataFrame({
+            "risk": 0.0,
+            "defense": "cash",
+            "picks": "",
+            "market": "",
+            "cost": 0.0,
+            "buy": 0.0,
+        }, index=index)
+        frame.loc[pd.Timestamp("2014-12-31"), ["risk", "picks", "market", "buy", "cost"]] = [
+            1.0, "a|b", "A", 1.5, 0.01,
+        ]
+        frame.loc[pd.Timestamp("2015-01-05"), ["risk", "picks", "market"]] = [1.0, "a|b", "A"]
+        frame.loc[pd.Timestamp("2015-01-06"), ["risk", "picks", "market", "defense", "buy", "cost"]] = [
+            0.5, "c", "H", "gold", 2.5, 0.02,
+        ]
+        frame.loc[pd.Timestamp("2015-01-07"), ["buy", "cost"]] = [0.4, 0.004]
+        exits = pd.DataFrame({"t": [pd.Timestamp("2015-01-06")], "id": ["a"], "why": ["F"]})
+        fees = {"cash": 0.0, "a": 0.001, "b": 0.002, "c": 0.003, "gold": 0.0005}
+        table = decompose(frame, exits, fees)
+        sources = table[table["source"] != "合计"]
+        self.assertGreater(float(sources.loc[sources["source"] == "第一层档位", "turnover_one_way"].sum()), 0.0)
+        self.assertGreater(float(sources.loc[sources["source"] == "换市场", "turnover_one_way"].sum()), 0.0)
+        self.assertGreater(float(sources.loc[sources["source"] == "未分解", "turnover_one_way"].sum()), 0.0)
+        for year, group in table.groupby(table["year"].astype(str)):
+            if year == "全部":
+                continue
+            part = group[group["source"] != "合计"]
+            total = group[group["source"] == "合计"]
+            self.assertEqual(len(total), 1)
+            for col in ("turnover_one_way", "cost"):
+                self.assertAlmostEqual(float(total[col].iloc[0]), float(part[col].sum()), places=9)
+        grand = table[(table["year"].astype(str) == "全部") & (table["source"] == "合计")]
+        self.assertEqual(len(grand), 1)
+        self.assertAlmostEqual(float(grand["turnover_one_way"].iloc[0]), 4.4, places=9)
+        self.assertAlmostEqual(float(grand["cost"].iloc[0]), 0.034, places=9)
+        self.assertAlmostEqual(float(grand["turnover_one_way"].iloc[0]), float(sources["turnover_one_way"].sum()), places=9)
+        self.assertAlmostEqual(float(grand["cost"].iloc[0]), float(sources["cost"].sum()), places=9)
+        self.assertNotAlmostEqual(
+            float(grand["turnover_one_way"].iloc[0]),
+            2.0 * float(sources["turnover_one_way"].sum()),
+            places=6,
+        )
+
+    def test_published_turnover_total_is_not_double_counted(self):
+        root = Path(__file__).resolve().parents[2] / "results" / "v5.1"
+        for name in ("index.csv", "tradable.csv", "g.csv", "summary.csv"):
+            frame = pd.read_csv(root / "turnover" / name)
+            groups = frame.groupby("pool") if "pool" in frame.columns else [(None, frame)]
+            for _pool, part in groups:
+                sources = part[part["source"] != "合计"]
+                grand = part[(part["year"].astype(str) == "全部") & (part["source"] == "合计")]
+                self.assertEqual(len(grand), 1)
+                for col in ("turnover_one_way", "cost"):
+                    src = float(sources[col].sum())
+                    tot = float(grand[col].iloc[0])
+                    self.assertAlmostEqual(tot, src, places=6)
+                    self.assertGreater(abs(tot - 2.0 * src), 1e-4)
+        for pool in ("index", "tradable"):
+            daily = pd.read_csv(root / "design" / pool / "daily.csv", parse_dates=["date"])
+            self.assertLessEqual(pd.Timestamp(daily["date"].max()), pd.Timestamp("2015-12-31"))
 
 
 class GateConclusion(unittest.TestCase):
