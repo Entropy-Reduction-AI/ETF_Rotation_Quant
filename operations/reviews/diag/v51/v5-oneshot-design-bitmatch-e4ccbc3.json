@@ -1,0 +1,20 @@
+{
+  "run_code_git": "e4ccbc3c41e1769e6404c9cf2b01af0b9906e3e8",
+  "freeze_code_git": "8970bcbc7986c9a67d9ca535ca58a8855c910495",
+  "db_sha256": "167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3",
+  "design_end": "2015-12-31",
+  "note": "运行代码 e4ccbc3 ≠ 冻结 8970bcb，差异只是窗口开关；设计期逐位复现于 e4ccbc3 worktree。",
+  "v4_r5": {
+    "B0/index": {"n": 2671, "exact": true, "max_diff": 0.0, "frozen": "results/v4/r5/design/B0/index/net.csv"},
+    "B0/tradable": {"n": 2671, "exact": true, "max_diff": 0.0, "frozen": "results/v4/r5/design/B0/tradable/net.csv"},
+    "A1/index": {"n": 2671, "exact": true, "max_diff": 0.0, "frozen": "results/v4/r5/design/A1/index/net.csv"},
+    "A1/tradable": {"n": 2671, "exact": true, "max_diff": 0.0, "frozen": "results/v4/r5/design/A1/tradable/net.csv"},
+    "A2/index": {"n": 2671, "exact": true, "max_diff": 0.0, "frozen": "results/v4/r5/design/A2/index/net.csv"},
+    "A2/tradable": {"n": 2671, "exact": true, "max_diff": 0.0, "frozen": "results/v4/r5/design/A2/tradable/net.csv"}
+  },
+  "v51": {
+    "index": {"n": 2671, "exact": true, "max_diff": 0.0, "frozen": "results/v5.1/design/index/daily.csv"},
+    "tradable": {"n": 2671, "exact": true, "max_diff": 0.0, "frozen": "results/v5.1/design/tradable/daily.csv"}
+  },
+  "all_match": true
+}
