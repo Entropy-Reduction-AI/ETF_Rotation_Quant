@@ -63,7 +63,7 @@ title(fig, '你说的“传导”数据上看得到：见顶时转负一路传�
 fig.tight_layout(); fig.savefig(OUT / 'm16-propagate.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
 # m17：设计稿第 3.1 版第一层每年持有什么（profile31-yearly.csv）
 import pandas as pd
-y = pd.read_csv(D / 'profile31-e2m-yearly.csv', index_col=0)
+y = pd.read_csv(D / 'profile32-yearly.csv', index_col=0)
 cols = [('A 股', '#c2410c'), ('港股', '#0d9488'), ('美股', '#1d4ed8'), ('国债', '#a3a3a3'), ('黄金', '#d4a017'), ('现金', '#e5e7eb')]
 fig, ax = plt.subplots(figsize=(13, 4.8)); x = np.arange(len(y)); bot = np.zeros(len(y))
 for c, col in cols:
@@ -71,10 +71,10 @@ for c, col in cols:
     for i, v in enumerate(y[c]):
         if v >= 12: ax.text(i, bot[i] + v / 2, f'{v:.0f}', ha='center', va='center', fontsize=9.5, color='white' if c not in ('现金', '黄金', '国债') else INK)
     bot += y[c].values
-for i, (r, hw) in enumerate(zip(y['风险仓位'], y['半仓周%'])):
+for i, r in enumerate(y['风险仓位']):
     ax.text(i, 103, f'风险 {r:.0f}%', ha='center', fontsize=9.5, color=INK, weight='bold')
 ax.set_xticks(x, [str(v) for v in y.index]); ax.set_ylim(0, 110); ax.set_ylabel('全年平均仓位 %', color=MUTED)
 ax.legend(frameon=False, ncol=6, fontsize=10, loc='upper center', bbox_to_anchor=(.5, -.08)); ax.grid(axis='y', alpha=.22)
-title(fig, '第 3.1 版：大牛市八到九成多在风险市场，2008 年七成在现金，2010–14 年主要在美股',
-      '设计期 2006–2015，每周规则想持有什么（第一层 + 防守），不含离场和成交，不算收益。2006–07 年尺子响度的历史不够一年，按规则用等权。')
+title(fig, '第 3.2 版：2007 年九成在风险市场，2008 年八成多在国债，2010–14 年主要在美股',
+      '设计期 2006–2015，规则每天想持有什么（第一层 + 防守），不算收益。2006–07 年尺子响度的历史不够一年，按规则用等权；2006–07 年还没有国债数据，防守只能是现金。')
 fig.tight_layout(); fig.savefig(OUT / 'm17-profile31.png', dpi=200, bbox_inches='tight', facecolor='white'); plt.close(fig)
