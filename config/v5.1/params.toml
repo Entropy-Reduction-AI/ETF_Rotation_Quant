@@ -1,0 +1,33 @@
+# v5.1 冻结参数（预注册 §2–§3.4，D31–D33）。
+# 引擎只接受和代码里写死的常数一致的这一份。改任何一个数都是改规则。
+# 大类表不复制，池子不另造成员：沿用 config/v5/classes.csv 和 v4 的 Markets。
+
+schema = "v5.1"
+design_end = "2015-12-31"
+
+# 3–250 天对数等距 30 点，四舍五入去重，共 28 把。长尺子是其中 ≥60 天的 10 把。
+rulers = [3, 4, 5, 6, 7, 9, 10, 12, 14, 16, 19, 22, 25, 30, 34, 40, 47, 54, 63, 74, 86, 100, 117, 136, 158, 184, 215, 250]
+long_min_days = 60
+sigma_window = 250
+quantile_min = 250
+# 长尺子放缓：连续两个间隔，各 20 个交易日。次数是结构，不单列成可调参数。
+slow_gap = 20
+
+frontier = 0.5
+noise_band = 1.0
+breadth_min = 3
+top_n = 3
+hard_stop = 0.10
+
+bond = "cgb-10y"
+gold = "gold"
+cash = "cash"
+
+classes = "config/v5/classes.csv"
+pools = ["index", "tradable"]
+layer1 = ["A股", "港股", "美股"]
+
+[representative]
+"A股" = "csi300"
+"港股" = "hsi"
+"美股" = "spx"
