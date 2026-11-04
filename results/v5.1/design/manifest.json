@@ -7,7 +7,6 @@
   "db_sha256": "167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3",
   "excluded": [
     "R1",
-    "G",
     "robustness"
   ],
   "git_sha": "abbecce164e314e5a9993486ce0d1ec328a8e92c",
@@ -22,6 +21,7 @@
     "tradable"
   ],
   "r5": "results/v5.1/controls",
+  "r6": "results/v5.1/other-market",
   "rules": "v5.1",
   "window": [
     "2006-01-01",
