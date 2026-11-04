@@ -7,8 +7,8 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Manager
-- Last updated: 2026-11-01（`milestone/v5-prereg-freeze` 指向 `f2ab4f5`：D29 四处选择，#156 大类草稿经 #157 签收；无 `results/v5/LOCK`；设计期 ≤2015-12-31；既有标签不移动）
-- Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`；D26-5 见 `operations/planning/2026-10-31-d26-v5-direction.md`；2026-11-01 新增见 `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`
+- Last updated: 2026-11-04（`milestone/v5.1-prereg-freeze` 指向 `1174e475`：R1b approve #230，#228 R1b 稿；无 `results/v5.1/LOCK`；设计期 ≤2015-12-31；既有标签不移动）
+- Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`；D26-5 见 `operations/planning/2026-10-31-d26-v5-direction.md`；2026-11-01 新增见 `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`；2026-11-04 新增见 `operations/work_logs/2026-11-04-v5.1-prereg-freeze-tag.md`
 
 ## Purpose
 
@@ -109,12 +109,29 @@ D26-5 / v5-R1（决定 `operations/planning/2026-10-31-d26-v5-direction.md`；�
 
 核对见 `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`。
 
+## `milestone/v5.1-prereg-freeze`
+
+2026-11-04。附注标签打在 #230 rebase-merge 之后的 `main` 尖端 `1174e475ecb62995eb420f700bd1771b52e34295`。尖端提交是 Reviewer 对 v5.1 预注册 R1b 的 `approve`（MF/SF 全闭合）。父提交 `d9c966f035805cfb3bee9b8d564ea8ab65ade5e2` 已含 #228 的 R1b 稿（合并提交 `5bd75a0243ecfa00d8181efa60ce48827a252503`）。新建时 origin 上还没有这个名字。`milestone/phase1-archive`、`milestone/v3-code-freeze`、`milestone/v3.1-prereg-freeze`、`milestone/v4-prereg-freeze`、`milestone/v4-code-freeze`、`milestone/v4-code-freeze-2`、`milestone/v5-prereg-freeze` 的对象 SHA 与上表一致，没有移动。
+
+附注说明：`v5.1 prereg freeze (R1b approve #230; #228 R1b稿; design-period ≤2015-12-31; no LOCK; no 2016+)`。标签日期 2026-11-04（Asia/Taipei）。
+
+打标签时核对过：该提交含 `docs/prereg/etf-multiasset-rotation-prereg-v5.1.md`；正文写明中国数据只允许 end ≤ 2015-12-31。树里没有 `results/v5.1/LOCK`。没有跑回测，没有改写 `main`。
+
+| 标签 | 标签对象 SHA | 指向提交 SHA | 说明 | 处置 | 理由 |
+| --- | --- | --- | --- | --- | --- |
+| `milestone/v5.1-prereg-freeze` | `87a57809bac36f1f2feec4b79e52656be456a35b` | `1174e475ecb62995eb420f700bd1771b52e34295` | R1b approve #230；#228 R1b 稿。无 `results/v5.1/LOCK`。设计期 ≤2015-12-31 | 保留 | v5.1 规则冻结。名字按 `milestone/<版本>-prereg-freeze` |
+
+本索引提交只补上表。没有移动、删除或改写任何标签，也没有改写 `main`。
+
+核对见 `operations/work_logs/2026-11-04-v5.1-prereg-freeze-tag.md`。
+
 ## Related Files
 
 - `operations/planning/2026-10-28-d14-owner-decisions.md`
 - `operations/work_logs/2026-10-28-tag-cleanup.md`
 - `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`
 - `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`
+- `operations/work_logs/2026-11-04-v5.1-prereg-freeze-tag.md`
 - `operations/reviews/2026-11-01-v5-classes-draft-signoff.md`
 - `operations/planning/2026-10-30-v4-r5c-plan.md`
 - `operations/reviews/2026-10-30-v4-r5c-d25-signoff.md`
