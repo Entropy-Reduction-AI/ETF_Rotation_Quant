@@ -8,7 +8,7 @@
 - Author: ETF Rotation Reviewer（lwx0218）
 - Route: review-only（`operations/reviews/**` + diag 脚本/JSON）
 - Dev PR: [#255](https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/255)
-- 一次性产物 tip: **`6c94f5ed6d6e88e7d992d7b51787b8bf3fcba3c5`**
+- 一次性产物 tip: **`6c94f5ed6d6e88e7d992d7b51787b8bf3fcba3c5`**（Dev #255 附录 tip: **`6615b81cc99aca74a8e87ade375318d917360511`**）
 - 运行代码（`ran.json` / oneshot 入口）: **`e4ccbc3c41e1769e6404c9cf2b01af0b9906e3e8`**
 - 代码冻结 tag: `milestone/v5-code-freeze` → **`8970bcbc7986c9a67d9ca535ca58a8855c910495`**
 - LOCK: `results/v5/LOCK`（D34-3 已签收）
@@ -16,9 +16,9 @@
 
 ## Decision
 
-**approve_with_follow_up**
+**approve**
 
-Reviewer 独立核对：① 在运行代码 `e4ccbc3` 上设计期（end ≤ 2015-12-31）E2/B0、A1、A2、v5.1 两池日净序列与已签收冻结产物 **逐位一致**；② 只读 `results/v5/oneshot/**` 的 `net.csv` + `month-states.csv` 重算 `criteria.csv` **12 行全列一致**；③ 判据⑤ 尝试次数 **115** 与 Dev `attempts.json` 一致（L3=10，L4=41，L5=0，C=0）。**未**合并 #255；**未**移动 tag；**未**重跑 2016+ 中国组合 NAV。
+Reviewer 独立核对：① 在运行代码 `e4ccbc3` 上设计期（end ≤ 2015-12-31）E2/B0、A1、A2、v5.1 两池日净序列与已签收冻结产物 **逐位一致**；② 只读 `results/v5/oneshot/**` 的 `net.csv` + `month-states.csv` 重算 `criteria.csv` **12 行全列一致**；③ 判据⑤ 尝试次数 **115** 与 Dev `attempts.json` 一致（L3=10，L4=41，L5=0，C=0）；④ Dev 附录 `operations/reviews/2026-11-04-v5-oneshot-signoff-appendix-a1-cash.md`（#255 @ `6615b81`）与 oneshot `held.csv` / 冻结规则 **一致**，现金月成因已闭合。**未**合并 #255；**未**移动 tag；**未**重跑 2016+ 中国组合 NAV。
 
 正式判据①⑥对 U-指数 E2/B0 的结论为 **不通过**（`criteria.csv` `pass=False`），属预注册检验结果，非落盘/复算差错。
 
@@ -26,7 +26,7 @@ Reviewer 独立核对：① 在运行代码 `e4ccbc3` 上设计期（end ≤ 201
 | --- | --- |
 | Must-fix | **0** |
 | Should-fix | **0** |
-| Note | **1**（附录 A1 可交易现金月诊断待 Dev 只读补全，见 §4） |
+| Note | **0** |
 
 ---
 
@@ -86,9 +86,19 @@ Reviewer 独立核对：① 在运行代码 `e4ccbc3` 上设计期（end ≤ 201
 
 ## 4 · 附录 · A1 可交易现金月（Dev 只读诊断）
 
-**附录待 Dev 补**
+**来源（Dev #255 head `6615b81`）**: [`operations/reviews/2026-11-04-v5-oneshot-signoff-appendix-a1-cash.md`](https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/6615b81cc99aca74a8e87ade375318d917360511/operations/reviews/2026-11-04-v5-oneshot-signoff-appendix-a1-cash.md)
 
-Dev 只读诊断目标月份（U-可交易 A1）: 2016-01–2017-08、2017-12、2018-04、2018-07（513500 载体/溢价/成交）。Reviewer 本 PR **不**编造 fills；待 Dev 在 #255 或后续 comment 贴表后，Manager 可要求补签附录结论。
+Reviewer 对附录结论的 spot（只读 `results/v5/oneshot/tradable/A1/held.csv`、`net.csv` 与 `config/v4/peers.toml`，**未**重跑组合）:
+
+| 核对点 | 结论 |
+| --- | --- |
+| 现金是否溢价控制 | **否** — A1 `premium_module = false`，对照不读 θ |
+| 主因 1 | 规则要 10 年国债时 **`511260` 不可用** → 整仓现金 |
+| 主因 2 | 规则要标普时 **`513500` 流动性未过 3000 万** → 选中 **`050025`**，复权净值止于 2015-12-31，2016+ 无成交打印 |
+| 2017-08 | **不是现金月**（2017-08-31 开盘持仓为沪深300，见附录表） |
+| 2017-12 / 2018-04 | 月末决策买沪深300；当月开盘现金来自**上一笔**标普/国债买不进 |
+
+Follow-up **已关闭**（原 Note：附录待 Dev 补）。
 
 ---
 
@@ -122,6 +132,5 @@ mkdir -p outputs
 
 | 角色 | 行动 |
 | --- | --- |
-| **Dev** | 补 §4 A1 可交易现金月只读诊断（513500）；不为此重跑 oneshot |
 | **Owner / Orchestrator** | 知悉一次性检验 **不通过**（`pass=False`）为策略结论；是否关闭 v5 入围线由看板/预注册流程决定，非本签收 MF |
 | **Cloud / Owner** | 若合入 Dev #255，仍按 LOCK 纪律：**禁止**再跑 2016+ 中国 PnL |
