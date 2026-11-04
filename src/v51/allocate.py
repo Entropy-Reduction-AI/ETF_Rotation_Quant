@@ -84,6 +84,19 @@ def _priced(returns: pd.DataFrame | None, day, name: str) -> bool:
     return value == value and np.isfinite(value)
 
 
+def leg_score(name: str, day, level: pd.DataFrame, frontier_share: pd.DataFrame,
+             easing: pd.DataFrame, width: float, frontier: float) -> float | None:
+    """一个代表在这一天的风险仓位。读数缺了就是没有这条腿。"""
+    height = _cell(level, day, name)
+    share = _cell(frontier_share, day, name)
+    slow = _cell(easing, day, name)
+    if pd.isna(height) or pd.isna(share) or pd.isna(slow):
+        return None
+    leg1 = (share < frontier) and not (pd.notna(width) and width >= frontier)
+    leg2 = (height > 0.0) or bool(slow)
+    return 0.5 * float(leg1) + 0.5 * float(leg2)
+
+
 def _rank(names: list[str], day, level: pd.DataFrame) -> list[str]:
     rows = []
     for name in names:
@@ -118,9 +131,21 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
              returns: pd.DataFrame | None = None, weekly: pd.DatetimeIndex | None = None,
              eligible: pd.DataFrame | None = None, params: Params | None = None,
              allow_after: bool = False, mode: str = "legs",
-             strength: pd.DataFrame | None = None, noise: pd.DataFrame | None = None) -> Allocation:
-    """按交易日走到收盘。不算组合收益。"""
+             strength: pd.DataFrame | None = None, noise: pd.DataFrame | None = None,
+             selection: str = "market", daily_look: bool = True) -> Allocation:
+    """按交易日走到收盘。不算组合收益。
+
+    `selection="all"` 只给 §7.1 S12：不先锁定一个市场，三个市场里够格的 ETF 按 H 一起取前 3。
+    `daily_look=False` 只给 S13：减仓、单只离场和换防守都只在周度决策日做。
+    默认参数走冻结规则，两条都不打开。
+    """
     frozen = Params() if params is None else params
+    if selection not in {"market", "all"}:
+        raise V51Error(f"没有这种挑选：{selection}")
+    if selection == "all" and mode != "legs":
+        raise V51Error("全部一起排只用于两条腿")
+    if not daily_look and mode != "legs":
+        raise V51Error("只在周度决策日减仓只用于两条腿")
     days = pd.DatetimeIndex(pd.to_datetime(index))
     if days.tz is not None:
         raise V51Error("交易日不带时区")
@@ -155,14 +180,7 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
         return _legs(market.representative, day, width)
 
     def _legs(name: str, day, width: float) -> float | None:
-        height = _cell(level, day, name)
-        share = _cell(frontier_share, day, name)
-        slow = _cell(easing, day, name)
-        if pd.isna(height) or pd.isna(share) or pd.isna(slow):
-            return None
-        leg1 = (share < frozen.frontier) and not (pd.notna(width) and width >= frozen.frontier)
-        leg2 = (height > 0.0) or bool(slow)
-        return 0.5 * float(leg1) + 0.5 * float(leg2)
+        return leg_score(name, day, level, frontier_share, easing, width, frozen.frontier)
 
     def defense_of(day, current: str) -> str:
         bond = universe.bond
@@ -227,6 +245,7 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
     peak: dict[str, float] = {}
     previous_count = 0
     previous_weights = {universe.cash: 1.0}
+    name_market = {name: market for market in universe.markets for name in market.members}
     state_rows = []
     exit_rows = []
     decision_rows = []
@@ -235,23 +254,25 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
     for day in days:
         stamp = pd.Timestamp(day).normalize()
         sold_today: set[str] = set()
-        for name in list(picks):
-            px = price_of(stamp, name)
-            if valid_mark(px):
-                peak[name] = px if name not in peak else max(peak[name], px)
-            why = None
-            share = _cell(frontier_share, stamp, name)
-            if pd.notna(share) and share >= frozen.frontier:
-                why = "F"
-            elif name in peak and valid_mark(px) and triggered(px, peak[name], frozen.hard_stop):
-                why = "硬闸门"
-            if why is None:
-                continue
-            picks.remove(name)
-            blocked.add(name)
-            sold_today.add(name)
-            peak.pop(name, None)
-            exit_rows.append((stamp, name, why))
+        if daily_look or stamp in week_set:
+            for name in list(picks):
+                px = price_of(stamp, name)
+                if valid_mark(px):
+                    peak[name] = px if name not in peak else max(peak[name], px)
+                why = None
+                share = _cell(frontier_share, stamp, name)
+                if pd.notna(share) and share >= frozen.frontier:
+                    why = "F"
+                elif (frozen.hard_stop is not None and name in peak and valid_mark(px)
+                      and triggered(px, peak[name], frozen.hard_stop)):
+                    why = "硬闸门"
+                if why is None:
+                    continue
+                picks.remove(name)
+                blocked.add(name)
+                sold_today.add(name)
+                peak.pop(name, None)
+                exit_rows.append((stamp, name, why))
 
         if stamp in week_set:
             if mode == "vol_ratio":
@@ -278,8 +299,26 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
                             held = challenger
                 risk = float(scores[held.representative]) if held is not None else 0.0
                 defense = defense_of(stamp, defense)
-            if held is None:
-                new: list[str] = []
+            if selection == "all" and mode != "vol_ratio":
+                scores = {market.representative: market_legs(market, stamp) for market in universe.markets}
+                open_markets = [
+                    market for market in universe.markets
+                    if scores[market.representative] and any(buyable(name, stamp) for name in market.members)
+                ]
+                pool: list[str] = []
+                for market in open_markets:
+                    pool.extend(qualified(market, stamp, blocked))
+                chosen = _rank(list(dict.fromkeys(pool)), stamp, level)[:frozen.top_n]
+                if not chosen and open_markets:
+                    best = _best(open_markets, stamp, level)
+                    stand = fallback(best, stamp, blocked, check_frontier=False) if best is not None else None
+                    chosen = [stand] if stand else []
+                new = chosen
+                parts = [float(scores[name_market[name].representative] or 0.0) for name in new]
+                held = None if not new else name_market[new[0]]
+                risk = 0.0 if not parts else float(sum(parts) / len(parts))
+            elif held is None:
+                new = []
             else:
                 ranked = qualified(held, stamp, blocked)
                 chosen = ranked[:frozen.top_n]
@@ -296,7 +335,54 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
                 held = None
                 risk = 0.0
             blocked = set(sold_today)
-        elif held is not None and mode == "vol_ratio":
+        elif selection == "all" and held is not None and daily_look:
+            kept: list[str] = []
+            for name in list(picks):
+                updated = market_legs(name_market[name], stamp)
+                if updated == 0.0:
+                    exit_rows.append((stamp, name, "市场退出"))
+                    peak.pop(name, None)
+                    continue
+                kept.append(name)
+            picks = kept
+            if picks:
+                parts = []
+                for name in picks:
+                    updated = market_legs(name_market[name], stamp)
+                    if updated is not None:
+                        parts.append(float(updated))
+                if parts:
+                    proposed = float(sum(parts) / len(parts))
+                    if proposed < risk:
+                        risk = proposed
+                while len(picks) < frozen.top_n and len(picks) < previous_count:
+                    pool = []
+                    for market in universe.markets:
+                        score = market_legs(market, stamp)
+                        if not score or not any(buyable(name, stamp) for name in market.members):
+                            continue
+                        pool.extend(name for name in qualified(market, stamp, blocked) if name not in picks)
+                    ranked = [name for name in _rank(list(dict.fromkeys(pool)), stamp, level) if name not in picks]
+                    if not ranked:
+                        break
+                    picks.append(ranked[0])
+            if not picks:
+                open_markets = [
+                    market for market in universe.markets
+                    if market_legs(market, stamp) and any(buyable(name, stamp) for name in market.members)
+                ]
+                best = _best(open_markets, stamp, level)
+                stand = fallback(best, stamp, blocked, check_frontier=True) if best is not None else None
+                if stand:
+                    picks = [stand]
+                    held = name_market[stand]
+                else:
+                    held = None
+                    risk = 0.0
+            else:
+                held = name_market[picks[0]]
+            defense = defense_of(stamp, defense)
+        elif held is not None and daily_look and mode == "vol_ratio":
             while len(picks) < frozen.top_n:
                 if len(picks) >= previous_count:
                     break
@@ -311,7 +397,7 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
                 else:
                     held = None
                     risk = 0.0
-        elif held is not None:
+        elif held is not None and daily_look:
             updated = market_legs(held, stamp)
             if updated is not None and updated < risk:
                 risk = float(updated)
@@ -344,9 +430,23 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
             decision_rows.append(weights)
             decision_index.append(stamp)
         previous_weights = weights
+        if selection == "all":
+            reps: list[str] = []
+            labels: list[str] = []
+            for name in picks:
+                market = name_market.get(name)
+                if market is None or market.representative in reps:
+                    continue
+                reps.append(market.representative)
+                labels.append(market.name)
+            market_id = "|".join(reps)
+            market_label = "|".join(labels)
+        else:
+            market_id = "" if held is None else held.representative
+            market_label = "" if held is None else held.name
         row = {
-            "market": "" if held is None else held.representative,
-            "market_name": "" if held is None else held.name,
+            "market": market_id,
+            "market_name": market_label,
             "risk": 0.0 if held is None else risk,
             "defense": defense,
             "picks": "|".join(picks),
