@@ -7,7 +7,7 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Manager
-- Last updated: 2026-11-04（`milestone/v5-code-freeze` 指向 `8970bcbc`：D34-1 #251+#252；无 `results/v5/LOCK`；设计期 ≤2015-12-31；过关 B0；既有标签不移动）
+- Last updated: 2026-11-04（`milestone/v5-code-freeze` 指向 `8970bcbc`：D34-1 #251+#252；`results/v5/LOCK` 待 D34-3 PR 合入；设计期 ≤2015-12-31；过关 B0；既有标签不移动）
 - Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`；D26-5 见 `operations/planning/2026-10-31-d26-v5-direction.md`；2026-11-01 新增见 `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`；2026-11-04 新增见 `operations/work_logs/2026-11-04-v5.1-prereg-freeze-tag.md`；2026-11-04 代码冻结见 `operations/work_logs/2026-11-04-v5-code-freeze-tag.md`
 
 ## Purpose
