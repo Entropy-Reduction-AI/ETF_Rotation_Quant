@@ -1,0 +1,77 @@
+{
+  "dev_head": "2fae1cc8eec1eae7ab93deab19c688d44f3fa264",
+  "ledger_run_sha_claimed": "eec5bc04f8054b82d234bc6218c112633dd0e725",
+  "window": {
+    "start": "2003-07-01",
+    "end": "2026-09-30",
+    "n": 5850
+  },
+  "v51_full": {
+    "cagr": {
+      "computed": 0.01301002509662208,
+      "summary": 0.01301002509656457,
+      "match": true
+    },
+    "calmar": {
+      "computed": 0.028995290987500498,
+      "summary": 0.02899529098736334,
+      "match": true
+    }
+  },
+  "r0": {
+    "n_sims": 2000,
+    "seed": 20261101,
+    "cagr_median": 0.06317614511917014,
+    "calmar_p95": 0.19829161322947234,
+    "summary_calmar_p95": 0.1982916132294723,
+    "p95_match": true
+  },
+  "item5": {
+    "calmar_pass": false,
+    "cagr_pass": false,
+    "strategy_calmar": 0.028995290987500498,
+    "hurdle_calmar_p95": 0.19829161322947234,
+    "strategy_cagr": 0.01301002509662208,
+    "hurdle_bm_cagr": 0.08212499703690312
+  },
+  "controls": {
+    "E2_cagr": {
+      "computed": 0.07047515320986442,
+      "summary": 0.07047515320981357,
+      "match": true
+    },
+    "A1_cagr": {
+      "computed": 0.0896177435619967,
+      "summary": 0.08961774356204466,
+      "match": true
+    },
+    "BM-G_cagr": {
+      "computed": 0.08212499703690312,
+      "summary": 0.0821249970369009,
+      "match": true
+    }
+  },
+  "manifest": {
+    "china_pnl": false,
+    "pool": "G",
+    "robustness": false,
+    "lock": false,
+    "git_sha": "eec5bc04f8054b82d234bc6218c112633dd0e725"
+  },
+  "ledger": {
+    "row_count": 11,
+    "other_market_rows": 4,
+    "lock_rows": 0,
+    "other_arms": [
+      "A1",
+      "E2式",
+      "R0",
+      "v5.1"
+    ],
+    "other_git_sha": [
+      "eec5bc04f8054b82d234bc6218c112633dd0e725"
+    ]
+  },
+  "gate_item5_status": "未通过",
+  "all_ok": true
+}
