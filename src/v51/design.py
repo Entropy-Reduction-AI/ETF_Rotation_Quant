@@ -489,9 +489,8 @@ def run_design(*, ledger: Path = LEDGER, out: Path = OUT) -> dict:
     from src.v3.engine.spec import load_spec
     from src.v4.r5.design import benchmark_returns, month_states, require_frozen_db
 
-    from .execute import open_market, run_book
-    from .universe import universe_for
     from .allocate import target_weights
+    from .execute import open_market, run_book, universe_for
 
     _refuse_ledger(ledger)
     digest = require_frozen_db()
