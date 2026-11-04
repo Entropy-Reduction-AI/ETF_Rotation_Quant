@@ -1,0 +1,15 @@
+{
+  "cagr": 0.029566146235010526,
+  "max_drawdown": -0.15017401032023037,
+  "n": 2611,
+  "start": "2016-01-04",
+  "end": "2026-09-30",
+  "arm": "E2-B0",
+  "role": "入围",
+  "pool": "index",
+  "pool_label": "U-指数",
+  "net_sha256": "e6b91c5d44d9a651f6fe980404bd6581ce6e8b44a9e4c7efed8a0c5f16b1de35",
+  "contender": true,
+  "pass_1": false,
+  "pass_6": false
+}

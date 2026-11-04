@@ -1,0 +1,9 @@
+{
+  "single_pass": true,
+  "window": [
+    "2016-01-01",
+    "2026-09-30"
+  ],
+  "freeze_sha": "8970bcbc7986c9a67d9ca535ca58a8855c910495",
+  "head_sha": "e4ccbc3c41e1769e6404c9cf2b01af0b9906e3e8"
+}
