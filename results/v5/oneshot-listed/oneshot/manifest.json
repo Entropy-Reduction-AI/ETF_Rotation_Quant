@@ -1,0 +1,44 @@
+{
+  "name": "可交易池 · 场内口径",
+  "kind": "registered-recalc",
+  "listed_only": true,
+  "config_enabled": false,
+  "pool": "tradable",
+  "pool_label": "U-可交易",
+  "window": [
+    "2016-01-01",
+    "2026-09-30"
+  ],
+  "last_session": "2026-09-30",
+  "arms": [
+    "E2-B0",
+    "A1",
+    "A2",
+    "v5.1-对照"
+  ],
+  "v51_role": "对照",
+  "counts_toward_criterion_5": false,
+  "L5_delta": 0,
+  "trial_ledger_written": false,
+  "formal_pass": null,
+  "d34_conclusion_unchanged": true,
+  "liquidity_threshold": 30000000,
+  "dropped": [
+    "tier-2 OTC",
+    "161211"
+  ],
+  "kept": [
+    "listed ETF",
+    "LOF",
+    "listed QDII",
+    "510880"
+  ],
+  "freeze_sha": "8970bcbc7986c9a67d9ca535ca58a8855c910495",
+  "head_sha": "eb83cdee5f17eaf0507787d6fb68ea2868edb76d",
+  "lock": "results/v5/LOCK",
+  "lock_sha256": "a4134a5475937cab280226182c85bc3ab00f398b85bede43418aed45b43a9ceb",
+  "addendum": "results/v5/LOCK-addendum-D35.md",
+  "addendum_sha256": "a3c1352c2d1822d6c22e4a0025a7aa9d58fbb21d9c49a6aa9be44aee17116711",
+  "db_sha256": "1fe4925e7993eb18d93a5cf359185242a98f7114583f7225033a9ec119ec288f",
+  "note": "只报告。不改 D34 结论，不计入判据 ⑤。"
+}

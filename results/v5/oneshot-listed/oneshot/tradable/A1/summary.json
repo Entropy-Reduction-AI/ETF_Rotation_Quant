@@ -1,0 +1,15 @@
+{
+  "cagr": 0.06089969747794499,
+  "max_drawdown": -0.32019225612740765,
+  "n": 2611,
+  "start": "2016-01-04",
+  "end": "2026-09-30",
+  "arm": "A1",
+  "role": "对照",
+  "pool": "tradable",
+  "pool_label": "U-可交易",
+  "net_sha256": "06b9027b5f71a3383927f30b1f7c8b8681f4a92ebc1cc5eb1c179ae5e90346dc",
+  "contender": false,
+  "pass_1": null,
+  "pass_6": null
+}

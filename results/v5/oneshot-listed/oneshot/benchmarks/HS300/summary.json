@@ -1,0 +1,13 @@
+{
+  "cagr": 0.03997095328904976,
+  "max_drawdown": -0.415610071951952,
+  "n": 2611,
+  "start": "2016-01-04",
+  "end": "2026-09-30",
+  "arm": "HS300",
+  "role": "对照",
+  "pool": null,
+  "pool_label": null,
+  "net_sha256": "928ac9edc85ad1cb589b1f121d2452b16beff947364356d231594aa615e34a2f",
+  "contender": false
+}

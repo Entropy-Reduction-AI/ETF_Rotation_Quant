@@ -1,0 +1,13 @@
+{
+  "cagr": 0.08696498766229066,
+  "max_drawdown": -0.26049013608966354,
+  "n": 2611,
+  "start": "2016-01-04",
+  "end": "2026-09-30",
+  "arm": "BM-main",
+  "role": "对照",
+  "pool": null,
+  "pool_label": null,
+  "net_sha256": "ceabdfc7ad3159ffadddfc7cb74e4e000f0e7b32d794385c55d6a259364a2526",
+  "contender": false
+}

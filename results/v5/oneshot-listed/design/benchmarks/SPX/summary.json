@@ -1,0 +1,13 @@
+{
+  "cagr": 0.05240069649049017,
+  "max_drawdown": -0.5930876847720379,
+  "n": 2429,
+  "start": "2006-01-04",
+  "end": "2015-12-31",
+  "arm": "SPX",
+  "role": "对照",
+  "pool": null,
+  "pool_label": null,
+  "net_sha256": "0073cd4e8d4e2f271fde711d1b1baa1e83a33821245efb550fba6f049a29520d",
+  "contender": false
+}
