@@ -7,11 +7,14 @@ python -m src.v51 turnover
 python -m src.v51 gate
 python -m src.v51 oneshot
 python -m src.v51 oneshot-listed
+python -m src.v51 d37-data
+python -m src.v51 d37
 
 设计期、R5 对照、G 池、R1、稳健性和换手。gate 只收草稿的最后一行。
 oneshot 只在 results/v5/LOCK 已经在当前树上、且还没跑过时，跑 2016-01-01 → 2026-09-30。
 oneshot-listed 是 D35 场内口径：只跑 U-可交易，写到 results/v5/oneshot-listed/。
 不写 LOCK，不打标签，不计入判据 ⑤。
+d37 是节奏诊断，只写 results/v51-diag/d37/。不写 LOCK，不打标签。
 """
 from __future__ import annotations
 
@@ -24,9 +27,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="v5.1 设计期、对照、稳健性和入围结论")
     parser.add_argument(
         "step",
-        choices=["design", "controls", "gpool", "r1", "robustness", "turnover", "gate", "oneshot", "oneshot-listed"],
+        choices=["design", "controls", "gpool", "r1", "robustness", "turnover", "gate", "oneshot", "oneshot-listed", "d37", "d37-data"],
     )
-    args = parser.parse_args(argv)
+    args, rest = parser.parse_known_args(argv)
+    if rest and args.step != "d37":
+        parser.error("unrecognized arguments: " + " ".join(rest))
     if args.step == "design":
         summary = run_design()
         print(f"db={summary['db_sha256']}", flush=True)
@@ -63,6 +68,14 @@ def main(argv: list[str] | None = None) -> int:
         summary = run_turnover()
         for pool, row in summary.items():
             print(f"{pool} turnover={row['turnover_one_way']:.6f} cost={row['cost']:.6f}", flush=True)
+    elif args.step == "d37-data":
+        from src.v51.d37_data import main as sync_s1
+
+        return sync_s1()
+    elif args.step == "d37":
+        from src.v51.diag_d37 import main as run_d37
+
+        return run_d37(rest)
     elif args.step == "oneshot":
         from src.v51.oneshot import run_oneshot
 

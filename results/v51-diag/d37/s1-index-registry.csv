@@ -1,0 +1,14 @@
+container_id,class,status,index_code,publish_date,bars_code,source_url,reason
+cross-border-commodity,商品,frozen,,,,https://fundf10.eastmoney.com/jbgk_161815.html,登记来源里没有可取的指数代码或正式发布日
+crude-oil,商品,frozen,,,,http://www.ccidx.com/zs/zsxx/202412/t20241205_1593.html,登记来源里没有可取的指数代码或正式发布日
+soymeal,商品,frozen,,,,https://www.dce.com.cn/,登记来源里没有可取的指数代码或正式发布日
+theme-iEdge Emerging Asia Select 50 Index,其他海外,frozen,,,,https://api2.sgx.com/sites/default/files/2026-09/iEdge%20EM%20Asia_Factsheet_20260831.pdf,登记来源里没有可取的指数代码或正式发布日
+theme-东京日经225指数,其他海外,frozen,,,,https://fundf10.eastmoney.com/jbgk_159866.html,登记来源里没有可取的指数代码或正式发布日
+theme-东证指数,其他海外,frozen,,,,https://fundf10.eastmoney.com/jbgk_513800.html,登记来源里没有可取的指数代码或正式发布日
+theme-中信证券印度ETP指数,其他海外,frozen,,,,https://fundf10.eastmoney.com/jbgk_164824.html,登记来源里没有可取的指数代码或正式发布日
+theme-中证韩交所中韩半导体指数,其他海外,spliced,931790,2021-12-20,931790,https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/931790,中证韩交所中韩半导体指数；新增 2995 行。发布日之前的点位即使在库里也不参与拼接。
+theme-富时亚太低碳精选指数,其他海外,frozen,,,,https://research.ftserussell.com/Analytics/Factsheets/Home/DownloadSingleIssue?IsManual=false&issueName=GPCSP006,登记来源里没有可取的指数代码或正式发布日
+theme-富时沙特阿拉伯指数,其他海外,frozen,,,,https://fundf10.eastmoney.com/jbgk_159329.html,登记来源里没有可取的指数代码或正式发布日
+theme-巴西IBOVESPA指数,其他海外,frozen,,,,https://fundf10.eastmoney.com/jbgk_520870.html,登记来源里没有可取的指数代码或正式发布日
+theme-法兰克福DAX指数,其他海外,frozen,,,,https://fundf10.eastmoney.com/jbgk_159561.html,登记来源里没有可取的指数代码或正式发布日
+theme-法国CAC40指数,其他海外,frozen,,,,https://fundf10.eastmoney.com/jbgk_513080.html,登记来源里没有可取的指数代码或正式发布日
