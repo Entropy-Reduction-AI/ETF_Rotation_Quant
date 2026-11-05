@@ -1,0 +1,11 @@
+{
+  "single_pass": true,
+  "listed_only": true,
+  "counts_toward_criterion_5": false,
+  "window": [
+    "2016-01-01",
+    "2026-09-30"
+  ],
+  "freeze_sha": "8970bcbc7986c9a67d9ca535ca58a8855c910495",
+  "head_sha": "eb83cdee5f17eaf0507787d6fb68ea2868edb76d"
+}

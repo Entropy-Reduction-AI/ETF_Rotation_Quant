@@ -1,0 +1,15 @@
+{
+  "cagr": 0.049855865752715944,
+  "max_drawdown": -0.27316988004975806,
+  "n": 2429,
+  "start": "2006-01-04",
+  "end": "2015-12-31",
+  "arm": "E2-B0",
+  "role": "入围",
+  "pool": "tradable",
+  "pool_label": "U-可交易",
+  "net_sha256": "6eebc231f1b2af8e20af9aba3e4ba5e5e35f6926215636994d531203e4edcb6b",
+  "contender": true,
+  "pass_1": null,
+  "pass_6": null
+}
