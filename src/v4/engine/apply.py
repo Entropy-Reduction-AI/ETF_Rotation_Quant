@@ -20,6 +20,7 @@ from src.v4.engine.carriers import (
     choose_path,
     compound_level,
     has_investable_index,
+    listed_carriers,
     prints_for,
     spliced_portfolio,
     spliced_research,
@@ -130,6 +131,8 @@ def _grouped(con, containers, end: str, switches):
             key: [row for row in rows if row.tier != 3]
             for key, rows in grouped.items()
         }
+    if switches.listed_only:
+        grouped = listed_carriers(grouped)
     return grouped
 
 

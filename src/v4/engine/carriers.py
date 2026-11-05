@@ -380,6 +380,19 @@ def build_candidates(con: sqlite3.Connection, containers: list[dict], calendar: 
     return grouped
 
 
+def listed_carriers(grouped: dict[str, list[_Candidate]]) -> dict[str, list[_Candidate]]:
+    """D35 场内口径。去掉第 2 档场外基金，以及场外相近替身（现在是 161211）。
+
+    第 1 档场内 ETF、LOF、场内 QDII，以及场内替身 510880，连同原来的可用序列一起留下。
+    3000 万成交额门槛不在这里改。U-指数不调用。
+    """
+    banned = frozenset(row["code"] for row in SUBSTITUTES if row["vehicle"] != "etf")
+    return {
+        key: [row for row in rows if row.tier != 2 and row.code not in banned]
+        for key, rows in grouped.items()
+    }
+
+
 def _add_indexless_etfs(con, containers: list[dict], grouped: dict[str, list[_Candidate]],
                         calendar: pd.DatetimeIndex, end: str) -> None:
     """没有指数历史的容器，执行层里的场内基金就是关联基金，不再要求跟踪标的对上指数名。"""

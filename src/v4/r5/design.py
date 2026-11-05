@@ -376,15 +376,19 @@ def attach_prev_closes(market) -> None:
 
 
 def prepare_market(pool: str, *, t4: bool, allow_substitute: bool, spec: Spec,
-                   end: str = DESIGN_END, allow_after: bool = False):
+                   end: str = DESIGN_END, allow_after: bool = False,
+                   listed_only: bool = False):
     """装好 B0 的数据开关。T2 的净值在这里附上，权重仍由执行时的开关决定。
 
     两个池的排名信号都从 U-指数的研究序列出发。U-可交易再把计价收益换成载体自己的日收益，
     并且只有当天选得到载体才进排名。不含相近替身只影响载体，不改研究序列。
     设计期不传 `end`。一次性检验才把结束日放到 2026-09-30，并打开 `allow_after`。
+    `listed_only` 默认关闭，只作用于 U-可交易的载体档位（D35）。研究序列仍按原 cascade。
     """
     if pool not in POOLS:
         raise RunnerError(f"未知的池 {pool}")
+    if listed_only and pool != "tradable":
+        raise RunnerError("场内口径只作用于 U-可交易池")
     if not allow_after and pd.Timestamp(end) > pd.Timestamp(DESIGN_END):
         raise RunnerError(f"设计期拒绝结束日 {end}")
     containers = load_containers()
@@ -410,6 +414,7 @@ def prepare_market(pool: str, *, t4: bool, allow_substitute: bool, spec: Spec,
             t4_pool=t4,
             allow_substitute=allow_substitute,
             t2_state_weights=True,
+            listed_only=listed_only,
         )
         market = apply_tradable_execution(
             market, carrier_switches, db=DB.MARKET_DB, containers=containers, spec=spec)
@@ -655,11 +660,13 @@ class Markets:
         self.spec = spec
         self._cache: dict[tuple, object] = {}
 
-    def get(self, pool: str, *, t4: bool, allow_substitute: bool = True):
-        key = (pool, bool(t4), bool(allow_substitute))
+    def get(self, pool: str, *, t4: bool, allow_substitute: bool = True,
+            listed_only: bool = False):
+        key = (pool, bool(t4), bool(allow_substitute), bool(listed_only))
         if key not in self._cache:
             self._cache[key] = prepare_market(
-                pool, t4=t4, allow_substitute=allow_substitute, spec=self.spec)
+                pool, t4=t4, allow_substitute=allow_substitute, spec=self.spec,
+                listed_only=listed_only)
         return self._cache[key]
 
 

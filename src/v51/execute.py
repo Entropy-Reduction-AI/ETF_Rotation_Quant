@@ -21,14 +21,18 @@ from .params import V51Error, load_params
 from .universe import Universe, universe_from_names
 
 
-def open_market(pool: str, spec, *, allow_substitute: bool = True):
-    """U-指数或 U-可交易。成员、载体和汇率仍由 v4 的 `Markets` 构造。"""
+def open_market(pool: str, spec, *, allow_substitute: bool = True, listed_only: bool = False):
+    """U-指数或 U-可交易。成员、载体和汇率仍由 v4 的 `Markets` 构造。
+
+    `listed_only` 默认关闭，且只允许用在 U-可交易。
+    """
     loaded = load_params()
     if pool not in loaded.params.pools:
         raise V51Error(f"v5.1 没有这个池：{pool}")
     from src.v4.r5.design import Markets
 
-    return Markets(spec).get(pool, t4=False, allow_substitute=allow_substitute)
+    return Markets(spec).get(
+        pool, t4=False, allow_substitute=allow_substitute, listed_only=listed_only)
 
 
 def universe_for(market, class_of: dict[str, str] | None = None) -> Universe:

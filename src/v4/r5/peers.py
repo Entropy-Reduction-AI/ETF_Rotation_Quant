@@ -22,6 +22,7 @@ from src.v4.engine.carriers import (
     build_candidates,
     choose_path,
     compound_level,
+    listed_carriers,
     prints_for,
     spliced_portfolio,
     stitch_fills,
@@ -76,8 +77,12 @@ def _bars(con, codes: list[str], end: str) -> dict[str, pd.DataFrame]:
     return _split_bars(frame)
 
 
-def research_panel(spec: Spec, *, end: str = DESIGN_END, allow_after: bool = False) -> dict:
-    """五条腿的研究序列，已经换成人民币并对齐到上交所交易日。"""
+def research_panel(spec: Spec, *, end: str = DESIGN_END, allow_after: bool = False,
+                   listed_only: bool = False) -> dict:
+    """五条腿的研究序列，已经换成人民币并对齐到上交所交易日。
+
+    `listed_only` 默认关闭。打开时只改 U-可交易的载体档位，研究序列不动。
+    """
     if not allow_after and pd.Timestamp(end) > pd.Timestamp(DESIGN_END):
         raise RunnerError(f"附表 A 拒绝结束日 {end}")
     containers = load_containers()
@@ -126,6 +131,8 @@ def research_panel(spec: Spec, *, end: str = DESIGN_END, allow_after: bool = Fal
             quotes[name] = FillQuote(close=close, board=board)
         grouped = {name: [] for name in names}
         built = build_candidates(con, containers, calendar, end)
+        if listed_only:
+            built = listed_carriers(built)
         for name in names:
             grouped[name] = built.get(name) or []
         assets = {name: str(by_id[name].get("asset_class") or "") for name in names}

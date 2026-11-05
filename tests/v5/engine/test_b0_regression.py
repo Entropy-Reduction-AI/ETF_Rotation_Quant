@@ -1,5 +1,6 @@
 """用改过的 `simulate_path` 重跑 v4 B0。日净收益须与已登记序列逐日相同。
 
+显式 `listed_only=False`：D35 场内口径关闭时，两个池仍与冻结设计期逐位一致。
 不写 ledger，不写 LOCK，不读 2016-01-01 及以后。
 """
 from __future__ import annotations
@@ -30,7 +31,11 @@ class B0Regression(unittest.TestCase):
         jobs = {(job.case, job.pool): job for job in single_jobs()}
         for pool in ("index", "tradable"):
             with self.subTest(pool=pool):
-                net, dropped = execute_job(job := jobs[("B0", pool)], markets.get(pool, t4=False), spec)
+                net, dropped = execute_job(
+                    job := jobs[("B0", pool)],
+                    markets.get(pool, t4=False, listed_only=False),
+                    spec,
+                )
                 registered = read_net("B0", pool)
                 summary = json.loads((run_dir("B0", pool) / "summary.json").read_text(encoding="utf-8"))
                 self.assertEqual(dropped, [])
