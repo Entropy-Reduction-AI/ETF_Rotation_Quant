@@ -4,7 +4,7 @@
 
 - Project: ETF_Rotation_Quant
 - Document type: owner（v5 一次性检验结论）
-- Status: active（第 1.1 版：能买到的池子改为全部不可用；Reviewer 签收；三件事待 Owner 决定）
+- Status: active（第 1.2 版：任意起点改用逐月柱状图；能买到的池子不可用；Reviewer 签收；三件事待 Owner 决定）
 - Owner: L. Loric
 - Maintainer: Orchestrator
 - Date: 2026-11-04
@@ -65,7 +65,7 @@
 | 反弹月超额的 t 值 ≥ −2（D33-3） | **−3.25**（23 个月） |
 | **⑤ 尝试次数** | 按次数打折扣报告 | 115 次（v3 起累计） | ① 没过，不用再算折扣 |
 
-![每个起点持有 5 年，E2 新口径、A1、A2 相对基准的年化超额](../assets/v5-oneshot/o5-anystart.png)
+![每个月初买入、持有 3 年，E2 新口径和 A1 相对基准的超额](../assets/v5-oneshot/o6-bars.png)
 
 | 四种行情（相对基准累计超额） | 月数 | E2 新口径 | A1 | A2 | 读法 |
 | --- | --- | --- | --- | --- | --- |
