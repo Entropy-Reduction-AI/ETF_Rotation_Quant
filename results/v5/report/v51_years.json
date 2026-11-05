@@ -1,0 +1,318 @@
+{
+ "2016": {
+  "v": 1.6,
+  "A1": 6.6,
+  "BM": -1.7,
+  "cost": 4.6,
+  "risk": 73,
+  "region": {
+   "A股": 4,
+   "国债": 19,
+   "港股": 11,
+   "美股": 58,
+   "黄金": 8
+  },
+  "top": {
+   "spx": 2.6,
+   "cgb-10y": 1.4,
+   "gold": 1.3
+  },
+  "worst": {
+   "theme-中证海外中国互联网指数": -1.8,
+   "hsi": -0.3,
+   "allshare-materials": -0.1
+  },
+  "A1_spx": 84,
+  "us_days": 66,
+  "us_sleeve": 2.9,
+  "spx_same_days": 8.6,
+  "broad_share": 58
+ },
+ "2017": {
+  "v": 1.2,
+  "A1": 14.7,
+  "BM": 23.0,
+  "cost": 5.0,
+  "risk": 77,
+  "region": {
+   "A股": 33,
+   "国债": 4,
+   "现金": 18,
+   "美股": 44
+  },
+  "top": {
+   "allshare-communication": 2.2,
+   "ndx100": 1.7,
+   "spx": 1.6
+  },
+  "worst": {
+   "theme-S&P 500 Energy Sector Index(NTR)": -1.4,
+   "theme-标普全球石油指数": -1.3,
+   "allshare-energy": -1.0
+  },
+  "A1_spx": 66,
+  "us_days": 55,
+  "us_sleeve": 3.7,
+  "spx_same_days": 6.4,
+  "broad_share": 76
+ },
+ "2018": {
+  "v": -10.4,
+  "A1": -16.9,
+  "BM": -16.5,
+  "cost": 6.1,
+  "risk": 60,
+  "region": {
+   "A股": 6,
+   "国债": 35,
+   "港股": 3,
+   "现金": 4,
+   "美股": 52
+  },
+  "top": {
+   "cgb-10y": 3.6,
+   "theme-S&P 500 Energy Sector Index(NTR)": 2.3,
+   "theme-道琼斯美国石油开发与生产指数": 1.8
+  },
+  "worst": {
+   "theme-中证海外中国互联网50人民币指数": -2.4,
+   "csi300": -2.3,
+   "allshare-financials-re": -1.9
+  },
+  "A1_spx": 51,
+  "us_days": 52,
+  "us_sleeve": 12.3,
+  "spx_same_days": 20.1,
+  "broad_share": 39
+ },
+ "2019": {
+  "v": -7.5,
+  "A1": 20.6,
+  "BM": 39.2,
+  "cost": 6.3,
+  "risk": 68,
+  "region": {
+   "A股": 32,
+   "国债": 21,
+   "港股": 7,
+   "现金": 6,
+   "美股": 28,
+   "黄金": 6
+  },
+  "top": {
+   "theme-中证海外中国互联网指数": 2.0,
+   "cgb-10y": 2.0,
+   "hsi": 1.8
+  },
+  "worst": {
+   "allshare-communication": -6.7,
+   "allshare-it": -3.3,
+   "allshare-financials-re": -2.8
+  },
+  "A1_spx": 43,
+  "us_days": 38,
+  "us_sleeve": 0.2,
+  "spx_same_days": 4.2,
+  "broad_share": 42
+ },
+ "2020": {
+  "v": -0.3,
+  "A1": 0.0,
+  "BM": 28.5,
+  "cost": 5.5,
+  "risk": 71,
+  "region": {
+   "A股": 45,
+   "国债": 19,
+   "现金": 8,
+   "美股": 27
+  },
+  "top": {
+   "allshare-staples": 8.6,
+   "ndx100": 4.3,
+   "cgb-10y": 2.2
+  },
+  "worst": {
+   "allshare-healthcare": -3.2,
+   "allshare-materials": -2.3,
+   "allshare-discretionary": -2.2
+  },
+  "A1_spx": 33,
+  "us_days": 31,
+  "us_sleeve": 8.9,
+  "spx_same_days": 6.1,
+  "broad_share": 52
+ },
+ "2021": {
+  "v": -11.8,
+  "A1": 16.6,
+  "BM": 5.1,
+  "cost": 7.3,
+  "risk": 86,
+  "region": {
+   "A股": 15,
+   "国债": 10,
+   "现金": 3,
+   "美股": 71
+  },
+  "top": {
+   "spx": 1.9,
+   "theme-中证海外中国互联网指数": 1.7,
+   "theme-道琼斯美国石油开发与生产指数": 1.0
+  },
+  "worst": {
+   "theme-标普美国品质消费股票指数": -4.6,
+   "allshare-energy": -1.9,
+   "allshare-healthcare": -1.9
+  },
+  "A1_spx": 60,
+  "us_days": 77,
+  "us_sleeve": -1.9,
+  "spx_same_days": 20.5,
+  "broad_share": 30
+ },
+ "2022": {
+  "v": -17.2,
+  "A1": -15.0,
+  "BM": -18.6,
+  "cost": 7.3,
+  "risk": 47,
+  "region": {
+   "A股": 11,
+   "国债": 42,
+   "港股": 6,
+   "现金": 6,
+   "美股": 31,
+   "黄金": 5
+  },
+  "top": {
+   "gold": 4.0,
+   "theme-标普美国品质消费股票指数": 1.8,
+   "allshare-discretionary": 1.7
+  },
+  "worst": {
+   "theme-道琼斯美国精选REIT指数": -3.4,
+   "allshare-energy": -3.1,
+   "theme-道琼斯美国石油开发与生产指数": -2.9
+  },
+  "A1_spx": 49,
+  "us_days": 38,
+  "us_sleeve": -7.6,
+  "spx_same_days": -4.8,
+  "broad_share": 11
+ },
+ "2023": {
+  "v": 4.3,
+  "A1": 23.1,
+  "BM": 4.6,
+  "cost": 6.3,
+  "risk": 65,
+  "region": {
+   "国债": 25,
+   "港股": 12,
+   "现金": 6,
+   "美股": 52,
+   "黄金": 4
+  },
+  "top": {
+   "ndx100": 5.8,
+   "theme-标普500信息科技指数": 3.9,
+   "theme-标普生物科技精选行业指数": 3.1
+  },
+  "worst": {
+   "gold": -4.1,
+   "theme-中证全球中国教育主题人民币指数": -2.2,
+   "theme-中证香港证券投资主题指数": -1.2
+  },
+  "A1_spx": 67,
+  "us_days": 66,
+  "us_sleeve": 24.7,
+  "spx_same_days": 21.9,
+  "broad_share": 41
+ },
+ "2024": {
+  "v": -2.6,
+  "A1": 27.1,
+  "BM": 21.8,
+  "cost": 5.7,
+  "risk": 87,
+  "region": {
+   "A股": 20,
+   "国债": 11,
+   "港股": 4,
+   "美股": 63
+  },
+  "top": {
+   "ndx100": 2.7,
+   "theme-标普500信息科技指数": 2.7,
+   "spx": 2.4
+  },
+  "worst": {
+   "theme-标普生物科技精选行业指数": -2.6,
+   "csi300": -2.0,
+   "theme-S&P 500 Energy Sector Index(NTR)": -1.8
+  },
+  "A1_spx": 100,
+  "us_days": 69,
+  "us_sleeve": 2.6,
+  "spx_same_days": 8.6,
+  "broad_share": 42
+ },
+ "2025": {
+  "v": -5.8,
+  "A1": 23.5,
+  "BM": 20.1,
+  "cost": 8.7,
+  "risk": 88,
+  "region": {
+   "A股": 10,
+   "国债": 8,
+   "港股": 62,
+   "美股": 16,
+   "黄金": 5
+  },
+  "top": {
+   "theme-中证香港创新药港币指数": 12.8,
+   "theme-恒生生物科技指数": 7.9,
+   "gold": 3.5
+  },
+  "worst": {
+   "theme-中证港股通科技指数": -6.8,
+   "theme-中证港股通50指数": -5.9,
+   "theme-恒生中国企业指数": -4.6
+  },
+  "A1_spx": 47,
+  "us_days": 20,
+  "us_sleeve": -6.2,
+  "spx_same_days": 2.5,
+  "broad_share": 18
+ },
+ "2026": {
+  "v": 18.7,
+  "A1": 0.4,
+  "BM": 0.4,
+  "cost": 5.8,
+  "risk": 79,
+  "region": {
+   "A股": 23,
+   "国债": 18,
+   "港股": 4,
+   "美股": 52
+  },
+  "top": {
+   "allshare-it": 7.3,
+   "theme-PHLX Semiconductor Sector Index": 5.9,
+   "allshare-communication": 3.8
+  },
+  "worst": {
+   "theme-纳斯达克科技市值加权指数": -1.4,
+   "gold": -1.1,
+   "theme-中证港股通金融服务指数": -1.1
+  },
+  "A1_spx": 11,
+  "us_days": 60,
+  "us_sleeve": 1.9,
+  "spx_same_days": -2.0,
+  "broad_share": 7
+ }
+}
