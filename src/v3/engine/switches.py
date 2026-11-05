@@ -3,6 +3,8 @@
 T2 的窗口按预注册草案固定为 60 日，权重用百分位直线换算，不再把效率本身当权重。
 `allow_substitute` 只在 `carriers` 打开时有意义。草案的主路径包含相近替身；
 关掉它是 §7.2 的「不含相近替身」对照。
+`listed_only` 默认关闭，只在 U-可交易的载体层有意义（D35）。打开时去掉第 2 档
+场外基金和场外替身 161211，第 1 档和场内 510880 不动。
 """
 from __future__ import annotations
 
@@ -26,6 +28,7 @@ class EngineSwitches:
     carriers: bool = False
     fx_v4: bool = False
     allow_substitute: bool = True
+    listed_only: bool = False
 
     def idle(self) -> bool:
         """关闭全部机制，并且没有跨境成本对象。这时执行路径与 v3.1 相同。"""

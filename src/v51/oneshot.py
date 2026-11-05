@@ -138,16 +138,21 @@ def _file_sha(path: Path) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def scored(series: pd.Series, last: pd.Timestamp) -> pd.Series:
-    """锁定窗口里的日收益。最后一天必须是窗口内的最后一个交易日。"""
+def scored(series: pd.Series, last: pd.Timestamp, *,
+           start: str = WINDOW_START, end: str = WINDOW_END) -> pd.Series:
+    """窗口里的日收益。最后一天必须是窗口内的最后一个交易日。"""
     out = pd.Series(series, dtype=float).dropna().sort_index()
     out.index = pd.DatetimeIndex(pd.to_datetime(out.index)).normalize()
     out = out[~out.index.duplicated(keep="last")]
-    if len(out) and pd.Timestamp(out.index.max()) > pd.Timestamp(WINDOW_END):
-        raise OneshotError("收益晚于 2026-09-30")
-    block = out.loc[WINDOW_START:WINDOW_END]
+    if len(out) and pd.Timestamp(out.index.max()) > pd.Timestamp(end):
+        if end == WINDOW_END:
+            raise OneshotError("收益晚于 2026-09-30")
+        raise OneshotError(f"收益晚于 {end}")
+    block = out.loc[start:end]
     if block.empty:
-        raise OneshotError("锁定窗口里没有收益")
+        if start == WINDOW_START and end == WINDOW_END:
+            raise OneshotError("锁定窗口里没有收益")
+        raise OneshotError("窗口里没有收益")
     if pd.Timestamp(block.index.max()) != pd.Timestamp(last):
         raise OneshotError(
             f"收益停在 {pd.Timestamp(block.index.max()).date()}，窗口最后交易日是 {pd.Timestamp(last).date()}"
@@ -179,22 +184,27 @@ def attempt_report(v3_path: Path, v4_path: Path, v5_path: Path) -> dict:
     }
 
 
-def criterion_1_on_window(strategy: pd.Series, benchmark: pd.Series) -> dict:
-    """§6.4 ①。36 与 60 个月窗口都落在锁定窗口里。"""
+def criterion_1_on_window(strategy: pd.Series, benchmark: pd.Series, *,
+                          start: str = WINDOW_START, end: str = WINDOW_END) -> dict:
+    """§6.4 ①。36 与 60 个月窗口都落在给定窗口里。默认是锁定窗口。"""
     both = pd.concat([
         pd.Series(strategy, dtype=float).rename("strategy"),
         pd.Series(benchmark, dtype=float).rename("benchmark"),
     ], axis=1).dropna().sort_index()
-    both = both.loc[WINDOW_START:WINDOW_END]
+    both = both.loc[start:end]
     if both.empty:
         raise OneshotError("判据①没有重叠的日收益")
     calendar = pd.DatetimeIndex(both.index)
+    floor = pd.Timestamp(start)
+    cap = end
 
     def records(months: int) -> list[dict]:
         rows = []
-        for start, end in rolling_windows(calendar, months, end_limit=WINDOW_END):
-            if pd.Timestamp(start) < pd.Timestamp(WINDOW_START):
+        for window_start, window_end in rolling_windows(calendar, months, end_limit=cap):
+            if pd.Timestamp(window_start) < floor:
                 continue
+            start = window_start
+            end = window_end
             days = calendar[(calendar >= start) & (calendar <= end)]
             left = both["strategy"].reindex(days)
             right = both["benchmark"].reindex(days)
@@ -232,13 +242,14 @@ def criterion_1_on_window(strategy: pd.Series, benchmark: pd.Series) -> dict:
     }
 
 
-def criterion_6(strategy: pd.Series, benchmark: pd.Series, states: pd.Series) -> dict:
+def criterion_6(strategy: pd.Series, benchmark: pd.Series, states: pd.Series, *,
+                start: str = WINDOW_START, end: str = WINDOW_END) -> dict:
     """⑥：P(牛市) ≥ 0，反弹月份的月度超额 t ≥ −2（D33-3）。"""
     both = pd.concat([
         pd.Series(strategy, dtype=float).rename("strategy"),
         pd.Series(benchmark, dtype=float).rename("benchmark"),
     ], axis=1).dropna().sort_index()
-    both = both.loc[WINDOW_START:WINDOW_END]
+    both = both.loc[start:end]
     if both.empty:
         raise OneshotError("判据⑥没有重叠的日收益")
     excess = both["strategy"] - both["benchmark"]
@@ -387,18 +398,18 @@ def _criteria_row(pool: str | None, arm: str, role: str, numbers: dict, rule1: d
     return row
 
 
-def _run_b0(market, spec):
+def _run_b0(market, spec, *, allow_after: bool = True):
     from src.v3.engine.arms import execute
     from src.v3.engine.exit import EXIT_DRAWDOWN
     from src.v5.engine.execute import b0_switches
 
     return execute(
-        market, spec, "A", allow_after=True,
+        market, spec, "A", allow_after=allow_after,
         exit_drawdown=EXIT_DRAWDOWN, switches=b0_switches(),
     )
 
 
-def _run_v51(market, spec, pool: str):
+def _run_v51(market, spec, pool: str, *, allow_after: bool = True):
     from src.v51.allocate import target_weights
     from src.v51.design import eligible_frame
     from src.v51.execute import run_book, universe_for
@@ -411,20 +422,22 @@ def _run_v51(market, spec, pool: str):
     allocation = target_weights(
         signal, universe_for(market),
         eligible=eligible_frame(pool, market.liquidity, signal.index),
-        allow_after=True,
+        allow_after=allow_after,
     )
-    book = run_book(market, spec, allocation.decisions, allow_after=True)
+    book = run_book(market, spec, allocation.decisions, allow_after=allow_after)
     return book, allocation
 
 
-def _run_peers(spec) -> dict:
+def _run_peers(spec, *, end: str = WINDOW_END, allow_after: bool = True,
+               listed_only: bool = False, pools: tuple[str, ...] = POOLS) -> dict:
     from src.v4.peers import load_peer, run_peer
     from src.v4.r5.peers import research_panel
 
-    panel = research_panel(spec, end=WINDOW_END, allow_after=True)
+    panel = research_panel(
+        spec, end=end, allow_after=allow_after, listed_only=listed_only)
     found = {}
     for peer_id in ("A1", "A2"):
-        for pool in POOLS:
+        for pool in pools:
             print(f"对照 {peer_id} {pool}", flush=True)
             peer = load_peer(peer_id, pool)
             carriers = panel["carriers"] if pool == "tradable" else None
@@ -434,7 +447,7 @@ def _run_peers(spec) -> dict:
             found[(peer_id, pool)] = run_peer(
                 peer, panel["calendar"], levels, signal_levels=signal_levels,
                 cash=panel["cash"], carriers=carriers, quotes=quotes,
-                calendar_closed=True, allow_after=True,
+                calendar_closed=True, allow_after=allow_after,
             )
     return found
 
@@ -458,7 +471,7 @@ def _last_session() -> pd.Timestamp:
 
 def _store_arm(out: Path, pool: str, arm: str, window: pd.Series, book, benchmark: pd.Series,
                states: pd.Series, refs: dict[str, pd.Series], rows: list[dict], *,
-               allocation=None) -> dict:
+               allocation=None, start: str = WINDOW_START, end: str = WINDOW_END) -> dict:
     from src.v4.r5.design import series_sha256
 
     folder = arm_dir(out, pool, arm)
@@ -476,8 +489,8 @@ def _store_arm(out: Path, pool: str, arm: str, window: pd.Series, book, benchmar
         "net_sha256": series_sha256(window),
         "contender": arm == PRIMARY,
     })
-    rule1 = criterion_1_on_window(window, benchmark.reindex(window.index))
-    rule6 = criterion_6(window, benchmark, states)
+    rule1 = criterion_1_on_window(window, benchmark.reindex(window.index), start=start, end=end)
+    rule6 = criterion_6(window, benchmark, states, start=start, end=end)
     formal = is_formal(arm, pool)
     numbers["pass_1"] = rule1["pass"] if formal else None
     numbers["pass_6"] = rule6["pass"] if formal else None
@@ -496,12 +509,12 @@ def _store_arm(out: Path, pool: str, arm: str, window: pd.Series, book, benchmar
         _write_frame(folder, state.reindex(window.index), "state.csv")
         decisions = allocation.decisions.copy()
         decisions.index = pd.DatetimeIndex(pd.to_datetime(decisions.index)).normalize()
-        kept = decisions.loc[(decisions.index >= WINDOW_START) & (decisions.index <= WINDOW_END)]
+        kept = decisions.loc[(decisions.index >= start) & (decisions.index <= end)]
         _write_frame(folder, kept, "decisions.csv")
         exits = allocation.exits.copy()
         if "t" in exits.columns and len(exits):
             stamp = pd.to_datetime(exits["t"])
-            exits = exits.loc[(stamp >= WINDOW_START) & (stamp <= WINDOW_END)]
+            exits = exits.loc[(stamp >= start) & (stamp <= end)]
         exits.to_csv(folder / "exits.csv", index=False)
     rows.append(_criteria_row(pool, arm, role, numbers, rule1, rule6, formal=formal))
     return {"rule1": rule1, "rule6": rule6, "numbers": numbers}
