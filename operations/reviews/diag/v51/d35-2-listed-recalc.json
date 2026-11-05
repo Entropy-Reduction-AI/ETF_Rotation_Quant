@@ -1,0 +1,58 @@
+{
+  "dev_pr": 264,
+  "dev_head": "49a3b75968c413c1f3cff3e8f9d70168182d9fe2",
+  "dev_base_at_open": "425c1e83f21c",
+  "main_tip_at_review": "f7ca1c9",
+  "reviewer": "lwx0218",
+  "db_sha256": "1fe4925e7993eb18d93a5cf359185242a98f7114583f7225033a9ec119ec288f",
+  "lock_sha256": "a4134a5475937cab280226182c85bc3ab00f398b85bede43418aed45b43a9ceb",
+  "addendum_sha256": "a3c1352c2d1822d6c22e4a0025a7aa9d58fbb21d9c49a6aa9be44aee17116711",
+  "forbidden_path_edits": false,
+  "tests": {
+    "listed_off_bitmatch": "ok",
+    "listed_only": "ok",
+    "b0_regression_listed_off": "ok"
+  },
+  "metrics_tradable_e2_b0": {
+    "listed_on_oneshot": {
+      "window": ["2016-01-01", "2026-09-30"],
+      "cagr": 0.025080891307060815,
+      "max_drawdown": -0.16665520147009016,
+      "n": 2611
+    },
+    "d34_signed_oneshot": {
+      "window": ["2016-01-01", "2026-09-30"],
+      "cagr": 0.020243300555477184,
+      "max_drawdown": -0.2079351927826062,
+      "n": 2611
+    },
+    "listed_on_design": {
+      "window": ["2006-01-01", "2015-12-31"],
+      "cagr": 0.049855865752715944,
+      "max_drawdown": -0.27316988004975806,
+      "n": 2429
+    }
+  },
+  "benchmarks_oneshot": {
+    "BM-main": {"net_csv_bytes_eq_signed": true, "series_sha256_eq_signed": true},
+    "HS300": {"net_csv_bytes_eq_signed": true, "series_sha256_eq_signed": true},
+    "NDX": {"net_csv_bytes_eq_signed": true, "series_sha256_eq_signed": true},
+    "SPX": {"net_csv_bytes_eq_signed": true, "series_sha256_eq_signed": true}
+  },
+  "listed_by_year": {
+    "contains_otc_prefix": false,
+    "contains_161211": false,
+    "allshare_financials_re_qualified_days": 0
+  },
+  "hold_sanity_oneshot_e2_b0": {
+    "weight_sum_min": 0.99999999999801,
+    "weight_sum_max": 1.00000000000187,
+    "zero_net_with_material_position_days": 0
+  },
+  "manifest_flags": {
+    "counts_toward_criterion_5": false,
+    "L5_delta": 0,
+    "trial_ledger_written": false,
+    "formal_pass": null
+  }
+}
