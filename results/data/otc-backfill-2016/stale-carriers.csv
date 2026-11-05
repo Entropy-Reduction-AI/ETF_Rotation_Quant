@@ -1,0 +1,4 @@
+vehicle_class,code,name,container,store,kind,first_date,last_date,rows,note
+QDII,526090,港股通金融ETF富国,theme-H11146,,,,,0,登记为载体，库内没有行情，所以没有最后日期
+listed,161229,国投瑞银中国价值发现股票型证券投资基金(LOF),theme-MSCI China Value Weighted Index,v4_series,backward,2016-01-04,2026-09-29,2265,最后日期早于 2026-09-30
+listed,161229,国投瑞银中国价值发现股票型证券投资基金(LOF),theme-MSCI China Value Weighted Index,bars,raw,2016-01-04,2026-09-29,2265,最后日期早于 2026-09-30
