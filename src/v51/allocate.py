@@ -21,14 +21,21 @@ from .params import Params, V51Error
 from .readings import level_index, read_panel
 from .universe import Market, Universe
 
+# 诊断开关。默认 frozen 就是冻结规则（V0）。其余四个不改周度选市场。
+CADENCES = ("frozen", "weekly", "resonance", "daily", "resonance_daily")
+
 
 @dataclass(frozen=True)
 class Allocation:
-    """`state` 是每个交易日收盘后的目标。`decisions` 只含要成交的决策日。"""
+    """`state` 是每个交易日收盘后的目标。`decisions` 只含要成交的决策日。
+
+    `legs` 是每个市场两条腿的逐日读数，给诊断拆尺子。冻结路径也记，不参与配权。
+    """
 
     state: pd.DataFrame
     decisions: pd.DataFrame
     exits: pd.DataFrame
+    legs: pd.DataFrame | None = None
 
 
 def breadth(frontier_share: pd.DataFrame, members: tuple[str, ...] | list[str], *,
@@ -84,9 +91,9 @@ def _priced(returns: pd.DataFrame | None, day, name: str) -> bool:
     return value == value and np.isfinite(value)
 
 
-def leg_score(name: str, day, level: pd.DataFrame, frontier_share: pd.DataFrame,
-             easing: pd.DataFrame, width: float, frontier: float) -> float | None:
-    """一个代表在这一天的风险仓位。读数缺了就是没有这条腿。"""
+def leg_flags(name: str, day, level: pd.DataFrame, frontier_share: pd.DataFrame,
+             easing: pd.DataFrame, width: float, frontier: float) -> tuple[bool, bool] | None:
+    """两条腿各自通不通。读数缺了就是没有腿。"""
     height = _cell(level, day, name)
     share = _cell(frontier_share, day, name)
     slow = _cell(easing, day, name)
@@ -94,7 +101,16 @@ def leg_score(name: str, day, level: pd.DataFrame, frontier_share: pd.DataFrame,
         return None
     leg1 = (share < frontier) and not (pd.notna(width) and width >= frontier)
     leg2 = (height > 0.0) or bool(slow)
-    return 0.5 * float(leg1) + 0.5 * float(leg2)
+    return bool(leg1), bool(leg2)
+
+
+def leg_score(name: str, day, level: pd.DataFrame, frontier_share: pd.DataFrame,
+             easing: pd.DataFrame, width: float, frontier: float) -> float | None:
+    """一个代表在这一天的风险仓位。读数缺了就是没有这条腿。"""
+    flags = leg_flags(name, day, level, frontier_share, easing, width, frontier)
+    if flags is None:
+        return None
+    return 0.5 * float(flags[0]) + 0.5 * float(flags[1])
 
 
 def _rank(names: list[str], day, level: pd.DataFrame) -> list[str]:
@@ -132,12 +148,14 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
              eligible: pd.DataFrame | None = None, params: Params | None = None,
              allow_after: bool = False, mode: str = "legs",
              strength: pd.DataFrame | None = None, noise: pd.DataFrame | None = None,
-             selection: str = "market", daily_look: bool = True) -> Allocation:
+             selection: str = "market", daily_look: bool = True,
+             cadence: str = "frozen") -> Allocation:
     """按交易日走到收盘。不算组合收益。
 
     `selection="all"` 只给 §7.1 S12：不先锁定一个市场，三个市场里够格的 ETF 按 H 一起取前 3。
     `daily_look=False` 只给 S13：减仓、单只离场和换防守都只在周度决策日做。
-    默认参数走冻结规则，两条都不打开。
+    `cadence="frozen"` 是冻结规则。其余值只给 D37 诊断，并且只改非周度日的档位。
+    默认参数走冻结规则。
     """
     frozen = Params() if params is None else params
     if selection not in {"market", "all"}:
@@ -146,6 +164,10 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
         raise V51Error("全部一起排只用于两条腿")
     if not daily_look and mode != "legs":
         raise V51Error("只在周度决策日减仓只用于两条腿")
+    if cadence not in CADENCES:
+        raise V51Error(f"没有这种节奏：{cadence}")
+    if cadence != "frozen" and (mode != "legs" or selection != "market" or not daily_look):
+        raise V51Error("诊断节奏只打开在两条腿、按市场挑选、每天看的默认路径上")
     days = pd.DatetimeIndex(pd.to_datetime(index))
     if days.tz is not None:
         raise V51Error("交易日不带时区")
@@ -250,6 +272,120 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
     exit_rows = []
     decision_rows = []
     decision_index = []
+    leg_rows = []
+    week_picks: list[str] = []
+    left_market: Market | None = None
+
+    def _abandon(market: Market) -> None:
+        nonlocal held, risk, picks, left_market
+        for name in list(picks):
+            exit_rows.append((stamp, name, "市场退出"))
+            peak.pop(name, None)
+        left_market = market
+        held = None
+        risk = 0.0
+        picks = []
+
+    def _refill(market: Market) -> None:
+        nonlocal held, risk, picks, left_market
+        while len(picks) < frozen.top_n:
+            if len(picks) >= previous_count:
+                break
+            ranked = [name for name in qualified(held, stamp, blocked) if name not in picks]
+            if not ranked:
+                break
+            picks.append(ranked[0])
+        if picks:
+            return
+        stand = fallback(held, stamp, blocked, check_frontier=True)
+        if stand:
+            picks = [stand]
+            return
+        left_market = market
+        held = None
+        risk = 0.0
+
+    def _reenter(market: Market, new_risk: float) -> None:
+        nonlocal held, risk, picks, left_market
+        if new_risk <= 0.0:
+            return
+        held = market
+        risk = min(1.0, float(new_risk))
+        allowed = set(qualified(market, stamp, blocked))
+        restored = [name for name in week_picks if name in allowed]
+        if not restored:
+            stand = fallback(market, stamp, blocked, check_frontier=True)
+            restored = [stand] if stand else []
+        picks = restored[:frozen.top_n]
+        if not picks:
+            left_market = market
+            held = None
+            risk = 0.0
+            return
+        left_market = None
+
+    def _step_cadence() -> None:
+        """非周度日。单只离场已经在上面做过。这里只改档位和整体离场后的买回。"""
+        nonlocal held, risk, defense, left_market
+        adds = cadence in {"daily", "resonance_daily"}
+        market = held if held is not None else (left_market if adds else None)
+        if market is None:
+            return
+        updated = market_legs(market, stamp)
+        if cadence == "weekly":
+            if held is None:
+                return
+            if risk == 0.0:
+                _abandon(market)
+            else:
+                _refill(market)
+        elif cadence == "resonance":
+            if held is None:
+                return
+            if updated is not None and updated <= 0.0:
+                _abandon(market)
+            elif risk <= 0.0:
+                _abandon(market)
+            else:
+                _refill(market)
+        elif cadence == "daily":
+            if updated is None:
+                if held is not None and risk > 0.0:
+                    _refill(market)
+                elif held is not None:
+                    _abandon(market)
+            elif updated <= 0.0:
+                if held is not None:
+                    _abandon(market)
+            elif held is None:
+                _reenter(market, float(updated))
+            else:
+                risk = float(updated)
+                if risk <= 0.0:
+                    _abandon(market)
+                else:
+                    _refill(market)
+        elif cadence == "resonance_daily":
+            if updated is None:
+                if held is not None and risk > 0.0:
+                    _refill(market)
+                elif held is not None:
+                    _abandon(market)
+            elif updated <= 0.0:
+                if held is not None:
+                    _abandon(market)
+            elif held is None:
+                _reenter(market, float(updated))
+            else:
+                if float(updated) > risk:
+                    risk = min(1.0, float(updated))
+                if risk <= 0.0:
+                    _abandon(market)
+                else:
+                    _refill(market)
+        else:
+            raise V51Error(f"没有这种节奏：{cadence}")
+        defense = defense_of(stamp, defense)
 
     for day in days:
         stamp = pd.Timestamp(day).normalize()
@@ -335,6 +471,8 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
                 held = None
                 risk = 0.0
             blocked = set(sold_today)
+            week_picks = list(picks)
+            left_market = None
         elif selection == "all" and held is not None and daily_look:
             kept: list[str] = []
             for name in list(picks):
@@ -397,7 +535,7 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
                 else:
                     held = None
                     risk = 0.0
-        elif held is not None and daily_look:
+        elif held is not None and daily_look and cadence == "frozen":
             updated = market_legs(held, stamp)
             if updated is not None and updated < risk:
                 risk = float(updated)
@@ -423,6 +561,8 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
                         held = None
                         risk = 0.0
             defense = defense_of(stamp, defense)
+        elif daily_look and cadence != "frozen":
+            _step_cadence()
 
         previous_count = len(picks)
         weights = _weights(picks, risk if held is not None else 0.0, defense, universe.cash)
@@ -457,11 +597,25 @@ def allocate(index, level: pd.DataFrame, frontier_share: pd.DataFrame, easing: p
             row["strength"] = _cell(strength, stamp, focus)
             row["noise"] = _cell(noise, stamp, focus)
         state_rows.append(row)
+        for market in universe.markets:
+            band = bands[market.representative]
+            width = float(band.at[stamp]) if stamp in band.index else float("nan")
+            flags = leg_flags(
+                market.representative, stamp, level, frontier_share, easing, width, frozen.frontier,
+            )
+            if flags is None:
+                leg1 = leg2 = score = float("nan")
+            else:
+                leg1 = float(flags[0])
+                leg2 = float(flags[1])
+                score = 0.5 * leg1 + 0.5 * leg2
+            leg_rows.append((stamp, market.representative, market.name, leg1, leg2, score, width))
 
     state = pd.DataFrame(state_rows, index=days)
     exits = pd.DataFrame(exit_rows, columns=["t", "id", "why"])
     decisions = _decision_frame(decision_rows, decision_index, universe.cash)
-    return Allocation(state=state, decisions=decisions, exits=exits)
+    legs = pd.DataFrame(leg_rows, columns=["date", "market", "market_name", "leg1", "leg2", "score", "width"])
+    return Allocation(state=state, decisions=decisions, exits=exits, legs=legs)
 
 
 def _finite_number(value: float) -> bool:
@@ -552,7 +706,8 @@ def _decision_frame(rows: list[dict[str, float]], index: list, cash: str) -> pd.
 
 def target_weights(returns: pd.DataFrame, universe: Universe, *,
                    eligible: pd.DataFrame | None = None, params: Params | None = None,
-                   allow_after: bool = False, equal_weight: bool = False) -> Allocation:
+                   allow_after: bool = False, equal_weight: bool = False,
+                   cadence: str = "frozen") -> Allocation:
     """先算 §2 的读数，再走 §3。不成交。`equal_weight` 只给 C-等权。"""
     frozen = Params() if params is None else params
     panel = read_panel(
@@ -561,5 +716,5 @@ def target_weights(returns: pd.DataFrame, universe: Universe, *,
     return allocate(
         panel.H.index, panel.H, panel.F, panel.E, universe,
         prices=level_index(returns), returns=returns, eligible=eligible,
-        params=frozen, allow_after=allow_after,
+        params=frozen, allow_after=allow_after, cadence=cadence,
     )

@@ -1,0 +1,31 @@
+{
+  "diagnostic": "D37",
+  "counts_toward_gate": false,
+  "lock_text_changed": false,
+  "lock_addendum": "results/v5/LOCK-addendum-D37.md",
+  "inspection_unlocked": true,
+  "db_sha256_before": "1fe4925e7993eb18d93a5cf359185242a98f7114583f7225033a9ec119ec288f",
+  "db_sha256_after": "430aa6d1e2884a36d968d65d2de27776d7ed4eb8943a0bf494f1a2cc726b186c",
+  "git_sha_base": "f7ca1c98eb84836e38e23598767d87657de4a3ec",
+  "cadence": ["frozen", "weekly", "resonance", "daily", "resonance_daily"],
+  "s0_v0_bitmatch": {
+    "设计期": "ok",
+    "别的市场": "ok",
+    "检验段": "failed"
+  },
+  "not_run": [
+    "S0/检验段/V1",
+    "S0/检验段/V2",
+    "S0/检验段/V3",
+    "S0/检验段/V4",
+    "S1/检验段/V0",
+    "S1/检验段/V1",
+    "S1/检验段/V2",
+    "S1/检验段/V3",
+    "S1/检验段/V4"
+  ],
+  "inspection_stop": "S0 V0 检验段没有逐位对上签收结果。签收库是 167d4e39，当前库在 OTC 续接和 931790 之后已经不同。设计期与别的市场的 S0 V0 已对上，所以这两段的 V1–V4 和 S1 设计期照跑。检验段 V0 文件只留差异，见 inspection-v0-note.txt 与 s0-v0-mismatch.txt。",
+  "s1_pnl": "打分用拼接后的研究序列；持有收益仍是冻结的指数池计价。可买日按场内 ETF/LOF 上市当日起、5 日成交额中位数。",
+  "s1_spliced": ["theme-中证韩交所中韩半导体指数"],
+  "s1_design_new_markets_held": false
+}

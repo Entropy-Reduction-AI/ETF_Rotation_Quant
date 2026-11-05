@@ -32,6 +32,27 @@ class Universe:
             raise V51Error("市场代表重复")
 
 
+# 巴克莱美国综合债券是债券，S1 不进第一层。
+S1_BOND = "theme-巴克莱资本美国综合债券指数"
+S1_EXTRA = frozenset({"其他海外", "商品"})
+
+
+def universe_s1(names: list[str], class_of: dict[str, str], params: Params | None = None) -> Universe:
+    """S0 的三个市场照旧。每个其他海外、商品容器再单独成一个市场。"""
+    base = universe_from_names(names, class_of, params)
+    seen = {market.representative for market in base.markets}
+    extra: list[Market] = []
+    for name in sorted(names):
+        kind = class_of.get(name)
+        if kind not in S1_EXTRA or name == S1_BOND or name == base.cash:
+            continue
+        if name in seen:
+            raise V51Error(f"S1 市场代表重复：{name}")
+        extra.append(Market(name, name, (name,)))
+        seen.add(name)
+    return Universe(tuple(base.markets) + tuple(extra), bond=base.bond, gold=base.gold, cash=base.cash)
+
+
 def universe_from_names(names: list[str], class_of: dict[str, str], params: Params | None = None) -> Universe:
     """只收第一层三个市场。其他海外、商品不进第一层。现金、国债、黄金只作防守。"""
     frozen = Params() if params is None else params
