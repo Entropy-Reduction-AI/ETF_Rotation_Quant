@@ -1,0 +1,11 @@
+{
+  "fetched_at": "2026-11-06T15:48:01+08:00",
+  "before": "e3af3b5e3cb098ee516cf75bc6e87f9e470dace4df2708489f6cc526fae65eda",
+  "after": "efbf86215526ccd3642e1f961de2bc4c838b40d66ed27a5de0ec31a14308772a",
+  "fx_ready": [
+    "EUR",
+    "HKD",
+    "JPY",
+    "USD"
+  ]
+}

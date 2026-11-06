@@ -1,0 +1,2 @@
+中国货币网 CcprHisNew 的货币表里没有 BRL/CNY。chinamoney searchlist=[]，不是 BRL/CNY
+核对时间 2026-11-06T15:48:37+08:00

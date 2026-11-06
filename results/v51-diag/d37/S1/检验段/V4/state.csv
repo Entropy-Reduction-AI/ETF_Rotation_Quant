@@ -1801,24 +1801,24 @@ date,market,market_name,risk,defense,picks,blocked
 2023-05-30,theme-法国CAC40指数,theme-法国CAC40指数,1,cgb-10y,theme-法国CAC40指数,
 2023-05-31,theme-法国CAC40指数,theme-法国CAC40指数,1,cgb-10y,theme-法国CAC40指数,
 2023-06-01,theme-法国CAC40指数,theme-法国CAC40指数,1,cgb-10y,theme-法国CAC40指数,
-2023-06-02,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,theme-法国CAC40指数
-2023-06-05,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,theme-法国CAC40指数
-2023-06-06,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,theme-法国CAC40指数
-2023-06-07,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,theme-法国CAC40指数
-2023-06-08,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,theme-法国CAC40指数
-2023-06-09,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,
-2023-06-12,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,
-2023-06-13,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,
-2023-06-14,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,
-2023-06-15,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,
-2023-06-16,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,
-2023-06-19,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,
-2023-06-20,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,
-2023-06-21,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,
-2023-06-26,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,
-2023-06-27,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,
-2023-06-28,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,
-2023-06-29,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cgb-10y,theme-中证韩交所中韩半导体指数,
+2023-06-02,,,0,cgb-10y,,theme-法国CAC40指数
+2023-06-05,,,0,cgb-10y,,theme-法国CAC40指数
+2023-06-06,,,0,cgb-10y,,theme-法国CAC40指数
+2023-06-07,,,0,cgb-10y,,theme-法国CAC40指数
+2023-06-08,,,0,cgb-10y,,theme-法国CAC40指数
+2023-06-09,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
+2023-06-12,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
+2023-06-13,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
+2023-06-14,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
+2023-06-15,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
+2023-06-16,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
+2023-06-19,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
+2023-06-20,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
+2023-06-21,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
+2023-06-26,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
+2023-06-27,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
+2023-06-28,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
+2023-06-29,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
 2023-06-30,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
 2023-07-03,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
 2023-07-04,theme-中信证券印度ETP指数,theme-中信证券印度ETP指数,1,cgb-10y,theme-中信证券印度ETP指数,
@@ -2075,17 +2075,17 @@ date,market,market_name,risk,defense,picks,blocked
 2024-07-16,spx,美股,1,cgb-10y,theme-标普500信息科技指数|spx|theme-PHLX Semiconductor Sector Index,
 2024-07-17,spx,美股,1,cgb-10y,theme-标普500信息科技指数|spx|theme-PHLX Semiconductor Sector Index,
 2024-07-18,spx,美股,1,cgb-10y,theme-标普500信息科技指数|spx|theme-PHLX Semiconductor Sector Index,
-2024-07-19,spx,美股,1,cgb-10y,theme-纳斯达克生物科技指数|theme-道琼斯美国精选REIT指数|theme-标普500医疗保健等权重指数,
-2024-07-22,spx,美股,1,cgb-10y,theme-纳斯达克生物科技指数|theme-道琼斯美国精选REIT指数|theme-标普500医疗保健等权重指数,
-2024-07-23,spx,美股,1,cgb-10y,theme-纳斯达克生物科技指数|theme-道琼斯美国精选REIT指数|theme-标普500医疗保健等权重指数,
-2024-07-24,spx,美股,1,cgb-10y,theme-纳斯达克生物科技指数|theme-道琼斯美国精选REIT指数|theme-标普500医疗保健等权重指数,
-2024-07-25,spx,美股,1,cgb-10y,theme-纳斯达克生物科技指数|theme-道琼斯美国精选REIT指数|theme-标普500医疗保健等权重指数,
+2024-07-19,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-纳斯达克生物科技指数|theme-道琼斯美国精选REIT指数,
+2024-07-22,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-纳斯达克生物科技指数|theme-道琼斯美国精选REIT指数,
+2024-07-23,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-纳斯达克生物科技指数|theme-道琼斯美国精选REIT指数,
+2024-07-24,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-纳斯达克生物科技指数|theme-道琼斯美国精选REIT指数,
+2024-07-25,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-纳斯达克生物科技指数|theme-道琼斯美国精选REIT指数,
 2024-07-26,spx,美股,0.5,cgb-10y,theme-纳斯达克生物科技指数|theme-标普生物科技精选行业指数|theme-道琼斯美国精选REIT指数,
 2024-07-29,spx,美股,0.5,cgb-10y,theme-纳斯达克生物科技指数|theme-标普生物科技精选行业指数|theme-道琼斯美国精选REIT指数,
 2024-07-30,spx,美股,0.5,cgb-10y,theme-纳斯达克生物科技指数|theme-标普生物科技精选行业指数|theme-道琼斯美国精选REIT指数,
 2024-07-31,spx,美股,1,cgb-10y,theme-纳斯达克生物科技指数|theme-标普生物科技精选行业指数|theme-道琼斯美国精选REIT指数,
 2024-08-01,spx,美股,1,cgb-10y,theme-纳斯达克生物科技指数|theme-标普生物科技精选行业指数|theme-道琼斯美国精选REIT指数,
-2024-08-02,spx,美股,1,cgb-10y,theme-标普500医疗保健等权重指数|theme-纳斯达克生物科技指数|theme-道琼斯美国精选REIT指数,
+2024-08-02,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-标普500医疗保健等权重指数|theme-纳斯达克生物科技指数,
 2024-08-05,,,0,cgb-10y,,
 2024-08-06,,,0,cgb-10y,,
 2024-08-07,,,0,cgb-10y,,
@@ -2163,16 +2163,16 @@ date,market,market_name,risk,defense,picks,blocked
 2024-11-26,spx,美股,1,cgb-10y,spx|theme-标普美国品质消费股票指数|theme-道琼斯美国石油开发与生产指数,allshare-financials-re
 2024-11-27,spx,美股,1,cgb-10y,spx|theme-标普美国品质消费股票指数|theme-道琼斯美国石油开发与生产指数,allshare-financials-re
 2024-11-28,spx,美股,1,cgb-10y,spx|theme-标普美国品质消费股票指数|theme-道琼斯美国石油开发与生产指数,allshare-financials-re
-2024-11-29,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|spx,
-2024-12-02,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|spx,
-2024-12-03,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|spx,
-2024-12-04,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|spx,
-2024-12-05,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|spx,
-2024-12-06,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|spx,
-2024-12-09,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|spx,
-2024-12-10,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|spx,
-2024-12-11,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|spx,
-2024-12-12,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|spx,
+2024-11-29,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数,
+2024-12-02,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数,
+2024-12-03,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数,
+2024-12-04,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数,
+2024-12-05,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数,
+2024-12-06,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-道琼斯工业平均指数|theme-新交所泛东南亚科技指数,
+2024-12-09,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-道琼斯工业平均指数|theme-新交所泛东南亚科技指数,
+2024-12-10,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-道琼斯工业平均指数|theme-新交所泛东南亚科技指数,
+2024-12-11,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-道琼斯工业平均指数|theme-新交所泛东南亚科技指数,
+2024-12-12,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-道琼斯工业平均指数|theme-新交所泛东南亚科技指数,
 2024-12-13,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|spx,
 2024-12-16,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|spx,
 2024-12-17,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|spx,
@@ -2180,11 +2180,11 @@ date,market,market_name,risk,defense,picks,blocked
 2024-12-19,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|theme-纳斯达克科技市值加权指数,spx
 2024-12-20,spx,美股,0.5,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|theme-标普500信息科技指数,
 2024-12-23,spx,美股,0.5,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|theme-标普500信息科技指数,
-2024-12-24,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|theme-标普500信息科技指数,
+2024-12-24,spx,美股,0.5,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|theme-标普500信息科技指数,
 2024-12-25,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|theme-标普500信息科技指数,
 2024-12-26,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|theme-新交所泛东南亚科技指数|theme-标普500信息科技指数,
-2024-12-27,spx,美股,0.5,cgb-10y,theme-标普美国品质消费股票指数|spx|ndx100,
-2024-12-30,spx,美股,0.5,cgb-10y,theme-标普美国品质消费股票指数|spx|ndx100,
+2024-12-27,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|spx|ndx100,
+2024-12-30,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|spx|ndx100,
 2024-12-31,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|spx|ndx100,
 2025-01-02,spx,美股,1,cgb-10y,theme-标普美国品质消费股票指数|ndx100|theme-标普500信息科技指数,spx
 2025-01-03,spx,美股,0.5,cgb-10y,theme-标普美国品质消费股票指数|theme-标普500信息科技指数|ndx100,
@@ -2202,15 +2202,15 @@ date,market,market_name,risk,defense,picks,blocked
 2025-01-21,spx,美股,1,cgb-10y,theme-道琼斯美国石油开发与生产指数|theme-标普石油天然气勘探及生产精选行业指数|theme-S&P 500 Energy Sector Index(NTR),
 2025-01-22,spx,美股,1,cgb-10y,theme-道琼斯美国石油开发与生产指数|theme-标普石油天然气勘探及生产精选行业指数|theme-S&P 500 Energy Sector Index(NTR),
 2025-01-23,spx,美股,1,cgb-10y,theme-道琼斯美国石油开发与生产指数|theme-标普石油天然气勘探及生产精选行业指数|theme-S&P 500 Energy Sector Index(NTR),
-2025-01-24,spx,美股,1,cgb-10y,spx|ndx100|theme-标普美国品质消费股票指数,theme-S&P 500 Energy Sector Index(NTR)
-2025-01-27,spx,美股,1,cgb-10y,spx|theme-标普美国品质消费股票指数|ndx100,
-2025-02-05,spx,美股,1,cgb-10y,spx|theme-标普美国品质消费股票指数|ndx100,
-2025-02-06,spx,美股,1,cgb-10y,spx|theme-标普美国品质消费股票指数|ndx100,
-2025-02-07,spx,美股,1,cgb-10y,theme-标普500医疗保健等权重指数|theme-纳斯达克生物科技指数|spx,
-2025-02-10,spx,美股,1,cgb-10y,theme-标普500医疗保健等权重指数|theme-纳斯达克生物科技指数|spx,
-2025-02-11,spx,美股,1,cgb-10y,theme-纳斯达克生物科技指数|spx|ndx100,theme-标普500医疗保健等权重指数
-2025-02-12,spx,美股,1,cgb-10y,spx|ndx100|theme-道琼斯工业平均指数,theme-标普500医疗保健等权重指数|theme-纳斯达克生物科技指数
-2025-02-13,spx,美股,1,cgb-10y,spx|ndx100|theme-道琼斯工业平均指数,theme-标普500医疗保健等权重指数|theme-纳斯达克生物科技指数
+2025-01-24,spx,美股,1,cgb-10y,spx|ndx100|theme-道琼斯工业平均指数,theme-S&P 500 Energy Sector Index(NTR)
+2025-01-27,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|spx|theme-标普美国品质消费股票指数,
+2025-02-05,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|spx|theme-标普美国品质消费股票指数,
+2025-02-06,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|spx|theme-标普美国品质消费股票指数,
+2025-02-07,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-标普500医疗保健等权重指数|theme-纳斯达克生物科技指数,
+2025-02-10,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-标普500医疗保健等权重指数|theme-纳斯达克生物科技指数,
+2025-02-11,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|theme-纳斯达克生物科技指数|spx,theme-标普500医疗保健等权重指数
+2025-02-12,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|spx|ndx100,theme-标普500医疗保健等权重指数|theme-纳斯达克生物科技指数
+2025-02-13,spx,美股,1,cgb-10y,theme-道琼斯工业平均指数|spx|ndx100,theme-标普500医疗保健等权重指数|theme-纳斯达克生物科技指数
 2025-02-14,hsi,港股,1,cgb-10y,theme-HSSCT|hsi|theme-中证港股通科技指数,
 2025-02-17,hsi,港股,1,cgb-10y,theme-HSSCT|hsi|theme-中证港股通科技指数,
 2025-02-18,hsi,港股,1,cgb-10y,theme-HSSCT|hsi|theme-中证港股通科技指数,
@@ -2231,11 +2231,11 @@ date,market,market_name,risk,defense,picks,blocked
 2025-03-11,hsi,港股,1,gold,hsi|hstech|theme-中证港股通50指数,
 2025-03-12,hsi,港股,1,gold,hsi|hstech|theme-中证港股通50指数,
 2025-03-13,hsi,港股,1,gold,hsi|hstech|theme-中证港股通50指数,
-2025-03-14,hsi,港股,1,gold,theme-中证港股通科技指数|theme-HSSCT|hsi,
-2025-03-17,hsi,港股,1,gold,theme-中证港股通科技指数|theme-HSSCT|hsi,
-2025-03-18,hsi,港股,1,gold,theme-中证港股通科技指数|theme-HSSCT|hsi,
-2025-03-19,hsi,港股,1,gold,theme-中证港股通科技指数|theme-HSSCT|hsi,
-2025-03-20,hsi,港股,1,gold,theme-中证港股通科技指数|theme-HSSCT|hsi,
+2025-03-14,hsi,港股,1,gold,theme-中证港股通科技指数|theme-HSSCNE|theme-HSSCT,
+2025-03-17,hsi,港股,1,gold,theme-中证港股通科技指数|theme-HSSCNE|theme-HSSCT,
+2025-03-18,hsi,港股,1,gold,theme-中证港股通科技指数|theme-HSSCNE|theme-HSSCT,
+2025-03-19,hsi,港股,1,gold,theme-中证港股通科技指数|theme-HSSCNE|theme-HSSCT,
+2025-03-20,hsi,港股,1,gold,theme-中证港股通科技指数|theme-HSSCNE|theme-HSSCT,
 2025-03-21,hsi,港股,1,gold,theme-中证港股通50指数|theme-中证港股通科技指数|theme-H50069,
 2025-03-24,hsi,港股,1,gold,theme-中证港股通50指数|theme-中证港股通科技指数|theme-H50069,
 2025-03-25,hsi,港股,1,gold,theme-中证港股通50指数|theme-中证港股通科技指数|theme-H50069,
@@ -2425,9 +2425,9 @@ date,market,market_name,risk,defense,picks,blocked
 2025-12-23,spx,美股,1,gold,theme-标普生物科技精选行业指数|theme-纳斯达克生物科技指数|theme-标普500消费精选指数,theme-PHLX Semiconductor Sector Index
 2025-12-24,spx,美股,1,gold,theme-标普生物科技精选行业指数|theme-纳斯达克生物科技指数|theme-标普500消费精选指数,theme-PHLX Semiconductor Sector Index
 2025-12-25,spx,美股,1,gold,theme-标普生物科技精选行业指数|theme-纳斯达克生物科技指数|theme-标普500消费精选指数,theme-PHLX Semiconductor Sector Index
-2025-12-26,spx,美股,1,gold,theme-标普生物科技精选行业指数|theme-纳斯达克生物科技指数|spx,
-2025-12-29,spx,美股,1,gold,theme-标普生物科技精选行业指数|theme-纳斯达克生物科技指数|spx,
-2025-12-30,spx,美股,1,gold,theme-标普生物科技精选行业指数|theme-纳斯达克生物科技指数|spx,
+2025-12-26,spx,美股,1,gold,theme-标普生物科技精选行业指数|theme-纳斯达克生物科技指数|theme-道琼斯工业平均指数,
+2025-12-29,spx,美股,1,gold,theme-标普生物科技精选行业指数|theme-纳斯达克生物科技指数|theme-道琼斯工业平均指数,
+2025-12-30,spx,美股,1,gold,theme-标普生物科技精选行业指数|theme-纳斯达克生物科技指数|theme-道琼斯工业平均指数,
 2025-12-31,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cash,theme-中证韩交所中韩半导体指数,
 2026-01-05,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,cash,theme-中证韩交所中韩半导体指数,
 2026-01-06,theme-中证韩交所中韩半导体指数,theme-中证韩交所中韩半导体指数,1,gold,theme-中证韩交所中韩半导体指数,
