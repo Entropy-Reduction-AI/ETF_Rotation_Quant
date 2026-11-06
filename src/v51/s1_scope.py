@@ -103,11 +103,53 @@ def splice_before_list(signal: pd.Series, index_returns: pd.Series, publish: pd.
 
 
 def returns_from_close(closes: pd.Series) -> pd.Series:
+    level = _positive_level(closes)
+    return level.pct_change()
+
+
+def _positive_level(closes: pd.Series) -> pd.Series:
     level = pd.Series(closes, dtype=float).dropna().sort_index()
     level.index = pd.DatetimeIndex(pd.to_datetime(level.index)).normalize()
     level = level[level > 0]
-    level = level[~level.index.duplicated(keep="last")]
-    return level.pct_change()
+    return level[~level.index.duplicated(keep="last")]
+
+
+def series_truncated_at_listing(series_first: str, first_list: str, slack_days: int = 120) -> bool:
+    """研究序列没有实质早于首只场内基金。没有序列、但有上市日，也算被上市日截断。
+
+    基金净值常常比交易所上市日早几天到几十天。早于上市日不到 slack_days 的，
+    仍当作从这只基金附近才开始，不是跟踪指数自己的长历史。
+    """
+    listed = str(first_list or "")[:10]
+    if len(listed) < 10:
+        return False
+    started = str(series_first or "")[:10]
+    if len(started) < 10:
+        return True
+    floor = (pd.Timestamp(listed) - pd.Timedelta(days=slack_days)).date().isoformat()
+    return started >= floor
+
+
+def calendar_index_returns(closes: pd.Series, calendar: pd.DatetimeIndex, fx: pd.Series | None = None,
+                           stale_limit: int = 5) -> pd.Series:
+    """价格指数对齐到上交所日历后再算收益。美元、港币点位先乘已登记汇率。
+
+    走海外对齐：决策日只用严格早于当日的收盘，避免把美股收盘写进同一天的 A 股决策。
+    """
+    from src.v3.engine.prices import align_overseas
+
+    level = _positive_level(closes)
+    days = pd.DatetimeIndex(pd.to_datetime(calendar)).normalize()
+    if fx is not None:
+        rate = _positive_level(fx)
+        rate = rate.reindex(level.index.union(rate.index)).sort_index().ffill().reindex(level.index)
+        level = (level * rate).dropna()
+    if level.empty:
+        return pd.Series(dtype=float, index=days)
+    frame = pd.DataFrame({"date": level.index, "close": level.to_numpy(dtype=float)})
+    aligned, fresh, _gaps = align_overseas(frame, days, stale_limit)
+    aligned = aligned.where(fresh.reindex(days).fillna(False))
+    return aligned.pct_change()
 
 
 def load_amounts(con: sqlite3.Connection, codes: list[str]) -> dict[str, pd.Series]:
@@ -153,8 +195,13 @@ def s1_markets_from_classes(class_of: dict[str, str]) -> list[str]:
     return sorted(name for name, kind in class_of.items() if kind in S1_EXTRA and name != S1_BOND)
 
 
-def apply_splices(signal: pd.DataFrame, registry: list[dict], closes_of, containers: dict[str, dict]) -> tuple[pd.DataFrame, list[dict]]:
-    """按登记表拼接。没有发布日或没有行情的保持原列，并记入缺口。"""
+def apply_splices(signal: pd.DataFrame, registry: list[dict], closes_of, containers: dict[str, dict],
+                  fx_of=None) -> tuple[pd.DataFrame, list[dict]]:
+    """按登记表拼接。没有发布日或没有行情的保持原列，并记入缺口。
+
+    currency 为 USD / HKD 时用已登记汇率换到人民币，再对齐到信号日历。
+    LOCAL 只对齐、不换汇。空着或 CNY 的沿用点位自身的日期。
+    """
     out = signal.copy()
     by_id = {str(row.get("container_id") or ""): row for row in registry}
     notes = []
@@ -172,10 +219,20 @@ def apply_splices(signal: pd.DataFrame, registry: list[dict], closes_of, contain
             notes.append({"container_id": name, "status": "frozen", "reason": f"库里没有 {code}"})
             continue
         container = containers.get(name) or {}
-        out[name] = splice_before_list(out[name], returns_from_close(closes), publish, first_list_date(container))
+        currency = str(row.get("currency") or "CNY").upper()
+        if currency in {"USD", "HKD", "LOCAL"}:
+            fx = None
+            if currency == "USD":
+                fx = fx_of("USDCNY") if fx_of is not None else None
+            elif currency == "HKD":
+                fx = fx_of("HKDCNY") if fx_of is not None else None
+            extra = calendar_index_returns(closes, out.index, fx)
+        else:
+            extra = returns_from_close(closes)
+        out[name] = splice_before_list(out[name], extra, publish, first_list_date(container))
         notes.append({
             "container_id": name, "status": "spliced", "publish_date": publish.date().isoformat(),
-            "bars_code": code, "reason": str(row.get("note") or ""),
+            "bars_code": code, "currency": currency, "reason": str(row.get("note") or row.get("reason") or ""),
         })
     return out, notes
 

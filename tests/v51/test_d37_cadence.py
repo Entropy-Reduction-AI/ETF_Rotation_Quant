@@ -7,7 +7,10 @@ import pandas as pd
 
 from src.v3.engine.sessions import decision_dates
 from src.v51.allocate import allocate
-from src.v51.s1_scope import buyable_frame, listed_funds, rolling_amount_ok, splice_before_list
+from src.v51.s1_scope import (
+    buyable_frame, calendar_index_returns, listed_funds, rolling_amount_ok,
+    series_truncated_at_listing, splice_before_list,
+)
 from src.v51.universe import Market, Universe, universe_s1
 from tests.v51.test_allocate import _frames, _picks, _prices, _universe
 
@@ -164,6 +167,21 @@ class Scope(unittest.TestCase):
         frame = buyable_frame(calendar, {"soymeal": [(funds[0], amounts)]})
         self.assertTrue(bool(frame.at[calendar[1], "soymeal"]))
         self.assertFalse(bool(frame.at[calendar[0], "soymeal"]))
+
+    def test_listing_truncation_keeps_a_series_that_already_starts_earlier(self):
+        self.assertTrue(series_truncated_at_listing("2021-04-08", "2019-06-25"))
+        self.assertTrue(series_truncated_at_listing("2022-11-02", "2022-12-22"))
+        self.assertTrue(series_truncated_at_listing("", "2019-12-05"))
+        self.assertFalse(series_truncated_at_listing("2020-07-27", "2021-05-25"))
+        self.assertFalse(series_truncated_at_listing("2020-07-27", ""))
+
+    def test_usd_index_return_uses_the_fx_level_on_the_decision_calendar(self):
+        calendar = pd.bdate_range("2016-01-04", periods=6)
+        closes = pd.Series([100.0, 110.0], index=[calendar[0] - pd.Timedelta(days=3), calendar[0]])
+        fx = pd.Series([6.0, 6.0], index=[calendar[0] - pd.Timedelta(days=3), calendar[0]])
+        got = calendar_index_returns(closes, calendar, fx)
+        self.assertEqual(list(got.index), list(pd.DatetimeIndex(calendar).normalize()))
+        self.assertTrue(got.iloc[1:].notna().any())
 
 
 if __name__ == "__main__":
