@@ -1,0 +1,1 @@
+{"data":null,"message":null,"status":{"rCode":400,"bCodeMessage":[{"code":1011,"errorMessage":"The fromdate field is required."},{"code":1011,"errorMessage":"Bad or No parameter fromdate : "}],"developerMessage":null}}
