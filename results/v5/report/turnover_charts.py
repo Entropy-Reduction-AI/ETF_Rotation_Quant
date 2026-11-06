@@ -6,7 +6,9 @@ import pandas as pd, numpy as np
 import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 ROOT = pathlib.Path(__file__).resolve().parents[3]
+import os
 REP = ROOT / 'results/v5/report'; D37 = ROOT / 'results/v51-diag/d37'; OUT = ROOT / 'docs/assets/v51-turnover'
+S1ROOT = pathlib.Path(os.environ.get('D37_S1_ROOT', str(D37)))  # 第四轮 S1 未合入时指向分支导出的目录
 plt.rcParams.update({'font.family': ['Noto Sans CJK SC'], 'axes.unicode_minus': False, 'axes.spines.top': False,
                      'axes.spines.right': False, 'font.size': 11, 'axes.edgecolor': '#9ca3af'})
 INK, MUTED, GOOD, BAD, BLUE, GREY, LIGHT = '#151b26', '#5d6676', '#15803d', '#c2410c', '#1d4ed8', '#94a3b8', '#cbd5e1'
@@ -20,8 +22,8 @@ def save(fig, name):
 J = json.load(open(REP / 'v51_turnover.json'))
 def net(seg, keys):
     return sum(J[seg][k]['每年增值20'] - J[seg][k]['每年成本'] for k in keys if k in J[seg])
-CATS = [('换市场', ['换市场']), ('整体进出\n（一来一回）', ['整体进场', '整体离场']), ('仓位档位\n（加 + 减）', ['加仓档', '减仓档']),
-        ('每周换人', ['周度换掉']), ('单只离场', ['单只离场']), ('防守换品种', ['防守换品种'])]
+CATS = [('换市场', ['换市场']), ('全部离场 + 重新进场\n（成对算）', ['整体进场', '整体离场']), ('满仓 ↔ 半仓\n（加、减成对算）', ['加仓档', '减仓档']),
+        ('每周换人', ['周度换掉']), ('单只止损', ['单只离场']), ('防守换品种', ['防守换品种'])]
 fig, ax = plt.subplots(figsize=(11, 5.2))
 y = np.arange(len(CATS))[::-1]
 for k, (seg, col, off) in enumerate((('设计期', SEGC['设计期'], .19), ('检验段', SEGC['检验段 · 原池子'], -.19))):
@@ -100,7 +102,7 @@ fig.tight_layout(); save(fig, 't4-hit-vs-payoff.png')
 
 # ---------- t5：五个版本 × 四段 ----------
 def perf(sc, seg, v):
-    p = json.load(open(D37 / sc / seg / v / 'stats.json'))['performance']; return p['ann'] * 100, p['max_drawdown'] * 100
+    p = json.load(open((S1ROOT if sc == 'S1' else D37) / sc / seg / v / 'stats.json'))['performance']; return p['ann'] * 100, p['max_drawdown'] * 100
 SEGS = [('设计期', 'S0', '设计期'), ('美国 ETF', 'S0', '别的市场'), ('检验段 · 原池子', 'S0', '检验段'), ('检验段 · 全市场', 'S1', '检验段')]
 VS = [('V1 全按周', 'V1'), ('V2 共振才按天减', 'V2'), ('V3 加减都按天', 'V3'), ('V4 共振减 + 按天加', 'V4')]
 fig, (a1, a2) = plt.subplots(1, 2, figsize=(14, 5.2), sharey=False)
@@ -120,7 +122,7 @@ fig.tight_layout(); save(fig, 't5-cadence-versions.png')
 
 # ---------- t6：有保险 vs 没保险的净值 ----------
 def nav(sc, seg, v):
-    d = pd.read_csv(D37 / sc / seg / v / 'daily.csv', parse_dates=['date']).set_index('date'); return (1 + d.net).cumprod()
+    d = pd.read_csv((S1ROOT if sc == 'S1' else D37) / sc / seg / v / 'daily.csv', parse_dates=['date']).set_index('date'); return (1 + d.net).cumprod()
 fig, axs = plt.subplots(1, 2, figsize=(14, 4.8))
 for ax, (lab, sc, seg) in zip(axs, (('美国 ETF（2003-07 → 2026-09）', 'S0', '别的市场'), ('检验段 · 原池子（2016 → 2026-09）', 'S0', '检验段'))):
     n1, n2 = nav(sc, seg, 'V1'), nav(sc, seg, 'V2')
@@ -137,7 +139,7 @@ fig.tight_layout(); save(fig, 't6-insurance-nav.png')
 
 # ---------- t7：全市场 vs 原池子，满仓押注的窗口 ----------
 n0, n1 = nav('S0', '检验段', 'V0'), nav('S1', '检验段', 'V0')
-h = pd.read_csv(D37 / 'S1/检验段/V0/held.csv', parse_dates=['date']).set_index('date')
+h = pd.read_csv(S1ROOT / 'S1/检验段/V0/held.csv', parse_dates=['date']).set_index('date')
 fig, ax = plt.subplots(figsize=(13, 5))
 ax.plot(n0.index, n0, color=GREY, lw=1.6, label='原池子（只选 A 股、港股、美股）'); ax.plot(n1.index, n1, color='#0f766e', lw=1.9, label='全市场（其他海外、商品各自成一个市场）')
 for cid, col, nm in (('cross-border-commodity', '#fde68a', '跨境商品满仓'), ('theme-中证韩交所中韩半导体指数', '#ddd6fe', '中韩半导体满仓')):
@@ -150,6 +152,6 @@ for n, c in ((n0, GREY), (n1, '#0f766e')):
     ann = n.iloc[-1] ** (252 / len(n)) - 1; ax.text(n.index[-1], n.iloc[-1], f'  年化 {ann * 100:+.1f}%'.replace('+-', '−'), color=c, fontsize=10.5, va='center')
 ax.legend(frameon=False, loc='upper left', fontsize=10); ax.grid(alpha=.2); ax.set_ylabel('净值（起点 = 1）', color=MUTED); ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 title(fig, '全市场多出来的收益，几乎都出现在两段“单只满仓”的窗口里：2021–22 年跨境商品、2026 年中韩半导体',
-      '检验段 2016–2026-09，原规则节奏（V0），D37 第三轮数据。色块 = 该标的占整个组合 100% 的日子。')
+      '检验段 2016–2026-09，原规则节奏（V0），D37 第四轮数据。色块 = 该标的占整个组合 100% 的日子。')
 fig.tight_layout(); save(fig, 't7-full-market.png')
 print('ok')
