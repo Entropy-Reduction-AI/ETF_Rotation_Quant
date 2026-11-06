@@ -6,23 +6,22 @@
 - Document type: review（诊断独立复算；**不计入**任何过关判据）
 - Date: 2026-11-06（Asia/Taipei）
 - Author: ETF Rotation Reviewer（Cloud Agent）
-- Dev PR: [#280](https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/280)（签收时 **OPEN**，base `main` @ `d1f44fc85282d91e74e46d84d5558ab03dd18f00`）
-- Dev 产物复算提交：`665f41a94d2d88f8f786a399f6ae38cc2b954b12`（worktree 只读）；PR head 签收时另有文档提交 `8cca838…`（仅 `plan-b-s12.txt` 增补，未改库与诊断格子）
+- Dev PR: [#280](https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/280)（**OPEN**，base `main` @ `d1f44fc85282d91e74e46d84d5558ab03dd18f00`，head **`8cca838c887eb1dc0f35da4102396d6bd6d2a7b9`**）
+- 拼接 / S1 复算：`665f41a…` 库与格子（未因 `8cca838` 改变）；`8cca838` **仅** 增补 `results/v51-diag/d37/plan-b-s12.txt`（方案 B 根因说明）
 - Companion PR: 本分支 `cursor/d37-r4-cadence-signoff-a91d` → `main`（**未**合并 #280）
 - 依据: `operations/planning/2026-11-05-d37-v51-cadence-diagnostic.md` 第 4/5 版补充；Dev 产物 `results/v51-diag/d37/`
 - 机器可读: `operations/reviews/diag/v51/d37-r4-recalc.json`；复跑脚本 `operations/reviews/diag/v51/d37-r4-verify.py`
 
 ## Decision
 
-**approve_with_follow_up**
+**approve**
 
-本诊断 **不** 重判策略优劣，**不** 计入 v5 预注册或任何过关判据。Must-fix（SHA、泄漏、点位/FX、S1 复算）均为 0。**Follow-up** 仅指方案 B 矩阵按第 5 版补充未跑完（Dev 已按「与 S12 成交不一致则停」执行，见 §7），待 Owner/Orchestrator 决定是否要统一成交路径后再补格。
+本诊断 **不** 重判策略优劣，**不** 计入 v5 预注册或任何过关判据。Must-fix（SHA、泄漏、点位/FX、S1 复算、目标权重）均为 **0**。方案 B 在 S0 设计期与 S12 **目标权重一致**、成交差异来自 `run_book` 涨跌停 vs S12 `simulate`（§7.2），且 Dev 按 Owner/Manager 指示 **未跑** 其余 B 格子 — **不是** missing-output Must-fix。
 
 | 级别 | 数量 |
 | --- | --- |
 | Must-fix | **0** |
 | Should-fix | **0** |
-| Follow-up | **1**（方案 B 其余格子缺失，§7） |
 | Note | **2**（§8） |
 
 ---
@@ -33,8 +32,8 @@
 | --- | --- |
 | 状态 | **OPEN**，未合并 |
 | base | `main`（`d1f44fc85282d91e74e46d84d5558ab03dd18f00`，含 #271/#274 签收与 D37 第 5 版规划增补） |
-| head（GitHub 当时） | `8cca838c887eb1dc0f35da4102396d6bd6d2a7b9` |
-| 独立复算使用的 Dev 树 | `665f41a…`（与 Owner 声称一致；其后仅文档 diff） |
+| head | `8cca838c887eb1dc0f35da4102396d6bd6d2a7b9`（`665f41a..8cca838` 仅 `plan-b-s12.txt`） |
+| 拼接 / 库 / 诊断格子 | 仍对应 `665f41a` 数据面（Reviewer 未重跑 splice/S1） |
 
 ---
 
@@ -108,7 +107,7 @@ Reviewer **独立**请求东财 `push2his`（Cursor WebFetch）与 Yahoo `^DJI`/
 
 ## 5 · 范围 completeness（冻结容器，`first_list` ≥ 2016-01-01）
 
-`s1-container-effect-检验段.csv` 中仍 **frozen** 且首只场内基金上市日 ≥ 2016-01-01 的容器 **33** 个（另 `hstech` 等为 `already` 不在此列）。
+`s1-splice-roster.csv` 中仍 **frozen** 且 `first_list` ≥ 2016-01-01 的容器 **32** 个（与 effect 表同数；另 `hstech` 等为 `already` 不在此列）。恒生仅单源/双源不一致、标普行业 Yahoo 无长历史、IBOVESPA 缺 BRL 中间价、东证/豆粕/MSCI/富时/新交所等无可用日线、原油与印度 ETP 非同一指数等 blocker 均写在名册 **reason** / **tried_urls** 中；Reviewer 抽查 **0** 例 silent skip。
 
 均未新拼接；原因写在 `s1-splice-roster.csv` / effect 表 **reason** 列：恒生主题仅单源日线、标普/道琼斯 403、巴西缺 BRL 中间价、东证无日线、MSCI/富时/新交所仅事实表等。Reviewer 认为文档 **足够** 说明「≥2 源尝试或结构性不拼」，**无** silent skip。
 
@@ -134,24 +133,42 @@ S1 **设计期** 五版本与 r3（`fac651f`）stats **逐字段相同**（抽�
 
 ## 7 · 方案 B（`selection="all"`，V0 节奏）
 
-| 格子 | Dev 产物 | Reviewer |
-| --- | --- | --- |
-| S0 设计期 `/B/` | **有** | 见下表 |
-| S0 别的市场 `/B/` | **无** | 缺失（Dev 已停） |
-| S0 检验段 `/B/` | **无** | 缺失 |
-| S1 检验段 `/B/` | **无** | 缺失 |
+### 7.1 产物范围（独立确认）
 
-**S0 设计期**（窗口 2006-01-04 → 2015-12-31，与 S12 对齐）：
+全库检索 `results/v51-diag/d37/**/B/`：**仅有** `S0/设计期/B/`（11 个文件，含 `daily.csv`、`decisions.csv`、`stats.json` 等）。**未** 生成 `S0/别的市场/B/`、`S0/检验段/B/`、`S1/检验段/B/` — 与 Dev 停跑说明一致，**不是** Must-fix。
 
-| 指标 | Reviewer B | Dev B | S12 | B vs S12 |
-| --- | ---: | ---: | ---: | --- |
-| 年化 | 26.86% | 26.86% | 26.85% | 决策层一致；成交层见下 |
-| 最大回撤 | −31.99% | −31.99% | −32.06% | |
-| 每年笔数 | 61.2 | 61.2 | — | |
-| 每年成本 | 4.31% | 4.31% | — | |
+### 7.2 目标权重 vs S12
 
-- `decisions.csv` vs S12：**0** 单元格差 ✅  
-- `daily.csv` vs S12：`net` **2** 天差（max 0.000535，2015-07-28）；`buy`/`sell` **1** 天（2015-07-27，创业板跌停路径，Dev `plan-b-s12.txt` 已说明）— **非** 目标权重错误，**不** 构成 Must-fix。
+| 检查 | Reviewer |
+| --- | --- |
+| `S0/设计期/B/decisions.csv` vs `results/v5.1/robustness/S12/decisions.csv` | 748 行 × **24** 列（含 `date`；Dev 写 23 列为目标列），**max abs cell diff = 0** ✅ |
+
+### 7.3 成交差异（独立复算，非引用 txt）
+
+| 列 | 2015-07-27 | 2015-07-28 | 2015-07-29 起 |
+| --- | --- | --- | --- |
+| `buy`/`sell` 与 S12 差 | 0.737005 vs 1.0（**1** 天） | 均为 1.0 | 均为 0 |
+| `gross` 与 S12 差 | **0**（−0.033627） | +0.000447 | 相同 |
+| `net` 与 S12 差 | +0.000351 | **累计 +0.000535** | **0**（日 `net` 逐日相同） |
+| `cost` 与 S12 差 | −0.000351 | −0.000088 | 0 |
+
+**S0 设计期**统计（2006-01-04 → 2015-12-31，与 S12 对齐）：年化 26.86% / 26.85%，最大回撤 −31.99% / −32.06%，每年笔数 61.2，每年成本 4.31% — Reviewer 与 Dev `stats.json` 一致。
+
+### 7.4 根因：2015-07-27 创业板跌停卖不出（独立核验）
+
+Dev 在 `8cca838` 的 `plan-b-s12.txt` 叙述与 **Reviewer 从数据 + 代码复现的结论一致**：
+
+| 声称 | Reviewer 独立结果 |
+| --- | --- |
+| 决定日 **2015-07-24**，执行 **2015-07-27** 收盘 | `decisions.csv` 2015-07-24 目标：通信 / 医药 / 中证1000 各 **1/3** ✅ |
+| 159915 原始收盘 2.740 → 2.466（−10%） | `data/market.sqlite` `bars` code=`159915` adj=`raw`：2015-07-24 **2.740**，2015-07-27 **2.466**；2.740×0.9=2.466 ✅ |
+| 2015 创业板卖触发线 **−9.5%** | `src/v3/engine/limits.py`：`LIMIT_BUFFER=0.005`，`limit_ratio('chinext',2015-07-27)=10%`，`blocked(..., sell)` 当跌幅 ≤ −9.5%；对 2.74→2.466 返回 **True** ✅ |
+| 创业板未卖出，残留权重 **0.263**；买卖额 **0.737** | `held.csv` 2015-07-28 开盘前 `chinext=0.262995`；三只买入各 **0.245668**（=0.333333×0.737005）✅ |
+| 同日毛收益相同，净收益差 = 少付费用 | `gross` 相同；`cost` 0.000983 vs 0.001333，差 **0.000351** = `net` 差 ✅ |
+| 2015-07-28 159915 −2.88%，可卖；毛收益差 +0.000447；收盘后均国债 | 2.466→2.395 为 **−2.88%**；`held.csv` 2015-07-29 `cgb-10y=1`（B 侧）✅ |
+| 2015-07-29 起日收益相同；净值差仅为两日复利残差 | 2015-07-29 起 `net` 列与 S12 **逐日相同**（max diff 0）；`net` 累计差自 2015-07-28 起保持 **+0.000535** 水平 ✅ |
+
+**结论**：差异 **可** 由「S12 忽略涨跌停整笔换仓 vs D37 `run_book` 在创业板跌停日卖单不成交、买单按剩余预算缩小」解释；Reviewer **未发现** 与 Dev 机制说明相矛盾的数字。Dev 说明文件仅作对照，上表证据来自库内价格、`held.csv`/`daily.csv` 与 `limits.py`。
 
 ---
 
