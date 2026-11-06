@@ -7,6 +7,7 @@ import pandas as pd
 
 from src.v3.engine.sessions import decision_dates
 from src.v51.allocate import allocate
+from src.v51.d37_round3 import parse_nikkei_month
 from src.v51.s1_scope import (
     buyable_frame, calendar_index_returns, listed_funds, rolling_amount_ok,
     series_truncated_at_listing, splice_before_list,
@@ -174,6 +175,21 @@ class Scope(unittest.TestCase):
         self.assertTrue(series_truncated_at_listing("", "2019-12-05"))
         self.assertFalse(series_truncated_at_listing("2020-07-27", "2021-05-25"))
         self.assertFalse(series_truncated_at_listing("2020-07-27", ""))
+
+    def test_nikkei_month_table_parses_official_columns(self):
+        html = """
+        <tr>
+            <td>2019.01.04</td>
+            <td>19,655.13</td>
+            <td>19,692.58</td>
+            <td>19,241.37</td>
+            <td>19,561.96</td>
+        </tr>
+        """
+        rows = parse_nikkei_month(html)
+        self.assertEqual(rows[0]["date"], "2019-01-04")
+        self.assertEqual(rows[0]["open"], "19655.13")
+        self.assertEqual(rows[0]["close"], "19561.96")
 
     def test_usd_index_return_uses_the_fx_level_on_the_decision_calendar(self):
         calendar = pd.bdate_range("2016-01-04", periods=6)
