@@ -1,0 +1,208 @@
+<!--
+* Copyright 2020 Adobe. All rights reserved.
+* This file is licensed to you under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License. You may obtain a copy
+* of the License at http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software distributed under
+* the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+* OF ANY KIND, either express or implied. See the License for the specific language
+* governing permissions and limitations under the License.
+-->
+<!DOCTYPE html>
+<html lang="en-HK">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Index Details</title>
+    
+    
+    <meta name="template" content="index-details-page-template"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    
+
+    
+    
+<link rel="canonical" href="https://www.hsi.com.hk/indexes/all-indexes/index-details/"/>
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/etc.clientlibs/hsinet/clientlibs/clientlib-base.min.d3939fa6318403f63a7c5779fedb6cde.css" type="text/css">
+
+
+
+
+
+<meta name="theme-color" content="#000000"/>
+<link rel="icon" href="/etc.clientlibs/hsinet/clientlibs/clientlib-react/resources/favicon.ico"/>
+<link rel="apple-touch-icon" href="/etc.clientlibs/hsinet/clientlibs/clientlib-react/resources/logo132.png"/>
+<link rel="manifest" href="/etc.clientlibs/hsinet/clientlibs/clientlib-react/resources/manifest.json"/>
+<!-- AEM page model -->
+
+<!-- Template structure pages have no /content SPA ancestor; load their own model. -->
+<meta property="cq:pagemodel_root_url" content="/content/wpb/hsil/en_hk/indexes/all-indexes/index-details.model.json"/>
+
+
+
+
+
+
+<!-- Optional AEM-driven page_name override (author can adapt logic / property) -->
+<meta name="hsi:pws:aem:pageName" content=""/>
+<meta name="hsi:pws:aem:pageLanguage" content="en-HK"/>
+<!-- Inject Tealium data layer BEFORE utag.js so 'b.page_name' exists -->
+<script>
+  window.utag_cfg_ovrd = window.utag_cfg_ovrd || {};
+  window.utag_cfg_ovrd.noview = true;
+  window.utag_cfg_ovrd.nocookie = true;
+  window.__hsiDeleteUtagMainCookie = window.__hsiDeleteUtagMainCookie || function() {
+    var cookieName = 'utag_main';
+    var hostname = window.location.hostname || '';
+    var pathSegments = (window.location.pathname || '/').split('/').filter(Boolean);
+    var domains = [''];
+    var paths = ['/'];
+
+    hostname.split('.').forEach(function(_, index, parts) {
+      if (index < parts.length - 1) {
+        domains.push(parts.slice(index).join('.'));
+      }
+    });
+
+    pathSegments.reduce(function(path, segment) {
+      var nextPath = path + '/' + segment;
+      paths.push(nextPath, nextPath + '/');
+      return nextPath;
+    }, '');
+
+    domains.forEach(function(domain) {
+      paths.forEach(function(path) {
+        document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0; path=' + path + (domain ? '; domain=' + domain : '') + (window.location.protocol === 'https:' ? '; Secure' : '');
+      });
+    });
+  };
+  window.__hsiScheduleUtagMainCookieCleanup = window.__hsiScheduleUtagMainCookieCleanup || function() {
+    window.__hsiDeleteUtagMainCookie();
+    [100, 500, 1500].forEach(function(delay) {
+      window.setTimeout(window.__hsiDeleteUtagMainCookie, delay);
+    });
+  };
+  window.__hsiScheduleUtagMainCookieCleanup();
+  window.utag_data = window.utag_data || {};
+  console.log('[TL-DIAG][01-header][page] inline tealium config start', {
+    pathname: window.location.pathname,
+    search: window.location.search,
+    noview: window.utag_cfg_ovrd.noview,
+    hasUtag: !!window.utag
+  });
+  var pageTitle = "" || document.title;
+  var formattedTitle = pageTitle.replace(/ /g, "_").replace(/_(?=[^_]*_Page$)/, "-");
+  if(!window.utag_data.page_name){
+     window.utag_data.page_name = "";
+  }
+  if(!window.utag_data.page_title){
+    window.utag_data.page_title = pageTitle;
+  }
+  window.utag_data.page_path = window.location.pathname || "";
+  window.utag_data.page_language = "en\u002DHK" || document.documentElement.lang;
+</script>
+<!-- Tealium utag footprint START -->
+<script type="text/javascript">
+    var prodDomain = 'www.hsi.com.hk';
+    var env = window.location.hostname.includes(prodDomain) ? 'prod' : 'qa';
+    var utagSyncSrc = 'https://tags.tiqcdn.com/utag/hsbc/hk-rbwm-hangseng-hsinet/' + env + '/utag.sync.js';
+    var syncScript = document.createElement('script');
+    syncScript.src = utagSyncSrc;
+    syncScript.type = 'text/javascript';
+    syncScript.async = true;
+    syncScript.onload = function(){ window.__hsiScheduleUtagMainCookieCleanup && window.__hsiScheduleUtagMainCookieCleanup(); console.log('[TL-DIAG][02-header][page] utag.sync.js loaded', utagSyncSrc); };
+    syncScript.onerror = function(){ console.error('[TL-DIAG][02-header][page] utag.sync.js failed', utagSyncSrc); };
+    document.head.appendChild(syncScript);
+
+    var utagSrc = 'https://tags.tiqcdn.com/utag/hsbc/hk-rbwm-hangseng-hsinet/' + env + '/utag.js';
+    console.log('[TL-DIAG][03-header][page] injecting utag.js', { env: env, utagSrc: utagSrc });
+      (function(a,b,c,d){
+        a = utagSrc;
+        b = document;
+        c = 'script';
+        d = b.createElement(c);
+        d.src = a;
+        d.type = 'text/javascript';
+        d.async = true;
+        d.onload = function(){ window.__hsiScheduleUtagMainCookieCleanup && window.__hsiScheduleUtagMainCookieCleanup(); console.log('[TL-DIAG][04-header][page] utag.js loaded', a); };
+        d.onerror = function(){ console.error('[TL-DIAG][04-header][page] utag.js failed', a); };
+        a = b.getElementsByTagName(c)[0];
+        a.parentNode.insertBefore(d,a);
+    })();
+</script>
+<!-- Tealium utag footprint END -->
+
+    
+    
+    
+
+    
+
+    
+    
+    
+<link rel="stylesheet" href="/etc.clientlibs/hsinet/clientlibs/clientlib-react.min.5fb1177eb7f4b9a8e49c13f0f70a769e.css" type="text/css">
+
+
+
+    
+
+    
+    
+</head>
+
+  <body class="page basicpage">
+    
+    
+      
+
+
+
+      <noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="spa-root"></div>
+
+      
+    
+    
+<script src="/etc.clientlibs/hsinet/clientlibs/clientlib-react.min.2f232332a897de6592c790b5ba6960d4.js"></script>
+
+
+
+    
+
+    
+    <script async src="/etc.clientlibs/core/wcm/components/commons/site/clientlibs/container.min.0a6aff292f5cc42142779cde92054524.js"></script>
+<script async src="/etc.clientlibs/clientlibs/granite/jquery/granite/csrf.min.56934e461ff6c436f962a5990541a527.js"></script>
+<script async src="/etc.clientlibs/hsinet/clientlibs/clientlib-base.min.bda5e761e50ea8d4d9c6fbcde21f5c31.js"></script>
+
+
+
+<script>
+  console.log('[TL-DIAG][05-footer][page] hsinet.base clientlib requested', {
+    pathname: window.location.pathname,
+    hasSpaRoot: !!document.getElementById('spa-root')
+  });
+</script>
+
+
+
+
+    
+
+    
+
+    
+    
+    
+
+      
+
+    
+  </body>
+</html>

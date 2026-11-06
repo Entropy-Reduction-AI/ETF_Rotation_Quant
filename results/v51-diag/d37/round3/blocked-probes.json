@@ -1,0 +1,17 @@
+{
+  "fetched_at": "2026-11-06T12:16:49+08:00",
+  "hsi_chart": "FetchError:HTTPError: HTTP Error 404: Not Found  ← https://www.hsi.com.hk/data/eng/indexes/hscei/chart-rebased.json",
+  "hsi_page": "ok:6905",
+  "sp": "标普道琼斯指数页 FetchError:HTTPError: HTTP Error 403: Forbidden  ← https://www.spglobal.com/spdji/en/indices/equity/sp-500-information-technology-sector/。不绕过 403，不用未知导出。 核对时间 2026-11-06T12:16:49+08:00。",
+  "stoxx": "FetchError:HTTPError: HTTP Error 403: Forbidden  ← https://www.stoxx.com/document/Indices/Current/HistoricalData/h_dax.txt",
+  "dax_site": "FetchError:URLError: <urlopen error _ssl.c:983: The handshake operation timed out>  ← https://www.dax-indices.com/",
+  "cac": "ok:249678",
+  "cac_ajax": "FetchError:HTTPError: HTTP Error 404: Not Found  ← https://live.euronext.com/en/ajax/getFullDownloadAjax/FR0003500008-XPAR",
+  "jpx_year_xls": "ok:36352",
+  "b3": "ok:38675",
+  "ftse": "ok:373494",
+  "sgx": "ok:612391",
+  "msci": "ok:1855",
+  "dce": "FetchError:URLError: <urlopen error _ssl.c:983: The handshake operation timed out>  ← https://www.dce.com.cn/",
+  "szse": "FetchError:HTTPError: HTTP Error 500: Internal Server Error  ← https://www.szse.cn/api/report/ShowReport?SHOWTYPE=JSON&CATALOGID=1815_stock_index&TABKE"
+}

@@ -333,7 +333,7 @@
     },
     {
       "market": "theme-东京日经225指数",
-      "first_score": null,
+      "first_score": "2006-03-23",
       "first_hold": null,
       "days": 0,
       "contribution": 0.0
