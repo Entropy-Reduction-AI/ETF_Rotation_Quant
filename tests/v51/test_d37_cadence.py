@@ -8,8 +8,11 @@ import pandas as pd
 from src.v3.engine.sessions import decision_dates
 from src.v51.allocate import allocate
 from src.v51.d37_round3 import parse_nikkei_month
+from src.v51.d37_plan_b import plan_b_markets
+from src.v51.d37_round4 import catalogue_dates
+from src.v51.universe import Market, Universe
 from src.v51.s1_scope import (
-    buyable_frame, calendar_index_returns, listed_funds, rolling_amount_ok,
+    buyable_frame, calendar_index_returns, fx_series_for, listed_funds, rolling_amount_ok,
     series_truncated_at_listing, splice_before_list,
 )
 from src.v51.universe import Market, Universe, universe_s1
@@ -198,6 +201,37 @@ class Scope(unittest.TestCase):
         got = calendar_index_returns(closes, calendar, fx)
         self.assertEqual(list(got.index), list(pd.DatetimeIndex(calendar).normalize()))
         self.assertTrue(got.iloc[1:].notna().any())
+
+    def test_jpy_mid_rate_is_quoted_per_hundred_yen(self):
+        raw = pd.Series([4.9788, 5.0], index=pd.to_datetime(["2024-01-04", "2024-01-05"]))
+        got = fx_series_for("JPY", lambda code: raw if code == "JPYCNY" else None)
+        self.assertAlmostEqual(float(got.iloc[0]), 4.9788 / 100)
+        self.assertIsNone(fx_series_for("LOCAL", lambda code: raw))
+
+    def test_catalogue_line_keeps_launch_not_base_date(self):
+        text = (
+            "Hang Seng SCHK 50 Index 恒生港股通50指数 .HSSC50 - 31-12-2021 13-01-2025\n"
+            "Hang Seng SCHK Telecommunications .HSSCTU - 31-12-2020 17-07-2023\n"
+        )
+        base, launch = catalogue_dates(text, "HSSC50")
+        self.assertEqual(base, "2021-12-31")
+        self.assertEqual(launch, "2025-01-13")
+        self.assertIsNone(catalogue_dates(text, "HSSCT"))
+
+    def test_plan_b_counts_markets_and_splits_contribution(self):
+        index = pd.to_datetime(["2016-01-04", "2016-01-05"])
+        held = pd.DataFrame({"a": [0.5, 0.0], "b": [0.5, 1.0]}, index=index)
+        pnl = pd.DataFrame({"a": [0.1, 0.0], "b": [0.0, 0.2]}, index=index)
+        state = pd.DataFrame({"market": ["m1|m2", "m2"]}, index=index)
+        universe = Universe(
+            (Market("甲", "a", ("a",)), Market("乙", "b", ("b",))),
+            bond="bond", gold="gold", cash="cash",
+        )
+        table, summary = plan_b_markets(held, pnl, state, universe)
+        self.assertEqual(summary["avg_markets_per_day"], 1.5)
+        by = dict(zip(table["market"], table["contribution"]))
+        self.assertAlmostEqual(by["甲"], 0.05)
+        self.assertAlmostEqual(by["乙"], 0.2)
 
 
 if __name__ == "__main__":

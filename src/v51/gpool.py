@@ -272,10 +272,11 @@ def _score_block(case: str, segment: str, start: str, end: str, strategy: pd.Ser
 
 
 def run_v51(window_returns: pd.DataFrame, long_returns: pd.DataFrame, prices: pd.DataFrame, universe: Universe,
-            cadence: str = "frozen"):
+            cadence: str = "frozen", selection: str = "market"):
     """冻结规则。读数看得到窗口之前的收盘；持仓从窗口第一天的现金走起。
 
     `cadence` 默认 frozen。别的值只给 D37，不写本目录的签收结果。
+    `selection="all"` 只给 D37 方案 B，和稳健性 S12 同一条挑选。
     """
     from .allocate import allocate
     from .readings import read_panel
@@ -284,7 +285,7 @@ def run_v51(window_returns: pd.DataFrame, long_returns: pd.DataFrame, prices: pd
     allocation = allocate(
         window_returns.index, panel.H, panel.F, panel.E, universe,
         prices=prices.reindex(window_returns.index), returns=window_returns,
-        allow_after=True, cadence=cadence,
+        allow_after=True, cadence=cadence, selection=selection,
     )
     missing = [name for name in allocation.decisions.columns if name not in window_returns.columns]
     if missing:
