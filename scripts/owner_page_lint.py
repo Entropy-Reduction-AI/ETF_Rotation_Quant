@@ -65,6 +65,13 @@ def lint(path: str) -> tuple[list[str], list[str]]:
         # S3 标题里的“：”后半句是结论，要求前面不是空泛的“概览/说明”
         if '：' not in title and ':' not in title:
             warns.append(f'[{sid}] 标题没有“问题：结论”结构：{title[:30]}')
+        # S4 有数据的节先给图（Owner 2026-11-06：通篇都是表格读着累，图才能一眼看出这一节的重点）
+        vis_tables = [t for t in sec.find_all('table') if not in_fold(t) and t.get('data-lint') != 'ref']
+        has_img = sec.find('img') or re.search(r'\{\{img:', str(sec))
+        if len(vis_tables) >= 2 and not has_img:
+            errors.append(f'[{sid}] 有 {len(vis_tables)} 张展开的表、没有图：先放一张图讲重点，明细表放进折叠')
+        elif len(vis_tables) == 1 and not has_img and len(vis_tables[0].find_all('tr')) > 6:
+            warns.append(f'[{sid}] 一张 {len(vis_tables[0].find_all("tr"))} 行的表、没有图：考虑用图讲重点、表放折叠')
         # 表格
         for t in sec.find_all('table'):
             if in_fold(t):
