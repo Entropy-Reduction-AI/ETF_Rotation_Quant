@@ -1,0 +1,579 @@
+{
+  "diagnostic": "D37-r2",
+  "counts_toward_gate": false,
+  "dev_pr_head": "447b5453c89ebb2f3a79ee87bb1961c59566c8c1",
+  "1a_signed_db_bitmatch": {
+    "signed_db_sha256": "167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3",
+    "git_object": "af8edfd",
+    "temp_db": "/tmp/market-167d4e39.sqlite",
+    "rows": 2611,
+    "max_abs_net_diff": 0.0,
+    "mismatch_dates": [],
+    "diag_bitmatch_problems": [],
+    "pass": true
+  },
+  "db_sha256": {
+    "signed_167d4e39": "167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3",
+    "dev_end_round_worktree": "6b8af8a22cac80c87909f1ace55181bac94577f457607cf8caaca8d8e6fff89a",
+    "main_worktree": "1fe4925e7993eb18d93a5cf359185242a98f7114583f7225033a9ec119ec288f"
+  },
+  "signed_vs_current_s0_v0_inspection": {
+    "ann_signed_db_rerun": -0.03326616115913417,
+    "mdd_signed_db_rerun": -0.5365297701238744,
+    "ann_current_db_artifacts": -0.034625032853091486,
+    "mdd_current_db_artifacts": -0.543235471678829,
+    "ann_signed_oneshot_summary": -0.03326616115925729,
+    "mdd_signed_oneshot_summary": -0.5365297701243275,
+    "picks_diff_days_vs_signed_oneshot_state": 64,
+    "market_diff_days": 0,
+    "first_picks_diff_date": "2019-03-08"
+  },
+  "inspection_cells_recalc": {
+    "S0/检验段/V0": {
+      "reviewer": {
+        "ann": -0.034625032853091486,
+        "max_drawdown": -0.543235471678829,
+        "trades_per_year": 69.87667560321717,
+        "turnover_two_way_per_year": 68.96122258671134,
+        "cost_per_year": 0.06617256661091796,
+        "n": 2611
+      },
+      "dev": {
+        "ann": -0.034625032853226156,
+        "max_drawdown": -0.5432354716793318,
+        "trades_per_year": 69.87667560321717,
+        "turnover_two_way_per_year": 68.96122258670873,
+        "cost_per_year": 0.06617256661091721
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "turnover_two_way_per_year": true,
+        "cost_per_year": true
+      }
+    },
+    "S0/检验段/V1": {
+      "reviewer": {
+        "ann": -0.012198811419169453,
+        "max_drawdown": -0.4791975196721828,
+        "trades_per_year": 64.85790884718499,
+        "turnover_two_way_per_year": 64.02550816479118,
+        "cost_per_year": 0.06436574637151897,
+        "n": 2611
+      },
+      "dev": {
+        "ann": -0.012198811419359079,
+        "max_drawdown": -0.479197519672918,
+        "trades_per_year": 64.85790884718499,
+        "turnover_two_way_per_year": 64.02550816478904,
+        "cost_per_year": 0.06436574637152247
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "turnover_two_way_per_year": true,
+        "cost_per_year": true
+      }
+    },
+    "S0/检验段/V2": {
+      "reviewer": {
+        "ann": -0.02660113147707288,
+        "max_drawdown": -0.5145006448727849,
+        "trades_per_year": 63.69973190348526,
+        "turnover_two_way_per_year": 65.45057168962002,
+        "cost_per_year": 0.06429031808909785,
+        "n": 2611
+      },
+      "dev": {
+        "ann": -0.026601131477216988,
+        "max_drawdown": -0.514500644873304,
+        "trades_per_year": 63.69973190348526,
+        "turnover_two_way_per_year": 65.45057168961746,
+        "cost_per_year": 0.06429031808909705
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "turnover_two_way_per_year": true,
+        "cost_per_year": true
+      }
+    },
+    "S0/检验段/V3": {
+      "reviewer": {
+        "ann": -0.025672467303396118,
+        "max_drawdown": -0.46829796640791077,
+        "trades_per_year": 80.10723860589813,
+        "turnover_two_way_per_year": 79.05555471096672,
+        "cost_per_year": 0.07542494361743102,
+        "n": 2611
+      },
+      "dev": {
+        "ann": -0.02567246730355377,
+        "max_drawdown": -0.4682979664086049,
+        "trades_per_year": 80.10723860589813,
+        "turnover_two_way_per_year": 79.05555471096429,
+        "cost_per_year": 0.07542494361743346
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "turnover_two_way_per_year": true,
+        "cost_per_year": true
+      }
+    },
+    "S0/检验段/V4": {
+      "reviewer": {
+        "ann": -0.012684918162077619,
+        "max_drawdown": -0.44338731386258323,
+        "trades_per_year": 70.64879356568365,
+        "turnover_two_way_per_year": 72.62302781120171,
+        "cost_per_year": 0.07078599824862357,
+        "n": 2611
+      },
+      "dev": {
+        "ann": -0.012684918162249148,
+        "max_drawdown": -0.4433873138633109,
+        "trades_per_year": 70.64879356568365,
+        "turnover_two_way_per_year": 72.62302781119978,
+        "cost_per_year": 0.07078599824862462
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "turnover_two_way_per_year": true,
+        "cost_per_year": true
+      }
+    },
+    "S1/检验段/V0": {
+      "reviewer": {
+        "ann": 0.01898941385530417,
+        "max_drawdown": -0.4038567305440448,
+        "trades_per_year": 51.152815013404826,
+        "turnover_two_way_per_year": 59.34934137234434,
+        "cost_per_year": 0.05116228819741995,
+        "n": 2611
+      },
+      "dev": {
+        "ann": 0.01898941385525066,
+        "max_drawdown": -0.40385673054441773,
+        "trades_per_year": 51.152815013404826,
+        "turnover_two_way_per_year": 59.34934137234307,
+        "cost_per_year": 0.051162288197421905
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "turnover_two_way_per_year": true,
+        "cost_per_year": true
+      }
+    },
+    "S1/检验段/V1": {
+      "reviewer": {
+        "ann": 0.028108923949128117,
+        "max_drawdown": -0.32733830712584433,
+        "trades_per_year": 48.643431635388744,
+        "turnover_two_way_per_year": 57.51435760605013,
+        "cost_per_year": 0.05067325307989808,
+        "n": 2611
+      },
+      "dev": {
+        "ann": 0.028108923949085263,
+        "max_drawdown": -0.3273383071260272,
+        "trades_per_year": 48.643431635388744,
+        "turnover_two_way_per_year": 57.51435760604882,
+        "cost_per_year": 0.05067325307990157
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "turnover_two_way_per_year": true,
+        "cost_per_year": true
+      }
+    },
+    "S1/检验段/V2": {
+      "reviewer": {
+        "ann": 0.026551618119360576,
+        "max_drawdown": -0.3538474796425639,
+        "trades_per_year": 48.739946380697056,
+        "turnover_two_way_per_year": 58.41520596693407,
+        "cost_per_year": 0.051168613107575686,
+        "n": 2611
+      },
+      "dev": {
+        "ann": 0.02655161811931439,
+        "max_drawdown": -0.3538474796428074,
+        "trades_per_year": 48.739946380697056,
+        "turnover_two_way_per_year": 58.41520596693292,
+        "cost_per_year": 0.05116861310757823
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "turnover_two_way_per_year": true,
+        "cost_per_year": true
+      }
+    },
+    "S1/检验段/V3": {
+      "reviewer": {
+        "ann": 0.020924269429595244,
+        "max_drawdown": -0.436209145020799,
+        "trades_per_year": 53.85522788203753,
+        "turnover_two_way_per_year": 63.02445246724419,
+        "cost_per_year": 0.05399506639061196,
+        "n": 2611
+      },
+      "dev": {
+        "ann": 0.02092426942957948,
+        "max_drawdown": -0.43620914502112396,
+        "trades_per_year": 53.85522788203753,
+        "turnover_two_way_per_year": 63.02445246724353,
+        "cost_per_year": 0.05399506639061464
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "turnover_two_way_per_year": true,
+        "cost_per_year": true
+      }
+    },
+    "S1/检验段/V4": {
+      "reviewer": {
+        "ann": 0.03210048452947056,
+        "max_drawdown": -0.3807735218623397,
+        "trades_per_year": 50.18766756032172,
+        "turnover_two_way_per_year": 60.33983954825726,
+        "cost_per_year": 0.05252927386823828,
+        "n": 2611
+      },
+      "dev": {
+        "ann": 0.032100484529470785,
+        "max_drawdown": -0.3807735218624967,
+        "trades_per_year": 50.18766756032172,
+        "turnover_two_way_per_year": 60.33983954825705,
+        "cost_per_year": 0.05252927386824213
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "turnover_two_way_per_year": true,
+        "cost_per_year": true
+      }
+    }
+  },
+  "inspection_cells_all_match_dev": true,
+  "s1_publish_spot_check": {
+    "spliced_count_roster": 25,
+    "spot_checks": [
+      {
+        "container_id": "theme-中证海外中国互联网30人民币指数",
+        "status": "spliced",
+        "publish_date": "2015-03-23",
+        "bars_code": "930604",
+        "first_list": "2021-12-02",
+        "series_first_in_db": "2015-03-23",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2016-03-29",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": null,
+        "reason_if_not_spliced": "中证海外中国互联网30指数；新增 3010 行。只入库发布日 2015-03-23 及之后的点位。",
+        "note_status": "spliced"
+      },
+      {
+        "container_id": "theme-中证海外中国互联网50人民币指数",
+        "status": "spliced",
+        "publish_date": "2014-12-29",
+        "bars_code": "H30533",
+        "first_list": "2017-01-18",
+        "series_first_in_db": "2014-12-29",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2016-01-07",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": "2017-08-08",
+        "reason_if_not_spliced": "中证海外中国互联网50指数；新增 3069 行。只入库发布日 2014-12-29 及之后的点位。",
+        "note_status": "spliced"
+      },
+      {
+        "container_id": "theme-中证海外中国互联网指数",
+        "status": "spliced",
+        "publish_date": "2011-09-20",
+        "bars_code": "H11136",
+        "first_list": "2015-07-10",
+        "series_first_in_db": "2011-09-20",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2012-09-28",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": "2017-08-08",
+        "reason_if_not_spliced": "中证海外中国互联网指数；新增 3925 行。只入库发布日 2011-09-20 及之后的点位。",
+        "note_status": "spliced"
+      },
+      {
+        "container_id": "theme-中证港股通高股息投资港元指数",
+        "status": "spliced",
+        "publish_date": "2016-11-25",
+        "bars_code": "930914",
+        "first_list": "2022-04-25",
+        "series_first_in_db": "2016-11-25",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2023-01-06",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": "2023-02-14",
+        "reason_if_not_spliced": "中证港股通高股息投资指数；新增 2441 行。只入库发布日 2016-11-25 及之后的点位。",
+        "note_status": "spliced"
+      },
+      {
+        "container_id": "theme-中证韩交所中韩半导体指数",
+        "status": "spliced",
+        "publish_date": "2021-12-20",
+        "bars_code": "931790",
+        "first_list": "2022-12-22",
+        "series_first_in_db": "2014-01-01",
+        "bars_strictly_before_publish_in_db": 1778,
+        "first_scoreable_post_splice": "2022-12-28",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": "2023-04-25",
+        "reason_if_not_spliced": "中证韩交所中韩半导体指数；已有 2995 行 2014-01-01→2026-09-30，不覆盖。只入库发布日 2021-12-20 及之后的点位。",
+        "note_status": "spliced"
+      },
+      {
+        "container_id": "theme-纳斯达克生物科技指数",
+        "status": "spliced",
+        "publish_date": "1993-11-01",
+        "bars_code": "NBI",
+        "first_list": "2022-08-29",
+        "series_first_in_db": "2006-05-10",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2007-05-22",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": "2022-08-31",
+        "reason_if_not_spliced": "纳斯达克生物科技价格指数。美元点位乘已登记 USDCNY。 新增 5218 行",
+        "note_status": "spliced"
+      },
+      {
+        "container_id": "theme-纳斯达克科技市值加权指数",
+        "status": "spliced",
+        "publish_date": "2023-01-03",
+        "bars_code": "NDXTMC",
+        "first_list": "2023-08-08",
+        "series_first_in_db": "2023-01-03",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2024-08-21",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": "2024-12-23",
+        "reason_if_not_spliced": "ExportHistory 在更早的年份为空，第一根官方点位当作可用起点。价格指数，美元乘 USDCNY。不用纳斯达克 100 科技行业（NDXT），那是另一条指数。 新增 939 行",
+        "note_status": "spliced"
+      }
+    ],
+    "sample_spliced": [
+      {
+        "container_id": "theme-CES100",
+        "status": "spliced",
+        "publish_date": "2014-12-15",
+        "bars_code": "CES100",
+        "first_list": "2018-05-25",
+        "series_first_in_db": "2014-12-15",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2019-06-10",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": "2022-12-20",
+        "reason_if_not_spliced": "中华交易服务港股通精选100指数；已有 2925 行 2014-12-15→2026-09-30，不覆盖。只入库发布日 2014-12-15 及之后的点位。",
+        "note_status": "spliced"
+      },
+      {
+        "container_id": "theme-H11146",
+        "status": "spliced",
+        "publish_date": "2010-06-02",
+        "bars_code": "H11146",
+        "first_list": "2023-10-11",
+        "series_first_in_db": "2010-06-02",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2012-01-11",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": null,
+        "reason_if_not_spliced": "中证港股通内地金融指数；已有 4083 行 2010-06-02→2026-09-30，不覆盖。只入库发布日 2010-06-02 及之后的点位。",
+        "note_status": "spliced"
+      },
+      {
+        "container_id": "theme-H50069",
+        "status": "spliced",
+        "publish_date": "2015-02-16",
+        "bars_code": "H50069",
+        "first_list": "2020-08-18",
+        "series_first_in_db": "2015-02-16",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2021-08-30",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": "2022-02-15",
+        "reason_if_not_spliced": "上证港股通指数；已有 2882 行 2015-02-16→2026-09-30，不覆盖。只入库发布日 2015-02-16 及之后的点位。",
+        "note_status": "spliced"
+      },
+      {
+        "container_id": "theme-PHLX Semiconductor Sector Index",
+        "status": "spliced",
+        "publish_date": "1993-12-01",
+        "bars_code": "SOX",
+        "first_list": "2023-04-14",
+        "series_first_in_db": "2000-01-03",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2007-01-18",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": "2024-06-25",
+        "reason_if_not_spliced": "容器基准里费城半导体占 70%。拼接 SOX 价格指数，不是 70/20/10 混合净值。2006 年前没有已登记美元汇率的日子在对齐时自然空掉。 新增 6875 行",
+        "note_status": "spliced"
+      },
+      {
+        "container_id": "theme-中证全球中国互联网人民币指数",
+        "status": "spliced",
+        "publish_date": "2016-04-22",
+        "bars_code": "930796",
+        "first_list": "2022-07-15",
+        "series_first_in_db": "2016-04-22",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2017-05-04",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": null,
+        "reason_if_not_spliced": "中证全球中国互联网指数；新增 2726 行。只入库发布日 2016-04-22 及之后的点位。",
+        "note_status": "spliced"
+      },
+      {
+        "container_id": "theme-中证全球中国教育主题人民币指数",
+        "status": "spliced",
+        "publish_date": "2020-04-21",
+        "bars_code": "931456",
+        "first_list": "2021-06-17",
+        "series_first_in_db": "2020-04-21",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2021-04-30",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": "2022-07-12",
+        "reason_if_not_spliced": "中证全球中国教育主题指数；新增 1683 行。只入库发布日 2020-04-21 及之后的点位。",
+        "note_status": "spliced"
+      },
+      {
+        "container_id": "theme-中证国新港股通央企红利指数",
+        "status": "spliced",
+        "publish_date": "2023-09-13",
+        "bars_code": "931722",
+        "first_list": "2024-07-10",
+        "series_first_in_db": "2023-09-13",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2025-07-24",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": null,
+        "reason_if_not_spliced": "中证国新港股通央企红利指数；新增 754 行。只入库发布日 2023-09-13 及之后的点位。",
+        "note_status": "spliced"
+      },
+      {
+        "container_id": "theme-中证海外中国互联网30人民币指数",
+        "status": "spliced",
+        "publish_date": "2015-03-23",
+        "bars_code": "930604",
+        "first_list": "2021-12-02",
+        "series_first_in_db": "2015-03-23",
+        "bars_strictly_before_publish_in_db": 0,
+        "first_scoreable_post_splice": "2016-03-29",
+        "first_score_on_or_after_publish": true,
+        "first_hold_post": null,
+        "reason_if_not_spliced": "中证海外中国互联网30指数；新增 3010 行。只入库发布日 2015-03-23 及之后的点位。",
+        "note_status": "spliced"
+      }
+    ],
+    "sample_not_spliced": [
+      {
+        "container_id": "allshare-communication",
+        "status": "already",
+        "publish_date": "nan",
+        "bars_code": "nan",
+        "first_list": "nan",
+        "series_first_in_db": null,
+        "bars_strictly_before_publish_in_db": null,
+        "first_scoreable_post_splice": "2006-01-16",
+        "first_score_on_or_after_publish": null,
+        "first_hold_post": null,
+        "reason_if_not_spliced": "研究序列已经早于首只场内基金。发布日之前的回填不接。",
+        "note_status": null
+      },
+      {
+        "container_id": "allshare-discretionary",
+        "status": "already",
+        "publish_date": "nan",
+        "bars_code": "nan",
+        "first_list": "2014-06-25",
+        "series_first_in_db": null,
+        "bars_strictly_before_publish_in_db": null,
+        "first_scoreable_post_splice": "2006-01-16",
+        "first_score_on_or_after_publish": null,
+        "first_hold_post": "2020-11-10",
+        "reason_if_not_spliced": "研究序列已经早于首只场内基金。发布日之前的回填不接。",
+        "note_status": null
+      },
+      {
+        "container_id": "allshare-energy",
+        "status": "already",
+        "publish_date": "nan",
+        "bars_code": "nan",
+        "first_list": "nan",
+        "series_first_in_db": null,
+        "bars_strictly_before_publish_in_db": null,
+        "first_scoreable_post_splice": "2006-01-16",
+        "first_score_on_or_after_publish": null,
+        "first_hold_post": null,
+        "reason_if_not_spliced": "研究序列已经早于首只场内基金。发布日之前的回填不接。",
+        "note_status": null
+      },
+      {
+        "container_id": "allshare-financials-re",
+        "status": "already",
+        "publish_date": "nan",
+        "bars_code": "nan",
+        "first_list": "2015-04-17",
+        "series_first_in_db": null,
+        "bars_strictly_before_publish_in_db": null,
+        "first_scoreable_post_splice": "2006-01-16",
+        "first_score_on_or_after_publish": null,
+        "first_hold_post": "2020-03-10",
+        "reason_if_not_spliced": "研究序列已经早于首只场内基金。发布日之前的回填不接。",
+        "note_status": null
+      },
+      {
+        "container_id": "allshare-healthcare",
+        "status": "already",
+        "publish_date": "nan",
+        "bars_code": "nan",
+        "first_list": "nan",
+        "series_first_in_db": null,
+        "bars_strictly_before_publish_in_db": null,
+        "first_scoreable_post_splice": "2006-01-16",
+        "first_score_on_or_after_publish": null,
+        "first_hold_post": null,
+        "reason_if_not_spliced": "研究序列已经早于首只场内基金。发布日之前的回填不接。",
+        "note_status": null
+      },
+      {
+        "container_id": "allshare-industrials",
+        "status": "already",
+        "publish_date": "nan",
+        "bars_code": "nan",
+        "first_list": "nan",
+        "series_first_in_db": null,
+        "bars_strictly_before_publish_in_db": null,
+        "first_scoreable_post_splice": "2006-01-16",
+        "first_score_on_or_after_publish": null,
+        "first_hold_post": null,
+        "reason_if_not_spliced": "研究序列已经早于首只场内基金。发布日之前的回填不接。",
+        "note_status": null
+      }
+    ],
+    "publish_date_violations_in_sample": [],
+    "pass_spot_check": true
+  }
+}
