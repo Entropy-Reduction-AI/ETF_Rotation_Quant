@@ -130,9 +130,32 @@ def series_truncated_at_listing(series_first: str, first_list: str, slack_days: 
     return started >= floor
 
 
+# 中间价代码，以及「报价里的 1 单位」对应多少外币。
+# 日元在中国货币网是 100JPY/CNY，入库仍是这个报价，用的时候除以 100。
+FX_PER_UNIT = {
+    "USD": ("USDCNY", 1.0),
+    "HKD": ("HKDCNY", 1.0),
+    "EUR": ("EURCNY", 1.0),
+    "BRL": ("BRLCNY", 1.0),
+    "JPY": ("JPYCNY", 100.0),
+}
+
+
+def fx_series_for(currency: str, fx_of) -> pd.Series | None:
+    """把已登记中间价换成「1 单位外币兑人民币」。没有这种货币就返回 None。"""
+    spec = FX_PER_UNIT.get(str(currency or "").upper())
+    if spec is None or fx_of is None:
+        return None
+    code, per = spec
+    raw = fx_of(code)
+    if raw is None or len(raw) == 0 or per <= 0:
+        return None
+    return pd.Series(raw, dtype=float) / float(per)
+
+
 def calendar_index_returns(closes: pd.Series, calendar: pd.DatetimeIndex, fx: pd.Series | None = None,
                            stale_limit: int = 5) -> pd.Series:
-    """价格指数对齐到上交所日历后再算收益。美元、港币点位先乘已登记汇率。
+    """价格指数对齐到上交所日历后再算收益。外币点位先乘「1 单位外币兑人民币」。
 
     走海外对齐：决策日只用严格早于当日的收盘，避免把美股收盘写进同一天的 A 股决策。
     """
@@ -199,8 +222,8 @@ def apply_splices(signal: pd.DataFrame, registry: list[dict], closes_of, contain
                   fx_of=None) -> tuple[pd.DataFrame, list[dict]]:
     """按登记表拼接。没有发布日或没有行情的保持原列，并记入缺口。
 
-    currency 为 USD / HKD 时用已登记汇率换到人民币，再对齐到信号日历。
-    LOCAL 只对齐、不换汇。空着或 CNY 的沿用点位自身的日期。
+    currency 为 USD / HKD / EUR / BRL / JPY 时用已登记人民币中间价换到人民币，再对齐到信号日历。
+    日元中间价按 100 日元报价，换算时除以 100。LOCAL 只对齐、不换汇。空着或 CNY 的沿用点位自身的日期。
     """
     out = signal.copy()
     by_id = {str(row.get("container_id") or ""): row for row in registry}
@@ -220,13 +243,17 @@ def apply_splices(signal: pd.DataFrame, registry: list[dict], closes_of, contain
             continue
         container = containers.get(name) or {}
         currency = str(row.get("currency") or "CNY").upper()
-        if currency in {"USD", "HKD", "LOCAL"}:
-            fx = None
-            if currency == "USD":
-                fx = fx_of("USDCNY") if fx_of is not None else None
-            elif currency == "HKD":
-                fx = fx_of("HKDCNY") if fx_of is not None else None
+        if currency in FX_PER_UNIT:
+            fx = fx_series_for(currency, fx_of)
+            if fx is None or fx.dropna().empty:
+                notes.append({
+                    "container_id": name, "status": "frozen",
+                    "reason": f"没有 {currency} 的人民币中间价，不用未换汇的点位",
+                })
+                continue
             extra = calendar_index_returns(closes, out.index, fx)
+        elif currency == "LOCAL":
+            extra = calendar_index_returns(closes, out.index, None)
         else:
             extra = returns_from_close(closes)
         out[name] = splice_before_list(out[name], extra, publish, first_list_date(container))

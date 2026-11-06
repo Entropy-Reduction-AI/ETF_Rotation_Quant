@@ -1,0 +1,727 @@
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+          Categories                                Index Name                                     指數名稱        Refinitiv Ticker   Bloomberg   First Value Date    Launch       Rebalancing                    Current Share Class Coverage
+           指數類別                                                                                                 路孚特代號               Ticker         (D-M-Y)         Date         Schedule                          現時指數股份類別涵蓋
+                                                                                                                                   彭博代號        首個指數點日             (D-M-Y)      Grouping(Note)    A    H   HK Shares Red     P Chips    Foreign   Overseas-
+                                                                                                                                                  (日-月-年)          發佈日        調整時間表分組
+                                                                                                                                                                                                A股   H股    香港公司     Chips   民營企業      Companies    listed
+                                                                                                                                                                 (日-月-年)            (註)
+                                                                                                                                                                                                                     紅籌                外國公司     外地上市股類
+
+                                                                                                                                                                                                A    H       HK       R       O              F   Overseas
+Hang Seng Index and its related indexes
+恒生指數及其相關指數
+                                 Hang Seng Index                                     恒生指數                           .HSI            HSI         31-07-1964       24-11-1969      Group 1             ●       ●        ●        ●             ●
+                  Sub-Indexes
+                      分類指數
+                                 Hang Seng Index - Finance                           恒生金融分類指數                      .HSNF            HSF         13-01-1984       02-01-1985      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Index - Utilities                         恒生公用事業分類指數                    .HSNU            HSU         13-01-1984       02-01-1985      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Index - Properties                        恒生地產分類指數                      .HSNP            HSP         13-01-1984       02-01-1985      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Index - Commerce & Industry               恒生工商業分類指數                     .HSNC            HSC         13-01-1984       02-01-1985      Group 1             ●       ●        ●        ●             ●
+            Short & Leveraged
+                   短倉及槓杆
+                                 HSI Short Index                                     恒指短倉指數                        .HSISI          HSISI        03-01-2006       01-09-2008        N/A
+                                 HSI 2x Short Index                                  恒指2倍短倉指數                     .HSI2SI          HSI2SI       03-01-2006       01-09-2008        N/A
+                                 HSI 1.25x Leveraged Index                           恒指1.25倍槓桿指數                 .HSI125LI        HSI125LI      04-01-2006       11-02-2019        N/A
+                                 HSI Leveraged Index                                 恒指槓桿指數                        .HSILI          HSILI        03-01-2006       01-09-2008        N/A
+                                 HSI 1.2x Leveraged KRW-converted Monthly Reset ER
+                                                                                     恒指1.2倍槓桿韓元轉換每月重置額外回報指數      .HSLKER          HSLKER        31-12-2006       19-08-2019        N/A
+                                 Index
+             Currency Hedged
+                      貨幣對沖
+                                 HSI EUR Hedged Index                                恒指歐羅對沖指數                     .HSIEURH        HSIEURH       30-01-2013       28-05-2018        N/A               ●       ●        ●        ●             ●
+                                 HSI GBP Hedged Index                                恒指英鎊對沖指數                    .HSIGBPH         HSIGBPH       30-01-2013       28-05-2018        N/A               ●       ●        ●        ●             ●
+                                 HSI JPY Hedged Index                                恒指日圓對沖指數                     .HSIJPYH        HSIJPYH       30-01-2013       28-05-2018        N/A               ●       ●        ●        ●             ●
+                                 HSI KRW Hedged Index                                恒指韓元對沖指數                    .HSIKRWH         HSIKRWH       30-01-2013       28-05-2018        N/A               ●       ●        ●        ●             ●
+                                 HSI RMB Hedged Index                                恒指人民幣對沖指數                   .HSIRMBH         HSIRMBH       30-01-2013       28-05-2018        N/A               ●       ●        ●        ●             ●
+                                 HSI EUR Daily Hedged Index                          恒指歐羅每日對沖指數                   .HSIEURD        HSIEURD       31-12-2013       05-08-2019        N/A
+                       Strategy
+                           策略
+                                 Hang Seng Equal Weighted Index                      恒生等權重指數                       .HSEWI         HSEWI              -           04-06-2012      Group 1             ●       ●        ●        ●             ●
+                                 HSI Quanto HKDKRW Adjusted Index                    恒指港元韓元匯率連動調控指數               .HSIQHK         HSIQHK        31-12-2007       15-07-2019        N/A
+                                 HSI Dividend Point Index                            恒指股息點指數                       .HSIDPI        HSIDPI             -           12-07-2010        N/A
+                                 HSI Covered Call Index                              恒指備兌認購期權指數                    .HSICC            -          30-12-2004       24-06-2019        N/A
+                                 HSI NTR Covered Call Index                          恒指淨股息累計備兌認購期權指數              .HSINCC            -          30-12-2004       24-06-2019        N/A
+                                 HSI 5% OTM Covered Call Index                       恒指5%價外備兌認購期權指數               .HSIOCC            -          30-12-2004       24-06-2019        N/A
+                                 HSI NTR 5% OTM Covered Call Index                   恒指淨股息累計5%價外備兌認購期權指數         .HSINOCC            -          30-12-2004       24-06-2019        N/A
+                    Derivatives
+                      衍生產品
+                                 HSI Volatility Index                                恒指波幅指數                        .VHSI            VHSI        02-01-2001       21-02-2011        N/A
+                                 Hang Seng Futures Index                             恒生期貨指數                        .HSFI            HSFI        30-06-2011       20-10-2014        N/A
+                 Risk Adjusted
+                 風險調控指數
+                                 Hang Seng Risk Adjusted Index - HSI 20%             恒生風險調控指數 - 恒指20%            .HSRAIHSI20      HSRHSI1       01-06-2000       08-11-2010        N/A               ●       ●        ●        ●             ●
+                                 Hang Seng Risk Adjusted Index (ER) - HSI 20%        恒生風險調控指數 (額外回報) - 恒指20%   .HSRAIHSIER20      HSRHSIE1      01-06-2000       08-11-2010        N/A               ●       ●        ●        ●             ●
+                         Others
+                           其他
+                                 HSI SCHK Index                                      恒指港股通指數                      .HSISC              -         04-09-2020       08-03-2024      Group 2             ●       ●        ●        ●             ●
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+          Categories                                   Index Name                                 指數名稱           Refinitiv Ticker   Bloomberg   First Value Date    Launch       Rebalancing                    Current Share Class Coverage
+           指數類別                                                                                                   路孚特代號               Ticker         (D-M-Y)         Date         Schedule                          現時指數股份類別涵蓋
+                                                                                                                                     彭博代號        首個指數點日             (D-M-Y)      Grouping(Note)    A    H   HK Shares Red     P Chips    Foreign   Overseas-
+                                                                                                                                                    (日-月-年)          發佈日        調整時間表分組
+                                                                                                                                                                                                  A股   H股    香港公司     Chips   民營企業      Companies    listed
+                                                                                                                                                                   (日-月-年)            (註)
+                                                                                                                                                                                                                       紅籌                外國公司     外地上市股類
+
+                                                                                                                                                                                                  A    H       HK       R       O              F   Overseas
+
+Hang Seng China Enterprises Index and its related indexes
+恒生中國企業指數及其相關指數
+                               Hang Seng China Enterprises Index                     恒生中國企業指數                        .HSCE           HSCEI        03-01-2000       08-08-1994      Group 1             ●                ●        ●
+           Short & Leveraged
+                  短倉及槓杆
+                               Hang Seng China Enterprises Futures Short Index       恒生中國企業期貨短倉指數                  .HSCEFS              -         30-06-2011       04-12-2017        N/A
+                                  Hang Seng China Enterprises Futures 2x Leveraged Index 恒生中國企業期貨2倍槓桿指數            .HSCEF2L             -         30-06-2011       04-12-2017        N/A
+                                  HSCEI Short Index                                   恒生國企短倉指數                     .HSCEISI          HSCEISI      03-01-2006       01-09-2008        N/A
+                                  HSCEI 2x Short Index                                恒生國企2倍短倉指數                  .HSCEI2SI         HSCEI2SI      03-01-2006       01-09-2008        N/A
+                                  HSCEI Leveraged Index                               恒生國企槓桿指數                     .HSCEILI          HSCEILI      03-01-2006       01-09-2008        N/A
+                                  HSCEI TR 2x Leveraged Index                         恒生國指股息累計2倍槓桿指數              .HSCEI2LT         HSCEI2LT      30-09-2013       08-10-2018        N/A
+                                  HSCEI 1.2x Leveraged KRW-converted Monthly Reset ER
+                                                                                      恒生國指1.2倍槓桿韓元轉換每月重置額外回報指數    .HSCELKER         HSCELKER      31-12-2006       19-08-2019        N/A
+                                  Index
+             Currency Hedged
+                     貨幣對沖
+                                  HSCEI EUR Hedged Index                             恒生國指歐羅對沖指數                   .HSCEEURH         HSCEEURH      30-01-2013       28-05-2018        N/A               ●                ●        ●
+                                  HSCEI GBP Hedged Index                             恒生國指英鎊對沖指數                  .HSCEGBPH          HSCEGBPH      30-01-2013       28-05-2018        N/A               ●                ●        ●
+                                  HSCEI JPY Hedged Index                             恒生國指日圓對沖指數                   .HSCEJPYH         HSCEJPYH      30-01-2013       28-05-2018        N/A               ●                ●        ●
+                                  HSCEI KRW Hedged Index                             恒生國指韓元對沖指數                  .HSCEKRWH          HSCEKRWH      30-01-2013       28-05-2018        N/A               ●                ●        ●
+                                  HSCEI RMB Hedged Index                             恒生國指人民幣對沖指數                 .HSCERMBH          HSCERMBH      30-01-2013       28-05-2018        N/A               ●                ●        ●
+                                  HSCEI EUR Daily Hedged Index                       恒生國指歐羅每日對沖指數                 .HSCEEURD         HSCEEURD      31-12-2013       05-08-2019        N/A
+                       Strategy
+                           策略
+                                  Hang Seng China Enterprises Equal Weighted Index   恒生中國企業等權重指數                   .HSCEEWI         HSCEEWI            -           04-06-2012      Group 1             ●                ●        ●
+                                  Hang Seng China Enterprises Smart Index            恒生中國企業精明指數                      .HSCESI         HSCESI       04-06-2010       08-06-2015      Group 1        ●    ●                ●        ●
+                                  HSCEI Quanto HKDKRW Adjusted Index                 恒生國指港元韓元匯率連動調控指數             .HSCEIQHK         HSCEIQHK      31-12-2007       11-02-2019        N/A
+                                  HSCEI Dividend Point Index                         恒生國企股息點指數                     .HSCEIDPI        HSCEIDPI           -           12-07-2010        N/A
+                                  HSCEI Covered Call Index                           恒生國指備兌認購期權指數                   .HSCECC             -         30-12-2004       24-06-2019        N/A
+                                  HSCEI NTR Covered Call Index                       恒生國指淨股息累計備兌認購期權指數            .HSCENCC              -         30-12-2004       24-06-2019        N/A
+                                  HSCEI 5% OTM Covered Call Index                    恒生國指5%價外備兌認購期權指數             .HSCEOCC              -         30-12-2004       24-06-2019        N/A
+                                  HSCEI NTR 5% OTM Covered Call Index                恒生國指淨股息累計5%價外備兌認購期權指數       .HSCENOCC              -         30-12-2004       24-06-2019        N/A
+                                  HSCEI Daily Reset ER Index                         恒生國指每日重置額外回報指數                 .HSCEER          HSCEER       31-12-2013       19-08-2019        N/A
+                                  HSCEI KRW-converted Daily Reset ER Index           恒生國指韓元轉換每日重置額外回報指數            .HSCEKER         HSCEKER       31-12-2013       09-09-2019        N/A
+
+                                  HSCEI Futures KRW Hedged 3.4% Decrement Index (TR) 恒生國指期貨韓元對沖3.4%遞減指數 (總回報)     .HSCEFKH          HSCEFKH       30-06-2011       23-02-2021        N/A
+
+                                  HSCEI NTR KRW Hedged 400 Points Decrement Index    恒生國指淨股息韓元對沖400點遞減指數          .HSCEKHD          HSCEKHD       30-01-2013       03-05-2021        N/A
+                    Derivatives
+                     衍生產品
+                                  HSCEI Volatility Index                             恒生國指波幅指數                       .VHSCEI          VHSCEI       14-06-2004       03-12-2018        N/A
+                                  Hang Seng China Enterprises Futures Index          恒生中國企業期貨指數                     .HSCEFI            —          30-06-2011       13-07-2015        N/A
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+        Categories                                  Index Name                              指數名稱              Refinitiv Ticker   Bloomberg   First Value Date    Launch       Rebalancing                    Current Share Class Coverage
+         指數類別                                                                                                  路孚特代號               Ticker         (D-M-Y)         Date         Schedule                          現時指數股份類別涵蓋
+                                                                                                                                  彭博代號        首個指數點日             (D-M-Y)      Grouping(Note)    A    H   HK Shares Red     P Chips    Foreign   Overseas-
+                                                                                                                                                 (日-月-年)          發佈日        調整時間表分組
+                                                                                                                                                                                               A股   H股    香港公司     Chips   民營企業      Companies    listed
+                                                                                                                                                                (日-月-年)            (註)
+                                                                                                                                                                                                                    紅籌                外國公司     外地上市股類
+
+                                                                                                                                                                                               A    H       HK       R       O              F   Overseas
+               Risk Adjusted
+                    風險調控
+                               Hang Seng Risk Adjusted Index - HSCEI 25%        恒生風險調控指數 - 國企指數25%              .HSRAICEI25      HSRCEI2       01-06-2000       08-11-2010        N/A               ●       ●        ●        ●
+                               Hang Seng Risk Adjusted Index (ER) - HSCEI 25%   恒生風險調控指數 (額外回報) - 國企指數25%     .HSRAICEIER25      HSRCEIE2      01-06-2000       08-11-2010        N/A               ●       ●        ●        ●
+                     Others
+                       其他
+                                HSCEI SCHK Index                                    恒生國指港股通指數                   .HSCEISC             -         02-12-2022       15-05-2026      Group 2             ●                ●        ●
+Hang Seng TECH Index and its related indexes
+恒生科技指數及其相關指數
+                                Hang Seng TECH Index                                恒生科技指數                      .HSTECH          HSTECH        31-12-2014       27-07-2020      Group 1             ●       ●        ●        ●             ●
+            Short & Leveraged
+                    短倉及槓杆
+                                HSTECH Futures 2x Short Index                       恒生科指期貨2倍短倉指數               .HSTECF2S         HSTECF2S      23-11-2020       12-04-2021        N/A
+                                HSTECH Futures 2x Leveraged Index                   恒生科指期貨2倍槓桿指數               .HSTECF2L         HSTECF2L      23-11-2020       12-04-2021        N/A
+                                HSTECH Short Index                                  恒生科指短倉指數                    .HSTECHS         HSTECHS       31-12-2014       23-11-2020        N/A
+                                HSTECH 2x Leveraged Index                           恒生科指2倍槓桿指數                 .HSTECH2L         HSTECH2L      31-12-2014       23-11-2020        N/A
+                                HSTECH 2x Short Index                               恒生科指 2 倍短倉指數                 .HST2SI          HST2SI       31-12-2014       21-06-2021        N/A
+                                HSTECH TR 2x Leveraged Index                        恒生科指股息累計 2 倍槓桿指數             .HST2LT          HST2LT       31-12-2014       21-06-2021        N/A
+                      Strategy
+                          策略
+                                HSTECH Covered Call Index                           恒生科指備兌認購期權指數                  .HSTCC          HSTCC        28-01-2021       13-01-2025        N/A
+                                HSTECH NTR Covered Call Index                       恒生科指淨股息累計備兌認購期權指數            .HSTNCC             -         28-01-2021       13-01-2025        N/A
+                                HSTECH 5% OTM Covered Call Index                    恒生科指5%價外備兌認購期權指數             .HSTOCC             -         28-01-2021       13-01-2025        N/A
+                                HSTECH NTR 5% OTM Covered Call Index                恒生科指淨股息累計5%價外備兌認購期權指數       .HSTNOCC             -         28-01-2021       13-01-2025        N/A
+                                HSTECH 15% Target Premium Weekly Covered Call Index 恒生科指15%目標期權金每周備兌認購期權指數     .HSTT15WC         HSTT15WC      24-09-2024       11-08-2025        N/A
+                                HSTECH NTR 15% Target Premium Weekly Covered Call 恒生科指淨股息累計15%目標期權金每周備兌認購期權
+                                                                                                              .HSTNT15WC             -         24-09-2024       11-08-2025        N/A
+                                Index                                               指數
+                    Derivatives
+                     衍生產品
+                                HSTECH Futures Index                                恒生科指期貨指數                    .HSTECHF         HSTECHF       23-11-2020       12-04-2021        N/A
+                        Others
+                          其他
+                                HSTECH Top 10 Index                                 恒生科指10強指數                   .HTECH10         HTECH10       31-12-2021       27-03-2025      Group 1             ●       ●        ●        ●             ●
+                                HSTECH SCHK Index                                   恒生科指港股通指數                  .HSTECHSC            -          02-12-2022       15-05-2026      Group 2             ●       ●        ●        ●             ●
+Hang Seng Biotech Index and its related indexes
+恒生生物科技指數及其相關指數
+                                Hang Seng Biotech Index                             恒生生物科技指數                     .HSBIO           HSBIO        31-12-2013       16-12-2019      Group 2             ●       ●        ●        ●             ●
+            Short & Leveraged
+                    短倉及槓杆
+                                HSBIO Short Index                                   恒生生科指短倉指數                    .HSBIOS         HSBIOS        31-12-2022       30-04-2026        N/A
+                                HSBIO 2x Leveraged Index                            恒生生科指2倍槓桿指數                 .HSBIO2L         HSBIO2L       31-12-2022       30-04-2026        N/A
+                                HSBIO 2x Short Index                                恒生生科指 2 倍短倉指數                .HSB2SI         HSB2SI        31-12-2022       30-04-2026        N/A
+                                HSBIO TR 2x Leveraged Index                         恒生生科指股息累計 2 倍槓桿指數            .HSB2LT         HSB2LT        31-12-2022       30-04-2026        N/A
+Hang Seng Composite Index and its related indexes
+恒生綜合指數及其相關指數
+                               Hang Seng Composite Index                        恒生綜合指數                            .HSCI            HSCI        03-01-2000       03-10-2001      Group 1             ●       ●        ●        ●             ●
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+         Categories                                     Index Name                                  指數名稱   Refinitiv Ticker   Bloomberg   First Value Date    Launch       Rebalancing                    Current Share Class Coverage
+          指數類別                                                                                              路孚特代號               Ticker         (D-M-Y)         Date         Schedule                          現時指數股份類別涵蓋
+                                                                                                                               彭博代號        首個指數點日             (D-M-Y)      Grouping(Note)    A    H   HK Shares Red     P Chips    Foreign   Overseas-
+                                                                                                                                              (日-月-年)          發佈日        調整時間表分組
+                                                                                                                                                                                            A股   H股    香港公司     Chips   民營企業      Companies    listed
+                                                                                                                                                             (日-月-年)            (註)
+                                                                                                                                                                                                                 紅籌                外國公司     外地上市股類
+
+                                                                                                                                                                                            A    H       HK       R       O              F   Overseas
+          Industry Sub-Indexes
+                                                                                                                                                                                                 ●       ●        ●        ●             ●
+                  行業分類指數
+                                 Hang Seng Composite Industry Index - Energy          恒生綜合行業指數 - 能源業          .HSCIE           HSCIEN       03-01-2000       11-09-2006      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Composite Industry Index - Information
+                                                                                      恒生綜合行業指數 - 資訊科技業        .HSCIIT          HSCIIT       03-01-2000       03-10-2001      Group 1             ●       ●        ●        ●             ●
+                                 Technology
+                                 Hang Seng Composite Industry Index - Conglomerates   恒生綜合行業指數 - 綜合企業          .HSCIC         HSCICO        03-01-2000       03-10-2001      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Composite Industry Index - Materials       恒生綜合行業指數 - 原材料業         .HSCIM          HSCIMT        03-01-2000       11-09-2006      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Composite Industry Index - Industrials     恒生綜合行業指數 - 工業           .HSCIIG         HSCIIN        03-01-2000       11-09-2006      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Composite Industry Index - Consumer
+                                                                                      恒生綜合行業指數 - 非必需性消費       .HSCICD         HSCICD        03-01-2000       03-10-2001      Group 1             ●       ●        ●        ●             ●
+                                 Discretionary
+                                 Hang Seng Composite Industry Index - Consumer Staples 恒生綜合行業指數 - 必需性消費       .HSCICS          HSCICS       03-01-2000       03-10-2001      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Composite Industry Index - Healthcare      恒生綜合行業指數 - 醫療保健業        .HSCIH           HSCIH        03-01-2000       03-10-2001      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Composite Industry Index -
+                                                                                      恒生綜合行業指數 - 電訊業           .HSCIT          HSCITC       03-01-2000       11-09-2006      Group 1             ●       ●        ●        ●             ●
+                                 Telecommunications
+                                 Hang Seng Composite Industry Index - Utilities       恒生綜合行業指數 - 公用事業         .HSCIU           HSCIUT       03-01-2000       03-10-2001      Group 1             ●       ●        ●        ●             ●
+
+                                 Hang Seng Composite Industry Index - Financials      恒生綜合行業指數 - 金融業           .HSCIF          HSCIFN       03-01-2000       03-10-2001      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Composite Industry Index - Properties &
+                                                                                      恒生綜合行業指數 - 地產建築業        .HSCIPC          HSCIPC       03-01-2000       03-10-2001      Group 1             ●       ●        ●        ●             ●
+                                 Construction
+             Size Sub-Indexes
+                 市值分類指數
+                                 Hang Seng Composite LargeCap Index                   恒生綜合大型股指數                 .HSLI           HSLI        03-01-2000       03-10-2001      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Composite MidCap Index                     恒生綜合中型股指數                 .HSMI           HSMI        03-01-2000       03-10-2001      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Composite SmallCap Index                   恒生綜合小型股指數                 .HSSI           HSSI        03-01-2000       03-10-2001      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Composite LargeCap & MidCap Index          恒生綜合大中型股指數               .HSLMI          HSLMI        05-03-2010       08-06-2015      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Composite MidCap & SmallCap Index          恒生綜合中小型股指數               .HSMSI          HSMSI        05-03-2010       08-06-2015      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Large-Mid Cap (Investable) Index           恒生大中型股(可投資)指數           .HSLMIV          HSLMIV       07-09-2007       19-10-2020      Group 1             ●       ●        ●        ●             ●
+                                 Hang Seng Small Cap (Investable) Index               恒生小型股(可投資)指數             .HSSIV          HSSIV        07-09-2007       19-10-2020      Group 1             ●       ●        ●        ●             ●
+           Foreign Companies
+                             Hang Seng Foreign Companies Composite Index              恒生外國公司綜合指數              .HSFCCI          HSFCCI       02-09-2011       05-09-2011      Group 1                     ●                               ●
+                     外國公司
+Region-focused Indexes
+地區相關指數
+             Mainland-focused
+                     內地相關
+                                 Hang Seng China A (Investable) Index                 恒生A股(可投資)指數              .HSCAII         HSCAII       07-09-2007       25-01-2021      Group 1        ●
+                                 Hang Seng China A Industry Top Index                 恒生A股行業龍頭指數              .HSCAIT          HSCAIT       01-07-2005       21-09-2009      Group 1        ●
+                                 Hang Seng China A Top 100 Index                      恒生A股100強指數            .HSCAT100         HSCAT100      28-12-2007       18-03-2013      Group 1        ●
+                                 Hang Seng China A Specialised & Sophisticated
+                                                                                      恒生A股專精特新企業指數           .HSCSSE              -         31-12-2018       05-06-2023      Group 1        ●
+                                 Enterprises Index
+                                 Hang Seng China A Specialised & Sophisticated 50 Index 恒生A股專精特新50指數         .HSCSS50             -         30-09-2022       22-01-2024      Group 1        ●
+                                 Hang Seng China 50 Index                             恒生神州50指數                .HSC50           HSC50        03-01-2000       30-06-2008      Group 1        ●    ●                ●        ●
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+         Categories                                 Index Name                                    指數名稱    Refinitiv Ticker   Bloomberg   First Value Date    Launch       Rebalancing                    Current Share Class Coverage
+          指數類別                                                                                             路孚特代號               Ticker         (D-M-Y)         Date         Schedule                          現時指數股份類別涵蓋
+                                                                                                                              彭博代號        首個指數點日             (D-M-Y)      Grouping(Note)    A    H   HK Shares Red     P Chips    Foreign   Overseas-
+                                                                                                                                             (日-月-年)          發佈日        調整時間表分組
+                                                                                                                                                                                           A股   H股    香港公司     Chips   民營企業      Companies    listed
+                                                                                                                                                            (日-月-年)            (註)
+                                                                                                                                                                                                                紅籌                外國公司     外地上市股類
+
+                                                                                                                                                                                           A    H       HK       R       O              F   Overseas
+                               Hang Seng China New Economy Index                      恒生中國新經濟指數              .HSCNE           HSCNE        31-12-2014       03-09-2018      Group 2        ●    ●                ●        ●                    ●
+                               Hang Seng China (Hong Kong-listed) 100 Index           恒生中國(香港上市)100指數       .HSM100          HSML100       03-01-2000       23-09-2002      Group 1             ●                ●        ●
+                               Hang Seng China (Hong Kong-listed) 30 Index            恒生中國(香港上市)30指數         .HSFM25         HSFML25       03-01-2000       20-01-2003      Group 1             ●                ●        ●
+                               Hang Seng China-Affiliated Corporations Index          恒生香港中資企業指數                .HSCC         HSCCI        03-01-2000       16-06-1997      Group 1                              ●
+                               Hang Seng Mainland Banks Index                         恒生中國內地銀行指數               .HSMBI         HSMBI        04-03-2011       13-07-2015      Group 1             ●
+                               Hang Seng Mainland Oil & Gas Index                     恒生中國內地石油及天然氣指數         .HSMOGI         HSMOGI        04-03-2011       13-07-2015      Group 1             ●                ●        ●
+                               Hang Seng Mainland Properties Index                    恒生中國內地地產指數               .HSMPI         HSMPI        04-03-2011       13-07-2015      Group 1             ●                ●        ●
+                               Hang Seng SCHK China Financials Index                  恒生港股通中國金融行業指數            .HSHFI          H-FIN       05-03-2004       27-11-2006      Group 2             ●
+                               Hang Seng H40 Reference Index                          恒生H40參考指數                .HSH40         HSH40        03-01-2000       05-03-2018      Group 1             ●
+                               Hang Seng China A Innovative Enterprises Index         恒生A 股創業指數               .HSCAIE         HSCAIE       03-09-2010       15-07-2019      Group 1        ●
+                               Hang Seng China State-holding Enterprises Index        恒生中國國有企業指數            .HSCSHEI         HSCSHEI       31-12-2014       05-08-2019      Group 1             ●                ●
+                               Hang Seng China Central SOEs Index                     恒生中國央企指數              .HSCSOE          HSCSOE        31-12-2018       17-04-2023      Group 1             ●                ●        ●
+                               Hang Seng SCHK China Central State-owned Enterprises
+                                                                                      恒生港股通中國國資央企指數        .HSSCSOE          HSSCSOE       31-12-2018       22-05-2023      Group 2             ●                ●        ●
+                               Index
+                               Hang Seng China Private-owned Enterprises Index        恒生中國民企指數               .HSPOE              -         31-12-2018       14-08-2023      Group 1             ●                ●        ●
+                               Hang Seng SCHK China Private-owned Enterprises Index 恒生港股通中國民企指數            .HSSCPOE              -         31-12-2018       14-08-2023      Group 2             ●                ●        ●
+ Shanghai, Shenzhen and Hong
+                Kong-focused
+                  滬深港相關
+                               Hang Seng Shanghai-Shenzhen-Hong Kong (Selected
+                                                                                      恒生滬深港（特選企業）300指數     .HSSSHSC          HSSSHSC       31-12-2014       21-09-2020      Group 1        ●    ●       ●        ●        ●
+                               Corporations) 300 Index
+           Hong Kong-focused
+                    香港相關
+                               Hang Seng HK 35                                        恒生香港35                 .HSH35          HSHK35        03-01-2000       20-01-2003      Group 1                     ●
+Stock Connect Indexes
+滬深港通指數系列
+                               Hang Seng HKEX Stock Connect China Enterprises Index   恒生香港交易所滬深港通中國企業指數       .SCCEA          SCCEA        31-12-2016       29-08-2022      Group 2        ●    ●                ●        ●
+                               Hang Seng Stock Connect China 500 Index                恒生滬深港通中國500指數          .HSC500          HSC500       31-12-2014       22-06-2020      Group 2        ●    ●                ●        ●
+                               Hang Seng Stock Connect China 80 Index                 恒生滬深港通中國80指數         .HSSCC80          HSSCC80       31-12-2014       03-05-2021      Group 2        ●    ●                ●        ●
+                               Hang Seng Stock Connect China A 300 Index              恒生A股通300指數            .HSCA300         HSCA300       31-12-2014       22-06-2020      Group 1        ●
+                               Hang Seng SCHK HK Companies Index                      恒生港股通香港公司指數          .HSSCHKC          HSSCHKC       31-12-2014       20-11-2017      Group 2                     ●
+                               Hang Seng SCHK Mainland China Companies Index          恒生港股通中國内地公司指數        .HSSCMLC          HSSCMLC       31-12-2014       20-11-2017      Group 2             ●                ●        ●
+                               Hang Seng Stock Connect China AH (A) Index             恒生滬深港通AH股A指數          .HSCAHAI           AHXA        03-01-2006       09-07-2007      Group 1        ●
+                               Hang Seng Stock Connect China AH (A+H) Index           恒生滬深港通AH股A+H指數         .HSCAHI          AHXAH        03-01-2006       09-07-2007      Group 1        ●    ●
+                               Hang Seng Stock Connect China AH (H) Index             恒生滬深港通AH股H指數          .HSCAHHI           AHXH        03-01-2006       09-07-2007      Group 1             ●
+                               Hang Seng Stock Connect Hong Kong Index                恒生港股通指數                  .HSHKI          HSHKI       31-12-2014       05-12-2016      Group 2             ●       ●        ●        ●
+                               Hang Seng Stock Connect Hong Kong MidCap &
+                                                                                      恒生港股通中小型股指數           .HSHKMS          HSHKMS        31-12-2014       05-12-2016      Group 2             ●       ●        ●        ●
+                               SmallCap Index
+                               Hang Seng Stock Connect Hong Kong SmallCap Index       恒生港股通小型股指數              .HSHKS          HSHKS        31-12-2014       05-12-2016      Group 2             ●       ●        ●        ●
+                               Hang Seng SCHK 50 Index                                恒生港股通50指數              .HSSC50            -          31-12-2021       13-01-2025      Group 2             ●       ●        ●        ●             ●
+                               Hang Seng Stock Connect China AH Premium Index         恒生滬深港通AH股溢價指數         .HSCAHPI          HSAHP        03-01-2006       09-07-2007      Group 1        ●    ●
+                               Hang Seng Stock Connect China AH Smart Index           恒生滬深港通AH股精明指數         .HSCAHSI         HSCAHSI       03-01-2006       22-07-2013      Group 1        ●    ●
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+        Categories                            Index Name                                     指數名稱      Refinitiv Ticker   Bloomberg   First Value Date    Launch       Rebalancing                    Current Share Class Coverage
+         指數類別                                                                                           路孚特代號               Ticker         (D-M-Y)         Date         Schedule                          現時指數股份類別涵蓋
+                                                                                                                           彭博代號        首個指數點日             (D-M-Y)      Grouping(Note)    A    H   HK Shares Red     P Chips    Foreign   Overseas-
+                                                                                                                                          (日-月-年)          發佈日        調整時間表分組
+                                                                                                                                                                                        A股   H股    香港公司     Chips   民營企業      Companies    listed
+                                                                                                                                                         (日-月-年)            (註)
+                                                                                                                                                                                                             紅籌                外國公司     外地上市股類
+
+                                                                                                                                                                                        A    H       HK       R       O              F   Overseas
+                         Hang Seng CSI Shanghai-Hong Kong AH Smart Index         中證恒生滬港通AH股精明指數           .SHHKSI         SHHKSI        09-04-2014       17-11-2014      Group 1        ●    ●
+                         Hang Seng SCHK Mainland China Banks Index               恒生港股通中國內地銀行指數            .HSSCBI         HSSCBI        31-12-2014       13-02-2017      Group 2             ●                ●        ●
+                         Hang Seng SCHK Innovative Drug and Healthcare Index     恒生港股通創新藥及醫療保健指數          .HSSCHI         HSSCHI        31-12-2014       21-01-2019      Group 2             ●       ●        ●        ●
+                         Hang Seng SCHK Innovative Drug Index                    恒生港股通創新藥指數               .HSSCID            -          31-12-2019       10-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK New Economy Index                        恒生港股通新經濟指數              .HSSCNE          HSSCNE        31-12-2014       08-01-2018      Group 2             ●       ●        ●        ●
+                         Hang Seng SCHK China Technology Index                   恒生港股通中國科技指數               .HSSCT            -          31-12-2014       17-02-2020      Group 2             ●                ●        ●
+                         Hang Seng SCHK Auto Driving Theme Index                 恒生港股通自動駕駛主題指數              .HSAMI           -          31-12-2019       15-05-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK China Financials Select Index            恒生港股通中國金融業精選指數            .HSSCF            -          31-12-2020       17-07-2023      Group 2             ●                ●        ●
+                         Hang Seng SCHK Consumption Select Index                 恒生港股通消費精選指數               .HSSCC            -          31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Consumer Discretionary Index             恒生港股通非必需性消費指數           .HSSCCD             -          31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Food and Drink Index                     恒生港股通食品飲料指數             .HSSCCS             -          31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Telecommunications & Utilities Index     恒生港股通電訊及公用事業指數          .HSSCTU             -          31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Materials & Industrials Index            恒生港股通原材料及工業指數            .HSSCMI            -          31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Properties & Construction Index          恒生港股通地產建築業指數            .HSSCPC             -          31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Insurance Theme Index                    恒生港股通保險主題指數             .HSSCBSI            -          31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Software & Semiconductors Index          恒生港股通軟件及半導體指數           .HSSCSS             -          31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Innovative Drug Select Index             恒生港股通創新藥精選指數            .HSSCPB             -          31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Healthcare Equipment & Services Index 恒生港股通醫療保健設備和服務指數          .HSSCHES              -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Culture & Entertainment Index            恒生港股通文化娛樂指數             .HSSCTE              -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Financials (Investable) Index            恒生港股通金融業(可投資)指數          .HSSCFI             -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Technology Index                         恒生港股通科技主題指數             .HSSCITI             -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Consumption (Investable) Index           恒生港股通消費行業(可投資)指數         .HSSCCI             -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Consumer Discretionary (Investable)
+                                                                                 恒生港股通非必需性消費(可投資)指數      .HSSCCDI             -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Index
+                         Hang Seng SCHK Consumer Staples (Investable) Index      恒生港股通必需性消費(可投資)指數       .HSSCCSI             -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Telecommunications & Utilities
+                                                                                 恒生港股通電訊及公用事業(可投資)指數     .HSSCTUI             -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         (Investable) Index
+                         Hang Seng SCHK Materials & Industrials (Investable)
+                                                                                 恒生港股通原材料及工業(可投資)指數      .HSSCMII             -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Index
+                         Hang Seng SCHK Properties & Construction (Investable)
+                                                                                 恒生港股通地產建築業(可投資)指數       .HSSCPCI             -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Index
+                         Hang Seng SCHK Banks & Insurance Index                  恒生港股通銀行保險指數             .HSSCBII             -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Software Theme Index                     恒生港股通軟件主題指數             .HSSCSI              -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Pharmaceuticals & Biotechnology
+                                                                                 恒生港股通藥品及生物技術(可投資)指數     .HSSCPBI             -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         (Investable) Index
+                         Hang Seng SCHK Medical Services Theme Index             恒生港股通醫療主題指數             .HSSCESI             -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Tourism Index                            恒生港股通旅遊主題指數             .HSSCTEI             -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Semiconductors Industry Index            恒生港股通半導體產業指數               .HSIT             -         31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Artificial Intelligence Theme Index      恒生港股通人工智能主題指數            .HSSCAI             -         31-12-2020       08-03-2024      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Automobile Index                         恒生港股通汽車主題指數             .HSSCAM              -         31-12-2020       31-05-2024      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng Stock Connect China A Top Shareholding 50
+                                                                                 恒生A股通高持股50指數            .HSCAS50         HSCAS50       17-03-2017       29-03-2021      Group 1        ●
+                         Index
+                         Hang Seng Stock Connect Hong Kong Top Shareholding
+                                                                                 恒生港股通高持股50指數            .HSHKS50         HSHKS50       17-03-2017       29-03-2021      Group 2             ●       ●        ●        ●
+                         50 Index
+                         Hang Seng SCHK Resources Index                          恒生港股通資源指數                .HSSCR              -         31-12-2021       12-08-2025      Group 2             ●       ●        ●        ●             ●
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+        Categories                                 Index Name                                指數名稱    Refinitiv Ticker   Bloomberg   First Value Date    Launch       Rebalancing                    Current Share Class Coverage
+         指數類別                                                                                         路孚特代號               Ticker         (D-M-Y)         Date         Schedule                          現時指數股份類別涵蓋
+                                                                                                                         彭博代號        首個指數點日             (D-M-Y)      Grouping(Note)    A    H   HK Shares Red     P Chips    Foreign   Overseas-
+                                                                                                                                        (日-月-年)          發佈日        調整時間表分組
+                                                                                                                                                                                      A股   H股    香港公司     Chips   民營企業      Companies    listed
+                                                                                                                                                       (日-月-年)            (註)
+                                                                                                                                                                                                           紅籌                外國公司     外地上市股類
+
+                                                                                                                                                                                      A    H       HK       R       O              F   Overseas
+                              Hang Seng SCHK Electronics Theme Index               恒生港股通電子主題指數         .HSSCETI             -         31-12-2020       18-12-2025      Group 2             ●       ●        ●        ●             ●
+                              Hang Seng SCHK Internet & Information Technology Index 恒生港股通互聯網科技業指數      .HSSCIII            -         31-12-2020       09-01-2026      Group 2             ●       ●        ●        ●             ●
+                              Hang Seng SCHK Financials ex Banks Index             恒生港股通非銀行金融指數       .HSSCFEB              -         31-12-2020       09-01-2026      Group 2             ●       ●        ●        ●             ●
+                              Hang Seng SCHK Nonferrous Metal Industry Index       恒生港股通有色金屬產業指數      .HSSCNMI              -         31-12-2022       15-05-2026      Group 2             ●       ●        ●        ●             ●
+                              Hang Seng SCHK Hardware Technology Select Index      恒生港股通硬件科技精選指數      .HSSCHTS              -         30-12-2022       06-07-2026      Group 2             ●       ●        ●        ●             ●
+                              Hang Seng SCHK AI Infrastructure Index               恒生港股通人工智能基礎設施指數     .HSSCAII             -         30-12-2022       31-07-2026      Group 2             ●       ●        ●        ●             ●
+                              Hang Seng SCHK Computing Power Theme Index           恒生港股通算力主題指數        .HSSCCPT              -         31-12-2020       23-09-2026      Group 2             ●       ●        ●        ●             ●
+                              Hang Seng SCHK Hard Tech Index                       恒生港股通硬科技指數          .HSSCHT              -         31-12-2020       12-10-2026      Group 2             ●       ●        ●        ●             ●
+           Greater Bay Area
+                     大灣區
+                              Hang Seng Stock Connect Greater Bay Area Composite
+                                                                                   恒生滬深港通大灣區綜合指數       .HSBBAC          HSBBAC        31-12-2014       21-05-2018      Group 2        ●    ●       ●        ●        ●
+                              Index
+                              Hang Seng CNI GBA Consumption Index                  國證恒生大灣區消費指數        .SZHKCON              -         31-12-2018       19-05-2025      Group 2        ●    ●       ●        ●        ●
+                              Hang Seng CNI GBA Digital Economy Index              國證恒生大灣區數字經濟指數       .SZHKDE              -         31-12-2018       19-05-2025      Group 2        ●    ●       ●        ●        ●
+                     Factor
+                      因子
+                              Hang Seng SCHK High Dividend Low Volatility Index    恒生港股通紅利低波動指數        .HSHYLV          HSHYLV        03-09-2010       08-05-2017      Group 2             ●       ●        ●        ●
+                              Hang Seng SCHK Quality Growth Low Volatility Index   恒生港股通質量成長低波動指數      .HSQGLV          HSQGLV        03-09-2010       22-01-2018      Group 2             ●       ●        ●        ●
+                              Hang Seng SCHK High Dividend Yield Index             恒生港股通红利指數          .HSSCHKY             -          31-12-2014       18-11-2019      Group 2             ●       ●        ●        ●
+                              Hang Seng SCHK Free Cash Flow Index                  恒生港股通自由現金流指數       .HSSCFCF             -          07-09-2018       28-02-2025      Group 2             ●       ●        ●        ●             ●
+                              Hang Seng SCHK Low Volatility Select Index           恒生港股通低波精選指數        .HSSCLVS             -          31-12-2022       27-03-2026      Group 2             ●       ●        ●        ●
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+          Categories                          Index Name                                      指數名稱        Refinitiv Ticker   Bloomberg   First Value Date    Launch       Rebalancing                    Current Share Class Coverage
+           指數類別                                                                                            路孚特代號               Ticker         (D-M-Y)         Date         Schedule                          現時指數股份類別涵蓋
+                                                                                                                              彭博代號        首個指數點日             (D-M-Y)      Grouping(Note)    A    H   HK Shares Red     P Chips    Foreign   Overseas-
+                                                                                                                                             (日-月-年)          發佈日        調整時間表分組
+                                                                                                                                                                                           A股   H股    香港公司     Chips   民營企業      Companies    listed
+                                                                                                                                                            (日-月-年)            (註)
+                                                                                                                                                                                                                紅籌                外國公司     外地上市股類
+
+                                                                                                                                                                                           A    H       HK       R       O              F   Overseas
+
+Factor Indexes
+因子指數
+                         Hang Seng High Beta Index                               恒生增幅指數                       .HSHBI          HSHBI        29-12-2006       18-03-2013      Group 1             ●       ●        ●        ●
+                         Hang Seng High Dividend Yield Index                     恒生高股息率指數                    .HSHDYI          HSHDYI       29-06-2007       10-12-2012      Group 1             ●       ●        ●        ●
+                         Hang Seng Low Volatility Index                          恒生低波幅指數                      .HSLVI           HSLVI       29-12-2006       18-03-2013      Group 1             ●       ●        ●        ●
+                         Hang Seng China High Dividend Yield Index               恒生中國高股息率指數                 .HSCHDY              -         31-12-2013       17-02-2020      Others              ●                ●        ●
+                         Hang Seng SCHK Chinese Mainland Companies High
+                                                                                 恒生港股通中國內地企業紅利指數            .HSMCHYI         HSMCHYI       31-12-2014       09-09-2019      Group 2             ●                ●        ●
+                         Dividend Yield Index
+                         Hang Seng SCHK High Dividend Yield Screened Index       恒生港股通紅利優選指數               .HSSCHYS          HSSCHYS       09-06-2017       12-06-2023      Group 2             ●       ●        ●        ●
+                         Hang Seng SCHK China Central SOEs High Dividend
+                                                                                 恒生港股通中國央企紅利指數             .HSSCSOY          HSSCSOY       14-06-2019       12-06-2023      Group 2             ●       ●        ●        ●
+                         Yield Index
+                         Hang Seng Large-Mid Cap Value Comprehensive Index       恒生大中型股價值全選指數               .HSLMVCI         HSLMVCI       04-03-2011       18-01-2021      Group 1             ●       ●        ●        ●
+                         Hang Seng Large-Mid Cap Momentum Comprehensive
+                                                                                 恒生大中型股動量全選指數               .HSLMMCI         HSLMMCI       04-03-2011       18-01-2021      Group 1             ●       ●        ●        ●
+                         Index
+                         Hang Seng Large-Mid Cap Quality Comprehensive Index     恒生大中型股質量全選指數               .HSLMQCI         HSLMQCI       04-03-2011       18-01-2021      Group 1             ●       ●        ●        ●
+                         Hang Seng Large-Mid Cap Dividend Yield Comprehensive
+                                                                                 恒生大中型股股息率全選指數              .HSLMYCI         HSLMYCI       04-03-2011       18-01-2021      Group 1             ●       ●        ●        ●
+                         Index
+                         Hang Seng Large-Mid Cap Low Volatility Comprehensive
+                                                                                 恒生大中型股低波幅全選指數              .HSLMLCI         HSLMLCI       04-03-2011       18-01-2021      Group 1             ●       ●        ●        ●
+                         Index
+                         Hang Seng Large-Mid Cap Low Size Comprehensive
+                                                                                 恒生大中型股規模全選指數               .HSLMSCI         HSLMSCI       04-03-2011       18-01-2021      Group 1             ●       ●        ●        ●
+                         Index
+                         Hang Seng Large-Mid Cap Equal Weighted Factor Mix
+                                                                                 恒生大中型股等權重混合因子(QVLM)指數     .HSLMEMQ          HSLMEMQ       05-09-2014       06-12-2021      Group 1             ●       ●        ●        ●
+                         (QVLM) Index
+                         Hang Seng Large-Mid Cap Risk Parity Factor Mix (QVLM)
+                                                                                 恒生大中型股風險平價混合因子(QVLM)指數    .HSLMRMQ          HSLMRMQ       05-09-2014       06-12-2021      Group 1             ●       ●        ●        ●
+                         Index
+                         Hang Seng China A Value Comprehensive Index             恒生A股價值全選指數                 .HSCAVCI         HSCAVCI       04-03-2011       17-05-2021      Group 1        ●
+                         Hang Seng China A Momentum Comprehensive Index          恒生A股動量全選指數                 .HSCAMCI         HSCAMCI       04-03-2011       17-05-2021      Group 1        ●
+                         Hang Seng China A Quality Comprehensive Index           恒生A股質量全選指數                 .HSCAQCI         HSCAQCI       04-03-2011       17-05-2021      Group 1        ●
+                         Hang Seng China A Dividend Yield Comprehensive Index    恒生A股股息率全選指數                .HSCAYCI         HSCAYCI       04-03-2011       17-05-2021      Group 1        ●
+                         Hang Seng China A Low Volatility Comprehensive Index    恒生A股低波幅全選指數                .HSCALCI         HSCALCI       04-03-2011       17-05-2021      Group 1        ●
+                         Hang Seng China A Low Size Comprehensive Index          恒生A股規模全選指數                 .HSCASCI         HSCASCI       04-03-2011       17-05-2021      Group 1        ●
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+        Categories                           Index Name                               指數名稱              Refinitiv Ticker   Bloomberg   First Value Date    Launch       Rebalancing                    Current Share Class Coverage
+         指數類別                                                                                            路孚特代號               Ticker         (D-M-Y)         Date         Schedule                          現時指數股份類別涵蓋
+                                                                                                                            彭博代號        首個指數點日             (D-M-Y)      Grouping(Note)    A    H   HK Shares Red     P Chips    Foreign   Overseas-
+                                                                                                                                           (日-月-年)          發佈日        調整時間表分組
+                                                                                                                                                                                         A股   H股    香港公司     Chips   民營企業      Companies    listed
+                                                                                                                                                          (日-月-年)            (註)
+                                                                                                                                                                                                              紅籌                外國公司     外地上市股類
+
+                                                                                                                                                                                         A    H       HK       R       O              F   Overseas
+                         Hang Seng Shanghai-Shenzhen-Hong Kong (Selected
+                                                                            恒生滬深港（特選企業）高股息率指數            .HSSSCHD          HSSSCHD       31-12-2015       23-08-2021      Group 2        ●    ●       ●        ●        ●
+                         Corporations) High Dividend Yield Index
+                         Hang Seng SCHK Central SOEs Value Index            恒生港股通央企價值指數                  .HSSCCSV              -         06-09-2019       16-10-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Central SOEs Quality Index          恒生港股通央企質量指數                  .HSSCCSQ              -         06-09-2019       16-10-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Central SOEs Low Volatility Index   恒生港股通央企低波幅指數                 .HSSCCLV              -         06-09-2019       16-10-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Central SOEs Momentum Index         恒生港股通央企動量指數                  .HSSCCSM              -         06-09-2019       16-10-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK Central SOEs Select Index           恒生港股通央企優選指數                  .HSSCCSS              -         06-09-2019       16-10-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK SOEs Value Index                    恒生港股通國有企業價值指數                  .HSSCSV             -         06-09-2019       16-10-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK SOEs Quality Index                  恒生港股通國有企業質量指數                  .HSSCSQ             -         06-09-2019       16-10-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK SOEs Low Volatility Index           恒生港股通國有企業低波幅指數                .HSSCSLV             -         06-09-2019       16-10-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK SOEs Momentum Index                 恒生港股通國有企業動量指數                  .HSSCSM             -         06-09-2019       16-10-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK SOEs Select Index                   恒生港股通國有企業優選指數                .HSSCSOS              -         06-09-2019       16-10-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng SCHK SOEs High Dividend Yield Index      恒生港股通國有企業紅利指數                .HSSCHDY              -         14-06-2019       16-10-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng High Dividend 30 Index                   恒生高息股 30 指數                     .HSHD30         HSHD30       14-06-2019       14-03-2025      Group 1             ●       ●        ●        ●             ●
+ESG Indexes
+ESG指數
+                         Hang Seng (China A) Corporate Sustainability Benchmark
+                                                                                恒生A股可持續發展企業基準指數         .HSCASUSB          HSCASUSB      02-01-2008       05-09-2011      Group 1        ●
+                         Index
+                         Hang Seng (China A) Corporate Sustainability Index     恒生A股可持續發展企業指數            .HSCASUS          HSCASUS       02-01-2008       26-07-2010      Group 1        ●
+                         Hang Seng (Mainland and HK) Corporate Sustainability
+                                                                                恒生內地及香港可持續發展企業指數         .HSMHSUS          HSMHSUS       02-01-2008       26-07-2010      Group 1        ●    ●       ●        ●        ●
+                         Index
+                         Hang Seng Corporate Sustainability Benchmark Index     恒生可持續發展企業基準指數              .HSSUSB          HSSUSB       02-01-2008       05-09-2011      Group 1             ●       ●        ●        ●
+                         Hang Seng Corporate Sustainability Index               恒生可持續發展企業指數                  .HSSUS         HSSUS        02-01-2008       26-07-2010      Group 1             ●       ●        ●        ●
+                         HSI ESG Index                                          恒指ESG指數                     .HSIESG         HSIESG       08-09-2014       14-05-2019      Group 1             ●       ●        ●        ●
+                         HSI ESG Enhanced Index                                 恒指ESG增強指數                 .HSIESGS         HSIESGS       07-12-2018       29-11-2021      Group 1             ●       ●        ●        ●
+                         HSI ESG Enhanced Select Index                          恒指ESG增強精選指數                  .HSISUI         HSISUI      07-12-2018       29-11-2021      Group 1             ●       ●        ●        ●
+                         HSI Low Carbon Index                                   恒指低碳指數                   .HSILOWC          HSILOWC       05-12-2014       29-11-2021      Group 1             ●       ●        ●        ●
+                         HSCEI ESG Index                                        恒生國指ESG指數                .HSCEESG          HSCEESG       08-09-2014       14-05-2019      Group 1             ●                ●        ●
+                         HSCEI ESG Enhanced Index                               恒生國指ESG增強指數              .HSCESGE          HSCESGE       07-12-2018       20-06-2022      Group 1             ●                ●        ●
+                         HSCEI ESG KRW Hedged Index                             恒生國指ESG韓元對沖指數            .HSCEEKH          HSCEEKH       08-09-2014       25-01-2021        N/A
+                         HSCEI ESG KRW-converted Daily Reset Index              恒生國指ESG韓元轉換每日重置指數         .HSCEIEK         HSCEIEK       08-09-2014       12-04-2021        N/A
+                         HSCEI ESG NTR KRW Hedged 40 Points Decrement
+                                                                                恒生國指ESG淨股息韓元對沖40點遞減指數   .HSCEENKH          HSCEENKH      29-09-2014       21-07-2021        N/A
+                         Index
+                         Hang Seng ESG 50 Index                                 恒生ESG 50 指數               .HSESG50         HSESG50       08-09-2014       20-07-2020      Group 1             ●       ●        ●        ●
+                         Hang Seng SCHK China Central SOEs ESG Leaders
+                                                                                恒生港股通中國央企ESG領先指數         .HSSCSEL          HSSCSEL       31-12-2018       10-07-2023      Group 2             ●                ●        ●
+                         Index
+                         Hang Seng Stock Connect China A Low Carbon Select
+                                                                                恒生A股通低碳精選指數              .HSCALCS          HSCALCS       31-12-2014       13-02-2023      Group 1        ●
+                         Index
+                         Hang Seng Shanghai-Shenzhen-Hong Kong Clean Energy
+                                                                                恒生滬深港清潔能源指數              .HSSSHCE          HSSSHCE       31-12-2015       29-03-2021      Group 1        ●    ●       ●        ●        ●
+                         Index
+                         Hang Seng Shanghai-Shenzhen-Hong Kong Autonomous
+                                                                                恒生滬深港智能及電動車指數            .HSSSHAE          HSSSHAE       31-12-2015       29-03-2021      Group 1        ●    ●       ●        ●        ●
+                         and Electric Vehicles Index
+                         Hang Seng Stock Connect Hydrogen Energy Index          恒生滬深港通氫能主題指數                .HSHE              -         31-12-2016       20-02-2023      Group 2        ●    ●       ●        ●        ●
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+          Categories                           Index Name                                     指數名稱    Refinitiv Ticker   Bloomberg   First Value Date    Launch       Rebalancing                    Current Share Class Coverage
+           指數類別                                                                                        路孚特代號               Ticker         (D-M-Y)         Date         Schedule                          現時指數股份類別涵蓋
+                                                                                                                          彭博代號        首個指數點日             (D-M-Y)      Grouping(Note)    A    H   HK Shares Red     P Chips    Foreign   Overseas-
+                                                                                                                                         (日-月-年)          發佈日        調整時間表分組
+                                                                                                                                                                                       A股   H股    香港公司     Chips   民營企業      Companies    listed
+                                                                                                                                                        (日-月-年)            (註)
+                                                                                                                                                                                                            紅籌                外國公司     外地上市股類
+
+                                                                                                                                                                                       A    H       HK       R       O              F   Overseas
+                         Hang Seng SCHK China Central SOEs ESG 40 Index          恒生港股通中國央企ESG40指數       .HSSCS40             -         31-12-2018       29-01-2024      Group 2             ●                ●        ●
+                         Hang Seng SCHK China Central State-owned Enterprises
+                                                                                 恒生港股通中國國資央企ESG增強指數    .HSSCSEE              -         31-12-2018       29-01-2024      Group 2             ●                ●        ●
+                         ESG Enhanced Index
+                         Hang Seng SCHK China Central State-owned Enterprises
+                                                                                 恒生港股通中國國資央企ESG指數       .HSSCSE              -         31-12-2018       29-01-2024      Group 2             ●                ●        ●
+                         ESG Index
+                         Hang Seng SCHK SOEs High Dividend Yield ESG Index       恒生港股通國有企業紅利ESG指數      .HSSEHDE              -         14-06-2019       29-01-2024      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng Stock Connect China A 300 ESG Index           恒生A股通300ESG指數         .HSCAESG              -         05-12-2014       29-01-2024      Group 1        ●
+                         Hang Seng Stock Connect China A 300 ESG Enhanced
+                                                                                 恒生A股通300ESG增強指數       .HSCAESE              -         06-12-2019       29-01-2024      Group 1        ●
+                         Index
+                         Hang Seng Stock Connect China A ESG Leaders Index       恒生A股通ESG領先指數          .HSCAESL              -         06-12-2019       29-01-2024      Group 1        ●
+                         Hang Seng Stock Connect China A ESG 50 Index            恒生A股通ESG50指數          .HSCAE50              -         11-09-2015       29-01-2024      Group 1        ●
+Sector Indexes
+行業指數
+                         Hang Seng Consumption Index                             恒生消費指數                  .HSCGSI         HSCGSI        05-03-2010       17-08-2015      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng Healthcare Index                              恒生醫療保健指數                 .HSHCI          HSHCI        05-03-2010       17-08-2015      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng Internet & Information Technology Index       恒生互聯網科技業指數                 .HSIII         HSIII       05-03-2010       17-08-2015      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng REIT Index                                    恒生房地產基金指數               .HSREIT         HSREIT        25-11-2005       27-10-2008      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng Property Service and Management Index         恒生物業服務及管理指數             .HSPSM          HSPSM         31-12-2018       19-04-2021      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng Shipping Index                                恒生航運主題指數                  .HSSH            -          31-12-2017       16-01-2023      Group 1             ●       ●        ●        ●
+                         Hang Seng Property Development and Management Index 恒生地產及物業管理指數                 .HSPDM              -         31-12-2019       15-05-2023      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng Innovative Drug Index                         恒生創新藥指數                   .HSIDI            -         31-12-2019       15-05-2023      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng Artificial Intelligence Theme Index           恒生人工智能主題指數               .HSAIT             -         31-12-2019       25-09-2023      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng Media Index                                   恒生傳媒指數                   .HSME              -         31-12-2019       25-09-2023      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng Hong Kong-Listed Banks Index                  恒生香港上市銀行指數             .HSHKLB              -         31-12-2020       29-01-2024      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng Pioneer Technology Index                      恒生先鋒科技指數                  .HSITI            -         31-12-2020       17-07-2023      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng Technology Composite Index                    恒生科技綜合指數                 .HSTCI             -         31-12-2020       23-09-2026      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng Technology Composite LargeCap Index           恒生科技綜合大型股指數             .HSTCL              -         31-12-2020       23-09-2026      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng Technology Composite MidCap & SmallCap
+                                                                                 恒生科技綜合中小型股指數           .HSTCMS              -         31-12-2020       23-09-2026      Group 1             ●       ●        ●        ●             ●
+                         Index
+                         Hang Seng Computing Power Theme Index                   恒生算力主題指數                .HSCPT             -          31-12-2020       23-09-2026      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng Hard Tech Index                               恒生硬科技指數                  .HSHT             -          31-12-2020       23-09-2026      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng Semiconductors Industry Index                 恒生半導體產業指數                .HSSII            -          31-12-2020       23-09-2026      Group 1             ●       ●        ●        ●             ●
+                         Hang Seng China A Power Grid Equipment Index            恒生A股電網設備指數            .HSCAUPG          HSCAUPG       31-12-2018       28-02-2022      Group 1        ●
+                         Hang Seng China A Energy Index                          恒生A股能源業指數               .HSCAE             -          31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Diversified Metals & Minerals Index   恒生A股一般金屬及礦石指數         .HSCADMM             -          31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Industrial Transportation Index       恒生A股工用運輸指數              .HSCATI            -          31-12-2019       03-04-2023      Group 2        ●
+                         Hang Seng Shanghai-Shenzhen-Hong Kong Automobile
+                                                                                 恒生滬深港汽車主題指數             .HSCAAI             -         31-12-2019       03-04-2023      Group 2        ●
+                         Index
+                         Hang Seng China A Household Goods & Electronics Index 恒生A股家庭電器及用品指數            .HSCAHE              -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Agricultural Products Index           恒生A股農業產品指數             .HSCAAP              -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Pharmaceuticals & Biotechnology
+                                                                                 恒生A股藥品及生物科技指數          .HSCAPB              -         31-12-2019       03-04-2023      Group 1        ●
+                         Index
+                         Hang Seng China A Healthcare Equipment & Services
+                                                                                 恒生A股醫療保健設備和服務指數       .HSCAHES              -         31-12-2019       03-04-2023      Group 1        ●
+                         Index
+                         Hang Seng China A Utilities Index                       恒生A股公用事業指數              .HSCAUI             -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Other Financials Index                恒生A股其他金融指數             .HSCAOF              -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Properties Index                      恒生A股地產指數                 .HSCAP             -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Construction Index                    恒生A股建築指數                .HSCAC              -         31-12-2019       03-04-2023      Group 1        ●
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+        Categories                            Index Name                 指數名稱   Refinitiv Ticker   Bloomberg   First Value Date    Launch       Rebalancing                    Current Share Class Coverage
+         指數類別                                                                    路孚特代號               Ticker         (D-M-Y)         Date         Schedule                          現時指數股份類別涵蓋
+                                                                                                    彭博代號        首個指數點日             (D-M-Y)      Grouping(Note)    A    H   HK Shares Red     P Chips    Foreign   Overseas-
+                                                                                                                   (日-月-年)          發佈日        調整時間表分組
+                                                                                                                                                                 A股   H股    香港公司     Chips   民營企業      Companies    listed
+                                                                                                                                  (日-月-年)            (註)
+                                                                                                                                                                                      紅籌                外國公司     外地上市股類
+
+                                                                                                                                                                 A    H       HK       R       O              F   Overseas
+                         Hang Seng China A IT Hardware Index   恒生A股資訊科技器材指數       .HSCAITH             -         31-12-2019       03-04-2023      Group 1        ●
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+        Categories                             Index Name                                    指數名稱    Refinitiv Ticker   Bloomberg   First Value Date    Launch       Rebalancing                    Current Share Class Coverage
+         指數類別                                                                                         路孚特代號               Ticker         (D-M-Y)         Date         Schedule                          現時指數股份類別涵蓋
+                                                                                                                         彭博代號        首個指數點日             (D-M-Y)      Grouping(Note)    A    H   HK Shares Red     P Chips    Foreign   Overseas-
+                                                                                                                                        (日-月-年)          發佈日        調整時間表分組
+                                                                                                                                                                                      A股   H股    香港公司     Chips   民營企業      Companies    listed
+                                                                                                                                                       (日-月-年)            (註)
+                                                                                                                                                                                                           紅籌                外國公司     外地上市股類
+
+                                                                                                                                                                                      A    H       HK       R       O              F   Overseas
+                         Hang Seng China A Software & Services Index               恒生A股軟件服務指數          .HSCASS              -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Other Metals & Minerals Index           恒生A股其他金屬及礦物指數      .HSCAOMM              -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Specialty Chemicals Index               恒生A股特殊化工用品指數        .HSCASC              -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Industrial Components & Equipment
+                                                                                   恒生A股工業零件及器材指數       .HSCAICE             -         31-12-2019       03-04-2023      Group 1        ●
+                         Index
+                         Hang Seng China A Electrical & Electronic Components
+                                                                                   恒生A股電氣及電子零件指數       .HSCAEC              -         31-12-2019       03-04-2023      Group 1        ●
+                         Index
+                         Hang Seng China A New Energy Materials Index              恒生A股新能源物料指數        .HSCANEM              -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Aerospace & Defence Index               恒生A股航空航天與國防指數         .HSCAAD            -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Alcohols Index                          恒生A股酒精飲料指數             .HSCAA            -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Pharmaceuticals Index                   恒生A股藥品指數               .HSCAPI           -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Biotechnology Index                     恒生A股生物技術指數           .HSCABIO            -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Medical Devices & Supplies Index        恒生A股醫療設備及用品指數        .HSCAMD             -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Banks Index                             恒生A股銀行指數               .HSCAB            -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China A Software Index                          恒生A股軟件開發指數             .HSCASI           -         31-12-2019       03-04-2023      Group 1        ●
+                         Hang Seng China Semiconductor Chips Index                 恒生中國半導體芯片指數        .HSCASEMI             -         31-12-2019       03-04-2023      Group 2        ●
+                         Hang Seng China A Energy Storage Units Index              恒生A股能源儲存裝置指數        .HSCAESU             -         31-12-2019       12-09-2023      Group 1        ●
+                         Hang Seng China A Charging Station Infrastructure Index   恒生A股充電樁基礎設施主題指數     .HSCACSI             -         31-12-2019       22-09-2023      Group 1        ●
+                         Hang Seng China A Robotics Index                   恒生A股機器人主題指數                .HSCARI              -         31-12-2019       11-12-2023      Group 1        ●
+                         Hang Seng China A Shipbuilding Industry Index      恒生A股船舶製造產業指數               .HSCASII             -         31-12-2020       06-07-2026      Group 1        ●
+                         Hang Seng China A Copper Industry Index            恒生A股銅產業指數                  .HSCACII             -         30-12-2022       07-08-2026      Group 1        ●
+                         Hang Seng China A Semiconductor Materials Theme
+                                                                            恒生A股半導體材料主題指數             .HSCASMT              -         31-12-2020       23-09-2026      Group 1        ●
+                         Index
+                         Hang Seng Shanghai-Shenzhen-Hong Kong Generation Z
+                                                                            恒生滬深港Z世代指數                .HSSSHGZ          HSSSHGZ       31-12-2015       23-08-2021      Group 1        ●    ●       ●        ●        ●
+                         Index
+                         Hang Seng Shanghai-Shenzhen-Hong Kong Technology
+                                                                            恒生滬深港科技精選50指數             .HSSSHTS          HSSSHTS       31-12-2014       23-11-2020      Group 1        ●    ●       ●        ●        ●
+                         Select 50 Index
+                         Hang Seng Stock Connect Biotech 50 Index           恒生滬深港通生物科技50指數             .HSSCB50         HSSCB50       31-12-2014       23-03-2020      Group 2        ●    ●       ●        ●        ●             ●
+                         Hang Seng Shanghai-Shenzhen-Hong Kong Innovative
+                                                                            恒生滬深港創新藥精選50指數             .HSSSHID         HSSSHID       31-12-2014       30-03-2020      Group 2        ●    ●       ●        ●        ●             ●
+                         Drug Select 50 Index
+                         Hang Seng China Tech Top 10 Select Index           恒生中國科技10強精選指數              .HSCTT10         HSCTT10       31-12-2021       27-03-2025      Group 1        ●    ●                ●        ●
+                         Hang Seng Dual Tech Index                          恒生雙科技指數                      .HSDTI            -          31-12-2020       09-01-2026      Group 2             ●       ●        ●        ●             ●
+                         Hang Seng Shanghai-Shenzhen-Hong Kong Gas Industry
+                                                                            恒生滬深港燃氣產業指數                .HSSSHGI             -         31-12-2020       06-02-2026      Group 2        ●    ●       ●        ●        ●             ●
+                         Index
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+          Categories                                    Index Name                                               指數名稱                 Refinitiv Ticker   Bloomberg   First Value Date    Launch       Rebalancing                    Current Share Class Coverage
+           指數類別                                                                                                                        路孚特代號               Ticker         (D-M-Y)         Date         Schedule                          現時指數股份類別涵蓋
+                                                                                                                                                          彭博代號        首個指數點日             (D-M-Y)      Grouping(Note)    A    H   HK Shares Red     P Chips    Foreign   Overseas-
+                                                                                                                                                                         (日-月-年)          發佈日        調整時間表分組
+                                                                                                                                                                                                                       A股   H股    香港公司     Chips   民營企業      Companies    listed
+                                                                                                                                                                                        (日-月-年)            (註)
+                                                                                                                                                                                                                                            紅籌                外國公司     外地上市股類
+
+                                                                                                                                                                                                                       A    H       HK       R       O              F   Overseas
+Global Indexes
+全球指數
+                                 Hang Seng HK-US TECH Index                         恒生港美科技指數                                             .HSUST           HSUST        31-12-2020       25-09-2024      Group 2             ●       ●        ●        ●             ●      ●
+                                 Hang Seng HK-US Biotech Index                      恒生港美生物科技指數                                           .HSUSB           HSUSB        31-12-2020       25-09-2024      Group 2             ●       ●        ●        ●             ●      ●
+                                 Hang Seng TECH & US Semiconductors Index           恒生科技美股半導體指數                                         .HSTUSS          HSTUSS        31-12-2020       17-07-2023      Group 2             ●       ●        ●        ●             ●      ●
+                                 Hang Seng HK-US Robotics Theme Index               恒生港美機器人主題指數                                         .HSUSRT          HSUSRT        30-12-2022       19-03-2026      Group 2             ●       ●        ●        ●             ●      ●
+                                 Hang Seng HK-US MegaCap Index                      恒生港美超大型股指數                                          .HSUSMC          HSUSMC        30-12-2022       19-03-2026      Group 2             ●       ●        ●        ●             ●      ●
+                                 Hang Seng HK-US LargeCap Index                     恒生港美大型股指數                                           .HSUSLC          HSUSLC        30-12-2022       19-03-2026      Group 2             ●       ●        ●        ●             ●      ●
+                                 Hang Seng TECH & US AI Index                       恒生科技美股人工智能指數                                        .HSTUSAI         HSTUSAI       30-12-2022       19-03-2026      Group 2             ●       ●        ●        ●             ●      ●
+                                 Hang Seng TECH & US Automobile Index               恒生科技美股汽車指數                                          .HSTUSA          HSTUSA        30-12-2022       19-03-2026      Group 2             ●       ●        ●        ●             ●      ●
+                                 Hang Seng Asia Select New Economy Index            恒生亞洲精選新經濟指數                                         .HSASNE          HSASNE        30-12-2022       19-03-2026      Group 2             ●       ●        ●        ●             ●      ●
+                                 Hang Seng KRX HK-Korea LargeCap Index              恒生韓交所港韓大型股指數                                        .HKKRLC          HKKRLC        29-12-2022       30-03-2026      Group 2             ●       ●        ●        ●             ●      ●
+                                 Hang Seng KRX HK-Korea TECH & Semiconductors Index 恒生韓交所港韓科技半導體指數                                      .HKKRTS          HKKRTS        29-12-2022       30-03-2026      Group 2             ●       ●        ●        ●             ●      ●
+                                 Hang Seng KRX HK-Korea TECH Index                  恒生韓交所港韓科技指數                                          .HKKRT           HKKRT        29-12-2022       30-03-2026      Group 1             ●       ●        ●        ●             ●      ●
+                                 Hang Seng KRX HK-Korea Biotech & Healthcare Index  恒生韓交所港韓生科醫療指數                                       .HKKRBH          HKKRBH        29-12-2022       30-03-2026      Group 2             ●       ●        ●        ●             ●      ●
+Note:
+Group 1 Indexes: Regular rebalancing will generally be implemented after market close on the first Friday of the rebalancing month
+Group 2 Indexes: Regular rebalancing will generally be implemented after market close on the second Friday of the rebalancing month
+Others: Please refer to the corresponding index methodology book for details
+For the regular index rebalancing schedule, please refer to the Index Schedule.
+註:
+第一組指數：定期指數調整一般會在調整月的首個星期五收盤後進行
+第二組指數：定期指數調整一般會在調整月的第二個星期五收盤後進行
+其他：詳情請參閱相對應的指數編算細則
+有關定期指數調整時間表，請參閱指數調整時間表。
+Hang Seng Family of Indexes - Index Catalogue
+恒生指數系列 - 指數目錄
+Updated on 12 October 2026
+於2026年10月12日更新
+           Categories                                     Index Name                                                   指數名稱                                Refinitiv Ticker     Bloomberg     First Value Date      Launch         Rebalancing                            Current Share Class Coverage
+            指數類別                                                                                                                                            路孚特代號                 Ticker           (D-M-Y)           Date           Schedule                                  現時指數股份類別涵蓋
+                                                                                                                                                                                 彭博代號          首個指數點日               (D-M-Y)        Grouping(Note)    A        H     HK Shares Red          P Chips      Foreign   Overseas-
+                                                                                                                                                                                                  (日-月-年)            發佈日          調整時間表分組
+                                                                                                                                                                                                                                                    A股       H股      香港公司     Chips        民營企業        Companies    listed
+                                                                                                                                                                                                                   (日-月-年)               (註)
+                                                                                                                                                                                                                                                                               紅籌                       外國公司     外地上市股類
+
+                                                                                                                                                                                                                                                      A       H         HK          R         O             F          Overseas
+Disclaimer:
+
+The information contained herein is for reference only. Hang Seng Indexes Company Limited (“Hang Seng Indexes”) ensures the accuracy and reliability of the information contained herein to the best of its endeavours. However, Hang Seng Indexes makes no warranty or representation as to the accuracy,
+completeness or reliability of any of the information contained herein and accepts no liability (whether in tort or contract or otherwise) whatsoever to any person for any damage or loss of any nature arising from or as a result of reliance on any of the contents of this document, or any errors or omissions in its
+contents and such contents may change from time to time without notice.
+
+The information contained herein does not constitute any express or implied advice or recommendation by Hang Seng Indexes for any investments. Investment involves risks. Prospective investors should not make any investment decision based solely on the information provided herein and should seek
+independent investment advice to ensure that any of their decisions is made with regard to their own investment objectives, financial circumstances and other particular needs. Prospective investors should also note that value of securities and investments can go down as well as up and past performance is not
+necessarily indicative of future performance.
+
+Hang Seng Indexes is a subsidiary of Hang Seng Bank Limited which is part of the group of companies under HSBC Holdings plc (“HSBC Group”). Potential conflicts of interest may arise between Hang Seng Indexes and other HSBC Group member(s). To manage actual or potential conflicts of interest, Hang
+Seng Indexes has in place policies and/or procedures to identify and manage conflicts of interest that relate to the creation, submission and administration of its indexes and/or that may arise between Hang Seng Indexes and other HSBC Group member(s). To reduce and avoid such conflicts of interest, each of
+Hang Seng Indexes and other HSBC Group members has its independent management structure and each entity acts independently and on an arm’s length basis.
+
+© Hang Seng Indexes Company Limited 2026. All rights reserved.
+
+免責聲明 :
+
+此文件所載之資料僅供參考之用。恒生指數有限公司（「恒生指數公司」）致力確保本文件所載之資料屬準確及可靠，惟恒生指數公司對此文件所載之任何資料的準確性、完整性或可依賴性不作出任何保證或聲明，並對任何人因依賴此文件所載之任何內容，或因此文件所載任何內容之錯誤或侵權行為而引的任何行為不
+承擔任何行為性質的損害行為或不承擔任何行為或其他行為）是不承擔任何行為或遺漏或遺漏行為。此文件所載之內容可不時作出更改而無需另行通知。
+
+此文件所載之資料均不代表恒生指數公司對任何投資作出明示或暗示的建議或推介。投資涉及風險。潛在投資者不應僅單獨基於此文件所提供的資料而作出任何投資決定，而應尋求獨立的投資建議，以確保他們所做的任何決定是基於他們自己的投資目標、財務狀況及其他特定需求。潛在投資者需注意證券及投資項目之
+價值可升亦可跌，而過往之表現亦不一定反映未來之表現。
+
+恒生指數公司為恒生銀行股份有限公司的附屬公司，而恒生銀行股份有限公司為匯豐控股有限公司（「匯豐集團」）旗下的成員之一。恒生指數公司與匯豐集團其他成員之間可能存在潛在利益衝突。為管理實際或潛在的利益衝突，恒生指數公司已製定政策及╱或程序以辨識及管理與其指數的創建、提交和管理有關及╱或
+恒生指數公司與匯豐集團其他成員之間可能存在的利益衝突。為減少及避免此類利益衝突，恒生指數公司及匯豐集團其他成員均擁有獨立的管理架構，且各實體均獨立及依公平原則行事。
+
+©恒生指數股份有限公司 2026。版權所有
+

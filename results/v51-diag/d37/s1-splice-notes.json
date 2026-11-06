@@ -4,8 +4,8 @@
     "status": "spliced",
     "publish_date": "1950-09-07",
     "bars_code": "NK225",
-    "currency": "LOCAL",
-    "reason": "日经官方按月表，概况页 Commencement date 1950-09-07。日元价格指数，库内没有日元汇率，不换人民币。新增 3547 行"
+    "currency": "JPY",
+    "reason": "日经官方按月表，概况页 Commencement date 1950-09-07。日元价格指数。第四轮用中国货币网 100JPY/CNY 中间价换成人民币：点位乘该报价，再除以 100。新增 3547 行 中间价核对 2024-01-04 = 4.9788。核对时间 2026-11-06T15:54:26+08:00。"
   },
   {
     "container_id": "theme-中证全球中国互联网人民币指数",
@@ -96,6 +96,54 @@
     "reason": "中证香港科技指数；币种 HKD。新增 1695 行 只留 2013-05-21 至上市前。"
   },
   {
+    "container_id": "theme-恒生互联网科技业指数",
+    "status": "spliced",
+    "publish_date": "2015-08-17",
+    "bars_code": "HSIII",
+    "currency": "HKD",
+    "reason": "恒生指数目录发布日 2015-08-17。同花顺 hk_HSIII 比东财更早，和已核对的东财重叠段一致。重叠 371 天，收盘相对差中位数 0.0000%，95 分位 0.0000%。新增 1347 行 港币价格指数，打分时乘 HKDCNY。核对时间 2026-11-06T15:58:30+08:00。"
+  },
+  {
+    "container_id": "theme-恒生医疗保健指数",
+    "status": "spliced",
+    "publish_date": "2015-08-17",
+    "bars_code": "HSHCI",
+    "currency": "HKD",
+    "reason": "恒生指数目录发布日 2015-08-17。同花顺 hk_HSHCI 比东财更早，和已核对的东财重叠段一致。重叠 404 天，收盘相对差中位数 0.0000%，95 分位 0.0000%。新增 1383 行 港币价格指数，打分时乘 HKDCNY。核对时间 2026-11-06T15:58:53+08:00。"
+  },
+  {
+    "container_id": "theme-恒生消费指数",
+    "status": "spliced",
+    "publish_date": "2015-08-17",
+    "bars_code": "HSCGSI",
+    "currency": "HKD",
+    "reason": "恒生指数目录发布日 2015-08-17。同花顺 hk_HSCGSI 比东财更早，和已核对的东财重叠段一致。重叠 911 天，收盘相对差中位数 0.0000%，95 分位 0.0000%。新增 1890 行 港币价格指数，打分时乘 HKDCNY。核对时间 2026-11-06T15:59:10+08:00。"
+  },
+  {
+    "container_id": "theme-恒生港股通红利低波动指数",
+    "status": "spliced",
+    "publish_date": "2017-05-08",
+    "bars_code": "HSHYLV",
+    "currency": "HKD",
+    "reason": "恒生指数目录发布日 2017-05-08。同花顺 hk_HSHYLV 比东财更早，和已核对的东财重叠段一致。重叠 916 天，收盘相对差中位数 0.0000%，95 分位 0.0000%。新增 1410 行 港币价格指数，打分时乘 HKDCNY。核对时间 2026-11-06T15:59:27+08:00。"
+  },
+  {
+    "container_id": "theme-恒生综合小型股指数",
+    "status": "spliced",
+    "publish_date": "2001-10-03",
+    "bars_code": "HSSI",
+    "currency": "HKD",
+    "reason": "恒生指数目录发布日 2001-10-03，基日 2000-01-03 的回填不接。东财 124.HSSI「恒生综合小型股指数」6605 行。核对来源 10jqka。重叠 3951 天，收盘相对差中位数 0.0000%，95 分位 0.0000%。新增 3718 行 港币价格指数，打分时乘已登记 HKDCNY。核对时间 2026-11-06T15:53:06+08:00。"
+  },
+  {
+    "container_id": "theme-法国CAC40指数",
+    "status": "spliced",
+    "publish_date": "1990-09-11",
+    "bars_code": "FCHI",
+    "currency": "EUR",
+    "reason": "东财「法国CAC40」与 Yahoo「CAC 40」从 1990-09-11 起 重叠 9185 天，收盘相对差中位数 0.0000%，95 分位 0.0022%。Euronext 产品页没有读出 1988 这个发布日，两条行情本身都从 1990 年起，只入库这段，不用更早的点。欧元点位乘中国货币网 EUR/CNY。新增 7555 行 核对时间 2026-11-06T15:59:31+08:00。"
+  },
+  {
     "container_id": "theme-纳斯达克生物科技指数",
     "status": "spliced",
     "publish_date": "1993-11-01",
@@ -110,6 +158,14 @@
     "bars_code": "NDXTMC",
     "currency": "USD",
     "reason": "ExportHistory 在更早的年份为空，第一根官方点位当作可用起点。价格指数，美元乘 USDCNY。不用纳斯达克 100 科技行业（NDXT），那是另一条指数。 新增 939 行"
+  },
+  {
+    "container_id": "theme-道琼斯工业平均指数",
+    "status": "spliced",
+    "publish_date": "1896-05-26",
+    "bars_code": "DJIA",
+    "currency": "USD",
+    "reason": "东财「道琼斯」9208 行；Yahoo ^DJI「Dow Jones Industrial Average」8774 行。发布日 1896-05-26，页面核对 通过。重叠 8774 天，收盘相对差中位数 0.0000%，95 分位 0.0003%。新增 8515 行 核对时间 2026-11-06T15:53:18+08:00。"
   },
   {
     "container_id": "theme-CES100",
@@ -134,6 +190,14 @@
     "bars_code": "H50069",
     "currency": "CNY",
     "reason": "上证港股通指数；已有 2882 行 2015-02-16→2026-09-30，不覆盖。只入库发布日 2015-02-16 及之后的点位。"
+  },
+  {
+    "container_id": "theme-HSSCNE",
+    "status": "spliced",
+    "publish_date": "2018-01-08",
+    "bars_code": "HSSCNE",
+    "currency": "HKD",
+    "reason": "恒生指数目录发布日 2018-01-08。同花顺 hk_HSSCNE 比东财更早，和已核对的东财重叠段一致。重叠 645 天，收盘相对差中位数 0.0000%，95 分位 0.0000%。新增 1025 行 港币价格指数，打分时乘 HKDCNY。核对时间 2026-11-06T15:58:13+08:00。"
   },
   {
     "container_id": "theme-PHLX Semiconductor Sector Index",

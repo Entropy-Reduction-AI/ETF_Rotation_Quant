@@ -1,0 +1,11 @@
+{
+  "pair": "100JPY/CNY",
+  "check": {
+    "2024-01-04": 4.9788
+  },
+  "rows": 5065,
+  "first": "2006-01-04",
+  "last": "2026-11-06",
+  "source": "https://www.chinamoney.com.cn/ags/ms/cm-u-bk-ccpr/CcprHisNew",
+  "fetched_at": "2026-11-06T15:48:21+08:00"
+}

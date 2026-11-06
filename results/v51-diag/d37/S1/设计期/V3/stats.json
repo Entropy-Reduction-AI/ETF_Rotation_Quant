@@ -340,7 +340,7 @@
     },
     {
       "market": "theme-东京日经225指数",
-      "first_score": "2006-03-23",
+      "first_score": "2007-03-22",
       "first_hold": null,
       "days": 0,
       "contribution": 0.0
@@ -396,7 +396,7 @@
     },
     {
       "market": "theme-法国CAC40指数",
-      "first_score": null,
+      "first_score": "2007-03-22",
       "first_hold": null,
       "days": 0,
       "contribution": 0.0
