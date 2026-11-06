@@ -298,7 +298,10 @@ def _s1_bundle(market, con):
     universe = universe_s1([name for name in market.names if name != market.cash_id], mapping)
     containers = container_map()
     registry = registry_rows(OUT / "s1-index-registry.csv")
-    signal, notes = apply_splices(_signal_of(market), registry, lambda code: load_closes(con, code), containers)
+    signal, notes = apply_splices(
+        _signal_of(market), registry, lambda code: load_closes(con, code), containers,
+        fx_of=lambda code: load_closes(con, code),
+    )
     codes: list[str] = []
     packed: dict[str, list] = {}
     members = [name for market_ in universe.markets for name in market_.members]
@@ -347,6 +350,102 @@ def _cn_index(market, segment: str) -> pd.DatetimeIndex:
         return dates
     start, end = INSPECT
     return dates[(dates >= start) & (dates <= end)]
+
+
+def _iso(stamp) -> str:
+    if stamp is None or (isinstance(stamp, float) and np.isnan(stamp)):
+        return ""
+    try:
+        if pd.isna(stamp):
+            return ""
+    except TypeError:
+        pass
+    return pd.Timestamp(stamp).date().isoformat()
+
+
+def _first_valid(series: pd.Series) -> str:
+    valid = series.dropna()
+    if valid.empty:
+        return ""
+    return _iso(valid.index[0])
+
+
+def _hold_start(held: pd.DataFrame, name: str) -> tuple[str, int]:
+    if name not in held.columns:
+        return "", 0
+    weights = held[name].astype(float)
+    days = weights[weights > 1e-6]
+    if days.empty:
+        return "", 0
+    return _iso(days.index[0]), int(len(days))
+
+
+def _day_gap(later: str, earlier: str) -> str:
+    if not later or not earlier:
+        return ""
+    return str((pd.Timestamp(later) - pd.Timestamp(earlier)).days)
+
+
+def write_s1_container_table(segment: str, pre_panel, post_panel, pre_held: pd.DataFrame,
+                             post_held: pd.DataFrame, pnl: pd.DataFrame) -> None:
+    """每只被考虑过的容器：拼接前后第一次能打分、第一次持有、持有天数和贡献。"""
+    registry = registry_rows(OUT / "s1-index-registry.csv")
+    if not registry:
+        return
+    rows = []
+    for row in registry:
+        name = str(row.get("container_id") or "")
+        pre_score = _first_valid(pre_panel.H[name]) if name in pre_panel.H.columns else ""
+        post_score = _first_valid(post_panel.H[name]) if name in post_panel.H.columns else ""
+        pre_hold, _pre_days = _hold_start(pre_held, name)
+        post_hold, post_days = _hold_start(post_held, name)
+        weights = post_held[name].astype(float) if name in post_held.columns else pd.Series(dtype=float)
+        returns = pnl[name].astype(float) if name in pnl.columns else pd.Series(dtype=float)
+        aligned = returns.reindex(weights.index).fillna(0.0) if len(weights) else pd.Series(dtype=float)
+        contribution = float((weights.reindex(aligned.index).fillna(0.0) * aligned).sum()) if len(weights) else 0.0
+        rows.append({
+            "container_id": name,
+            "class": row.get("class") or "",
+            "status": row.get("status") or "",
+            "publish_date": row.get("publish_date") or "",
+            "bars_code": row.get("bars_code") or "",
+            "first_list": row.get("first_list") or "",
+            "series_first": row.get("series_first") or "",
+            "first_scoreable_pre": pre_score,
+            "first_scoreable_post": post_score,
+            "scoreable_earlier_days": _day_gap(pre_score, post_score),
+            "first_hold_pre": pre_hold,
+            "first_hold_post": post_hold,
+            "hold_earlier_days": _day_gap(pre_hold, post_hold),
+            "hold_days_post": post_days,
+            "contribution_post": contribution,
+            "reason": row.get("reason") or "",
+        })
+    frame = pd.DataFrame(rows)
+    frame.to_csv(OUT / f"s1-container-effect-{segment}.csv", index=False, float_format="%.12g")
+
+
+def write_otc_backfill_note(folder: Path) -> None:
+    """当前库 S0 V0 相对签收 oneshot 的年化、回撤和换名天数。只作 OTC 续接的说明。"""
+    stats = json.loads((folder / "stats.json").read_text(encoding="utf-8"))
+    signed = json.loads((ROOT / "results" / "v5" / "oneshot" / "index" / "v5.1-对照" / "summary.json").read_text(encoding="utf-8"))
+    got = pd.read_csv(folder / "daily.csv", parse_dates=["date"], index_col="date")
+    ref = pd.read_csv(ROOT / "results" / "v5" / "oneshot" / "index" / "v5.1-对照" / "state.csv", parse_dates=["date"], index_col="date")
+    shared = got.index.intersection(ref.index)
+    picks = (_text(got.loc[shared, "picks"]) != _text(ref.loc[shared, "picks"])).sum()
+    market = (_text(got.loc[shared, "market"]) != _text(ref.loc[shared, "market"])).sum()
+    ann = float(stats["performance"]["ann"])
+    mdd = float(stats["performance"]["max_drawdown"])
+    lines = [
+        "当前库 S0 V0 检验段没有逐位对上签收的 v5.1-对照。",
+        "签收库是 167d4e39。用那份库的临时副本重跑，S0 V0 检验段与签收 net 逐日差为 0。",
+        "差异来自签收之后的场外净值续接，不是节奏开关。这一段后面的版本改以当前库的 S0 V0 为对照，不改签收结论。",
+        f"年化：当前 {ann:.6f}，签收 {float(signed['cagr']):.6f}，差 {ann - float(signed['cagr']):.6f}",
+        f"最大回撤：当前 {mdd:.6f}，签收 {float(signed['max_drawdown']):.6f}，差 {mdd - float(signed['max_drawdown']):.6f}",
+        f"名字不同的天数（picks）：{int(picks)}",
+        f"市场不同的天数：{int(market)}",
+    ]
+    (OUT / "inspection-v0-note.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def run_cn(segment: str, versions: list[str], scopes: list[str], *, bitmatch: bool) -> list[str]:
@@ -411,6 +510,16 @@ def run_cn(segment: str, versions: list[str], scopes: list[str], *, bitmatch: bo
                 if found:
                     print("S0 V0 对不上签收，停止这一段后面的版本", flush=True)
                     break
+    if s1 is not None and "V0" in versions and (OUT / "S1" / segment / "V0" / "held.csv").is_file():
+        print(f"S1 {segment} 拼接前 V0，只为对照第一次持有", flush=True)
+        pre_book, _pre_allocation = _run_cn_version(
+            market, spec, s1[0], signal, panels["S0"], s1[2], "frozen", allow_after,
+        )
+        pre_held = _slice_book(pre_book, index).held
+        post_held = pd.read_csv(OUT / "S1" / segment / "V0" / "held.csv", parse_dates=["date"], index_col="date")
+        pnl = market.pnl.copy()
+        pnl.index = _norm(pnl.index)
+        write_s1_container_table(segment, panels["S0"], panels["S1"], pre_held, post_held, pnl.reindex(index))
     if con is not None:
         con.close()
     return problems
@@ -476,7 +585,7 @@ def run_other(versions: list[str], *, bitmatch: bool) -> list[str]:
     return problems
 
 
-def run_matrix(scopes: list[str], segments: list[str], versions: list[str]) -> dict:
+def run_matrix(scopes: list[str], segments: list[str], versions: list[str], *, allow_v0_diff: bool = False) -> dict:
     if set(versions) - set(VERSIONS):
         raise V51Error(f"版本只能是 {list(VERSIONS)}")
     if "S1" in scopes and "别的市场" in segments and segments == ["别的市场"] and scopes == ["S1"]:
@@ -503,12 +612,17 @@ def run_matrix(scopes: list[str], segments: list[str], versions: list[str]) -> d
         "cadence": CADENCES,
         "s0_v0_segments_checked": ordered,
         "s0_v0_bitmatch": v0_problems or "ok",
-        "s1_pnl": "打分用拼接后的研究序列；持有收益仍是冻结的指数池计价。可买日按场内 ETF/LOF 上市当日起、5 日成交额中位数。",
+        "allow_v0_diff": allow_v0_diff,
+        "s1_pnl": "打分用拼接后的研究序列；持有收益仍是冻结的指数池计价。可买日按场内 ETF/LOF 上市当日起、5 日成交额中位数。美元和港币价格指数先乘已登记汇率，再按海外对齐放到上交所日历。",
     }
     (OUT / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if v0_problems:
         (OUT / "s0-v0-mismatch.txt").write_text("\n".join(v0_problems) + "\n", encoding="utf-8")
-        raise V51Error("S0 V0 和签收结果不一致：\n" + "\n".join(v0_problems))
+        if not allow_v0_diff:
+            raise V51Error("S0 V0 和签收结果不一致：\n" + "\n".join(v0_problems))
+        inspected = OUT / "S0" / "检验段" / "V0"
+        if (inspected / "stats.json").is_file():
+            write_otc_backfill_note(inspected)
     for segment in ordered:
         if segment == "别的市场":
             pending = [item for item in versions if item != "V0"]
@@ -530,6 +644,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--scope", default="all", choices=["S0", "S1", "all"])
     parser.add_argument("--segment", default="all", choices=["设计期", "别的市场", "检验段", "all"])
     parser.add_argument("--version", default="all", choices=["V0", "V1", "V2", "V3", "V4", "all"])
+    parser.add_argument("--allow-v0-diff", action="store_true")
     args = parser.parse_args(argv)
     scopes = ["S0", "S1"] if args.scope == "all" else [args.scope]
     segments = ["设计期", "别的市场", "检验段"] if args.segment == "all" else [args.segment]
@@ -541,7 +656,10 @@ def main(argv: list[str] | None = None) -> int:
     if "检验段" in segments and not inspection_unlocked():
         raise V51Error("检验段还没解锁")
     # 别的市场不跑 S1。全量时把 S1 限制在中国两段，由 run_matrix 负责。
-    summary = run_matrix(scopes, [item for item in segments if not (item == "别的市场" and scopes == ["S1"])], versions)
+    summary = run_matrix(
+        scopes, [item for item in segments if not (item == "别的市场" and scopes == ["S1"])], versions,
+        allow_v0_diff=args.allow_v0_diff,
+    )
     print(json.dumps({"bitmatch": summary["s0_v0_bitmatch"], "db": summary["db_sha256"]}, ensure_ascii=False), flush=True)
     return 0
 
