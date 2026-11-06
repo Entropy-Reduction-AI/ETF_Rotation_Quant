@@ -1,5 +1,13 @@
 [
   {
+    "container_id": "theme-东京日经225指数",
+    "status": "spliced",
+    "publish_date": "1950-09-07",
+    "bars_code": "NK225",
+    "currency": "LOCAL",
+    "reason": "日经官方按月表，概况页 Commencement date 1950-09-07。日元价格指数，库内没有日元汇率，不换人民币。新增 3547 行"
+  },
+  {
     "container_id": "theme-中证全球中国互联网人民币指数",
     "status": "spliced",
     "publish_date": "2016-04-22",
@@ -70,6 +78,22 @@
     "bars_code": "H11153",
     "currency": "CNY",
     "reason": "中证香港内地国有企业指数；新增 4041 行。只入库发布日 2010-07-30 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证香港创新药港币指数",
+    "status": "spliced",
+    "publish_date": "2018-08-14",
+    "bars_code": "931787",
+    "currency": "HKD",
+    "reason": "中证香港创新药指数；币种 HKD。新增 1010 行 只留 2018-08-14 至上市前。"
+  },
+  {
+    "container_id": "theme-中证香港科技指数指数",
+    "status": "spliced",
+    "publish_date": "2013-05-21",
+    "bars_code": "931574",
+    "currency": "HKD",
+    "reason": "中证香港科技指数；币种 HKD。新增 1695 行 只留 2013-05-21 至上市前。"
   },
   {
     "container_id": "theme-纳斯达克生物科技指数",
@@ -144,6 +168,14 @@
     "reason": "中证港股通互联网指数；新增 1417 行。只入库发布日 2021-01-11 及之后的点位。"
   },
   {
+    "container_id": "theme-中证港股通信息技术综合指数",
+    "status": "spliced",
+    "publish_date": "2017-06-23",
+    "bars_code": "930967",
+    "currency": "HKD",
+    "reason": "中证港股通信息技术综合指数；币种 HKD。新增 2181 行 只留 2017-06-23 至上市前。"
+  },
+  {
     "container_id": "theme-中证港股通创新药指数",
     "status": "spliced",
     "publish_date": "2012-07-20",
@@ -160,12 +192,28 @@
     "reason": "中证港股通医疗主题指数；新增 1056 行。只入库发布日 2022-07-21 及之后的点位。"
   },
   {
+    "container_id": "theme-中证港股通医药卫生综合指数",
+    "status": "spliced",
+    "publish_date": "2017-06-23",
+    "bars_code": "930965",
+    "currency": "HKD",
+    "reason": "中证港股通医药卫生综合指数；币种 HKD。新增 1025 行 只留 2017-06-23 至上市前。"
+  },
+  {
     "container_id": "theme-中证港股通央企红利指数",
     "status": "spliced",
     "publish_date": "2017-06-28",
     "bars_code": "931233",
     "currency": "CNY",
     "reason": "中证港股通央企红利指数；新增 2376 行。只入库发布日 2017-06-28 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证港股通汽车产业主题指数",
+    "status": "spliced",
+    "publish_date": "2022-07-21",
+    "bars_code": "931239",
+    "currency": "HKD",
+    "reason": "中证港股通汽车产业主题指数；币种 HKD。新增 617 行 只留 2022-07-21 至上市前。"
   },
   {
     "container_id": "theme-中证港股通消费主题指数",

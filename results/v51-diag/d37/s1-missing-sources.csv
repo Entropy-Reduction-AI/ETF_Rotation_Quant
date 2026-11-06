@@ -1,13 +1,12 @@
 container_id,status,reason
 cross-border-commodity,frozen,没有单一跟踪指数，或基准不是一条期货价格指数，不拼。
 crude-oil,frozen,没有单一跟踪指数，或基准不是一条期货价格指数，不拼。
-soymeal,frozen,官网没有取到正式发布日及之后、且早于首只基金的价格指数
-theme-iEdge Emerging Asia Select 50 Index,frozen,新交所事实表没有可入库的日线。
-theme-东京日经225指数,frozen,官方日线 CSV 最早 2023-01-04，晚于或不够覆盖首只基金上市前。库内 N225 来自 yahoo，不用来拼接。
-theme-东证指数,frozen,官网没有取到正式发布日及之后、且早于首只基金的价格指数
+soymeal,frozen,大商所首页 FetchError:URLError: <urlopen error _ssl.c:983: The handshake operation timed out>  ← https://www.dce.com.cn/。没有取到豆粕期货价格指数日线。核对时间 2026-11-06T12:16:49+08:00。
+theme-iEdge Emerging Asia Select 50 Index,frozen,新交所事实表 ok:612391。事实表不是日线。核对时间 2026-11-06T12:16:49+08:00。
+theme-东证指数,frozen,JPX 公开的是年度表 topixyear_e.xls（ok:36352）和事实表，不是日线。不把年度表当成日线。核对时间 2026-11-06T12:16:49+08:00。
 theme-中信证券印度ETP指数,frozen,没有单一跟踪指数，或基准不是一条期货价格指数，不拼。
-theme-富时亚太低碳精选指数,frozen,富时罗素事实表没有可入库的日线。
-theme-富时沙特阿拉伯指数,frozen,富时罗素事实表没有可入库的日线。
-theme-巴西IBOVESPA指数,frozen,官网没有取到正式发布日及之后、且早于首只基金的价格指数
-theme-法兰克福DAX指数,frozen,官网没有取到正式发布日及之后、且早于首只基金的价格指数
-theme-法国CAC40指数,frozen,官网没有取到正式发布日及之后、且早于首只基金的价格指数
+theme-富时亚太低碳精选指数,frozen,富时罗素事实表 ok:373494。事实表不是日线，历史库要登录。不注册。核对时间 2026-11-06T12:16:49+08:00。
+theme-富时沙特阿拉伯指数,frozen,富时罗素事实表 ok:373494。事实表不是日线，历史库要登录。不注册。核对时间 2026-11-06T12:16:49+08:00。
+theme-巴西IBOVESPA指数,frozen,B3 Ibovespa 介绍页 ok:38675。没有匿名日线文件。核对时间 2026-11-06T12:16:49+08:00。
+theme-法兰克福DAX指数,frozen,德交所/STOXX 历史文件 FetchError:HTTPError: HTTP Error 403: Forbidden  ← https://www.stoxx.com/document/Indices/Current/HistoricalData/h_dax.txt；dax-indices.com FetchError:URLError: <urlopen error _ssl.c:983: The handshake operation timed out>  ← https://www.dax-indices.com/。没有免费日线。核对时间 2026-11-06T12:16:49+08:00。
+theme-法国CAC40指数,frozen,泛欧产品页 ok:249678；猜测的下载接口 FetchError:HTTPError: HTTP Error 404: Not Found  ← https://live.euronext.com/en/ajax/getFullDownloadAjax/FR0003500008-XPAR。页面没有匿名日线导出。核对时间 2026-11-06T12:16:49+08:00。
