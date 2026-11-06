@@ -327,7 +327,8 @@ def _panel(signal: pd.DataFrame, cash: str, allow_after: bool):
     return read_panel(signal, cash, allow_after=allow_after)
 
 
-def _run_cn_version(market, spec, universe, signal, panel, eligible, cadence: str, allow_after: bool):
+def _run_cn_version(market, spec, universe, signal, panel, eligible, cadence: str, allow_after: bool,
+                    selection: str = "market"):
     from .allocate import allocate
     from .execute import run_book
     from .readings import level_index
@@ -335,7 +336,7 @@ def _run_cn_version(market, spec, universe, signal, panel, eligible, cadence: st
     allocation = allocate(
         panel.H.index, panel.H, panel.F, panel.E, universe,
         prices=level_index(signal), returns=signal, eligible=eligible,
-        allow_after=allow_after, cadence=cadence,
+        allow_after=allow_after, cadence=cadence, selection=selection,
     )
     missing = [name for name in allocation.decisions.columns if name not in market.pnl.columns]
     if missing:
