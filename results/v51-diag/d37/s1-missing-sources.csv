@@ -1,13 +1,13 @@
 container_id,status,reason
-cross-border-commodity,frozen,登记来源里没有可取的指数代码或正式发布日
-crude-oil,frozen,登记来源里没有可取的指数代码或正式发布日
-soymeal,frozen,登记来源里没有可取的指数代码或正式发布日
-theme-iEdge Emerging Asia Select 50 Index,frozen,登记来源里没有可取的指数代码或正式发布日
-theme-东京日经225指数,frozen,登记来源里没有可取的指数代码或正式发布日
-theme-东证指数,frozen,登记来源里没有可取的指数代码或正式发布日
-theme-中信证券印度ETP指数,frozen,登记来源里没有可取的指数代码或正式发布日
-theme-富时亚太低碳精选指数,frozen,登记来源里没有可取的指数代码或正式发布日
-theme-富时沙特阿拉伯指数,frozen,登记来源里没有可取的指数代码或正式发布日
-theme-巴西IBOVESPA指数,frozen,登记来源里没有可取的指数代码或正式发布日
-theme-法兰克福DAX指数,frozen,登记来源里没有可取的指数代码或正式发布日
-theme-法国CAC40指数,frozen,登记来源里没有可取的指数代码或正式发布日
+cross-border-commodity,frozen,没有单一跟踪指数，或基准不是一条期货价格指数，不拼。
+crude-oil,frozen,没有单一跟踪指数，或基准不是一条期货价格指数，不拼。
+soymeal,frozen,官网没有取到正式发布日及之后、且早于首只基金的价格指数
+theme-iEdge Emerging Asia Select 50 Index,frozen,新交所事实表没有可入库的日线。
+theme-东京日经225指数,frozen,官方日线 CSV 最早 2023-01-04，晚于或不够覆盖首只基金上市前。库内 N225 来自 yahoo，不用来拼接。
+theme-东证指数,frozen,官网没有取到正式发布日及之后、且早于首只基金的价格指数
+theme-中信证券印度ETP指数,frozen,没有单一跟踪指数，或基准不是一条期货价格指数，不拼。
+theme-富时亚太低碳精选指数,frozen,富时罗素事实表没有可入库的日线。
+theme-富时沙特阿拉伯指数,frozen,富时罗素事实表没有可入库的日线。
+theme-巴西IBOVESPA指数,frozen,官网没有取到正式发布日及之后、且早于首只基金的价格指数
+theme-法兰克福DAX指数,frozen,官网没有取到正式发布日及之后、且早于首只基金的价格指数
+theme-法国CAC40指数,frozen,官网没有取到正式发布日及之后、且早于首只基金的价格指数

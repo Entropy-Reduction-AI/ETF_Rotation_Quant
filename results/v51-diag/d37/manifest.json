@@ -1,31 +1,69 @@
 {
   "diagnostic": "D37",
   "counts_toward_gate": false,
-  "lock_text_changed": false,
   "lock_addendum": "results/v5/LOCK-addendum-D37.md",
   "inspection_unlocked": true,
-  "db_sha256_before": "1fe4925e7993eb18d93a5cf359185242a98f7114583f7225033a9ec119ec288f",
-  "db_sha256_after": "430aa6d1e2884a36d968d65d2de27776d7ed4eb8943a0bf494f1a2cc726b186c",
-  "git_sha_base": "f7ca1c98eb84836e38e23598767d87657de4a3ec",
-  "cadence": ["frozen", "weekly", "resonance", "daily", "resonance_daily"],
-  "s0_v0_bitmatch": {
-    "设计期": "ok",
-    "别的市场": "ok",
-    "检验段": "failed"
-  },
-  "not_run": [
-    "S0/检验段/V1",
-    "S0/检验段/V2",
-    "S0/检验段/V3",
-    "S0/检验段/V4",
-    "S1/检验段/V0",
-    "S1/检验段/V1",
-    "S1/检验段/V2",
-    "S1/检验段/V3",
-    "S1/检验段/V4"
+  "db_sha256": "6b8af8a22cac80c87909f1ace55181bac94577f457607cf8caaca8d8e6fff89a",
+  "git_sha": "da237f47230d5e3242e98e3db9e49cf81187e4fd",
+  "cadence": [
+    "frozen",
+    "weekly",
+    "resonance",
+    "daily",
+    "resonance_daily"
   ],
-  "inspection_stop": "S0 V0 检验段没有逐位对上签收结果。签收库是 167d4e39，当前库在 OTC 续接和 931790 之后已经不同。设计期与别的市场的 S0 V0 已对上，所以这两段的 V1–V4 和 S1 设计期照跑。检验段 V0 文件只留差异，见 inspection-v0-note.txt 与 s0-v0-mismatch.txt。",
-  "s1_pnl": "打分用拼接后的研究序列；持有收益仍是冻结的指数池计价。可买日按场内 ETF/LOF 上市当日起、5 日成交额中位数。",
-  "s1_spliced": ["theme-中证韩交所中韩半导体指数"],
-  "s1_design_new_markets_held": false
+  "s0_v0_segments_checked": [
+    "检验段"
+  ],
+  "s0_v0_bitmatch": [
+    "检验段 net max 0.0131 @ 2019-09-27 got 0.0128686118824 signed -0.000234285314663",
+    "检验段 nav max 0.0211 @ 2020-07-13 got 0.948088119397 signed 0.926990200851",
+    "检验段 gross max 0.0141 @ 2019-09-27 got 0.0142019452157 signed 0.000113216140761",
+    "检验段 cost max 0.001 @ 2019-09-26 got 0.0 signed 0.001",
+    "检验段 buy max 0.5 @ 2019-09-26 got 0.0 signed 0.5",
+    "检验段 sell max 0.5 @ 2019-09-26 got 0.0 signed 0.5",
+    "检验段 risk max 0.5 @ 2019-09-25 got 1.0 signed 0.5",
+    "检验段 picks 64 行，例如 2019-03-08",
+    "检验段 blocked 12 行，例如 2019-10-17",
+    "检验段 held cash max 0.504 @ 2019-10-31 got 0.0 signed 0.504005449801",
+    "检验段 held csi300 max 0.333 @ 2020-12-25 got 0.0 signed 0.333384667485",
+    "检验段 held csi1000 max 0.342 @ 2019-03-18 got 0.0 signed 0.342294323409",
+    "检验段 held chinext max 0.337 @ 2021-01-18 got 0.336797738293 signed 0.0",
+    "检验段 held allshare-materials max 0.342 @ 2020-08-10 got 0.0 signed 0.342049067207",
+    "检验段 held allshare-industrials max 0.333 @ 2020-10-20 got 0.0 signed 0.333333333333",
+    "检验段 held allshare-discretionary max 0.000776 @ 2020-11-09 got 0.173530217036 signed 0.172754055382",
+    "检验段 held allshare-staples max 0.175 @ 2019-09-27 got 0.341960504027 signed 0.166666666667",
+    "检验段 held allshare-healthcare max 0.34 @ 2020-07-16 got 0.0 signed 0.339618700015",
+    "检验段 held allshare-financials-re max 0.167 @ 2019-10-25 got 0.0 signed 0.167152755871",
+    "检验段 held allshare-it max 0.17 @ 2020-05-20 got 0.0 signed 0.170211045462",
+    "检验段 held allshare-communication max 0.164 @ 2019-09-27 got 0.33040471573 signed 0.166666666667",
+    "检验段 held csi-dividend max 0.333 @ 2019-10-15 got 0.0 signed 0.333333333333",
+    "检验段 held gold max 0.5 @ 2019-09-27 got 0.0 signed 0.5",
+    "检验段 held cgb-10y max 0.00138 @ 2020-05-20 got 0.498037895554 signed 0.496659464403",
+    "检验段 exits 725≠726 首差 (('2019-03-15', 'chinext', '周度换掉'), ('2019-03-29', 'csi1000', '周度换掉'))"
+  ],
+  "allow_v0_diff": true,
+  "s1_pnl": "打分用拼接后的研究序列；持有收益仍是冻结的指数池计价。可买日按场内 ETF/LOF 上市当日起、5 日成交额中位数。美元和港币价格指数先乘已登记汇率，再按海外对齐放到上交所日历。",
+  "cells_written": true,
+  "baseline_167d4e39": {
+    "sha256": "167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3",
+    "path": "temp only, not written over data/market.sqlite",
+    "s0_v0_inspection_net_max_abs_diff": 0.0,
+    "rows": 2611
+  },
+  "comparison_baseline": "当前库 S0 V0 检验段",
+  "signed_oneshot_vs_current_s0_v0": {
+    "ann_current": -0.034625032853226156,
+    "ann_signed": -0.03326616115925729,
+    "mdd_current": -0.5432354716793318,
+    "mdd_signed": -0.5365297701243275,
+    "picks_diff_days": 64,
+    "market_diff_days": 0,
+    "cause": "OTC NAV backfill after the signed database"
+  },
+  "db_sha256_chain": [
+    "430aa6d1e2884a36d968d65d2de27776d7ed4eb8943a0bf494f1a2cc726b186c",
+    "d3cbb59aff8aa288ef022188e5f5df7ce5ad0737a91a11ab8233b61b1b33c318",
+    "6b8af8a22cac80c87909f1ace55181bac94577f457607cf8caaca8d8e6fff89a"
+  ]
 }

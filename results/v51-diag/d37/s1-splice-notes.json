@@ -1,9 +1,202 @@
 [
   {
+    "container_id": "theme-中证全球中国互联网人民币指数",
+    "status": "spliced",
+    "publish_date": "2016-04-22",
+    "bars_code": "930796",
+    "currency": "CNY",
+    "reason": "中证全球中国互联网指数；新增 2726 行。只入库发布日 2016-04-22 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证全球中国教育主题人民币指数",
+    "status": "spliced",
+    "publish_date": "2020-04-21",
+    "bars_code": "931456",
+    "currency": "CNY",
+    "reason": "中证全球中国教育主题指数；新增 1683 行。只入库发布日 2020-04-21 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证海外中国互联网30人民币指数",
+    "status": "spliced",
+    "publish_date": "2015-03-23",
+    "bars_code": "930604",
+    "currency": "CNY",
+    "reason": "中证海外中国互联网30指数；新增 3010 行。只入库发布日 2015-03-23 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证海外中国互联网50人民币指数",
+    "status": "spliced",
+    "publish_date": "2014-12-29",
+    "bars_code": "H30533",
+    "currency": "CNY",
+    "reason": "中证海外中国互联网50指数；新增 3069 行。只入库发布日 2014-12-29 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证海外中国互联网指数",
+    "status": "spliced",
+    "publish_date": "2011-09-20",
+    "bars_code": "H11136",
+    "currency": "CNY",
+    "reason": "中证海外中国互联网指数；新增 3925 行。只入库发布日 2011-09-20 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证港股通金融服务指数",
+    "status": "spliced",
+    "publish_date": "2013-05-21",
+    "bars_code": "H30106",
+    "currency": "CNY",
+    "reason": "中证港股通金融服务指数；新增 3316 行。只入库发布日 2013-05-21 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证港股通高股息投资港元指数",
+    "status": "spliced",
+    "publish_date": "2016-11-25",
+    "bars_code": "930914",
+    "currency": "CNY",
+    "reason": "中证港股通高股息投资指数；新增 2441 行。只入库发布日 2016-11-25 及之后的点位。"
+  },
+  {
     "container_id": "theme-中证韩交所中韩半导体指数",
     "status": "spliced",
     "publish_date": "2021-12-20",
     "bars_code": "931790",
-    "reason": ""
+    "currency": "CNY",
+    "reason": "中证韩交所中韩半导体指数；已有 2995 行 2014-01-01→2026-09-30，不覆盖。只入库发布日 2021-12-20 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证香港内地国有企业港元指数",
+    "status": "spliced",
+    "publish_date": "2010-07-30",
+    "bars_code": "H11153",
+    "currency": "CNY",
+    "reason": "中证香港内地国有企业指数；新增 4041 行。只入库发布日 2010-07-30 及之后的点位。"
+  },
+  {
+    "container_id": "theme-纳斯达克生物科技指数",
+    "status": "spliced",
+    "publish_date": "1993-11-01",
+    "bars_code": "NBI",
+    "currency": "USD",
+    "reason": "纳斯达克生物科技价格指数。美元点位乘已登记 USDCNY。 新增 5218 行"
+  },
+  {
+    "container_id": "theme-纳斯达克科技市值加权指数",
+    "status": "spliced",
+    "publish_date": "2023-01-03",
+    "bars_code": "NDXTMC",
+    "currency": "USD",
+    "reason": "ExportHistory 在更早的年份为空，第一根官方点位当作可用起点。价格指数，美元乘 USDCNY。不用纳斯达克 100 科技行业（NDXT），那是另一条指数。 新增 939 行"
+  },
+  {
+    "container_id": "theme-CES100",
+    "status": "spliced",
+    "publish_date": "2014-12-15",
+    "bars_code": "CES100",
+    "currency": "CNY",
+    "reason": "中华交易服务港股通精选100指数；已有 2925 行 2014-12-15→2026-09-30，不覆盖。只入库发布日 2014-12-15 及之后的点位。"
+  },
+  {
+    "container_id": "theme-H11146",
+    "status": "spliced",
+    "publish_date": "2010-06-02",
+    "bars_code": "H11146",
+    "currency": "CNY",
+    "reason": "中证港股通内地金融指数；已有 4083 行 2010-06-02→2026-09-30，不覆盖。只入库发布日 2010-06-02 及之后的点位。"
+  },
+  {
+    "container_id": "theme-H50069",
+    "status": "spliced",
+    "publish_date": "2015-02-16",
+    "bars_code": "H50069",
+    "currency": "CNY",
+    "reason": "上证港股通指数；已有 2882 行 2015-02-16→2026-09-30，不覆盖。只入库发布日 2015-02-16 及之后的点位。"
+  },
+  {
+    "container_id": "theme-PHLX Semiconductor Sector Index",
+    "status": "spliced",
+    "publish_date": "1993-12-01",
+    "bars_code": "SOX",
+    "currency": "USD",
+    "reason": "容器基准里费城半导体占 70%。拼接 SOX 价格指数，不是 70/20/10 混合净值。2006 年前没有已登记美元汇率的日子在对齐时自然空掉。 新增 6875 行"
+  },
+  {
+    "container_id": "theme-中证国新港股通央企红利指数",
+    "status": "spliced",
+    "publish_date": "2023-09-13",
+    "bars_code": "931722",
+    "currency": "CNY",
+    "reason": "中证国新港股通央企红利指数；新增 754 行。只入库发布日 2023-09-13 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证港股通50指数",
+    "status": "spliced",
+    "publish_date": "2017-01-16",
+    "bars_code": "930931",
+    "currency": "CNY",
+    "reason": "中证港股通50指数；已有 2407 行 2017-01-16→2026-09-30，不覆盖。只入库发布日 2017-01-16 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证港股通互联网指数",
+    "status": "spliced",
+    "publish_date": "2021-01-11",
+    "bars_code": "931637",
+    "currency": "CNY",
+    "reason": "中证港股通互联网指数；新增 1417 行。只入库发布日 2021-01-11 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证港股通创新药指数",
+    "status": "spliced",
+    "publish_date": "2012-07-20",
+    "bars_code": "931250",
+    "currency": "CNY",
+    "reason": "中证港股通创新药指数；新增 2245 行。只入库发布日 2012-07-20 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证港股通医疗主题指数",
+    "status": "spliced",
+    "publish_date": "2022-07-21",
+    "bars_code": "932069",
+    "currency": "CNY",
+    "reason": "中证港股通医疗主题指数；新增 1056 行。只入库发布日 2022-07-21 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证港股通央企红利指数",
+    "status": "spliced",
+    "publish_date": "2017-06-28",
+    "bars_code": "931233",
+    "currency": "CNY",
+    "reason": "中证港股通央企红利指数；新增 2376 行。只入库发布日 2017-06-28 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证港股通消费主题指数",
+    "status": "spliced",
+    "publish_date": "2020-03-06",
+    "bars_code": "931454",
+    "currency": "CNY",
+    "reason": "中证港股通消费主题指数；已有 1628 行 2020-03-06→2026-09-30，不覆盖。只入库发布日 2020-03-06 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证港股通科技指数",
+    "status": "spliced",
+    "publish_date": "2014-05-21",
+    "bars_code": "931573",
+    "currency": "CNY",
+    "reason": "中证港股通科技指数；已有 2988 行 2014-05-21→2026-09-30，不覆盖。只入库发布日 2014-05-21 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证港股通非银行金融主题指数",
+    "status": "spliced",
+    "publish_date": "2017-11-06",
+    "bars_code": "931024",
+    "currency": "CNY",
+    "reason": "中证港股通非银行金融主题指数；已有 2207 行 2017-11-06→2026-09-30，不覆盖。只入库发布日 2017-11-06 及之后的点位。"
+  },
+  {
+    "container_id": "theme-中证香港证券投资主题指数",
+    "status": "spliced",
+    "publish_date": "2015-07-13",
+    "bars_code": "930709",
+    "currency": "CNY",
+    "reason": "中证香港证券投资主题指数；已有 2785 行 2015-07-13→2026-09-30，不覆盖。只入库发布日 2015-07-13 及之后的点位。"
   }
 ]

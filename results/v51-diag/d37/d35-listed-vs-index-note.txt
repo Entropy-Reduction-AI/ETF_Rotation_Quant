@@ -1,0 +1,7 @@
+D35 场内口径 v5.1 与签收指数池的逐年对照。只说明池子差别，不改判。
+
+场内口径数字来自已签收重算 49a3b759（`results/v5/oneshot-listed/`，库 1fe4925e）。指数池来自本仓库签收 `results/v5/oneshot/index/v5.1-对照`。
+
+逐年收益用两边的 yearly.csv。笔数、双边换手、成本不是签收账本里的列：两边都用开盘前持仓的绝对变化，乘 `config/v3/arms.toml` 的单边费率复原。不含收益漂移，所以和回测账本的成本差一个漂移项。同一算法才能横比。
+
+`avg_containers_clearing_30m` 是这一年每天平均有几只容器过了 D35 的 3000 万门槛（`listed-by-year.csv` 的 qualified_days 合计 / 当年交易日）。指数池不设这道成交额门槛。

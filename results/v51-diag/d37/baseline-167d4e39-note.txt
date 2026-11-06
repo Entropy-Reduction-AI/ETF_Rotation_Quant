@@ -1,0 +1,8 @@
+S0 V0 检验段在签收库上逐位对上了 results/v5/oneshot/index/v5.1-对照。
+
+库：git 对象 af8edfd 的 data/market.sqlite，OID / SHA256
+167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3
+只复制到临时路径 /tmp/market-167d4e39.sqlite，没有覆盖当前库。
+
+对照：2611 行，2016-01-04 → 2026-09-30，net 逐日差最大为 0。
+临时输出在 /tmp/d37-baseline-167d4e39，不入库。

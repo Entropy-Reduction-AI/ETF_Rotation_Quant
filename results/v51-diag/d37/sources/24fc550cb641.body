@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="copyright" content="(C) Japan Exchange Group, Inc.">
+
+<meta name="description" content="TOPIX (TPX) | This is the website of Japan Exchange Group (JPX), which operates Tokyo Stock Exchange, Osaka Exchange, and Tokyo Commodity Exchange.">
+  
+<meta property="og:title" content="TOPIX (TPX) | Japan Exchange Group">
+  
+<meta property="og:type" content="article">
+
+<meta property="og:description" content="TOPIX (TPX) | This is the website of Japan Exchange Group (JPX), which operates Tokyo Stock Exchange, Osaka Exchange, and Tokyo Commodity Exchange.">
+  
+<meta property="og:image" content="https://www.jpx.co.jp/english/markets/indices/topix/tvdivq00000030ne-img/TOPIX_ogp.png">
+  
+<meta property="og:site_name" content="Japan Exchange Group">
+<meta property="og:url" content="https://www.jpx.co.jp/english/markets/indices/topix/index.html">
+<meta property="og:locale" content="en_US">
+<meta property="fb:app_id" content="493523696109663">
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:site" content="@JPX_official_EN">
+<link href="/english/_assets/img/icon/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link rel="apple-touch-icon" href="/english/_assets/img/image/jpx_icon_180x180.png" />
+<link rel="icon" type="image/png" href="/english/_assets/img/image/jpx_icon_192x192.png">
+
+<title>TOPIX (TPX) | Japan Exchange Group</title>
+  
+
+<script type="text/javascript" src="/english/_assets/js/jquery.min.js"></script>
+<link href="/english/_assets/css/reset.css" rel="stylesheet" type="text/css">
+<link href="/english/_assets/css/layout.css" rel="stylesheet" type="text/css" media="all">
+<link href="/english/_assets/css/parts.css" rel="stylesheet" type="text/css">
+<link href="/english/_assets/css/print.css" rel="stylesheet" type="text/css" media="print">
+<link href="/english/_assets/css/style_add.css" rel="stylesheet" type="text/css">
+<link href="/english/_assets/css/probo.css" rel="stylesheet" type="text/css">
+<link href="/english/_assets/css/probo_add.css" rel="stylesheet" type="text/css">
+
+<link href="/english/_assets/css/list_add.css" rel="stylesheet" type="text/css">
+<link href="/english/_assets/css2/lity.css" rel="stylesheet" type="text/css">
+
+      <link href="/english/_assets/css2/prettyPhoto-parts.css" rel="stylesheet" type="text/css">
+    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
+      
+
+</head>
+<body class="">
+  
+  <!-- body_prepend -->
+  <!-- Google Tag Manager -->
+  <link rel="stylesheet" type="text/css" href="/english/_assets/css/cookieconsent_customize.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+  <script src="/english/_assets/js2/cookie-accept.js"></script>
+  <noscript>
+  <iframe src="//www.googletagmanager.com/ns.html?id=GTM-MS2WRF" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <script>
+function startGtm() {
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MS2WRF');
+}
+</script> 
+  <!-- End Google Tag Manager -->
+
+  <!-- wrapper-area -->
+  <div id="wrapper-area">
+
+    <!-- ヘッダー出力 -->
+<header class="JPX-header">
+  <div class="JPX-header-label">
+    <div class="JPX-header-label-main">
+      <ul>
+        <li>Tokyo Stock Exchange</li>
+        <li>Osaka Exchange</li>
+        <li>Tokyo Commodity Exchange</li>
+        <li>JPX Market Innovation & Research</li>
+        <li>Japan Exchange Regulation</li>
+        <li><a href="https://www.jpx.co.jp/jscc/en/" rel="external">Japan Securities Clearing Corporation</a></li>
+      </ul>
+    </div>
+    <div class="JPX-header-label-link">
+      <a href="/english/corporate/index.html">About JPX</a>
+    </div>
+  </div>
+  
+  <div class="JPX-header-main-wrapper">
+    <div class="JPX-header-main">
+      <div class="JPX-header-mainInner">
+        <div class="JPX-header-logo">
+          <a href="/english/index.html">
+            <picture>
+              <source srcset="/english/_assets/img/image/logo_pc.svg" media="(min-width: 1081px)">
+              <img src="/english/_assets/img/image/logo_sp.svg" alt="Japan Exchange Group">
+            </picture>
+          </a>
+        </div>
+        <div class="JPX-header-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+      </div>
+
+      <div class="JPX-header-menu">
+
+        <!-- 検索窓 -->
+        <div class="JPX-header-menu-search">
+          <div class="JPX-header-menu-searchInner">
+            <form action="/english/search.html">
+              <input type="text" id="q2" class="search-input" name="q" value="" placeholder="Search" />
+              <div class="search-input-btn">
+                <input type="image" src="/english/_assets/img/svg/icn-search.svg" name="" value="" />
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- /検索窓 -->
+
+        <!-- PCメニュー全ページ共通（PC） -->
+        
+<a id="global_menu_pc_following_logo_hidden" style="display:none;" href="/english/index.html"></a>
+<script>
+  $(function (global_menu_third_map_link) {
+    $.ajax({
+      url: "/english/i15r6c0000003p10.html",
+      type: "GET",
+      dataType: "html",
+      async: false,
+      timeout: 1000,
+      error: function () {
+        $("#global_menu_pc_third_map").html("Couldn't get information");
+        $("#global_menu_sp_third_map").html("Couldn't get information");
+      },
+      success: function (html) {
+        let jq = $($.parseHTML(html));
+        let pc = jq.filter("#global_menu_pc_third_map_links").first().html();
+        $("#global_menu_pc_third_map").html(pc);
+        let sp = jq.filter("#global_menu_sp_third_map_links").first().html();
+        $("#global_menu_sp_third_map").prepend($(sp));
+
+        $("#global_menu_pc_following_logo").prop("href", $("#global_menu_pc_following_logo_hidden").prop("href"));
+      }
+    });
+  });
+</script>
+
+<div class="JPX-header-pc-global" id="global_menu_pc_third_map">
+  <nav class="JPX-header-pc-global-menu">
+  <ul>
+    <li class="-is-jpx-link">
+      <a href="#" id="global_menu_pc_following_logo">
+        <picture>
+          <img src="/english/_assets/img/image/logo_pc_menu.svg" alt="Japan Exchange Group" />
+        </picture>
+      </a>
+    </li>
+    
+      <li data-target-item="pc-menu-0-0">
+        <a href="/english/news/index.html"><span>News</span></a>
+      </li>
+    
+      
+      <li data-target-item="pc-menu-1-0">
+        <a href="/english/markets/index.html"><span>Data &amp; Statistics</span></a>
+      </li>
+    
+      
+      <li data-target-item="pc-menu-2-0">
+        <a href="/english/listing/index.html"><span>Listed Companies</span></a>
+      </li>
+    
+      
+      <li data-target-item="pc-menu-3-0">
+        <a href="/english/equities/index.html"><span>Equities, Debt, Funds</span></a>
+      </li>
+    
+      
+      <li data-target-item="pc-menu-4-0">
+        <a href="/english/derivatives/index.html"><span>Derivatives</span></a>
+      </li>
+    
+      
+      <li data-target-item="pc-menu-5-0">
+        <a href="/english/rules-participants/index.html"><span>Rules &amp; Trading Participants</span></a>
+      </li>
+    
+      
+      <li data-target-item="pc-menu-6-0">
+        <a href="/english/systems/index.html"><span>Systems</span></a>
+      </li>
+    
+      
+      <li data-target-item="pc-menu-7-0">
+        <a href="/english/regulation/index.html"><span>Self-Regulation</span></a>
+      </li>
+    
+      
+  </ul>
+</nav>
+  <div class="JPX-header-pc-global-data">
+  </div>
+  <div class="JPX-header-pc-global-shadow"></div>
+</div>
+<!-- /PCメニュー全ページ共通（PC） -->
+
+<!-- SPメニュー -->
+<div class="JPX-header-sp-global">
+  <!-- SP MENU -->
+  <nav class="JPX-header-sp-global-menu">
+    
+      <!-- SP MENUボタン -->
+      <div class="JPX-header-sp-global-ItemBtn">MENU</div>
+      <!-- /SP MENUボタン -->
+    
+    <div class="JPX-header-sp-global-ItemWrap" id="global_menu_sp_third_map">
+      
+<!-- 対象者別 -->
+<div class="JPX-header-menu-target">
+  <ul>
+    
+      <li class="-individual"><a href="/english/individuals/index.html"><span>For Individual Investors</span></a></li>
+    
+      <li class="-listed"><a href="/english/listed-companies/index.html"><span>For Listed Companies</span></a></li>
+    
+      <li class="-pre"><a href="/english/pre-listed-companies/index.html"><span>For Prospective Issuers</span></a></li>
+    
+      <li class="-participants"><a href="/english/participants/index.html"><span>For Trading Participants</span></a></li>
+    
+      <li class="-nstitutional"><a href="/english/institutional/index.html"><span>For Institutional Investors</span></a></li>
+    
+      <li class="-media"><a href="/english/media/index.html"><span>For Media</span></a></li>
+    
+  </ul>
+</div>
+<!-- /対象者別 -->
+      
+    </div>
+  </nav>
+  <!-- /SP MENU -->
+  
+  <!-- （SP 第5-6階層） -->
+  
+      <div class="JPX-header-sp-global-links">
+        <div class="JPX-header-sp-global-linksTitle ">
+          <a href="/english/markets/index.html">Data &amp; Statistics</a>
+        </div>
+        
+      <div class="JPX-header-sp-global-linksSubTitle ">
+        <a href="/english/markets/indices/index.html">Indices</a>
+      </div>
+      
+      <div class="JPX-header-sp-global-linksSubSubTitle ">
+        <a href="/english/markets/indices/line-up/index.html">Indices Line-up</a>
+      </div>
+      
+      <div class="JPX-header-sp-global-linksSubSubTitle -is-active">
+        <a href="/english/markets/indices/topix/index.html">TOPIX (TPX)</a>
+      </div>
+      
+      <div class="JPX-header-sp-global-linksSubSubTitle ">
+        <a href="/english/markets/indices/jpx-prime150/index.html">JPX Prime 150 Index</a>
+      </div>
+      
+      <div class="JPX-header-sp-global-linksSubSubTitle ">
+        <a href="/english/markets/indices/jpx-startup100/index.html">JPX Start-Up Acceleration 100 Index</a>
+      </div>
+      
+      <div class="JPX-header-sp-global-linksSubSubTitle ">
+        <a href="/english/markets/indices/jpx-nikkei400/index.html">JPX-Nikkei Co-brand Indices</a>
+      </div>
+      
+      <div class="JPX-header-sp-global-linksSubSubTitle ">
+        <a href="/english/markets/indices/carbon-efficient/index.html">S&amp;P/JPX Carbon Efficient Index</a>
+      </div>
+      
+      <div class="JPX-header-sp-global-linksSubSubTitle ">
+        <a href="/english/markets/indices/net-zero/index.html">FTSE JPX Net Zero Japan Index Series</a>
+      </div>
+      
+      <div class="JPX-header-sp-global-linksSubSubTitle ">
+        <a href="/english/markets/indices/realvalues/index.html">Stock Price Index - Real Time Values</a>
+      </div>
+      
+      <div class="JPX-header-sp-global-linksSubSubTitle ">
+        <a href="/english/markets/indices/factsheets/index.html">Factsheet</a>
+      </div>
+      
+      <div class="JPX-header-sp-global-linksSubSubTitle ">
+        <a href="/english/markets/indices/related/index.html">Related Data</a>
+      </div>
+      
+      <div class="JPX-header-sp-global-linksSubSubTitle ">
+        <a href="/english/markets/indices/licence/index.html">License</a>
+      </div>
+      
+      <div class="JPX-header-sp-global-linksSubSubTitle ">
+        <a href="/english/markets/indices/governance/index.html">Governance</a>
+      </div>
+      
+      <div class="JPX-header-sp-global-linksSubSubTitle ">
+        <a href="/english/markets/indices/revisions-indices/index.html">Revisions of TOPIX</a>
+      </div>
+      
+  
+      
+        
+      </div>
+    
+  <!-- /（SP 第5-6階層） -->
+
+</div>
+        <!-- /SPメニュー -->
+
+        <!-- その他 -->
+        <div class="JPX-header-menu-other">
+<ul>
+
+<li><a href="/english/corporate/about-jpx/access/index.html" ><span>Access</span></a></li>
+
+<li><a href="/english/contact/index.html" ><span>Contact us</span></a></li>
+
+<li><a href="/english/corporate/sustainability/index.html" ><span>Sustainability</span></a></li>
+
+</ul>
+</div>
+        <!-- /その他 -->
+
+        <!-- SNS -->
+        <div class="JPX-header-menu-sns">
+          <ul>
+            <li><a href="https://x.com/JPX_official_EN" rel="external"><img src="/english/_assets/img/svg/icn-sns-tw.svg" alt="X"></a></li>
+            <li><a href="https://www.facebook.com/JapanExchangeGroupGlobal" rel="external"><img src="/english/_assets/img/svg/icn-sns-fb.svg" alt="facebook"></a></li>
+            <li><a href="https://www.youtube.com/channel/UCnZA74T8a8dEbavWRq8F2nA" rel="external"><img src="/english/_assets/img/svg/icn-sns-yt.svg" alt="youtube"></a></li>
+          </ul>
+        </div>
+        <!-- /SNS -->
+
+        
+  <!-- 言語 -->
+  <div class="JPX-header-menu-language">
+    <ul>
+      
+          <li><a href="/markets/indices/topix/index.html" title=""><span>Japanese</span></a></li>
+        <li><a href="/english/corporate/index.html"><span>About JPX</span></a></li>
+    </ul>
+  </div>
+  <!-- /言語 -->
+
+      </div>
+    </div>
+  </div>
+
+</header>
+
+  <div class="bread-crumb-box">
+    <div class="bread-crumb">
+      <div class="bread-crumb-data">
+        <ol>
+          
+              <li><a href="/english/index.html">HOME</a></li>
+            
+              <li><a href="/english/markets/index.html">Data &amp; Statistics</a></li>
+            
+              <li><a href="/english/markets/indices/index.html">Indices</a></li>
+            
+              <li><a href="/english/markets/indices/topix/index.html">TOPIX (TPX)</a></li>
+            
+        </ol>
+      </div>
+      <div class="JPX-site-update">
+        Update : Nov. 02, 2026
+        
+      </div>
+    </div>
+  </div>
+
+    
+
+<!-- /ヘッダー出力 -->
+
+<noscript>
+<section class="JPX-section -is-attention">
+<div class="JPX-section-inner">
+<div class="JPX-noscript-wrapper">
+<div class="JPX-noscript">
+<div class="JPX-noscript-title">Please enable Javascript.</div>
+<div class="JPX-noscript-text">It is necessary to enable Javascript settings in order to properly view and operate this website. Please refer to support resources for your current browser for how to enable Javascript settings.</div>
+</div>
+</div>
+</div>
+</section>
+</noscript>
+      
+
+    <!-- main-area -->
+    <div id="main-area" class="-is-fix">
+      <div>
+        <!-- メインタイトル(新規追加) -->
+        <div class="headline-title-wrap"><h1 class="headline-title"><span>TOPIX (TPX)</span></h1></div>
+        <!-- /メインタイトル -->
+      </div>
+      <!-- main-areaIn -->
+      <div id="main-areaIn" class="-is-sidecontents">
+        <!-- readArea -->
+<div id="readArea">
+  <section class="JPX-section">
+    <!-- コンテンツエリア -->
+
+    <!-- 汎用コンポーネント：タブコンポーネント -->
+    
+    
+    <!-- /汎用コンポーネント：タブコンポーネント -->
+
+    
+          <div>
+            <div class="tab-submenu-anchor">
+              <ul>
+                
+                      <li><a href="#heading_0">What is TOPIX ?</a></li>
+                    
+                      <li><a href="#heading_2">Summary of TOPIX</a></li>
+                    
+                      <li><a href="#heading_4">Component Issues</a></li>
+                    
+                      <li><a href="#heading_10">Calculation Method</a></li>
+                    
+                      <li><a href="#heading_13">Historical Index Value</a></li>
+                    
+                      <li><a href="#heading_17">TOPIX New Index Code information</a></li>
+                    
+                      <li><a href="#heading_19">TOPIX Related ETFs</a></li>
+                    
+                      <li><a href="#heading_21">Related Information</a></li>
+                    
+                      <li><a href="#heading_24">News</a></li>
+                    
+              </ul>
+            </div>
+          </div>
+        <div><h2 class="heading-title-mu" id="heading_0"><span>What is TOPIX ?</span></h2></div>
+          <div>
+  
+            <div class="component-imgbox">
+              <div class="component-imgboxL">
+                
+  <img src="/english/markets/indices/topix/tvdivq00000030ne-img/topix_logo_220401.jpg" title="" alt="" width="400" height="125">
+
+              </div>
+              <p class="component-imgText">TOPIX (TPX) is a market benchmark with functionality as an investable index, covering an extensive proportion of the Japanese stock market. TOPIX is a free-float
+adjusted market capitalization-weighted index. TOPIX shows the measure of current market capitalization assuming that market capitalization as of the base date (January 4 ,1968) is 100 points. This is a measure of the overall trend in the stock market, and is used as a benchmark for investment in japan stocks.</p>
+            </div>
+          
+</div>
+    <div><h2 class="heading-title" id="heading_2"><span>Summary of TOPIX</span></h2></div>
+          <div>
+<div class="component-normal-table">
+<table class="overtable">
+<caption></caption>
+
+<tr class="first">
+  
+     <td width="30%" class="a-center a-middle  tb-color003 fc-white">Index Name</td>
+  
+     <td width="70%" class="a-left a-middle ">TOPIX<br/>
+ (Tokyo Stock Price Index, TPX)</td>
+  
+</tr>
+
+<tr>
+  
+     <td width="30%" class="a-center a-middle  tb-color003 fc-white">Calculation Method</td>
+  
+     <td width="70%" class="a-left a-middle ">Free-float adjusted market capitalization-weighted</td>
+  
+</tr>
+
+<tr>
+  
+     <td width="30%" class="a-center a-middle  tb-color003 fc-white">Start of Calculation</td>
+  
+     <td width="70%" class="a-left a-middle ">Jul. 1, 1969<br/>
+The price return index is calculated and disseminated in real-time (per sec).</td>
+  
+</tr>
+
+<tr class="end">
+  
+     <td width="30%" class="a-center a-middle  tb-color003 fc-white">Base Date / Base Point</td>
+  
+     <td width="70%" class="a-left a-middle ">Jan. 4, 1968 / 100 points</td>
+  
+</tr>
+
+</table>
+</div>
+</div>
+    <div><h2 class="heading-title" id="heading_4"><span>Component Issues</span></h2></div>
+          <div><p class="component-text"><div class="component-file">
+  <table width="50%">
+    <tr>
+      <th width="90%">TOPIX Component Stocks Weight</th>
+      <td width="10%"><a href="/automation/english/markets/indices/topix/files/topixweight_e.csv" rel="external"><img src="/english/common/images/icon/tvdivq0000002peo-img/icon-csv.png" alt="icon-csv" title="icon-csv" width="18" height="18" /></a></td>
+    </tr>
+  </table>
+</div></p></div>
+    
+    <div>
+      
+<div class="component-file">
+  <table width="50%">
+    
+          <tr>
+            <th width="90%">Results of the First Periodic Review and Component Stocks of TOPIX</th>
+            
+                  <td width="10%"><a href="/english/markets/indices/topix/tvdivq00000030ne-att/topix_e.pdf" rel="external"><img src="/english/common/images/icon/icon-pdf.png" alt="icon-pdf" title="icon-pdf" width="18" height="18" /></a></td>
+                
+          </tr>
+        
+          <tr>
+            <th width="90%">Appendix</th>
+            
+                  <td width="10%"><a href="/english/markets/indices/topix/tvdivq00000030ne-att/appendix_e.pdf" rel="external"><img src="/english/common/images/icon/icon-pdf.png" alt="icon-pdf" title="icon-pdf" width="18" height="18" /></a></td>
+                
+          </tr>
+        
+  </table>
+</div>
+
+      
+    </div>
+  
+    
+<div>
+  
+  <div class="component-note">
+    <span>(Note)</span>
+    <ul>
+      
+            <li class="note00">&#xFF65;"TOPIX Component Stocks Weight" data as of the end of month will be updated on or after 4:20 pm on the last business day of next month.</li>
+          
+            <li class="note00">&#xFF65;Constituents information as TOPIX is available on "J-Quants DataCube".<br/>
+Please refer to "End of month Master Of Index" from the following link.</li>
+          
+    </ul>
+  </div>
+  
+</div>
+
+    <div>
+  
+                <a href="https://dc.jpx-jquants.com/en" class="link-window" rel="external">J-Quants DataCube<img src="/english/common/images/icon/tvdivq000000016t-img/icon-block.png" alt="icon-block" title="icon-block" width="19" height="12" /></a>
+              
+</div>
+    <div>
+  <div class="component-inquiry">
+    <p class="inquiry-title"><span>Contact</span></p>
+    
+      <p class="inquiry-text">
+      JPX Market Innovation &amp; Research, Inc.　Index Business<br />
+      E-mail:<a href="mailto:index@jpx.co.jp">index@jpx.co.jp</a><br />
+    </p>
+    
+  </div>
+</div>
+
+    <div><h2 class="heading-title" id="heading_10"><span>Calculation Method</span></h2></div>
+          <div>
+  
+                <a href="https://www.jpx.co.jp/english/markets/indices/line-up/files/e_cal2_30_topix.pdf" class="link-window" >Tokyo Stock Exchange Index Guidebook (TOPIX)</a>
+              
+</div>
+    <div>
+  
+                <a href="https://www.jpx.co.jp/english/markets/indices/line-up/files/e_cal2_1_FFW.pdf" class="link-window" >Free Float Weight Calculation Methodology</a>
+              
+</div>
+    <div><h2 class="heading-title" id="heading_13"><span>Historical Index Value</span></h2></div>
+          
+    <div>
+      
+<div class="component-file">
+  <table width="50%">
+    
+          <tr>
+            <th width="90%">As of end of 2025</th>
+            
+                  <td width="10%"><a href="/english/markets/indices/topix/tvdivq00000030ne-att/topixyear_e.xls" rel="external"><img src="/english/common/images/icon/icon-xls.png" alt="icon-xls" title="icon-xls" width="18" height="18" /></a></td>
+                
+          </tr>
+        
+  </table>
+</div>
+
+      
+    </div>
+  
+    
+<div>
+  
+  <div class="component-note">
+    <span>(Note)</span>
+    <ul>
+      
+            <li class="note00">&#xFF65;Open/High/Low/Closing Prices</li>
+          
+    </ul>
+  </div>
+  
+</div>
+
+    
+<div>
+  
+  <div class="component-asterisk-num">
+    <ul>
+      
+            <li class="asterisk00">Figures are based on closing prices and a calender year.</li>
+        
+    </ul>
+  </div>
+  
+</div>
+
+    <div><h2 class="heading-title" id="heading_17"><span>TOPIX New Index Code information</span></h2></div>
+          
+    <div>
+      
+<div class="component-file">
+  <table width="50%">
+    
+          <tr>
+            <th width="90%">The result of periodic review of TOPIX new index series (October 30, 2026)</th>
+            
+                  <td width="10%"><a href="/english/markets/indices/topix/tvdivq00000030ne-att/e_mei2_12_size.pdf" rel="external"><img src="/english/common/images/icon/icon-pdf.png" alt="icon-pdf" title="icon-pdf" width="18" height="18" /></a></td>
+                
+          </tr>
+        
+          <tr>
+            <th width="90%">The result of periodic review of TOPIX new index series (October 31, 2025)</th>
+            
+                  <td width="10%"><a href="/english/markets/indices/topix/tvdivq00000030ne-att/e_mei2_12_size2025.pdf" rel="external"><img src="/english/common/images/icon/icon-pdf.png" alt="icon-pdf" title="icon-pdf" width="18" height="18" /></a></td>
+                
+          </tr>
+        
+          <tr>
+            <th width="90%">New Index Series Code of newly added companies</th>
+            
+                  <td width="10%"><a href="/english/markets/indices/topix/tvdivq00000030ne-att/newindex-e.xlsx" rel="external"><img src="/english/common/images/icon/icon-xls.png" alt="icon-xls" title="icon-xls" width="18" height="18" /></a></td>
+                
+          </tr>
+        
+  </table>
+</div>
+
+      
+    </div>
+  
+    <div><h2 class="heading-title" id="heading_19"><span>TOPIX Related ETFs</span></h2></div>
+          <div>
+  
+                <a href="https://www.jpx.co.jp/english/equities/products/etfs/issues/01.html" class="link-window" >Listed Issues</a>
+              
+</div>
+    <div><h2 class="heading-title" id="heading_21"><span>Related Information</span></h2></div>
+          <div>
+  
+                <a href="https://www.jpx.co.jp/english/markets/indices/factsheets/files/e_001_fac2_TOPIX.pdf" class="link-window" >Factsheet</a>
+              
+</div>
+    
+<div>
+  <div class="component-column-important">
+  
+    <p class="column-text">For more information on TOPIX revisions, click the link below.<br>
+ <a href="https://www.jpx.co.jp/english/markets/indices/revisions-indices/index.html" class="link-window">Revisions of TOPIX</a></p>
+  </div>
+</div>
+
+    <div><h2 class="heading-title" id="heading_24"><span>News</span></h2></div>
+          <div>
+    <div class="component-normal-table">
+        <table  class="overtable" >
+            <caption></caption>
+            <tbody>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Oct. 07, 2026
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20261007-01.html" class="link-window">Periodic Review and Initial Selection of Constituents of TOPIX and Other Stock Price Indices</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Sep. 03, 2026
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20260903-01.html" class="link-window">Calculation of TOPIX in relation to shares of NOK Group Corporation, etc.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Jul. 10, 2026
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20260710-01.html" class="link-window">Regarding the Handling of the Free-Float Weight (FFW) of Kioxia Holdings Corporation (285A) in the October 2026 Periodic Review of FFW</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Jun. 03, 2026
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20260603-01.html" class="link-window">Calculation of TOPIX in relation to shares of giftee Group,Inc.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                May. 28, 2026
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20260528-01.html" class="link-window">Index Calculation in relation to shares of JAPAN POST HOLDINGS Co.,Ltd. (6178)</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                May. 08, 2026
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20260508-01.html" class="link-window">Calculation of TOPIX in relation to shares of MAEZAWA Holdings CO.,LTD.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Mar. 04, 2026
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20260304-01.html" class="link-window">Calculation of TOPIX in relation to shares of Muninova Holdings Inc., etc.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Oct. 10, 2025
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20251010-01.html" class="link-window">Calculation of TOPIX in relation to shares of Hamee Corp.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Oct. 07, 2025
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20251007-01.html" class="link-window">Constituent Change in TOPIX New Index Series</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Sep. 10, 2025
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20250910-01.html" class="link-window">Index Calculation in Relation to Shares of SONY GROUP CORPORATION</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Sep. 03, 2025
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20250903-01.html" class="link-window">Calculation of TOPIX in relation to shares of BLUE ZONES HOLDINGS CO.,LTD.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Aug. 29, 2025
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20250829-01.html" class="link-window">Index Calculation in relation to shares of JAPAN POST HOLDINGS Co.,Ltd. (6178)</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Jul. 07, 2025
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20250707-01.html" class="link-window">Regarding the treatment of GMO internet,Inc. (4784) in the periodic review of the Free-Float Weight (FFW) (July 2025)</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Oct. 16, 2024
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/corporate/news/news-releases/0060/20241016-01.html" class="link-window">TOPIX Banks High Dividend Index to be Launched</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Oct. 07, 2024
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20241007-01.html" class="link-window">Constituent Change in TOPIX New Index Series</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Sep. 27, 2024
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20240927-01.html" class="link-window">Revisions of TOPIX and Other Indices</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Sep. 04, 2024
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20240904-01.html" class="link-window">Calculation of TOPIX in relation to shares of TOBISHIMA HOLDINGS Inc.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Aug. 27, 2024
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20240827-01.html" class="link-window">Index Calculation in Relation to Shares of MELCO HOLDINGS INC.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Jun. 19, 2024
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20240619-02.html" class="link-window">Index Consultation on Revisions of TOPIX and Other Indices</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                May 07, 2024
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20240507-01.html" class="link-window">Calculation of TOPIX in relation to shares of SAMTY HOLDINGS Co.,Ltd.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Mar. 05, 2024
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20240305-01.html" class="link-window">Calculation of TOPIX in relation to shares of Ryoyo Ryosan Holdings,Inc.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Oct. 06, 2023
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20231006-01.html" class="link-window">Constituent Change in TOPIX New Index Series</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Oct. 06, 2023
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20231006-02.html" class="link-window">Re-evaluating Phased Weighting Reduction Constituents in TOPIX</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Sep. 05, 2023
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20230905-01.html" class="link-window">Calculation of TOPIX in relation to shares of MIGALO HOLDINGS Inc., etc.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Aug. 16, 2023
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20230816-01.html" class="link-window">Index Calculation in relation to shares of JAPAN POST HOLDINGS Co.,Ltd. (6178)</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Jul. 14, 2023
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20230714-01.html" class="link-window">Calculation of TOPIX in relation to shares of Confidence Inc.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Jun. 05, 2023
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20230605-01.html" class="link-window">Calculation of TOPIX in relation to shares of Integrated Design & Engineering Holdings Co.,Ltd.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Mar. 03, 2023
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20230303-01.html" class="link-window">Calculation of TOPIX in relation to shares of NIPPON KANZAI Holdings Co.,Ltd.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Oct. 07, 2022
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20221007-01.html" class="link-window">Constituent Change in TOPIX New Index Series</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Oct. 07, 2022
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20221007-02.html" class="link-window">Publication of List of Phased Weighting Reduction Constituents in TOPIX and Tokyo Stock Exchange Mothers Index</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Sep. 16, 2022
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20220916-01.html" class="link-window">Index Calculation in relation to shares of NIPPON TELEGRAPH AND TELEPHONE CORPORATION (9432)</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Sep. 05, 2022
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20220905-01.html" class="link-window">Calculation of TOPIX in relation to shares of WOW WORLD GROUP Inc., etc.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Aug. 03, 2022
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/6030/20220803-01.html" class="link-window">Calculation of TOPIX in relation to shares of PICKLES HOLDINGS CO.,LTD.</a>
+                            </td>
+                        
+                    </tr>
+                
+                    <tr>
+                        
+                            <th  width="20%"
+                                class="a-center a-middle tb-color003 fc-white">
+                                Mar. 03, 2022
+                            </th>
+                            <td class="a-left a-middle ">
+                                <a href="https://www.jpx.co.jp/english/news/1044/20220303-01.html" class="link-window">Calculation of TOPIX in relation to shares of Procrea Holdings,Inc.</a>
+                            </td>
+                        
+                    </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+    <div>
+<div class="component-margin24">&nbsp;</div>
+</div>
+
+
+    
+  </section>
+  <!-- /コンテンツエリア -->
+</div>
+<!-- /readArea -->
+        
+<!-- サイドメニュー出力 -->
+
+      <div class="JPX-sidecontents">
+        <div class="JPX-sidecontents-box">
+          <div class="JPX-sidecontents-title"><a href="/english/markets/index.html">Data &amp; Statistics</a></div>
+          
+            <ul class="JPX-sidemenu-list">
+              
+      <li><a href="/english/markets/indices/index.html" class="-is-active-parent">Indices</a>
+        
+          <ul class="JPX-sidemenu-list-sub">
+            
+      <li><a href="/english/markets/indices/line-up/index.html" class="">Indices Line-up</a>
+        
+      </li>
+    
+      <li><a href="/english/markets/indices/topix/index.html" class="-is-active">TOPIX (TPX)</a>
+        
+      </li>
+    
+      <li><a href="/english/markets/indices/jpx-prime150/index.html" class="">JPX Prime 150 Index</a>
+        
+      </li>
+    
+      <li><a href="/english/markets/indices/jpx-startup100/index.html" class="">JPX Start-Up Acceleration 100 Index</a>
+        
+      </li>
+    
+      <li><a href="/english/markets/indices/jpx-nikkei400/index.html" class="">JPX-Nikkei Co-brand Indices</a>
+        
+      </li>
+    
+      <li><a href="/english/markets/indices/carbon-efficient/index.html" class="">S&amp;P/JPX Carbon Efficient Index</a>
+        
+      </li>
+    
+      <li><a href="/english/markets/indices/net-zero/index.html" class="">FTSE JPX Net Zero Japan Index Series</a>
+        
+      </li>
+    
+      <li><a href="/english/markets/indices/realvalues/index.html" class="">Stock Price Index - Real Time Values</a>
+        
+      </li>
+    
+      <li><a href="/english/markets/indices/factsheets/index.html" class="">Factsheet</a>
+        
+      </li>
+    
+      <li><a href="/english/markets/indices/related/index.html" class="">Related Data</a>
+        
+      </li>
+    
+      <li><a href="/english/markets/indices/licence/index.html" class="">License</a>
+        
+      </li>
+    
+      <li><a href="/english/markets/indices/governance/index.html" class="">Governance</a>
+        
+      </li>
+    
+      <li><a href="/english/markets/indices/revisions-indices/index.html" class="">Revisions of TOPIX</a>
+        
+      </li>
+    
+  
+          </ul>
+        
+      </li>
+    
+            </ul>
+          
+        </div>
+      </div>
+    
+
+<!-- /サイドメニュー出力 -->
+      </div>
+      <!-- /main-areaIn -->
+
+      <!-- フッター出力 -->
+<!-- ページトップ -->
+<div class="JPX-PageTop"><a href="#"><span>PageTop</span></a></div>
+<!-- /ページトップ -->
+<footer class="JPX-footer">
+  <div class="JPX-footer-wrapper">
+    <!-- ↓ PCのみ表示 ↓ -->
+    <div class="JPX-footer-sitemap-background">
+      <div class="JPX-footer-sitemap">
+        
+          <script>
+            $(function(){
+              $.ajax({
+                url:"/english/tvdivq000000zpw5.xml",
+                type:"GET",
+                dataType:"xml",
+                async:false,
+                timeout:1000,
+                error:function() {
+                  $("#therd_map").html("Couldn't get information");
+                },
+                success:function(xml){
+                  let html = '';
+                  $(xml).children("menu_list").children("menu").each(function() {
+                    html += '<div class="JPX-footer-sitemap-data">';
+                    
+                    html += '<div class="JPX-footer-sitemap-title"><a href="'
+                        +$(this).find('second_url').text()
+                        +'">'
+                        +$(this).find('second_name').text()
+                        +'</a></div>';
+                    
+                    html += '<ul class="JPX-footer-sitemap-list">';
+                    $(this).children("menu_list").children("menu").each(function() {
+                      html += '<li><a href="'
+                        +$(this).find('third_url').text()
+                        +'">'
+                        +$(this).find('third_name').text()
+                        +'</a></li>';
+                    });
+                    html += '</ul>';
+                    html += '</div>';
+                  });
+
+                  $("#therd_map").append(html);
+                }
+              });
+            });
+          </script>
+          <div class="JPX-footer-sitemap-box" id="therd_map">
+          </div>
+        
+<div class="JPX-footer-purpose-box">
+  
+    <div class="JPX-footer-purpose -individual"><a href="/english/individuals/index.html"><span>For Individual Investors</span></a></div>
+  
+    <div class="JPX-footer-purpose -company"><a href="/english/listed-companies/index.html"><span>For Listed Companies</span></a></div>
+  
+    <div class="JPX-footer-purpose -consider"><a href="/english/pre-listed-companies/index.html"><span>For Prospective Issuers</span></a></div>
+  
+    <div class="JPX-footer-purpose -participant"><a href="/english/participants/index.html"><span>For Trading Participants</span></a></div>
+  
+    <div class="JPX-footer-purpose -investor"><a href="/english/institutional/index.html"><span>For Institutional Investors</span></a></div>
+  
+    <div class="JPX-footer-purpose -media"><a href="/english/media/index.html"><span>For Media</span></a></div>
+  
+</div>
+<!-- /対象者別 -->
+        
+      </div>
+      <!-- ↑ PCのみ表示 ↑ -->
+      
+      <div class="JPX-footer-sub">
+        <ul class="JPX-footer-sublink">
+
+  <li><a href="/english/corporate/learning/tour/index.html" ><span>Visit JPX</span></a></li>
+
+</ul>
+        <ul class="JPX-footer-sns-icon">
+          <li><a href="https://x.com/JPX_official_EN" rel="external"><img src="/english/_assets/img/svg/icn-sns-tw.svg" alt="X"></a></li>
+          <li><a href="https://www.facebook.com/JapanExchangeGroupGlobal" rel="external"><img src="/english/_assets/img/svg/icn-sns-fb.svg" alt="facebook"></a></li>
+          <li><a href="https://www.youtube.com/channel/UCnZA74T8a8dEbavWRq8F2nA" rel="external"><img src="/english/_assets/img/svg/icn-sns-yt.svg" alt="youtube"></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="JPX-footer-main">
+
+      <div class="JPX-footer-link-box">
+  <ul class="JPX-footer-link">
+
+  <li><a href="/english/faq/index.html" ><span>FAQ</span></a></li>
+
+  <li><a href="/english/sitemap/index.html" ><span>Sitemap</span></a></li>
+
+  <li><a href="/english/term-of-use/index.html" ><span>Disclaimer/ Terms of Use</span></a></li>
+
+  <li><a href="/english/corporate/governance/security/personal-information/index.html" ><span>Handling of Personal Information</span></a></li>
+
+  </ul>
+</div>
+
+      <div class="JPX-footer-logo">
+        <div class="JPX-footer-logo-img">
+          <a href="/english/index.html">
+            <img src="/english/_assets/img/image/logo_full.png" alt="JPX">
+          </a>
+        </div>
+        <div class="JPX-footer-copylight">&copy; Japan Exchange Group, Inc.</div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- /フッター出力 -->
+        
+
+    </div>
+    <!-- /main-area -->
+  </div>
+  <!-- /wrapper-area -->
+
+  <!-- Bodyタグ末尾の共通処理 -->
+  <!-- Facebook Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '191019531472708');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=191019531472708&amp;ev=PageView&amp;noscript=1" />
+  </noscript>
+
+  <script type="text/javascript" src="/english/_assets/js/slick.min.js"></script>
+  <script type="text/javascript" src="/english/_assets/js/jquery.matchHeight.js"></script>
+  <script type="text/javascript" src="/english/_assets/js/script.js"></script>
+  <script type="text/javascript" src="/english/_assets/js/common.js"></script>
+  <script type="text/javascript" src="/english/_assets/js/heightLine.js"></script>
+<!--  <script type="text/javascript" src="/english/_assets/js/fixed_midashi.js"></script> -->
+  <script type="text/javascript" src="/english/_assets/js/fix-table-header.js"></script>
+  
+  <script type="text/javascript" src="/english/_assets/js2/lity.js"></script>
+  <script type="text/javascript" src="/english/_assets/js/link.js"></script>
+  <script type="text/javascript" src="/english/_assets/js/jquery.prettyPhoto.js"></script>
+  <script type="text/javascript" src="/english/_assets/js2/jquery.mousewheel.js"></script>
+  <script type="text/javascript" src="/english/_assets/js2/jquery.jscrollpane.min.js"></script>
+  <script type="text/javascript" src="/english/_assets/js2/jquery.easing.1.3.js"></script>
+  <script type="text/javascript" src="/english/_assets/js2/jquery.aslider.min.js"></script>
+  <script type="text/javascript" src="/english/_assets/js2/jquery.bxslider.min.js"></script>
+  <script type="text/javascript" src="/english/_assets/js2/iframe.js"></script>
+  <script type="text/javascript" src="/english/_assets/js2/add-action.js"></script>
+  <script type="text/javascript" src="/english/_assets/js2/add_attribute_gid.js"></script>
+  
+
+  <!-- End Facebook Pixel Code -->
+  <!-- /Bodyタグ末尾の共通処理 -->
+
+</body>
+</html>
