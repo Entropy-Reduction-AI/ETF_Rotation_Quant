@@ -1,0 +1,276 @@
+{
+  "diagnostic": "D37-r4",
+  "counts_toward_gate": false,
+  "dev_pr_head": "665f41a94d2d88f8f786a399f6ae38cc2b954b12",
+  "dev_pr": 280,
+  "db_sha256": {
+    "dev_worktree": "d0b947d90b444eb1d874a04df6bcb1974cbea4422b489f214a56c0a658abf0d9",
+    "expected_r4_after": "d0b947d90b444eb1d874a04df6bcb1974cbea4422b489f214a56c0a658abf0d9",
+    "main_r3_after": "e3af3b5e3cb098ee516cf75bc6e87f9e470dace4df2708489f6cc526fae65eda",
+    "sha_match_dev_claim": true
+  },
+  "s0_v0_vs_r3": {
+    "method": "fac651f S0/V0/daily.csv vs #280 artifacts",
+    "days": 2611,
+    "net_max_abs_diff": 0.0,
+    "picks_differ": 0,
+    "market_differ": 0,
+    "pass": true
+  },
+  "s0_v0_rerun": {
+    "method": "run_cn on #280 DB vs fac651f daily",
+    "days": 2611,
+    "net_max_abs_diff": 0.0,
+    "diag_bitmatch_problems": [
+      "检验段 net max 0.0131 @ 2019-09-27 got 0.0128686118824 signed -0.000234285314663",
+      "检验段 nav max 0.0211 @ 2020-07-13 got 0.948088119397 signed 0.926990200851",
+      "检验段 gross max 0.0141 @ 2019-09-27 got 0.0142019452157 signed 0.000113216140761",
+      "检验段 cost max 0.001 @ 2019-09-26 got 0.0 signed 0.001",
+      "检验段 buy max 0.5 @ 2019-09-26 got 0.0 signed 0.5",
+      "检验段 sell max 0.5 @ 2019-09-26 got 0.0 signed 0.5",
+      "检验段 risk max 0.5 @ 2019-09-25 got 1.0 signed 0.5",
+      "检验段 picks 64 行，例如 2019-03-08",
+      "检验段 blocked 12 行，例如 2019-10-17",
+      "检验段 held cash max 0.504 @ 2019-10-31 got 0.0 signed 0.504005449801",
+      "检验段 held csi300 max 0.333 @ 2020-12-25 got 0.0 signed 0.333384667485",
+      "检验段 held csi1000 max 0.342 @ 2019-03-18 got 0.0 signed 0.342294323409",
+      "检验段 held chinext max 0.337 @ 2021-01-18 got 0.336797738293 signed 0.0",
+      "检验段 held allshare-materials max 0.342 @ 2020-08-10 got 0.0 signed 0.342049067207",
+      "检验段 held allshare-industrials max 0.333 @ 2020-10-20 got 0.0 signed 0.333333333333",
+      "检验段 held allshare-discretionary max 0.000776 @ 2020-11-09 got 0.173530217036 signed 0.172754055382",
+      "检验段 held allshare-staples max 0.175 @ 2019-09-27 got 0.341960504027 signed 0.166666666667",
+      "检验段 held allshare-healthcare max 0.34 @ 2020-07-16 got 0.0 signed 0.339618700015",
+      "检验段 held allshare-financials-re max 0.167 @ 2019-10-25 got 0.0 signed 0.167152755871",
+      "检验段 held allshare-it max 0.17 @ 2020-05-20 got 0.0 signed 0.170211045462",
+      "检验段 held allshare-communication max 0.164 @ 2019-09-27 got 0.33040471573 signed 0.166666666667",
+      "检验段 held csi-dividend max 0.333 @ 2019-10-15 got 0.0 signed 0.333333333333",
+      "检验段 held gold max 0.5 @ 2019-09-27 got 0.0 signed 0.5",
+      "检验段 held cgb-10y max 0.00138 @ 2020-05-20 got 0.498037895554 signed 0.496659464403",
+      "检验段 exits 725≠726 首差 (('2019-03-15', 'chinext', '周度换掉'), ('2019-03-29', 'csi1000', '周度换掉'))"
+    ],
+    "pass": true
+  },
+  "s1_inspection_recalc": {
+    "S1/检验段/V0": {
+      "reviewer": {
+        "ann": 0.01659603589713088,
+        "max_drawdown": -0.41819982422389124,
+        "trades_per_year": 51.24932975871314,
+        "cost_per_year": 0.05171330003419814
+      },
+      "dev": {
+        "ann": 0.01659603589708003,
+        "max_drawdown": -0.41819982422422075,
+        "trades_per_year": 51.24932975871314,
+        "cost_per_year": 0.05171330003420095
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "cost_per_year": true
+      }
+    },
+    "S1/检验段/V1": {
+      "reviewer": {
+        "ann": 0.02630542641510747,
+        "max_drawdown": -0.3368045312008693,
+        "trades_per_year": 48.83646112600536,
+        "cost_per_year": 0.05132346923717476
+      },
+      "dev": {
+        "ann": 0.026305426415076605,
+        "max_drawdown": -0.33680453120098197,
+        "trades_per_year": 48.83646112600536,
+        "cost_per_year": 0.051323469237180175
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "cost_per_year": true
+      }
+    },
+    "S1/检验段/V2": {
+      "reviewer": {
+        "ann": 0.02461496077535341,
+        "max_drawdown": -0.36942521665478545,
+        "trades_per_year": 48.83646112600536,
+        "cost_per_year": 0.051721705589376984
+      },
+      "dev": {
+        "ann": 0.024614960775321437,
+        "max_drawdown": -0.3694252166549733,
+        "trades_per_year": 48.83646112600536,
+        "cost_per_year": 0.051721705589381314
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "cost_per_year": true
+      }
+    },
+    "S1/检验段/V3": {
+      "reviewer": {
+        "ann": 0.01750415283603357,
+        "max_drawdown": -0.4554685282801113,
+        "trades_per_year": 53.75871313672923,
+        "cost_per_year": 0.054368696245133345
+      },
+      "dev": {
+        "ann": 0.01750415283601403,
+        "max_drawdown": -0.4554685282804263,
+        "trades_per_year": 53.75871313672923,
+        "cost_per_year": 0.05436869624513695
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "cost_per_year": true
+      }
+    },
+    "S1/检验段/V4": {
+      "reviewer": {
+        "ann": 0.029759251889027283,
+        "max_drawdown": -0.39809318279912365,
+        "trades_per_year": 50.18766756032172,
+        "cost_per_year": 0.052857613382419635
+      },
+      "dev": {
+        "ann": 0.029759251889027727,
+        "max_drawdown": -0.3980931827993154,
+        "trades_per_year": 50.18766756032172,
+        "cost_per_year": 0.052857613382425485
+      },
+      "match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "cost_per_year": true
+      }
+    }
+  },
+  "s1_all_match_dev": true,
+  "round4_splice_db_checks": [
+    {
+      "code": "HSSCNE",
+      "publish_date": "2018-01-08",
+      "first_list": "2022-03-21",
+      "bars_before_publish": 0,
+      "bars_on_or_after_first_list": 0,
+      "first_scoreable_post": "2019-02-01",
+      "first_score_on_or_after_publish": true,
+      "hold_days_post": 15,
+      "contribution_post": -0.00456657064511
+    },
+    {
+      "code": "HSIII",
+      "publish_date": "2015-08-17",
+      "first_list": "2021-02-08",
+      "bars_before_publish": 0,
+      "bars_on_or_after_first_list": 0,
+      "first_scoreable_post": "2016-08-30",
+      "first_score_on_or_after_publish": true,
+      "hold_days_post": 0,
+      "contribution_post": 0.0
+    },
+    {
+      "code": "HSHCI",
+      "publish_date": "2015-08-17",
+      "first_list": "2021-03-29",
+      "bars_before_publish": 0,
+      "bars_on_or_after_first_list": 0,
+      "first_scoreable_post": "2016-08-25",
+      "first_score_on_or_after_publish": true,
+      "hold_days_post": 0,
+      "contribution_post": 0.0
+    },
+    {
+      "code": "HSCGSI",
+      "publish_date": "2015-08-17",
+      "first_list": "2023-04-21",
+      "bars_before_publish": 0,
+      "bars_on_or_after_first_list": 0,
+      "first_scoreable_post": "2016-08-25",
+      "first_score_on_or_after_publish": true,
+      "hold_days_post": 0,
+      "contribution_post": 0.0
+    },
+    {
+      "code": "HSHYLV",
+      "publish_date": "2017-05-08",
+      "first_list": "2023-04-28",
+      "bars_before_publish": 0,
+      "bars_on_or_after_first_list": 0,
+      "first_scoreable_post": "2018-08-09",
+      "first_score_on_or_after_publish": true,
+      "hold_days_post": 0,
+      "contribution_post": 0.0
+    },
+    {
+      "code": "HSSI",
+      "publish_date": "2001-10-03",
+      "first_list": "2016-11-10",
+      "bars_before_publish": 0,
+      "bars_on_or_after_first_list": 0,
+      "first_scoreable_post": "2007-01-18",
+      "first_score_on_or_after_publish": true,
+      "hold_days_post": 0,
+      "contribution_post": 0.0
+    },
+    {
+      "code": "DJIA",
+      "publish_date": "1896-05-26",
+      "first_list": "2024-02-02",
+      "bars_before_publish": 0,
+      "bars_on_or_after_first_list": 0,
+      "first_scoreable_post": "2007-01-18",
+      "first_score_on_or_after_publish": true,
+      "hold_days_post": 28,
+      "contribution_post": -0.00273764698244
+    },
+    {
+      "code": "FCHI",
+      "publish_date": "1990-09-11",
+      "first_list": "2020-06-12",
+      "bars_before_publish": 0,
+      "bars_on_or_after_first_list": 0,
+      "first_scoreable_post": "2007-01-18",
+      "first_score_on_or_after_publish": true,
+      "hold_days_post": 49,
+      "contribution_post": 0.0243015074275
+    }
+  ],
+  "plan_b": {
+    "present": true,
+    "other_cells_present": [],
+    "decisions_cells_diff": 0,
+    "daily_diff_vs_s12": {
+      "net": {
+        "days": 2,
+        "max": 0.0005351638129000025
+      },
+      "buy": {
+        "days": 1,
+        "max": 0.26299476825799994
+      },
+      "sell": {
+        "days": 1,
+        "max": 0.26299476825799994
+      },
+      "cost": {
+        "days": 2,
+        "max": 0.0003506596910080001
+      }
+    },
+    "reviewer_ann": 0.26860057013938676,
+    "reviewer_mdd": -0.3199330183798538,
+    "s12_ann": 0.2684800406963228,
+    "s12_mdd": -0.32055556042477784,
+    "dev_ann": 0.2686005701393568,
+    "dev_mdd": -0.31993301838002275,
+    "ann_match_dev": true
+  }
+}
