@@ -1,0 +1,58 @@
+{
+  "diagnostic": "D37-r5",
+  "counts_toward_gate": false,
+  "selection": "all",
+  "cadence": "frozen",
+  "db_sha256": "d0b947d90b444eb1d874a04df6bcb1974cbea4422b489f214a56c0a658abf0d9",
+  "design_nav": "kept",
+  "cells": [
+    {
+      "scope": "S0",
+      "segment": "设计期",
+      "execution": "run_book",
+      "nav_path": "kept",
+      "ann": 0.2686005701393568,
+      "max_drawdown": -0.31993301838002275,
+      "trades": 612,
+      "trades_per_year": 61.2,
+      "cost": 0.43116829791495304,
+      "cost_per_year": 0.0431168297914953
+    },
+    {
+      "scope": "S0",
+      "segment": "别的市场",
+      "execution": "gpool.simulate",
+      "nav_path": "this-run",
+      "ann": 0.009441222206706623,
+      "max_drawdown": -0.4773965639616903,
+      "trades": 1523,
+      "trades_per_year": 65.60615384615384,
+      "cost": 1.575951346085888,
+      "cost_per_year": 0.06788713490831517
+    },
+    {
+      "scope": "S0",
+      "segment": "检验段",
+      "execution": "run_book",
+      "nav_path": "this-run",
+      "ann": -0.03616750308091843,
+      "max_drawdown": -0.5512151255918675,
+      "trades": 797,
+      "trades_per_year": 76.92225201072387,
+      "cost": 0.7771615447316416,
+      "cost_per_year": 0.07500754855318793
+    },
+    {
+      "scope": "S1",
+      "segment": "检验段",
+      "execution": "run_book",
+      "nav_path": "this-run",
+      "ann": 0.061972697650517494,
+      "max_drawdown": -0.32287078266031133,
+      "trades": 792,
+      "trades_per_year": 76.4396782841823,
+      "cost": 0.7437748331479976,
+      "cost_per_year": 0.0717852385880105
+    }
+  ]
+}
