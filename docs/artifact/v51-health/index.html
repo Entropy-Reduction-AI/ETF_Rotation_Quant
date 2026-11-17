@@ -679,6 +679,32 @@ p.exp-key { font-size: 12.5px; color: var(--muted); margin: 6px 0 4px; display: 
 .sens-tag { align-self: flex-start; width: fit-content; }
 .cards.sens-cards { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
 
+.gl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 12px; margin: 8px 0 12px; }
+.gl-card { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--muted); border-radius: 10px; padding: 12px 16px 14px; }
+.gl-card.wide { grid-column: 1 / -1; }
+.gl-card.t-main { border-top-color: var(--accent); background: linear-gradient(180deg, var(--accent-soft), var(--surface) 60px); }
+.gl-card.t-peer { border-top-color: #7c3aed; } .gl-card.t-off { border-top-color: #a16207; } .gl-card.t-ref { border-top-color: var(--ink); }
+.gl-n { font-size: 17px; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+.gl-tag { font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 1px 7px; color: #fff; background: var(--muted); }
+.t-main .gl-tag { background: var(--accent); } .t-peer .gl-tag { background: #7c3aed; } .t-off .gl-tag { background: #a16207; }
+.gl-pos { font-size: 14px; font-weight: 600; color: var(--accent); margin: 4px 0 10px; }
+.t-peer .gl-pos { color: #7c3aed; } .t-off .gl-pos { color: #a16207; } .t-ref .gl-pos { color: var(--muted); }
+.gl-r { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); gap: 8px; align-items: baseline; padding: 5px 0; border-top: 1px dashed var(--line); font-size: 14px; line-height: 1.6; }
+.gl-k { justify-self: start; font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 0 6px; }
+.gl-k.k-pick { color: var(--accent); background: var(--accent-soft); }
+.gl-k.k-sell { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.gl-k.k-def { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.gl-k.k-size { color: #7c3aed; background: color-mix(in srgb, #7c3aed 10%, transparent); }
+.gl-k.k-pace { color: var(--muted); background: var(--bg); border: 1px solid var(--line); }
+.gl-bar { display: flex; height: 26px; border-radius: 6px; overflow: hidden; margin: 2px 0 8px; }
+.gl-bar span { display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; }
+.gl-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12.5px; color: var(--ink); margin: -2px 0 8px; }
+.gl-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.gl-subs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.gl-sub { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; background: var(--bg); }
+.gl-sk { font-weight: 700; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
+.gl-sv { font-size: 13.5px; line-height: 1.6; color: var(--ink); }
+
 </style>
 </head>
 <body>
@@ -697,36 +723,7 @@ p.exp-key { font-size: 12.5px; color: var(--muted); margin: 6px 0 4px; display: 
 <section class="intro status"><p class="kv"><span class="kv-k"><strong>项目愿景</strong></span><span class="kv-v">　在动态周期内，从多类资产里选出 Top N 强势 ETF 轮动持有，获得超额收益、稳定跑赢被动基准，同时把回撤控制住。</span></p>
 <div class="hero"><div class="hero-g n1"><div class="hz verdict2 t-bad"><div class="hz-l">结论</div><div class="hz-hd">能排名的池子年化 <strong class="num">30.1%</strong>、回撤 <strong class="num">−26%</strong>，任何月初买入持有 5 年都赢基准。</div><div class="hz-rest">但当年真能买到的只有 <strong class="num">15.8%</strong>，5 年只有 34% 的起点赢；美国 ETF 上只有 <strong class="num">1.3%</strong>。</div></div><div class="hz ask calm"><div class="hz-l">需要你</div><div class="hq-h calm">✓ 不用操作</div><div class="hq-ref">这份报告是封板前的留档，一次性检验的结论另写。</div></div><div class="hz eng"><span class="eng-ok">✓</span><span class="hz-l">进度</span><span class="eng-d">v5.1 设计期跑完，<strong>不入围</strong>；你已批准封板（D34）。一次性检验里它只作对照，和 E2 新口径、A1、基准同次跑。</span></div></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>先认识这几个名字：v5.1、E2 新口径、A1、基准、两个池子</span></button><div class="fold-b" hidden="">
-<div class="table-wrap"><table class="deflist" data-lint="ref">
-<thead>
-<tr>
-<th>问题</th>
-<th>回答</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="k"><strong>v5.1</strong></td>
-<td class="detail">两层轮动。第一层每周在 A 股、港股、美股三个市场里选一个，仓位分两半：前沿没过半（短中长 28 把尺子里，正在走弱的不到一半，而且同市场里多数品种也没走弱）给一半；水平为正或长尺子在改善再给一半。仓位每天可以减、每周才加。第二层在选中的市场里拿最强的前 3 只，单只自己走弱或从高点跌 10% 就卖。不在股票里的钱默认拿 10 年国债，黄金明显更强时换黄金。</td>
-</tr>
-<tr>
-<td class="k"><strong>E2 新口径</strong></td>
-<td class="detail">v4 的最终版，也是一次性检验唯一能入围的一版。看 1、3、6、12 个月四个回看期，只买跑赢现金的，每组前 N 名各 1/N，单只跌 10% 就卖。</td>
-</tr>
-<tr>
-<td class="k"><strong>A1 双动量</strong></td>
-<td class="detail">公开同行。每月末：标普500 过去 12 个月跑赢现金，就在标普500 和沪深300 里拿更强的那个，100% 仓位；否则拿 10 年国债。</td>
-</tr>
-<tr class="ref">
-<td class="k"><strong>基准</strong></td>
-<td class="detail">70% 沪深300 + 15% 纳指100 + 15% 标普500，全收益、人民币，每月再平衡。</td>
-</tr>
-<tr>
-<td class="k"><strong>两个池子</strong></td>
-<td class="detail"><strong>能排名的池子（U-指数）</strong>：有指数数据就能参加排名，回答“选法好不好”，用来判过关。<strong>能买到的池子（U-可交易）</strong>：只排当年真有基金能买的，回答“当年真能赚多少”。2006 年两者差 16 个容器，到 2015 年差 9 个。细节见<a href="https://claude.ai/artifact/DpJNEma9D9uELPsLkWbRBx">《v4 体检报告》</a>“两个池子”。</td>
-</tr>
-</tbody>
-</table></div>
+<div class="gl-grid"><div class="gl-card t-info wide"><div class="gl-n">v5.1</div><div class="gl-pos">两层轮动</div><div class="gl-r"><span class="gl-k k-pick">选</span><span>第一层每周在 A 股、港股、美股三个市场里选一个</span></div><div class="gl-r"><span class="gl-k k-size">仓位</span><span>仓位分两半：前沿没过半（短中长 28 把尺子里，正在走弱的不到一半，而且同市场里多数品种也没走弱）给一半</span></div><div class="gl-r"><span class="gl-k k-size">仓位</span><span>水平为正或长尺子在改善再给一半</span></div><div class="gl-r"><span class="gl-k k-pace">节奏</span><span>仓位每天可以减、每周才加</span></div><div class="gl-r"><span class="gl-k k-pick">选</span><span>第二层在选中的市场里拿最强的前 3 只</span></div><div class="gl-r"><span class="gl-k k-sell">卖</span><span>单只自己走弱或从高点跌 10% 就卖</span></div><div class="gl-r"><span class="gl-k k-def">防守</span><span>不在股票里的钱默认拿 10 年国债，黄金明显更强时换黄金</span></div></div><div class="gl-card t-main"><div class="gl-n">E2 新口径<span class="gl-tag">入围</span></div><div class="gl-pos">v4 的最终版，也是一次性检验唯一能入围的一版</div><div class="gl-r"><span class="gl-k k-pick">选</span><span>看 1、3、6、12 个月四个回看期，只买跑赢现金的</span></div><div class="gl-r"><span class="gl-k k-size">仓位</span><span>每组前 N 名各 1/N</span></div><div class="gl-r"><span class="gl-k k-sell">卖</span><span>单只跌 10% 就卖</span></div></div><div class="gl-card t-peer"><div class="gl-n">A1 双动量<span class="gl-tag">公开同行</span></div><div class="gl-pos">公开同行</div><div class="gl-r"><span class="gl-k k-pace">节奏</span><span>每月末</span></div><div class="gl-r"><span class="gl-k k-pick">选</span><span>标普500 过去 12 个月跑赢现金，就在标普500 和沪深300 里拿更强的那个</span></div><div class="gl-r"><span class="gl-k k-size">仓位</span><span>100% 仓位</span></div><div class="gl-r"><span class="gl-k k-def">防守</span><span>否则拿 10 年国债</span></div></div><div class="gl-card t-ref"><div class="gl-n">基准</div><div class="gl-bar"><span style="flex:70;background:var(--accent)">70%</span><span style="flex:15;background:#7c3aed">15%</span><span style="flex:15;background:#0e7490">15%</span></div><div class="gl-legend"><span><i style="background:var(--accent)"></i>沪深300 70%</span><span><i style="background:#7c3aed"></i>纳指100 15%</span><span><i style="background:#0e7490"></i>标普500 15%</span></div><div class="gl-r"><span class="gl-k k-pace">节奏</span><span>全收益、人民币，每月再平衡。</span></div></div><div class="gl-card wide t-ref"><div class="gl-n">两个池子</div><div class="gl-subs"><div class="gl-sub"><div class="gl-sk">能排名的池子（U-指数）</div><div class="gl-sv">有指数数据就能参加排名，回答“选法好不好”，用来判过关。</div></div><div class="gl-sub"><div class="gl-sk">能买到的池子（U-可交易）</div><div class="gl-sv">只排当年真有基金能买的，回答“当年真能赚多少”。2006 年两者差 16 个容器，到 2015 年差 9 个。细节见<a href="https://claude.ai/artifact/DpJNEma9D9uELPsLkWbRBx">《v4 体检报告》</a>“两个池子”。</div></div></div></div></div>
 <p class="table-note note">年化、回撤都从 2006-01-01 算到 2015-12-31，扣费后。前五年 = 2006–2010，后五年 = 2011–2015。中国 2016 年以后的收益一律没有算。</p>
 </div></div>
 </section>
