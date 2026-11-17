@@ -318,27 +318,100 @@
         "market": "A股",
         "avg_weight": 0.39087212497558366,
         "days_held": 1272,
-        "contribution": 2.5918482772311453
+        "contribution": 2.5918482772311453,
+        "window_avg_weight": 0.429814510419837,
+        "window_days_held": 1272,
+        "window_contribution": 2.5918482772311453
       },
       {
         "market": "港股",
         "avg_weight": 0.04997152497445339,
         "days_held": 320,
-        "contribution": -0.09519559118046864
+        "contribution": -0.09519559118046864,
+        "window_avg_weight": 0.054950161880100865,
+        "window_days_held": 320,
+        "window_contribution": -0.09519559118046864
       },
       {
         "market": "美股",
         "avg_weight": 0.20878504533457543,
         "days_held": 776,
-        "contribution": 0.09286660220336364
+        "contribution": 0.09286660220336364,
+        "window_avg_weight": 0.229586190238226,
+        "window_days_held": 776,
+        "window_contribution": 0.09286660220336364
       },
       {
         "market": "防守或现金",
         "avg_weight": 0.35037130471530065,
         "days_held": 1173,
-        "contribution": 0.3913992996176302
+        "contribution": 0.3913992996176302,
+        "window_avg_weight": 0.28564913746174064,
+        "window_days_held": 931,
+        "window_contribution": 0.372192950411276
       }
-    ]
+    ],
+    "market_days": {
+      "0": 549,
+      "1": 1416,
+      "2": 437,
+      "3": 27
+    },
+    "market_days_window": {
+      "start": "2006-01-01",
+      "end": "2015-12-31",
+      "days": 2429
+    },
+    "avg_markets_in_window": 0.9761218608480856,
+    "warmup_days_before_window": 242,
+    "window_note": "market_days、avg_markets_in_window、window_* 和 markets-window.csv 是 2006-01-01→2015-12-31，与年化同一窗口。avg_markets_per_day、days 和 markets.csv 仍是含 2005 年 242 天满仓现金的已接受数字，没有改。风险市场这 242 天权重为 0，所以窗口贡献等于原贡献；防守贡献减去这 242 天的组合毛收益。"
   },
-  "selection": "all"
+  "selection": "all",
+  "execution": "run_book",
+  "db_sha256": "d0b947d90b444eb1d874a04df6bcb1974cbea4422b489f214a56c0a658abf0d9",
+  "nav_path": "kept",
+  "vs_v0": [
+    {
+      "metric": "ann",
+      "label": "年化",
+      "B": 0.2686005701393568,
+      "V0": 0.30141914990871777,
+      "B_minus_V0": -0.03281857976936098
+    },
+    {
+      "metric": "max_drawdown",
+      "label": "最大回撤",
+      "B": -0.31993301838002275,
+      "V0": -0.25851879578569903,
+      "B_minus_V0": -0.06141422259432372
+    },
+    {
+      "metric": "trades",
+      "label": "笔数",
+      "B": 612.0,
+      "V0": 497.0,
+      "B_minus_V0": 115.0
+    },
+    {
+      "metric": "trades_per_year",
+      "label": "每年笔数",
+      "B": 61.2,
+      "V0": 49.7,
+      "B_minus_V0": 11.5
+    },
+    {
+      "metric": "cost",
+      "label": "成本",
+      "B": 0.43116829791495304,
+      "V0": 0.3246928458220832,
+      "B_minus_V0": 0.10647545209286985
+    },
+    {
+      "metric": "cost_per_year",
+      "label": "每年成本",
+      "B": 0.0431168297914953,
+      "V0": 0.03246928458220832,
+      "B_minus_V0": 0.010647545209286985
+    }
+  ]
 }

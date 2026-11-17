@@ -8,7 +8,7 @@ import pandas as pd
 from src.v3.engine.sessions import decision_dates
 from src.v51.allocate import allocate
 from src.v51.d37_round3 import parse_nikkei_month
-from src.v51.d37_plan_b import plan_b_markets
+from src.v51.d37_plan_b import plan_b_markets, vs_rows
 from src.v51.d37_round4 import catalogue_dates
 from src.v51.universe import Market, Universe
 from src.v51.s1_scope import (
@@ -229,9 +229,20 @@ class Scope(unittest.TestCase):
         )
         table, summary = plan_b_markets(held, pnl, state, universe)
         self.assertEqual(summary["avg_markets_per_day"], 1.5)
+        self.assertEqual(summary["market_days"], {"0": 0, "1": 1, "2": 1})
         by = dict(zip(table["market"], table["contribution"]))
         self.assertAlmostEqual(by["甲"], 0.05)
         self.assertAlmostEqual(by["乙"], 0.2)
+
+    def test_vs_v0_subtracts_the_same_segment(self):
+        rows = vs_rows(
+            {"ann": 0.1, "max_drawdown": -0.2, "trades": 10, "trades_per_year": 1.0, "cost": 0.05, "cost_per_year": 0.01},
+            {"ann": 0.3, "max_drawdown": -0.4, "trades": 4, "trades_per_year": 0.4, "cost": 0.02, "cost_per_year": 0.004},
+        )
+        by = {row["metric"]: row["B_minus_V0"] for row in rows}
+        self.assertAlmostEqual(by["ann"], -0.2)
+        self.assertAlmostEqual(by["max_drawdown"], 0.2)
+        self.assertEqual(by["trades"], 6)
 
 
 if __name__ == "__main__":
