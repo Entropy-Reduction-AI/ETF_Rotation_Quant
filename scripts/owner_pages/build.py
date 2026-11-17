@@ -356,7 +356,7 @@ def build(slug, fname, short, oldid):
             shutil.copy(absp, os.path.join(adir, name))
         alt = am.group(1) if am else ''
         src = os.path.relpath(absp, os.path.join(OUT, slug)) if REPO_MODE else f'assets/{name}'
-        return f'<img src="{src}" alt="{alt}" loading="lazy">'
+        return f'<img src="{src}" alt="{alt}">'
     content = re.sub(r'<img([^>]*)/?>', img_sub, content)
     # paragraph that only holds an image -> figure
     content = re.sub(r'<p>\s*(<img [^>]+>)\s*</p>', r'<figure>\1</figure>', content)
