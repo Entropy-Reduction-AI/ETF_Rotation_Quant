@@ -1213,12 +1213,77 @@ def generic_hero(soup, sec, cards):
     sec.select_one('.cards.status').replace_with(BeautifulSoup(html, 'html.parser'))
 
 
+
+def sensitivity_cards(soup):
+    """Cards that each report a variant's result as 'X%' plus '少/多 N 个点' or '都差 N 个点以内':
+    infer the base from X + delta, draw the variants on one axis around it, tone each card."""
+    for grp in soup.select('.cards'):
+        cards = grp.select('.card')
+        if len(cards) < 3 or grp.find_parent(class_='status') is not None:
+            continue
+        rows, bases = [], []
+        for c in cards:
+            cv, p = c.select_one('.cv'), c.find('p')
+            if cv is None or p is None:
+                break
+            vals = [float(x) for x in re.findall(r'(\d+(?:\.\d+)?)(?=%|\s*[–-]\s*\d+(?:\.\d+)?%)', cv.get_text())]
+            t = p.get_text('', strip=True)
+            m = re.match(r'^(少|多)\s*(\d+(?:\.\d+)?)(?:[–-](\d+(?:\.\d+)?))?\s*个点', t)
+            m2 = re.search(r'都差\s*(\d+(?:\.\d+)?)\s*个点以内', t)
+            if not vals or not (m or m2):
+                break
+            if m and len(vals) == 1 and not m.group(3):
+                d = float(m.group(2)) * (1 if m.group(1) == '多' else -1)
+                bases.append((len(m.group(2)), round(vals[0] - d, 1)))
+            kind = 'warn' if m and m.group(1) == '多' else ('bad' if m else 'good')
+            if kind == 'warn':
+                lab = f'多 {m.group(2)} 个点 · 要警惕'
+            elif kind == 'bad':
+                lab = f'少 {m.group(2)}' + (f'–{m.group(3)}' if m.group(3) else '') + ' 个点 · 敏感'
+            else:
+                lab = f'±{m2.group(1)} 个点内 · 稳'
+            rows.append((c, vals, kind, lab))
+        else:
+            if not bases or max(b for _, b in bases) - min(b for _, b in bases) > 0.6:
+                continue
+            base = max(bases)[1]  # the most precisely stated delta wins
+            allv = [v for _, vals, _, _ in rows for v in vals] + [base]
+            lo, hi = min(allv) - 2, max(allv) + 2
+            pos = lambda v: (v - lo) / (hi - lo) * 100
+            marks, placed = [], []
+            for c, vals, kind, lab in rows:
+                name = c.select_one('.ct').get_text(strip=True)
+                add_class(c, 'sens', f'sk-{kind}')
+                c['class'] = [x for x in c['class'] if not x.startswith('tone-')]
+                c.select_one('.ct').insert_after(BeautifulSoup(f'<div class="sens-tag">{lab}</div>', 'html.parser'))
+                if len(vals) == 2 and '–' in c.select_one('.cv').get_text():
+                    marks.append(f'<div class="sm r sk-{kind}" style="left:{pos(vals[0]):.1f}%;width:{pos(vals[1]) - pos(vals[0]):.1f}%" title="{name}"></div>')
+                for v in (vals if not (len(vals) == 2 and '–' in c.select_one('.cv').get_text()) else []):
+                    marks.append(f'<div class="sm d sk-{kind}" style="left:{pos(v):.1f}%" title="{name} {v}%"></div>')
+                lx = pos(sum(vals) / len(vals))
+                row = 0
+                while any(abs(lx - x) < 16 and r == row for x, r in placed):
+                    row += 1
+                placed.append((lx, row))
+                marks.append(f'<div class="sl-lab sk-{kind}" style="left:{lx:.1f}%;top:{34 + row * 17}px">{name}</div>')
+            ticks = ''.join(f'<span class="st" style="left:{pos(v):.1f}%">{v:g}%</span>' for v in range(int(lo // 5 * 5 + 5), int(hi) + 1, 5))
+            # zone within ±2 of base
+            z0, z1 = pos(base - 2), pos(base + 2)
+            strip = (f'<div class="sens-axis"><div class="sa-cap">每项只改一处，年化落在哪：灰带 = 原规则 ±2 个点</div>'
+                     f'<div class="sa-track"><div class="sa-zone" style="left:{z0:.1f}%;width:{z1 - z0:.1f}%"></div>'
+                     f'<div class="sa-base" style="left:{pos(base):.1f}%"><span>原规则 {base:g}%</span></div>{"".join(marks)}</div>'
+                     f'<div class="sa-ticks">{ticks}</div></div>')
+            grp.insert_before(BeautifulSoup(strip, 'html.parser'))
+            add_class(grp, 'sens-cards')
+
+
 def ux_pass(html):
     soup = BeautifulSoup(html, 'html.parser')
     status_hero(soup)
     inline_bullets(soup)
     case_cards(soup)
     card_ux(soup)
+    sensitivity_cards(soup)
     flow_steps(soup)
     kv_paragraphs(soup)
     focus_pass(soup)
@@ -1547,4 +1612,31 @@ table.split thead th.gh { text-align: center; }
 p.exp-key { font-size: 12.5px; color: var(--muted); margin: 6px 0 4px; display: flex; gap: 8px; align-items: center; }
 .ek { font-family: var(--font-mono); font-weight: 700; border-radius: 4px; padding: 0 6px; }
 .ek.ok { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); } .ek.no { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+"""
+
+CSS += r"""
+.sens-axis { margin: 10px 0 16px; padding: 14px 16px 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.sa-cap { font-size: 13px; color: var(--muted); margin-bottom: 34px; }
+.sa-track { position: relative; height: 44px; border-bottom: 1px solid var(--line); }
+.sa-zone { position: absolute; top: 0; bottom: 0; background: color-mix(in srgb, var(--muted) 12%, transparent); border-radius: 4px; }
+.sa-base { position: absolute; top: -26px; bottom: 0; border-left: 2px dashed var(--ink); }
+.sa-base span { position: absolute; top: -4px; left: 6px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.sm { position: absolute; top: 18px; height: 12px; }
+.sm.d { width: 14px; height: 14px; margin-left: -7px; top: 17px; border-radius: 50%; }
+.sm.r { border-radius: 6px; }
+.sm.sk-good { background: var(--good); } .sm.sk-bad { background: var(--bad); } .sm.sk-warn { background: #fff; border: 3px solid #a16207; box-sizing: border-box; }
+.sl-lab { position: absolute; top: 34px; transform: translateX(-50%); font-size: 11.5px; font-weight: 600; white-space: nowrap; padding-top: 12px; }
+.sl-lab.sk-good { color: var(--good); } .sl-lab.sk-bad { color: var(--bad); } .sl-lab.sk-warn { color: #a16207; }
+.sa-ticks { position: relative; height: 58px; margin-top: 0; }
+.sa-ticks .st { top: 44px !important; }
+.sa-ticks .st { position: absolute; top: 26px; transform: translateX(-50%); font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
+.cards .card.sens { border-top: 4px solid var(--line); }
+.cards .card.sk-good { border-top-color: var(--good); } .cards .card.sk-bad { border-top-color: var(--bad); } .cards .card.sk-warn { border-top: 4px dashed #a16207; background: color-mix(in srgb, #a16207 5%, var(--surface)); }
+.card.sk-good .cv { color: var(--good); } .card.sk-bad .cv { color: var(--bad); } .card.sk-warn .cv { color: #a16207; }
+.sens-tag { display: inline-block; font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 1px 7px; margin: 4px 0 2px; }
+.sk-good .sens-tag { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.sk-bad .sens-tag { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.sk-warn .sens-tag { color: #a16207; background: color-mix(in srgb, #a16207 12%, transparent); }
+.sens-tag { align-self: flex-start; width: fit-content; }
+.cards.sens-cards { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
 """
