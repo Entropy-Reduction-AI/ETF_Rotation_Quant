@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第二阶段复盘</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  /* 布局：左侧固定目录 + 宽主栏（约 960px），图表按主栏全宽显示；表格自带横向滚动 */
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --ink: #1b2330;
+  --muted: #5b6676;
+  --line: #e1e5eb;
+  --accent: #1f5fd1;
+  --accent-soft: #e8f0fd;
+  --good: #1d7a46;
+  --good-soft: #e5f4ea;
+  --bad: #c2410c;
+  --bad-soft: #fdf0e6;
+  --warn: #8a5a00;
+  --warn-soft: #fbf1dc;
+  --font-body: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1a2029; --ink: #e6eaf0; --muted: #9aa5b4; --line: #2c3440;
+    --accent: #7aa7ff; --accent-soft: #1c2a44;
+    --good: #6fcf97; --good-soft: #17301f; --bad: #fb923c; --bad-soft: #3a2414; --warn: #f2c063; --warn-soft: #3a2e14;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12161d; --surface: #1a2029; --ink: #e6eaf0; --muted: #9aa5b4; --line: #2c3440;
+  --accent: #7aa7ff; --accent-soft: #1c2a44;
+  --good: #6fcf97; --good-soft: #17301f; --bad: #fb923c; --bad-soft: #3a2414; --warn: #f2c063; --warn-soft: #3a2e14;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+strong { font-weight: 700; }
+code { font-family: var(--font-mono); font-size: .88em; background: var(--line); padding: .1em .35em; border-radius: 4px; }
+
+.shell { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 56px; max-width: 1240px; margin: 0 auto; padding: 40px 32px 96px; }
+nav.toc { position: sticky; top: 24px; align-self: start; font-size: 14px; line-height: 1.6; }
+nav.toc .toc-title { font-size: 12px; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+nav.toc a { display: block; color: var(--muted); padding: 4px 10px; border-left: 2px solid var(--line); }
+nav.toc a:hover { color: var(--ink); border-left-color: var(--accent); text-decoration: none; }
+nav.toc ol ol { padding-left: 12px; font-size: 13px; }
+nav.toc a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 500; }
+
+main { min-width: 0; }
+header.top { display: grid; gap: 8px; margin-bottom: 28px; }
+.kicker { font-size: 13px; color: var(--muted); font-family: var(--font-mono); }
+h1 { font-size: 34px; line-height: 1.3; margin: 0; font-weight: 700; text-wrap: balance; }
+.vision { color: var(--muted); margin: 4px 0 0; }
+.vision b { color: var(--ink); font-weight: 500; }
+
+.summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 8px 0 48px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; display: grid; gap: 8px; align-content: start; }
+.card h3 { margin: 0; font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: .04em; }
+.card p { margin: 0; font-size: 15px; line-height: 1.7; }
+.asks { margin: 0; padding-left: 1.3em; font-size: 15px; line-height: 1.7; }
+.asks li { margin: 2px 0; }
+.card.verdict { border-top: 3px solid var(--bad); }
+.card.ask { border-top: 3px solid var(--accent); }
+.card.eng { border-top: 3px solid var(--good); }
+.big { font-family: var(--font-mono); font-size: 28px; font-weight: 500; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.big .vs { font-size: 15px; color: var(--muted); font-family: var(--font-body); }
+
+section { margin: 0 0 64px; scroll-margin-top: 24px; }
+h2 { font-size: 24px; line-height: 1.4; margin: 0 0 14px; font-weight: 700; text-wrap: balance; display: flex; gap: 12px; align-items: baseline; }
+h2 .num { font-family: var(--font-mono); font-size: 15px; color: var(--accent); font-weight: 500; }
+h3 { font-size: 19px; margin: 36px 0 10px; line-height: 1.45; text-wrap: balance; scroll-margin-top: 24px; }
+h4 { font-size: 16px; margin: 24px 0 8px; }
+p { margin: 0 0 12px; }
+ul, ol.steps { margin: 0 0 14px; padding-left: 1.3em; }
+li { margin: 4px 0; }
+
+.lede { font-size: 17px; font-weight: 500; border-left: 3px solid var(--accent); background: var(--surface); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 0 0 20px; max-width: none; }
+
+figure { margin: 14px 0 22px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+figure img { display: block; width: 100%; height: auto; }
+figcaption { font-size: 13px; color: #5b6676; margin-top: 8px; }
+
+.table-wrap { overflow-x: auto; margin: 14px 0 22px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; line-height: 1.65; }
+th, td { text-align: left; vertical-align: top; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+th { font-weight: 500; color: var(--muted); font-size: 13px; background: var(--bg); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; font-family: var(--font-mono); font-size: 14px; }
+td.name { font-weight: 700; white-space: nowrap; }
+.cols-3 td { width: 33.3%; }
+
+.pill { display: inline-block; font-size: 12.5px; font-weight: 500; padding: 1px 9px; border-radius: 999px; white-space: nowrap; margin-right: 4px; }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.good { background: var(--good-soft); color: var(--good); }
+.pill.info { background: var(--accent-soft); color: var(--accent); }
+.pill.warn { background: var(--warn-soft); color: var(--warn); }
+.pill.mute { background: var(--line); color: var(--muted); }
+
+.note { font-size: 14px; color: var(--muted); }
+.claim { font-weight: 700; font-size: 16.5px; margin: 0 0 4px; }
+.aside { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; margin: 14px 0 22px; }
+.aside h4 { margin: 0 0 6px; font-size: 15px; }
+.aside p:last-child, .aside ul:last-child { margin-bottom: 0; }
+
+.archive { margin-top: 40px; border-top: 2px dashed var(--line); padding-top: 4px; }
+.archive-band { font-family: var(--font-mono); font-size: 12px; color: var(--muted); letter-spacing: .06em; margin: 10px 0 0; }
+.archive-head { display: flex; gap: 10px; align-items: baseline; margin-top: 32px; }
+.archive-head .tag { font-family: var(--font-mono); font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; }
+
+.mini { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 14px 0 22px; }
+.mini .card p { font-size: 14.5px; }
+
+ol.next { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; max-width: none; }
+ol.next { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; gap: 0; }
+ol.next li { padding: 14px 18px; display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; margin: 0; border-bottom: 1px solid var(--line); }
+ol.next li:last-child { border-bottom: 0; }
+ol.next .who .pill { margin-top: 4px; font-weight: 500; }
+ol.next .who { font-weight: 700; }
+
+.log { display: grid; gap: 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.log div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 14.5px; line-height: 1.7; }
+.log div:last-child { border-bottom: 0; }
+.log .d { font-family: var(--font-mono); font-size: 13.5px; color: var(--muted); padding-top: 1px; }
+details.older { margin-top: 16px; }
+details.older summary { cursor: pointer; color: var(--accent); font-size: 15px; margin-bottom: 10px; }
+
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+
+@media (max-width: 1000px) {
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 24px 16px 64px; }
+  nav.toc { display: none; }
+  .summary, .mini { grid-template-columns: minmax(0, 1fr); }
+  h1 { font-size: 27px; }
+  ol.next li, .log div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+html { scroll-behavior: smooth; }
+
+/* page-type additions */
+nav.toc li.l3 a { padding-left: 22px; font-size: 13px; }
+nav.toc { max-height: calc(100vh - 48px); overflow-y: auto; }
+.back { font-size: 13px; color: var(--muted); }
+.headline { font-size: 19px; line-height: 1.6; font-weight: 500; margin: 6px 0 0; color: var(--ink); text-wrap: balance; }
+section.intro > p:first-child { margin-top: 0; }
+section.intro { margin-bottom: 40px; }
+.lede p, .claim-box p { margin: 0; }
+.claim-box { font-weight: 700; font-size: 16.5px; margin: 0 0 10px; }
+.aside > p:last-child, .aside > ul:last-child, .aside > ol:last-child { margin-bottom: 0; }
+h4.toggle { font-size: 15.5px; color: var(--ink); margin: 26px 0 8px; padding-left: 10px; border-left: 3px solid var(--line); }
+details.fold { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 18px; margin: 16px 0 22px; }
+details.fold > summary { cursor: pointer; padding: 12px 0; font-weight: 500; color: var(--accent); list-style: none; }
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::before { content: '▸'; display: inline-block; width: 1.1em; transition: transform .15s; }
+details.fold[open] > summary::before { transform: rotate(90deg); }
+details.fold[open] { padding-bottom: 8px; }
+details.fold figure { padding: 10px; }
+pre { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font-size: 13px; }
+pre code { background: none; padding: 0; }
+td del, td s { color: var(--muted); }
+td.k { white-space: nowrap; font-weight: 500; }
+/* table polish */
+.table-wrap { box-shadow: 0 1px 0 var(--line); }
+th { background: var(--bg); color: var(--muted); font-weight: 500; font-size: 12.5px; border-bottom: 2px solid var(--line); vertical-align: bottom; }
+tbody tr:hover td { background: var(--accent-soft); }
+tbody td:first-child { font-weight: 500; color: var(--ink); }
+tr.group td { background: var(--bg); color: var(--muted); font-size: 12.5px; font-weight: 500; letter-spacing: .02em; padding-top: 8px; padding-bottom: 8px; }
+tr.ref td { background: color-mix(in srgb, var(--line) 35%, transparent); color: var(--muted); }
+tr.ref td:first-child { font-style: normal; }
+span.pos { color: var(--good); font-weight: 500; }
+span.neg { color: var(--bad); font-weight: 500; }
+td .pill { margin-right: 6px; vertical-align: 1px; }
+td.good span.pos, td.bad span.neg { color: inherit; }
+td.good { background: var(--good-soft); }
+td.bad, tr.hl td { background: var(--warn-soft); }
+td.boxed { outline: 2px solid var(--accent); outline-offset: -4px; }
+.log div.hl { background: var(--warn-soft); }
+.log div.hl span { color: var(--warn); font-weight: 500; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin: 14px 0 22px; }
+.cards .card .ct { font-size: 14px; color: var(--ink); font-weight: 700; }
+.cards .card .cv { font-family: var(--font-mono); font-size: 20px; font-weight: 500; line-height: 1.3; color: var(--accent); font-variant-numeric: tabular-nums; }
+.cards .card p { font-size: 14.5px; line-height: 1.7; margin: 0; }
+.cards .card p + p { color: var(--muted); font-size: 13.5px; }
+th { white-space: normal; min-width: 4.5em; }
+th.n { white-space: normal; }
+h2 .num { min-width: 1.6em; }
+
+/* ===== storytelling layer ===== */
+/* status cards that open a page */
+.cards.from-table { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.cards.from-table .card { border-top: 3px solid var(--line); }
+.cards.from-table .ct { font-size: 12.5px; font-weight: 500; color: var(--muted); letter-spacing: .04em; }
+.cards.from-table .cb { font-size: 14.5px; line-height: 1.75; }
+.cards.status .tone-0 { border-top-color: var(--muted); }
+.cards.status .tone-1 { border-top-color: var(--accent); }
+.cards.status .tone-2 { border-top-color: var(--warn); }
+.cards.status .tone-2 .ct { color: var(--warn); }
+.cards.status .tone-1 .cb { font-size: 15px; }
+.cards.plain .card { border-top-color: var(--accent); }
+
+/* options with a recommendation */
+.options { display: grid; gap: 10px; margin: 12px 0 18px; }
+.option { display: grid; grid-template-columns: minmax(150px, 220px) minmax(0, 1fr); gap: 16px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+.option .on { font-weight: 700; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.option .od { color: var(--muted); font-size: 14.5px; }
+.option.rec { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.option.rec .od { color: var(--ink); }
+.option .badge { font-size: 12px; font-weight: 500; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 0 8px; }
+
+/* definitions */
+table.deflist thead { display: none; }
+table.deflist td:first-child { width: 9.5em; color: var(--accent); font-weight: 700; border-right: 2px solid var(--accent-soft); }
+table.deflist tr.was td { color: var(--muted); }
+table.deflist tr.was td:last-child { text-decoration: line-through; text-decoration-color: var(--bad); }
+table.deflist tr.now td { background: var(--good-soft); }
+table.deflist tr.now td:first-child { color: var(--good); border-right-color: var(--good); }
+
+/* grouped headers */
+thead tr.grp th.gh { text-align: center; color: var(--ink); font-weight: 700; border-bottom: 1px solid var(--line); background: var(--bg); }
+thead tr.sub th { font-size: 12px; }
+
+/* column roles */
+th.h-subj, td.c-subj { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+th.h-subj { color: var(--accent); font-weight: 700; }
+td.c-take { font-weight: 500; color: var(--ink); border-left: 1px solid var(--line); }
+th.h-take { border-left: 1px solid var(--line); color: var(--ink); }
+td.c-note { color: var(--muted); font-size: 13.5px; }
+tr.row-subj td { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+tr.row-subj td:first-child { box-shadow: inset 3px 0 0 var(--accent); color: var(--accent); }
+
+/* numeric columns */
+td.numcol, th.numcol { text-align: right; }
+td.numcol { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 14px; white-space: nowrap; }
+thead tr.sub th.numcol, thead tr.grp th.numcol { text-align: right; }
+/* heat cells for differences */
+td.heat { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 500; text-align: right; white-space: nowrap; }
+td.heat-pos { color: var(--good); background: color-mix(in srgb, var(--good) var(--h, 8%), transparent); }
+td.heat-neg { color: var(--bad); background: color-mix(in srgb, var(--bad) var(--h, 8%), transparent); }
+td.heat-zero { color: var(--muted); }
+td.key { color: var(--accent); font-weight: 700; }
+td.key strong { font-weight: 700; }
+
+/* verdict rows */
+tr.row-bad td { background: color-mix(in srgb, var(--bad) 5%, transparent); }
+tr.row-bad td:first-child { box-shadow: inset 3px 0 0 var(--bad); }
+tr.row-good td:first-child { box-shadow: inset 3px 0 0 var(--good); }
+tr.row-warn td:first-child { box-shadow: inset 3px 0 0 var(--warn); }
+tr.row-bad td.heat, tr.row-subj td.heat { background: color-mix(in srgb, var(--bad) var(--h, 8%), transparent); }
+tr.row-bad td.heat-pos, tr.row-subj td.heat-pos { background: color-mix(in srgb, var(--good) var(--h, 8%), transparent); }
+.tvc .tv { font-family: var(--font-mono); margin-right: 8px; }
+.who { font-size: 12.5px; color: var(--muted); margin-right: 6px; }
+.pill-note { display: block; font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+td .pill { font-size: 12.5px; }
+
+/* scorecard above verdict tables */
+.score { display: flex; align-items: center; gap: 14px; margin: 14px 0 -6px; }
+.score .seg { display: flex; gap: 3px; width: 200px; height: 8px; }
+.score .seg span { border-radius: 2px; }
+.score .s-good { background: var(--good); }
+.score .s-warn { background: var(--warn); }
+.score .s-bad { background: var(--bad); }
+.score .sl { font-size: 13.5px; color: var(--muted); }
+.score .sl b { font-family: var(--font-mono); font-size: 15px; }
+.score .t-good { color: var(--good); } .score .t-bad { color: var(--bad); } .score .t-warn { color: var(--warn); }
+.score .of { color: var(--muted); }
+
+/* notes under tables read as captions */
+p.table-note { font-size: 13px; color: var(--muted); margin-top: -12px; }
+
+/* key-point lists */
+ul.points { list-style: none; padding-left: 0; display: grid; gap: 8px; }
+ul.points > li { padding: 2px 0 2px 14px; border-left: 3px solid var(--accent-soft); margin: 0; }
+ul.points > li > strong:first-child { color: var(--ink); }
+ol.steps-n { list-style: none; padding-left: 0; counter-reset: st; display: grid; gap: 6px; }
+ol.steps-n > li { counter-increment: st; position: relative; padding-left: 34px; margin: 0; }
+ol.steps-n > li::before { content: counter(st); position: absolute; left: 0; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; display: grid; place-items: center; }
+
+/* enrichment */
+td.mgc { white-space: nowrap; min-width: 128px; }
+.mg { display: inline-flex; align-items: center; gap: 8px; }
+.mg-t { position: relative; display: inline-block; width: 64px; height: 8px; background: var(--line); border-radius: 4px; }
+.mg-b { position: absolute; left: 0; top: 0; height: 8px; border-radius: 4px; }
+.mg-b.a { background: var(--accent); } .mg-b.m { background: color-mix(in srgb, var(--muted) 55%, transparent); } .mg-b.o { background: color-mix(in srgb, var(--bad) 70%, transparent); }
+.mk { position: absolute; top: -3px; width: 2px; height: 14px; background: var(--ink); margin-left: -1px; }
+.mg-v { font-family: var(--font-mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.mg-v.strong { font-weight: 700; color: var(--accent); }
+.mg-s { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; padding-left: 72px; }
+td.detail { color: var(--muted); font-size: 13.5px; line-height: 1.65; max-width: 30em; }
+tbody tr:nth-child(even):not(.grp):not(.row-bad):not(.row-subj) td { background: color-mix(in srgb, var(--bg) 60%, transparent); }
+tbody td:first-child strong { font-weight: 700; }
+td.c-take .pill { font-size: 13px; padding: 2px 10px; }
+
+
+/* ===== spec layer: docs/reference/owner-facing-uiux-principles.md §13 ===== */
+:root { --fg: var(--ink); --mono: var(--font-mono); --body: var(--font-body); --rule: var(--line); --ok: var(--good); --ok-soft: var(--good-soft); }
+p.memo { font-size: 17px; font-weight: 700; line-height: 1.65; border-left: 4px solid var(--accent); background: var(--surface); padding: 12px 16px; border-radius: 0 10px 10px 0; margin: 0 0 18px; }
+p.memo strong { color: var(--accent); }
+.fold { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin: 14px 0 20px; }
+.fold-h { all: unset; box-sizing: border-box; display: flex; gap: 8px; align-items: center; width: 100%; padding: 11px 16px; cursor: pointer; color: var(--accent); font-weight: 500; font-size: 15px; border-radius: 10px; }
+.fold-h:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.fold-h .chev { display: inline-block; transition: transform .15s; }
+.fold-h[aria-expanded="true"] .chev { transform: rotate(90deg); }
+.fold-b { padding: 0 16px 12px; }
+.fold-b > .table-wrap:first-child, .fold-b > .score:first-child { margin-top: 4px; }
+td.ibc { min-width: 150px; }
+td.tg { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+section.appendix h3 { font-size: 20px; margin-top: 0; }
+ol.next-steps, ul.next-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; counter-reset: none; }
+ol.next-steps > li, ul.next-steps > li { padding: 12px 16px 12px 18px; border-bottom: 1px solid var(--line); margin: 0; }
+ol.next-steps > li::before { display: none; }
+ol.next-steps > li:last-child, ul.next-steps > li:last-child { border-bottom: 0; }
+ol.next-steps > li > b:first-child, ol.next-steps > li > strong:first-child { display: inline-block; min-width: 7em; color: var(--accent); }
+.pill.tagline { white-space: normal; font-weight: 500; }
+
+.stk-wrap { margin: 8px 0 16px; }
+.stk span { color: #fff; }
+.stk-l span { display: inline-flex; align-items: center; }
+.stk-l b { color: var(--ink); margin-left: 3px; font-family: var(--font-mono); font-weight: 500; }
+
+/* UX pass */
+span.num, strong.num, b.num { font-family: var(--font-mono); font-size: .93em; font-weight: 500; color: var(--ink); background: color-mix(in srgb, var(--accent) 9%, transparent); border-radius: 4px; padding: 0 4px; white-space: nowrap; }
+p.memo span.num { background: none; color: var(--accent); padding: 0; }
+span.arr { color: var(--accent); font-weight: 700; padding: 0 2px; }
+.cards .card { position: relative; border-top: 3px solid var(--accent); transition: transform .12s, box-shadow .12s; }
+.cards .card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(20, 30, 50, .08); }
+.cards .card.tone-good { border-top-color: var(--good); } .cards .card.tone-bad { border-top-color: var(--bad); }
+.cards .card .ct { font-size: 13px; letter-spacing: .02em; }
+.cards .card.tone-good .ct { color: var(--good); } .cards .card.tone-bad .ct { color: var(--bad); } .cards .card.tone-info .ct { color: var(--accent); }
+.cards .card .cv { font-size: 24px; line-height: 1.2; margin: 2px 0 4px; color: var(--ink); }
+.cards .card .cv.delta .from { color: var(--muted); font-size: 18px; }
+.cards .card .cv.delta .to { font-weight: 700; }
+.cards .card.tone-good .cv .to { color: var(--good); } .cards .card.tone-bad .cv .to { color: var(--bad); }
+.cards .card .cv.echo { color: var(--accent); }
+.cards .card p { font-size: 14.5px; }
+ol.flow { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 22px; margin: 14px 0 22px; counter-reset: none; }
+ol.flow > li { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 14px 12px; margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); }
+ol.flow > li { counter-increment: fl; }
+ol.flow > li::before { content: counter(fl); display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 12.5px; margin-bottom: 6px; position: static; }
+ol.flow > li:not(:last-child)::after { content: '→'; position: absolute; right: -18px; top: 50%; transform: translateY(-50%); color: var(--accent); font-weight: 700; }
+ol.flow .fl-n { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 12.5px; margin-bottom: 6px; }
+ol.flow .fl-t { display: block; font-weight: 700; color: var(--ink); font-size: 15px; margin-bottom: 4px; }
+p.kv { display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); margin: 0; }
+p.kv + :not(p.kv) { margin-top: 14px; }
+p.kv .kv-k { font-weight: 700; color: var(--ink); }
+p.kv .kv-k::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: 2px; }
+@media (max-width: 1000px) { p.kv { grid-template-columns: minmax(0, 1fr); gap: 2px; } ol.flow > li::after { display: none; } }
+
+.readnote { margin: -6px 0 22px; padding: 10px 14px; border-radius: 10px; background: var(--bg); border: 1px dashed var(--line); display: grid; gap: 4px; }
+.readnote .rn-h { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .06em; margin-bottom: 2px; }
+.readnote .rn-i { font-size: 13.5px; color: var(--muted); line-height: 1.6; padding-left: 14px; position: relative; }
+.readnote .rn-i::before { content: ''; position: absolute; left: 2px; top: .65em; width: 5px; height: 5px; border-radius: 50%; background: var(--line); }
+.readnote .rn-i:first-of-type { color: var(--ink); font-weight: 500; }
+.readnote span.num { background: none; padding: 0; color: var(--ink); }
+
+/* focus pass */
+.claim-box { font-weight: 700; font-size: 16px; border-left: 4px solid var(--accent); background: var(--surface); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 0 0 14px; }
+.fold-b .claim-box { background: var(--accent-soft); }
+.callout { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--warn); border-radius: 0 10px 10px 0; padding: 12px 16px; margin: 14px 0 20px; }
+.callout .co-h { font-weight: 700; color: var(--warn); font-size: 14.5px; margin-bottom: 6px; }
+.callout > p:last-child, .callout > ul:last-child { margin-bottom: 0; }
+p.oneline { background: var(--accent-soft); border-radius: 10px; padding: 12px 16px; font-size: 15.5px; }
+p.oneline > b:first-child, p.oneline > strong:first-child { display: inline-block; background: var(--accent); color: #fff; border-radius: 4px; padding: 0 8px; margin-right: 8px; font-size: 13px; }
+.overview { margin: 8px 0 26px; padding: 14px; background: var(--bg); border-radius: 12px; border: 1px solid var(--line); }
+.overview .ov-h { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+.overview .ov-h span { font-weight: 400; color: var(--muted); }
+.ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; counter-reset: ov; }
+.ov-card { position: relative; display: flex; flex-direction: column; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 10px; padding: 10px 12px 28px; color: var(--ink); text-decoration: none; transition: transform .12s, box-shadow .12s; }
+.ov-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(20, 30, 50, .08); text-decoration: none; }
+.ov-card.t-bad { border-top-color: var(--bad); } .ov-card.t-good { border-top-color: var(--good); } .ov-card.t-mixed { border-top-color: #b45309; } .ov-card.t-info { border-top-color: var(--muted); }
+.ov-top { display: flex; align-items: center; gap: 8px; }
+.ov-card .ov-n { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 5px; padding: 0 6px; }
+.ov-tag { font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 0 6px; color: var(--muted); background: var(--bg); }
+.t-bad .ov-tag { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.t-good .ov-tag { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.t-mixed .ov-tag { color: #b45309; background: color-mix(in srgb, #b45309 10%, transparent); }
+.ov-m { font-family: var(--font-mono); font-size: 21px; font-weight: 700; line-height: 1.25; margin-top: 4px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ov-m i { font-style: normal; font-size: 14px; color: var(--muted); margin: 0 6px; font-family: var(--font-sans, inherit); }
+.t-bad .ov-m { color: var(--bad); } .t-good .ov-m { color: var(--good); } .t-mixed .ov-m { color: #b45309; }
+.ov-card .ov-t { font-weight: 700; font-size: 15px; line-height: 1.4; }
+.ov-card .ov-c { font-size: 13.5px; line-height: 1.6; color: var(--muted); }
+.ov-card .ov-c .num { color: var(--ink); }
+.ov-q { color: var(--ink); font-weight: 600; }
+.ov-card.bare { border-top-style: dashed; background: transparent; }
+.ov-card.bare .ov-tag { display: none; }
+.ov-go { position: absolute; left: 12px; bottom: 8px; font-size: 12px; color: var(--accent); opacity: 0; transition: opacity .12s; }
+.ov-card:hover .ov-go { opacity: 1; }
+.ov-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.ov-chip { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px 4px 4px; color: var(--ink); font-size: 14px; font-weight: 600; text-decoration: none; }
+.ov-chip:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.ov-k { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 12px; }
+
+.actboard { display: grid; gap: 14px; }
+.ab-strip { display: flex; flex-wrap: wrap; gap: 8px; }
+.ab-s { display: inline-flex; align-items: baseline; gap: 6px; font-size: 13px; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; }
+.ab-s b { font-family: var(--font-mono); font-size: 16px; color: var(--ink); }
+.ab-s.s-me { background: var(--accent); border-color: var(--accent); color: #fff; } .ab-s.s-me b { color: #fff; }
+.ab-s.s-wait b { color: #b45309; } .ab-s.s-done b { color: var(--good); }
+.ab-mine { border: 1.5px solid var(--accent); border-radius: 12px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--surface)), var(--surface)); padding: 14px 16px 16px; }
+.ab-mh { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.ab-mh b { font-size: 16px; color: var(--accent); }
+.ab-mhint { font-size: 13px; color: var(--muted); }
+.ab-decs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.ab-dec { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px 14px 52px; min-height: 52px; }
+.ab-dn { position: absolute; left: 14px; top: 14px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; border: 2px solid var(--accent); color: var(--accent); font-family: var(--font-mono); font-weight: 700; font-size: 13px; }
+.ab-verb { font-size: 22px; font-weight: 800; color: var(--accent); line-height: 1.15; letter-spacing: .04em; }
+.ab-obj { font-size: 14.5px; line-height: 1.6; color: var(--ink); margin-top: 4px; }
+.ab-opts { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ab-opt { font-size: 13.5px; font-weight: 600; border: 1.5px dashed var(--accent); color: var(--accent); border-radius: 8px; padding: 3px 10px; background: var(--accent-soft); }
+.ab-or { font-size: 12px; color: var(--muted); font-weight: 700; }
+.ab-q { font-weight: 700; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+.ab-q.bad { color: var(--bad); border-color: transparent; background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.ab-id { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); background: var(--accent-soft); border-radius: 4px; padding: 0 5px; white-space: nowrap; }
+.ab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.ab-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.ab-who { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+.ab-who b { font-size: 15px; }
+.ab-n { margin-left: auto; font-family: var(--font-mono); font-size: 12px; color: var(--muted); background: var(--bg); border-radius: 999px; padding: 0 8px; }
+.ab-av { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--line); color: var(--ink); font-weight: 700; font-size: 13px; }
+.ab-mh .ab-av { background: var(--accent); color: #fff; }
+.ab-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.ab-items li { margin: 0; padding: 0; display: grid; gap: 3px; font-size: 14px; line-height: 1.6; }
+.ab-items li::before { display: none; }
+.ab-st { justify-self: start; font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 0 7px; color: var(--muted); background: var(--bg); border: 1px solid var(--line); }
+.st-done .ab-st { color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, transparent); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.st-done .ab-st::before { content: '✓ '; }
+.st-done .ab-tx { color: var(--muted); }
+.st-wait .ab-st { color: #b45309; border-color: color-mix(in srgb, #b45309 40%, transparent); background: color-mix(in srgb, #b45309 10%, transparent); }
+.st-wait .ab-st::before { content: '⏳ '; }
+.st-todo .ab-st { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: var(--accent-soft); }
+.st-todo .ab-st::before { content: '→ '; }
+.st-ongoing .ab-st::before { content: '↻ '; }
+.st-later .ab-tx { color: var(--muted); }
+@media (max-width: 1000px) { .ab-decs, .ab-grid { grid-template-columns: minmax(0, 1fr); } }
+
+table.risk tr.risk-hit td { background: color-mix(in srgb, var(--bad) 6%, transparent); }
+table.risk tr.risk-hit td:first-child { box-shadow: inset 4px 0 0 var(--bad); }
+table.risk tr.risk-hit td:first-child .pill { display: table; margin: 6px 0 0; }
+table.risk tr.risk-hit td:nth-child(2) strong.c-bad, table.risk tr.risk-hit td:nth-child(2) strong { color: var(--bad); font-size: 15px; }
+table.risk tr.risk-watch td { color: var(--muted); }
+table.risk tr.risk-watch td:first-child { color: var(--ink); box-shadow: inset 4px 0 0 var(--line); }
+table.risk td:nth-child(3) b { color: var(--ink); }
+.rk-i { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 700; margin-right: 6px; vertical-align: 1px; }
+.rk-i.done { background: var(--good-soft); color: var(--good); }
+
+.declog { position: relative; display: grid; gap: 12px; margin: 6px 0 14px; }
+.dl-track { display: flex; align-items: stretch; gap: 0; margin: 0 0 4px; padding-top: 8px; counter-reset: none; }
+.dl-tk { flex: 1; position: relative; display: grid; gap: 2px; padding: 10px 14px 10px 0; text-decoration: none; color: var(--muted); border-top: 3px solid color-mix(in srgb, var(--accent) 30%, var(--line)); }
+.dl-tk::before { content: ''; position: absolute; top: -8px; left: 0; width: 13px; height: 13px; border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); box-sizing: border-box; }
+.dl-tk:last-child { border-top-color: var(--accent); }
+.dl-tk:last-child::before { background: var(--accent); }
+.dl-tk-id { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); font-weight: 600; }
+.dl-tk-t { font-size: 13.5px; color: var(--ink); }
+.dl-tk:hover .dl-tk-t { color: var(--accent); text-decoration: underline; }
+.dl-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--muted); margin-bottom: 2px; }
+.dl-lg { display: inline-flex; align-items: center; gap: 5px; }
+.dl-row { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 20px; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: 10px; padding: 14px 18px; scroll-margin-top: 80px; transition: box-shadow .12s; }
+.dl-row:hover { box-shadow: 0 6px 18px rgba(20, 30, 50, .07); }
+.dl-row:target { box-shadow: 0 0 0 2px var(--accent); }
+.dl-row.latest { border-left-color: var(--accent); background: linear-gradient(90deg, var(--accent-soft), var(--surface) 40%); }
+.dl-row.latest .dl-side::after { content: '最新'; display: inline-block; margin-top: 6px; font-size: 11.5px; font-weight: 700; color: #fff; background: var(--accent); border-radius: 4px; padding: 1px 7px; }
+.dl-side { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; border-right: 1px dashed var(--line); padding-right: 14px; }
+.dl-id { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 2px 8px; white-space: nowrap; }
+.dl-t { font-weight: 700; font-size: 15.5px; color: var(--ink); line-height: 1.4; }
+.dl-cnt { font-size: 12.5px; color: var(--muted); }
+.dl-cnt b { font-family: var(--font-mono); color: var(--ink); }
+.dl-h { font-size: 19px; font-weight: 700; color: var(--accent); line-height: 1.45; padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+.dl-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 8px 22px; }
+.dl-c { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px; align-items: start; font-size: 14.5px; line-height: 1.6; color: var(--ink); }
+.dl-ic { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; font-size: 11px; font-weight: 700; margin-top: 3px; color: #fff; background: var(--accent); }
+.dl-ic::before { content: '✓'; }
+.k-guard .dl-ic { background: #7c3aed; } .k-guard .dl-ic::before { content: '!'; }
+.k-swap .dl-ic { background: var(--good); } .k-swap .dl-ic::before { content: '⇄'; }
+.k-change .dl-ic { background: var(--warn, #b45309); } .k-change .dl-ic::before { content: '↻'; }
+.k-outcome .dl-ic { background: var(--good); } .k-outcome .dl-ic::before { content: '★'; }
+.k-guard .dl-tx { color: #4c1d95; }
+.dl-not { color: var(--muted); }
+.dl-not del .num { background: none; color: inherit; padding: 0; }
+.dl-not del { color: var(--bad); text-decoration-color: var(--bad); text-decoration-thickness: 2px; }
+.dl-arrow { display: inline-block; margin: 0 4px; font-size: 12px; font-weight: 700; color: var(--warn, #b45309); background: color-mix(in srgb, #b45309 12%, transparent); border-radius: 4px; padding: 0 6px; }
+.dl-new { font-weight: 700; }
+.dl-win { font-weight: 700; color: var(--good); background: color-mix(in srgb, var(--good) 12%, transparent); border-radius: 4px; padding: 0 5px; }
+.dl-q { font-weight: 600; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+@media (max-width: 1000px) { .dl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; } .dl-side { border-right: 0; padding-right: 0; flex-direction: row; flex-wrap: wrap; align-items: center; } .dl-track { display: none; } }
+
+ol.flow { align-items: stretch; }
+ol.flow .fl-t { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 2px; }
+ol.flow .fl-d { display: block; }
+ol.flow .fl-k { display: block; font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1.35; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+ol.flow > li { color: var(--muted); }
+
+.hero { display: grid; gap: 14px; margin-bottom: 8px; }
+.hv { font-size: 15px; line-height: 1.8; color: var(--muted); padding: 2px 0; }
+.hv-k { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--accent); border: 1px solid var(--accent); border-radius: 4px; padding: 1px 7px; margin-right: 10px; }
+.hv-goal { color: var(--ink); font-weight: 600; border-bottom: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); }
+.hero-g { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); grid-template-areas: 'v a' 'e a'; gap: 14px; }
+.hz.ask { grid-area: a; } .hz.eng { grid-area: e; }
+.hz { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.hz-l { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--muted); }
+.hz.verdict { grid-area: v; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px 24px; border-top: 4px solid var(--bad); align-content: start; }
+.hz.verdict .hz-l, .hz.verdict .hz-v { grid-column: 1 / -1; }
+.hz-v { font-size: 34px; font-weight: 800; color: var(--bad); line-height: 1.1; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.hz-x { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--bad); color: #fff; font-size: 20px; align-self: center; }
+.hz-s { font-size: 16px; font-weight: 500; color: var(--muted); }
+.hz-cap { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.hz-cap b { color: var(--bad); font-weight: 700; margin: 0 2px; }
+.hb { display: grid; grid-template-columns: 6.5em minmax(0, 1fr) 4em; gap: 8px; align-items: center; margin: 6px 0; font-size: 13.5px; }
+.hb-k { color: var(--ink); font-weight: 600; }
+.hb-bar { height: 14px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.hb-bar b { display: block; height: 100%; background: color-mix(in srgb, var(--muted) 55%, transparent); border-radius: 4px; }
+.hb-bar b.bad { background: var(--bad); }
+.hb-v { font-family: var(--font-mono); font-weight: 700; font-size: 16px; text-align: right; }
+.hb-v.bad { color: var(--bad); }
+.hz-gap { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.hz-gap b { font-family: var(--font-mono); color: var(--bad); font-size: 15px; }
+.dots { display: grid; grid-template-columns: repeat(14, 12px); gap: 4px; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--bad); box-sizing: border-box; opacity: .75; }
+.dots i.w { background: var(--good); border-color: var(--good); }
+.hz.ask { border: 1.5px solid var(--accent); background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--surface)), var(--surface)); }
+.hz.ask .hz-l { color: var(--accent); }
+.hq-h { font-size: 22px; font-weight: 800; color: var(--accent); margin: 4px 0 10px; }
+.hq { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: none; }
+.hq li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 8px; margin: 0; padding: 0; font-size: 14.5px; line-height: 1.55; color: var(--ink); }
+.hq li::before { display: none; }
+.hq-n { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--accent); color: var(--accent); font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
+.hq-ref { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.hz.eng { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; padding: 12px 18px; }
+.hz.eng b { color: var(--ink); }
+.eng-ok { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--good); color: #fff; font-size: 12px; font-weight: 700; align-self: center; }
+.eng-d { font-size: 13.5px; color: var(--muted); }
+@media (max-width: 1000px) { .hero-g, .hz.verdict { grid-template-columns: minmax(0, 1fr); } .hero-g { grid-template-areas: 'v' 'a' 'e'; } }
+
+table td.vs-good { color: var(--good); font-weight: 600; background: color-mix(in srgb, var(--good) 8%, transparent); }
+table td.vs-bad { color: var(--bad); font-weight: 600; background: color-mix(in srgb, var(--bad) 7%, transparent); }
+table.vs-base th:last-child, table.vs-base td.numcol:last-child { }
+td.r-concl { font-weight: 600; color: var(--ink); box-shadow: inset 3px 0 0 color-mix(in srgb, var(--accent) 45%, transparent); }
+th.rh-concl { color: var(--accent); }
+td.r-cost { color: color-mix(in srgb, var(--bad) 80%, var(--ink)); font-size: 13.5px; }
+th.rh-cost { color: var(--bad); }
+th.rh-cost::before { content: '⚠ '; }
+td.r-why { color: var(--muted); font-size: 13.5px; }
+td.r-old { color: var(--muted); }
+td.r-new { font-weight: 600; color: var(--ink); background: color-mix(in srgb, var(--accent) 5%, transparent); }
+th.rh-new { color: var(--accent); }
+th.rh-new::before { content: '→ '; }
+.rid { display: inline-grid; place-items: center; min-width: 20px; height: 20px; border-radius: 5px; background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); font-size: 12px; font-weight: 700; margin-right: 8px; padding: 0 4px; }
+.cat { display: inline-block; font-size: 12.5px; font-weight: 600; border-radius: 999px; padding: 1px 10px; border: 1px solid var(--line); }
+.cat.c0 { color: var(--accent); background: var(--accent-soft); border-color: transparent; }
+.cat.c1 { color: #7c3aed; background: color-mix(in srgb, #7c3aed 10%, transparent); border-color: transparent; }
+.cat.c2 { color: #b45309; background: color-mix(in srgb, #b45309 10%, transparent); border-color: transparent; }
+.cat.c3 { color: var(--muted); background: var(--bg); }
+.pill.ditto { opacity: .7; }
+
+.cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 12px; margin: 14px 0 20px; }
+.case { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; padding: 12px 16px; }
+.case.t-bad { border-left-color: var(--bad); } .case.t-good { border-left-color: var(--good); }
+.case-h { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.case-who { font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 5px; padding: 1px 8px; }
+.case-c { font-size: 16.5px; font-weight: 700; color: var(--ink); }
+.case.t-bad .case-c { color: var(--bad); } .case.t-good .case-c { color: var(--good); }
+.case-b p { margin: 6px 0; font-size: 14.5px; }
+.case-b p.kv { display: block; border: 0; padding: 0; }
+.case-b p.kv .kv-k::before { display: none; }
+.subpts { margin: 6px 0 2px; display: grid; gap: 4px; }
+.subpts .sp { position: relative; padding-left: 14px; font-size: 14px; line-height: 1.6; color: var(--ink); }
+.subpts .sp::before { content: ''; position: absolute; left: 2px; top: .65em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+.hz.verdict2 { grid-area: v; border-top: 4px solid var(--accent); }
+.hz.verdict2.t-bad { border-top-color: var(--bad); }
+.hz-hd { font-size: 19px; font-weight: 700; line-height: 1.55; color: var(--ink); margin-top: 6px; }
+.hz-hd .num, .hz-hd strong.num { font-size: 1.12em; color: var(--accent); background: none; padding: 0 1px; }
+.hz-rest { font-size: 14.5px; line-height: 1.7; color: var(--muted); margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+.hz-engs { grid-area: e; display: grid; gap: 10px; margin: 0; padding: 0; }
+.hero-g > .hz.ask { align-self: start; }
+.hz-engs .hz.eng { padding: 10px 16px; }
+.hq-h.calm { color: var(--good); font-size: 20px; }
+.hz.ask.calm { border-color: color-mix(in srgb, var(--good) 50%, var(--line)); background: color-mix(in srgb, var(--good) 5%, var(--surface)); }
+.hz.ask.calm .hz-l { color: var(--good); }
+.hq-b { font-size: 14.5px; line-height: 1.7; margin-top: 6px; }
+
+</style>
+</head>
+<body>
+<div class="shell">
+<nav class="toc" aria-label="目录">
+  <a class="back" href="https://claude.ai/artifact/17bW2rKeeBheRFfhnjsrSU">← Owner 看板</a>
+  <div class="toc-title">目录</div>
+  <ol><li class="l2"><a href="#1-参赛者-四个策略押了四种东西-只有-a2-的押注两段都兑现了">1. 参赛者</a></li><li class="l2"><a href="#2-设计期-三个策略的超额都来自-a-股里拿什么-什么时候拿-后五年就弱下来了">2. 设计期</a></li><li class="l2"><a href="#3-检验段-美股仓位都不缺-输在进出时点和-a-股-v5-1-再被成本吃掉-6-">3. 检验段</a></li><li class="l3"><a href="#你问到的芯片和科技-etf-上市晚-进池子时行情已走了一半">你问到的芯片和科技 ETF</a></li><li class="l2"><a href="#4-v5-1-为什么失效-市场大体选对了-输在动得太勤-进出时点丢-4-3-成本">4. v5.1 为什么失效</a></li><li class="l3"><a href="#①-选市场-和-a1-大体一致">① 选市场：和 A1 大体一致</a></li><li class="l3"><a href="#②-成本-一年换手-69-倍-六成花在-换人-和-进出-上">② 成本</a></li><li class="l3"><a href="#③-逐段看-v5-1-赢的都是下跌或震荡年-a1-赢-v5-1-输的四年-两者都">③ 逐段看</a></li><li class="l2"><a href="#5-本该更早发现的-九件事里五件看见了没行动-四件根本没去查">5. 本该更早发现的</a></li><li class="l2"><a href="#6-我漏了什么-看见的没推成结论-该查的没去查-精力花在了把-v5-1-做复杂">6. 我漏了什么</a></li><li class="l2"><a href="#7-哪些能直接修-数据和口径的错现在修-规则的硬伤只能放进-v6">7. 哪些能直接修</a></li><li class="l2"><a href="#8-三次尝试说明了什么-挑哪一只-很难赚钱-该不该在场-有用但要慢">8. 三次尝试说明了什么</a></li><li class="l2"><a href="#9-对愿景的含义-跑赢-和-控回撤-这十年只能先选一个">9. 对愿景的含义</a></li><li class="l2"><a href="#10-流程马上改什么-七条改动-堵住第-5-节九件里的八件">10. 流程马上改什么</a></li><li class="l2"><a href="#11-需要你定的四件事-我的建议是关闭-沿用门槛-先要控回撤-做核心-卫星">11. 需要你定的四件事</a></li></ol>
+</nav>
+<main>
+<header class="top">
+  <div class="kicker">ETF_Rotation_Quant · 2026-11-05</div>
+  <h1>第二阶段复盘</h1>
+  <p class="headline">设计期的超额来自 A 股大行情，不是来自“选强”；检验段换了池子、换了行情，就没了</p>
+</header>
+<section class="intro status"><p class="kv"><span class="kv-k"><strong>项目愿景</strong></span><span class="kv-v">　在动态周期内，从多类资产里选出 Top N 强势 ETF 轮动持有，获得超额收益、稳定跑赢被动基准，同时把回撤控制住。</span></p>
+<div class="hero"><div class="hero-g n1"><div class="hz verdict2 t-info"><div class="hz-l">结论</div><div class="hz-hd">设计期三个策略都靠 A 股赢。</div><div class="hz-rest">检验段美股都没少拿，每年比基准：E2 新口径 <strong class="num">−6.1</strong>（A 股和美股主题）、A1 <strong class="num">0.0</strong>、v5.1 <strong class="num">−11.7</strong>（成本 6.6 + 进出时点 4.3）。</div></div><div class="hz ask"><div class="hz-l">需要你</div><div class="hq-h">四件事</div><ol class="hq"><li><span class="hq-n">1</span><span>关闭</span></li><li><span class="hq-n">2</span><span>场内口径门槛</span></li><li><span class="hq-n">3</span><span>先要<span class="ab-q">跑赢</span>还是<span class="ab-q">控回撤</span></span></li><li><span class="hq-n">4</span><span>v6 方向</span></li></ol><div class="hq-ref">见第 11 节。</div></div><div class="hz eng"><span class="eng-ok">✓</span><span class="hz-l">进度</span><span class="eng-d">设计期和一次性检验都已签收；场外净值补齐。能买到的池子改用场内口径登记重算（D35），等 Grok 跑。</span></div></div></div>
+</section>
+<section id="sec-1-参赛者-四个策略押了四种东西-只有-a2-的押注两段都兑现了"><h2 id="1-参赛者-四个策略押了四种东西-只有-a2-的押注两段都兑现了"><span class="num">01</span>参赛者：四个策略押了四种东西，只有 A2 的押注两段都兑现了</h2>
+<p class="memo"><strong>E2 新口径押“选强”，A1 押“美股和 A 股二选一”，A2 押“分散、各自躲下跌”，v5.1 押“快进快出”。到检验段，只有 A2 的低回撤（<span class="num">−13%</span> <span class="arr">→</span> <span class="num">−10%</span>）还在。</strong></p>
+<div class="score"><div class="seg"><span class="s-good" style="flex:1"></span><span class="s-warn" style="flex:1"></span><span class="s-bad" style="flex:2"></span></div><div class="sl"><b class="t-good num">1</b> 兑现 · <b class="t-warn num">1</b> 打平基准 · <b class="t-bad num">2</b> 没兑现<span class="of"> / 共 4 项</span></div></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>参赛者</th>
+<th>押的是什么</th>
+<th class="rh-why">怎么做</th>
+<th>年化：设计期 → 检验段</th>
+<th>押注兑现了吗</th>
+</tr>
+</thead>
+<tbody>
+<tr class="ref">
+<td class="k">基准</td>
+<td><strong>被动拿住中美股票</strong></td>
+<td class="r-why">沪深300 70% + 纳指100 15% + 标普500 15%，每月再平衡</td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:33px"></i><i class="mk" style="left:18px" title="→ 8.7%"></i></span><span class="mg-v strong">15.6%</span></span><span class="mg-s">→ 8.7%</span></td>
+<td><span class="pill mute">靶子</span></td>
+</tr>
+<tr class="row-bad">
+<td class="k">E2 新口径</td>
+<td><strong>选强</strong>：谁涨得稳就买谁</td>
+<td class="r-why">按“涨幅 ÷ 波动”排名，取前几名平均分；跌 10% 就卖</td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:53px"></i><i class="mk" style="left:6px" title="→ 3.0%"></i></span><span class="mg-v strong">24.9%</span></span><span class="mg-s">→ 3.0%</span></td>
+<td><span class="pill bad">没兑现</span><span class="pill-note"> 唯一入围</span></td>
+</tr>
+<tr class="row-warn">
+<td class="k">A1 双动量</td>
+<td><strong>二选一</strong>：美股、A 股谁强拿谁</td>
+<td class="r-why">美股跑输现金就全拿国债；一次只拿一样</td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:57px"></i><i class="mk" style="left:18px" title="→ 8.6%"></i></span><span class="mg-v strong">27.0%</span></span><span class="mg-s">→ 8.6%</span></td>
+<td><span class="pill warn">打平基准</span><span class="pill-note"> 回撤 −40%</span></td>
+</tr>
+<tr class="row-good">
+<td>A2 五腿均线</td>
+<td><strong>分散 + 各自躲下跌</strong></td>
+<td class="r-why">五样各 1/5，跌破 10 个月均线的那样换现金</td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:19px"></i><i class="mk" style="left:15px" title="→ 7.2%"></i></span><span class="mg-v strong">8.9%</span></span><span class="mg-s">→ 7.2%</span></td>
+<td><span class="pill good">兑现</span><span class="pill-note"> 回撤 −13% → −10%</span></td>
+</tr>
+<tr class="row-bad">
+<td class="k"><span class="rid">v</span>5.1</td>
+<td><strong>快进快出</strong>：读 28 把尺子</td>
+<td class="r-why">先选市场、再选 3 只，仓位每天可减</td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:64px"></i><i class="mk" style="left:7px" title="→ −3.3%"></i></span><span class="mg-v strong">30.1%</span></span><span class="mg-s">→ −3.3%</span></td>
+<td><span class="pill bad">没兑现</span><span class="pill-note"> 换手 69 倍</span></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">能排名的池子，扣费后。设计期 2006–2015，检验段 2016-01 <span class="arr">→</span> 2026-09。</p>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>代码和冻结点（工程用）、前两次尝试</span></button><div class="fold-b" hidden="">
+<ul class="points">
+<li><strong>基准</strong>：<code>src/v3/engine/benchmark.py</code>（<code>WEIGHTS</code>）、<code>src/v4/r5/design.py</code> 的 <code>benchmark_returns</code>。</li>
+<li><strong>E2 新口径</strong>：<code>src/v3/engine/arms.py</code> 的 <code>execute</code>（A 臂）+ <code>src/v4/r5/design.py</code> 的 <code>Job(case='B0')</code>；预注册 v4 第 2.3 版；<code>milestone/v4-code-freeze-2</code>。</li>
+<li><strong>A1、A2</strong>：<code>config/v4/peers.toml</code>、<code>src/v4/peers/signals.py</code>（<code>dual_momentum</code>、<code>ten_month_average</code>）；Antonacci 2014、Faber 2007。</li>
+<li><strong>v5.1</strong>：<code>src/v51/</code>；<code>milestone/v5.1-prereg-freeze</code>；一次性检验 <code>milestone/v5-code-freeze</code>。</li>
+<li><strong>前两次尝试</strong>：第 1 次 V1 A 股主题轮动，设计期不成立；第 2 次 v2 A 股择时，2016–2026 不通过。第二阶段是第 3 次，累计尝试 115 次。</li>
+</ul>
+</div></div>
+</section>
+<section id="sec-2-设计期-三个策略的超额都来自-a-股里拿什么-什么时候拿-后五年就弱下来了"><h2 id="2-设计期-三个策略的超额都来自-a-股里拿什么-什么时候拿-后五年就弱下来了"><span class="num">02</span>设计期：三个策略的超额都来自“A 股里拿什么、什么时候拿”，后五年就弱下来了</h2>
+<p class="memo"><strong><span class="num">2006–2015 年</span>，E2 新口径、A1、v5.1 每年分别比基准多 6.7、8.8、<span class="num">11.3 个点</span>，其中“A 股里拿什么、什么时候拿”分别贡献 13.3、13.6、21.2。</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>参赛者</th>
+<th class="n numcol">前五年比基准 2006–10</th>
+<th class="n numcol">后五年比基准 2011–15</th>
+<th class="n numcol">A 股里拿什么、 什么时候拿（每年）</th>
+<th class="h-note">钱从哪来</th>
+<th class="h-take rh-concl">结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k">E2 新口径</td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:69px"></i><em class="g">+19.6</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:4px"></i><em class="g">+0.5</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:44px"></i><em class="g">+13.3</em></span></td>
+<td class="c-note">A 股行业 25 + 宽基 13 个点；2008 年只有 32% 仓位</td>
+<td class="c-take"><span class="pill info">靠一段行情</span></td>
+</tr>
+<tr class="row-good">
+<td class="k">A1 双动量</td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+19.8</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:25px"></i><em class="g">+4.0</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:45px"></i><em class="g">+13.6</em></span></td>
+<td class="c-note">2006–07 满仓沪深300，2008 年换国债；之后多半在标普</td>
+<td class="c-take"><span class="pill good">两段都赢</span></td>
+</tr>
+<tr class="row-good">
+<td class="k"><span class="rid">v</span>5.1</td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:64px"></i><em class="g">+18.1</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+11.2</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+21.2</em></span></td>
+<td class="c-note">A 股快进快出；2008 年八成在国债；成本每年 3.4 个点</td>
+<td class="c-take"><span class="pill good">两段都赢</span><span class="pill-note"> 别的市场不成立</span></td>
+</tr>
+<tr class="row-bad">
+<td>A2 五腿均线</td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:28px"></i><em class="r">-7.8</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:37px"></i><em class="r">-5.9</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:7px"></i><em class="g">+2.2</em></span></td>
+<td class="c-note">六成在债券、黄金、现金，牛市只有 1/5 在 A 股</td>
+<td class="c-take"><span class="pill bad">两段都输</span><span class="pill-note"> 回撤 −13%</span></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">前两列 = 该段年化减基准年化（基准两段 <span class="num">22.3%</span>、<span class="num">9.4%</span>）；第三列来自下一节的差距拆解（每年算术贡献）。框出的是最该警惕的一格。</p>
+<figure><img alt="E2 新口径、A1、v5.1 和基准在三段时间里，每年收益分别来自哪些大类" loading="lazy" src="../../assets/retro/r1-sources.png"/></figure>
+<ul class="points">
+<li><strong>同一个来源，三种拿法</strong>：E2 新口径分散持有很多 A 股行业，A1 一次只拿沪深300 或标普，v5.1 只在一个市场里拿 3 只、快进快出。设计期这三种拿法都从 A 股大行情里赚到了钱。</li>
+<li><strong>基准自己也在变</strong>：前五年 <span class="num">95%</span> 的收益来自沪深300，后五年美股占四成，检验段占六成。</li>
+</ul>
+</section>
+<section id="sec-3-检验段-美股仓位都不缺-输在进出时点和-a-股-v5-1-再被成本吃掉-6-"><h2 id="3-检验段-美股仓位都不缺-输在进出时点和-a-股-v5-1-再被成本吃掉-6-"><span class="num">03</span>检验段：美股仓位都不缺，输在进出时点和 A 股；v5.1 再被成本吃掉 6.6</h2>
+<p class="memo"><strong>按地区算（美股主题算美股），每年比基准：E2 新口径 −6.1、A1 0.0、v5.1 −11.7。美股仓位三个都不少（<span class="num">26%</span>、<span class="num">57%</span>、<span class="num">45%</span>，基准 <span class="num">30%</span>）；最大的坑是美股进出时点（A1 −3.1、v5.1 −4.3）和 v5.1 的成本 −6.6。</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>每年比基准多（少）赚，百分点</th>
+<th class="numcol">E2 新口径</th>
+<th class="numcol">A1</th>
+<th class="numcol">v5.1</th>
+<th class="h-take rh-concl">读法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="grp"><td colspan="5">美股基准拿 30%，这十年美股每年 19.1%</td></tr>
+<tr>
+<td><span class="rid">①</span>拿了多少 仓位 26% / 57% / 45%</td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:16px"></i><em class="r">−0.7</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+5.1</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="g" style="width:30px"></i><em class="g">+2.8</em></span></td>
+<td class="c-take"><span class="pill info">都不少拿</span></td>
+</tr>
+<tr>
+<td><span class="rid">②</span>拿的是什么 主题、标普 vs 指数</td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:42px"></i><em class="r">−1.8</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:15px"></i><em class="r">−1.1</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:8px"></i><em class="r">−0.8</em></span></td>
+<td class="c-take"><span class="pill info">主题不如宽基</span><span class="pill-note"> 能源、石油拖累</span></td>
+</tr>
+<tr>
+<td><span class="rid">③</span>什么时候进出</td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:37px"></i><em class="r">−1.6</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:43px"></i><em class="r">−3.1</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:46px"></i><em class="r">−4.3</em></span></td>
+<td class="c-take"><span class="pill info">最大的坑</span><span class="pill-note"> 涨时不在、跌时在</span></td>
+</tr>
+<tr class="grp"><td colspan="5">A 股基准拿 70%，这十年沪深300 每年只有 5.7%</td></tr>
+<tr>
+<td><span class="rid">④</span>拿了多少 仓位 18% / 31% / 18%</td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:70px"></i><em class="r">−3.0</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:30px"></i><em class="r">−2.2</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:32px"></i><em class="r">−3.0</em></span></td>
+<td class="c-take"><span class="pill info">少拿</span><span class="pill-note"> 腾出的钱算在别的行</span></td>
+</tr>
+<tr>
+<td><span class="rid">⑤</span>拿什么、何时拿</td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:40px"></i><em class="r">−1.7</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="g" style="width:15px"></i><em class="g">+1.1</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:17px"></i><em class="r">−1.6</em></span></td>
+<td class="c-take"><span class="pill info">选强没用</span><span class="pill-note"> A1 只拿沪深300</span></td>
+</tr>
+<tr class="grp"><td colspan="5">其他</td></tr>
+<tr>
+<td><span class="rid">⑥</span>港股、其他海外</td>
+<td class="numcol ibc"><span class="ib"><i class="g" style="width:61px"></i><em class="g">+2.6</em></span></td>
+<td class="numcol">不持有</td>
+<td class="numcol ibc"><span class="ib"><i class="g" style="width:4px"></i><em class="g">+0.3</em></span></td>
+<td class="c-take"><span class="pill info">E2 补回</span><span class="pill-note"> 中韩半导体累计 +5.0</span></td>
+</tr>
+<tr>
+<td><span class="rid">⑦</span>债券、黄金、现金</td>
+<td class="numcol ibc"><span class="ib"><i class="g" style="width:54px"></i><em class="g">+2.3</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="g" style="width:8px"></i><em class="g">+0.6</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="g" style="width:15px"></i><em class="g">+1.4</em></span></td>
+<td class="c-take"><span class="pill info">都补回一点</span></td>
+</tr>
+<tr>
+<td class="k"><span class="rid">⑧</span>成本</td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:51px"></i><em class="r">−2.2</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:4px"></i><em class="r">−0.3</em></span></td>
+<td class="numcol ibc"><span class="ib"><i class="r" style="width:70px"></i><em class="r">−6.6</em></span></td>
+<td class="c-take"><span class="pill info">v5.1 最大一块</span><span class="pill-note"> 见第 4 节</span></td>
+</tr>
+<tr>
+<td class="k">合计 年化</td>
+<td class="numcol"><strong><span class="neg">−6.1</span></strong> 3.0%</td>
+<td class="numcol"><strong>0.0</strong> 8.6%</td>
+<td class="numcol"><strong><span class="neg">−11.7</span></strong> <span class="neg">−3.3%</span></td>
+<td class="c-take"><span class="pill info">只有 A1 打平</span></td>
+</tr>
+</tbody>
+</table></div>
+<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">每年算术贡献，和年化略有差别。</div><div class="rn-i">“拿了多少”= 比基准多拿或少拿 × 该地区指数收益；“拿的是什么”= 持有的容器比指数（标普、纳指各半）多赚或少赚；“什么时候进出”= 仓位高低和当天涨跌是否同向。</div><div class="rn-i">A2：美股 −3.4、A 股 −3.4，债券黄金补回 +4.0、港股 +0.5，成本 0.2，合计 −2.6。</div></div>
+<ul class="points">
+<li><strong>你问“为什么海外主题和美股分开算”——分开是错的</strong>：上一版把美股主题和港股主题一起算成“海外主题”，看起来像 E2 新口径少拿美股（−4.1）。按地区合起来它的美股是 <span class="num">26%</span>，只少 0.7；问题在拿的主题、进出时点和 A 股。</li>
+<li><strong>A1 和 v5.1 输法相同、程度不同</strong>：都在美股里进进出出，丢在时点上；A1 一年换 2.6 次，v5.1 一年动 61 次，所以多了一块成本。</li>
+</ul>
+<figure><img alt="检验段三个策略每年的持仓结构，按地区" loading="lazy" src="../../assets/v5-oneshot/o3-exposure.png"/></figure>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：十年累计贡献</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>十年累计贡献</th>
+<th>赚得最多</th>
+<th>亏得最多</th>
+<th class="h-take rh-concl">结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k">E2 新口径</td>
+<td>黄金 <strong>+7.2</strong>、5 年国债 +5.8、纳指100 +5.5</td>
+<td>全指 IT <strong>−4.8</strong>、中证1000 −4.1、标普全球石油 −3.3</td>
+<td class="c-take"><span class="pill info">赚钱的是防守资产</span></td>
+</tr>
+<tr class="row-bad">
+<td class="k">A1</td>
+<td>标普500 <strong>+68.5</strong>、沪深300 +29.5</td>
+<td>— 输在什么时候换</td>
+<td class="c-take"><span class="pill bad">资产对，时点错</span></td>
+</tr>
+<tr class="row-good">
+<td class="k"><span class="rid">v</span>5.1</td>
+<td>纳指100 <strong>+17.3</strong>、国债 +12.5、香港创新药 +12.5</td>
+<td>全指能源 <strong>−11.2</strong>、港股通科技 −6.8、港股通50 −6.5</td>
+<td class="c-take"><span class="pill good">挑对的被成本吃掉</span></td>
+</tr>
+</tbody>
+</table></div><p class="table-note note">和同期拿美股指数比，石油、能源类主题拖累最大（十年累计）：E2 新口径的标普全球石油少赚 8.5；v5.1 的标普能源、美国石油开发、标普全球石油合计少赚 18.2，半导体、REIT 补回 12.1。</p></div></div>
+<h3 id="你问到的芯片和科技-etf-上市晚-进池子时行情已走了一半">你问到的芯片和科技 ETF：上市晚，进池子时行情已走了一半</h3>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：主题（场内基金）</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>主题（场内基金）</th>
+<th>哪天能买</th>
+<th>之后每年涨</th>
+<th>E2 新口径拿了</th>
+<th>v5.1 拿了</th>
+<th class="h-take rh-concl">结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>纳指科技 159509</td>
+<td>2023-08</td>
+<td>2024 <span class="pos">+38</span>、2025 <span class="pos">+28</span>、2026 <span class="pos">+26</span></td>
+<td>0.4–2.6%，累计 <strong><span class="pos">+1.9</span></strong></td>
+<td>只在 2026 年 3.9%，<strong><span class="neg">−1.2</span></strong></td>
+<td class="c-take"><span class="pill info">上市晚、仓位小</span></td>
+</tr>
+<tr>
+<td>全球芯片 LOF 501225，跟 PHLX 半导体</td>
+<td>2023-04</td>
+<td>2024 <span class="pos">+24</span>、2025 <span class="pos">+37</span>、2026 <span class="pos">+57</span></td>
+<td>2026 年 6.3%，累计 <strong><span class="pos">+1.7</span></strong></td>
+<td>2026 年 <strong>10.2%</strong>，<strong><span class="pos">+5.4</span></strong></td>
+<td class="c-take"><span class="pill info">今年拿了</span><span class="pill-note"> v5.1 今年第二大</span></td>
+</tr>
+<tr>
+<td>中韩半导体 513310</td>
+<td>2022-11</td>
+<td>2025 <span class="pos">+77</span>、2026 <span class="pos">+75</span></td>
+<td>2025 年 3.2%、2026 年 7.6%，<strong><span class="pos">+5.0</span></strong></td>
+<td><strong>从不持有</strong></td>
+<td class="c-take"><span class="pill info">v5.1 规则拿不到</span></td>
+</tr>
+<tr>
+<td>标普信息科技 2016-12 起</td>
+<td>2016-12</td>
+<td>十年里多数年份领涨</td>
+<td>0.4–4%，累计 <strong><span class="pos">+2.0</span></strong></td>
+<td>最多 12.8%，累计 <strong><span class="pos">+12.3</span></strong></td>
+<td class="c-take"><span class="pill info">v5.1 第 4 大</span></td>
+</tr>
+</tbody>
+</table></div></div></div>
+<ul class="points">
+<li><strong>池子从第一只 ETF 上市那天才收这个主题</strong>：不往前接海外指数，避免“回测里买了当时买不到的东西”。所以纳指科技、全球芯片 2023 年以后才出现，十年累计贡献自然小。</li>
+<li><strong>中韩半导体 v5.1 永远拿不到</strong>：v5.1 第一层只在 A 股、港股、美股三个市场里选，中韩半导体属于“其他海外”。E2 新口径不分市场，所以拿到了。A1 只在标普和沪深300 之间选，这几只都不持有。</li>
+</ul>
+</section>
+<section id="sec-4-v5-1-为什么失效-市场大体选对了-输在动得太勤-进出时点丢-4-3-成本"><h2 id="4-v5-1-为什么失效-市场大体选对了-输在动得太勤-进出时点丢-4-3-成本"><span class="num">04</span>v5.1 为什么失效：市场大体选对了，输在动得太勤——进出时点丢 4.3、成本丢 6.6</h2>
+<p class="memo"><strong>A1 拿标普的那些天，v5.1 有 <span class="num">64%</span> 也在美股。它比基准每年少的 11.7 里，成本 6.6 + 美股进出时点 4.3，占了九成。</strong></p>
+<h3 id="①-选市场-和-a1-大体一致">① 选市场：和 A1 大体一致</h3>
+<p><strong>A1 拿标普的日子里，v5.1 在哪</strong>（检验段，按天数）：</p>
+<div class="stk-wrap"><div class="stk"><span style="width:46.0%;background:var(--accent)" title="美股满仓 46%">美股满仓 46%</span><span style="width:18.0%;background:color-mix(in srgb, var(--accent) 55%, white)" title="美股半仓 18%">美股半仓 18%</span><span style="width:12.0%;background:var(--good)" title="A 股 12%">A 股 12%</span><span style="width:8.0%;background:var(--warn)" title="港股 8%"></span><span style="width:15.0%;background:var(--muted)" title="全空（国债、现金） 15%">全空（国债、现金） 15%</span></div><div class="stk-l"><span><i style="background:var(--accent)"></i>美股满仓 <b class="num">46%</b></span><span><i style="background:color-mix(in srgb, var(--accent) 55%, white)"></i>美股半仓 <b class="num">18%</b></span><span><i style="background:var(--good)"></i>A 股 <b class="num">12%</b></span><span><i style="background:var(--warn)"></i>港股 <b class="num">8%</b></span><span><i style="background:var(--muted)"></i>全空（国债、现金） <b class="num">15%</b></span></div></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>一年动几次</th>
+<th class="n numcol">换市场</th>
+<th class="n numcol">调仓位</th>
+<th class="n numcol">换人</th>
+<th class="n numcol">每年成本</th>
+<th class="h-take rh-concl">结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k">A1</td>
+<td class="n numcol"><strong>2.6</strong></td>
+<td class="n numcol">0</td>
+<td class="n numcol">0</td>
+<td class="n numcol"><strong>0.26</strong></td>
+<td class="c-take"><span class="pill info">看 12 个月，慢</span></td>
+</tr>
+<tr>
+<td class="k"><span class="rid">v</span>5.1</td>
+<td class="n numcol"><strong>1.9</strong></td>
+<td class="n numcol"><strong>28</strong></td>
+<td class="n numcol"><strong>27</strong></td>
+<td class="n numcol"><strong>6.63</strong></td>
+<td class="c-take"><span class="pill info">每周换人、每天可减仓</span></td>
+</tr>
+</tbody>
+</table></div>
+<ul class="points">
+<li><strong>你说得对：一直选强，A1 拿美股时 v5.1 也该拿美股——它确实拿了</strong>：换市场的频率两者差不多（一年 2.6 次对 1.9 次）。差别在市场里面：v5.1 一年调 28 次仓位（满仓↔半仓↔全空）、换 27 次人。</li>
+<li><strong>动得勤，时点反而更差</strong>：短期强弱噪音大，常常刚减仓就反弹、刚追进就回落。美股进出时点每年丢 <span class="num">4.3 个点</span>，比 A1 的 3.1 还多。</li>
+</ul>
+<h3 id="②-成本-一年换手-69-倍-六成花在-换人-和-进出-上">② 成本：一年换手 69 倍，六成花在“换人”和“进出”上</h3>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：钱花在哪</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>钱花在哪</th>
+<th>是什么</th>
+<th class="n numcol">一年几次</th>
+<th class="n numcol">双边换手</th>
+<th class="n numcol">每年成本（百分点）</th>
+<th class="h-take rh-concl">结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k">每周换人</td>
+<td>同一市场里，掉出前 3 的换掉</td>
+<td class="n numcol">21</td>
+<td class="n numcol">20.2 倍</td>
+<td class="n numcol key"><strong>2.36</strong></td>
+<td class="c-take"><span class="pill info">最大一块</span></td>
+</tr>
+<tr>
+<td class="k">整体进出</td>
+<td>全空 ↔ 持有</td>
+<td class="n numcol">13</td>
+<td class="n numcol">18.8 倍</td>
+<td class="n numcol key"><strong>1.60</strong></td>
+<td class="c-take"><span class="pill info">来回打脸</span></td>
+</tr>
+<tr>
+<td class="k">仓位档位</td>
+<td>满仓 ↔ 半仓</td>
+<td class="n numcol">15</td>
+<td class="n numcol">17.6 倍</td>
+<td class="n numcol key"><strong>1.58</strong></td>
+<td class="c-take"><span class="pill info">来回打脸</span></td>
+</tr>
+<tr>
+<td class="k">换市场</td>
+<td>A 股、港股、美股之间换</td>
+<td class="n numcol">2</td>
+<td class="n numcol">3.9 倍</td>
+<td class="n numcol key"><strong>0.41</strong></td>
+<td class="c-take"><span class="pill info">不多</span></td>
+</tr>
+<tr>
+<td>单只走弱或跌 10%</td>
+<td>个别持仓离场</td>
+<td class="n numcol">6</td>
+<td class="n numcol">3.7 倍</td>
+<td class="n numcol key"><strong>0.38</strong></td>
+<td class="c-take"><span class="pill info">不多</span></td>
+</tr>
+<tr>
+<td class="k">防守换品种</td>
+<td>国债、黄金、现金之间换</td>
+<td class="n numcol">4</td>
+<td class="n numcol">4.2 倍</td>
+<td class="n numcol key"><strong>0.24</strong></td>
+<td class="c-take"><span class="pill info">不多</span></td>
+</tr>
+<tr>
+<td class="k">合计</td>
+<td>含少量其他</td>
+<td class="n numcol">61</td>
+<td class="n numcol key"><strong>68.9 倍</strong></td>
+<td class="n numcol key"><strong>6.63</strong></td>
+<td class="c-take"><span class="pill info">预注册估 1–2</span></td>
+</tr>
+</tbody>
+</table></div></div></div>
+<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">按冻结费率，每 1 倍双边换手（全仓买一遍、卖一遍）约 0.1 个点。</div><div class="rn-i">按每 252 个交易日算一年；按日历年是 66 倍、6.4 个点（一次性检验报告用的口径）。</div><div class="rn-i">成交在信号次日，归类时已对齐。</div><div class="rn-i">设计期成本每年 3.4 个点，检验段池子更大、主题更多，换得更勤。</div></div>
+<h3 id="③-逐段看-v5-1-赢的都是下跌或震荡年-a1-赢-v5-1-输的四年-两者都">③ 逐段看：v5.1 赢的都是下跌或震荡年；A1 赢、v5.1 输的四年，两者都在美股</h3>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：年份</span></button><div class="fold-b" hidden=""><div class="score"><div class="seg"><span class="s-good" style="flex:2"></span><span class="s-bad" style="flex:2"></span></div><div class="sl"><b class="t-good num">2</b> 赢 · <b class="t-bad num">2</b> 输<span class="of"> / 共 4 项</span></div></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>年份</th>
+<th>v5.1 / A1 / 基准</th>
+<th>v5.1 拿的</th>
+<th>A1 拿的</th>
+<th class="h-note">差在哪</th>
+<th class="h-take rh-concl">结论</th>
+</tr>
+</thead>
+<tbody>
+<tr class="grp"><td colspan="6">v5.1 赢基准（4 年）都是下跌或震荡年：国债护住，或短期强势刚好兑现</td></tr>
+<tr class="row-good">
+<td class="k">2016</td>
+<td><strong>1.6</strong> / 6.6 / −1.7</td>
+<td>标普纳指 33%、石油能源 25%、国债 19%</td>
+<td>标普 84%</td>
+<td class="c-note">跌时有国债；一直拿标普更好</td>
+<td class="c-take"><span class="pill good">赢</span></td>
+</tr>
+<tr class="row-bad">
+<td class="k">2018</td>
+<td><strong>−10.4</strong> / −16.9 / −16.5</td>
+<td>国债 35%、美股 52%</td>
+<td>标普 51%、沪深300 42%</td>
+<td class="c-note">国债多，少亏 6 个点</td>
+<td class="c-take"><span class="pill bad">少亏</span></td>
+</tr>
+<tr class="row-bad">
+<td class="k">2022</td>
+<td><strong>−17.2</strong> / −15.0 / −18.6</td>
+<td>国债 42%</td>
+<td>标普 49%、国债 51%</td>
+<td class="c-note">少亏 1.4 个点，A1 更好</td>
+<td class="c-take"><span class="pill bad">少亏</span></td>
+</tr>
+<tr class="row-good">
+<td>2026（到 9 月）</td>
+<td><strong>18.7</strong> / 0.4 / 0.4</td>
+<td>半导体 10%、生物科技 16%、A 股 IT</td>
+<td>沪深300 89%</td>
+<td class="c-note">A 股 IT +7.3、半导体 +5.9</td>
+<td class="c-take"><span class="pill good">赢</span><span class="pill-note"> 短期强势兑现</span></td>
+</tr>
+<tr class="grp"><td colspan="6">A 股大涨（3 年）两个都输，v5.1 输得更多：A 股里拿的不是大盘</td></tr>
+<tr class="row-bad">
+<td class="k">2017</td>
+<td><strong>1.2</strong> / 14.7 / 23.0</td>
+<td>美股 44%、现金 18%、A 股 33%</td>
+<td>标普 66%、沪深300 34%</td>
+<td class="c-note">能源相关合计 −3.7；成本 5.0</td>
+<td class="c-take"><span class="pill bad">输</span></td>
+</tr>
+<tr class="row-bad">
+<td>2019–2020</td>
+<td><strong>−7.8</strong> / 20.6 / 78.9</td>
+<td>A 股行业 32–45%：通信、IT、消费</td>
+<td>标普、沪深300 各一半</td>
+<td class="c-note">2019 通信 −6.7、IT −3.3；成本 6.3、5.5</td>
+<td class="c-take"><span class="pill bad">输</span></td>
+</tr>
+<tr class="grp"><td colspan="6">A1 赢、v5.1 输（4 年）同样在美股，A1 拿住标普，v5.1 拿主题、进进出出</td></tr>
+<tr class="row-bad">
+<td class="k">2021</td>
+<td><strong>−11.8</strong> / 16.6 / 5.1</td>
+<td>美股 71%：石油、REIT、品质消费</td>
+<td>标普 60%</td>
+<td class="c-note">同在美股的日子：标普 <strong>+20.5</strong>，v5.1 <strong>−1.9</strong></td>
+<td class="c-take"><span class="pill bad">拿错</span></td>
+</tr>
+<tr>
+<td class="k">2023</td>
+<td><strong>4.3</strong> / 23.1 / 4.6</td>
+<td>美股 52%：纳指、信息科技；国债 25%</td>
+<td>标普 67%</td>
+<td class="c-note">只有 65% 在场；黄金 −4.1</td>
+<td class="c-take"><span class="pill info">在场太少</span></td>
+</tr>
+<tr class="row-bad">
+<td class="k">2024</td>
+<td><strong>−2.6</strong> / 27.1 / 21.8</td>
+<td>美股 63%；4–5 月去港股，10–11 月追 A 股</td>
+<td>标普 100%</td>
+<td class="c-note">一年换市场 10 次，进出时点 <strong>−12.5</strong></td>
+<td class="c-take"><span class="pill bad">进出错</span></td>
+</tr>
+<tr>
+<td class="k">2025</td>
+<td><strong>−5.8</strong> / 23.5 / 20.1</td>
+<td>港股 62%：创新药、生物科技</td>
+<td>标普、沪深300 各半</td>
+<td class="c-note">创新药 +12.8，港股通科技 −6.8；成本 8.7</td>
+<td class="c-take"><span class="pill info">成本吃掉</span></td>
+</tr>
+</tbody>
+</table></div><p class="table-note note">每年收益，扣费后，能排名的池子。多年合并的一行是累计收益。“同在美股的日子”= v5.1 第一层选美股、且美股仓位超过 <span class="num">5%</span> 的交易日；比的是这些天里 v5.1 美股部分的收益和标普的收益（都扣费前）。</p></div></div>
+<div class="aside">
+<p><strong>理念好，为什么失效</strong>　“一直选强”在<strong>慢节奏、宽基</strong>上有效：A1 看 12 个月、只在标普和沪深300 之间选，一年换 2.6 次。v5.1 把同一个想法做到<strong>周、日的节奏</strong>，再落到几十个主题上：短期的“最强”经常是快要回落的那个（2021 年的石油、REIT，2025 年的港股科技），每次纠错都要付钱。结果是方向大体对，时点和成本把收益全部吃掉。</p>
+</div>
+</section>
+<section id="sec-5-本该更早发现的-九件事里五件看见了没行动-四件根本没去查"><h2 id="5-本该更早发现的-九件事里五件看见了没行动-四件根本没去查"><span class="num">05</span>本该更早发现的：九件事里五件看见了没行动，四件根本没去查</h2>
+<p class="memo"><strong>九件里有 6 件在跑任何回测之前就能发现。最致命的 a 和 f 都不需要看检验段：一件靠拆设计期的持仓，一件靠数容器。</strong></p>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：问题</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>问题</th>
+<th class="rh-why">证据</th>
+<th class="rh-concl">本该得出的结论</th>
+<th>最早能在</th>
+</tr>
+</thead>
+<tbody>
+<tr class="grp"><td colspan="4">a–e 看见了，没行动证据摆在设计期报告里，但没推到“E2 新口径通不过”</td></tr>
+<tr>
+<td><span class="rid">a</span>“挑哪一只”没有本事</td>
+<td class="r-why">比等权每年只多 1 个点左右</td>
+<td class="r-concl"><strong>超额不是选出来的</strong></td>
+<td><span class="cat c0">设计期</span></td>
+</tr>
+<tr>
+<td><span class="rid">b</span>债券靠“稳”排在股票前面</td>
+<td class="r-why">债券仓位 16–34%</td>
+<td class="r-concl"><strong>牛市里注定跟不满</strong></td>
+<td><span class="cat c1">设计前</span></td>
+</tr>
+<tr>
+<td><span class="rid">c</span>优势集中在一段行情</td>
+<td class="r-why">后五年超额只有 +0.5</td>
+<td class="r-concl"><strong>后半段已经没有超额</strong></td>
+<td><span class="cat c0">设计期</span></td>
+</tr>
+<tr>
+<td><span class="rid">d</span>十年里大行情只有十来次</td>
+<td class="r-why">真有本事也只有 40% 机会四格全赢</td>
+<td class="r-concl"><strong>设计期 25% 不能当证据</strong></td>
+<td><span class="cat c1">设计前</span></td>
+</tr>
+<tr>
+<td><span class="rid">e</span>来回切换的成本</td>
+<td class="r-why">v5.1 设计期成本每年 3.4</td>
+<td class="r-concl"><strong>平缓市场里一直在付钱</strong></td>
+<td><span class="cat c1">设计前</span></td>
+</tr>
+<tr class="grp"><td colspan="4">f–i 没去查不需要任何回测，查一下就知道</td></tr>
+<tr>
+<td><span class="rid">f</span>池子在检验段完全变样</td>
+<td class="r-why">26 → 102 个容器</td>
+<td class="r-concl"><strong>测的不是同一个池子</strong></td>
+<td><span class="cat c1">设计前</span></td>
+</tr>
+<tr>
+<td><span class="rid">g</span>基准越来越靠美股</td>
+<td class="r-why">检验段 60% 收益来自美股</td>
+<td class="r-concl"><strong>美股怎么拿决定输赢</strong></td>
+<td><span class="cat c1">设计前</span></td>
+</tr>
+<tr>
+<td><span class="rid">h</span>能买到的池子混进场外基金</td>
+<td class="r-why">场外是 第 2 档，你只买场内</td>
+<td class="r-concl"><strong>和你的真实交易对不上</strong></td>
+<td><span class="cat c1">设计前</span></td>
+</tr>
+<tr>
+<td><span class="rid">i</span>数据没覆盖到检验终点</td>
+<td class="r-why">57 只场外基金停在 2015 年</td>
+<td class="r-concl"><strong>能买到的池子算不准</strong></td>
+<td><span class="cat c2">检验前</span></td>
+</tr>
+</tbody>
+</table></div></div></div>
+<ul class="points">
+<li><strong>“3000 万门槛”是什么</strong>：只用在“能买到的池子”。一只场内 ETF 某天要算“能买”，它最近 20 个交易日<strong>每天成交额的中位数要 ≥ 3000 万元</strong>，并且上市满 60 个交易日。不是看单日，也不是看基金规模。目的是保证真实下单时买得进、卖得出。</li>
+<li><strong>本页的收益和拆解都用“能排名的池子”</strong>，不受这道门槛影响；门槛只影响“能买到的池子”那一组数字（D35 正在按场内口径重算）。</li>
+</ul>
+<figure><img alt="能排名的池子每年有行情的容器数，按地区" loading="lazy" src="../../assets/retro/r2-pool.png"/></figure>
+<figure><img alt="E2 新口径股票类持仓相对等权的超额，逐年" loading="lazy" src="../../assets/retro/r3-selection.png"/></figure>
+</section>
+<section id="sec-6-我漏了什么-看见的没推成结论-该查的没去查-精力花在了把-v5-1-做复杂"><h2 id="6-我漏了什么-看见的没推成结论-该查的没去查-精力花在了把-v5-1-做复杂"><span class="num">06</span>我漏了什么：看见的没推成结论，该查的没去查，精力花在了把 v5.1 做复杂</h2>
+<p class="memo"><strong>九件里 5 件我写过却没下判断，4 件没去查；这一轮复盘里，我还把美股主题单独算，得出过“E2 新口径少拿美股”的错结论，是你问了才改。</strong>
+<strong>那句没说出口的话</strong>　“按 abcd，E2 新口径的一次性检验大概率不会通过；它只是规则上唯一的入围者。”这句话本该在你批准封板之前写进报告。</p>
+<div class="cards"><div class="card tone-bad"><div class="ct">看见了，没下判断 · a–e</div><div class="cv">5 件</div><p>每件都写过。缺的是同一步：<strong>把证据合起来，写事前预判和把握有多大</strong>；以及把 v5.1 的触发次数<strong>换算成每年的钱</strong>（是 <span class="num">3–6 个点</span>，不是 1–2）。</p><p>期望线也该在看结果前由你签字，而不是事后补。</p></div><div class="card tone-bad"><div class="ct">没去查 · f–i</div><div class="cv">4 件</div><p>都不用回测：<strong>数池子、拆基准、核对场内场外、查数据到哪天</strong>。我只要求了“复算代码一致”，没要求“数据覆盖到终点”。</p><p>结果是上一版报告把能买到的池子说错了。</p></div><div class="card tone-bad"><div class="ct">精力放错 · v5.1</div><div class="cv">37 个探索</div><p>v5、v5.1 做了 37 个探索、28 把尺子。本该先用持仓拆解回答<strong>“选强到底有没有用、在哪一层有用”</strong>，再决定要不要做两层、每周换人。</p><p>归因也要按地区算：主题跟着它所在的市场走。</p></div></div>
+<div class="aside">
+<p><strong>做对的、要保留的</strong>　先预注册再跑、检验段只跑一次、别的市场检验挡下 v5.1、按时封板、每步独立复算、结果照实报告。没有这些，我们现在会拿着设计期 <span class="num">30%</span> 的 v5.1 去上模拟盘。</p>
+</div>
+</section>
+<section id="sec-7-哪些能直接修-数据和口径的错现在修-规则的硬伤只能放进-v6"><h2 id="7-哪些能直接修-数据和口径的错现在修-规则的硬伤只能放进-v6"><span class="num">07</span>哪些能直接修：数据和口径的错现在修，规则的硬伤只能放进 v6</h2>
+<p class="memo"><strong>现在修 4 件（已完成 1 件），放进 v6 7 件。2016–2026 已经用掉，改了规则再在这段上跑，只能算“设计证据”。</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>怎么修</th>
+<th class="rh-status">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr class="grp"><td colspan="3">现在修修的是错，修完可以直接重算</td></tr>
+<tr class="row-good">
+<td><span class="rid">i</span>场外净值只到 2015 年</td>
+<td><strong>补齐 63 只</strong>，Reviewer 签收</td>
+<td class="r-status"><span class="pill good">已修</span></td>
+</tr>
+<tr>
+<td><span class="rid">h</span>能买到的池子混进场外</td>
+<td><strong>只用场内 ETF、LOF</strong>，只报告、不改判</td>
+<td class="r-status"><span class="pill warn">D35 重算中</span></td>
+</tr>
+<tr class="row-warn">
+<td>载体没价格还能被选中</td>
+<td><strong>近 5 日要有价格</strong>，否则不进排名</td>
+<td class="r-status"><span class="pill warn">待修程序</span></td>
+</tr>
+<tr class="row-warn">
+<td>尝试次数少记 30 行</td>
+<td><strong>v5、v5.1 账本并入</strong></td>
+<td class="r-status"><span class="pill warn">待补记</span></td>
+</tr>
+<tr class="grp"><td colspan="3">放进 v6改的是规则：设计证据 → 别的市场 → 至少 6 个月模拟盘</td></tr>
+<tr>
+<td><span class="rid">b</span>跨资产用“涨幅 ÷ 波动”排名</td>
+<td><strong>大类先分预算</strong>，同类里再比强弱</td>
+<td class="r-status"><span class="pill info">v6</span></td>
+</tr>
+<tr>
+<td><span class="rid">f</span>池子暴涨、主题占大头</td>
+<td><strong>固定分层</strong>，主题只在所属市场里竞争、设上限</td>
+<td class="r-status"><span class="pill info">v6</span></td>
+</tr>
+<tr>
+<td><span class="rid">a</span>“挑哪一只”没有本事</td>
+<td><strong>先证明能选</strong>；证明不了就不靠选</td>
+<td class="r-status"><span class="pill info">v6 先验证</span></td>
+</tr>
+<tr>
+<td><span class="rid">g</span>和基准的美股差</td>
+<td><strong>核心贴基准</strong>，美股核心用标普、纳指</td>
+<td class="r-status"><span class="pill info">v6</span></td>
+</tr>
+<tr>
+<td>ev5.1 动得太勤</td>
+<td><strong>减仓线、加仓线分开</strong>；换人改月度并留缓冲</td>
+<td class="r-status"><span class="pill info">v6</span></td>
+</tr>
+<tr>
+<td><span class="rid">v</span>5.1 拿不到“其他海外”</td>
+<td><strong>按资产选，不按市场挡</strong>（如中韩半导体）</td>
+<td class="r-status"><span class="pill info">v6</span></td>
+</tr>
+<tr>
+<td>A1 一次全换</td>
+<td><strong>分批切换</strong>，不一次全换</td>
+<td class="r-status"><span class="pill info">v6</span></td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="sec-8-三次尝试说明了什么-挑哪一只-很难赚钱-该不该在场-有用但要慢"><h2 id="8-三次尝试说明了什么-挑哪一只-很难赚钱-该不该在场-有用但要慢"><span class="num">08</span>三次尝试说明了什么：“挑哪一只”很难赚钱，“该不该在场”有用但要慢</h2>
+<p class="memo"><strong>稳定做到的只有“跌的时候少亏”：检验段回撤 E2 新口径 <span class="num">−15%</span>、A2 <span class="num">−10%</span>，基准 <span class="num">−26%</span>；做得太快的 v5.1 是 <span class="num">−54%</span>。</strong></p>
+<div class="cards"><div class="card tone-info"><div class="ct">同一类里挑哪一只</div><div class="cv">不成立</div><p>比等权每年：E2 新口径 <strong class="num">+1.1</strong>（检验段 0.4），v5.1 在所选市场里 <strong class="num">+1.3</strong>（0.7）。</p><p>第 1 次的 A 股主题轮动同样失败；不少研究发现 A 股横截面动量弱、短期反转明显。</p></div><div class="card tone-info"><div class="ct">大类二选一（A1）</div><div class="cv">设计期有用，检验段弱</div><p>设计期每年 <strong class="num">+13.9</strong>，检验段 <strong class="num">+2.2</strong>；拿对了美股（+5.1），却在进出时点丢了 <strong class="num">3.1</strong>。</p><p>只有两样资产、一次只拿一样：换错一次就是 <span class="num">−40%</span> 的回撤。</p></div><div class="card tone-info"><div class="ct">自己是不是在涨（趋势）</div><div class="cv">成立，但要慢</div><p>A2 按月看 10 个月均线，检验段只衰减 <strong class="num">1.7</strong> 个点。v5.1 把同一想法做到周和日：成本 <strong class="num">6.6</strong> + 时点 <strong class="num">4.3</strong>。</p><p>多资产趋势跟随是文献里最稳健的结论之一（Moskowitz 等 2012；Faber 2007）。</p></div></div>
+<p class="kv"><span class="kv-k"><strong>两点注意</strong></span><span class="kv-v">你最初的判断“强势有连续性”，在“大类该不该拿、按月看”这一层成立，在“同类里挑哪一只、按周看”这一层不成立。A2 回撤最浅是看过检验段之后才看到的，只算线索，要先过别的市场检验和至少 6 个月模拟盘。</span></p>
+</section>
+<section id="sec-9-对愿景的含义-跑赢-和-控回撤-这十年只能先选一个"><h2 id="9-对愿景的含义-跑赢-和-控回撤-这十年只能先选一个"><span class="num">09</span>对愿景的含义：“跑赢”和“控回撤”这十年只能先选一个</h2>
+<p class="memo"><strong>这十年做得到的是“收益接近基准、回撤小一半”：A2 年化 <span class="num">7.2%</span> 对 <span class="num">8.7%</span>，回撤 <span class="num">−10%</span> 对 <span class="num">−26%</span>。</strong></p>
+<div class="cards"><div class="card tone-good"><div class="ct">靶子 ① 稳定跑赢基准</div><div class="cv">三次都没做到</div><p>E2 新口径 <strong class="num"><span class="num">3.0%</span></strong>、v5.1 <strong class="num"><span class="num">−3.3%</span></strong>；A1 多拿美股才打平（<span class="num">8.6%</span>），回撤 <span class="num">−40%</span>。</p></div><div class="card tone-info"><div class="ct">靶子 ② 收益接近、回撤更小</div><div class="cv">年化 ÷ 回撤 0.74</div><p>基准只有 <strong class="num">0.33</strong>。符合“先为不可胜”，也是唯一被数据支持的。</p></div><div class="card tone-info"><div class="ct">靶子 ③ 核心贴基准、卫星争超额</div><div class="cv">还没测过</div><p>核心拿住基准（或你认可的美股比例），<strong>卫星只用一小部分</strong>去争。</p></div></div>
+<ul>
+<li><strong>你的美股直觉，这十年是对的</strong>：标普500 年化 <span class="num">15.9%</span>、纳指100 <span class="num">21.4%</span>、沪深300 <span class="num">4.0%</span>，基准六成收益来自那 <span class="num">30%</span> 美股。但要“拿住”宽基才赚得到；这只是一段十年，不能直接当成规律。</li>
+</ul>
+</section>
+<section id="sec-10-流程马上改什么-七条改动-堵住第-5-节九件里的八件"><h2 id="10-流程马上改什么-七条改动-堵住第-5-节九件里的八件"><span class="num">10</span>流程马上改什么：七条改动，堵住第 5 节九件里的八件</h2>
+<p class="memo"><strong>剩下的 b 是规则硬伤，只能放进 v6。这七条从下一次任务就生效，不等 v6。</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>改动</th>
+<th>堵住</th>
+<th>生效</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>冻结前做收益来源拆解：仓位、拿什么、进出时点</td>
+<td>ac</td>
+<td><span class="pill info">下一次</span></td>
+</tr>
+<tr>
+<td>检验前写事前预判，期望线由你签字</td>
+<td>d</td>
+<td><span class="pill info">下一次</span></td>
+</tr>
+<tr>
+<td>跑前把触发次数换算成每年换手和成本</td>
+<td>e</td>
+<td><span class="pill info">下一次</span></td>
+</tr>
+<tr>
+<td>冻结前数检验段的池子，按地区</td>
+<td>f</td>
+<td><span class="pill info">下一次</span></td>
+</tr>
+<tr>
+<td>冻结前拆基准，按地区写清暴露差</td>
+<td>g</td>
+<td><span class="pill info">下一次</span></td>
+</tr>
+<tr>
+<td>能买到的池子和你的真实交易一致</td>
+<td>h</td>
+<td><span class="pill good">已按 D35 改</span></td>
+</tr>
+<tr>
+<td>数据覆盖门 + 持有零收益报警</td>
+<td>i</td>
+<td><span class="pill info">下一次</span></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">写进策略设计评审（跑前五问加三问）和 Reviewer 的签收模板，你确认后生效。Orchestrator 写，Reviewer 核。</p>
+</section>
+<section id="sec-11-需要你定的四件事-我的建议是关闭-沿用门槛-先要控回撤-做核心-卫星"><h2 id="11-需要你定的四件事-我的建议是关闭-沿用门槛-先要控回撤-做核心-卫星"><span class="num">11</span>需要你定的四件事：我的建议是关闭、沿用门槛、先要控回撤、做核心 + 卫星</h2>
+<p class="memo"><strong>四件事里，1 和 2 决定 D35 重算能不能开跑，3 和 4 决定 v6 从哪里开始。</strong></p>
+<h4 id="1-确认第二阶段轮动研究按-不成立-关闭-第-3-次尝试">1：确认第二阶段轮动研究按“不成立”关闭（第 3 次尝试）</h4>
+<div class="options decision"><div class="option rec"><div class="on">关闭 <strong></strong><span class="badge">★ 建议</span></div><div class="od">不通过不是擦边；复盘也说明原因在结构（第 3 节），不在运气。</div></div></div>
+<p>影响：关闭后不再改 E2 新口径；核心配置照常执行。</p>
+<h4 id="2-场内口径重算-d35-的成交额门槛">2：场内口径重算（D35）的成交额门槛</h4>
+<div class="options decision"><div class="option rec"><div class="on">这次沿用 3000 万 <strong></strong><span class="badge">★ 建议</span></div><div class="od">只换载体档位，结果才可比；按资金规模定门槛放到 v6。</div></div><div class="option"><div class="on">现在就按资金规模改</div><div class="od">需要你给计划投入的规模；改动不止一处，结果更难解读。</div></div></div>
+<p>影响：门槛越低，早年能买到的容器越多，可交易池越接近能排名的池子。</p>
+<h4 id="3-愿景里先要哪个靶子-第-9-节">3：愿景里先要哪个靶子（第 9 节）</h4>
+<div class="options decision"><div class="option rec"><div class="on">收益接近基准、回撤明显更小 <strong></strong><span class="badge">★ 建议</span></div><div class="od">符合“先为不可胜”，这十年唯一做得到的；“跑赢”交给卫星。</div></div><div class="option"><div class="on">仍以跑赢基准为主</div><div class="od">先回答超额从哪来：这十年选强不行，只能靠更多美股或更好的择时。</div></div></div>
+<p>影响：决定 v6 的过关条件，必须在看任何新结果之前定。</p>
+<h4 id="4-v6-往哪走">4：v6 往哪走</h4>
+<div class="options decision"><div class="option rec"><div class="on">核心 + 卫星，卫星用大类趋势 <strong></strong><span class="badge">★ 建议</span></div><div class="od">不靠同类里挑哪一只。证据：设计证据（按尝试次数打折）<span class="arr">→</span> 别的市场 <span class="arr">→</span> 至少 6 个月模拟盘 <span class="arr">→</span> 小资金。</div></div><div class="option"><div class="on">先停轮动，转做期权</div><div class="od">期权研究备忘提前。</div></div></div>
+<p>影响：决定接下来几周的研究方向和证据路径。</p>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>数据来源和方法</span></button><div class="fold-b" hidden="">
+<ul class="points">
+<li><strong>表现</strong>：设计期引用已签收的 <code>results/v4/r5/design</code>、<code>results/v5.1/design</code>；检验段引用 <code>results/v5/oneshot</code>。</li>
+<li><strong>收益来源拆解</strong>：<code>results/v5/report/attribution_all.py</code>（设计期）、<code>region_attr.py</code>（检验段按地区，地区取 <code>config/v5/classes.csv</code>）、<code>timing.json</code>（进出时点）、<code>v51_years.json</code>（v5.1 逐年）。持仓 × 各容器当日收益（行情数据，不是新的组合收益），和扣费前净值相关系数 1.00。设计期 E2 新口径持仓用冻结规则在 ≤2015 复跑，净值与签收结果最大差 5×10⁻¹⁴。</li>
+<li><strong>图</strong>：<code>results/v5/report/retro4_charts.py</code>（r1、r2、o3）、<code>retro3_charts.py</code>（r3）。本页只用能排名的池子。</li>
+</ul>
+</div></div></section>
+<footer>内容取自仓库 <a href="https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/main/docs/owner/phase2-retrospective.md">docs/owner/phase2-retrospective.md</a>（main @ a592981）。图表为原文配图。</footer>
+</main>
+</div>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc ol a'));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function update() {
+    var y = window.scrollY + 120, idx = 0;
+    targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top + window.scrollY <= y) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+
+document.querySelectorAll('.fold-h').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var open = b.getAttribute('aria-expanded') === 'true';
+    b.setAttribute('aria-expanded', open ? 'false' : 'true');
+    var body = b.nextElementSibling;
+    if (open) body.setAttribute('hidden', ''); else body.removeAttribute('hidden');
+  });
+});
+
+</script>
+</body>
+</html>
