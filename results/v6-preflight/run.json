@@ -1,0 +1,9 @@
+{
+ "paths": 1000,
+ "seed": 20261117,
+ "noise": "^GSPC/^HSI 1987-01..2003-06 paired, 20d block bootstrap",
+ "noise_days": 3983,
+ "daily_corr": 0.142,
+ "bond": 0.03,
+ "cost_per_leg": 0.001
+}
