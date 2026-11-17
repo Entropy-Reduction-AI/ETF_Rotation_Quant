@@ -654,6 +654,31 @@ p.exp-key { font-size: 12.5px; color: var(--muted); margin: 6px 0 4px; display: 
 .ek { font-family: var(--font-mono); font-weight: 700; border-radius: 4px; padding: 0 6px; }
 .ek.ok { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); } .ek.no { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
 
+.sens-axis { margin: 10px 0 16px; padding: 14px 16px 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.sa-cap { font-size: 13px; color: var(--muted); margin-bottom: 34px; }
+.sa-track { position: relative; height: 44px; border-bottom: 1px solid var(--line); }
+.sa-zone { position: absolute; top: 0; bottom: 0; background: color-mix(in srgb, var(--muted) 12%, transparent); border-radius: 4px; }
+.sa-base { position: absolute; top: -26px; bottom: 0; border-left: 2px dashed var(--ink); }
+.sa-base span { position: absolute; top: -4px; left: 6px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.sm { position: absolute; top: 18px; height: 12px; }
+.sm.d { width: 14px; height: 14px; margin-left: -7px; top: 17px; border-radius: 50%; }
+.sm.r { border-radius: 6px; }
+.sm.sk-good { background: var(--good); } .sm.sk-bad { background: var(--bad); } .sm.sk-warn { background: #fff; border: 3px solid #a16207; box-sizing: border-box; }
+.sl-lab { position: absolute; top: 34px; transform: translateX(-50%); font-size: 11.5px; font-weight: 600; white-space: nowrap; padding-top: 12px; }
+.sl-lab.sk-good { color: var(--good); } .sl-lab.sk-bad { color: var(--bad); } .sl-lab.sk-warn { color: #a16207; }
+.sa-ticks { position: relative; height: 58px; margin-top: 0; }
+.sa-ticks .st { top: 44px !important; }
+.sa-ticks .st { position: absolute; top: 26px; transform: translateX(-50%); font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
+.cards .card.sens { border-top: 4px solid var(--line); }
+.cards .card.sk-good { border-top-color: var(--good); } .cards .card.sk-bad { border-top-color: var(--bad); } .cards .card.sk-warn { border-top: 4px dashed #a16207; background: color-mix(in srgb, #a16207 5%, var(--surface)); }
+.card.sk-good .cv { color: var(--good); } .card.sk-bad .cv { color: var(--bad); } .card.sk-warn .cv { color: #a16207; }
+.sens-tag { display: inline-block; font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 1px 7px; margin: 4px 0 2px; }
+.sk-good .sens-tag { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.sk-bad .sens-tag { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.sk-warn .sens-tag { color: #a16207; background: color-mix(in srgb, #a16207 12%, transparent); }
+.sens-tag { align-self: flex-start; width: fit-content; }
+.cards.sens-cards { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
 </style>
 </head>
 <body>
@@ -1035,7 +1060,7 @@ p.exp-key { font-size: 12.5px; color: var(--muted); margin: 6px 0 4px; display: 
 </section>
 <section id="sec-8-改参数会不会塌-不会塌-但对成交时点敏感"><h2 id="8-改参数会不会塌-不会塌-但对成交时点敏感"><span class="num">08</span>改参数会不会塌：不会塌，但对成交时点敏感</h2>
 <p class="memo"><strong>成本加倍、去掉最好的容器、改门槛和噪音带，年化都在 <span class="num">24–32%</span> 之间；唯一要警惕的是决策日晚一天，年化反而升到 <span class="num">38%</span>。</strong></p>
-<div class="cards"><div class="card tone-info"><div class="ct">成本加倍</div><div class="cv">25.8%</div><p>少 <span class="num">4.3 个点</span>，仍高于 E2 新口径。换手高，所以成本是最敏感的一项之一。</p></div><div class="card tone-info"><div class="ct">门槛、噪音带、硬闸门</div><div class="cv">27.9–31.6%</div><p>前沿门槛 0.4、0.6，噪音带 0.5、2，硬闸门 <span class="num">8%</span>、<span class="num">12%</span>、不设，都差 <span class="num">2 个点</span>以内。去掉最好的 1–3 个容器反而略高，不靠明星。</p></div><div class="card tone-info"><div class="ct">长尺子放缓比 10、40 天前</div><div class="cv">26.0%、23.8%</div><p>少 <span class="num">4–6 个点</span>，是规则里最敏感的一个读数。</p></div><div class="card tone-info"><div class="ct">决策日晚一天</div><div class="cv">38.0%</div><p>多 <span class="num">8 个点</span>。晚一天反而更好，说明结果对成交时点很敏感，<span class="num">30%</span> 里有一部分可能只是时点上的运气。</p></div></div>
+<div class="sens-axis"><div class="sa-cap">每项只改一处，年化落在哪：灰带 = 原规则 ±2 个点</div><div class="sa-track"><div class="sa-zone" style="left:34.6%;width:22.0%"></div><div class="sa-base" style="left:45.6%"><span>原规则 30.1%</span></div><div class="sm d sk-bad" style="left:22.0%" title="成本加倍 25.8%"></div><div class="sl-lab sk-bad" style="left:22.0%;top:34px">成本加倍</div><div class="sm r sk-good" style="left:33.5%;width:20.3%" title="门槛、噪音带、硬闸门"></div><div class="sl-lab sk-good" style="left:43.7%;top:34px">门槛、噪音带、硬闸门</div><div class="sm d sk-bad" style="left:23.1%" title="长尺子放缓比 10、40 天前 26.0%"></div><div class="sm d sk-bad" style="left:11.0%" title="长尺子放缓比 10、40 天前 23.8%"></div><div class="sl-lab sk-bad" style="left:17.0%;top:51px">长尺子放缓比 10、40 天前</div><div class="sm d sk-warn" style="left:89.0%" title="决策日晚一天 38.0%"></div><div class="sl-lab sk-warn" style="left:89.0%;top:34px">决策日晚一天</div></div><div class="sa-ticks"><span class="st" style="left:17.6%">25%</span><span class="st" style="left:45.1%">30%</span><span class="st" style="left:72.5%">35%</span><span class="st" style="left:100.0%">40%</span></div></div><div class="cards sens-cards"><div class="card sens sk-bad"><div class="ct">成本加倍</div><div class="sens-tag">少 4.3 个点 · 敏感</div><div class="cv">25.8%</div><p>少 <span class="num">4.3 个点</span>，仍高于 E2 新口径。换手高，所以成本是最敏感的一项之一。</p></div><div class="card sens sk-good"><div class="ct">门槛、噪音带、硬闸门</div><div class="sens-tag">±2 个点内 · 稳</div><div class="cv">27.9–31.6%</div><p>前沿门槛 0.4、0.6，噪音带 0.5、2，硬闸门 <span class="num">8%</span>、<span class="num">12%</span>、不设，都差 <span class="num">2 个点</span>以内。去掉最好的 1–3 个容器反而略高，不靠明星。</p></div><div class="card sens sk-bad"><div class="ct">长尺子放缓比 10、40 天前</div><div class="sens-tag">少 4–6 个点 · 敏感</div><div class="cv">26.0%、23.8%</div><p>少 <span class="num">4–6 个点</span>，是规则里最敏感的一个读数。</p></div><div class="card sens sk-warn"><div class="ct">决策日晚一天</div><div class="sens-tag">多 8 个点 · 要警惕</div><div class="cv">38.0%</div><p>多 <span class="num">8 个点</span>。晚一天反而更好，说明结果对成交时点很敏感，<span class="num">30%</span> 里有一部分可能只是时点上的运气。</p></div></div>
 <p>能排名的池子，每项只改一处，其余照原规则。全部只报告，不改判。完整 17 行见《v5 研究备忘》第 11 节。</p>
 </section>
 <section id="sec-9-对照期望-能排名的池子三条全过-能买到的池子只过一条"><h2 id="9-对照期望-能排名的池子三条全过-能买到的池子只过一条"><span class="num">09</span>对照期望：能排名的池子三条全过，能买到的池子只过一条</h2>
