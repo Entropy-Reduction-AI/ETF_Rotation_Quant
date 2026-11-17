@@ -1,7 +1,7 @@
 import sys, re
 from bs4 import BeautifulSoup
 PAGES_DIR = sys.argv[1] if len(sys.argv) > 1 else 'docs/artifact'
-PAGES=['board','retro','oneshot','v51-health','v5-memo','v4-health','v4-memo','data-board']
+PAGES=['v6-preflight','board','retro','oneshot','v51-health','v5-memo','v4-health','v4-memo','data-board']
 VIS='pill|ib|mg|big|boxed|stk|verdict|tag|risk-hit|win|best|good|bad'
 for p in PAGES:
     s=BeautifulSoup(open(f'{PAGES_DIR}/{p}/index.html').read(),'html.parser')

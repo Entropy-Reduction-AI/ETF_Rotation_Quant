@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v6 预演预测表</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  /* 布局：左侧固定目录 + 宽主栏（约 960px），图表按主栏全宽显示；表格自带横向滚动 */
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --ink: #1b2330;
+  --muted: #5b6676;
+  --line: #e1e5eb;
+  --accent: #1f5fd1;
+  --accent-soft: #e8f0fd;
+  --good: #1d7a46;
+  --good-soft: #e5f4ea;
+  --bad: #c2410c;
+  --bad-soft: #fdf0e6;
+  --warn: #8a5a00;
+  --warn-soft: #fbf1dc;
+  --font-body: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1a2029; --ink: #e6eaf0; --muted: #9aa5b4; --line: #2c3440;
+    --accent: #7aa7ff; --accent-soft: #1c2a44;
+    --good: #6fcf97; --good-soft: #17301f; --bad: #fb923c; --bad-soft: #3a2414; --warn: #f2c063; --warn-soft: #3a2e14;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12161d; --surface: #1a2029; --ink: #e6eaf0; --muted: #9aa5b4; --line: #2c3440;
+  --accent: #7aa7ff; --accent-soft: #1c2a44;
+  --good: #6fcf97; --good-soft: #17301f; --bad: #fb923c; --bad-soft: #3a2414; --warn: #f2c063; --warn-soft: #3a2e14;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+strong { font-weight: 700; }
+code { font-family: var(--font-mono); font-size: .88em; background: var(--line); padding: .1em .35em; border-radius: 4px; }
+
+.shell { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 56px; max-width: 1240px; margin: 0 auto; padding: 40px 32px 96px; }
+nav.toc { position: sticky; top: 24px; align-self: start; font-size: 14px; line-height: 1.6; }
+nav.toc .toc-title { font-size: 12px; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+nav.toc a { display: block; color: var(--muted); padding: 4px 10px; border-left: 2px solid var(--line); }
+nav.toc a:hover { color: var(--ink); border-left-color: var(--accent); text-decoration: none; }
+nav.toc ol ol { padding-left: 12px; font-size: 13px; }
+nav.toc a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 500; }
+
+main { min-width: 0; }
+header.top { display: grid; gap: 8px; margin-bottom: 28px; }
+.kicker { font-size: 13px; color: var(--muted); font-family: var(--font-mono); }
+h1 { font-size: 34px; line-height: 1.3; margin: 0; font-weight: 700; text-wrap: balance; }
+.vision { color: var(--muted); margin: 4px 0 0; }
+.vision b { color: var(--ink); font-weight: 500; }
+
+.summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 8px 0 48px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; display: grid; gap: 8px; align-content: start; }
+.card h3 { margin: 0; font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: .04em; }
+.card p { margin: 0; font-size: 15px; line-height: 1.7; }
+.asks { margin: 0; padding-left: 1.3em; font-size: 15px; line-height: 1.7; }
+.asks li { margin: 2px 0; }
+.card.verdict { border-top: 3px solid var(--bad); }
+.card.ask { border-top: 3px solid var(--accent); }
+.card.eng { border-top: 3px solid var(--good); }
+.big { font-family: var(--font-mono); font-size: 28px; font-weight: 500; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.big .vs { font-size: 15px; color: var(--muted); font-family: var(--font-body); }
+
+section { margin: 0 0 64px; scroll-margin-top: 24px; }
+h2 { font-size: 24px; line-height: 1.4; margin: 0 0 14px; font-weight: 700; text-wrap: balance; display: flex; gap: 12px; align-items: baseline; }
+h2 .num { font-family: var(--font-mono); font-size: 15px; color: var(--accent); font-weight: 500; }
+h3 { font-size: 19px; margin: 36px 0 10px; line-height: 1.45; text-wrap: balance; scroll-margin-top: 24px; }
+h4 { font-size: 16px; margin: 24px 0 8px; }
+p { margin: 0 0 12px; }
+ul, ol.steps { margin: 0 0 14px; padding-left: 1.3em; }
+li { margin: 4px 0; }
+
+.lede { font-size: 17px; font-weight: 500; border-left: 3px solid var(--accent); background: var(--surface); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 0 0 20px; max-width: none; }
+
+figure { margin: 14px 0 22px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+figure img { display: block; width: 100%; height: auto; }
+figcaption { font-size: 13px; color: #5b6676; margin-top: 8px; }
+
+.table-wrap { overflow-x: auto; margin: 14px 0 22px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; line-height: 1.65; }
+th, td { text-align: left; vertical-align: top; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+th { font-weight: 500; color: var(--muted); font-size: 13px; background: var(--bg); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; font-family: var(--font-mono); font-size: 14px; }
+td.name { font-weight: 700; white-space: nowrap; }
+.cols-3 td { width: 33.3%; }
+
+.pill { display: inline-block; font-size: 12.5px; font-weight: 500; padding: 1px 9px; border-radius: 999px; white-space: nowrap; margin-right: 4px; }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.good { background: var(--good-soft); color: var(--good); }
+.pill.info { background: var(--accent-soft); color: var(--accent); }
+.pill.warn { background: var(--warn-soft); color: var(--warn); }
+.pill.mute { background: var(--line); color: var(--muted); }
+
+.note { font-size: 14px; color: var(--muted); }
+.claim { font-weight: 700; font-size: 16.5px; margin: 0 0 4px; }
+.aside { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; margin: 14px 0 22px; }
+.aside h4 { margin: 0 0 6px; font-size: 15px; }
+.aside p:last-child, .aside ul:last-child { margin-bottom: 0; }
+
+.archive { margin-top: 40px; border-top: 2px dashed var(--line); padding-top: 4px; }
+.archive-band { font-family: var(--font-mono); font-size: 12px; color: var(--muted); letter-spacing: .06em; margin: 10px 0 0; }
+.archive-head { display: flex; gap: 10px; align-items: baseline; margin-top: 32px; }
+.archive-head .tag { font-family: var(--font-mono); font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; }
+
+.mini { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 14px 0 22px; }
+.mini .card p { font-size: 14.5px; }
+
+ol.next { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; max-width: none; }
+ol.next { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; gap: 0; }
+ol.next li { padding: 14px 18px; display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; margin: 0; border-bottom: 1px solid var(--line); }
+ol.next li:last-child { border-bottom: 0; }
+ol.next .who .pill { margin-top: 4px; font-weight: 500; }
+ol.next .who { font-weight: 700; }
+
+.log { display: grid; gap: 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.log div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 14.5px; line-height: 1.7; }
+.log div:last-child { border-bottom: 0; }
+.log .d { font-family: var(--font-mono); font-size: 13.5px; color: var(--muted); padding-top: 1px; }
+details.older { margin-top: 16px; }
+details.older summary { cursor: pointer; color: var(--accent); font-size: 15px; margin-bottom: 10px; }
+
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+
+@media (max-width: 1000px) {
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 24px 16px 64px; }
+  nav.toc { display: none; }
+  .summary, .mini { grid-template-columns: minmax(0, 1fr); }
+  h1 { font-size: 27px; }
+  ol.next li, .log div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+html { scroll-behavior: smooth; }
+
+/* page-type additions */
+nav.toc li.l3 a { padding-left: 22px; font-size: 13px; }
+nav.toc { max-height: calc(100vh - 48px); overflow-y: auto; }
+.back { font-size: 13px; color: var(--muted); }
+.headline { font-size: 19px; line-height: 1.6; font-weight: 500; margin: 6px 0 0; color: var(--ink); text-wrap: balance; }
+section.intro > p:first-child { margin-top: 0; }
+section.intro { margin-bottom: 40px; }
+.lede p, .claim-box p { margin: 0; }
+.claim-box { font-weight: 700; font-size: 16.5px; margin: 0 0 10px; }
+.aside > p:last-child, .aside > ul:last-child, .aside > ol:last-child { margin-bottom: 0; }
+h4.toggle { font-size: 15.5px; color: var(--ink); margin: 26px 0 8px; padding-left: 10px; border-left: 3px solid var(--line); }
+details.fold { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 18px; margin: 16px 0 22px; }
+details.fold > summary { cursor: pointer; padding: 12px 0; font-weight: 500; color: var(--accent); list-style: none; }
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::before { content: '▸'; display: inline-block; width: 1.1em; transition: transform .15s; }
+details.fold[open] > summary::before { transform: rotate(90deg); }
+details.fold[open] { padding-bottom: 8px; }
+details.fold figure { padding: 10px; }
+pre { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font-size: 13px; }
+pre code { background: none; padding: 0; }
+td del, td s { color: var(--muted); }
+td.k { white-space: nowrap; font-weight: 500; }
+/* table polish */
+.table-wrap { box-shadow: 0 1px 0 var(--line); }
+th { background: var(--bg); color: var(--muted); font-weight: 500; font-size: 12.5px; border-bottom: 2px solid var(--line); vertical-align: bottom; }
+tbody tr:hover td { background: var(--accent-soft); }
+tbody td:first-child { font-weight: 500; color: var(--ink); }
+tr.group td { background: var(--bg); color: var(--muted); font-size: 12.5px; font-weight: 500; letter-spacing: .02em; padding-top: 8px; padding-bottom: 8px; }
+tr.ref td { background: color-mix(in srgb, var(--line) 35%, transparent); color: var(--muted); }
+tr.ref td:first-child { font-style: normal; }
+span.pos { color: var(--good); font-weight: 500; }
+span.neg { color: var(--bad); font-weight: 500; }
+td .pill { margin-right: 6px; vertical-align: 1px; }
+td.good span.pos, td.bad span.neg { color: inherit; }
+td.good { background: var(--good-soft); }
+td.bad, tr.hl td { background: var(--warn-soft); }
+td.boxed { outline: 2px solid var(--accent); outline-offset: -4px; }
+.log div.hl { background: var(--warn-soft); }
+.log div.hl span { color: var(--warn); font-weight: 500; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin: 14px 0 22px; }
+.cards .card .ct { font-size: 14px; color: var(--ink); font-weight: 700; }
+.cards .card .cv { font-family: var(--font-mono); font-size: 20px; font-weight: 500; line-height: 1.3; color: var(--accent); font-variant-numeric: tabular-nums; }
+.cards .card p { font-size: 14.5px; line-height: 1.7; margin: 0; }
+.cards .card p + p { color: var(--muted); font-size: 13.5px; }
+th { white-space: normal; min-width: 4.5em; }
+th.n { white-space: normal; }
+h2 .num { min-width: 1.6em; }
+:root { --fg: var(--ink); --rule: var(--line); --mono: var(--font-mono); --body: var(--font-body); --ok: var(--good); --ok-soft: var(--good-soft); }
+.lt{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--fg);color:var(--bg);font:700 11.5px var(--mono);margin-right:6px;vertical-align:1px}
+.rn{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font:700 12.5px var(--mono);margin-right:6px}
+.ib{display:inline-flex;align-items:center;gap:8px;min-width:150px;width:100%}
+.ib i{display:block;height:10px;border-radius:5px;flex:none}
+.ib i.g{background:var(--good)} .ib i.r{background:var(--bad)} .ib i.k{background:var(--muted)}
+.ib em{font-style:normal;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ib em.g{color:var(--good)} .ib em.r{color:var(--bad)}
+.big{font:700 18px var(--body);font-variant-numeric:tabular-nums;white-space:nowrap}
+.big.g{color:var(--good)} .big.r{color:var(--bad)} .big.k{color:var(--fg)}
+.arr{color:var(--muted);margin:0 4px}
+b.c-bad,em.c-bad{color:var(--bad)} b.c-good,em.c-good{color:var(--good)}
+.ib em.w{color:var(--warn)} .ib i.w{background:var(--warn)}
+td.lead{font-weight:700;color:var(--fg)}
+table.story td{vertical-align:middle}
+table.story td.why{font-size:14px;color:var(--fg)}
+table.story td.sub{font-size:13px;color:var(--muted)}
+tr.grp td{background:var(--bg);font-weight:700;font-size:13.5px;color:var(--fg);letter-spacing:.02em;border-top:2px solid var(--rule)}
+tr.grp td .gk{display:inline-block;margin-right:8px;padding:1px 8px;border-radius:999px;font-size:12px}
+.gk.o{background:var(--warn-soft);color:var(--warn)} .gk.r{background:var(--bad-soft);color:var(--bad)} .gk.g{background:var(--ok-soft);color:var(--ok)} .gk.b{background:var(--accent-soft);color:var(--accent)}
+.vd-card.v-bad{background:var(--bad-soft);border-top-color:var(--bad)} .v-bad .vd-v{color:var(--bad)}
+.cards3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+.cards3 .vd-card p{font-size:14px}
+.vd-card .vd-e{font-size:13px;color:var(--muted);margin-top:6px;border-top:1px dashed var(--rule);padding-top:6px}
+@media (max-width:760px){.cards3{grid-template-columns:1fr}.ib{min-width:110px}}
+.tag-a{display:inline-block;font:700 11.5px var(--body);padding:1px 7px;border-radius:5px;background:var(--bg);border:1px solid var(--rule);color:var(--fg);margin:1px 2px 1px 0;white-space:nowrap}
+.stk{display:flex;height:26px;border-radius:6px;overflow:hidden;width:100%;max-width:640px;margin:6px 0 2px}
+.stk span{display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:700;white-space:nowrap;overflow:hidden}
+.stk-l{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.stk-l i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+tr.tot td{border-top:2px solid var(--fg)}
+h3.sub-h{font-size:15px;font-weight:700;margin:22px 0 8px;color:var(--fg)}
+
+
+/* ===== storytelling layer ===== */
+/* status cards that open a page */
+.cards.from-table { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.cards.from-table .card { border-top: 3px solid var(--line); }
+.cards.from-table .ct { font-size: 12.5px; font-weight: 500; color: var(--muted); letter-spacing: .04em; }
+.cards.from-table .cb { font-size: 14.5px; line-height: 1.75; }
+.cards.status .tone-0 { border-top-color: var(--muted); }
+.cards.status .tone-1 { border-top-color: var(--accent); }
+.cards.status .tone-2 { border-top-color: var(--warn); }
+.cards.status .tone-2 .ct { color: var(--warn); }
+.cards.status .tone-1 .cb { font-size: 15px; }
+.cards.plain .card { border-top-color: var(--accent); }
+
+/* options with a recommendation */
+.options { display: grid; gap: 10px; margin: 12px 0 18px; }
+.option { display: grid; grid-template-columns: minmax(150px, 220px) minmax(0, 1fr); gap: 16px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+.option .on { font-weight: 700; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.option .od { color: var(--muted); font-size: 14.5px; }
+.option.rec { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.option.rec .od { color: var(--ink); }
+.option .badge { font-size: 12px; font-weight: 500; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 0 8px; }
+
+/* definitions */
+table.deflist thead { display: none; }
+table.deflist td:first-child { width: 9.5em; color: var(--accent); font-weight: 700; border-right: 2px solid var(--accent-soft); }
+table.deflist tr.was td { color: var(--muted); }
+table.deflist tr.was td:last-child { text-decoration: line-through; text-decoration-color: var(--bad); }
+table.deflist tr.now td { background: var(--good-soft); }
+table.deflist tr.now td:first-child { color: var(--good); border-right-color: var(--good); }
+
+/* grouped headers */
+thead tr.grp th.gh { text-align: center; color: var(--ink); font-weight: 700; border-bottom: 1px solid var(--line); background: var(--bg); }
+thead tr.sub th { font-size: 12px; }
+
+/* column roles */
+th.h-subj, td.c-subj { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+th.h-subj { color: var(--accent); font-weight: 700; }
+td.c-take { font-weight: 500; color: var(--ink); border-left: 1px solid var(--line); }
+th.h-take { border-left: 1px solid var(--line); color: var(--ink); }
+td.c-note { color: var(--muted); font-size: 13.5px; }
+tr.row-subj td { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+tr.row-subj td:first-child { box-shadow: inset 3px 0 0 var(--accent); color: var(--accent); }
+
+/* numeric columns */
+td.numcol, th.numcol { text-align: right; }
+td.numcol { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 14px; white-space: nowrap; }
+thead tr.sub th.numcol, thead tr.grp th.numcol { text-align: right; }
+/* heat cells for differences */
+td.heat { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 500; text-align: right; white-space: nowrap; }
+td.heat-pos { color: var(--good); background: color-mix(in srgb, var(--good) var(--h, 8%), transparent); }
+td.heat-neg { color: var(--bad); background: color-mix(in srgb, var(--bad) var(--h, 8%), transparent); }
+td.heat-zero { color: var(--muted); }
+td.key { color: var(--accent); font-weight: 700; }
+td.key strong { font-weight: 700; }
+
+/* verdict rows */
+tr.row-bad td { background: color-mix(in srgb, var(--bad) 5%, transparent); }
+tr.row-bad td:first-child { box-shadow: inset 3px 0 0 var(--bad); }
+tr.row-good td:first-child { box-shadow: inset 3px 0 0 var(--good); }
+tr.row-warn td:first-child { box-shadow: inset 3px 0 0 var(--warn); }
+tr.row-bad td.heat, tr.row-subj td.heat { background: color-mix(in srgb, var(--bad) var(--h, 8%), transparent); }
+tr.row-bad td.heat-pos, tr.row-subj td.heat-pos { background: color-mix(in srgb, var(--good) var(--h, 8%), transparent); }
+.tvc .tv { font-family: var(--font-mono); margin-right: 8px; }
+.who { font-size: 12.5px; color: var(--muted); margin-right: 6px; }
+.pill-note { display: block; font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+td .pill { font-size: 12.5px; }
+
+/* scorecard above verdict tables */
+.score { display: flex; align-items: center; gap: 14px; margin: 14px 0 -6px; }
+.score .seg { display: flex; gap: 3px; width: 200px; height: 8px; }
+.score .seg span { border-radius: 2px; }
+.score .s-good { background: var(--good); }
+.score .s-warn { background: var(--warn); }
+.score .s-bad { background: var(--bad); }
+.score .sl { font-size: 13.5px; color: var(--muted); }
+.score .sl b { font-family: var(--font-mono); font-size: 15px; }
+.score .t-good { color: var(--good); } .score .t-bad { color: var(--bad); } .score .t-warn { color: var(--warn); }
+.score .of { color: var(--muted); }
+
+/* notes under tables read as captions */
+p.table-note { font-size: 13px; color: var(--muted); margin-top: -12px; }
+
+/* key-point lists */
+ul.points { list-style: none; padding-left: 0; display: grid; gap: 8px; }
+ul.points > li { padding: 2px 0 2px 14px; border-left: 3px solid var(--accent-soft); margin: 0; }
+ul.points > li > strong:first-child { color: var(--ink); }
+ol.steps-n { list-style: none; padding-left: 0; counter-reset: st; display: grid; gap: 6px; }
+ol.steps-n > li { counter-increment: st; position: relative; padding-left: 34px; margin: 0; }
+ol.steps-n > li::before { content: counter(st); position: absolute; left: 0; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; display: grid; place-items: center; }
+
+/* enrichment */
+td.mgc { white-space: nowrap; min-width: 128px; }
+.mg { display: inline-flex; align-items: center; gap: 8px; }
+.mg-t { position: relative; display: inline-block; width: 64px; height: 8px; background: var(--line); border-radius: 4px; }
+.mg-b { position: absolute; left: 0; top: 0; height: 8px; border-radius: 4px; }
+.mg-b.a { background: var(--accent); } .mg-b.m { background: color-mix(in srgb, var(--muted) 55%, transparent); } .mg-b.o { background: color-mix(in srgb, var(--bad) 70%, transparent); }
+.mk { position: absolute; top: -3px; width: 2px; height: 14px; background: var(--ink); margin-left: -1px; }
+.mg-v { font-family: var(--font-mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.mg-v.strong { font-weight: 700; color: var(--accent); }
+.mg-s { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; padding-left: 72px; }
+td.detail { color: var(--muted); font-size: 13.5px; line-height: 1.65; max-width: 30em; }
+tbody tr:nth-child(even):not(.grp):not(.row-bad):not(.row-subj) td { background: color-mix(in srgb, var(--bg) 60%, transparent); }
+tbody td:first-child strong { font-weight: 700; }
+td.c-take .pill { font-size: 13px; padding: 2px 10px; }
+
+
+/* ===== spec layer: docs/reference/owner-facing-uiux-principles.md §13 ===== */
+:root { --fg: var(--ink); --mono: var(--font-mono); --body: var(--font-body); --rule: var(--line); --ok: var(--good); --ok-soft: var(--good-soft); }
+p.memo { font-size: 17px; font-weight: 700; line-height: 1.65; border-left: 4px solid var(--accent); background: var(--surface); padding: 12px 16px; border-radius: 0 10px 10px 0; margin: 0 0 18px; }
+p.memo strong { color: var(--accent); }
+.fold { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin: 14px 0 20px; }
+.fold-h { all: unset; box-sizing: border-box; display: flex; gap: 8px; align-items: center; width: 100%; padding: 11px 16px; cursor: pointer; color: var(--accent); font-weight: 500; font-size: 15px; border-radius: 10px; }
+.fold-h:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.fold-h .chev { display: inline-block; transition: transform .15s; }
+.fold-h[aria-expanded="true"] .chev { transform: rotate(90deg); }
+.fold-b { padding: 0 16px 12px; }
+.fold-b > .table-wrap:first-child, .fold-b > .score:first-child { margin-top: 4px; }
+td.ibc { min-width: 150px; }
+td.tg { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+section.appendix h3 { font-size: 20px; margin-top: 0; }
+ol.next-steps, ul.next-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; counter-reset: none; }
+ol.next-steps > li, ul.next-steps > li { padding: 12px 16px 12px 18px; border-bottom: 1px solid var(--line); margin: 0; }
+ol.next-steps > li::before { display: none; }
+ol.next-steps > li:last-child, ul.next-steps > li:last-child { border-bottom: 0; }
+ol.next-steps > li > b:first-child, ol.next-steps > li > strong:first-child { display: inline-block; min-width: 7em; color: var(--accent); }
+.pill.tagline { white-space: normal; font-weight: 500; }
+
+.stk-wrap { margin: 8px 0 16px; }
+.stk span { color: #fff; }
+.stk-l span { display: inline-flex; align-items: center; }
+.stk-l b { color: var(--ink); margin-left: 3px; font-family: var(--font-mono); font-weight: 500; }
+
+/* UX pass */
+span.num, strong.num, b.num { font-family: var(--font-mono); font-size: .93em; font-weight: 500; color: var(--ink); background: color-mix(in srgb, var(--accent) 9%, transparent); border-radius: 4px; padding: 0 4px; white-space: nowrap; }
+p.memo span.num { background: none; color: var(--accent); padding: 0; }
+span.arr { color: var(--accent); font-weight: 700; padding: 0 2px; }
+.cards .card { position: relative; border-top: 3px solid var(--accent); transition: transform .12s, box-shadow .12s; }
+.cards .card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(20, 30, 50, .08); }
+.cards .card.tone-good { border-top-color: var(--good); } .cards .card.tone-bad { border-top-color: var(--bad); }
+.cards .card .ct { font-size: 13px; letter-spacing: .02em; }
+.cards .card.tone-good .ct { color: var(--good); } .cards .card.tone-bad .ct { color: var(--bad); } .cards .card.tone-info .ct { color: var(--accent); }
+.cards .card .cv { font-size: 24px; line-height: 1.2; margin: 2px 0 4px; color: var(--ink); }
+.cards .card .cv.delta .from { color: var(--muted); font-size: 18px; }
+.cards .card .cv.delta .to { font-weight: 700; }
+.cards .card.tone-good .cv .to { color: var(--good); } .cards .card.tone-bad .cv .to { color: var(--bad); }
+.cards .card .cv.echo { color: var(--accent); }
+.cards .card p { font-size: 14.5px; }
+ol.flow { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 22px; margin: 14px 0 22px; counter-reset: none; }
+ol.flow > li { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 14px 12px; margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); }
+ol.flow > li { counter-increment: fl; }
+ol.flow > li::before { content: counter(fl); display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 12.5px; margin-bottom: 6px; position: static; }
+ol.flow > li:not(:last-child)::after { content: '→'; position: absolute; right: -18px; top: 50%; transform: translateY(-50%); color: var(--accent); font-weight: 700; }
+ol.flow .fl-n { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 12.5px; margin-bottom: 6px; }
+ol.flow .fl-t { display: block; font-weight: 700; color: var(--ink); font-size: 15px; margin-bottom: 4px; }
+p.kv { display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); margin: 0; }
+p.kv + :not(p.kv) { margin-top: 14px; }
+p.kv .kv-k { font-weight: 700; color: var(--ink); }
+p.kv .kv-k::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: 2px; }
+@media (max-width: 1000px) { p.kv { grid-template-columns: minmax(0, 1fr); gap: 2px; } ol.flow > li::after { display: none; } }
+
+.readnote { margin: -6px 0 22px; padding: 10px 14px; border-radius: 10px; background: var(--bg); border: 1px dashed var(--line); display: grid; gap: 4px; }
+.readnote .rn-h { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .06em; margin-bottom: 2px; }
+.readnote .rn-i { font-size: 13.5px; color: var(--muted); line-height: 1.6; padding-left: 14px; position: relative; }
+.readnote .rn-i::before { content: ''; position: absolute; left: 2px; top: .65em; width: 5px; height: 5px; border-radius: 50%; background: var(--line); }
+.readnote .rn-i:first-of-type { color: var(--ink); font-weight: 500; }
+.readnote span.num { background: none; padding: 0; color: var(--ink); }
+
+/* focus pass */
+.claim-box { font-weight: 700; font-size: 16px; border-left: 4px solid var(--accent); background: var(--surface); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 0 0 14px; }
+.fold-b .claim-box { background: var(--accent-soft); }
+.callout { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--warn); border-radius: 0 10px 10px 0; padding: 12px 16px; margin: 14px 0 20px; }
+.callout .co-h { font-weight: 700; color: var(--warn); font-size: 14.5px; margin-bottom: 6px; }
+.callout > p:last-child, .callout > ul:last-child { margin-bottom: 0; }
+p.oneline { background: var(--accent-soft); border-radius: 10px; padding: 12px 16px; font-size: 15.5px; }
+p.oneline > b:first-child, p.oneline > strong:first-child { display: inline-block; background: var(--accent); color: #fff; border-radius: 4px; padding: 0 8px; margin-right: 8px; font-size: 13px; }
+.overview { margin: 8px 0 26px; padding: 14px; background: var(--bg); border-radius: 12px; border: 1px solid var(--line); }
+.overview .ov-h { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+.overview .ov-h span { font-weight: 400; color: var(--muted); }
+.ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; counter-reset: ov; }
+.ov-card { position: relative; display: flex; flex-direction: column; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 10px; padding: 10px 12px 28px; color: var(--ink); text-decoration: none; transition: transform .12s, box-shadow .12s; }
+.ov-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(20, 30, 50, .08); text-decoration: none; }
+.ov-card.t-bad { border-top-color: var(--bad); } .ov-card.t-good { border-top-color: var(--good); } .ov-card.t-mixed { border-top-color: #b45309; } .ov-card.t-info { border-top-color: var(--muted); }
+.ov-top { display: flex; align-items: center; gap: 8px; }
+.ov-card .ov-n { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 5px; padding: 0 6px; }
+.ov-tag { font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 0 6px; color: var(--muted); background: var(--bg); }
+.t-bad .ov-tag { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.t-good .ov-tag { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.t-mixed .ov-tag { color: #b45309; background: color-mix(in srgb, #b45309 10%, transparent); }
+.ov-m { font-family: var(--font-mono); font-size: 21px; font-weight: 700; line-height: 1.25; margin-top: 4px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ov-m i { font-style: normal; font-size: 14px; color: var(--muted); margin: 0 6px; font-family: var(--font-sans, inherit); }
+.t-bad .ov-m { color: var(--bad); } .t-good .ov-m { color: var(--good); } .t-mixed .ov-m { color: #b45309; }
+.ov-card .ov-t { font-weight: 700; font-size: 15px; line-height: 1.4; }
+.ov-card .ov-c { font-size: 13.5px; line-height: 1.6; color: var(--muted); }
+.ov-card .ov-c .num { color: var(--ink); }
+.ov-q { color: var(--ink); font-weight: 600; }
+.ov-card.bare { border-top-style: dashed; background: transparent; }
+.ov-card.bare .ov-tag { display: none; }
+.ov-go { position: absolute; left: 12px; bottom: 8px; font-size: 12px; color: var(--accent); opacity: 0; transition: opacity .12s; }
+.ov-card:hover .ov-go { opacity: 1; }
+.ov-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.ov-chip { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px 4px 4px; color: var(--ink); font-size: 14px; font-weight: 600; text-decoration: none; }
+.ov-chip:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.ov-k { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 12px; }
+
+.actboard { display: grid; gap: 14px; }
+.ab-strip { display: flex; flex-wrap: wrap; gap: 8px; }
+.ab-s { display: inline-flex; align-items: baseline; gap: 6px; font-size: 13px; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; }
+.ab-s b { font-family: var(--font-mono); font-size: 16px; color: var(--ink); }
+.ab-s.s-me { background: var(--accent); border-color: var(--accent); color: #fff; } .ab-s.s-me b { color: #fff; }
+.ab-s.s-wait b { color: #b45309; } .ab-s.s-done b { color: var(--good); }
+.ab-mine { border: 1.5px solid var(--accent); border-radius: 12px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--surface)), var(--surface)); padding: 14px 16px 16px; }
+.ab-mh { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.ab-mh b { font-size: 16px; color: var(--accent); }
+.ab-mhint { font-size: 13px; color: var(--muted); }
+.ab-decs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.ab-dec { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px 14px 52px; min-height: 52px; }
+.ab-dn { position: absolute; left: 14px; top: 14px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; border: 2px solid var(--accent); color: var(--accent); font-family: var(--font-mono); font-weight: 700; font-size: 13px; }
+.ab-verb { font-size: 22px; font-weight: 800; color: var(--accent); line-height: 1.15; letter-spacing: .04em; }
+.ab-obj { font-size: 14.5px; line-height: 1.6; color: var(--ink); margin-top: 4px; }
+.ab-opts { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ab-opt { font-size: 13.5px; font-weight: 600; border: 1.5px dashed var(--accent); color: var(--accent); border-radius: 8px; padding: 3px 10px; background: var(--accent-soft); }
+.ab-or { font-size: 12px; color: var(--muted); font-weight: 700; }
+.ab-q { font-weight: 700; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+.ab-q.bad { color: var(--bad); border-color: transparent; background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.ab-id { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); background: var(--accent-soft); border-radius: 4px; padding: 0 5px; white-space: nowrap; }
+.ab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.ab-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.ab-who { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+.ab-who b { font-size: 15px; }
+.ab-n { margin-left: auto; font-family: var(--font-mono); font-size: 12px; color: var(--muted); background: var(--bg); border-radius: 999px; padding: 0 8px; }
+.ab-av { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--line); color: var(--ink); font-weight: 700; font-size: 13px; }
+.ab-mh .ab-av { background: var(--accent); color: #fff; }
+.ab-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.ab-items li { margin: 0; padding: 0; display: grid; gap: 3px; font-size: 14px; line-height: 1.6; }
+.ab-items li::before { display: none; }
+.ab-st { justify-self: start; font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 0 7px; color: var(--muted); background: var(--bg); border: 1px solid var(--line); }
+.st-done .ab-st { color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, transparent); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.st-done .ab-st::before { content: '✓ '; }
+.st-done .ab-tx { color: var(--muted); }
+.st-wait .ab-st { color: #b45309; border-color: color-mix(in srgb, #b45309 40%, transparent); background: color-mix(in srgb, #b45309 10%, transparent); }
+.st-wait .ab-st::before { content: '⏳ '; }
+.st-todo .ab-st { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: var(--accent-soft); }
+.st-todo .ab-st::before { content: '→ '; }
+.st-ongoing .ab-st::before { content: '↻ '; }
+.st-later .ab-tx { color: var(--muted); }
+@media (max-width: 1000px) { .ab-decs, .ab-grid { grid-template-columns: minmax(0, 1fr); } }
+
+table.risk tr.risk-hit td { background: color-mix(in srgb, var(--bad) 6%, transparent); }
+table.risk tr.risk-hit td:first-child { box-shadow: inset 4px 0 0 var(--bad); }
+table.risk tr.risk-hit td:first-child .pill { display: table; margin: 6px 0 0; }
+table.risk tr.risk-hit td:nth-child(2) strong.c-bad, table.risk tr.risk-hit td:nth-child(2) strong { color: var(--bad); font-size: 15px; }
+table.risk tr.risk-watch td { color: var(--muted); }
+table.risk tr.risk-watch td:first-child { color: var(--ink); box-shadow: inset 4px 0 0 var(--line); }
+table.risk td:nth-child(3) b { color: var(--ink); }
+.rk-i { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 700; margin-right: 6px; vertical-align: 1px; }
+.rk-i.done { background: var(--good-soft); color: var(--good); }
+
+.declog { position: relative; display: grid; gap: 12px; margin: 6px 0 14px; }
+.dl-track { display: flex; align-items: stretch; gap: 0; margin: 0 0 4px; padding-top: 8px; counter-reset: none; }
+.dl-tk { flex: 1; position: relative; display: grid; gap: 2px; padding: 10px 14px 10px 0; text-decoration: none; color: var(--muted); border-top: 3px solid color-mix(in srgb, var(--accent) 30%, var(--line)); }
+.dl-tk::before { content: ''; position: absolute; top: -8px; left: 0; width: 13px; height: 13px; border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); box-sizing: border-box; }
+.dl-tk:last-child { border-top-color: var(--accent); }
+.dl-tk:last-child::before { background: var(--accent); }
+.dl-tk-id { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); font-weight: 600; }
+.dl-tk-t { font-size: 13.5px; color: var(--ink); }
+.dl-tk:hover .dl-tk-t { color: var(--accent); text-decoration: underline; }
+.dl-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--muted); margin-bottom: 2px; }
+.dl-lg { display: inline-flex; align-items: center; gap: 5px; }
+.dl-row { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 20px; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: 10px; padding: 14px 18px; scroll-margin-top: 80px; transition: box-shadow .12s; }
+.dl-row:hover { box-shadow: 0 6px 18px rgba(20, 30, 50, .07); }
+.dl-row:target { box-shadow: 0 0 0 2px var(--accent); }
+.dl-row.latest { border-left-color: var(--accent); background: linear-gradient(90deg, var(--accent-soft), var(--surface) 40%); }
+.dl-row.latest .dl-side::after { content: '最新'; display: inline-block; margin-top: 6px; font-size: 11.5px; font-weight: 700; color: #fff; background: var(--accent); border-radius: 4px; padding: 1px 7px; }
+.dl-side { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; border-right: 1px dashed var(--line); padding-right: 14px; }
+.dl-id { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 2px 8px; white-space: nowrap; }
+.dl-t { font-weight: 700; font-size: 15.5px; color: var(--ink); line-height: 1.4; }
+.dl-cnt { font-size: 12.5px; color: var(--muted); }
+.dl-cnt b { font-family: var(--font-mono); color: var(--ink); }
+.dl-h { font-size: 19px; font-weight: 700; color: var(--accent); line-height: 1.45; padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+.dl-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 8px 22px; }
+.dl-c { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px; align-items: start; font-size: 14.5px; line-height: 1.6; color: var(--ink); }
+.dl-ic { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; font-size: 11px; font-weight: 700; margin-top: 3px; color: #fff; background: var(--accent); }
+.dl-ic::before { content: '✓'; }
+.k-guard .dl-ic { background: #7c3aed; } .k-guard .dl-ic::before { content: '!'; }
+.k-swap .dl-ic { background: var(--good); } .k-swap .dl-ic::before { content: '⇄'; }
+.k-change .dl-ic { background: var(--warn, #b45309); } .k-change .dl-ic::before { content: '↻'; }
+.k-outcome .dl-ic { background: var(--good); } .k-outcome .dl-ic::before { content: '★'; }
+.k-guard .dl-tx { color: #4c1d95; }
+.dl-not { color: var(--muted); }
+.dl-not del .num { background: none; color: inherit; padding: 0; }
+.dl-not del { color: var(--bad); text-decoration-color: var(--bad); text-decoration-thickness: 2px; }
+.dl-arrow { display: inline-block; margin: 0 4px; font-size: 12px; font-weight: 700; color: var(--warn, #b45309); background: color-mix(in srgb, #b45309 12%, transparent); border-radius: 4px; padding: 0 6px; }
+.dl-new { font-weight: 700; }
+.dl-win { font-weight: 700; color: var(--good); background: color-mix(in srgb, var(--good) 12%, transparent); border-radius: 4px; padding: 0 5px; }
+.dl-q { font-weight: 600; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+@media (max-width: 1000px) { .dl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; } .dl-side { border-right: 0; padding-right: 0; flex-direction: row; flex-wrap: wrap; align-items: center; } .dl-track { display: none; } }
+
+ol.flow { align-items: stretch; }
+ol.flow .fl-t { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 2px; }
+ol.flow .fl-d { display: block; }
+ol.flow .fl-k { display: block; font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1.35; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+ol.flow > li { color: var(--muted); }
+
+.hero { display: grid; gap: 14px; margin-bottom: 8px; }
+.hv { font-size: 15px; line-height: 1.8; color: var(--muted); padding: 2px 0; }
+.hv-k { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--accent); border: 1px solid var(--accent); border-radius: 4px; padding: 1px 7px; margin-right: 10px; }
+.hv-goal { color: var(--ink); font-weight: 600; border-bottom: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); }
+.hero-g { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); grid-template-areas: 'v a' 'e a'; gap: 14px; }
+.hz.ask { grid-area: a; } .hz.eng { grid-area: e; }
+.hz { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.hz-l { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--muted); }
+.hz.verdict { grid-area: v; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px 24px; border-top: 4px solid var(--bad); align-content: start; }
+.hz.verdict .hz-l, .hz.verdict .hz-v { grid-column: 1 / -1; }
+.hz-v { font-size: 34px; font-weight: 800; color: var(--bad); line-height: 1.1; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.hz-x { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--bad); color: #fff; font-size: 20px; align-self: center; }
+.hz-s { font-size: 16px; font-weight: 500; color: var(--muted); }
+.hz-cap { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.hz-cap b { color: var(--bad); font-weight: 700; margin: 0 2px; }
+.hb { display: grid; grid-template-columns: 6.5em minmax(0, 1fr) 4em; gap: 8px; align-items: center; margin: 6px 0; font-size: 13.5px; }
+.hb-k { color: var(--ink); font-weight: 600; }
+.hb-bar { height: 14px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.hb-bar b { display: block; height: 100%; background: color-mix(in srgb, var(--muted) 55%, transparent); border-radius: 4px; }
+.hb-bar b.bad { background: var(--bad); }
+.hb-v { font-family: var(--font-mono); font-weight: 700; font-size: 16px; text-align: right; }
+.hb-v.bad { color: var(--bad); }
+.hz-gap { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.hz-gap b { font-family: var(--font-mono); color: var(--bad); font-size: 15px; }
+.dots { display: grid; grid-template-columns: repeat(14, 12px); gap: 4px; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--bad); box-sizing: border-box; opacity: .75; }
+.dots i.w { background: var(--good); border-color: var(--good); }
+.hz.ask { border: 1.5px solid var(--accent); background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--surface)), var(--surface)); }
+.hz.ask .hz-l { color: var(--accent); }
+.hq-h { font-size: 22px; font-weight: 800; color: var(--accent); margin: 4px 0 10px; }
+.hq { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: none; }
+.hq li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 8px; margin: 0; padding: 0; font-size: 14.5px; line-height: 1.55; color: var(--ink); }
+.hq li::before { display: none; }
+.hq-n { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--accent); color: var(--accent); font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
+.hq-ref { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.hz.eng { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; padding: 12px 18px; }
+.hz.eng b { color: var(--ink); }
+.eng-ok { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--good); color: #fff; font-size: 12px; font-weight: 700; align-self: center; }
+.eng-d { font-size: 13.5px; color: var(--muted); }
+@media (max-width: 1000px) { .hero-g, .hz.verdict { grid-template-columns: minmax(0, 1fr); } .hero-g { grid-template-areas: 'v' 'a' 'e'; } }
+
+table td.vs-good { color: var(--good); font-weight: 600; background: color-mix(in srgb, var(--good) 8%, transparent); }
+table td.vs-bad { color: var(--bad); font-weight: 600; background: color-mix(in srgb, var(--bad) 7%, transparent); }
+table.vs-base th:last-child, table.vs-base td.numcol:last-child { }
+td.r-concl { font-weight: 600; color: var(--ink); box-shadow: inset 3px 0 0 color-mix(in srgb, var(--accent) 45%, transparent); }
+th.rh-concl { color: var(--accent); }
+td.r-cost { color: color-mix(in srgb, var(--bad) 80%, var(--ink)); font-size: 13.5px; }
+th.rh-cost { color: var(--bad); }
+th.rh-cost::before { content: '⚠ '; }
+td.r-why { color: var(--muted); font-size: 13.5px; }
+td.r-old { color: var(--muted); }
+td.r-new { font-weight: 600; color: var(--ink); background: color-mix(in srgb, var(--accent) 5%, transparent); }
+th.rh-new { color: var(--accent); }
+th.rh-new::before { content: '→ '; }
+.rid { display: inline-grid; place-items: center; min-width: 20px; height: 20px; border-radius: 5px; background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); font-size: 12px; font-weight: 700; margin-right: 8px; padding: 0 4px; }
+.cat { display: inline-block; font-size: 12.5px; font-weight: 600; border-radius: 999px; padding: 1px 10px; border: 1px solid var(--line); }
+.cat.c0 { color: var(--accent); background: var(--accent-soft); border-color: transparent; }
+.cat.c1 { color: #7c3aed; background: color-mix(in srgb, #7c3aed 10%, transparent); border-color: transparent; }
+.cat.c2 { color: #b45309; background: color-mix(in srgb, #b45309 10%, transparent); border-color: transparent; }
+.cat.c3 { color: var(--muted); background: var(--bg); }
+.pill.ditto { opacity: .7; }
+
+.cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 12px; margin: 14px 0 20px; }
+.case { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; padding: 12px 16px; }
+.case.t-bad { border-left-color: var(--bad); } .case.t-good { border-left-color: var(--good); }
+.case-h { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.case-who { font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 5px; padding: 1px 8px; }
+.case-c { font-size: 16.5px; font-weight: 700; color: var(--ink); }
+.case.t-bad .case-c { color: var(--bad); } .case.t-good .case-c { color: var(--good); }
+.case-b p { margin: 6px 0; font-size: 14.5px; }
+.case-b p.kv { display: block; border: 0; padding: 0; }
+.case-b p.kv .kv-k::before { display: none; }
+.subpts { margin: 6px 0 2px; display: grid; gap: 4px; }
+.subpts .sp { position: relative; padding-left: 14px; font-size: 14px; line-height: 1.6; color: var(--ink); }
+.subpts .sp::before { content: ''; position: absolute; left: 2px; top: .65em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+.hz.verdict2 { grid-area: v; border-top: 4px solid var(--accent); }
+.hz.verdict2.t-bad { border-top-color: var(--bad); }
+.hz-hd { font-size: 19px; font-weight: 700; line-height: 1.55; color: var(--ink); margin-top: 6px; }
+.hz-hd .num, .hz-hd strong.num { font-size: 1.12em; color: var(--accent); background: none; padding: 0 1px; }
+.hz-rest { font-size: 14.5px; line-height: 1.7; color: var(--muted); margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+.hz-engs { grid-area: e; display: grid; gap: 10px; margin: 0; padding: 0; }
+.hero-g > .hz.ask { align-self: start; }
+.hz-engs .hz.eng { padding: 10px 16px; }
+.hq-h.calm { color: var(--good); font-size: 20px; }
+.hz.ask.calm { border-color: color-mix(in srgb, var(--good) 50%, var(--line)); background: color-mix(in srgb, var(--good) 5%, var(--surface)); }
+.hz.ask.calm .hz-l { color: var(--good); }
+.hq-b { font-size: 14.5px; line-height: 1.7; margin-top: 6px; }
+
+td.exp-ok .mg-v, td.exp-ok { color: var(--good); font-weight: 700; }
+td.exp-no .mg-v, td.exp-no { color: var(--bad); font-weight: 700; }
+td.exp-ok .mg-b { background: var(--good) !important; } td.exp-no .mg-b { background: var(--bad) !important; }
+table.split th.first-sub, table.split td.first-sub { border-left: 2px solid var(--line); }
+table.split { table-layout: auto; width: 100%; }
+table.split td, table.split th { padding-left: 8px; padding-right: 8px; }
+table.split td:first-child, table.split th:first-child { min-width: 7.5em; }
+table.split td.numcol { font-size: 13.5px; }
+
+td.sg-pos { color: var(--good); } td.sg-neg { color: var(--bad); }
+.ib { width: auto; min-width: 0; } td.ibc { white-space: nowrap; }
+td.c-take, th.h-take { min-width: 10em; }
+table.split .ib { min-width: 0; gap: 5px; }
+table.split .ib i { display: none; }
+table.split th, table.split td.ibc, table.split td.mgc { min-width: 0 !important; }
+table.split .ib { width: auto; }
+table.split td.c-take, table.split th.h-take { min-width: 9em; }
+table.split .mg { gap: 6px; }
+table.split tr.row-bad td, table.split tr.row-good td { background: none; }
+table.split td.c-take { border-left: 0; }
+table.split thead th.gh { text-align: center; }
+p.exp-key { font-size: 12.5px; color: var(--muted); margin: 6px 0 4px; display: flex; gap: 8px; align-items: center; }
+.ek { font-family: var(--font-mono); font-weight: 700; border-radius: 4px; padding: 0 6px; }
+.ek.ok { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); } .ek.no { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+
+.sens-axis { margin: 10px 0 16px; padding: 14px 16px 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.sa-cap { font-size: 13px; color: var(--muted); margin-bottom: 34px; }
+.sa-track { position: relative; height: 44px; border-bottom: 1px solid var(--line); }
+.sa-zone { position: absolute; top: 0; bottom: 0; background: color-mix(in srgb, var(--muted) 12%, transparent); border-radius: 4px; }
+.sa-base { position: absolute; top: -26px; bottom: 0; border-left: 2px dashed var(--ink); }
+.sa-base span { position: absolute; top: -4px; left: 6px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.sm { position: absolute; top: 18px; height: 12px; }
+.sm.d { width: 14px; height: 14px; margin-left: -7px; top: 17px; border-radius: 50%; }
+.sm.r { border-radius: 6px; }
+.sm.sk-good { background: var(--good); } .sm.sk-bad { background: var(--bad); } .sm.sk-warn { background: #fff; border: 3px solid #a16207; box-sizing: border-box; }
+.sl-lab { position: absolute; top: 34px; transform: translateX(-50%); font-size: 11.5px; font-weight: 600; white-space: nowrap; padding-top: 12px; }
+.sl-lab.sk-good { color: var(--good); } .sl-lab.sk-bad { color: var(--bad); } .sl-lab.sk-warn { color: #a16207; }
+.sa-ticks { position: relative; height: 58px; margin-top: 0; }
+.sa-ticks .st { top: 44px !important; }
+.sa-ticks .st { position: absolute; top: 26px; transform: translateX(-50%); font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
+.cards .card.sens { border-top: 4px solid var(--line); }
+.cards .card.sk-good { border-top-color: var(--good); } .cards .card.sk-bad { border-top-color: var(--bad); } .cards .card.sk-warn { border-top: 4px dashed #a16207; background: color-mix(in srgb, #a16207 5%, var(--surface)); }
+.card.sk-good .cv { color: var(--good); } .card.sk-bad .cv { color: var(--bad); } .card.sk-warn .cv { color: #a16207; }
+.sens-tag { display: inline-block; font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 1px 7px; margin: 4px 0 2px; }
+.sk-good .sens-tag { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.sk-bad .sens-tag { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.sk-warn .sens-tag { color: #a16207; background: color-mix(in srgb, #a16207 12%, transparent); }
+.sens-tag { align-self: flex-start; width: fit-content; }
+.cards.sens-cards { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+.gl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 12px; margin: 8px 0 12px; }
+.gl-card { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--muted); border-radius: 10px; padding: 12px 16px 14px; }
+.gl-card.wide { grid-column: 1 / -1; }
+.gl-card.t-main { border-top-color: var(--accent); background: linear-gradient(180deg, var(--accent-soft), var(--surface) 60px); }
+.gl-card.t-peer { border-top-color: #7c3aed; } .gl-card.t-off { border-top-color: #a16207; } .gl-card.t-ref { border-top-color: var(--ink); }
+.gl-n { font-size: 17px; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+.gl-tag { font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 1px 7px; color: #fff; background: var(--muted); }
+.t-main .gl-tag { background: var(--accent); } .t-peer .gl-tag { background: #7c3aed; } .t-off .gl-tag { background: #a16207; }
+.gl-pos { font-size: 14px; font-weight: 600; color: var(--accent); margin: 4px 0 10px; }
+.t-peer .gl-pos { color: #7c3aed; } .t-off .gl-pos { color: #a16207; } .t-ref .gl-pos { color: var(--muted); }
+.gl-r { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); gap: 8px; align-items: baseline; padding: 5px 0; border-top: 1px dashed var(--line); font-size: 14px; line-height: 1.6; }
+.gl-k { justify-self: start; font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 0 6px; }
+.gl-k.k-pick { color: var(--accent); background: var(--accent-soft); }
+.gl-k.k-sell { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.gl-k.k-def { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.gl-k.k-size { color: #7c3aed; background: color-mix(in srgb, #7c3aed 10%, transparent); }
+.gl-k.k-pace { color: var(--muted); background: var(--bg); border: 1px solid var(--line); }
+.gl-bar { display: flex; height: 26px; border-radius: 6px; overflow: hidden; margin: 2px 0 8px; }
+.gl-bar span { display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; }
+.gl-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12.5px; color: var(--ink); margin: -2px 0 8px; }
+.gl-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.gl-subs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.gl-sub { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; background: var(--bg); }
+.gl-sk { font-weight: 700; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
+.gl-sv { font-size: 13.5px; line-height: 1.6; color: var(--ink); }
+
+.rr-fig { margin: 10px 0 14px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.rr-cap { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+.rr-svg { width: 100%; max-width: 900px; height: auto; display: block; }
+.rr-t { font-size: 11px; fill: var(--muted); font-family: var(--font-mono); }
+.rr-g { stroke: var(--line); stroke-width: 1; }
+.rr-ref { stroke: var(--ink); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.rr-q { fill: color-mix(in srgb, var(--good) 8%, transparent); }
+.rr-ql { font-size: 11px; fill: var(--good); font-weight: 700; }
+.rr-p { stroke: var(--surface); stroke-width: 2; }
+.rr-p.rr-good { fill: var(--good); } .rr-p.rr-mid { fill: #a16207; } .rr-p.rr-bad { fill: var(--bad); } .rr-p.rr-ref { fill: var(--ink); } .rr-p.rr-other { fill: var(--muted); }
+.rr-l { font-size: 11.5px; fill: var(--muted); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; } .rr-l.m { font-weight: 700; font-size: 12.5px; }
+.rr-l.rr-good { fill: var(--good); } .rr-l.rr-mid { fill: #a16207; } .rr-l.rr-bad { fill: var(--bad); } .rr-l.rr-ref { fill: var(--ink); font-weight: 700; }
+.cards .card.rr { border-top: 4px solid var(--line); }
+.cards .card.rr-good { border-top-color: var(--good); } .cards .card.rr-mid { border-top-color: #a16207; } .cards .card.rr-bad { border-top-color: var(--bad); }
+.card.rr-good .cv { color: var(--good); } .card.rr-mid .cv { color: #a16207; } .card.rr-bad .cv { color: var(--bad); }
+.rr-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 2px 0 8px; }
+.rr-vs { font-size: 11.5px; color: var(--muted); }
+.rr-c { font-size: 12px; font-weight: 700; border-radius: 4px; padding: 0 6px; }
+.rr-c.g { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.rr-c.b { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.cards.rr-cards { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+p.kv.kv-warn { border: 1px solid color-mix(in srgb, #a16207 45%, var(--line)); border-left: 4px solid #a16207; background: color-mix(in srgb, #a16207 6%, var(--surface)); border-radius: 10px; padding: 12px 16px; margin-top: 12px; }
+p.kv.kv-warn .kv-k { color: #a16207; }
+p.kv.kv-warn .kv-k::before { content: '⚠'; width: auto; height: auto; background: none; color: #a16207; border-radius: 0; margin-right: 6px; }
+
+.cards.dx-cards { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.cards .card.dx { border-top: 4px solid var(--bad); display: flex; flex-direction: column; gap: 8px; }
+.cards .card.dxc-mid { border-top-color: #a16207; }
+.dx-n { font-size: 12.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 5px; padding: 1px 8px; }
+.dx-d { font-size: 18px; font-weight: 800; line-height: 1.4; color: var(--bad); }
+.dxc-mid .dx-d { color: #a16207; }
+.dx-g { background: var(--bg); border-radius: 8px; padding: 8px 10px; }
+.dx-gl { font-size: 11.5px; color: var(--muted); margin-bottom: 4px; }
+.dx-gb { position: relative; height: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 5px; }
+.dx-gb i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; }
+.dx-gb i.g { background: var(--good); } .dx-gb i.b { background: var(--bad); }
+.dx-gb em { position: absolute; top: -4px; bottom: -4px; border-left: 2px dashed var(--ink); }
+.dx-gv { display: flex; justify-content: space-between; margin-top: 4px; font-size: 12px; }
+.dx-gv b { font-family: var(--font-mono); font-size: 15px; } .dx-gv b.g { color: var(--good); } .dx-gv b.b { color: var(--bad); }
+.dx-gv span { color: var(--muted); }
+.dx-rows { display: grid; gap: 6px; }
+.dx-r { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 6px; font-size: 14px; line-height: 1.6; }
+.dx-i { width: 16px; height: 16px; border-radius: 50%; margin-top: 4px; display: grid; place-items: center; font-size: 10px; font-weight: 800; color: #fff; background: var(--muted); }
+.dx-i::before { content: '·'; }
+.dx-bad .dx-i { background: var(--bad); } .dx-bad .dx-i::before { content: '✕'; }
+.dx-good .dx-i { background: var(--good); } .dx-good .dx-i::before { content: '✓'; }
+b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color: var(--bad); font-family: var(--font-mono); }
+
+</style>
+</head>
+<body>
+<div class="shell">
+<nav class="toc" aria-label="目录">
+  <a class="back" href="https://claude.ai/artifact/17bW2rKeeBheRFfhnjsrSU">← Owner 看板</a>
+  <div class="toc-title">目录</div>
+  <ol><li class="l2"><a href="#1-预测表-保险层每年付-1-6-2-2-个点换回撤-挑选和倾斜打折后不到半个点">1. 预测表</a></li><li class="l2"><a href="#2-每种行情-保费付在慢牛和-v-型反转-赔付在慢熊和急跌">2. 每种行情</a></li><li class="l2"><a href="#3-底仓美股比例-每多-10-个点-每年约多-少-0-1-两地涨幅差">3. 底仓美股比例</a></li><li class="l2"><a href="#4-信号准确度-三层都弱-只有躲大熊的趋势是硬的">4. 信号准确度</a></li><li class="l2"><a href="#5-不做线-跑前写下的线-没有一层过-k2-只差保费一条">5. 不做线</a></li><li class="l2"><a href="#6-你的三个要求-①-能做到-②-做不到-③-没有测">6. 你的三个要求</a></li><li class="l2"><a href="#7-需要你定-保费上限-建议-k2a-每年约-1-6-个点">7. 需要你定</a></li><li class="l2"><a href="#8-复算-reviewer-两次都批准-三处差异都已查清-数字不变">8. 复算</a></li><li class="l2"><a href="#9-还没做的-三件-都不影响保费的决定">9. 还没做的</a></li></ol>
+</nav>
+<main>
+<header class="top">
+  <div class="kicker">ETF_Rotation_Quant · 2026-11-17</div>
+  <h1>v6 预演预测表</h1>
+  <p class="headline">保险层每年约付 1.6–2.2 个点、换回撤砍掉三到五成；挑选和倾斜打折后每年不到半个点</p>
+</header>
+<section class="intro status"><p class="kv"><span class="kv-k"><strong>项目愿景</strong></span><span class="kv-v">　在动态周期内，从多类资产里选出 Top N 强势 ETF 轮动持有，获得超额收益、稳定跑赢被动基准，同时把回撤控制住。</span></p>
+<div class="hero"><div class="hero-g n1"><div class="hz verdict2 t-info"><div class="hz-l">结论</div><div class="hz-hd">按跑前写下的“不做线”，<strong>没有一层过</strong>。</div><div class="hz-rest">最接近的 K2 只差保费一条：每年约少赚 <strong class="num">2.2</strong> 个点，回撤约砍一半。</div></div><div class="hz ask"><div class="hz-l">需要你</div><div class="hq-b">定保费上限：不设保险、<strong>K2A（约 1.6 个点）</strong>或 K2（约 2.2 个点）。建议 K2A。</div></div><div class="hz eng"><span class="eng-ok">✓</span><span class="hz-l">进度</span><span class="eng-d">D38 预演六项算完，Reviewer 两次独立复算都批准，跟进项已查清。</span></div></div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>名词解释：K0–K3、K2A、挑选层、合成行情、打五折、不做线</span></button><div class="fold-b" hidden="">
+<div class="table-wrap"><table class="deflist" data-lint="ref">
+<thead>
+<tr>
+<th>名字</th>
+<th>是什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>K0 底仓</strong></td>
+<td class="detail">基准本身：沪深300 70% + 纳指100 15% + 标普500 15%，每月再平衡。所有“多或少几个点”都和它比。</td>
+</tr>
+<tr>
+<td><strong>K1 慢趋势保险</strong></td>
+<td class="detail">每条腿月末低于自己的 10 个月均线，就换成国债；回到均线上方换回（Faber 2007）。</td>
+</tr>
+<tr>
+<td><strong>K2 按波动降仓</strong></td>
+<td class="detail">K1 再加一条：每条腿的仓位 = 长期波动 ÷ 近 20 日波动，最多 1；每周看一次，变化不到 10 个点不动。</td>
+</tr>
+<tr>
+<td><strong>K2A 只保 A 股腿</strong></td>
+<td class="detail">K2 的规则只用在 A 股腿上，美股腿一直持有。</td>
+</tr>
+<tr>
+<td class="k"><strong>K3 倾斜层</strong></td>
+<td class="detail">在 K1 上，A 股和美股比 12 个月涨幅（跳过最近 1 个月），每月把 20 个点挪给强的一边。</td>
+</tr>
+<tr>
+<td class="k"><strong>挑选层</strong></td>
+<td class="detail">同一市场里按 12−1 涨幅排名挑 ETF。这一轮只测准确度，没跑组合。</td>
+</tr>
+<tr>
+<td class="k"><strong>合成行情</strong></td>
+<td class="detail">人工造的六种行情，噪声取真实指数的日收益重抽；里面没有动量，量的是“没有信号时”的保费。</td>
+</tr>
+<tr>
+<td class="k"><strong>打五折</strong></td>
+<td class="detail">从历史数据算出来的进出时点和挑选收益一律乘 0.5；成本按上限、不打折。</td>
+</tr>
+<tr>
+<td class="k"><strong>不做线</strong></td>
+<td class="detail">跑之前写下的及格线，达不到就不进 v6；看到结果后不改。</td>
+</tr>
+</tbody>
+</table></div>
+</div></div>
+</section>
+<section id="sec-1-预测表-保险层每年付-1-6-2-2-个点换回撤-挑选和倾斜打折后不到半个点"><h2 id="1-预测表-保险层每年付-1-6-2-2-个点换回撤-挑选和倾斜打折后不到半个点"><span class="num">01</span>预测表：保险层每年付 1.6–2.2 个点换回撤，挑选和倾斜打折后不到半个点</h2>
+<p class="memo"><strong>K2 每年约 −2.2、回撤约砍一半；K2A 约 −1.6、回撤约砍三成；倾斜和挑选打折后都在 0 到 +0.4 之间。</strong></p>
+<figure><img alt="每一层每年比底仓多或少几个点，以及回撤能砍多少" loading="lazy" src="../../assets/v6-preflight/f1-forecast.png"/></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>层</th>
+<th style="text-align: right;">仓位差</th>
+<th class="numcol" style="text-align: right;">挑选</th>
+<th style="text-align: right;">进出时点（打五折）</th>
+<th class="n numcol" style="text-align: right;">成本</th>
+<th style="text-align: right;">合计</th>
+<th>回撤</th>
+<th>把握</th>
+<th>不做线结论</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-bad">
+<td><strong>K1 慢趋势保险</strong></td>
+<td style="text-align: right;"><span class="neg">−2.2</span>（<span class="neg">−2.5</span> ~ <span class="neg">−1.2</span>）</td>
+<td class="numcol" style="text-align: right;">0</td>
+<td style="text-align: right;"><span class="pos">+0.7</span>（<span class="pos">+0.3</span> ~ <span class="pos">+1.7</span>）</td>
+<td class="n numcol" style="text-align: right;"><span class="neg">−0.4</span></td>
+<td class="sg-neg" style="text-align: right;"><strong><span class="neg">−1.9</span></strong>（<span class="neg">−2.6</span> ~ 0.0）</td>
+<td>浅三到五成；V 型和短急跌无效</td>
+<td><span class="cat c0">中</span></td>
+<td><span class="pill bad">没过</span><span class="pill-note"> 保费、急跌两条</span></td>
+</tr>
+<tr>
+<td><strong>K2 = K1 + 按波动降仓</strong></td>
+<td style="text-align: right;"><span class="neg">−2.5</span>（<span class="neg">−2.6</span> ~ <span class="neg">−1.3</span>）</td>
+<td class="numcol" style="text-align: right;">0</td>
+<td style="text-align: right;"><span class="pos">+0.8</span>（<span class="pos">+0.7</span> ~ <span class="pos">+1.4</span>）</td>
+<td class="n numcol" style="text-align: right;"><span class="neg">−0.5</span></td>
+<td class="sg-neg" style="text-align: right;"><strong><span class="neg">−2.2</span></strong>（<span class="neg">−2.4</span> ~ <span class="neg">−0.4</span>）</td>
+<td>比 K1 再浅 2–9 个点；急跌也有效</td>
+<td><span class="cat c0">中</span></td>
+<td><span class="pill info">只差保费一条</span></td>
+</tr>
+<tr class="row-bad">
+<td><strong>K2A 只保 A 股腿</strong></td>
+<td style="text-align: right;"><span class="neg">−1.7</span>（<span class="neg">−2.2</span> ~ <span class="neg">−1.1</span>）</td>
+<td class="numcol" style="text-align: right;">0</td>
+<td style="text-align: right;"><span class="pos">+0.5</span>（<span class="pos">+0.5</span> ~ <span class="pos">+3.8</span>）</td>
+<td class="n numcol" style="text-align: right;"><span class="neg">−0.4</span></td>
+<td class="sg-neg" style="text-align: right;"><strong><span class="neg">−1.6</span></strong>（<span class="neg">−2.1</span> ~ <span class="pos">+2.3</span>）</td>
+<td>浅约三成；美股的回撤照单全收</td>
+<td><span class="cat c1">中低</span></td>
+<td><span class="pill bad">没过</span><span class="pill-note"> 保费、急跌两条</span></td>
+</tr>
+<tr class="row-bad">
+<td><strong>K3 倾斜层</strong>（加在 K1 上）</td>
+<td style="text-align: right;">0</td>
+<td class="numcol" style="text-align: right;">0</td>
+<td style="text-align: right;">0 ~ <span class="pos">+0.5</span></td>
+<td class="n numcol" style="text-align: right;"><span class="neg">−0.1</span></td>
+<td class="sg-neg" style="text-align: right;"><strong><span class="neg">−0.1</span> ~ <span class="pos">+0.4</span></strong></td>
+<td>基本不变</td>
+<td><span class="cat c2">低</span></td>
+<td><span class="pill bad">没过</span><span class="pill-note"> 期望为正没证据</span></td>
+</tr>
+<tr>
+<td><strong>挑选层</strong> A 股内 12−1，月度</td>
+<td style="text-align: right;">0</td>
+<td class="numcol" style="text-align: right;"><span class="pos">+0.2</span> ~ <span class="pos">+0.6</span></td>
+<td style="text-align: right;">0</td>
+<td class="n numcol" style="text-align: right;"><span class="neg">−0.2</span></td>
+<td style="text-align: right;"><strong>0 ~ <span class="pos">+0.4</span></strong></td>
+<td>不变</td>
+<td><span class="cat c2">低</span></td>
+<td><span class="pill info">待定</span><span class="pill-note"> 缺长历史</span></td>
+</tr>
+<tr>
+<td>参照：底仓美股每多 10 个点</td>
+<td style="text-align: right;">—</td>
+<td class="numcol" style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td class="n numcol" style="text-align: right;">0</td>
+<td style="text-align: right;"><strong>0.1 × 两地涨幅差</strong></td>
+<td>取决于两地波动</td>
+<td><span class="cat c3">算术</span></td>
+<td><b>不是策略层</b></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">换算口径：股票每年 <span class="num">8.7%</span>（基准这十年的实际年化）、国债 <span class="num">2.5%</span>。</p>
+<ul class="points">
+<li><strong>“仓位差”是保费的主体</strong>：K1、K2 平均只拿 <span class="num">60–66%</span> 的股票，少拿的部分按“股票 − 国债”算。长历史里这一项看起来很小（标普 −0.4），是因为那几十年现金利率平均 <span class="num">5.5%</span>；按现在的利率换算是 −2.2 到 −2.5。</li>
+<li><strong>进出时点在三个市场都是正的</strong>：未打折是标普 +1.4、恒生 +0.6、日经 +3.4，来自躲开慢熊。</li>
+<li><strong>K2A 的范围很宽</strong>：中间值用恒生（独立市场，作 A 股腿的代理）；上限 +3.8 来自沪深300 2006–2015 的回放（每年 +3.5、回撤 <span class="num">−72%</span> <span class="arr">→</span> <span class="num">−40%</span>），但那一段是用过上百次的设计期，只作一致性检查，不当证据。</li>
+<li><strong>挑选层的锚</strong>：E2 新口径比同池等权每年 +1.1（设计期）、+0.4（检验段，已签收）；A 股行业 12−1 排名的月度准确度两段都是正的（第 4 节），打五折后约 +0.2 到 +0.6。</li>
+</ul>
+</section>
+<section id="sec-2-每种行情-保费付在慢牛和-v-型反转-赔付在慢熊和急跌"><h2 id="2-每种行情-保费付在慢牛和-v-型反转-赔付在慢熊和急跌"><span class="num">02</span>每种行情：保费付在慢牛和 V 型反转，赔付在慢熊和急跌</h2>
+<p class="memo"><strong>慢牛里 K2 每年少赚 5.1；慢熊里多赚 29；V 型反转一次少 <span class="num">20 个点</span>。合成行情没有动量，这些是“没有信号时”的保费。</strong></p>
+<figure><img alt="每种行情里 K1、K2、K2A 比底仓多或少几个点" loading="lazy" src="../../assets/v6-preflight/f2-regimes.png"/></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>行情</th>
+<th class="n numcol" style="text-align: right;">K1 每年</th>
+<th class="n numcol" style="text-align: right;">K2 每年</th>
+<th class="n numcol" style="text-align: right;">K2A 每年</th>
+<th class="n numcol" style="text-align: right;">K3 每年</th>
+<th class="h-take rh-concl">读法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k">慢牛</td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:11px"></i><em class="r">−4.4</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:12px"></i><em class="r">−5.1</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:12px"></i><em class="r">−3.5</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:12px"></i><em class="r">−4.8</em></span></td>
+<td class="c-take"><span class="pill info">保费最贵</span></td>
+</tr>
+<tr>
+<td class="k">急跌</td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:4px"></i><em class="r">−1.5</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="g" style="width:10px"></i><em class="g">+4.2</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="g" style="width:11px"></i><em class="g">+3.2</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:5px"></i><em class="r">−1.8</em></span></td>
+<td class="c-take"><span class="pill info">K2 最有用</span></td>
+</tr>
+<tr>
+<td class="k">慢熊</td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+29</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+29</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+20</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+28</em></span></td>
+<td class="c-take"><span class="pill info">赔付最大</span></td>
+</tr>
+<tr>
+<td class="k">V 型反转</td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:63px"></i><em class="r">−26</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:48px"></i><em class="r">−20</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:52px"></i><em class="r">−15</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:65px"></i><em class="r">−26</em></span></td>
+<td class="c-take"><span class="pill info">最怕的行情</span></td>
+</tr>
+<tr class="row-bad">
+<td class="k">震荡</td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:4px"></i><em class="r">−1.7</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:4px"></i><em class="r">−1.3</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:4px"></i><em class="r">−0.8</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:6px"></i><em class="r">−2.3</em></span></td>
+<td class="c-take"><span class="pill bad">小亏换回撤</span></td>
+</tr>
+<tr>
+<td class="k">市场接力</td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:13px"></i><em class="r">−5.2</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:14px"></i><em class="r">−5.6</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:14px"></i><em class="r">−3.9</em></span></td>
+<td class="n numcol ibc" style="text-align: right;"><span class="ib"><i class="r" style="width:10px"></i><em class="r">−4.0</em></span></td>
+<td class="c-take"><span class="pill info">倾斜层唯一有用</span></td>
+</tr>
+</tbody>
+</table></div>
+<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">1000 条路径中位数；两个市场走同样的行情（接力除外）。</div><div class="rn-i">慢牛 = 3 年 +15%/年；急跌 = 20 天 −30%；慢熊 = 18 个月 −45%；V 型反转 = 20 天 −30%、60 天收回，这一行是这一次事件累计少赚的点数；震荡 = 3 年横盘。</div><div class="rn-i">急跌里 K1 在月末才离场，卖在底部；V 型反转里保险卖在底部、错过反弹。</div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：每种行情的最大回撤（中位数）</span></button><div class="fold-b" hidden="">
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>行情</th>
+<th class="n numcol" style="text-align: right;">K0</th>
+<th class="n numcol" style="text-align: right;">K2</th>
+<th class="n numcol" style="text-align: right;">K2A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k">慢牛</td>
+<td class="n numcol" style="text-align: right;">−15%</td>
+<td class="n numcol" style="text-align: right;">−12%</td>
+<td class="n numcol" style="text-align: right;">−12%</td>
+</tr>
+<tr>
+<td class="k">急跌</td>
+<td class="n numcol" style="text-align: right;">−37%</td>
+<td class="n numcol" style="text-align: right;">−24%</td>
+<td class="n numcol" style="text-align: right;">−28%</td>
+</tr>
+<tr>
+<td class="k">慢熊</td>
+<td class="n numcol" style="text-align: right;">−48%</td>
+<td class="n numcol" style="text-align: right;">−11%</td>
+<td class="n numcol" style="text-align: right;">−22%</td>
+</tr>
+<tr>
+<td class="k">V 型反转</td>
+<td class="n numcol" style="text-align: right;">−31%</td>
+<td class="n numcol" style="text-align: right;">−23%</td>
+<td class="n numcol" style="text-align: right;">−25%</td>
+</tr>
+<tr>
+<td class="k">震荡</td>
+<td class="n numcol" style="text-align: right;">−30%</td>
+<td class="n numcol" style="text-align: right;">−20%</td>
+<td class="n numcol" style="text-align: right;">−22%</td>
+</tr>
+<tr>
+<td class="k">市场接力</td>
+<td class="n numcol" style="text-align: right;">−21%</td>
+<td class="n numcol" style="text-align: right;">−16%</td>
+<td class="n numcol" style="text-align: right;">−16%</td>
+</tr>
+</tbody>
+</table></div>
+</div></div>
+<ul class="points">
+<li><strong>成本已经不是问题</strong>：五个结构每年双边换手 <span class="num">1.5–4.3 倍</span>，成本 <span class="num">0.15–0.45 个点</span>（v5.1 是 6.4）。</li>
+<li><strong>真实长历史回放</strong>（一直持有 <span class="arr">→</span> K2）：标普 1956–2003 年化 +0.5、回撤 <span class="num">−49%</span> <span class="arr">→</span> <span class="num">−24%</span>；恒生 1988–2015 −1.0、<span class="num">−65%</span> <span class="arr">→</span> <span class="num">−37%</span>；日经 1988–2015 +2.9、<span class="num">−82%</span> <span class="arr">→</span> <span class="num">−41%</span>。</li>
+<li><strong>见底后回来得慢</strong>：三个市场平均要 85–120 个交易日才回到半仓，这时离底部已涨 <span class="num">18–25%</span>。</li>
+</ul>
+</section>
+<section id="sec-3-底仓美股比例-每多-10-个点-每年约多-少-0-1-两地涨幅差"><h2 id="3-底仓美股比例-每多-10-个点-每年约多-少-0-1-两地涨幅差"><span class="num">03</span>底仓美股比例：每多 10 个点，每年约多（少）0.1 × 两地涨幅差</h2>
+<p class="memo"><strong>美股比 A 股每年多涨 <span class="num">10 个点</span>时，<span class="num">80%</span> 美股比 70/30 每年多 4.9；少涨 <span class="num">10 个点</span>时少 5.1。美股强的十年里，K2A 比 K2 每年少付约 <span class="num">1.5 个点</span>保费。</strong></p>
+<figure><img alt="底仓美股从 30% 到 80%，每年比 70/30 多或少几个点" loading="lazy" src="../../assets/v6-preflight/f3-us-share.png"/></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th class="n" style="text-align: right;">美股比 A 股每年多涨</th>
+<th class="n numcol" style="text-align: right;">K2 比底仓</th>
+<th class="n numcol" style="text-align: right;">K2A 比底仓</th>
+<th class="h-take rh-concl">读法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="n" style="text-align: right;"><span class="neg">−10</span> 个点</td>
+<td class="n numcol" style="text-align: right;"><strong><span class="neg">−1.1</span></strong></td>
+<td class="n numcol" style="text-align: right;"><span class="neg">−1.9</span></td>
+<td class="c-take"><span class="pill info">K2 好</span><span class="pill-note"> A 股强时，K2A 少保护了美股这一边</span></td>
+</tr>
+<tr>
+<td class="n" style="text-align: right;">0</td>
+<td class="n numcol" style="text-align: right;"><span class="neg">−2.8</span></td>
+<td class="n numcol" style="text-align: right;"><strong><span class="neg">−1.9</span></strong></td>
+<td class="c-take"><span class="pill info">K2A 好</span></td>
+</tr>
+<tr>
+<td class="n" style="text-align: right;"><span class="pos">+10</span> 个点</td>
+<td class="n numcol" style="text-align: right;"><span class="neg">−3.5</span></td>
+<td class="n numcol" style="text-align: right;"><strong><span class="neg">−2.0</span></strong></td>
+<td class="c-take"><span class="pill info">K2A 好</span><span class="pill-note"> 不在美股上付保费</span></td>
+</tr>
+<tr>
+<td class="n" style="text-align: right;"><span class="pos">+20</span> 个点</td>
+<td class="n numcol" style="text-align: right;"><span class="neg">−3.7</span></td>
+<td class="n numcol" style="text-align: right;"><strong><span class="neg">−2.0</span></strong></td>
+<td class="c-take"><span class="pill info">K2A 好</span></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">十年合成行情，A 股每年 <span class="num">6%</span>、波动 <span class="num">25%</span>，美股波动 <span class="num">17%</span>（两地波动是假设）。美股比例的回撤：美股多了回撤反而浅，是“美股波动更低、两地相关低”这个假设推出来的；美股弱 <span class="num">10 个点</span>时，<span class="num">80%</span> 的回撤已经比 <span class="num">70%</span> 差。</p>
+</section>
+<section id="sec-4-信号准确度-三层都弱-只有躲大熊的趋势是硬的"><h2 id="4-信号准确度-三层都弱-只有躲大熊的趋势是硬的"><span class="num">04</span>信号准确度：三层都弱，只有躲大熊的趋势是硬的</h2>
+<p class="memo"><strong>月度准确度（IC）最高 0.15，只出现在 <span class="num">2006–10 年</span>；长历史里市场之间几乎为 0。</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>信号</th>
+<th style="text-align: right;">2006–10</th>
+<th style="text-align: right;">2011–15</th>
+<th style="text-align: right;">长历史</th>
+<th class="h-take rh-concl">读法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 自己的 10 个月均线（各容器中位）</td>
+<td class="key" style="text-align: right;"><strong>0.15</strong></td>
+<td style="text-align: right;">−0.01</td>
+<td style="text-align: right;">标普 0.04、恒生 −0.02、日经 0.06</td>
+<td class="c-take"><span class="pill info">价值在尾部</span><span class="pill-note"> 平常没信息，躲大熊才有用</span></td>
+</tr>
+<tr>
+<td>② 市场之间 12−1（A、港、美三地）</td>
+<td style="text-align: right;">0.13（t 1.4）</td>
+<td style="text-align: right;">0.08（t 0.8）</td>
+<td style="text-align: right;">0.005（t 0.1）</td>
+<td class="c-take"><span class="pill info">弱</span><span class="pill-note"> 长历史里没有</span></td>
+</tr>
+<tr class="row-good">
+<td>③ A 股内挑选 12−1 涨幅</td>
+<td style="text-align: right;">0.05（t 0.8）</td>
+<td style="text-align: right;">0.05（t 0.9）</td>
+<td style="text-align: right;">缺</td>
+<td class="c-take"><span class="pill good">达到 0.03 的线</span><span class="pill-note"> 两段都正</span></td>
+</tr>
+<tr class="row-good">
+<td>③ A 股内挑选 12−1 涨幅 ÷ 波动</td>
+<td style="text-align: right;">0.10（t 1.8）</td>
+<td style="text-align: right;">0.06（t 1.0）</td>
+<td style="text-align: right;">缺</td>
+<td class="c-take"><span class="pill good">达到 0.03 的线</span><span class="pill-note"> 同上</span></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">月度秩相关，0 = 没有信息。判定只看登记时定的 12−1；3、6 个月只作参照。</p>
+<ul class="points">
+<li><strong>美股在 <span class="num">2011–15 年</span>的均线信号是负的</strong>：标普 −0.19、纳指 −0.24。稳定的牛市里，跌破均线往往是买点，这是 K2A 的出发点。</li>
+<li><strong>挑选层的长历史还没有</strong>：外部数据（Kenneth French 美国行业组合）待取，见 D38 数据需求。</li>
+</ul>
+</section>
+<section id="sec-5-不做线-跑前写下的线-没有一层过-k2-只差保费一条"><h2 id="5-不做线-跑前写下的线-没有一层过-k2-只差保费一条"><span class="num">05</span>不做线：跑前写下的线，没有一层过；K2 只差保费一条</h2>
+<p class="memo"><strong>K1 差 2 条、K2 差 1 条、K2A 差 2 条、K3 差 1 条，挑选层待定。</strong></p>
+<div class="score"><div class="seg"><span class="s-good" style="flex:5"></span><span class="s-warn" style="flex:1"></span><span class="s-bad" style="flex:6"></span></div><div class="sl"><b class="t-good num">5</b> 通过 · <b class="t-warn num">1</b> 待定 · <b class="t-bad num">6</b> 没过<span class="of"> / 共 12 项</span></div></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>条件</th>
+<th>结果</th>
+<th class="h-take rh-concl">结论</th>
+</tr>
+</thead>
+<tbody>
+<tr class="grp"><td colspan="3">K1 慢趋势保险</td></tr>
+<tr class="row-bad">
+<td>慢牛每年落后 ≤ 2</td>
+<td><b>4.4</b></td>
+<td class="c-take"><span class="pill bad">没过</span></td>
+</tr>
+<tr class="row-bad">
+<td>急跌和慢熊回撤浅 ≥ 三分之一</td>
+<td><b>急跌只浅 13%；慢熊 76%</b></td>
+<td class="c-take"><span class="pill bad">没过</span></td>
+</tr>
+<tr class="row-good">
+<td class="k">成本 ≤ 1</td>
+<td><b>0.27</b></td>
+<td class="c-take"><span class="pill good">通过</span></td>
+</tr>
+<tr class="grp"><td colspan="3">K2 按波动降仓</td></tr>
+<tr class="row-bad">
+<td>慢牛每年落后 ≤ 2</td>
+<td><b>5.1</b></td>
+<td class="c-take"><span class="pill bad">没过</span></td>
+</tr>
+<tr class="row-good">
+<td>急跌和慢熊回撤浅 ≥ 三分之一</td>
+<td><b>急跌 35%；慢熊 80%</b></td>
+<td class="c-take"><span class="pill good">通过</span></td>
+</tr>
+<tr class="row-good">
+<td class="k">成本 ≤ 1</td>
+<td><b>0.39</b></td>
+<td class="c-take"><span class="pill good">通过</span></td>
+</tr>
+<tr class="grp"><td colspan="3">K2A 只保 A 股腿</td></tr>
+<tr class="row-bad">
+<td>慢牛每年落后 ≤ 2</td>
+<td><b>3.5</b></td>
+<td class="c-take"><span class="pill bad">没过</span></td>
+</tr>
+<tr class="row-bad">
+<td>急跌和慢熊回撤浅 ≥ 三分之一</td>
+<td><b>急跌只浅 24%；慢熊 55%</b></td>
+<td class="c-take"><span class="pill bad">没过</span></td>
+</tr>
+<tr class="row-good">
+<td class="k">成本 ≤ 1</td>
+<td><b>0.28</b></td>
+<td class="c-take"><span class="pill good">通过</span></td>
+</tr>
+<tr class="grp"><td colspan="3">K3 倾斜层和挑选层</td></tr>
+<tr class="row-bad">
+<td>K3：打折后期望超额为正</td>
+<td><b>0 ~ +0.4，长历史 IC 为 0</b></td>
+<td class="c-take"><span class="pill bad">没过</span><span class="pill-note"> 证据不够</span></td>
+</tr>
+<tr class="row-good">
+<td>K3：最差行情每年落后 ≤ 2（比 K1）</td>
+<td><b>−0.7（震荡）</b></td>
+<td class="c-take"><span class="pill good">通过</span></td>
+</tr>
+<tr class="row-warn">
+<td>挑选层：两段和长历史 IC 都为正、平均 ≥ 0.03</td>
+<td><b>两段 0.05；长历史缺</b></td>
+<td class="c-take"><span class="pill warn">待定</span></td>
+</tr>
+</tbody>
+</table></div>
+<ul class="points">
+<li><strong>保费这条线用的是合成慢牛</strong>：合成行情没有动量，所以 4.4、5.1、3.5 是“没有信号时”的上限。</li>
+<li><strong>换到真实口径更低</strong>：计入真实利率和真实的进出时点后，K2 平均约 2.2、K2A 约 1.6。这条线是跑之前写下的，不改；两组数字都摆在这里，由你在第 7 节决定。</li>
+</ul>
+</section>
+<section id="sec-6-你的三个要求-①-能做到-②-做不到-③-没有测"><h2 id="6-你的三个要求-①-能做到-②-做不到-③-没有测"><span class="num">06</span>你的三个要求：① 能做到，② 做不到，③ 没有测</h2>
+<p class="memo"><strong>慢熊里回撤从 <span class="num">−48%</span> 收到 <span class="num">−11%</span>；但见底后要等离底涨了 <span class="num">18–25%</span> 才回到半仓。</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>要求</th>
+<th>预演的答案</th>
+<th class="h-take rh-concl">结论</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-good">
+<td>① 牛市见顶后撤到债券或现金</td>
+<td class="detail">慢熊回撤从 −48% 到 −11%；急跌要靠按波动降仓（K2），月度均线来不及</td>
+<td class="c-take"><span class="pill good">做到</span></td>
+</tr>
+<tr class="row-bad">
+<td>② 极端见底后快速回场、抓反转</td>
+<td class="detail">离底 18–25% 才回到半仓；V 型里浮亏变实亏，一次约 −15 到 −26 个点</td>
+<td class="c-take"><span class="pill bad">没达到</span></td>
+</tr>
+<tr>
+<td>③ 震荡市波段做超额</td>
+<td class="detail">原因见诊断第 4 节；保险层在震荡里每年小亏 1–2 个点，回撤浅约 8–10 个点</td>
+<td class="c-take"><span class="pill info">没有测</span></td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="sec-7-需要你定-保费上限-建议-k2a-每年约-1-6-个点"><h2 id="7-需要你定-保费上限-建议-k2a-每年约-1-6-个点"><span class="num">07</span>需要你定：保费上限，建议 K2A，每年约 1.6 个点</h2>
+<p class="memo"><strong>K2A 十年约少赚 30 万（按 100 万本金），整体回撤浅约三成；代价是美股的熊市不防。</strong></p>
+<h4 id="保费上限-保险层在牛市里每年最多愿意少赚多少">保费上限：保险层在牛市里每年最多愿意少赚多少</h4>
+<div class="options decision"><div class="option"><div class="on">不设保险层，只定美股比例的原则</div><div class="od">没有一层过线；v6 = 底仓 + 定美股比例的原则。回撤和基准一样，2008、2015 那种年份照单全收。</div></div><div class="option rec"><div class="on">K2A 只保 A 股腿，约 1.6 个点 <strong></strong><span class="badge">★ 建议</span></div><div class="od">每年少赚约 <span class="num">1.6 个点</span>（十年约 30 万）；A 股腿回撤约砍四成，整体约三成。美股的熊市（如 2008、2022）完全不防。</div></div><div class="option"><div class="on">K2 全部底仓买保险，约 2.2 个点</div><div class="od">每年少赚约 <span class="num">2.2 个点</span>（十年约 40 万），长牛年份 <span class="num">4–5 个点</span>；回撤约砍一半。长牛里会连续几年落后基准。</div></div></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>选择</th>
+<th class="rh-cost">二阶代价</th>
+<th class="rh-cost">三阶代价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>不设保险</strong></td>
+<td class="r-cost"><b>“先为不可胜”只能靠底仓里放债券、黄金来做</b></td>
+<td class="r-cost"><b>牛市照样少赚，保费换个地方付</b></td>
+</tr>
+<tr>
+<td class="k"><strong>K2A</strong></td>
+<td class="r-cost"><b>美股强的十年里保费比 K2 少一半；A 股强的十年里反而比 K2 差</b></td>
+<td class="r-cost"><b>如果下一个十年美股出事，这个选择会很痛</b></td>
+</tr>
+<tr>
+<td class="k"><strong>K2</strong></td>
+<td class="r-cost"><b>V 型反转一次就是 −20 个点</b></td>
+<td class="r-cost"><b>6 个月模拟盘验不出好坏，只能验“落后的幅度在不在这张表的范围里”</b></td>
+</tr>
+<tr>
+<td><strong>把钱花在美股比例上</strong></td>
+<td class="r-cost"><b>QDII 溢价和限购随比例上升</b></td>
+<td class="r-cost"><b>和 2006–2015 那样的十年对赌</b></td>
+</tr>
+</tbody>
+</table></div>
+<ul class="points">
+<li><strong>为什么建议 K2A</strong>：它是唯一一个按真实口径落在 <span class="num">2 个点</span>以内的保险。</li>
+<li><strong>保费付在赔付高的地方</strong>：A 股的熊市又深又慢，沪深300 设计期最深 <span class="num">−72%</span>。</li>
+<li><strong>不在最贵的地方付</strong>：美股这十年的均线信号是负的，在美股上买保险最贵。</li>
+</ul>
+</section>
+<section id="sec-8-复算-reviewer-两次都批准-三处差异都已查清-数字不变"><h2 id="8-复算-reviewer-两次都批准-三处差异都已查清-数字不变"><span class="num">08</span>复算：Reviewer 两次都批准，三处差异都已查清，数字不变</h2>
+<p class="memo"><strong>长历史 9 项、信号准确度 7 项、K2A 合成行情 3 种逐位一致；差异来自随机数顺序和预热口径。</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>差异</th>
+<th>原因</th>
+<th>处理</th>
+<th class="h-take rh-concl">结论</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-good">
+<td>第 1 部分：V 型里 K1、K2 年化差 1.2–1.6 个点</td>
+<td>原脚本六种行情共用一个随机数流</td>
+<td>改成每种行情从同一种子开始，逐位一致；判定不变</td>
+<td class="c-take"><span class="pill good">已修</span></td>
+</tr>
+<tr>
+<td>第 2 部分：沪深300 回放 K2 每年 +3.46 对 +4.46</td>
+<td>Reviewer 没有预热，2006 年 K2 不降仓</td>
+<td>按它的起点重跑，逐位一致；本表保留预热口径</td>
+<td class="c-take"><span class="pill info">已查清</span></td>
+</tr>
+<tr>
+<td>第 2 部分：敏感度八格低 0.25–0.4</td>
+<td>登记没写死预热年参数</td>
+<td>两个结构一起平移，结论不变</td>
+<td class="c-take"><span class="pill info">已查清</span></td>
+</tr>
+</tbody>
+</table></div>
+<ul class="points">
+<li><strong>V 型差异怎么查清的</strong>：Reviewer 每种行情从同一个种子重新开始；把本表脚本改成同样口径后，两边逐位一致（K1 −31.84、K2 −25.03）。</li>
+<li><strong>抽样波动有多大</strong>：换 5 个种子，V 型年化在 ±<span class="num">1 个点</span>内波动，折成这一次的累计损失不到 <span class="num">1 个点</span>。全部重跑后，其他数字最多变 <span class="num">0.5 个点</span>。</li>
+<li><strong>沪深300 差异怎么查清的</strong>：Reviewer 从 2006-01-06 读起，K2 要攒满 252 天才能算长期波动，所以整个 2006 年没降过仓；本表用 2005 年预热，和长历史回放同口径。按 Reviewer 的起点重跑本表脚本，得到 +4.46。</li>
+<li><strong>敏感度差异怎么查清的</strong>：本表预热年用两地 <span class="num">8%</span>、波动 <span class="num">20%</span>；Reviewer 用和后面十年相同的参数。</li>
+<li><strong>沪深300 差异顺带看到的</strong>：2006 年沪深300 涨了一倍多，K2 那年平均只拿 <span class="num">92%</span> 的仓位，就少赚约 <span class="num">10 个点</span>，摊到十年每年约 <span class="num">1 个点</span>。这正是红队第 4 条“牛市里按波动降仓的代价”。</li>
+</ul>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>红队：假设 v6 上线后失败了，最可能的五个原因</span></button><div class="fold-b" hidden="">
+<div class="table-wrap"><table data-lint="ref">
+<thead>
+<tr>
+<th class="n" style="text-align: right;">#</th>
+<th>失败原因</th>
+<th style="text-align: right;">每年损失</th>
+<th>预测表覆盖</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="n" style="text-align: right;">1</td>
+<td>V 型急反，月末离场后反弹才回来</td>
+<td style="text-align: right;">一次 −15 ~ −26 个点</td>
+<td><strong>是</strong> 第 2、6 节</td>
+</tr>
+<tr>
+<td class="n" style="text-align: right;">2</td>
+<td>长牛里连续付保费</td>
+<td style="text-align: right;">4–5</td>
+<td><strong>是</strong> 第 2、5 节合成慢牛</td>
+</tr>
+<tr>
+<td class="n" style="text-align: right;">3</td>
+<td>美股腿的均线信号为负</td>
+<td style="text-align: right;">2–3（美股腿）</td>
+<td><strong>是</strong> 新增 K2A</td>
+</tr>
+<tr>
+<td class="n" style="text-align: right;">4</td>
+<td>牛市里按波动降仓，回补慢</td>
+<td style="text-align: right;">1.5–2</td>
+<td><strong>部分</strong> 沪深300 2006 年的例子</td>
+</tr>
+<tr>
+<td class="n" style="text-align: right;">5</td>
+<td>保费上限定得比真实口径紧，把 K2 挡在外面</td>
+<td style="text-align: right;">机会成本</td>
+<td><strong>是</strong> 第 5、7 节</td>
+</tr>
+</tbody>
+</table></div>
+</div></div>
+</section>
+<section id="sec-9-还没做的-三件-都不影响保费的决定"><h2 id="9-还没做的-三件-都不影响保费的决定"><span class="num">09</span>还没做的：三件，都不影响保费的决定</h2>
+<p class="memo"><strong>挑选层缺长历史、红队第 4 条只部分覆盖；它们影响的是 v6 要不要设挑选层，不影响保险层。</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>事项</th>
+<th>现状</th>
+<th class="rh-why">影响</th>
+<th class="h-take rh-concl">结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>挑选层的长历史</td>
+<td>外部行业数据（Kenneth French）待取</td>
+<td class="r-why"><b>决定 v6 要不要设挑选层</b></td>
+<td class="c-take"><span class="pill info">待取数</span></td>
+</tr>
+<tr class="row-warn">
+<td>红队第 4 条：牛市里按波动降仓的代价</td>
+<td>有沪深300 2006 年一个例子，没单列</td>
+<td class="r-why"><b>K2、K2A 的保费可能偏低</b></td>
+<td class="c-take"><span class="pill warn">部分</span><span class="pill-note">覆盖</span></td>
+</tr>
+<tr>
+<td>全市场池子的清点</td>
+<td>16 个“市场”里 13 个只有一只基金，合计平均占 15% 仓位（D37 已签收）</td>
+<td class="r-why"><b>v6 若用全市场池，要先改“市场”的定义</b></td>
+<td class="c-take"><span class="pill info">已清点</span></td>
+</tr>
+</tbody>
+</table></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>数据来源</span></button><div class="fold-b" hidden="">
+<ul class="points">
+<li><strong>登记和运行</strong>：D38 登记第 3 版、附表第 0–8 行（<code>operations/planning/2026-11-16-d38-project-diagnosis-and-preflight.md</code>）。</li>
+<li><strong>结果</strong>：<code>results/v6-preflight/</code> 的 behavior、cost、events、sensitivity、plateau、longhist、longhist-bears、decomp-longhist、csi300、ic、ic-ma10、census、census-listing-heat。</li>
+<li><strong>脚本</strong>：<code>scripts/preflight/</code>（sim、longhist、csi300、decomp、ic、census、charts）。</li>
+<li><strong>复算</strong>：<code>operations/reviews/2026-11-17-d38-preflight-review.md</code>，脚本在 <code>operations/reviews/diag/d38/</code>。</li>
+<li><strong>上市时的热度</strong>：2015 年以前上市的 7 个主题，上市前 12 个月的涨幅在当天全池里的分位中位数是 0.71，样本太少，不下结论。</li>
+<li><strong>溢价控制</strong>：已经接入核心配置和 v5.1 的执行链，看板上“未接入”一条过时。</li>
+</ul>
+</div></div></section>
+<footer>内容取自仓库 <a href="https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/main/docs/owner/v6-preflight-forecast.md">docs/owner/v6-preflight-forecast.md</a>（main @ a592981）。图表为原文配图。</footer>
+</main>
+</div>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc ol a'));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function update() {
+    var y = window.scrollY + 120, idx = 0;
+    targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top + window.scrollY <= y) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+
+document.querySelectorAll('.fold-h').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var open = b.getAttribute('aria-expanded') === 'true';
+    b.setAttribute('aria-expanded', open ? 'false' : 'true');
+    var body = b.nextElementSibling;
+    if (open) body.setAttribute('hidden', ''); else body.removeAttribute('hidden');
+  });
+});
+
+</script>
+</body>
+</html>
