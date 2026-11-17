@@ -1,0 +1,374 @@
+{
+  "diagnostic": "D37-r5-plan-B",
+  "counts_toward_gate": false,
+  "pr284": {
+    "number": 284,
+    "head": "770b22b2779309f70936b59ff210905922676d3f",
+    "branch": "cursor/d37-r5",
+    "state": "OPEN"
+  },
+  "main_head_at_review": "87089f9a4f0b968e30101a82917f89fa74f7ffb2",
+  "pr284_base_oid_from_gh": "87089f9a4f0b968e30101a82917f89fa74f7ffb2",
+  "merge_check": {
+    "merge_base_with_pr284_head": "a0ede094c5e5d604d1d9b5cb1c08da0d64641b40",
+    "manager_expected_base_a0ede09": "a0ede094c5e5d604d1d9b5cb1c08da0d64641b40",
+    "merge_tree_has_conflict_markers": false,
+    "clean_merge_read": true
+  },
+  "db_sha256": {
+    "dev_worktree_resolved": "d0b947d90b444eb1d874a04df6bcb1974cbea4422b489f214a56c0a658abf0d9",
+    "expected_d37_round4_after": "d0b947d90b444eb1d874a04df6bcb1974cbea4422b489f214a56c0a658abf0d9",
+    "match_expected": true
+  },
+  "completeness_B_dirs": {
+    "S0/设计期/B": {
+      "folder_exists": true,
+      "required_files": {
+        "daily.csv": true,
+        "stats.json": true,
+        "market_days.csv": true,
+        "markets.csv": true,
+        "vs-v0.csv": true,
+        "trades.csv": true,
+        "sells.csv": true
+      },
+      "markets_window_csv_design": true,
+      "complete": true
+    },
+    "S0/别的市场/B": {
+      "folder_exists": true,
+      "required_files": {
+        "daily.csv": true,
+        "stats.json": true,
+        "market_days.csv": true,
+        "markets.csv": true,
+        "vs-v0.csv": true,
+        "trades.csv": true,
+        "sells.csv": true
+      },
+      "markets_window_csv_design": null,
+      "complete": true
+    },
+    "S0/检验段/B": {
+      "folder_exists": true,
+      "required_files": {
+        "daily.csv": true,
+        "stats.json": true,
+        "market_days.csv": true,
+        "markets.csv": true,
+        "vs-v0.csv": true,
+        "trades.csv": true,
+        "sells.csv": true
+      },
+      "markets_window_csv_design": null,
+      "complete": true
+    },
+    "S1/检验段/B": {
+      "folder_exists": true,
+      "required_files": {
+        "daily.csv": true,
+        "stats.json": true,
+        "market_days.csv": true,
+        "markets.csv": true,
+        "vs-v0.csv": true,
+        "trades.csv": true,
+        "sells.csv": true
+      },
+      "markets_window_csv_design": null,
+      "complete": true
+    }
+  },
+  "S0_design_B_vs_main_r4_daily": {
+    "both_present": true,
+    "main_sha256": "58d95367dcefb2e775133e65f2c6f2d7b6c95fcc83622ced6522210c22be225a",
+    "pr284_sha256": "58d95367dcefb2e775133e65f2c6f2d7b6c95fcc83622ced6522210c22be225a",
+    "sha256_match": true
+  },
+  "cells": {
+    "S0/设计期/B": {
+      "reviewer": {
+        "ann": 0.26860057013938676,
+        "max_drawdown": -0.3199330183798538,
+        "n": 2429,
+        "trades_per_year": 61.2,
+        "cost_per_year": 0.04311682979149921,
+        "trades": 612,
+        "cost": 0.4311682979149921
+      },
+      "dev": {
+        "ann": 0.2686005701393568,
+        "max_drawdown": -0.31993301838002275,
+        "trades_per_year": 61.2,
+        "cost_per_year": 0.0431168297914953,
+        "trades": 612,
+        "cost": 0.43116829791495304
+      },
+      "stats_match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "cost_per_year": true,
+        "trades": true,
+        "cost": true
+      },
+      "vs_v0_rows": {
+        "rows": [
+          {
+            "metric": "ann",
+            "reviewer_B_minus_V0": -0.032818579769331,
+            "dev_B_minus_V0": -0.0328185797694,
+            "match": true
+          },
+          {
+            "metric": "max_drawdown",
+            "reviewer_B_minus_V0": -0.061414222594154744,
+            "dev_B_minus_V0": -0.0614142225943,
+            "match": true
+          },
+          {
+            "metric": "trades",
+            "reviewer_B_minus_V0": 115.0,
+            "dev_B_minus_V0": 115.0,
+            "match": true
+          },
+          {
+            "metric": "trades_per_year",
+            "reviewer_B_minus_V0": 11.5,
+            "dev_B_minus_V0": 11.5,
+            "match": true
+          },
+          {
+            "metric": "cost",
+            "reviewer_B_minus_V0": 0.10647545209290893,
+            "dev_B_minus_V0": 0.106475452093,
+            "match": true
+          },
+          {
+            "metric": "cost_per_year",
+            "reviewer_B_minus_V0": 0.010647545209290891,
+            "dev_B_minus_V0": 0.0106475452093,
+            "match": true
+          }
+        ],
+        "all_match": true
+      }
+    },
+    "S0/别的市场/B": {
+      "reviewer": {
+        "ann": 0.009441222206762134,
+        "max_drawdown": -0.4773965639615032,
+        "n": 5850,
+        "trades_per_year": 65.60615384615384,
+        "cost_per_year": 0.06788713490829232,
+        "trades": 1523,
+        "cost": 1.5759513460853574
+      },
+      "dev": {
+        "ann": 0.009441222206706623,
+        "max_drawdown": -0.4773965639616903,
+        "trades_per_year": 65.60615384615384,
+        "cost_per_year": 0.06788713490831517,
+        "trades": 1523,
+        "cost": 1.575951346085888
+      },
+      "stats_match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "cost_per_year": true,
+        "trades": true,
+        "cost": true
+      },
+      "vs_v0_rows": {
+        "rows": [
+          {
+            "metric": "ann",
+            "reviewer_B_minus_V0": -0.003568802889802436,
+            "dev_B_minus_V0": -0.00356880288986,
+            "match": true
+          },
+          {
+            "metric": "max_drawdown",
+            "reviewer_B_minus_V0": -0.02870215002254428,
+            "dev_B_minus_V0": -0.0287021500227,
+            "match": true
+          },
+          {
+            "metric": "trades",
+            "reviewer_B_minus_V0": 101.0,
+            "dev_B_minus_V0": 101.0,
+            "match": true
+          },
+          {
+            "metric": "trades_per_year",
+            "reviewer_B_minus_V0": 4.350769230769231,
+            "dev_B_minus_V0": 4.35076923077,
+            "match": true
+          },
+          {
+            "metric": "cost",
+            "reviewer_B_minus_V0": 0.21335304006489353,
+            "dev_B_minus_V0": 0.213353040065,
+            "match": true
+          },
+          {
+            "metric": "cost_per_year",
+            "reviewer_B_minus_V0": 0.009190592495103109,
+            "dev_B_minus_V0": 0.00919059249513,
+            "match": true
+          }
+        ],
+        "all_match": true
+      }
+    },
+    "S0/检验段/B": {
+      "reviewer": {
+        "ann": -0.036167503080849706,
+        "max_drawdown": -0.5512151255914772,
+        "n": 2611,
+        "trades_per_year": 76.92225201072387,
+        "cost_per_year": 0.07500754855318838,
+        "trades": 797,
+        "cost": 0.7771615447316462
+      },
+      "dev": {
+        "ann": -0.03616750308091843,
+        "max_drawdown": -0.5512151255918675,
+        "trades_per_year": 76.92225201072387,
+        "cost_per_year": 0.07500754855318793,
+        "trades": 797,
+        "cost": 0.7771615447316416
+      },
+      "stats_match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "cost_per_year": true,
+        "trades": true,
+        "cost": true
+      },
+      "vs_v0_rows": {
+        "rows": [
+          {
+            "metric": "ann",
+            "reviewer_B_minus_V0": -0.0015424702276235491,
+            "dev_B_minus_V0": -0.00154247022769,
+            "match": true
+          },
+          {
+            "metric": "max_drawdown",
+            "reviewer_B_minus_V0": -0.00797965391214539,
+            "dev_B_minus_V0": -0.00797965391254,
+            "match": true
+          },
+          {
+            "metric": "trades",
+            "reviewer_B_minus_V0": 73.0,
+            "dev_B_minus_V0": 73.0,
+            "match": true
+          },
+          {
+            "metric": "trades_per_year",
+            "reviewer_B_minus_V0": 7.045576407506701,
+            "dev_B_minus_V0": 7.04557640751,
+            "match": true
+          },
+          {
+            "metric": "cost",
+            "reviewer_B_minus_V0": 0.0915402295685318,
+            "dev_B_minus_V0": 0.0915402295685,
+            "match": true
+          },
+          {
+            "metric": "cost_per_year",
+            "reviewer_B_minus_V0": 0.00883498194227117,
+            "dev_B_minus_V0": 0.00883498194227,
+            "match": true
+          }
+        ],
+        "all_match": true
+      }
+    },
+    "S1/检验段/B": {
+      "reviewer": {
+        "ann": 0.06197269765078417,
+        "max_drawdown": -0.32287078266014924,
+        "n": 2611,
+        "trades_per_year": 76.4396782841823,
+        "cost_per_year": 0.07178523858800491,
+        "trades": 792,
+        "cost": 0.7437748331479397
+      },
+      "dev": {
+        "ann": 0.061972697650517494,
+        "max_drawdown": -0.32287078266031133,
+        "trades_per_year": 76.4396782841823,
+        "cost_per_year": 0.0717852385880105,
+        "trades": 792,
+        "cost": 0.7437748331479976
+      },
+      "stats_match": {
+        "ann": true,
+        "max_drawdown": true,
+        "trades_per_year": true,
+        "cost_per_year": true,
+        "trades": true,
+        "cost": true
+      },
+      "vs_v0_rows": {
+        "rows": [
+          {
+            "metric": "ann",
+            "reviewer_B_minus_V0": 0.04537666175370414,
+            "dev_B_minus_V0": 0.0453766617534,
+            "match": true
+          },
+          {
+            "metric": "max_drawdown",
+            "reviewer_B_minus_V0": 0.09532904156407151,
+            "dev_B_minus_V0": 0.0953290415639,
+            "match": true
+          },
+          {
+            "metric": "trades",
+            "reviewer_B_minus_V0": 261.0,
+            "dev_B_minus_V0": 261.0,
+            "match": true
+          },
+          {
+            "metric": "trades_per_year",
+            "reviewer_B_minus_V0": 25.19034852546917,
+            "dev_B_minus_V0": 25.1903485255,
+            "match": true
+          },
+          {
+            "metric": "cost",
+            "reviewer_B_minus_V0": 0.20796758557135764,
+            "dev_B_minus_V0": 0.207967585571,
+            "match": true
+          },
+          {
+            "metric": "cost_per_year",
+            "reviewer_B_minus_V0": 0.02007193855380396,
+            "dev_B_minus_V0": 0.0200719385538,
+            "match": true
+          }
+        ],
+        "all_match": true
+      }
+    }
+  },
+  "engine": {
+    "china_B_execution_fields_in_stats_json": {
+      "S0/设计期": "run_book",
+      "S0/检验段": "run_book",
+      "S1/检验段": "run_book"
+    },
+    "other_market_B_execution": "gpool.simulate",
+    "d37_plan_b_docstring_notes_run_book_vs_gpool": true,
+    "gpool_manifest_limits_false_in_source": true,
+    "gpool_run_v51_uses_simulate": true
+  },
+  "must_fix_flags": [],
+  "must_fix_count": 0
+}
