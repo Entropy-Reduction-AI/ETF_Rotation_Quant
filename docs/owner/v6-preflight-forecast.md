@@ -4,11 +4,11 @@
 
 - Project: ETF_Rotation_Quant
 - Document type: owner report（D38 预演第 6 项）
-- Status: active（第 2 版：并入 Reviewer 复算和红队；新增 K2A“只给 A 股腿买保险”）
+- Status: active（第 2.1 版：Reviewer 第 2 部分复算 K2A，结论 approve_with_follow_up，跟进项已查清；数字不变）
 - Owner: L. Loric
 - Maintainer: Orchestrator
 - Date: 2026-11-17（Asia/Taipei）
-- 依据：`operations/planning/2026-11-16-d38-project-diagnosis-and-preflight.md`（登记第 3 版、不做线、运行附表 0–7）；Reviewer 复算 `operations/reviews/2026-11-17-d38-preflight-review.md`（PR #300，结论 approve_with_follow_up）
+- 依据：`operations/planning/2026-11-16-d38-project-diagnosis-and-preflight.md`（登记第 3 版、不做线、运行附表 0–7）；Reviewer 复算 `operations/reviews/2026-11-17-d38-preflight-review.md`（第 1 部分 PR #300、第 2 部分 PR #302，两次结论都是 approve_with_follow_up，跟进项均已查清）
 - 数据：合成行情；长历史标普 1955–2003、恒生和日经 1987–2015；项目池 ≤2015-12-31。2016 年以后只引用已签收的数字，不读收益
 
 ## 0. 一句话
@@ -131,11 +131,17 @@ Orchestrator 的建议：**K2A**。理由：它是唯一一个按真实口径落
 | 4 | 牛市末段波动收敛、按波动降仓后回补慢 | 1.5–2 | 部分（进出时点已含，未单列牛末） |
 | 5 | 保费上限定得比真实口径紧，把 K2 挡在外面 | 机会成本 | 是（第 4、6 节） |
 
+**第 2 部分（PR #302，复算 K2A）**：K2A 合成行情三种逐位一致；敏感度八格都在容差内；预测表里 K2A 的加总、不做线三格、十年金额都一致。两处差异已查清：
+
+| 差异 | 原因 | 影响 |
+| --- | --- | --- |
+| 沪深300 回放里 K2 每年 +3.46 对 +4.46 | Reviewer 从 2006-01-06 读起、没有预热，K2 要攒满 252 天才能算长期波动，整个 2006 年没降过仓；本表用 2005 年预热，和长历史回放同口径。按 Reviewer 的起点重跑本表脚本，得到 +4.46，逐位一致 | 不改数字。顺带看到：2006 年沪深300 涨了一倍多，K2 那年平均只拿 92% 的仓位，就少赚约 10 个点（摊到十年每年约 1 个点），正是红队第 4 条“按波动降仓在牛市里的代价” |
+| 敏感度八格都比本表低 0.25–0.4 个点 | 登记没写死预热年怎么设：本表预热年用两地 8%、波动 20%，Reviewer 用和后面十年相同的参数 | 两个结构一起平移，K2A 比 K2 在美股强时少付约 1.5 个点这一结论不变 |
+
 ## 8. 还没做的
 
-- **K2A 是第 3 版登记新加的**，Reviewer 还没复算；派单见 `operations/planning/2026-11-17-grok-tasks-d38-preflight-review.md` 第 2 部分。
 - **挑选层的长历史**：外部行业数据待取。
-- **红队第 4 条**（牛末回补慢）只部分覆盖。
+- **红队第 4 条**（牛市里按波动降仓的代价）只部分覆盖；沪深300 2006 年的例子见第 7 节。
 
 ## 附：运行与文件
 
