@@ -730,6 +730,29 @@ p.kv.kv-warn { border: 1px solid color-mix(in srgb, #a16207 45%, var(--line)); b
 p.kv.kv-warn .kv-k { color: #a16207; }
 p.kv.kv-warn .kv-k::before { content: '⚠'; width: auto; height: auto; background: none; color: #a16207; border-radius: 0; margin-right: 6px; }
 
+.cards.dx-cards { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.cards .card.dx { border-top: 4px solid var(--bad); display: flex; flex-direction: column; gap: 8px; }
+.cards .card.dxc-mid { border-top-color: #a16207; }
+.dx-n { font-size: 12.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 5px; padding: 1px 8px; }
+.dx-d { font-size: 18px; font-weight: 800; line-height: 1.4; color: var(--bad); }
+.dxc-mid .dx-d { color: #a16207; }
+.dx-g { background: var(--bg); border-radius: 8px; padding: 8px 10px; }
+.dx-gl { font-size: 11.5px; color: var(--muted); margin-bottom: 4px; }
+.dx-gb { position: relative; height: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 5px; }
+.dx-gb i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; }
+.dx-gb i.g { background: var(--good); } .dx-gb i.b { background: var(--bad); }
+.dx-gb em { position: absolute; top: -4px; bottom: -4px; border-left: 2px dashed var(--ink); }
+.dx-gv { display: flex; justify-content: space-between; margin-top: 4px; font-size: 12px; }
+.dx-gv b { font-family: var(--font-mono); font-size: 15px; } .dx-gv b.g { color: var(--good); } .dx-gv b.b { color: var(--bad); }
+.dx-gv span { color: var(--muted); }
+.dx-rows { display: grid; gap: 6px; }
+.dx-r { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 6px; font-size: 14px; line-height: 1.6; }
+.dx-i { width: 16px; height: 16px; border-radius: 50%; margin-top: 4px; display: grid; place-items: center; font-size: 10px; font-weight: 800; color: #fff; background: var(--muted); }
+.dx-i::before { content: '·'; }
+.dx-bad .dx-i { background: var(--bad); } .dx-bad .dx-i::before { content: '✕'; }
+.dx-good .dx-i { background: var(--good); } .dx-good .dx-i::before { content: '✓'; }
+b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color: var(--bad); font-family: var(--font-mono); }
+
 </style>
 </head>
 <body>
@@ -1033,7 +1056,7 @@ p.kv.kv-warn .kv-k::before { content: '⚠'; width: auto; height: auto; backgrou
 <section id="sec-4-为什么输-三个策略输法不同-e2-新口径少拿美股-v5-1-输给成本-a1-"><h2 id="4-为什么输-三个策略输法不同-e2-新口径少拿美股-v5-1-输给成本-a1-"><span class="num">04</span>为什么输：三个策略输法不同——E2 新口径少拿美股，v5.1 输给成本，A1 输在进出时点</h2>
 <p class="memo"><strong>美股宽基平均仓位：E2 新口径 <span class="num">8%</span>、v5.1 <span class="num">17%</span>、A1 <span class="num">57%</span>（基准 <span class="num">30%</span>）。只有 A1 拿到了美股，但它每年在来回换里丢了 <span class="num">4.2 个点</span>。</strong></p>
 <figure><img alt="检验段三个策略每年的持仓结构" loading="lazy" src="../../assets/v5-oneshot/o3-exposure.png"/></figure>
-<div class="cards"><div class="card tone-info"><div class="ct">E2 新口径：国债挤掉股票，钱分得太散</div><p>“涨幅 ÷ 波动”让国债排在股票前面，2019 年 <span class="num">42%</span> 在债券；剩下的钱分在约 20 个容器上，七成候选是海外主题。扣费前年化只有 <span class="num">5.2%</span>，成本每年 <span class="num">2.2 个点</span>。</p></div><div class="card tone-bad"><div class="ct">A1：拿对了美股，进出时点错</div><p>一大半时间拿标普500，方向对了（每年 +5.1）；但 <span class="num">2018–19 年</span>在美股和 A 股之间来回换，2020 年 3 月拿着标普撞上疫情，回撤 <span class="num">−40%</span>。</p></div><div class="card tone-info"><div class="ct">v5.1：同样的判断，做得太频繁</div><p>每年双边换手 <span class="num">66 倍</span>，成本每年 <span class="num">6.6 个点</span>，扣费前也只有 <span class="num">3.2%</span>。它挑中的纳指100、香港创新药都赚了钱，但被成本和全指能源（−11.2）、港股通科技（−6.8）吃掉。</p></div></div>
+<div class="cards dx-cards"><div class="card dx dxc-bad"><div class="dx-h"><span class="dx-n">E2 新口径</span></div><div class="dx-d">国债挤掉股票，钱分得太散</div><div class="dx-g"><div class="dx-gl">美股宽基平均仓位</div><div class="dx-gb"><i class="b" style="width:13%"></i><em style="left:48%"></em></div><div class="dx-gv"><b class="b num">8%</b><span>基准 30%</span></div></div><div class="dx-rows"><div class="dx-r dx-neu"><span class="dx-i"></span><span>“涨幅 ÷ 波动”让国债排在股票前面，2019 年 <span class="num">42%</span> 在债券；</span></div><div class="dx-r dx-neu"><span class="dx-i"></span><span>剩下的钱分在约 20 个容器上，七成候选是海外主题。</span></div><div class="dx-r dx-bad"><span class="dx-i"></span><span>扣费前年化只有 <span class="num">5.2%</span>，成本每年 <span class="num">2.2 个点</span>。</span></div></div></div><div class="card dx dxc-mid"><div class="dx-h"><span class="dx-n">A1</span></div><div class="dx-d">拿对了美股，进出时点错</div><div class="dx-g"><div class="dx-gl">美股宽基平均仓位</div><div class="dx-gb"><i class="g" style="width:91%"></i><em style="left:48%"></em></div><div class="dx-gv"><b class="g num">57%</b><span>基准 30%</span></div></div><div class="dx-rows"><div class="dx-r dx-good"><span class="dx-i"></span><span>一大半时间拿标普500，方向对了（每年 +5.1）；</span></div><div class="dx-r dx-bad"><span class="dx-i"></span><span>但 <span class="num">2018–19 年</span>在美股和 A 股之间来回换，2020 年 3 月拿着标普撞上疫情，回撤 <span class="num">−40%</span>。</span></div></div></div><div class="card dx dxc-mid"><div class="dx-h"><span class="dx-n">v5.1</span></div><div class="dx-d">同样的判断，做得太频繁</div><div class="dx-g"><div class="dx-gl">美股宽基平均仓位</div><div class="dx-gb"><i class="b" style="width:27%"></i><em style="left:48%"></em></div><div class="dx-gv"><b class="b num">17%</b><span>基准 30%</span></div></div><div class="dx-rows"><div class="dx-r dx-bad"><span class="dx-i"></span><span>每年双边换手 <span class="num">66 倍</span>，成本每年 <span class="num">6.6 个点</span>，扣费前也只有 <span class="num">3.2%</span>。</span></div><div class="dx-r dx-good"><span class="dx-i"></span><span>它挑中的纳指100、香港创新药都赚了钱，</span></div><div class="dx-r dx-bad"><span class="dx-i"></span><span>但被成本和全指能源（<b class="sg-neg num">−11.2</b>）、港股通科技（<b class="sg-neg num">−6.8</b>）吃掉。</span></div></div></div></div>
 <p>逐项拆解（美股仓位、时点、A 股、海外主题、成本）见《第二阶段复盘》第 3 节。</p>
 </section>
 <section id="sec-5-设计期的优势为什么没延续-靠的是-2006-2010-那种单边大行情"><h2 id="5-设计期的优势为什么没延续-靠的是-2006-2010-那种单边大行情"><span class="num">05</span>设计期的优势为什么没延续：靠的是 2006–2010 那种单边大行情</h2>
