@@ -32,6 +32,11 @@ def noise_pool():
 Z, CORR = noise_pool()
 rng = np.random.default_rng(SEED)
 
+def reseed():
+    """每种行情、每组敏感度都从同一个种子重新开始，结果不随运行顺序变化（D38 Reviewer 跟进，2026-11-17）。"""
+    global rng
+    rng = np.random.default_rng(SEED)
+
 def draw(n):
     """n 天、NP 条路径的成对标准化噪声，形状 (NP, n, 2)。"""
     k = int(np.ceil(n / 20)); st = rng.integers(0, len(Z) - 20, size=(NP, k))
@@ -74,7 +79,7 @@ SCEN = {
 EVENT = {'急跌': ('top', WARM + D), '慢熊': ('top', WARM), 'V型反转': ('bottom', WARM + 20)}
 
 # ---------- 结构 ----------
-STRUCT = ('K0', 'K1', 'K2', 'K3')
+STRUCT = ('K0', 'K1', 'K2', 'K3', 'K2A')  # K2A：只给 A 股腿用 K2，美股腿一直持有（D38 第 3 版登记，2026-11-17）
 
 def run(lr, s_us=0.30, kind='K0', vol_short=20, band=0.10, tilt=0.20):
     """lr: (NP, T, 2) 日对数收益，列 0 = A 股腿，列 1 = 美股腿。返回逐日净值、股票仓位、各类换手。
@@ -101,7 +106,7 @@ def run(lr, s_us=0.30, kind='K0', vol_short=20, band=0.10, tilt=0.20):
         week_end = (t + 1) % W == 0
         new_on, new_frac, new_tgt = on, frac, tgt_leg
         cls = None
-        if kind in ('K1', 'K2', 'K3') and month_end and t >= 10 * M:
+        if kind in ('K1', 'K2', 'K3', 'K2A') and month_end and t >= 10 * M:
             me = P[:, t - 9 * M:t + 1:M, :]                  # 最近 10 个月末收盘
             new_on = (P[:, t, :] >= me.mean(axis=1)).astype(float)
         if kind == 'K3' and month_end and t >= D:
@@ -109,11 +114,14 @@ def run(lr, s_us=0.30, kind='K0', vol_short=20, band=0.10, tilt=0.20):
             us_up = m[:, 1] > m[:, 0]
             a = np.where(us_up, base[0] - tilt, base[0] + tilt); a = np.clip(a, 0, 1)
             new_tgt = np.column_stack([a, 1 - a])
-        if kind == 'K2' and week_end and t >= D:
+        if kind in ('K2', 'K2A') and week_end and t >= D:
             lrw = lr[:, t - D + 1:t + 1, :]
             vl = lrw.std(axis=1); vs = lr[:, t - vol_short + 1:t + 1, :].std(axis=1)
             f = np.minimum(1.0, vl / np.maximum(vs, 1e-9))
             new_frac = np.where(np.abs(f - frac) >= band, f, frac)
+        if kind == 'K2A':
+            new_on = new_on.copy(); new_on[:, 1] = 1.0
+            new_frac = new_frac.copy(); new_frac[:, 1] = 1.0
         # 目标权重
         legs = new_tgt * new_on * new_frac
         target = np.column_stack([legs, 1 - legs.sum(axis=1)])
@@ -193,7 +201,7 @@ def event_timing(res, lr, scen):
 def main():
     rows, cost_rows, ev = [], [], {}
     for scen, segs in SCEN.items():
-        lr = build(segs)
+        reseed(); lr = build(segs)
         res = stats(scen, lr)
         ev[scen] = event_timing(res, lr, scen)
         for k, r in res.items():
@@ -217,7 +225,7 @@ def main():
     # 十年；A 股腿年化 6%、波动 25%；美股腿 = A + 差，波动 17%（两腿波动为假设，见 README）
     sens = []
     for spread in (-0.10, 0.0, 0.10, 0.20):
-        lr = build([warm(0.20), seg(10 * D, 0.06, 0.06 + spread, 0.25, 0.17)])
+        reseed(); lr = build([warm(0.20), seg(10 * D, 0.06, 0.06 + spread, 0.25, 0.17)])
         ref = stats('ref', lr, kinds=('K0',), s_us=0.30)['K0']
         for s in (0.30, 0.40, 0.50, 0.60, 0.70, 0.80):
             r = stats('s', lr, kinds=('K0',), s_us=s)['K0']
@@ -225,7 +233,7 @@ def main():
             sens.append(dict(美股比A股每年多涨=f'{spread:+.0%}', 结构='K0', 底仓美股=f'{s:.0%}',
                              比70_30年化_p10=q(d)[0] * 100, 比70_30年化_p50=q(d)[1] * 100, 比70_30年化_p90=q(d)[2] * 100,
                              回撤_中位=round(float(np.median(r['mdd'])) * 100, 1), 比70_30回撤_p50=round(float(np.median(dm)) * 100, 1)))
-        res = stats('k', lr, kinds=('K1', 'K2', 'K3'), s_us=0.30)
+        res = stats('k', lr, kinds=('K1', 'K2', 'K3', 'K2A'), s_us=0.30)
         for k, r in res.items():
             d = r['ann'] - ref['ann']; dm = r['mdd'] - ref['mdd']
             sens.append(dict(美股比A股每年多涨=f'{spread:+.0%}', 结构=k, 底仓美股='30%',
@@ -236,7 +244,7 @@ def main():
     # 平台：K2 的短窗 10/60 日，K3 的倾斜 10/30 个点（只报告）
     plat = []
     for scen in ('慢牛', '急跌', '震荡', '市场接力'):
-        lr = build(SCEN[scen]); k0 = stats(scen, lr, kinds=('K0',))['K0']
+        reseed(); lr = build(SCEN[scen]); k0 = stats(scen, lr, kinds=('K0',))['K0']
         for k, ex in (('K2', dict(vol_short=10)), ('K2', dict(vol_short=20)), ('K2', dict(vol_short=60)),
                       ('K3', dict(tilt=0.10)), ('K3', dict(tilt=0.20)), ('K3', dict(tilt=0.30))):
             r = stats(scen, lr, kinds=(k,), extra=ex)[k]

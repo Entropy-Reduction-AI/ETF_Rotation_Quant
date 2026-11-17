@@ -33,6 +33,26 @@ R6 结论：approve / approve_with_follow_up / return_to_planning。
 完成判据：R1–R4 每一项都有“一致 / 不一致（差多少、原因）”；R5 五条都有数字；R6 有结论。
 ```
 
+## 第 2 部分：K2A 复算（2026-11-17 追加）
+
+```text
+【任务】D38 预演第 2 部分：K2A 复算（Reviewer）
+
+背景：你在第 1 部分（PR #300）的跟进项已经查清：原脚本六种行情共用一个随机数流，现已改成每种行情从同一种子重新开始，和你的口径一致，V 型反转逐位相同（K1 −31.84、K2 −25.03）。红队第 3 条促成了新候选 K2A，需要你复算。
+
+先读：docs/owner/v6-preflight-forecast.md 第 2 版；D38 登记“第 3 版补充”和附表第 5–7 行。
+
+纪律同第 1 部分：独立实现，不 import scripts/preflight/；不读 2016 年以后的收益。
+
+R7 K2A 合成行情：在你的 review_engine.py 里加 K2A（K2 的规则只作用在 A 股腿，美股腿一直持有），跑慢牛、急跌、V 型反转各 1000 条路径。核对 behavior.csv 里 K2A 的“比K0年化_p50”（±0.5）、“比K0回撤_p50”（±1.5），cost.csv 的每年成本（±0.05）。
+R8 K2A 敏感度：美股比 A 股每年多涨 −10、0、+10、+20 个点（十年，A 股 6%、波动 25%，美股波动 17%），核对 sensitivity.csv 里 K2 和 K2A 的“比70_30年化_p50”（±0.5）。
+R9 沪深300 回放：项目池 index 口径 2006–2015，单市场 K0、K1、K2，核对 csi300.json 的“比K0年化”（±0.2）、“最大回撤”（±1）、“平均仓位”（±0.02）。
+R10 预测表第 2 版：K2A 一行四项加总；第 4 节 K2A 三格；第 6 节 K2A 一行的金额（十年约 30 万）。
+R11 结论：approve / approve_with_follow_up / return_to_planning。
+
+交付：在 operations/reviews/2026-11-17-d38-preflight-review.md 末尾追加“第 2 部分”，脚本放 operations/reviews/diag/d38/。
+```
+
 ## 之后
 
 Orchestrator 把复算结果和红队意见并入预测表第 2 版，再交 Owner 定保费上限。

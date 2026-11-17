@@ -4,7 +4,7 @@
 
 - Project: ETF_Rotation_Quant
 - Document type: planning（决定记录 + 诊断登记，先登记再运行）
-- Status: active（第 2 版：候选结构由 Orchestrator 定；只留“保险费上限”一项取舍待 Owner 定）
+- Status: active（第 3 版：新增候选 K2A；预测表第 2 版已出，待 Owner 定保费上限）
 - Owner: L. Loric
 - Maintainer: Orchestrator
 - Date: 2026-11-16（Asia/Taipei）
@@ -85,6 +85,11 @@
 - **交给 Owner 的只有一项取舍：保险费上限**，即牛市里保险层每年最多允许落后底仓几个点。下表的“2 个点”是建议值，Owner 定之前按 2 个点开跑；Owner 改了，只改判定，不改计算。
 - **分支和归档**：v6 实施前由 Grok 群统一做一次完整清理和归档（Owner 2026-11-17），在此之前不清理。
 
+### 第 3 版补充（2026-11-17）
+
+- **新增候选 K2A**：K2 的规则只作用在 A 股腿上，美股腿一直持有。来源：预测表第 1 版第 6 节的提议，以及 Reviewer 红队第 3 条（美股腿的均线信号为负，预测表没有覆盖）。参数和 K2 完全相同，不新增自由度。不做线同保险层。
+- **随机数口径改为“每种行情从同一个种子重新开始”**：Reviewer 复算发现原脚本的结果随行情的运行顺序变化（第 5 行）。
+
 ### “不做线”（保险费上限待 Owner 定，其余由 Orchestrator 定）
 
 打折之后仍要满足，达不到就不进 v6 设计：
@@ -125,3 +130,6 @@
 | 2 | 2026-11-17 | `scripts/preflight/longhist.py`：第 2 项后半，单市场 K0–K2 长历史回放，逐段熊市对照 | ^GSPC 1955–2003、^HSI 和 ^N225 1987–2015（价格指数）；DTB3、日本银行拆借利率 | `results/v6-preflight/longhist.csv`、`longhist-bears.csv` |
 | 3 | 2026-11-17 | `scripts/preflight/ic.py`：第 3 项信号准确度。① 10 个月均线（各容器、长历史三市场）；② 市场之间（A、港、美）；③ A 股内挑选（10 个全指行业 + 5 个宽基）。回看期 3、6、12−1 是报告网格，判定只用登记的 12−1 | 项目池 index 口径 ≤2015-12-31（`data/market.sqlite` SHA256 d0b947d9…）；长历史同第 2 行 | `ic.json`、`ic-ma10.csv` |
 | 4 | 2026-11-17 | `scripts/preflight/census.py`：第 5 项清点；长历史结果拆成仓位差、进出时点、成本四项（`scripts/preflight/decomp.py` → `decomp-longhist.json`，现金取同期 DTB3、日本银行拆借利率平均） | 项目池 ≤2015；引用 D37 已签收的 S1 方案 B 市场表（只用仓位） | `census.json`、`census-listing-heat.csv`、`decomp-longhist.json`；预测表 `docs/owner/v6-preflight-forecast.md` 第 1 版 |
+| 5 | 2026-11-17 | Reviewer 跟进：V 型反转差异查因。原脚本六种行情共用一个随机数流；改为每种行情、每组敏感度和平台都从同一种子重新开始后，和 Reviewer 逐位一致。另换 5 个种子跑 V 型，看抽样波动。全部重跑；其他数字最多变 0.5 个点，判定不变 | 同第 1 行 | 覆盖 `behavior`、`cost`、`events`、`sensitivity`、`plateau` |
+| 6 | 2026-11-17 | 新增 K2A（第 3 版登记）进 `sim.py` 的合成行情和敏感度；其他结构结果逐位不变 | 同第 1 行 | 同上 |
+| 7 | 2026-11-17 | `scripts/preflight/csi300.py`：沪深300 单市场 K0–K2 回放（K2A 的 A 股腿证据；复用 `longhist.py` 的函数，`longhist.py` 改成可导入，结果逐字节不变） | 项目池 index ≤2015-12-31 | `csi300.json`；预测表第 2 版 |

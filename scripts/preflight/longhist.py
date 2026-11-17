@@ -11,7 +11,6 @@ import sys, json, pathlib
 import numpy as np, pandas as pd
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-OUT = pathlib.Path(sys.argv[1]); OUT.mkdir(parents=True, exist_ok=True)
 RAW = ROOT / 'data/research/long-history/raw'
 COST = 0.001
 
@@ -80,46 +79,52 @@ def ann(s):
 def mdd(s):
     return float((s / s.cummax() - 1).min())
 
-rows, bear_rows = [], []
-for name, f, a, b, cash in SETS:
-    d = pd.read_csv(RAW / f, parse_dates=['date']).set_index('date')['close']
-    px = d[(d.index >= a) & (d.index <= b)]
-    px = px[px > 0]
-    rate = jp_rate() if cash == 'jp' else dtb
-    res = {k: simulate(px, rate, k) for k in ('K0', 'K1', 'K2')}
-    st = px.index[0] + pd.Timedelta(days=366)                        # 跳过第一年预热
-    bs = bears(px[px.index >= st])
-    in_bear = pd.Series(False, px.index)
-    for p0, p1, _ in bs: in_bear[(in_bear.index > p0) & (in_bear.index <= p1)] = True
-    yrs = (px.index[-1] - st).days / 365.25
-    for k, (nav, expo, turn, fb) in res.items():
-        nv = nav[nav.index >= st]
-        dr = nv.pct_change().fillna(0); k0 = res['K0'][0][res['K0'][0].index >= st].pct_change().fillna(0)
-        bull_years = (~in_bear[in_bear.index >= st]).sum() / 252; bear_years = in_bear[in_bear.index >= st].sum() / 252
-        bull_ex = np.expm1(np.log1p(dr[~in_bear]).sum() - np.log1p(k0[~in_bear]).sum()) if k != 'K0' else 0.0
-        bear_ex = np.expm1(np.log1p(dr[in_bear]).sum() - np.log1p(k0[in_bear]).sum()) if k != 'K0' else 0.0
-        rows.append(dict(市场=name, 区间=f'{st.date()}→{px.index[-1].date()}', 结构=k,
-                         年化=round(ann(nv) * 100, 2), 比K0年化=round((ann(nv) - ann(res['K0'][0][res['K0'][0].index >= st])) * 100, 2),
-                         最大回撤=round(mdd(nv) * 100, 1),
-                         牛市段每年比K0=round((np.log1p(dr[~in_bear]).sum() - np.log1p(k0[~in_bear]).sum()) / bull_years * 100, 2),
-                         熊市段每年比K0=round((np.log1p(dr[in_bear]).sum() - np.log1p(k0[in_bear]).sum()) / bear_years * 100, 2),
-                         平均仓位=round(float(expo[expo.index >= st].mean()), 3),
-                         双边换手_每年=round(turn / yrs, 2), 成本_每年_百分点=round(turn / yrs * COST * 100, 3),
-                         一月内翻回_每年=round(fb / yrs, 2), 熊市段数=len(bs), 熊市占时间=round(bear_years / (bull_years + bear_years), 3)))
-    for p0, p1, dd in bs:
-        row = dict(市场=name, 见顶=str(p0.date()), 见底=str(p1.date()), 跌幅=round(dd * 100, 1),
-                   跌的天数=int(((px.index > p0) & (px.index <= p1)).sum()))
-        for k in ('K1', 'K2'):
-            nav = res[k][0]; k0n = res['K0'][0]
-            seg = (nav.index >= p0) & (nav.index <= p1)
-            row[f'{k}_这段少亏'] = round((nav[seg].iloc[-1] / nav[seg].iloc[0] - k0n[seg].iloc[-1] / k0n[seg].iloc[0]) * 100, 1)
-            e = res[k][1]; after = e[(e.index > p1)].iloc[:252]
-            hit = np.where(after.values >= 0.5)[0]
-            row[f'{k}_见底后回到半仓天数'] = int(hit[0]) if len(hit) else None
-            if len(hit):
-                row[f'{k}_回来时已离底涨'] = round((px[after.index[hit[0]]] / px[p1] - 1) * 100, 1)
-        bear_rows.append(row)
+def main(OUT):
+    rows, bear_rows = [], []
+    for name, f, a, b, cash in SETS:
+        d = pd.read_csv(RAW / f, parse_dates=['date']).set_index('date')['close']
+        px = d[(d.index >= a) & (d.index <= b)]
+        px = px[px > 0]
+        rate = jp_rate() if cash == 'jp' else dtb
+        res = {k: simulate(px, rate, k) for k in ('K0', 'K1', 'K2')}
+        st = px.index[0] + pd.Timedelta(days=366)                        # 跳过第一年预热
+        bs = bears(px[px.index >= st])
+        in_bear = pd.Series(False, px.index)
+        for p0, p1, _ in bs: in_bear[(in_bear.index > p0) & (in_bear.index <= p1)] = True
+        yrs = (px.index[-1] - st).days / 365.25
+        for k, (nav, expo, turn, fb) in res.items():
+            nv = nav[nav.index >= st]
+            dr = nv.pct_change().fillna(0); k0 = res['K0'][0][res['K0'][0].index >= st].pct_change().fillna(0)
+            bull_years = (~in_bear[in_bear.index >= st]).sum() / 252; bear_years = in_bear[in_bear.index >= st].sum() / 252
+            bull_ex = np.expm1(np.log1p(dr[~in_bear]).sum() - np.log1p(k0[~in_bear]).sum()) if k != 'K0' else 0.0
+            bear_ex = np.expm1(np.log1p(dr[in_bear]).sum() - np.log1p(k0[in_bear]).sum()) if k != 'K0' else 0.0
+            rows.append(dict(市场=name, 区间=f'{st.date()}→{px.index[-1].date()}', 结构=k,
+                             年化=round(ann(nv) * 100, 2), 比K0年化=round((ann(nv) - ann(res['K0'][0][res['K0'][0].index >= st])) * 100, 2),
+                             最大回撤=round(mdd(nv) * 100, 1),
+                             牛市段每年比K0=round((np.log1p(dr[~in_bear]).sum() - np.log1p(k0[~in_bear]).sum()) / bull_years * 100, 2),
+                             熊市段每年比K0=round((np.log1p(dr[in_bear]).sum() - np.log1p(k0[in_bear]).sum()) / bear_years * 100, 2),
+                             平均仓位=round(float(expo[expo.index >= st].mean()), 3),
+                             双边换手_每年=round(turn / yrs, 2), 成本_每年_百分点=round(turn / yrs * COST * 100, 3),
+                             一月内翻回_每年=round(fb / yrs, 2), 熊市段数=len(bs), 熊市占时间=round(bear_years / (bull_years + bear_years), 3)))
+        for p0, p1, dd in bs:
+            row = dict(市场=name, 见顶=str(p0.date()), 见底=str(p1.date()), 跌幅=round(dd * 100, 1),
+                       跌的天数=int(((px.index > p0) & (px.index <= p1)).sum()))
+            for k in ('K1', 'K2'):
+                nav = res[k][0]; k0n = res['K0'][0]
+                seg = (nav.index >= p0) & (nav.index <= p1)
+                row[f'{k}_这段少亏'] = round((nav[seg].iloc[-1] / nav[seg].iloc[0] - k0n[seg].iloc[-1] / k0n[seg].iloc[0]) * 100, 1)
+                e = res[k][1]; after = e[(e.index > p1)].iloc[:252]
+                hit = np.where(after.values >= 0.5)[0]
+                row[f'{k}_见底后回到半仓天数'] = int(hit[0]) if len(hit) else None
+                if len(hit):
+                    row[f'{k}_回来时已离底涨'] = round((px[after.index[hit[0]]] / px[p1] - 1) * 100, 1)
+            bear_rows.append(row)
 
-pd.DataFrame(rows).to_csv(OUT / 'longhist.csv', index=False)
-pd.DataFrame(bear_rows).to_csv(OUT / 'longhist-bears.csv', index=False)
-print(pd.DataFrame(rows).to_string()); print(pd.DataFrame(bear_rows).to_string())
+    pd.DataFrame(rows).to_csv(OUT / 'longhist.csv', index=False)
+    pd.DataFrame(bear_rows).to_csv(OUT / 'longhist-bears.csv', index=False)
+    print(pd.DataFrame(rows).to_string()); print(pd.DataFrame(bear_rows).to_string())
+
+
+if __name__ == '__main__':
+    OUT = pathlib.Path(sys.argv[1]); OUT.mkdir(parents=True, exist_ok=True)
+    main(OUT)
