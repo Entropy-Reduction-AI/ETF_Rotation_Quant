@@ -1,0 +1,260 @@
+[
+  {
+    "scenario": "慢牛",
+    "structures": {
+      "K0": {
+        "ann_median_pct": 15.22,
+        "vs_k0_ann_pctiles": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mdd_median_pct": -14.7,
+        "vs_k0_mdd_p50_pct": 0.0,
+        "stock_exposure_ratio_p50": 1.0,
+        "flips_per_year_p50": 0.0,
+        "turnover_annual_p50": {
+          "再平衡": 0.16,
+          "保险切换": 0.0,
+          "波动调仓": 0.0
+        },
+        "total_turn_p50": 0.16,
+        "cost_annual_pct_p50": 0.016
+      },
+      "K1": {
+        "ann_median_pct": 10.83,
+        "vs_k0_ann_pctiles": [
+          -8.286,
+          -4.3995,
+          -0.9308
+        ],
+        "mdd_median_pct": -13.1,
+        "vs_k0_mdd_p50_pct": 0.5,
+        "stock_exposure_ratio_p50": 0.797,
+        "flips_per_year_p50": 0.5,
+        "turnover_annual_p50": {
+          "再平衡": 0.11,
+          "保险切换": 2.57,
+          "波动调仓": 0.0
+        },
+        "total_turn_p50": 2.69,
+        "cost_annual_pct_p50": 0.269
+      },
+      "K2": {
+        "ann_median_pct": 10.15,
+        "vs_k0_ann_pctiles": [
+          -8.6355,
+          -5.0885,
+          -1.7295
+        ],
+        "mdd_median_pct": -11.8,
+        "vs_k0_mdd_p50_pct": 2.4,
+        "stock_exposure_ratio_p50": 0.74,
+        "flips_per_year_p50": 0.5,
+        "turnover_annual_p50": {
+          "再平衡": 0.09,
+          "保险切换": 2.25,
+          "波动调仓": 1.5
+        },
+        "total_turn_p50": 3.89,
+        "cost_annual_pct_p50": 0.389
+      },
+      "K2A": {
+        "ann_median_pct": 11.71,
+        "vs_k0_ann_pctiles": [
+          -6.6434,
+          -3.5436,
+          -0.5123
+        ],
+        "mdd_median_pct": -12.0,
+        "vs_k0_mdd_p50_pct": 1.8,
+        "stock_exposure_ratio_p50": 0.815,
+        "flips_per_year_p50": 0.25,
+        "turnover_annual_p50": {
+          "再平衡": 0.12,
+          "保险切换": 1.65,
+          "波动调仓": 1.07
+        },
+        "total_turn_p50": 2.82,
+        "cost_annual_pct_p50": 0.282
+      }
+    },
+    "meta": {
+      "paths": 1000,
+      "seed": 20261117,
+      "noise_corr": 0.142
+    }
+  },
+  {
+    "scenario": "急跌",
+    "structures": {
+      "K0": {
+        "ann_median_pct": -12.81,
+        "vs_k0_ann_pctiles": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mdd_median_pct": -37.3,
+        "vs_k0_mdd_p50_pct": 0.0,
+        "stock_exposure_ratio_p50": 1.0,
+        "flips_per_year_p50": 0.0,
+        "turnover_annual_p50": {
+          "再平衡": 0.17,
+          "保险切换": 0.0,
+          "波动调仓": 0.0
+        },
+        "total_turn_p50": 0.17,
+        "cost_annual_pct_p50": 0.017
+      },
+      "K1": {
+        "ann_median_pct": -14.18,
+        "vs_k0_ann_pctiles": [
+          -5.9504,
+          -1.4538,
+          15.2663
+        ],
+        "mdd_median_pct": -31.7,
+        "vs_k0_mdd_p50_pct": 4.9,
+        "stock_exposure_ratio_p50": 0.584,
+        "flips_per_year_p50": 0.39,
+        "turnover_annual_p50": {
+          "再平衡": 0.09,
+          "保险切换": 2.35,
+          "波动调仓": 0.0
+        },
+        "total_turn_p50": 2.44,
+        "cost_annual_pct_p50": 0.244
+      },
+      "K2": {
+        "ann_median_pct": -8.6,
+        "vs_k0_ann_pctiles": [
+          -1.6417,
+          4.2122,
+          15.6091
+        ],
+        "mdd_median_pct": -23.9,
+        "vs_k0_mdd_p50_pct": 13.1,
+        "stock_exposure_ratio_p50": 0.534,
+        "flips_per_year_p50": 0.39,
+        "turnover_annual_p50": {
+          "再平衡": 0.08,
+          "保险切换": 1.93,
+          "波动调仓": 1.02
+        },
+        "total_turn_p50": 3.05,
+        "cost_annual_pct_p50": 0.305
+      },
+      "K2A": {
+        "ann_median_pct": -9.66,
+        "vs_k0_ann_pctiles": [
+          -1.933,
+          3.1654,
+          13.9511
+        ],
+        "mdd_median_pct": -27.9,
+        "vs_k0_mdd_p50_pct": 9.1,
+        "stock_exposure_ratio_p50": 0.673,
+        "flips_per_year_p50": 0.0,
+        "turnover_annual_p50": {
+          "再平衡": 0.13,
+          "保险切换": 1.35,
+          "波动调仓": 0.74
+        },
+        "total_turn_p50": 2.24,
+        "cost_annual_pct_p50": 0.224
+      }
+    },
+    "meta": {
+      "paths": 1000,
+      "seed": 20261117,
+      "noise_corr": 0.142
+    }
+  },
+  {
+    "scenario": "V型反转",
+    "structures": {
+      "K0": {
+        "ann_median_pct": 6.25,
+        "vs_k0_ann_pctiles": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mdd_median_pct": -30.6,
+        "vs_k0_mdd_p50_pct": 0.0,
+        "stock_exposure_ratio_p50": 1.0,
+        "flips_per_year_p50": 0.0,
+        "turnover_annual_p50": {
+          "再平衡": 0.2,
+          "保险切换": 0.0,
+          "波动调仓": 0.0
+        },
+        "total_turn_p50": 0.2,
+        "cost_annual_pct_p50": 0.02
+      },
+      "K1": {
+        "ann_median_pct": -25.68,
+        "vs_k0_ann_pctiles": [
+          -40.3007,
+          -31.8357,
+          -1.5924
+        ],
+        "mdd_median_pct": -30.1,
+        "vs_k0_mdd_p50_pct": 1.5,
+        "stock_exposure_ratio_p50": 0.682,
+        "flips_per_year_p50": 0.0,
+        "turnover_annual_p50": {
+          "再平衡": 0.13,
+          "保险切换": 2.23,
+          "波动调仓": 0.0
+        },
+        "total_turn_p50": 2.42,
+        "cost_annual_pct_p50": 0.242
+      },
+      "K2": {
+        "ann_median_pct": -18.6,
+        "vs_k0_ann_pctiles": [
+          -35.6979,
+          -25.0349,
+          -1.9608
+        ],
+        "mdd_median_pct": -23.4,
+        "vs_k0_mdd_p50_pct": 8.5,
+        "stock_exposure_ratio_p50": 0.619,
+        "flips_per_year_p50": 0.0,
+        "turnover_annual_p50": {
+          "再平衡": 0.13,
+          "保险切换": 2.17,
+          "波动调仓": 0.64
+        },
+        "total_turn_p50": 2.98,
+        "cost_annual_pct_p50": 0.298
+      },
+      "K2A": {
+        "ann_median_pct": -12.0,
+        "vs_k0_ann_pctiles": [
+          -27.7431,
+          -18.2398,
+          2.2183
+        ],
+        "mdd_median_pct": -25.0,
+        "vs_k0_mdd_p50_pct": 6.6,
+        "stock_exposure_ratio_p50": 0.739,
+        "flips_per_year_p50": 0.0,
+        "turnover_annual_p50": {
+          "再平衡": 0.18,
+          "保险切换": 1.51,
+          "波动调仓": 0.49
+        },
+        "total_turn_p50": 2.12,
+        "cost_annual_pct_p50": 0.212
+      }
+    },
+    "meta": {
+      "paths": 1000,
+      "seed": 20261117,
+      "noise_corr": 0.142
+    }
+  }
+]
