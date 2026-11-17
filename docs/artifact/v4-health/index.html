@@ -202,6 +202,39 @@ td.boxed { outline: 2px solid var(--accent); outline-offset: -4px; }
 th { white-space: normal; min-width: 4.5em; }
 th.n { white-space: normal; }
 h2 .num { min-width: 1.6em; }
+:root { --fg: var(--ink); --rule: var(--line); --mono: var(--font-mono); --body: var(--font-body); --ok: var(--good); --ok-soft: var(--good-soft); }
+.lt{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--fg);color:var(--bg);font:700 11.5px var(--mono);margin-right:6px;vertical-align:1px}
+.rn{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font:700 12.5px var(--mono);margin-right:6px}
+.ib{display:inline-flex;align-items:center;gap:8px;min-width:150px;width:100%}
+.ib i{display:block;height:10px;border-radius:5px;flex:none}
+.ib i.g{background:var(--good)} .ib i.r{background:var(--bad)} .ib i.k{background:var(--muted)}
+.ib em{font-style:normal;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ib em.g{color:var(--good)} .ib em.r{color:var(--bad)}
+.big{font:700 18px var(--body);font-variant-numeric:tabular-nums;white-space:nowrap}
+.big.g{color:var(--good)} .big.r{color:var(--bad)} .big.k{color:var(--fg)}
+.arr{color:var(--muted);margin:0 4px}
+b.c-bad,em.c-bad{color:var(--bad)} b.c-good,em.c-good{color:var(--good)}
+.ib em.w{color:var(--warn)} .ib i.w{background:var(--warn)}
+td.lead{font-weight:700;color:var(--fg)}
+table.story td{vertical-align:middle}
+table.story td.why{font-size:14px;color:var(--fg)}
+table.story td.sub{font-size:13px;color:var(--muted)}
+tr.grp td{background:var(--bg);font-weight:700;font-size:13.5px;color:var(--fg);letter-spacing:.02em;border-top:2px solid var(--rule)}
+tr.grp td .gk{display:inline-block;margin-right:8px;padding:1px 8px;border-radius:999px;font-size:12px}
+.gk.o{background:var(--warn-soft);color:var(--warn)} .gk.r{background:var(--bad-soft);color:var(--bad)} .gk.g{background:var(--ok-soft);color:var(--ok)} .gk.b{background:var(--accent-soft);color:var(--accent)}
+.vd-card.v-bad{background:var(--bad-soft);border-top-color:var(--bad)} .v-bad .vd-v{color:var(--bad)}
+.cards3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+.cards3 .vd-card p{font-size:14px}
+.vd-card .vd-e{font-size:13px;color:var(--muted);margin-top:6px;border-top:1px dashed var(--rule);padding-top:6px}
+@media (max-width:760px){.cards3{grid-template-columns:1fr}.ib{min-width:110px}}
+.tag-a{display:inline-block;font:700 11.5px var(--body);padding:1px 7px;border-radius:5px;background:var(--bg);border:1px solid var(--rule);color:var(--fg);margin:1px 2px 1px 0;white-space:nowrap}
+.stk{display:flex;height:26px;border-radius:6px;overflow:hidden;width:100%;max-width:640px;margin:6px 0 2px}
+.stk span{display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:700;white-space:nowrap;overflow:hidden}
+.stk-l{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.stk-l i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+tr.tot td{border-top:2px solid var(--fg)}
+h3.sub-h{font-size:15px;font-weight:700;margin:22px 0 8px;color:var(--fg)}
+
 
 /* ===== storytelling layer ===== */
 /* status cards that open a page */
@@ -596,6 +629,31 @@ th.rh-new::before { content: '→ '; }
 .hz.ask.calm .hz-l { color: var(--good); }
 .hq-b { font-size: 14.5px; line-height: 1.7; margin-top: 6px; }
 
+td.exp-ok .mg-v, td.exp-ok { color: var(--good); font-weight: 700; }
+td.exp-no .mg-v, td.exp-no { color: var(--bad); font-weight: 700; }
+td.exp-ok .mg-b { background: var(--good) !important; } td.exp-no .mg-b { background: var(--bad) !important; }
+table.split th.first-sub, table.split td.first-sub { border-left: 2px solid var(--line); }
+table.split { table-layout: auto; width: 100%; }
+table.split td, table.split th { padding-left: 8px; padding-right: 8px; }
+table.split td:first-child, table.split th:first-child { min-width: 7.5em; }
+table.split td.numcol { font-size: 13.5px; }
+
+td.sg-pos { color: var(--good); } td.sg-neg { color: var(--bad); }
+.ib { width: auto; min-width: 0; } td.ibc { white-space: nowrap; }
+td.c-take, th.h-take { min-width: 10em; }
+table.split .ib { min-width: 0; gap: 5px; }
+table.split .ib i { display: none; }
+table.split th, table.split td.ibc, table.split td.mgc { min-width: 0 !important; }
+table.split .ib { width: auto; }
+table.split td.c-take, table.split th.h-take { min-width: 9em; }
+table.split .mg { gap: 6px; }
+table.split tr.row-bad td, table.split tr.row-good td { background: none; }
+table.split td.c-take { border-left: 0; }
+table.split thead th.gh { text-align: center; }
+p.exp-key { font-size: 12.5px; color: var(--muted); margin: 6px 0 4px; display: flex; gap: 8px; align-items: center; }
+.ek { font-family: var(--font-mono); font-weight: 700; border-radius: 4px; padding: 0 6px; }
+.ek.ok { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); } .ek.no { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+
 </style>
 </head>
 <body>
@@ -873,43 +931,35 @@ th.rh-new::before { content: '→ '; }
 <p class="memo"><strong>修好后，指数池的熊市超额一半来自拿现金、一半来自选对国债和黄金；牛市里可交易池少赚 <span class="num">176 个百分点</span>，只有 <span class="num">13%</span> 的月份跑赢。</strong></p>
 <p>四种行情按沪深300 全收益在每个月末只用当时的数据划分：过去 12 个月涨、这个月也涨 = <strong>牛市</strong>；12 个月涨、这个月跌 = <strong>回调</strong>；12 个月跌、这个月也跌 = <strong>熊市</strong>；12 个月跌、这个月涨 = <strong>反弹</strong>。</p>
 <figure><img alt="两个池子在四种行情下的超额，拆成拿现金和选标的" loading="lazy" src="../../assets/v4-health/h3-states.png"/></figure>
-<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：行情</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table>
-<thead>
-<tr>
-<th>行情</th>
-<th class="n numcol">月数</th>
-<th>U-指数池 合计 · 跑赢月份</th>
-<th>U-可交易池 合计 · 跑赢月份</th>
-<th class="h-take rh-concl">读法</th>
-</tr>
-</thead>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：行情</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table class="split">
+<thead><tr class="grp"><th rowspan="2">行情</th><th class="n numcol" rowspan="2">月数</th><th class="gh" colspan="2">U-指数池</th><th class="gh" colspan="2">U-可交易池</th><th class="h-take rh-concl" rowspan="2">读法</th></tr><tr class="sub"><th class="first-sub numcol">合计</th><th class="numcol">跑赢月份</th><th class="first-sub numcol">合计</th><th class="numcol">跑赢月份</th></tr></thead>
 <tbody>
 <tr>
 <td class="k"><strong>牛市</strong></td>
 <td class="n numcol">53</td>
-<td><span class="neg">−2</span> · 53%</td>
-<td><span class="neg">−176</span> · 13%</td>
+<td class="first-sub numcol ibc"><span class="ib"><i class="r" style="width:4px"></i><em class="r">−2</em></span></td><td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:40px"></i></span><span class="mg-v">53%</span></span></td>
+<td class="first-sub numcol ibc"><span class="ib"><i class="r" style="width:70px"></i><em class="r">−176</em></span></td><td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:10px"></i></span><span class="mg-v">13%</span></span></td>
 <td class="c-take">指数池选得好（+23），被现金拖累抵掉（−25），基本打平。可交易池能买的太少，钱大多在现金里。</td>
 </tr>
 <tr>
 <td class="k"><strong>回调</strong></td>
 <td class="n numcol">21</td>
-<td><span class="pos">+27</span> · 71%</td>
-<td><span class="pos">+57</span> · 57%</td>
-<td class="c-take"><b>拿现金和 10% 离场在起作用，两个池子都赢；可交易池这一格的选标的是 −14。</b></td>
+<td class="first-sub numcol ibc"><span class="ib"><i class="g" style="width:20px"></i><em class="g">+27</em></span></td><td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:53px"></i></span><span class="mg-v">71%</span></span></td>
+<td class="first-sub numcol ibc"><span class="ib"><i class="g" style="width:23px"></i><em class="g">+57</em></span></td><td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:43px"></i></span><span class="mg-v">57%</span></span></td>
+<td class="c-take">拿现金和 10% 离场在起作用，两个池子都赢；可交易池这一格的选标的是 −14。</td>
 </tr>
 <tr>
 <td class="k"><strong>熊市</strong></td>
 <td class="n numcol">27</td>
-<td><span class="pos">+95</span> · 85%</td>
-<td><span class="pos">+112</span> · 85%</td>
-<td class="c-take"><b>指数池现金 +45、选标的 +50（国债、黄金）；可交易池几乎全靠现金。</b></td>
+<td class="first-sub numcol ibc"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+95</em></span></td><td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:64px"></i></span><span class="mg-v">85%</span></span></td>
+<td class="first-sub numcol ibc"><span class="ib"><i class="g" style="width:45px"></i><em class="g">+112</em></span></td><td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:64px"></i></span><span class="mg-v">85%</span></span></td>
+<td class="c-take">指数池现金 +45、选标的 +50（国债、黄金）；可交易池几乎全靠现金。</td>
 </tr>
 <tr>
 <td class="k"><strong>反弹</strong></td>
 <td class="n numcol">19</td>
-<td><span class="neg">−54</span> · 16%</td>
-<td><span class="neg">−71</span> · 11%</td>
+<td class="first-sub numcol ibc"><span class="ib"><i class="r" style="width:40px"></i><em class="r">−54</em></span></td><td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:12px"></i></span><span class="mg-v">16%</span></span></td>
+<td class="first-sub numcol ibc"><span class="ib"><i class="r" style="width:28px"></i><em class="r">−71</em></span></td><td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:8px"></i></span><span class="mg-v">11%</span></span></td>
 <td class="c-take">大跌之后慢的组还没转正，钱还在现金和国债里；指数池选标的也是 −31，拿着的防守资产在反弹里涨得慢。</td>
 </tr>
 </tbody>
@@ -919,48 +969,41 @@ th.rh-new::before { content: '→ '; }
 <p class="memo"><strong>指数池持有 5 年跑赢基准的起点占 <span class="num">65%</span>；可交易池只有 <span class="num">32%</span>。好看的十年仍主要靠 <span class="num">2006–07 年</span>买入。</strong></p>
 <figure><img alt="每个月初买入、持有 3 年，E2 新口径比基准多赚多少" loading="lazy" src="../../assets/v4-health/h4-anystart.png"/></figure>
 <p>图上的比例和中位数是我按简报同一方法算的，可交易池和简报差不到 <span class="num">1 个百分点</span>（起点日期取法不同）。</p>
-<div class="table-wrap"><table data-lint="ref">
-<thead>
-<tr>
-<th>持有 5 年（60 个起点），对照</th>
-<th>U-指数池 跑赢的起点 · 中位数 · 最差</th>
-<th>U-可交易池 跑赢的起点 · 中位数 · 最差</th>
-</tr>
-</thead>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：持有 5 年（60 个起点），对照</span></button><div class="fold-b" hidden=""><p class="exp-key"><span class="ek ok">≥ <span class="num">60%</span></span><span class="ek no">&lt; <span class="num">60%</span></span>跑赢的起点按期望线 <span class="num">60%</span> 上色（期望线见上图和“期望”一节）</p><div class="table-wrap"><table class="split has-exp">
+<thead><tr class="grp"><th rowspan="2">持有 5 年（60 个起点），对照</th><th class="gh" colspan="3">U-指数池</th><th class="gh" colspan="3">U-可交易池</th></tr><tr class="sub"><th class="first-sub numcol">跑赢的起点</th><th class="numcol">中位数</th><th class="numcol">最差</th><th class="first-sub numcol">跑赢的起点</th><th class="numcol">中位数</th><th class="numcol">最差</th></tr></thead>
 <tbody>
 <tr class="ref">
 <td class="k"><strong>基准</strong></td>
-<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:45px"></i></span><span class="mg-v">65%</span></span><span class="mg-s">· +4.3 · −6.1</span></td>
-<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:35px"></i></span><span class="mg-v">32%</span></span><span class="mg-s">· −3.0 · −11.3</span></td>
+<td class="first-sub numcol mgc exp-ok"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:45px"></i></span><span class="mg-v">65%</span></span></td><td class="numcol ibc"><span class="ib"><i class="g" style="width:34px"></i><em class="g">+4.3</em></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:22px"></i><em class="r">−6.1</em></span></td>
+<td class="first-sub numcol mgc exp-no"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:35px"></i></span><span class="mg-v">32%</span></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:29px"></i><em class="r">−3.0</em></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:33px"></i><em class="r">−11.3</em></span></td>
 </tr>
 <tr>
 <td class="k">沪深300</td>
-<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:64px"></i></span><span class="mg-v">93%</span></span><span class="mg-s">· +8.8 · −3.2</span></td>
-<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:64px"></i></span><span class="mg-v">58%</span></span><span class="mg-s">· +1.7 · −18.8</span></td>
+<td class="first-sub numcol mgc exp-ok"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:64px"></i></span><span class="mg-v">93%</span></span></td><td class="numcol ibc"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+8.8</em></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:11px"></i><em class="r">−3.2</em></span></td>
+<td class="first-sub numcol mgc exp-no"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:64px"></i></span><span class="mg-v">58%</span></span></td><td class="numcol ibc"><span class="ib"><i class="g" style="width:16px"></i><em class="g">+1.7</em></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:56px"></i><em class="r">−18.8</em></span></td>
 </tr>
 <tr>
 <td class="k">标普500</td>
-<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:34px"></i></span><span class="mg-v">50%</span></span><span class="mg-s">· −0.2 · −14.4</span></td>
-<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:47px"></i></span><span class="mg-v">43%</span></span><span class="mg-s">· −2.3 · −18.3</span></td>
+<td class="first-sub numcol mgc exp-no"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:34px"></i></span><span class="mg-v">50%</span></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:4px"></i><em class="r">−0.2</em></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:52px"></i><em class="r">−14.4</em></span></td>
+<td class="first-sub numcol mgc exp-no"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:47px"></i></span><span class="mg-v">43%</span></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:22px"></i><em class="r">−2.3</em></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:54px"></i><em class="r">−18.3</em></span></td>
 </tr>
 <tr>
 <td class="k">纳指100</td>
-<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:22px"></i></span><span class="mg-v">32%</span></span><span class="mg-s">· −4.7 · −19.5</span></td>
-<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:25px"></i></span><span class="mg-v">23%</span></span><span class="mg-s">· −7.2 · −23.7</span></td>
+<td class="first-sub numcol mgc exp-no"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:22px"></i></span><span class="mg-v">32%</span></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:37px"></i><em class="r">−4.7</em></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:70px"></i><em class="r">−19.5</em></span></td>
+<td class="first-sub numcol mgc exp-no"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:25px"></i></span><span class="mg-v">23%</span></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:69px"></i><em class="r">−7.2</em></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:70px"></i><em class="r">−23.7</em></span></td>
 </tr>
 <tr>
 <td>A1 双动量（同池）</td>
-<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:8px"></i></span><span class="mg-v">12%</span></span><span class="mg-s">· −2.7 · −9.9</span></td>
-<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:0px"></i></span><span class="mg-v">0%</span></span><span class="mg-s">· −7.3 · −23.5</span></td>
+<td class="first-sub numcol mgc exp-no"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:8px"></i></span><span class="mg-v">12%</span></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:21px"></i><em class="r">−2.7</em></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:36px"></i><em class="r">−9.9</em></span></td>
+<td class="first-sub numcol mgc exp-no"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:0px"></i></span><span class="mg-v">0%</span></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:70px"></i><em class="r">−7.3</em></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:69px"></i><em class="r">−23.5</em></span></td>
 </tr>
 <tr>
 <td>A2 五腿均线（同池）</td>
-<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:50px"></i></span><span class="mg-v">73%</span></span><span class="mg-s">· +2.2 · −4.7</span></td>
-<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:39px"></i></span><span class="mg-v">35%</span></span><span class="mg-s">· −0.5 · −2.9</span></td>
+<td class="first-sub numcol mgc exp-ok"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:50px"></i></span><span class="mg-v">73%</span></span></td><td class="numcol ibc"><span class="ib"><i class="g" style="width:18px"></i><em class="g">+2.2</em></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:17px"></i><em class="r">−4.7</em></span></td>
+<td class="first-sub numcol mgc exp-no"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:39px"></i></span><span class="mg-v">35%</span></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:5px"></i><em class="r">−0.5</em></span></td><td class="numcol ibc"><span class="ib"><i class="r" style="width:9px"></i><em class="r">−2.9</em></span></td>
 </tr>
 </tbody>
-</table></div>
-<p class="table-note note">中位数和最差 = 持有期内每年比对照多（少）赚的百分点。数字来自 D25-8 之后的设计期简报。指数池的最差起点是 2008 年 11 月，正好错过 2009 年的大反弹；可交易池的最差起点是 2006 年 1 月。</p>
+</table></div><p class="table-note note">中位数和最差 = 持有期内每年比对照多（少）赚的百分点。数字来自 D25-8 之后的设计期简报。指数池的最差起点是 2008 年 11 月，正好错过 2009 年的大反弹；可交易池的最差起点是 2006 年 1 月。</p></div></div>
 <ul class="points">
 <li><strong>比沪深300 好得多，比美股差</strong>：这十年美股是慢牛，A 股大起大落，E2 主要在 A 股的大起大落里赚钱。</li>
 <li><strong>可交易池持有 5 年只有 <span class="num">32%</span> 的起点跑赢基准</strong>。要注意，基准里那 <span class="num">30%</span> 美股在 2012 年以前境内也买不到，这个比较对可交易池偏严。</li>
@@ -1006,26 +1049,26 @@ th.rh-new::before { content: '→ '; }
 </section>
 <section id="sec-6-两个年代-前五年是主场-后五年指数池刚好打平"><h2 id="6-两个年代-前五年是主场-后五年指数池刚好打平"><span class="num">06</span>两个年代：前五年是主场，后五年指数池刚好打平</h2>
 <p class="memo"><strong>后五年指数池年化 <span class="num">9.9%</span>、基准 <span class="num">9.4%</span>，几乎打平；可交易池 <span class="num">7.4%</span>，没跑过。</strong></p>
-<div class="table-wrap"><table>
+<div class="table-wrap"><table class="vs-base">
 <thead>
-<tr class="grp"><th rowspan="2">年代</th><th class="gh" colspan="2">E2</th><th class="n numcol" rowspan="2">基准</th><th rowspan="2">A1（指数 / 可交易）</th><th rowspan="2">A2（指数 / 可交易）</th><th class="h-take" rowspan="2">读法</th></tr><tr class="sub"><th class="h-subj">U-指数池</th><th class="n numcol h-subj">U-可交易池</th></tr>
+<tr class="grp"><th rowspan="2">年代</th><th class="gh" colspan="2">E2</th><th class="n numcol" rowspan="2">基准</th><th rowspan="2">A1（指数 / 可交易）</th><th rowspan="2">A2（指数 / 可交易）</th><th class="h-take rh-concl" rowspan="2">读法</th></tr><tr class="sub"><th class="h-subj">U-指数池</th><th class="n numcol h-subj">U-可交易池</th></tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>2006–2010</strong></td>
-<td class="c-subj key"><strong>41.9%</strong></td>
-<td class="n numcol c-subj key"><strong>10.0%</strong></td>
+<td class="c-subj key vs-good" title="对基准 22.3%：更好"><strong>41.9%</strong></td>
+<td class="n numcol c-subj key vs-bad" title="对基准 22.3%：更差"><strong>10.0%</strong></td>
 <td class="n numcol">22.3%</td>
-<td>42.1% / 33.8%</td>
-<td><b>14.5% / 9.0%</b></td>
+<td class="vs-good" title="对基准 22.3%：更好">42.1% / 33.8%</td>
+<td class="vs-bad" title="对基准 22.3%：更差"><b>14.5% / 9.0%</b></td>
 <td class="c-take"><b>前五年是趋势策略的主场</b></td></tr>
 <tr>
 <td><strong>2011–2015</strong></td>
-<td class="c-subj">9.9%</td>
-<td class="n numcol c-subj key"><strong>7.4%</strong></td>
+<td class="c-subj vs-good" title="对基准 9.4%：更好">9.9%</td>
+<td class="n numcol c-subj key vs-bad" title="对基准 9.4%：更差"><strong>7.4%</strong></td>
 <td class="n numcol">9.4%</td>
-<td>13.4% / 14.4%</td>
-<td><b>3.5% / 3.0%</b></td>
+<td class="vs-good" title="对基准 9.4%：更好">13.4% / 14.4%</td>
+<td class="vs-bad" title="对基准 9.4%：更差"><b>3.5% / 3.0%</b></td>
 <td class="c-take"><b>后五年能买的多了，趋势却短了</b></td></tr>
 <tr>
 <td>2016–2020</td>
@@ -1034,7 +1077,7 @@ th.rh-new::before { content: '→ '; }
 <td class="n numcol"></td>
 <td></td>
 <td></td>
-<td></td></tr>
+<td class="r-concl"></td></tr>
 <tr>
 <td>2021–2026</td>
 <td class="c-subj"><span class="pill warn">留空</span><span class="pill-note">同上</span></td>
@@ -1042,7 +1085,7 @@ th.rh-new::before { content: '→ '; }
 <td class="n numcol"></td>
 <td></td>
 <td></td>
-<td></td></tr>
+<td class="r-concl"></td></tr>
 </tbody>
 </table></div>
 <ul class="points">
