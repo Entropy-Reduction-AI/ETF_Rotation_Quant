@@ -41,8 +41,23 @@ def add_class(el, *cls):
     el['class'] = cur
 
 
+def leaf_heads(t):
+    """One header cell per body column, also for two-row (group + sub) headers."""
+    trs = t.select('thead tr')
+    if len(trs) == 2 and 'grp' in (trs[0].get('class') or []):
+        subs = iter(trs[1].find_all('th'))
+        out = []
+        for th in trs[0].find_all('th'):
+            if th.get('colspan'):
+                out.extend(next(subs) for _ in range(int(th['colspan'])))
+            else:
+                out.append(th)
+        return out
+    return t.select('thead th')
+
+
 def table_grid(t):
-    heads = t.select('thead th')
+    heads = leaf_heads(t)
     rows = [tr for tr in t.select('tbody tr')]
     return heads, rows
 
@@ -106,7 +121,7 @@ def options_to_cards(soup, t):
 
 def group_headers(soup, t):
     thead = t.find('thead')
-    if not thead:
+    if not thead or len(thead.find_all('tr')) > 1:
         return
     tr = thead.find('tr')
     ths = tr.find_all('th')
@@ -368,8 +383,57 @@ def polish_notes(soup):
             add_class(nxt, 'table-note')
 
 
+
+def split_compound(soup):
+    """Header 'Group a · b · c' over cells 'x · y · z' -> a group header with one column per value."""
+    for t in soup.select('table'):
+        thead = t.find('thead')
+        if thead is None or len(thead.find_all('tr')) != 1:
+            continue
+        ths = thead.find_all('th')
+        rows = t.select('tbody tr')
+        plan = {}
+        for i, th in enumerate(ths):
+            h = th.get_text(' ', strip=True)
+            m = re.match(r'^(.*?)\s+(\S+(?:\s*·\s*\S+)+)$', h)
+            if not m or i == 0:
+                continue
+            subs = [x.strip() for x in m.group(2).split('·')]
+            ok = all(len(tr.find_all('td')) == len(ths) and len(tr.find_all('td')[i].get_text(strip=True).split('·')) == len(subs) for tr in rows)
+            if ok and len(subs) >= 2:
+                plan[i] = (m.group(1).strip(), subs)
+        if not plan:
+            continue
+        top = soup.new_tag('tr', attrs={'class': ['grp']})
+        sub = soup.new_tag('tr', attrs={'class': ['sub']})
+        for i, th in enumerate(ths):
+            if i in plan:
+                g, subs = plan[i]
+                gh = soup.new_tag('th', attrs={'class': ['gh'], 'colspan': str(len(subs))}); gh.string = g
+                top.append(gh)
+                for k, x in enumerate(subs):
+                    st = soup.new_tag('th', attrs={'class': ['first-sub'] if k == 0 else []}); st.string = x
+                    sub.append(st)
+            else:
+                th2 = th.extract(); th2['rowspan'] = '2'
+                top.append(th2)
+        thead.clear(); thead.append(top); thead.append(sub)
+        for tr in rows:
+            tds = tr.find_all('td')
+            for i in sorted(plan, reverse=True):
+                td = tds[i]
+                vals = [x.strip() for x in td.get_text(strip=True).split('·')]
+                new = []
+                for k, v in enumerate(vals):
+                    n = soup.new_tag('td', attrs={'class': ['first-sub'] if k == 0 else []}); n.string = v
+                    new.append(n)
+                td.replace_with(*new)
+        add_class(t, 'split')
+
+
 def polish(html, slug):
     soup = BeautifulSoup(html, 'html.parser')
+    split_compound(soup)
     prefixed_verdicts(soup)
     trailing_verdicts(soup)
     for t in list(soup.select('table')):
@@ -475,7 +539,7 @@ ol.steps-n > li::before { content: counter(st); position: absolute; left: 0; top
 
 # ---------- enrichment pass (comment 2026-11-17: 表格还是太素) ----------
 MAG_HEAD = re.compile(r'年化|回撤|收益|胜率|占比|仓位|波动|超额|赢|跑赢')
-BAD_W = re.compile(r'输|不通过|没过|不入围|不成立|错|亏|没兑现|不可用|失效|更差')
+BAD_W = re.compile(r'难|没.?赢|赢得少|输|不通过|没过|不入围|不成立|错|亏|没兑现|不可用|失效|更差')
 GOOD_W = re.compile(r'变好|通过|过关|赢|对|成立|兑现|更好|最好|最浅|达到')
 PCT = re.compile(r'^([+\-−]?\d+(?:\.\d+)?)%$')
 
@@ -487,7 +551,7 @@ def _pct(s):
 
 def enrich(soup):
     for t in soup.find_all('table'):
-        heads = t.select('thead th')
+        heads = leaf_heads(t)
         H = [txt(h) for h in heads]
         rows = [tr for tr in t.select('tbody tr') if 'grp' not in (tr.get('class') or [])]
         # 1. magnitude bars on percent columns

@@ -8,6 +8,7 @@ Runs after polish.py. Only restructures and formats the source's own words: it n
 - conclusion cells get bold; list items and long paragraphs open with a bold phrase taken from their own text
 """
 import re
+import polish as P
 from bs4 import BeautifulSoup, NavigableString, Tag
 
 VERDICT_HEAD = re.compile(r'结论|判定|结果|读法|结局|状态|意味着|代价|当时|怎么处理|对愿景|得出|生效|兑现|影响')
@@ -988,7 +989,7 @@ def _tf_status_tone(t):
 def table_focus(soup):
     """Give every non-reference table a visual focus, using only what the table itself says."""
     for t in soup.find_all('table'):
-        heads = t.select('thead tr:last-child th') or t.select('thead th')
+        heads = P.leaf_heads(t)
         H = [h.get_text('', strip=True) for h in heads]
         rows = [tr for tr in t.select('tbody tr') if 'grp' not in (tr.get('class') or [])]
         if not rows or len(H) < 2:
@@ -1015,6 +1016,31 @@ def table_focus(soup):
                     add_class(td, 'vs-good' if better else 'vs-bad')
                     td['title'] = f'对基准 {r[bi].get_text("", strip=True)}：' + ('更好' if better else '更差')
             add_class(t, 'vs-base')
+        # A2. share of winning start points vs the 60% expectation line drawn in the same section's chart
+        for ci, h in enumerate(H):
+            if '跑赢的起点' not in h:
+                continue
+            root = t.find_parents()[-1] if t.find_parents() else t
+            if not re.search(r'期望', root.get_text()) or not re.search(r'≥\s*60%', root.get_text()):
+                continue
+            for r in grid:
+                if ci < len(r):
+                    v = _tf_num(r[ci].get_text('', strip=True))
+                    if v is not None:
+                        add_class(r[ci], 'exp-ok' if v >= 60 else 'exp-no')
+            if 'has-exp' not in (t.get('class') or []):
+                add_class(t, 'has-exp')
+                wrap = t.find_parent(class_='table-wrap') or t
+                wrap.insert_before(BeautifulSoup('<p class="exp-key"><span class="ek ok">≥ 60%</span><span class="ek no">&lt; 60%</span>跑赢的起点按期望线 60% 上色（期望线见上图和“期望”一节）</p>', 'html.parser'))
+        # A3. signed differences (中位/最差/超额…) that no earlier pass styled: colour by sign
+        for ci, h in enumerate(H):
+            if ci == 0 or not re.search(r'中位|最差|最好|超额|合计|相对|多赚|差值', h):
+                continue
+            for r in grid:
+                if ci < len(r) and not set(r[ci].get('class') or []) & {'ibc', 'mgc', 'vs-good', 'vs-bad'}:
+                    tx = r[ci].get_text('', strip=True)
+                    if re.match(r'^[+\-−]\d', tx):
+                        add_class(r[ci], 'sg-pos' if tx[0] == '+' else 'sg-neg')
         # C. column roles from the header wording
         for ci, h in enumerate(H):
             if ci == 0:
@@ -1494,4 +1520,31 @@ CSS += r"""
 .hz.ask.calm { border-color: color-mix(in srgb, var(--good) 50%, var(--line)); background: color-mix(in srgb, var(--good) 5%, var(--surface)); }
 .hz.ask.calm .hz-l { color: var(--good); }
 .hq-b { font-size: 14.5px; line-height: 1.7; margin-top: 6px; }
+"""
+
+CSS += r"""
+td.exp-ok .mg-v, td.exp-ok { color: var(--good); font-weight: 700; }
+td.exp-no .mg-v, td.exp-no { color: var(--bad); font-weight: 700; }
+td.exp-ok .mg-b { background: var(--good) !important; } td.exp-no .mg-b { background: var(--bad) !important; }
+table.split th.first-sub, table.split td.first-sub { border-left: 2px solid var(--line); }
+table.split { table-layout: auto; width: 100%; }
+table.split td, table.split th { padding-left: 8px; padding-right: 8px; }
+table.split td:first-child, table.split th:first-child { min-width: 7.5em; }
+table.split td.numcol { font-size: 13.5px; }
+
+td.sg-pos { color: var(--good); } td.sg-neg { color: var(--bad); }
+.ib { width: auto; min-width: 0; } td.ibc { white-space: nowrap; }
+td.c-take, th.h-take { min-width: 10em; }
+table.split .ib { min-width: 0; gap: 5px; }
+table.split .ib i { display: none; }
+table.split th, table.split td.ibc, table.split td.mgc { min-width: 0 !important; }
+table.split .ib { width: auto; }
+table.split td.c-take, table.split th.h-take { min-width: 9em; }
+table.split .mg { gap: 6px; }
+table.split tr.row-bad td, table.split tr.row-good td { background: none; }
+table.split td.c-take { border-left: 0; }
+table.split thead th.gh { text-align: center; }
+p.exp-key { font-size: 12.5px; color: var(--muted); margin: 6px 0 4px; display: flex; gap: 8px; align-items: center; }
+.ek { font-family: var(--font-mono); font-weight: 700; border-radius: 4px; padding: 0 6px; }
+.ek.ok { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); } .ek.no { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
 """

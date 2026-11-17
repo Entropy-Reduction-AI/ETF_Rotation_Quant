@@ -12,6 +12,10 @@ import story as S
 REPO, OUT, LINKS = sys.argv[1], sys.argv[2], sys.argv[3]
 DOCS = os.path.join(REPO, 'docs', 'owner')
 CSS = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'base.css'), encoding='utf-8').read()
+# the spec's component sheet (docs/reference/owner-page-story.css), with its variable names mapped onto ours
+SPEC_CSS = (':root { --fg: var(--ink); --rule: var(--line); --mono: var(--font-mono); --body: var(--font-body); '
+            '--ok: var(--good); --ok-soft: var(--good-soft); }\n'
+            + open(os.path.join(REPO, 'docs', 'reference', 'owner-page-story.css'), encoding='utf-8').read())
 links = json.load(open(LINKS, encoding='utf-8')) if os.path.exists(LINKS) else {}
 
 PAGES = [
@@ -519,6 +523,7 @@ td.boxed {{ outline: 2px solid var(--accent); outline-offset: -4px; }}
 th {{ white-space: normal; min-width: 4.5em; }}
 th.n {{ white-space: normal; }}
 h2 .num {{ min-width: 1.6em; }}
+{SPEC_CSS}
 {P.CSS}
 {S.CSS}
 </style>
