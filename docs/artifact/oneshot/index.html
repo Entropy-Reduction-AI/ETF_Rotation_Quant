@@ -705,6 +705,31 @@ p.exp-key { font-size: 12.5px; color: var(--muted); margin: 6px 0 4px; display: 
 .gl-sk { font-weight: 700; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
 .gl-sv { font-size: 13.5px; line-height: 1.6; color: var(--ink); }
 
+.rr-fig { margin: 10px 0 14px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.rr-cap { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+.rr-svg { width: 100%; max-width: 900px; height: auto; display: block; }
+.rr-t { font-size: 11px; fill: var(--muted); font-family: var(--font-mono); }
+.rr-g { stroke: var(--line); stroke-width: 1; }
+.rr-ref { stroke: var(--ink); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.rr-q { fill: color-mix(in srgb, var(--good) 8%, transparent); }
+.rr-ql { font-size: 11px; fill: var(--good); font-weight: 700; }
+.rr-p { stroke: var(--surface); stroke-width: 2; }
+.rr-p.rr-good { fill: var(--good); } .rr-p.rr-mid { fill: #a16207; } .rr-p.rr-bad { fill: var(--bad); } .rr-p.rr-ref { fill: var(--ink); } .rr-p.rr-other { fill: var(--muted); }
+.rr-l { font-size: 11.5px; fill: var(--muted); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; } .rr-l.m { font-weight: 700; font-size: 12.5px; }
+.rr-l.rr-good { fill: var(--good); } .rr-l.rr-mid { fill: #a16207; } .rr-l.rr-bad { fill: var(--bad); } .rr-l.rr-ref { fill: var(--ink); font-weight: 700; }
+.cards .card.rr { border-top: 4px solid var(--line); }
+.cards .card.rr-good { border-top-color: var(--good); } .cards .card.rr-mid { border-top-color: #a16207; } .cards .card.rr-bad { border-top-color: var(--bad); }
+.card.rr-good .cv { color: var(--good); } .card.rr-mid .cv { color: #a16207; } .card.rr-bad .cv { color: var(--bad); }
+.rr-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 2px 0 8px; }
+.rr-vs { font-size: 11.5px; color: var(--muted); }
+.rr-c { font-size: 12px; font-weight: 700; border-radius: 4px; padding: 0 6px; }
+.rr-c.g { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.rr-c.b { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.cards.rr-cards { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+p.kv.kv-warn { border: 1px solid color-mix(in srgb, #a16207 45%, var(--line)); border-left: 4px solid #a16207; background: color-mix(in srgb, #a16207 6%, var(--surface)); border-radius: 10px; padding: 12px 16px; margin-top: 12px; }
+p.kv.kv-warn .kv-k { color: #a16207; }
+p.kv.kv-warn .kv-k::before { content: '⚠'; width: auto; height: auto; background: none; color: #a16207; border-radius: 0; margin-right: 6px; }
+
 </style>
 </head>
 <body>
@@ -1022,8 +1047,8 @@ p.exp-key { font-size: 12.5px; color: var(--muted); margin: 6px 0 4px; display: 
 </section>
 <section id="sec-6-对照-a1-和基准打平-a2-回撤最浅-v5-1-证明当初挡下它是对的"><h2 id="6-对照-a1-和基准打平-a2-回撤最浅-v5-1-证明当初挡下它是对的"><span class="num">06</span>对照：A1 和基准打平，A2 回撤最浅，v5.1 证明当初挡下它是对的</h2>
 <p class="memo"><strong>对照只用来诊断，不改判：A1 <span class="num">8.6%</span> 和基准打平，A2 回撤只有 <span class="num">−10%</span>，v5.1 换手 <span class="num">66 倍</span>、年化 <span class="num">−3.3%</span>。</strong></p>
-<div class="cards"><div class="card tone-info"><div class="ct">A1 双动量</div><div class="cv">8.6% · −40%</div><p>年化和基准打平。持有 5 年 <span class="num">47%</span> 的起点赢基准，2019 年以后买入的多数赢。但 2020 年 3 月一次回撤 <span class="num">−40%</span>，比基准深得多。</p></div><div class="card tone-info"><div class="ct">A2 五腿均线</div><div class="cv">7.2% · −10%</div><p>少赚 <span class="num">1.5 个点</span>，但最大回撤只有基准的四成，年化 ÷ 回撤 0.74，是唯一一个明显高于基准（0.33）的。设计期它是最差的一个（年化 <span class="num">8.9%</span>）。</p></div><div class="card tone-info"><div class="ct">v5.1</div><div class="cv">−3.3% · −54%</div><p>每年双边换手 <span class="num">66 倍</span>、成本 <span class="num">6.4 个点</span>，扣费前也只有 <span class="num">3.2%</span>。和美国 ETF 上的结果一样：平缓的市场里，来回切换只是付成本。别的市场检验把它挡在外面是对的。</p></div><div class="card tone-info"><div class="ct">单一指数</div><div class="cv">美股 16–21%</div><p>这十年最大的收益来自美股慢牛；A 股（沪深300）只有 <span class="num">4.0%</span>。所有策略都没能比基准更好地拿住美股这一段。</p></div></div>
-<p class="kv"><span class="kv-k"><strong>不能事后挑</strong></span><span class="kv-v">A2 在这一段回撤最浅，但这是看过结果之后的发现。按纪律（D27-5），它只能算“设计证据”，不能直接拿来上模拟盘。</span></p>
+<figure class="rr−fig"><div class="rr−cap">年化 × 最大回撤：虚线是基准（8.7% · −26%），左上角的浅色区 = 两项都比基准好。</div><svg aria-label="年化和最大回撤" class="rr-svg" role="img" viewbox="0 0 860 300"><rect class="rr-q" height="20.6" width="283.4" x="56" y="22"></rect><text class="rr-t" text-anchor="middle" x="56.0" y="276">−0%</text><text class="rr-t" text-anchor="middle" x="165.0" y="276">−10%</text><text class="rr-t" text-anchor="middle" x="274.0" y="276">−20%</text><text class="rr-t" text-anchor="middle" x="383.0" y="276">−30%</text><text class="rr-t" text-anchor="middle" x="492.0" y="276">−40%</text><text class="rr-t" text-anchor="middle" x="601.0" y="276">−50%</text><text class="rr-t" text-anchor="middle" x="710.0" y="276">−60%</text><text class="rr-t" text-anchor="end" x="48" y="264.0">-5%</text><line class="rr-g" x1="56" x2="710" y1="260.0" y2="260.0"></line><text class="rr-t" text-anchor="end" x="48" y="184.7">0%</text><line class="rr-g" x1="56" x2="710" y1="180.7" y2="180.7"></line><text class="rr-t" text-anchor="end" x="48" y="105.3">5%</text><line class="rr-g" x1="56" x2="710" y1="101.3" y2="101.3"></line><text class="rr-t" text-anchor="end" x="48" y="26.0">10%</text><line class="rr-g" x1="56" x2="710" y1="22.0" y2="22.0"></line><line class="rr-ref" x1="339.4" x2="339.4" y1="22" y2="260"></line><line class="rr-ref" x1="56" x2="710" y1="42.6" y2="42.6"></line><text class="rr-ql" x="62" y="36">两项都比基准好</text><text class="rr-t" text-anchor="end" x="706" y="252">← 回撤越浅越好　　最大回撤</text><text class="rr-t" x="16" y="18">年化</text><circle class="rr-p rr-ref" cx="339.4" cy="42.6" r="5"></circle><text class="rr-l rr-ref" x="349.4" y="34.6">基准 8.7% · −26%</text><circle class="rr-p rr-mid" cx="492.0" cy="44.2" r="7"></circle><text class="rr-l rr-mid m" x="502.0" y="36.2">A1 双动量 8.6% · −40%</text><circle class="rr-p rr-mid" cx="165.0" cy="66.4" r="7"></circle><text class="rr-l rr-mid m" x="175.0" y="58.4">A2 五腿均线 7.2% · −10%</text><circle class="rr-p rr-other" cx="219.5" cy="133.1" r="5"></circle><text class="rr-l rr-other" x="229.5" y="125.1">E2 新口径 3% · −15%</text><circle class="rr-p rr-bad" cx="644.6" cy="233.0" r="7"></circle><text class="rr-l rr-bad m" x="654.6" y="225.0">v5.1 −3.3% · −54%</text></svg></figure><div class="cards rr-cards"><div class="card rr rr-mid"><div class="ct">A1 双动量</div><div class="cv">8.6% · −40%</div><div class="rr-chips"><span class="rr-vs">对基准</span><span class="rr-c g">年化 打平</span><span class="rr-c b">回撤深 14 个点</span></div><p>年化和基准打平。持有 5 年 <span class="num">47%</span> 的起点赢基准，2019 年以后买入的多数赢。但 2020 年 3 月一次回撤 <span class="num">−40%</span>，比基准深得多。</p></div><div class="card rr rr-mid"><div class="ct">A2 五腿均线</div><div class="cv">7.2% · −10%</div><div class="rr-chips"><span class="rr-vs">对基准</span><span class="rr-c b">年化 −1.5</span><span class="rr-c g">回撤浅 16 个点</span></div><p>少赚 <span class="num">1.5 个点</span>，但最大回撤只有基准的四成，年化 ÷ 回撤 0.74，是唯一一个明显高于基准（0.33）的。设计期它是最差的一个（年化 <span class="num">8.9%</span>）。</p></div><div class="card rr rr-bad"><div class="ct">v5.1</div><div class="cv">−3.3% · −54%</div><div class="rr-chips"><span class="rr-vs">对基准</span><span class="rr-c b">年化 −12.0</span><span class="rr-c b">回撤深 28 个点</span></div><p>每年双边换手 <span class="num">66 倍</span>、成本 <span class="num">6.4 个点</span>，扣费前也只有 <span class="num">3.2%</span>。和美国 ETF 上的结果一样：平缓的市场里，来回切换只是付成本。别的市场检验把它挡在外面是对的。</p></div><div class="card tone-info"><div class="ct">单一指数</div><div class="cv">美股 16–21%</div><p>这十年最大的收益来自美股慢牛；A 股（沪深300）只有 <span class="num">4.0%</span>。所有策略都没能比基准更好地拿住美股这一段。</p></div></div>
+<p class="kv kv-warn"><span class="kv-k"><strong>不能事后挑</strong></span><span class="kv-v">A2 在这一段回撤最浅，但这是看过结果之后的发现。按纪律（D27-5），它只能算“设计证据”，不能直接拿来上模拟盘。</span></p>
 </section>
 <section id="sec-7-结果靠得住吗-过关结论靠得住-能买到的池子有一处数据缺口"><h2 id="7-结果靠得住吗-过关结论靠得住-能买到的池子有一处数据缺口"><span class="num">07</span>结果靠得住吗：过关结论靠得住；能买到的池子有一处数据缺口</h2>
 <p class="memo"><strong>代码、判据、数据窗口都按冻结规则执行，Reviewer 独立复算一致。复查时我另外发现：57 只场外基金的净值只取到了 2015 年底，能买到的池子的结果因此全部不可用。过关只看能排名的池子，不受影响。</strong></p>
