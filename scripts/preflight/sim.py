@@ -98,7 +98,7 @@ def run(lr, s_us=0.30, kind='K0', vol_short=20, band=0.10, tilt=0.20, bond=None)
     flips = np.zeros(n); last_flip = np.full((n, 2), -10 ** 6); last_state = on.copy()
     for t in range(T):
         # 当日收益
-        bd = bd0 if bond is None else bond[t]
+        bd = bd0 if bond is None else (bond[:, t] if np.ndim(bond) == 2 else bond[t])
         g = 1 + w[:, 0] * R[:, t, 0] + w[:, 1] * R[:, t, 1] + w[:, 2] * bd
         w = np.column_stack([w[:, 0] * (1 + R[:, t, 0]), w[:, 1] * (1 + R[:, t, 1]), w[:, 2] * (1 + bd)]) / g[:, None]
         nav = nav * g; navs[:, t] = nav; expo[:, t] = w[:, 0] + w[:, 1]
