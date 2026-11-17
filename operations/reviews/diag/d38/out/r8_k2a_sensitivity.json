@@ -1,0 +1,99 @@
+{
+  "sensitivity": [
+    {
+      "spread_pp": -10.0,
+      "us_weight": 0.3,
+      "structures": {
+        "K2": {
+          "vs_70_30_ann_pctiles": [
+            -4.8022,
+            -1.3285,
+            2.6773
+          ],
+          "vs_70_30_mdd_p50": 14.0
+        },
+        "K2A": {
+          "vs_70_30_ann_pctiles": [
+            -5.5628,
+            -2.0912,
+            1.546
+          ],
+          "vs_70_30_mdd_p50": 8.9
+        }
+      },
+      "benchmark_7030_ann_p50": 3.73
+    },
+    {
+      "spread_pp": 0.0,
+      "us_weight": 0.3,
+      "structures": {
+        "K2": {
+          "vs_70_30_ann_pctiles": [
+            -6.712,
+            -3.1612,
+            0.9941
+          ],
+          "vs_70_30_mdd_p50": 11.6
+        },
+        "K2A": {
+          "vs_70_30_ann_pctiles": [
+            -5.7314,
+            -2.1606,
+            1.5846
+          ],
+          "vs_70_30_mdd_p50": 11.0
+        }
+      },
+      "benchmark_7030_ann_p50": 6.86
+    },
+    {
+      "spread_pp": 10.0,
+      "us_weight": 0.3,
+      "structures": {
+        "K2": {
+          "vs_70_30_ann_pctiles": [
+            -7.4564,
+            -3.8151,
+            0.4392
+          ],
+          "vs_70_30_mdd_p50": 10.9
+        },
+        "K2A": {
+          "vs_70_30_ann_pctiles": [
+            -5.8776,
+            -2.2134,
+            1.6333
+          ],
+          "vs_70_30_mdd_p50": 11.5
+        }
+      },
+      "benchmark_7030_ann_p50": 9.79
+    },
+    {
+      "spread_pp": 20.0,
+      "us_weight": 0.3,
+      "structures": {
+        "K2": {
+          "vs_70_30_ann_pctiles": [
+            -7.6449,
+            -3.8827,
+            0.0511
+          ],
+          "vs_70_30_mdd_p50": 11.3
+        },
+        "K2A": {
+          "vs_70_30_ann_pctiles": [
+            -6.005,
+            -2.2526,
+            1.6903
+          ],
+          "vs_70_30_mdd_p50": 11.8
+        }
+      },
+      "benchmark_7030_ann_p50": 12.55
+    }
+  ],
+  "paths": 1000,
+  "seed": 20261117,
+  "noise_corr": 0.142
+}
