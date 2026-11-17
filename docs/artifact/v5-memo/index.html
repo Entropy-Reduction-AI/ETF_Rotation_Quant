@@ -1,0 +1,2746 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v5 研究备忘</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  /* 布局：左侧固定目录 + 宽主栏（约 960px），图表按主栏全宽显示；表格自带横向滚动 */
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --ink: #1b2330;
+  --muted: #5b6676;
+  --line: #e1e5eb;
+  --accent: #1f5fd1;
+  --accent-soft: #e8f0fd;
+  --good: #1d7a46;
+  --good-soft: #e5f4ea;
+  --bad: #c2410c;
+  --bad-soft: #fdf0e6;
+  --warn: #8a5a00;
+  --warn-soft: #fbf1dc;
+  --font-body: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1a2029; --ink: #e6eaf0; --muted: #9aa5b4; --line: #2c3440;
+    --accent: #7aa7ff; --accent-soft: #1c2a44;
+    --good: #6fcf97; --good-soft: #17301f; --bad: #fb923c; --bad-soft: #3a2414; --warn: #f2c063; --warn-soft: #3a2e14;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12161d; --surface: #1a2029; --ink: #e6eaf0; --muted: #9aa5b4; --line: #2c3440;
+  --accent: #7aa7ff; --accent-soft: #1c2a44;
+  --good: #6fcf97; --good-soft: #17301f; --bad: #fb923c; --bad-soft: #3a2414; --warn: #f2c063; --warn-soft: #3a2e14;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+strong { font-weight: 700; }
+code { font-family: var(--font-mono); font-size: .88em; background: var(--line); padding: .1em .35em; border-radius: 4px; }
+
+.shell { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 56px; max-width: 1240px; margin: 0 auto; padding: 40px 32px 96px; }
+nav.toc { position: sticky; top: 24px; align-self: start; font-size: 14px; line-height: 1.6; }
+nav.toc .toc-title { font-size: 12px; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+nav.toc a { display: block; color: var(--muted); padding: 4px 10px; border-left: 2px solid var(--line); }
+nav.toc a:hover { color: var(--ink); border-left-color: var(--accent); text-decoration: none; }
+nav.toc ol ol { padding-left: 12px; font-size: 13px; }
+nav.toc a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 500; }
+
+main { min-width: 0; }
+header.top { display: grid; gap: 8px; margin-bottom: 28px; }
+.kicker { font-size: 13px; color: var(--muted); font-family: var(--font-mono); }
+h1 { font-size: 34px; line-height: 1.3; margin: 0; font-weight: 700; text-wrap: balance; }
+.vision { color: var(--muted); margin: 4px 0 0; }
+.vision b { color: var(--ink); font-weight: 500; }
+
+.summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 8px 0 48px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; display: grid; gap: 8px; align-content: start; }
+.card h3 { margin: 0; font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: .04em; }
+.card p { margin: 0; font-size: 15px; line-height: 1.7; }
+.asks { margin: 0; padding-left: 1.3em; font-size: 15px; line-height: 1.7; }
+.asks li { margin: 2px 0; }
+.card.verdict { border-top: 3px solid var(--bad); }
+.card.ask { border-top: 3px solid var(--accent); }
+.card.eng { border-top: 3px solid var(--good); }
+.big { font-family: var(--font-mono); font-size: 28px; font-weight: 500; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.big .vs { font-size: 15px; color: var(--muted); font-family: var(--font-body); }
+
+section { margin: 0 0 64px; scroll-margin-top: 24px; }
+h2 { font-size: 24px; line-height: 1.4; margin: 0 0 14px; font-weight: 700; text-wrap: balance; display: flex; gap: 12px; align-items: baseline; }
+h2 .num { font-family: var(--font-mono); font-size: 15px; color: var(--accent); font-weight: 500; }
+h3 { font-size: 19px; margin: 36px 0 10px; line-height: 1.45; text-wrap: balance; scroll-margin-top: 24px; }
+h4 { font-size: 16px; margin: 24px 0 8px; }
+p { margin: 0 0 12px; }
+ul, ol.steps { margin: 0 0 14px; padding-left: 1.3em; }
+li { margin: 4px 0; }
+
+.lede { font-size: 17px; font-weight: 500; border-left: 3px solid var(--accent); background: var(--surface); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 0 0 20px; max-width: none; }
+
+figure { margin: 14px 0 22px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+figure img { display: block; width: 100%; height: auto; }
+figcaption { font-size: 13px; color: #5b6676; margin-top: 8px; }
+
+.table-wrap { overflow-x: auto; margin: 14px 0 22px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; line-height: 1.65; }
+th, td { text-align: left; vertical-align: top; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+th { font-weight: 500; color: var(--muted); font-size: 13px; background: var(--bg); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; font-family: var(--font-mono); font-size: 14px; }
+td.name { font-weight: 700; white-space: nowrap; }
+.cols-3 td { width: 33.3%; }
+
+.pill { display: inline-block; font-size: 12.5px; font-weight: 500; padding: 1px 9px; border-radius: 999px; white-space: nowrap; margin-right: 4px; }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.good { background: var(--good-soft); color: var(--good); }
+.pill.info { background: var(--accent-soft); color: var(--accent); }
+.pill.warn { background: var(--warn-soft); color: var(--warn); }
+.pill.mute { background: var(--line); color: var(--muted); }
+
+.note { font-size: 14px; color: var(--muted); }
+.claim { font-weight: 700; font-size: 16.5px; margin: 0 0 4px; }
+.aside { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; margin: 14px 0 22px; }
+.aside h4 { margin: 0 0 6px; font-size: 15px; }
+.aside p:last-child, .aside ul:last-child { margin-bottom: 0; }
+
+.archive { margin-top: 40px; border-top: 2px dashed var(--line); padding-top: 4px; }
+.archive-band { font-family: var(--font-mono); font-size: 12px; color: var(--muted); letter-spacing: .06em; margin: 10px 0 0; }
+.archive-head { display: flex; gap: 10px; align-items: baseline; margin-top: 32px; }
+.archive-head .tag { font-family: var(--font-mono); font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; }
+
+.mini { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 14px 0 22px; }
+.mini .card p { font-size: 14.5px; }
+
+ol.next { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; max-width: none; }
+ol.next { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; gap: 0; }
+ol.next li { padding: 14px 18px; display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; margin: 0; border-bottom: 1px solid var(--line); }
+ol.next li:last-child { border-bottom: 0; }
+ol.next .who .pill { margin-top: 4px; font-weight: 500; }
+ol.next .who { font-weight: 700; }
+
+.log { display: grid; gap: 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.log div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 14.5px; line-height: 1.7; }
+.log div:last-child { border-bottom: 0; }
+.log .d { font-family: var(--font-mono); font-size: 13.5px; color: var(--muted); padding-top: 1px; }
+details.older { margin-top: 16px; }
+details.older summary { cursor: pointer; color: var(--accent); font-size: 15px; margin-bottom: 10px; }
+
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+
+@media (max-width: 1000px) {
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 24px 16px 64px; }
+  nav.toc { display: none; }
+  .summary, .mini { grid-template-columns: minmax(0, 1fr); }
+  h1 { font-size: 27px; }
+  ol.next li, .log div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+html { scroll-behavior: smooth; }
+
+/* page-type additions */
+nav.toc li.l3 a { padding-left: 22px; font-size: 13px; }
+nav.toc { max-height: calc(100vh - 48px); overflow-y: auto; }
+.back { font-size: 13px; color: var(--muted); }
+.headline { font-size: 19px; line-height: 1.6; font-weight: 500; margin: 6px 0 0; color: var(--ink); text-wrap: balance; }
+section.intro > p:first-child { margin-top: 0; }
+section.intro { margin-bottom: 40px; }
+.lede p, .claim-box p { margin: 0; }
+.claim-box { font-weight: 700; font-size: 16.5px; margin: 0 0 10px; }
+.aside > p:last-child, .aside > ul:last-child, .aside > ol:last-child { margin-bottom: 0; }
+h4.toggle { font-size: 15.5px; color: var(--ink); margin: 26px 0 8px; padding-left: 10px; border-left: 3px solid var(--line); }
+details.fold { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 18px; margin: 16px 0 22px; }
+details.fold > summary { cursor: pointer; padding: 12px 0; font-weight: 500; color: var(--accent); list-style: none; }
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::before { content: '▸'; display: inline-block; width: 1.1em; transition: transform .15s; }
+details.fold[open] > summary::before { transform: rotate(90deg); }
+details.fold[open] { padding-bottom: 8px; }
+details.fold figure { padding: 10px; }
+pre { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font-size: 13px; }
+pre code { background: none; padding: 0; }
+td del, td s { color: var(--muted); }
+td.k { white-space: nowrap; font-weight: 500; }
+/* table polish */
+.table-wrap { box-shadow: 0 1px 0 var(--line); }
+th { background: var(--bg); color: var(--muted); font-weight: 500; font-size: 12.5px; border-bottom: 2px solid var(--line); vertical-align: bottom; }
+tbody tr:hover td { background: var(--accent-soft); }
+tbody td:first-child { font-weight: 500; color: var(--ink); }
+tr.group td { background: var(--bg); color: var(--muted); font-size: 12.5px; font-weight: 500; letter-spacing: .02em; padding-top: 8px; padding-bottom: 8px; }
+tr.ref td { background: color-mix(in srgb, var(--line) 35%, transparent); color: var(--muted); }
+tr.ref td:first-child { font-style: normal; }
+span.pos { color: var(--good); font-weight: 500; }
+span.neg { color: var(--bad); font-weight: 500; }
+td .pill { margin-right: 6px; vertical-align: 1px; }
+td.good span.pos, td.bad span.neg { color: inherit; }
+td.good { background: var(--good-soft); }
+td.bad, tr.hl td { background: var(--warn-soft); }
+td.boxed { outline: 2px solid var(--accent); outline-offset: -4px; }
+.log div.hl { background: var(--warn-soft); }
+.log div.hl span { color: var(--warn); font-weight: 500; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin: 14px 0 22px; }
+.cards .card .ct { font-size: 14px; color: var(--ink); font-weight: 700; }
+.cards .card .cv { font-family: var(--font-mono); font-size: 20px; font-weight: 500; line-height: 1.3; color: var(--accent); font-variant-numeric: tabular-nums; }
+.cards .card p { font-size: 14.5px; line-height: 1.7; margin: 0; }
+.cards .card p + p { color: var(--muted); font-size: 13.5px; }
+th { white-space: normal; min-width: 4.5em; }
+th.n { white-space: normal; }
+h2 .num { min-width: 1.6em; }
+
+/* ===== storytelling layer ===== */
+/* status cards that open a page */
+.cards.from-table { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.cards.from-table .card { border-top: 3px solid var(--line); }
+.cards.from-table .ct { font-size: 12.5px; font-weight: 500; color: var(--muted); letter-spacing: .04em; }
+.cards.from-table .cb { font-size: 14.5px; line-height: 1.75; }
+.cards.status .tone-0 { border-top-color: var(--muted); }
+.cards.status .tone-1 { border-top-color: var(--accent); }
+.cards.status .tone-2 { border-top-color: var(--warn); }
+.cards.status .tone-2 .ct { color: var(--warn); }
+.cards.status .tone-1 .cb { font-size: 15px; }
+.cards.plain .card { border-top-color: var(--accent); }
+
+/* options with a recommendation */
+.options { display: grid; gap: 10px; margin: 12px 0 18px; }
+.option { display: grid; grid-template-columns: minmax(150px, 220px) minmax(0, 1fr); gap: 16px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+.option .on { font-weight: 700; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.option .od { color: var(--muted); font-size: 14.5px; }
+.option.rec { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.option.rec .od { color: var(--ink); }
+.option .badge { font-size: 12px; font-weight: 500; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 0 8px; }
+
+/* definitions */
+table.deflist thead { display: none; }
+table.deflist td:first-child { width: 9.5em; color: var(--accent); font-weight: 700; border-right: 2px solid var(--accent-soft); }
+table.deflist tr.was td { color: var(--muted); }
+table.deflist tr.was td:last-child { text-decoration: line-through; text-decoration-color: var(--bad); }
+table.deflist tr.now td { background: var(--good-soft); }
+table.deflist tr.now td:first-child { color: var(--good); border-right-color: var(--good); }
+
+/* grouped headers */
+thead tr.grp th.gh { text-align: center; color: var(--ink); font-weight: 700; border-bottom: 1px solid var(--line); background: var(--bg); }
+thead tr.sub th { font-size: 12px; }
+
+/* column roles */
+th.h-subj, td.c-subj { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+th.h-subj { color: var(--accent); font-weight: 700; }
+td.c-take { font-weight: 500; color: var(--ink); border-left: 1px solid var(--line); }
+th.h-take { border-left: 1px solid var(--line); color: var(--ink); }
+td.c-note { color: var(--muted); font-size: 13.5px; }
+tr.row-subj td { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+tr.row-subj td:first-child { box-shadow: inset 3px 0 0 var(--accent); color: var(--accent); }
+
+/* numeric columns */
+td.numcol, th.numcol { text-align: right; }
+td.numcol { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 14px; white-space: nowrap; }
+thead tr.sub th.numcol, thead tr.grp th.numcol { text-align: right; }
+/* heat cells for differences */
+td.heat { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 500; text-align: right; white-space: nowrap; }
+td.heat-pos { color: var(--good); background: color-mix(in srgb, var(--good) var(--h, 8%), transparent); }
+td.heat-neg { color: var(--bad); background: color-mix(in srgb, var(--bad) var(--h, 8%), transparent); }
+td.heat-zero { color: var(--muted); }
+td.key { color: var(--accent); font-weight: 700; }
+td.key strong { font-weight: 700; }
+
+/* verdict rows */
+tr.row-bad td { background: color-mix(in srgb, var(--bad) 5%, transparent); }
+tr.row-bad td:first-child { box-shadow: inset 3px 0 0 var(--bad); }
+tr.row-good td:first-child { box-shadow: inset 3px 0 0 var(--good); }
+tr.row-warn td:first-child { box-shadow: inset 3px 0 0 var(--warn); }
+tr.row-bad td.heat, tr.row-subj td.heat { background: color-mix(in srgb, var(--bad) var(--h, 8%), transparent); }
+tr.row-bad td.heat-pos, tr.row-subj td.heat-pos { background: color-mix(in srgb, var(--good) var(--h, 8%), transparent); }
+.tvc .tv { font-family: var(--font-mono); margin-right: 8px; }
+.who { font-size: 12.5px; color: var(--muted); margin-right: 6px; }
+.pill-note { display: block; font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+td .pill { font-size: 12.5px; }
+
+/* scorecard above verdict tables */
+.score { display: flex; align-items: center; gap: 14px; margin: 14px 0 -6px; }
+.score .seg { display: flex; gap: 3px; width: 200px; height: 8px; }
+.score .seg span { border-radius: 2px; }
+.score .s-good { background: var(--good); }
+.score .s-warn { background: var(--warn); }
+.score .s-bad { background: var(--bad); }
+.score .sl { font-size: 13.5px; color: var(--muted); }
+.score .sl b { font-family: var(--font-mono); font-size: 15px; }
+.score .t-good { color: var(--good); } .score .t-bad { color: var(--bad); } .score .t-warn { color: var(--warn); }
+.score .of { color: var(--muted); }
+
+/* notes under tables read as captions */
+p.table-note { font-size: 13px; color: var(--muted); margin-top: -12px; }
+
+/* key-point lists */
+ul.points { list-style: none; padding-left: 0; display: grid; gap: 8px; }
+ul.points > li { padding: 2px 0 2px 14px; border-left: 3px solid var(--accent-soft); margin: 0; }
+ul.points > li > strong:first-child { color: var(--ink); }
+ol.steps-n { list-style: none; padding-left: 0; counter-reset: st; display: grid; gap: 6px; }
+ol.steps-n > li { counter-increment: st; position: relative; padding-left: 34px; margin: 0; }
+ol.steps-n > li::before { content: counter(st); position: absolute; left: 0; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; display: grid; place-items: center; }
+
+/* enrichment */
+td.mgc { white-space: nowrap; min-width: 128px; }
+.mg { display: inline-flex; align-items: center; gap: 8px; }
+.mg-t { position: relative; display: inline-block; width: 64px; height: 8px; background: var(--line); border-radius: 4px; }
+.mg-b { position: absolute; left: 0; top: 0; height: 8px; border-radius: 4px; }
+.mg-b.a { background: var(--accent); } .mg-b.m { background: color-mix(in srgb, var(--muted) 55%, transparent); } .mg-b.o { background: color-mix(in srgb, var(--bad) 70%, transparent); }
+.mk { position: absolute; top: -3px; width: 2px; height: 14px; background: var(--ink); margin-left: -1px; }
+.mg-v { font-family: var(--font-mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.mg-v.strong { font-weight: 700; color: var(--accent); }
+.mg-s { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; padding-left: 72px; }
+td.detail { color: var(--muted); font-size: 13.5px; line-height: 1.65; max-width: 30em; }
+tbody tr:nth-child(even):not(.grp):not(.row-bad):not(.row-subj) td { background: color-mix(in srgb, var(--bg) 60%, transparent); }
+tbody td:first-child strong { font-weight: 700; }
+td.c-take .pill { font-size: 13px; padding: 2px 10px; }
+
+
+/* ===== spec layer: docs/reference/owner-facing-uiux-principles.md §13 ===== */
+:root { --fg: var(--ink); --mono: var(--font-mono); --body: var(--font-body); --rule: var(--line); --ok: var(--good); --ok-soft: var(--good-soft); }
+p.memo { font-size: 17px; font-weight: 700; line-height: 1.65; border-left: 4px solid var(--accent); background: var(--surface); padding: 12px 16px; border-radius: 0 10px 10px 0; margin: 0 0 18px; }
+p.memo strong { color: var(--accent); }
+.fold { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin: 14px 0 20px; }
+.fold-h { all: unset; box-sizing: border-box; display: flex; gap: 8px; align-items: center; width: 100%; padding: 11px 16px; cursor: pointer; color: var(--accent); font-weight: 500; font-size: 15px; border-radius: 10px; }
+.fold-h:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.fold-h .chev { display: inline-block; transition: transform .15s; }
+.fold-h[aria-expanded="true"] .chev { transform: rotate(90deg); }
+.fold-b { padding: 0 16px 12px; }
+.fold-b > .table-wrap:first-child, .fold-b > .score:first-child { margin-top: 4px; }
+td.ibc { min-width: 150px; }
+td.tg { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+section.appendix h3 { font-size: 20px; margin-top: 0; }
+ol.next-steps, ul.next-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; counter-reset: none; }
+ol.next-steps > li, ul.next-steps > li { padding: 12px 16px 12px 18px; border-bottom: 1px solid var(--line); margin: 0; }
+ol.next-steps > li::before { display: none; }
+ol.next-steps > li:last-child, ul.next-steps > li:last-child { border-bottom: 0; }
+ol.next-steps > li > b:first-child, ol.next-steps > li > strong:first-child { display: inline-block; min-width: 7em; color: var(--accent); }
+.pill.tagline { white-space: normal; font-weight: 500; }
+
+.stk-wrap { margin: 8px 0 16px; }
+.stk span { color: #fff; }
+.stk-l span { display: inline-flex; align-items: center; }
+.stk-l b { color: var(--ink); margin-left: 3px; font-family: var(--font-mono); font-weight: 500; }
+
+/* UX pass */
+span.num, strong.num, b.num { font-family: var(--font-mono); font-size: .93em; font-weight: 500; color: var(--ink); background: color-mix(in srgb, var(--accent) 9%, transparent); border-radius: 4px; padding: 0 4px; white-space: nowrap; }
+p.memo span.num { background: none; color: var(--accent); padding: 0; }
+span.arr { color: var(--accent); font-weight: 700; padding: 0 2px; }
+.cards .card { position: relative; border-top: 3px solid var(--accent); transition: transform .12s, box-shadow .12s; }
+.cards .card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(20, 30, 50, .08); }
+.cards .card.tone-good { border-top-color: var(--good); } .cards .card.tone-bad { border-top-color: var(--bad); }
+.cards .card .ct { font-size: 13px; letter-spacing: .02em; }
+.cards .card.tone-good .ct { color: var(--good); } .cards .card.tone-bad .ct { color: var(--bad); } .cards .card.tone-info .ct { color: var(--accent); }
+.cards .card .cv { font-size: 24px; line-height: 1.2; margin: 2px 0 4px; color: var(--ink); }
+.cards .card .cv.delta .from { color: var(--muted); font-size: 18px; }
+.cards .card .cv.delta .to { font-weight: 700; }
+.cards .card.tone-good .cv .to { color: var(--good); } .cards .card.tone-bad .cv .to { color: var(--bad); }
+.cards .card .cv.echo { color: var(--accent); }
+.cards .card p { font-size: 14.5px; }
+ol.flow { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 22px; margin: 14px 0 22px; counter-reset: none; }
+ol.flow > li { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 14px 12px; margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); }
+ol.flow > li { counter-increment: fl; }
+ol.flow > li::before { content: counter(fl); display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 12.5px; margin-bottom: 6px; position: static; }
+ol.flow > li:not(:last-child)::after { content: '→'; position: absolute; right: -18px; top: 50%; transform: translateY(-50%); color: var(--accent); font-weight: 700; }
+ol.flow .fl-n { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 12.5px; margin-bottom: 6px; }
+ol.flow .fl-t { display: block; font-weight: 700; color: var(--ink); font-size: 15px; margin-bottom: 4px; }
+p.kv { display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); margin: 0; }
+p.kv + :not(p.kv) { margin-top: 14px; }
+p.kv .kv-k { font-weight: 700; color: var(--ink); }
+p.kv .kv-k::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: 2px; }
+@media (max-width: 1000px) { p.kv { grid-template-columns: minmax(0, 1fr); gap: 2px; } ol.flow > li::after { display: none; } }
+
+.readnote { margin: -6px 0 22px; padding: 10px 14px; border-radius: 10px; background: var(--bg); border: 1px dashed var(--line); display: grid; gap: 4px; }
+.readnote .rn-h { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .06em; margin-bottom: 2px; }
+.readnote .rn-i { font-size: 13.5px; color: var(--muted); line-height: 1.6; padding-left: 14px; position: relative; }
+.readnote .rn-i::before { content: ''; position: absolute; left: 2px; top: .65em; width: 5px; height: 5px; border-radius: 50%; background: var(--line); }
+.readnote .rn-i:first-of-type { color: var(--ink); font-weight: 500; }
+.readnote span.num { background: none; padding: 0; color: var(--ink); }
+
+/* focus pass */
+.claim-box { font-weight: 700; font-size: 16px; border-left: 4px solid var(--accent); background: var(--surface); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 0 0 14px; }
+.fold-b .claim-box { background: var(--accent-soft); }
+.callout { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--warn); border-radius: 0 10px 10px 0; padding: 12px 16px; margin: 14px 0 20px; }
+.callout .co-h { font-weight: 700; color: var(--warn); font-size: 14.5px; margin-bottom: 6px; }
+.callout > p:last-child, .callout > ul:last-child { margin-bottom: 0; }
+p.oneline { background: var(--accent-soft); border-radius: 10px; padding: 12px 16px; font-size: 15.5px; }
+p.oneline > b:first-child, p.oneline > strong:first-child { display: inline-block; background: var(--accent); color: #fff; border-radius: 4px; padding: 0 8px; margin-right: 8px; font-size: 13px; }
+.overview { margin: 8px 0 26px; padding: 14px; background: var(--bg); border-radius: 12px; border: 1px solid var(--line); }
+.overview .ov-h { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+.overview .ov-h span { font-weight: 400; color: var(--muted); }
+.ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; counter-reset: ov; }
+.ov-card { position: relative; display: flex; flex-direction: column; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 10px; padding: 10px 12px 28px; color: var(--ink); text-decoration: none; transition: transform .12s, box-shadow .12s; }
+.ov-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(20, 30, 50, .08); text-decoration: none; }
+.ov-card.t-bad { border-top-color: var(--bad); } .ov-card.t-good { border-top-color: var(--good); } .ov-card.t-mixed { border-top-color: #b45309; } .ov-card.t-info { border-top-color: var(--muted); }
+.ov-top { display: flex; align-items: center; gap: 8px; }
+.ov-card .ov-n { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 5px; padding: 0 6px; }
+.ov-tag { font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 0 6px; color: var(--muted); background: var(--bg); }
+.t-bad .ov-tag { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.t-good .ov-tag { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.t-mixed .ov-tag { color: #b45309; background: color-mix(in srgb, #b45309 10%, transparent); }
+.ov-m { font-family: var(--font-mono); font-size: 21px; font-weight: 700; line-height: 1.25; margin-top: 4px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ov-m i { font-style: normal; font-size: 14px; color: var(--muted); margin: 0 6px; font-family: var(--font-sans, inherit); }
+.t-bad .ov-m { color: var(--bad); } .t-good .ov-m { color: var(--good); } .t-mixed .ov-m { color: #b45309; }
+.ov-card .ov-t { font-weight: 700; font-size: 15px; line-height: 1.4; }
+.ov-card .ov-c { font-size: 13.5px; line-height: 1.6; color: var(--muted); }
+.ov-card .ov-c .num { color: var(--ink); }
+.ov-q { color: var(--ink); font-weight: 600; }
+.ov-card.bare { border-top-style: dashed; background: transparent; }
+.ov-card.bare .ov-tag { display: none; }
+.ov-go { position: absolute; left: 12px; bottom: 8px; font-size: 12px; color: var(--accent); opacity: 0; transition: opacity .12s; }
+.ov-card:hover .ov-go { opacity: 1; }
+.ov-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.ov-chip { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px 4px 4px; color: var(--ink); font-size: 14px; font-weight: 600; text-decoration: none; }
+.ov-chip:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.ov-k { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 12px; }
+
+.actboard { display: grid; gap: 14px; }
+.ab-strip { display: flex; flex-wrap: wrap; gap: 8px; }
+.ab-s { display: inline-flex; align-items: baseline; gap: 6px; font-size: 13px; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; }
+.ab-s b { font-family: var(--font-mono); font-size: 16px; color: var(--ink); }
+.ab-s.s-me { background: var(--accent); border-color: var(--accent); color: #fff; } .ab-s.s-me b { color: #fff; }
+.ab-s.s-wait b { color: #b45309; } .ab-s.s-done b { color: var(--good); }
+.ab-mine { border: 1.5px solid var(--accent); border-radius: 12px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--surface)), var(--surface)); padding: 14px 16px 16px; }
+.ab-mh { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.ab-mh b { font-size: 16px; color: var(--accent); }
+.ab-mhint { font-size: 13px; color: var(--muted); }
+.ab-decs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.ab-dec { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px 14px 52px; min-height: 52px; }
+.ab-dn { position: absolute; left: 14px; top: 14px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; border: 2px solid var(--accent); color: var(--accent); font-family: var(--font-mono); font-weight: 700; font-size: 13px; }
+.ab-verb { font-size: 22px; font-weight: 800; color: var(--accent); line-height: 1.15; letter-spacing: .04em; }
+.ab-obj { font-size: 14.5px; line-height: 1.6; color: var(--ink); margin-top: 4px; }
+.ab-opts { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ab-opt { font-size: 13.5px; font-weight: 600; border: 1.5px dashed var(--accent); color: var(--accent); border-radius: 8px; padding: 3px 10px; background: var(--accent-soft); }
+.ab-or { font-size: 12px; color: var(--muted); font-weight: 700; }
+.ab-q { font-weight: 700; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+.ab-q.bad { color: var(--bad); border-color: transparent; background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.ab-id { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); background: var(--accent-soft); border-radius: 4px; padding: 0 5px; white-space: nowrap; }
+.ab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.ab-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.ab-who { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+.ab-who b { font-size: 15px; }
+.ab-n { margin-left: auto; font-family: var(--font-mono); font-size: 12px; color: var(--muted); background: var(--bg); border-radius: 999px; padding: 0 8px; }
+.ab-av { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--line); color: var(--ink); font-weight: 700; font-size: 13px; }
+.ab-mh .ab-av { background: var(--accent); color: #fff; }
+.ab-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.ab-items li { margin: 0; padding: 0; display: grid; gap: 3px; font-size: 14px; line-height: 1.6; }
+.ab-items li::before { display: none; }
+.ab-st { justify-self: start; font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 0 7px; color: var(--muted); background: var(--bg); border: 1px solid var(--line); }
+.st-done .ab-st { color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, transparent); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.st-done .ab-st::before { content: '✓ '; }
+.st-done .ab-tx { color: var(--muted); }
+.st-wait .ab-st { color: #b45309; border-color: color-mix(in srgb, #b45309 40%, transparent); background: color-mix(in srgb, #b45309 10%, transparent); }
+.st-wait .ab-st::before { content: '⏳ '; }
+.st-todo .ab-st { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: var(--accent-soft); }
+.st-todo .ab-st::before { content: '→ '; }
+.st-ongoing .ab-st::before { content: '↻ '; }
+.st-later .ab-tx { color: var(--muted); }
+@media (max-width: 1000px) { .ab-decs, .ab-grid { grid-template-columns: minmax(0, 1fr); } }
+
+table.risk tr.risk-hit td { background: color-mix(in srgb, var(--bad) 6%, transparent); }
+table.risk tr.risk-hit td:first-child { box-shadow: inset 4px 0 0 var(--bad); }
+table.risk tr.risk-hit td:first-child .pill { display: table; margin: 6px 0 0; }
+table.risk tr.risk-hit td:nth-child(2) strong.c-bad, table.risk tr.risk-hit td:nth-child(2) strong { color: var(--bad); font-size: 15px; }
+table.risk tr.risk-watch td { color: var(--muted); }
+table.risk tr.risk-watch td:first-child { color: var(--ink); box-shadow: inset 4px 0 0 var(--line); }
+table.risk td:nth-child(3) b { color: var(--ink); }
+.rk-i { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 700; margin-right: 6px; vertical-align: 1px; }
+.rk-i.done { background: var(--good-soft); color: var(--good); }
+
+.declog { position: relative; display: grid; gap: 12px; margin: 6px 0 14px; }
+.dl-track { display: flex; align-items: stretch; gap: 0; margin: 0 0 4px; padding-top: 8px; counter-reset: none; }
+.dl-tk { flex: 1; position: relative; display: grid; gap: 2px; padding: 10px 14px 10px 0; text-decoration: none; color: var(--muted); border-top: 3px solid color-mix(in srgb, var(--accent) 30%, var(--line)); }
+.dl-tk::before { content: ''; position: absolute; top: -8px; left: 0; width: 13px; height: 13px; border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); box-sizing: border-box; }
+.dl-tk:last-child { border-top-color: var(--accent); }
+.dl-tk:last-child::before { background: var(--accent); }
+.dl-tk-id { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); font-weight: 600; }
+.dl-tk-t { font-size: 13.5px; color: var(--ink); }
+.dl-tk:hover .dl-tk-t { color: var(--accent); text-decoration: underline; }
+.dl-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--muted); margin-bottom: 2px; }
+.dl-lg { display: inline-flex; align-items: center; gap: 5px; }
+.dl-row { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 20px; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: 10px; padding: 14px 18px; scroll-margin-top: 80px; transition: box-shadow .12s; }
+.dl-row:hover { box-shadow: 0 6px 18px rgba(20, 30, 50, .07); }
+.dl-row:target { box-shadow: 0 0 0 2px var(--accent); }
+.dl-row.latest { border-left-color: var(--accent); background: linear-gradient(90deg, var(--accent-soft), var(--surface) 40%); }
+.dl-row.latest .dl-side::after { content: '最新'; display: inline-block; margin-top: 6px; font-size: 11.5px; font-weight: 700; color: #fff; background: var(--accent); border-radius: 4px; padding: 1px 7px; }
+.dl-side { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; border-right: 1px dashed var(--line); padding-right: 14px; }
+.dl-id { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 2px 8px; white-space: nowrap; }
+.dl-t { font-weight: 700; font-size: 15.5px; color: var(--ink); line-height: 1.4; }
+.dl-cnt { font-size: 12.5px; color: var(--muted); }
+.dl-cnt b { font-family: var(--font-mono); color: var(--ink); }
+.dl-h { font-size: 19px; font-weight: 700; color: var(--accent); line-height: 1.45; padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+.dl-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 8px 22px; }
+.dl-c { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px; align-items: start; font-size: 14.5px; line-height: 1.6; color: var(--ink); }
+.dl-ic { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; font-size: 11px; font-weight: 700; margin-top: 3px; color: #fff; background: var(--accent); }
+.dl-ic::before { content: '✓'; }
+.k-guard .dl-ic { background: #7c3aed; } .k-guard .dl-ic::before { content: '!'; }
+.k-swap .dl-ic { background: var(--good); } .k-swap .dl-ic::before { content: '⇄'; }
+.k-change .dl-ic { background: var(--warn, #b45309); } .k-change .dl-ic::before { content: '↻'; }
+.k-outcome .dl-ic { background: var(--good); } .k-outcome .dl-ic::before { content: '★'; }
+.k-guard .dl-tx { color: #4c1d95; }
+.dl-not { color: var(--muted); }
+.dl-not del .num { background: none; color: inherit; padding: 0; }
+.dl-not del { color: var(--bad); text-decoration-color: var(--bad); text-decoration-thickness: 2px; }
+.dl-arrow { display: inline-block; margin: 0 4px; font-size: 12px; font-weight: 700; color: var(--warn, #b45309); background: color-mix(in srgb, #b45309 12%, transparent); border-radius: 4px; padding: 0 6px; }
+.dl-new { font-weight: 700; }
+.dl-win { font-weight: 700; color: var(--good); background: color-mix(in srgb, var(--good) 12%, transparent); border-radius: 4px; padding: 0 5px; }
+.dl-q { font-weight: 600; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+@media (max-width: 1000px) { .dl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; } .dl-side { border-right: 0; padding-right: 0; flex-direction: row; flex-wrap: wrap; align-items: center; } .dl-track { display: none; } }
+
+ol.flow { align-items: stretch; }
+ol.flow .fl-t { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 2px; }
+ol.flow .fl-d { display: block; }
+ol.flow .fl-k { display: block; font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1.35; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+ol.flow > li { color: var(--muted); }
+
+.hero { display: grid; gap: 14px; margin-bottom: 8px; }
+.hv { font-size: 15px; line-height: 1.8; color: var(--muted); padding: 2px 0; }
+.hv-k { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--accent); border: 1px solid var(--accent); border-radius: 4px; padding: 1px 7px; margin-right: 10px; }
+.hv-goal { color: var(--ink); font-weight: 600; border-bottom: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); }
+.hero-g { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); grid-template-areas: 'v a' 'e a'; gap: 14px; }
+.hz.ask { grid-area: a; } .hz.eng { grid-area: e; }
+.hz { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.hz-l { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--muted); }
+.hz.verdict { grid-area: v; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px 24px; border-top: 4px solid var(--bad); align-content: start; }
+.hz.verdict .hz-l, .hz.verdict .hz-v { grid-column: 1 / -1; }
+.hz-v { font-size: 34px; font-weight: 800; color: var(--bad); line-height: 1.1; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.hz-x { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--bad); color: #fff; font-size: 20px; align-self: center; }
+.hz-s { font-size: 16px; font-weight: 500; color: var(--muted); }
+.hz-cap { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.hz-cap b { color: var(--bad); font-weight: 700; margin: 0 2px; }
+.hb { display: grid; grid-template-columns: 6.5em minmax(0, 1fr) 4em; gap: 8px; align-items: center; margin: 6px 0; font-size: 13.5px; }
+.hb-k { color: var(--ink); font-weight: 600; }
+.hb-bar { height: 14px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.hb-bar b { display: block; height: 100%; background: color-mix(in srgb, var(--muted) 55%, transparent); border-radius: 4px; }
+.hb-bar b.bad { background: var(--bad); }
+.hb-v { font-family: var(--font-mono); font-weight: 700; font-size: 16px; text-align: right; }
+.hb-v.bad { color: var(--bad); }
+.hz-gap { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.hz-gap b { font-family: var(--font-mono); color: var(--bad); font-size: 15px; }
+.dots { display: grid; grid-template-columns: repeat(14, 12px); gap: 4px; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--bad); box-sizing: border-box; opacity: .75; }
+.dots i.w { background: var(--good); border-color: var(--good); }
+.hz.ask { border: 1.5px solid var(--accent); background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--surface)), var(--surface)); }
+.hz.ask .hz-l { color: var(--accent); }
+.hq-h { font-size: 22px; font-weight: 800; color: var(--accent); margin: 4px 0 10px; }
+.hq { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: none; }
+.hq li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 8px; margin: 0; padding: 0; font-size: 14.5px; line-height: 1.55; color: var(--ink); }
+.hq li::before { display: none; }
+.hq-n { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--accent); color: var(--accent); font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
+.hq-ref { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.hz.eng { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; padding: 12px 18px; }
+.hz.eng b { color: var(--ink); }
+.eng-ok { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--good); color: #fff; font-size: 12px; font-weight: 700; align-self: center; }
+.eng-d { font-size: 13.5px; color: var(--muted); }
+@media (max-width: 1000px) { .hero-g, .hz.verdict { grid-template-columns: minmax(0, 1fr); } .hero-g { grid-template-areas: 'v' 'a' 'e'; } }
+
+table td.vs-good { color: var(--good); font-weight: 600; background: color-mix(in srgb, var(--good) 8%, transparent); }
+table td.vs-bad { color: var(--bad); font-weight: 600; background: color-mix(in srgb, var(--bad) 7%, transparent); }
+table.vs-base th:last-child, table.vs-base td.numcol:last-child { }
+td.r-concl { font-weight: 600; color: var(--ink); box-shadow: inset 3px 0 0 color-mix(in srgb, var(--accent) 45%, transparent); }
+th.rh-concl { color: var(--accent); }
+td.r-cost { color: color-mix(in srgb, var(--bad) 80%, var(--ink)); font-size: 13.5px; }
+th.rh-cost { color: var(--bad); }
+th.rh-cost::before { content: '⚠ '; }
+td.r-why { color: var(--muted); font-size: 13.5px; }
+td.r-old { color: var(--muted); }
+td.r-new { font-weight: 600; color: var(--ink); background: color-mix(in srgb, var(--accent) 5%, transparent); }
+th.rh-new { color: var(--accent); }
+th.rh-new::before { content: '→ '; }
+.rid { display: inline-grid; place-items: center; min-width: 20px; height: 20px; border-radius: 5px; background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); font-size: 12px; font-weight: 700; margin-right: 8px; padding: 0 4px; }
+.cat { display: inline-block; font-size: 12.5px; font-weight: 600; border-radius: 999px; padding: 1px 10px; border: 1px solid var(--line); }
+.cat.c0 { color: var(--accent); background: var(--accent-soft); border-color: transparent; }
+.cat.c1 { color: #7c3aed; background: color-mix(in srgb, #7c3aed 10%, transparent); border-color: transparent; }
+.cat.c2 { color: #b45309; background: color-mix(in srgb, #b45309 10%, transparent); border-color: transparent; }
+.cat.c3 { color: var(--muted); background: var(--bg); }
+.pill.ditto { opacity: .7; }
+
+.cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 12px; margin: 14px 0 20px; }
+.case { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; padding: 12px 16px; }
+.case.t-bad { border-left-color: var(--bad); } .case.t-good { border-left-color: var(--good); }
+.case-h { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.case-who { font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 5px; padding: 1px 8px; }
+.case-c { font-size: 16.5px; font-weight: 700; color: var(--ink); }
+.case.t-bad .case-c { color: var(--bad); } .case.t-good .case-c { color: var(--good); }
+.case-b p { margin: 6px 0; font-size: 14.5px; }
+.case-b p.kv { display: block; border: 0; padding: 0; }
+.case-b p.kv .kv-k::before { display: none; }
+.subpts { margin: 6px 0 2px; display: grid; gap: 4px; }
+.subpts .sp { position: relative; padding-left: 14px; font-size: 14px; line-height: 1.6; color: var(--ink); }
+.subpts .sp::before { content: ''; position: absolute; left: 2px; top: .65em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+.hz.verdict2 { grid-area: v; border-top: 4px solid var(--accent); }
+.hz.verdict2.t-bad { border-top-color: var(--bad); }
+.hz-hd { font-size: 19px; font-weight: 700; line-height: 1.55; color: var(--ink); margin-top: 6px; }
+.hz-hd .num, .hz-hd strong.num { font-size: 1.12em; color: var(--accent); background: none; padding: 0 1px; }
+.hz-rest { font-size: 14.5px; line-height: 1.7; color: var(--muted); margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+.hz-engs { grid-area: e; display: grid; gap: 10px; margin: 0; padding: 0; }
+.hero-g > .hz.ask { align-self: start; }
+.hz-engs .hz.eng { padding: 10px 16px; }
+.hq-h.calm { color: var(--good); font-size: 20px; }
+.hz.ask.calm { border-color: color-mix(in srgb, var(--good) 50%, var(--line)); background: color-mix(in srgb, var(--good) 5%, var(--surface)); }
+.hz.ask.calm .hz-l { color: var(--good); }
+.hq-b { font-size: 14.5px; line-height: 1.7; margin-top: 6px; }
+
+</style>
+</head>
+<body>
+<div class="shell">
+<nav class="toc" aria-label="目录">
+  <a class="back" href="https://claude.ai/artifact/17bW2rKeeBheRFfhnjsrSU">← Owner 看板</a>
+  <div class="toc-title">目录</div>
+  <ol><li class="l2"><a href="#1-v5-要解决什么-两个池子-前后两段-都稳定跑赢基准">1. v5 要解决什么</a></li><li class="l3"><a href="#我们是怎么走到-v5-的">我们是怎么走到 v5 的</a></li><li class="l3"><a href="#原版为什么偏了-瞄准了机制-没瞄准目标">原版为什么偏了</a></li><li class="l3"><a href="#用五步法看-e2-跑之前就能推出它会输在哪三格">用五步法看 E2</a></li><li class="l3"><a href="#仓位比例从哪来-没有一个比例是人定的">仓位比例从哪来</a></li><li class="l3"><a href="#策略核心-三版放在一起看">策略核心：三版放在一起看</a></li><li class="l3"><a href="#它为什么能跟着市场变-又为什么会滞后">它为什么能跟着市场变，又为什么会滞后</a></li><li class="l3"><a href="#同一天-e2-和-v5-原版怎么分仓">同一天，E2 和 v5 原版怎么分仓</a></li><li class="l2"><a href="#2-v5-设计稿第-3-2-版-定稿-两层-fof-读尺子的规则">2. v5 设计稿第 3.2 版（定稿）</a></li><li class="l3"><a href="#①-从第-2-版到第-3-2-版-改了什么-为什么改">① 从第 2 版到第 3.2 版</a></li><li class="l3"><a href="#②-尺子铺满-会不会更吵">② 尺子铺满，会不会更吵</a></li><li class="l3"><a href="#③-传导-回调还是见顶-看转负传到了哪里">③ 传导</a></li><li class="l3"><a href="#④-抗噪放在决策上-不在信号上">④ 抗噪放在决策上，不在信号上</a></li><li class="l3"><a href="#⑤-见底是见顶的镜像-逻辑对称-读的尺子不同">⑤ 见底是见顶的镜像</a></li><li class="l3"><a href="#⑥-尺子的权重-按-响度-自动调整">⑥ 尺子的权重</a></li><li class="l3"><a href="#⑦-规则-第-3-2-版-定稿">⑦ 规则（第 3.2 版，定稿）</a></li><li class="l3"><a href="#⑧-事前画像和跑前五问-长成什么样-值不值得跑">⑧ 事前画像和跑前五问</a></li><li class="l3"><a href="#⑨-预期疼痛表-每种行情下-事先认下的代价">⑨ 预期疼痛表</a></li><li class="l3"><a href="#①-四个动作-设计期里做到了没有">① 四个动作，设计期里做到了没有</a></li><li class="l3"><a href="#②-为什么震荡时换得太勤-复盘一轮完整的走势">② 为什么震荡时换得太勤</a></li><li class="l3"><a href="#③-规则-草案">③ 规则（草案）</a></li><li class="l3"><a href="#④-每条规则的依据有多硬">④ 每条规则的依据有多硬</a></li><li class="l3"><a href="#⑤-事前画像-第一层每年会持有什么">⑤ 事前画像</a></li><li class="l3"><a href="#⑥-预期疼痛表-初稿-第-3-版定稿后重写-每种行情下-事先认下的代价">⑥ 预期疼痛表（初稿，第 3 版定稿后重写）</a></li><li class="l3"><a href="#事前画像">事前画像</a></li><li class="l3"><a href="#押最强的大市场-是机制-但我们的数据证明不了">押最强的大市场</a></li><li class="l3"><a href="#这对成功标准意味着什么-四格全赢主要看运气">这对成功标准意味着什么</a></li><li class="l2"><a href="#3-结论-v5-1-中国十年是最好的一版-换个市场不成立-不入围">3. 结论</a></li><li class="l2"><a href="#4-怎么做的-先冻结规则-再一步一步跑-每一步都独立复算">4. 怎么做的</a></li><li class="l2"><a href="#5-过关-7-条过了-5-条-栽在-换个市场-和-顺应市场">5. 过关</a></li><li class="l2"><a href="#6-哪里赢-哪里输-赢在熊市和急跌-输在牛市和反弹">6. 哪里赢、哪里输</a></li><li class="l2"><a href="#7-换一种检验方式-任意时点买入-都要比基准好">7. 换一种检验方式</a></li><li class="l2"><a href="#8-为什么换个市场就不行-优势依赖中国的急涨急跌">8. 为什么换个市场就不行</a></li><li class="l2"><a href="#9-换手-一大半来自仓位在满仓和半仓之间来回切">9. 换手</a></li><li class="l2"><a href="#10-跑前预判对照-年份预测大多对了-成本和换个市场估错了">10. 跑前预判对照</a></li><li class="l2"><a href="#11-稳健性-中国的结果不靠参数和运气">11. 稳健性</a></li><li class="l2"><a href="#12-学到了什么-接下来">12. 学到了什么，接下来</a></li><li class="l3"><a href="#原版-结论-v5-原版没有赢过-e2-新口径-不入围">原版 · 结论</a></li><li class="l3"><a href="#和随机挑比-e2-有真本事-v5-只是-少押一点的随机">和随机挑比</a></li><li class="l3"><a href="#原版-设计依据-v4-的证据-和两条推错的推论">原版 · 设计依据</a></li><li class="l3"><a href="#原版-怎么做的-先写死规则-再跑">原版 · 怎么做的</a></li><li class="l3"><a href="#原版-过关-两个部件各试一次-只有-10-离场-留下-最终版没能入围">原版 · 过关</a></li><li class="l3"><a href="#原版-哪里赢-哪里输-输在大牛市和下跌年份">原版 · 哪里赢、哪里输</a></li><li class="l3"><a href="#原版-为什么输-四处结构硬伤-都违背了-优中选优">原版 · 为什么输</a></li><li class="l3"><a href="#比四条规则更根本的-研究流程上的三处错">比四条规则更根本的</a></li><li class="l3"><a href="#原版-跑前预判对照-猜对三条-猜错三条">原版 · 跑前预判对照</a></li><li class="l3"><a href="#原版-稳健性-结论不靠运气和参数-唯一明显的改善指向-集中">原版 · 稳健性</a></li><li class="l3"><a href="#学到了什么">学到了什么</a></li><li class="l3"><a href="#原版-接下来-先把-v5-策略讨论清楚-再写预注册">原版 · 接下来</a></li></ol>
+</nav>
+<main>
+<header class="top">
+  <div class="kicker">ETF_Rotation_Quant · 2026-11-04</div>
+  <h1>v5 研究备忘</h1>
+  <p class="headline">v5.1 中国十年最好，换个市场不成立，不入围</p>
+</header>
+<section class="intro status"><p class="kv"><span class="kv-k"><strong>项目愿景</strong></span><span class="kv-v">　在动态周期内，从多类资产里选出 Top N 强势 ETF 轮动持有，获得超额收益、稳定跑赢被动基准，同时把回撤控制住。</span></p>
+<div class="hero"><div class="hero-g n1"><div class="hz verdict2 t-bad"><div class="hz-l">结论</div><div class="hz-hd">v5.1 中国指数池年化 <strong class="num">30.1%</strong>、可交易池 15.8%（基准 15.6%），回撤 −26%；但美国 ETF 上只有 <strong class="num">1.3%</strong>。</div><div class="hz-rest">优势依赖中国的急涨急跌，换手太高是主因。</div></div><div class="hz ask calm"><div class="hz-l">需要你</div><div class="hq-h calm">✓ 不用操作</div><div class="hq-ref">等一次性检验跑完、Reviewer 签收后，结论写进新的报告。体检细节见《v5.1 体检报告》。</div></div><div class="hz eng"><span class="eng-ok">✓</span><span class="hz-l">现状</span><span class="eng-d"><strong>v5.1 设计期跑完，不入围；你已批准封板（D34）。</strong>一次性检验同次跑 E2 新口径、A1、基准、v5.1，只有 E2 新口径可以入围。</span></div></div></div>
+</section>
+<section id="sec-1-v5-要解决什么-两个池子-前后两段-都稳定跑赢基准"><h2 id="1-v5-要解决什么-两个池子-前后两段-都稳定跑赢基准"><span class="num">01</span>v5 要解决什么：两个池子、前后两段，都稳定跑赢基准</h2>
+<p class="memo"><strong>愿景说“稳定跑赢被动基准”。把它拆成四格来看：E2 新口径只赢了 1 格，最简单的 A1 四格全赢。v5 立项，就是为了补上 E2 缺的那 3 格。</strong></p>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：设计期，相对基准 每年多赚几个点</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table>
+<thead>
+<tr class="grp"><th rowspan="2">设计期，相对基准 每年多赚几个点</th><th class="gh" colspan="2">能排名的池子</th><th class="gh" colspan="2">当年真能买到的池子</th><th rowspan="2">四格</th></tr><tr class="sub"><th class="n numcol">2006–10</th><th class="n numcol">2011–15</th><th class="n numcol">2006–10</th><th class="n numcol">2011–15</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>E2 新口径</strong>（现在的唯一候选）</td>
+<td class="n good numcol ibc"><span class="ib"><i class="g" style="width:69px"></i><em class="g">+19.6</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:7px"></i><em class="g">+0.5</em></span></td>
+<td class="n bad numcol ibc"><span class="ib"><i class="r" style="width:70px"></i><em class="r">−12.3</em></span></td>
+<td class="n bad numcol ibc"><span class="ib"><i class="r" style="width:27px"></i><em class="r">−2.0</em></span></td>
+<td><strong>1 格</strong> 只赢在 A 股大牛市，而且是买不到的池子</td>
+</tr>
+<tr>
+<td><strong>A1</strong>（公开同行：沪深300、标普500 二选一，都不行就国债）</td>
+<td class="n good numcol ibc"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+19.8</em></span></td>
+<td class="n good numcol ibc"><span class="ib"><i class="g" style="width:57px"></i><em class="g">+4.1</em></span></td>
+<td class="n good numcol ibc"><span class="ib"><i class="g" style="width:65px"></i><em class="g">+11.5</em></span></td>
+<td class="n good numcol ibc"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+5.1</em></span></td>
+<td><strong>4 格</strong> 三个品种，四格全赢</td>
+</tr>
+<tr class="row-subj">
+<td><strong>v5 原版</strong>（已淘汰）</td>
+<td class="n bad numcol ibc"><span class="ib"><i class="r" style="width:4px"></i><em class="r">−0.6</em></span></td>
+<td class="n bad numcol ibc"><span class="ib"><i class="r" style="width:70px"></i><em class="r">−5.0</em></span></td>
+<td class="n good numcol ibc"><span class="ib"><i class="g" style="width:55px"></i><em class="g">+9.6</em></span></td>
+<td class="n bad numcol ibc"><span class="ib"><i class="r" style="width:69px"></i><em class="r">−5.0</em></span></td>
+<td><strong>1 格</strong> 补上了一格，丢了另一格</td>
+</tr>
+</tbody>
+</table></div></div></div>
+<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">每格 = 策略年化 − 基准年化（百分点）；基准 = 70% 沪深300 + 15% 纳指100 + 15% 标普500，两段年化 22.3%、9.4%。</div><div class="rn-i">绿 = 跑赢 2 个点以上，橙 = 跑输。</div><div class="rn-i">“能排名的池子”包含早年还没有基金跟踪的指数，真实交易买不到；“当年真能买到的池子”才是实盘的样子。</div><div class="rn-i">全部是已登记的设计期结果。</div></div>
+<h3 id="我们是怎么走到-v5-的">我们是怎么走到 v5 的</h3>
+<ol class="steps-n flow" style="counter-reset: fl 0">
+<li><b class="fl-t">10-29 · 想法</b><span class="fl-d">你提出把交易员的三个做法放进 v5：让赢家跑、小仓试错、按波动调仓。出发点是愿景里的“动态周期”。</span></li>
+<li><b class="fl-t">10-31 · v4 体检</b><span class="fl-d">四个微调都没过；体检把上面那张四格表摆了出来：E2 能买到的池子跑输基准，后五年几乎没有超额，而 A1 两个池子都赢。</span></li>
+<li><b class="fl-t">10-31 · 换架构</b><span class="fl-d">我根据 v4 的证据提议“两层 + 防守位”，你同意了。这一步出了问题。</span></li>
+</ol>
+<h3 id="原版为什么偏了-瞄准了机制-没瞄准目标">原版为什么偏了：瞄准了机制，没瞄准目标</h3>
+<ul class="points">
+<li><strong>目标是四格，原版追的是机制。</strong>证据说“该不该持有”比“挑哪一只”可信，我就把架构改成先按大类判断，却没有回头检查这样能不能补上那 3 格。</li>
+<li><strong>入围门槛量错了地方。</strong>原版要入围，得在“能排名的池子”里两段都赢 E2，也就是在 E2 最强的那一格和它比；愿景要的是四格都赢基准。门槛和目标不一致，原版即使过了门槛，也不等于离愿景更近。</li>
+<li><strong>最强的线索被放在了对照栏里。</strong>A1 只有三个品种，却四格全赢。它的三个特点：只比大市场（没有同类挤占）、跑不赢现金就整体退到国债（不留空位）、只持一只（钱全部集中）。原版一个也没有用上。</li>
+</ul>
+<p>v5 的成功标准（提议第 2 版，讨论定了再写进预注册）</p>
+<ol class="steps-n flow" start="0" style="counter-reset: fl -1">
+<li><b class="fl-t">先赢随机</b><span class="fl-d">两个池子里，年化 ÷ 回撤都高于 <span class="num">95%</span> 的“每月随便挑、满仓持有”（2000 次）；年化不低于随机的中位数。赢不了随机，后面都没有意义。</span></li>
+<li><b class="fl-t">跑赢基准</b><span class="fl-d"><del>四格都跑赢</del> <span class="arr">→</span> 十年合计在两个池子里都跑赢；四格逐一报告，任何一格都不能“明显跑输”（跑输的可信度达到 <span class="num">2 倍</span>）。</span></li>
+<li><b class="fl-t">复杂要有回报</b><span class="fl-d"><del>四格合计不输 A1</del> <span class="arr">→</span> 两个池子都不明显输给 A1。</span></li>
+<li><b class="fl-t">换个市场也成立</b><span class="fl-d">同一套规则在美国上市的 ETF 上（2003–2026），也要跑赢随机和基准。</span></li>
+<li><b class="fl-t">回撤不比基准深</b><span class="fl-d">。</span></li>
+</ol>
+<p class="kv"><span class="kv-k"><b>为什么改：</b></span><span class="kv-v">十年里只有十来次独立的大判断，“四格全赢”主要看运气。一个真的每年多赚 <span class="num">5 个点</span>的策略，四格全赢的概率只有 <span class="num">40%</span>；A1 按它自己的成绩重来一次，也只有 <span class="num">49%</span>。证明见第 2 节。改完并没有放松对 E2 的判断：E2 在可交易池十年合计跑输基准 <span class="num">7 个点</span>，而且明显输给 A1（可信度 <span class="num">2.95 倍</span>），照样不过关。</span></p>
+<p>随机对照两个池子都做了。能排名的池子：E2 的年化 ÷ 回撤高于全部 2000 次随机。当年真能买到的池子：随机挑的年化中位数 <span class="num">15.1%</span>、最大回撤约 <span class="num">−72%</span>（早年能买的只有一只）；E2 的年化 <span class="num">8.7%</span> <strong>低于全部随机</strong>，年化 ÷ 回撤高于全部随机；A1 两项都高于全部随机。</p>
+<h3 id="用五步法看-e2-跑之前就能推出它会输在哪三格">用五步法看 E2：跑之前就能推出它会输在哪三格</h3>
+<div class="claim-box"><strong>E2 输掉的三格不是运气：一格是钱闲着，两格是押得太少。这些只看规则和信号就能推出来，不需要回测。</strong></div>
+<div class="table-wrap"><table data-lint="ref">
+<thead>
+<tr>
+<th>步骤</th>
+<th class="rh-why">做了什么</th>
+<th>在 E2 上看到的</th>
+<th>指向哪一格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>① 写成“钱怎么分”</strong></td>
+<td class="r-why">把规则写成：输入排名，输出仓位</td>
+<td class="detail">每个名额固定 1/N（N = 3、5、8）；合格的不够 N 只，空位拿现金。<strong>合格的越少，闲钱越多</strong></td>
+<td>可交易池两格</td>
+</tr>
+<tr>
+<td class="k"><strong>② 问五问</strong></td>
+<td class="r-why">钱跟不跟强弱走、在哪挑、防守怎么进来</td>
+<td class="detail">钱跟着强弱走、全场一起比、防守同场竞争，都对。但尺子是“涨幅 ÷ 波动”，<strong>国债靠稳就能排到股票前面</strong></td>
+<td>后五年</td>
+</tr>
+<tr>
+<td class="k"><strong>③ 数触发</strong></td>
+<td class="r-why">在十年的信号上数</td>
+<td class="detail">可交易池 2006–10 年，每月平均只有 1–2 只“跑赢现金又能买到”，E2 有 <strong>71%</strong> 的钱闲着；能排名的池子只有 13%</td>
+<td>可交易池前五年 −12.3</td>
+</tr>
+<tr>
+<td class="k"><strong>④ 画持仓</strong></td>
+<td class="r-why">看每年想持有什么</td>
+<td class="detail">2011–15 年 E2 的风险仓位约<strong>六成</strong>，其余是行业分散和国债；A1 近<strong>九成</strong>，2010–14 年大部分时间全仓标普500</td>
+<td>两个池子后五年 +0.5、−2.0</td>
+</tr>
+<tr>
+<td class="k"><strong>⑤ 下判断</strong></td>
+<td class="r-why">不跑回测，先预言</td>
+<td class="detail">可交易池前五年会大幅跑输，后五年两个池子的超额都很薄</td>
+<td>和四格表一致</td>
+</tr>
+</tbody>
+</table></div>
+<figure><img alt="E2 在两个池子里闲置的现金，以及 E2 与 A1 每年的风险仓位" loading="lazy" src="../../assets/v5-memo/m9-e2-cells.png"/></figure>
+<div class="readnote"><div class="rn-h">怎么读这张图</div><div class="rn-i">五步只用规则文字和信号（谁跑赢了现金、排第几），不算收益，不消耗尝试次数（D30-1）。</div><div class="rn-i">图和表都是“规则想持有什么”：月度决策、四个回看期和 N 平均，不含离场和成交。</div><div class="rn-i">脚本 results/v5/diag/design/evidence.py。</div></div>
+<h3 id="仓位比例从哪来-没有一个比例是人定的">仓位比例从哪来：没有一个比例是人定的</h3>
+<p>备忘里出现的“防守加现金 <span class="num">37%</span>”“A 股九成”这类数字，<strong>都不是设计出来的</strong>，是规则每月重新排名、十年平均下来的结果，作用是画出策略的样子。真正需要证明的，是“分钱的规则”本身。可选的只有三种：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>分钱的规则</th>
+<th>谁在用</th>
+<th class="rh-why">证据</th>
+<th class="h-take rh-concl">结论</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-bad">
+<td><strong>每个名额固定 1/N，空位拿现金</strong></td>
+<td>E2</td>
+<td class="detail r-why">合格的少时钱闲着：可交易池前五年闲置 71%，输掉两格</td>
+<td class="c-take"><span class="pill bad">不用</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>合格的平分，不留空位</strong></td>
+<td>A1（全仓一只）</td>
+<td class="detail r-why">A1 四格全赢；钱总在合格的品种上</td>
+<td class="c-take"><span class="pill good">采用</span></td>
+</tr>
+<tr class="row-bad">
+<td><strong>按得分高低加权</strong></td>
+<td>—</td>
+<td class="detail r-why">“挑哪一只”的信号可信度只有 1.1–1.6 倍（2 倍以上才算可信），按分数加权等于把噪音放大。学术上也有结论：估计不准时，等权很难被打败（DeMiguel 等，2009）</td>
+<td class="c-take"><span class="pill bad">不用</span></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="策略核心-三版放在一起看">策略核心：三版放在一起看</h3>
+<p>E2 新口径（现在的唯一候选）</p>
+<ol class="steps-n flow" style="counter-reset: fl 0">
+<li><b class="fl-t">所有容器一起排名</b><span class="fl-d"></span></li>
+<li><b class="fl-t">跑赢现金的才有资格，取前 N 名，<strong>每名 1/N</strong></b><span class="fl-d"></span></li>
+<li><b class="fl-t">不够 N 名，<strong>空位拿现金</strong></b><span class="fl-d"></span></li>
+</ol>
+<p>防守自然发生：股票一弱，国债就排进前几名。</p>
+<p>v5 原版（已淘汰）</p>
+<ol class="steps-n flow" style="counter-reset: fl 0">
+<li><b class="fl-t"><del>先分五个风险大类，各自判断开不开</del></b><span class="fl-d"></span></li>
+<li><b class="fl-t"><del>开着的类平分，每类买最强的一只</del></b><span class="fl-d"></span></li>
+<li><b class="fl-t"><del>五类都关掉才放国债、黄金</del></b><span class="fl-d"></span></li>
+</ol>
+<p>开着的类不论强弱都拿一份；防守是开关。</p>
+<p>v5 设计稿第 3.2 版（定稿，第 2 节）</p>
+<ol class="steps-n flow" style="counter-reset: fl 0">
+<li><b class="fl-t">第一层选市场：</b><span class="fl-d">A、港、美各用宽基，在 3–250 天铺满的尺子上比整体强度，只持最强的一个</span></li>
+<li><b class="fl-t">两条腿各管一半仓位，见顶、见底镜像</b><span class="fl-d"></span></li>
+<li><b class="fl-t">都不该持有：国债、黄金，再不行现金</b><span class="fl-d"></span></li>
+<li><b class="fl-t">第二层选 ETF：选中的市场里取前 3 只</b><span class="fl-d"></span></li>
+</ol>
+<p>和 E2 的区别：先选市场再选 ETF；不定尺子，读尺子之间的关系；仓位分三档。</p>
+<p>卡里的“排名”是怎么排出来的</p>
+<ol class="steps-n flow" style="counter-reset: fl 0">
+<li><b class="fl-t">每只算一个分数</b><span class="fl-d">分数 = 这段时间的涨幅 ÷（每天涨跌的波动 × √天数）。意思是“涨得多、而且涨得稳”的排前面；两只涨幅一样，波动小的那只分数更高。</span></li>
+<li><b class="fl-t">先过门槛</b><span class="fl-d">同一段时间的涨幅必须高于现金（货币基金）的收益，否则不参加排名。</span></li>
+<li><b class="fl-t">四张表</b><span class="fl-d">回看 1、3、6、12 个月各排一张表，各管 1/4 的钱；周、月各调一次仓。</span></li>
+<li><b class="fl-t">不同资产用同一把尺子</b><span class="fl-d">股票、国债、黄金直接比分数。因为分数除了波动，国债这种涨得慢但很稳的资产，在股市转弱时能排到第一（2012 年 5 月就是这样）。</span></li>
+</ol>
+<p>这把尺子比的是“涨势有多可信”，不是“涨了多少”。它是 E2 能自然防守的原因，也意味着它天然偏向波动小的资产，这是 v5 讨论中的问题之一。</p>
+<h3 id="它为什么能跟着市场变-又为什么会滞后">它为什么能跟着市场变，又为什么会滞后</h3>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：能跟着市场变，因为</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>能跟着市场变，因为</th>
+<th class="rh-cost">代价是滞后，因为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>没有固定配置：每月重新排名，哪个市场强，名额就去哪。E2 在 2006–07 年九成在 A 股，2008 年国债和现金近七成，2013–14 年美股近三成，都不是人为切换的</td>
+<td class="r-cost"><b>它只认已经发生的涨跌，不预测。底部回场慢：2009 年反弹少赚 39 个百分点</b></td>
+</tr>
+<tr>
+<td>跑赢现金才买，弱的自动出局；国债黄金同场竞争，股票一弱它们就排上来</td>
+<td class="r-cost"><b>三周跌完的急跌躲不开（2015 年）；来回震荡时会来回换（2011、2014 年）</b></td>
+</tr>
+<tr>
+<td>四个回看期快慢搭配；单只回落 10% 就卖，不等下一次排名</td>
+<td class="r-cost"><b>要改掉滞后，得换一类工具（例如期权保护），不是再调参数</b></td>
+</tr>
+</tbody>
+</table></div></div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>预注册第 1 稿（E2 + 每类最多一半）为什么作废</span></button><div class="fold-b" hidden="">
+<ul class="points">
+<li><strong>它是什么</strong>：E2 不变，同一个大类最多占前 N 名的一半，被截的名额顺延给下一名。</li>
+<li><strong>为什么是一半</strong>：说实话，这是我的判断，不是证据。我能讲出“不设上限有同类挤占、上限太小又压住大行情”，但证明不了一半比 <span class="num">40%</span> 或 <span class="num">60%</span> 好。拿不出证据的参数，按项目规矩不该进策略。</li>
+<li><strong>为什么搁置</strong>：它不碰“空位拿现金”，补不上可交易池的两格；它也不提高后五年的风险仓位。补不上目标的改动，做了也只是又一个 v4 式的小微调。</li>
+<li><strong>更正我之前的一句话</strong>：我写过“上限 1 名就回到原版的每类一个代表”。这不对：原版的病是开着的类不论强弱都平分，不是每类只派一个代表。冠军赛也是每类一个代表，但冠军之间还要再比，弱的冠军拿不到钱。</li>
+</ul>
+</div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>v5 原版是怎么设计的、同一天怎么分仓（已淘汰，留档）</span></button><div class="fold-b" hidden="">
+<div class="cases"><div class="case t-info"><div class="case-h"><span class="case-who">E2 新口径</span><span class="case-c">一张排名表</span></div><div class="case-b"><ol class="steps-n">
+<li>所有容器（股票、国债、黄金）一起排名</li>
+<li>跑赢现金的才有资格，取前 N 名，每名 1/N</li>
+<li>不够 N 名，空位拿现金</li>
+</ol><p>防守是自然发生的：股票一弱，国债就排进前几名。</p></div></div><div class="case t-info"><div class="case-h"><span class="case-who">v5 原版</span><span class="case-c">两层 + 防守位</span></div><div class="case-b"><ol class="steps-n">
+<li>五个风险大类各自判断：有没有跑赢现金的成员</li>
+<li>跑赢的大类<strong>平分</strong>仓位，每类买最强的一只</li>
+<li><strong>五类都不跑赢</strong>时，才放国债、黄金，再不行拿现金</li>
+</ol><p>防守是一个开关：只有所有风险大类都转弱才打开。</p></div></div></div>
+
+
+
+
+
+<h3 id="同一天-e2-和-v5-原版怎么分仓">同一天，E2 和 v5 原版怎么分仓</h3>
+<div class="table-wrap"><table data-lint="ref">
+<thead>
+<tr>
+<th>那一天</th>
+<th>跑赢现金的</th>
+<th>E2 新口径</th>
+<th class="h-subj">v5</th>
+<th class="h-note">差在哪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2007 年 5 月底</strong> 大牛市</td>
+<td>17 个全部跑赢，前 5 名都是 A 股</td>
+<td>A 股 <strong>100%</strong></td>
+<td class="bad c-subj">A 股医药、恒生、标普 <strong>各 1/3</strong></td>
+<td class="c-note">v5 把牛市仓位平分给了涨得慢的港股、美股</td>
+</tr>
+<tr>
+<td><strong>2011 年 7 月底</strong> 下跌途中</td>
+<td>21 个里只有 3 个：主要消费、黄金、能源</td>
+<td>三只各 20%，<strong>现金 40%</strong></td>
+<td class="bad c-subj">主要消费 <strong>100%</strong></td>
+<td class="c-note">只要有一类在涨，v5 就全押，不留现金</td>
+</tr>
+<tr>
+<td><strong>2012 年 5 月底</strong> 震荡市</td>
+<td>8 个，排第一、第二的是 10 年和 5 年国债</td>
+<td><strong>国债 40%</strong>，A 股 60%</td>
+<td class="bad c-subj">主要消费 <strong>100%</strong></td>
+<td class="c-note">国债排第一也买不到，因为 A 股类“开着”</td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">为了看得清，这里只用 3 个月回看、E2 取前 5 名；实际两者都是四个回看期、多组调仓的平均。标橙的三格就是 v5 原版输掉的原因，第 8 节用十年的持仓数据验证了它们。</p>
+</div></div>
+</section>
+<section id="sec-2-v5-设计稿第-3-2-版-定稿-两层-fof-读尺子的规则"><h2 id="2-v5-设计稿第-3-2-版-定稿-两层-fof-读尺子的规则"><span class="num">02</span>v5 设计稿第 3.2 版（定稿）：两层 FOF + 读尺子的规则</h2>
+<p class="memo"><strong>不挑尺子，也不定“看多长”：3 天到 250 天铺满，每把尺子先跟自己比，按它最近有多响定权重，再读水平、传导前沿和长尺子放缓。见顶、见底按镜像处理，仓位分两条腿；抗噪放在决策上。画像显示：震荡来回换的问题解决了，大跌后回场快了，代价是熊市里会被反弹拉进去几次。</strong></p>
+<h3 id="①-从第-2-版到第-3-2-版-改了什么-为什么改">① 从第 2 版到第 3.2 版：改了什么，为什么改</h3>
+<div class="table-wrap"><table data-lint="ref">
+<thead>
+<tr>
+<th>项目</th>
+<th class="rh-old">第 2 版</th>
+<th class="rh-new">第 3.2 版</th>
+<th class="h-note rh-why">为什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>尺子</strong></td>
+<td class="r-old">一个动态周期（1–12 个月，按波动比伸缩）</td>
+<td class="r-new">3–250 天铺满 28 把，不挑</td>
+<td class="c-note r-why">你的判断：先定尺子再回看市场，是先射箭后画靶。铺满以后，“选哪几把”这个数就消掉了</td>
+</tr>
+<tr>
+<td class="k"><strong>权重</strong></td>
+<td class="r-old">—</td>
+<td class="r-new">按响度自动调整</td>
+<td class="c-note r-why">你的判断：牛市后段、下跌猛时看短，跌势衰竭移向长端，震荡接近平均（⑥）</td>
+</tr>
+<tr>
+<td class="k"><strong>怎么读</strong></td>
+<td class="r-old">一把尺子上的涨幅</td>
+<td class="r-new">水平、传导前沿、长尺子放缓</td>
+<td class="c-note r-why">28 把尺子的速度只相当于 2–3 把独立的，前三个综合量解释 83–88%（下图 ①）</td>
+</tr>
+<tr>
+<td class="k"><strong>加速度</strong></td>
+<td class="r-old">逐把尺子看</td>
+<td class="r-new">看三个综合量和前沿怎么变</td>
+<td class="c-note r-why">逐把尺子做差，噪音放大到相当于 9–10 把独立的（下图 ②）</td>
+</tr>
+<tr>
+<td class="k"><strong>见顶、见底</strong></td>
+<td class="r-old">只有“跑赢现金”的正负开关</td>
+<td class="r-new">两条腿各管一半，涨跌镜像</td>
+<td class="c-note r-why">见顶 8/8、见底 15/18 抓到；见底时长尺子放缓区分力最强（⑤）</td>
+</tr>
+<tr>
+<td class="k"><strong>离场</strong></td>
+<td class="r-old">单只回落 10% 回宽基</td>
+<td class="r-new">单只按自己的前沿换；回撤面过半当天减；10% 留作硬闸门</td>
+<td class="c-note r-why">只靠 10% 太被动；但十年 362 段持有里有 17 段（约 5%）在前沿过半之前就先跌到 −10%，都在急跌里，所以保留硬闸门兜底</td>
+</tr>
+<tr>
+<td class="k"><strong>防守</strong></td>
+<td class="r-old">国债、黄金跑赢现金才持有</td>
+<td class="r-new">默认国债（像 A1）</td>
+<td class="c-note r-why">国债数据 2008 年才满一年，旧规则那年只能拿现金</td>
+</tr>
+<tr>
+<td class="k"><strong>抗噪</strong></td>
+<td class="r-old">噪音带（只管换市场）</td>
+<td class="r-new">保留；另加压缩和分步仓位</td>
+<td class="c-note r-why">平滑越多反应越慢，这是数学上的限制，所以不在信号上再磨</td>
+</tr>
+<tr>
+<td><strong>动态周期（波动比）</strong></td>
+<td class="r-old">规则</td>
+<td class="r-new"><strong>降为对照组</strong></td>
+<td class="c-note r-why">新的读法必须跑赢它和“所有尺子等权平均”两个对照，才值得多出来的复杂度</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="②-尺子铺满-会不会更吵">② 尺子铺满，会不会更吵</h3>
+<p class="kv"><span class="kv-k"><strong>不会。铺满多出来的是重复，不是噪音。</strong></span><span class="kv-v">相邻两把尺子用的几乎是同一段数据，相关在 0.92–0.96。真正的噪音在“加速度”上：做差会把短期的抖动放大。</span></p>
+<figure><img alt="28 把尺子的三个综合量形状，以及速度和加速度各相当于几把独立尺子" loading="lazy" src="../../assets/v5-memo/m15-dense.png"/></figure>
+<div class="table-wrap"><table data-lint="ref">
+<thead>
+<tr>
+<th>每天只看这几个数</th>
+<th>是什么</th>
+<th>对应你说的</th>
+<th>形状怎么定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>水平</strong></td>
+<td>28 把尺子的平均速度</td>
+<td>速度：整体在涨还是在跌；它的变化就是加速度</td>
+<td>写死，不用数据估。三个市场里数据自己估出的形状几乎一样，说明它们是数学结构</td>
+</tr>
+<tr>
+<td class="k"><strong>斜率</strong></td>
+<td>短尺子减长尺子</td>
+<td>谁领先；在收尺子还是放尺子</td>
+<td>同上</td>
+</tr>
+<tr>
+<td class="k"><strong>弯曲</strong></td>
+<td>两端减中段</td>
+<td>中段先熄火，还是中段最响</td>
+<td>同上</td>
+</tr>
+<tr>
+<td class="k"><strong>传导前沿</strong></td>
+<td>速度已经转负的尺子占几成</td>
+<td>你说的传导、过山车</td>
+<td>只数个数，不用权重</td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">每把尺子先按自己的噪音折算（涨幅 ÷ 平常的日波动 × √天数），这是“跟自己比”的第一步；需要判断“高不高”的地方，一律用它在自己过去历史里的排名。利率的期限结构也是几十个期限压成水平、斜率、弯曲三个数来读（Litterman、Scheinkman 1991），我们的结构和它一样。</p>
+<h3 id="③-传导-回调还是见顶-看转负传到了哪里">③ 传导：回调还是见顶，看转负传到了哪里</h3>
+<figure><img alt="见顶和回调之后，速度转负的尺子比例怎么变，以及它和“已经跌了多少”谁更分得开" loading="lazy" src="../../assets/v5-memo/m16-propagate.png"/></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>规则：一半以上的尺子转负，判为见顶</th>
+<th class="n numcol rh-old">上一轮：逐把尺子看加速度</th>
+<th class="numcol rh-new">这次：传导前沿过半</th>
+<th class="rh-concl">判定</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-good">
+<td><strong>8 次见顶抓到</strong></td>
+<td class="n numcol r-old">4 次</td>
+<td class="numcol key r-new"><strong>8 次</strong></td>
+<td class="r-concl"><span class="pill good">更好</span><span class="pill-note"> 做砝码够用，做开关不够</span></td>
+</tr>
+<tr>
+<td><strong>回调被当成见顶</strong></td>
+<td class="n numcol r-old">45 次</td>
+<td class="numcol key r-new"><strong>22 次</strong></td>
+<td class="r-concl"><span class="pill good ditto">更好</span><span class="pill-note">同上</span></td>
+</tr>
+<tr>
+<td><strong>报警里真是见顶的</strong></td>
+<td class="n numcol r-old">8%</td>
+<td class="numcol key r-new"><strong>27%</strong></td>
+<td class="r-concl"><span class="pill good ditto">更好</span><span class="pill-note">同上</span></td>
+</tr>
+<tr>
+<td><strong>报警时已经承受的回撤</strong></td>
+<td class="n numcol r-old">—</td>
+<td class="numcol r-new">约 4.5%</td>
+<td class="r-concl"><b>见顶时中位 5 天报警；误报中位 10 天</b></td>
+</tr>
+</tbody>
+</table></div>
+<ul class="points">
+<li><strong>新信息在最开始</strong>：最短尺子刚转负的那天，价格跌了多少完全分不开见顶和回调（0.50），转负的尺子有几把已经能分开一部分（0.67）。5 天以后，前沿基本就是在反映价格已经跌了多少。</li>
+<li><strong>传导的本质是持续性</strong>：一次下跌持续下去，自然会累积到越来越长的尺子上；马上反弹，就传不过去。学术上对应方差比检验（Lo、MacKinlay 1988）和异质市场假说（Müller 等 1997）。</li>
+<li><strong>过山车</strong>：一波一波从短尺子出发、没到长尺子就消散的波浪。前沿反复过不了半，本身就说明是震荡，不需要单独一套规则。</li>
+</ul>
+<p class="kv"><span class="kv-k"><b>事件：</b></span><span class="kv-v">沪深300、恒生、标普500 在 2015 年以前创 60 天新高后，最短尺子第一次转负，共 169 次。每天只统计结局还没揭晓的事件。只有 8 次见顶，而且事件定义漏掉了 2007-10、2015-06 两个大顶；“过半”是跑之前写的，但这个数是我选的，要检验 0.4–0.6 结论变不变。</span></p>
+<h3 id="④-抗噪放在决策上-不在信号上">④ 抗噪放在决策上，不在信号上</h3>
+<div class="table-wrap"><table data-lint="ref">
+<thead>
+<tr>
+<th>办法</th>
+<th class="rh-why">怎么做</th>
+<th>会不会让反应变慢</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>压缩</strong></td>
+<td class="r-why">28 把尺子合成几个数，噪音互相抵消</td>
+<td><span class="pill good">不会</span>：短尺子的反应保留在斜率和前沿里</td>
+</tr>
+<tr>
+<td class="k"><strong>回差</strong></td>
+<td class="r-why">换市场要强出一倍噪音；在两条线之间来回抖不交易</td>
+<td><span class="pill good">不会</span>：只在门槛附近起作用，信号本身一天不晚</td>
+</tr>
+<tr>
+<td class="k"><strong>分步仓位</strong></td>
+<td class="r-why">满仓、一半、离场三档，不是全进全出</td>
+<td><span class="pill good">不会</span>：抖一下只是小幅调仓；误报的代价变小</td>
+</tr>
+<tr>
+<td class="k"><strong>再平滑信号</strong></td>
+<td class="r-why">例如把速度再做移动平均</td>
+<td><span class="pill bad">会</span>：误报少了，但见顶和回场都晚，<strong>不用</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="⑤-见底是见顶的镜像-逻辑对称-读的尺子不同">⑤ 见底是见顶的镜像：逻辑对称，读的尺子不同</h3>
+<p>把见顶的传导检验原样镜像到见底：在新低附近、最短尺子刚转正时，看“转正的尺子过半”能不能分开真反转和熊市反弹。</p>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>见顶：转负过半</th>
+<th>见底：转正过半</th>
+<th class="rh-concl">判定</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-good">
+<td class="k"><strong>真转折抓到</strong></td>
+<td>8/8</td>
+<td><strong>15/18</strong></td>
+<td class="r-concl"><span class="pill good">见底更好认</span></td>
+</tr>
+<tr>
+<td class="k"><strong>误报</strong></td>
+<td>22 次回调</td>
+<td>18 次熊市反弹</td>
+<td class="r-concl"><span class="pill good ditto">见底更好认</span><span class="pill-note">同上</span></td>
+</tr>
+<tr>
+<td><strong>报警里真是转折的</strong></td>
+<td>27%</td>
+<td><strong>45%</strong></td>
+<td class="r-concl"><span class="pill good ditto">见底更好认</span><span class="pill-note">同上</span></td>
+</tr>
+<tr>
+<td><strong>区分力最强的信号</strong></td>
+<td>转负从短尺子传向中尺子</td>
+<td><strong>长尺子的下跌在放缓</strong>（0.68–0.79）</td>
+<td class="r-concl"><b>和你的 P4 一致：“从次一级尺子起，向下的加速度逐步放缓”</b></td>
+</tr>
+</tbody>
+</table></div><p class="table-note note">第 3 版回场慢（2008 年 94 天），原因在规则不对称：离场看前沿（数尺子，快），回场要等 28 把尺子的平均转正（被长尺子拖住，慢）。第 3.1 版按镜像改，见规则第 3 条。</p></div></div>
+<h3 id="⑥-尺子的权重-按-响度-自动调整">⑥ 尺子的权重：按“响度”自动调整</h3>
+<p>你的判断：牛市越往后，资金成本越高、回调越急，短尺子越重要；下跌一波比一波猛就保持看短，一波比一波弱就移向长端；震荡时接近平均。做法是<strong>每把尺子的权重 = 它最近有多响，在自己历史上排第几</strong>，不新增参数。</p>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：行情</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>行情</th>
+<th class="n numcol">权重重心（天）</th>
+<th>和你的描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2008 上半年第一波暴跌</strong>（沪深300）</td>
+<td class="n numcol">19</td>
+<td><span class="pill mute tagline"><strong>对上</strong> 下跌猛，重心在短端</span></td>
+</tr>
+<tr>
+<td><strong>2008 下半年第二波</strong></td>
+<td class="n numcol">21</td>
+<td><span class="pill mute tagline"><strong>对上</strong> 下一波仍猛，保持短</span></td>
+</tr>
+<tr>
+<td><strong>2008-11 见底后三个月</strong></td>
+<td class="n numcol">30</td>
+<td><span class="pill mute tagline"><strong>对上</strong> 跌势衰竭，移向长端</span></td>
+</tr>
+<tr>
+<td><strong>2015 年 3–4 月加速</strong>（恒生）</td>
+<td class="n numcol">19</td>
+<td><span class="pill mute tagline"><strong>对上</strong> 牛市后段，移向短端</span></td>
+</tr>
+<tr>
+<td><strong>2015 加速到见顶</strong>（沪深300）</td>
+<td class="n numcol">33</td>
+<td><span class="pill mute tagline"><strong>没对上</strong> 长尺子同样响</span></td>
+</tr>
+<tr>
+<td><strong>2011–13 震荡</strong></td>
+<td class="n numcol">20</td>
+<td><span class="pill mute tagline"><strong>偏短</strong> 不是平均</span></td>
+</tr>
+</tbody>
+</table></div></div></div>
+<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">等权时重心约 31 天。</div><div class="rn-i">最关键的一个数：2008-11 见底后，等权的水平 34 天才转正（离底 +29%），响度加权 <strong>10 天</strong>（+19%）。</div><div class="rn-i">响度要积累一年历史才有，2006–07 年按规则用等权；牛市后段变短这一条，要等 2003 年以前的长历史检验。</div></div>
+<h3 id="⑦-规则-第-3-2-版-定稿">⑦ 规则（第 3.2 版，定稿）</h3>
+<p>每周最后一个交易日决定加仓、换市场；减仓和单只替换每天看；都在下一个交易日收盘成交</p>
+<ol class="steps-n">
+<li><strong>量</strong>：每个序列在 3–250 天的 28 把尺子上算速度 = 超出现金的涨幅 ÷（过去 250 天的日波动 × √天数）。权重 = 每把尺子最近一段（自己的长度）平均有多响，在自己历史上的排名；历史不足一年时等权。读出三个数：<strong>水平</strong>（加权平均速度）、<strong>转负前沿</strong>（速度为负的尺子占几成）、<strong>长尺子放缓</strong>（63–250 天 10 把尺子的平均速度<strong>连续两个月</strong>都比前一个月高）。</li>
+<li><strong>第一层·选市场</strong>：A 股（沪深300）、港股（恒生）、美股（标普500）里，至少一条腿成立才有资格，持水平最高的一个；另一个市场的水平要强出一倍噪音才换。</li>
+<li><strong>两条腿，各管一半仓位</strong>：腿一 = 宽基的转负前沿不到一半，而且这个市场的回撤面不到一半（回撤面 = 市场里有几成 ETF 的前沿已过半，至少 3 只 ETF 时才看）；腿二 = 水平大于零，或长尺子连续两个月放缓。两条都成立满仓，一条半仓，都不成立离场。每天看，只减不加：哪天一条腿失效，当天就减；加仓等周末。</li>
+<li><strong>防守默认国债</strong>（像 A1）：没放进风险市场的部分放 10 年国债；黄金明显更强才换黄金；国债自己在跌才拿现金。</li>
+<li><strong>第二层·选 ETF</strong>：选中的市场里，按水平取水平大于零、前沿不到一半的前 3 只平分；不足 3 只就平分给够格的；一只都没有就持宽基。</li>
+<li><strong>单只替换</strong>：持有的 ETF 自己一半以上的尺子转负，<strong>或</strong>从买入后高点回落 <span class="num">10%</span>（硬闸门，保险），哪个先到按哪个，当天换成排名下一只；换上去的也降速、回撤面扩大，就由第 3 条接回第一层。</li>
+</ol>
+<p class="kv"><span class="kv-k"><strong>新增自由度 4 个</strong></span><span class="kv-v">① 前沿门槛“一半”（尺子之间、ETF 之间、单只三处用同一个数）；② 长尺子连续两个月放缓；③ 噪音带“一倍”；④ 第二层取前 3。<span class="num">10%</span> 硬闸门沿用 E2 原有的数，不算新增。结构定的数：3 天、250 天、28 把、一年历史、回撤面至少 3 只。</span></p>
+<h3 id="⑧-事前画像和跑前五问-长成什么样-值不值得跑">⑧ 事前画像和跑前五问：长成什么样，值不值得跑</h3>
+<figure><img alt="第 3.2 版第一层和防守每年的平均仓位" loading="lazy" src="../../assets/v5-memo/m17-profile31.png"/></figure>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：转折（沪深300 涨跌对照）</span></button><div class="fold-b" hidden=""><div class="score"><div class="seg"><span class="s-good" style="flex:5"></span></div><div class="sl"><b class="t-good num">5</b> 通过<span class="of"> / 共 5 项</span></div></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>转折（沪深300 涨跌对照）</th>
+<th>第 2 版</th>
+<th>第 3.1 版</th>
+<th>第 3.2 版（定稿）</th>
+<th class="rh-concl">判定</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-good">
+<td><strong>2007-10 见顶，减到半仓</strong></td>
+<td>45 天，<span class="neg">−19%</span>（清零）</td>
+<td>38 天，<span class="neg">−17%</span>（清零）</td>
+<td><strong>27 天，<span class="neg">−15%</span></strong></td>
+<td class="r-concl"><span class="pill good">更早</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>2009-08 见顶，减到半仓</strong></td>
+<td>283 天（清零）</td>
+<td>178 天</td>
+<td><strong>8 天，<span class="neg">−10%</span></strong></td>
+<td class="r-concl"><span class="pill good">明显更早</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>2015-06 见顶，风险清零</strong></td>
+<td>21 天，<span class="neg">−27%</span></td>
+<td>21 天，<span class="neg">−27%</span></td>
+<td><strong>17 天，<span class="neg">−21%</span></strong></td>
+<td class="r-concl"><span class="pill good">更早</span></td>
+</tr>
+<tr>
+<td><strong>2008-11 见底，回到半仓 / 满仓</strong></td>
+<td>10 天 / 10 天（<span class="pos">+19%</span>）</td>
+<td>10 天 / 45 天</td>
+<td>10 天 / 45 天（<span class="pos">+19%</span> / <span class="pos">+26%</span>）</td>
+<td class="r-concl"><b>和第 2 版一样快回到半仓</b></td>
+</tr>
+<tr class="row-good">
+<td><strong>2008 熊市</strong></td>
+<td>风险 23%</td>
+<td>风险 30%，现金 70%</td>
+<td><strong>风险 16%，国债 84%</strong></td>
+<td class="r-concl"><span class="pill good">更好</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>2009 年持仓</strong></td>
+<td>—</td>
+<td>港股 70%，A 股 14%</td>
+<td><strong>A 股 55%，港股 25%</strong></td>
+<td class="r-concl"><span class="pill good">更好</span></td>
+</tr>
+<tr>
+<td class="k"><strong>平均风险仓位</strong></td>
+<td>81%</td>
+<td>80%</td>
+<td>71%</td>
+<td class="r-concl"><span class="pill info">代价</span><span class="pill-note"> 牛市里常被减到半仓</span></td>
+</tr>
+<tr>
+<td class="k"><strong>仓位档位变动</strong></td>
+<td>—</td>
+<td>十年 103 次</td>
+<td><strong>十年 187 次</strong></td>
+<td class="r-concl"><span class="pill info">代价</span><span class="pill-note"> 三分之二一个月内变回</span></td>
+</tr>
+</tbody>
+</table></div></div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：跑前五问</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>跑前五问</th>
+<th>第 3.2 版的回答</th>
+<th class="rh-concl">判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. 钱是否跟着强弱走</strong></td>
+<td class="detail">市场按水平选最强的一个，ETF 按水平取前 3；两条腿只决定持多少</td>
+<td class="r-concl"><span class="pill info">是</span></td>
+</tr>
+<tr>
+<td><strong>2. 挑选发生在哪一层</strong></td>
+<td class="detail">第一层在三个市场之间，第二层在市场内部；B（全部一起排）只做对照</td>
+<td class="r-concl"><span class="pill info">清楚</span></td>
+</tr>
+<tr>
+<td><strong>3. 防守怎么进来</strong></td>
+<td class="detail">分步进来：一条腿失效，一半去国债；国债自己在跌才拿现金</td>
+<td class="r-concl"><span class="pill info">不是开关</span></td>
+</tr>
+<tr>
+<td><strong>4. 每个开关触发几次</strong></td>
+<td class="detail">十年档位变动 187 次（每年 7–30 次，约三分之二一个月内变回）；当天减仓 76 次；单只离场按原因：周度换掉 176、自己的前沿 120、市场退出 40、硬闸门 17（都在急跌里）；单只持有的最大回撤最深 −15.8%；第二层平均持 2.3 只</td>
+<td class="r-concl"><span class="pill info">开关都在动</span><span class="pill-note"> 来回晃写进疼痛表</span></td>
+</tr>
+<tr>
+<td><strong>5. 去掉信号还剩多少</strong></td>
+<td class="detail">预注册写死对照：随机选市场、随机选 3 只，仓位档位照抄，2000 次</td>
+<td class="r-concl"><span class="pill info">跑时报告</span></td>
+</tr>
+</tbody>
+</table></div><p class="table-note note">画像只算规则想持有什么，不算收益；2015 年以前的数据，记为探索，不计入判据 ⑤。<span class="num">2006–07 年</span>还没有国债数据，防守只能是现金。</p></div></div>
+<h3 id="⑨-预期疼痛表-每种行情下-事先认下的代价">⑨ 预期疼痛表：每种行情下，事先认下的代价</h3>
+<p>冻结后不改，每次转折都对照复盘：落在范围里是正常代价；超出范围，说明策略的性格变了，要查原因。范围来自设计期画像和长历史上的 40 次熊市（标普 1955–2003，恒生、日经 1987–2015）。</p>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：行情</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>行情</th>
+<th class="rh-why">规则会怎么动</th>
+<th class="rh-cost">事先认下的代价</th>
+<th class="rh-cost">超出就要查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>单边牛市</strong></td>
+<td class="r-why">持有领先市场；回调时常被减到半仓</td>
+<td class="r-cost">平均风险仓位 <strong>70–90%</strong>；涨得多但波动更大的市场可能排在后面（2006–07 年一到三成在港股）</td>
+<td class="r-cost">牛市里平均风险仓位低于 60%</td>
+</tr>
+<tr>
+<td><strong>急跌</strong>（几天内跌 10% 以上）</td>
+<td class="r-why">前沿来不及过半，硬闸门在 −10% 卖出</td>
+<td class="r-cost">每段持有最多亏约 <strong>10%</strong> 加成交滑点；急跌后马上反弹时会错过反弹</td>
+<td class="r-cost">单只卖出时已跌超过 15%</td>
+</tr>
+<tr>
+<td class="k"><strong>见顶、牛转熊</strong></td>
+<td class="r-why">单只先换；回撤面过半当天减半；水平转负且长尺子还在恶化时清零</td>
+<td class="r-cost">1–4 周减到半仓，此时离顶已跌 <strong>10–20%</strong>；2–5 周清零</td>
+<td class="r-cost">6 周还没减到半仓，或减半时已跌超过 25%</td>
+</tr>
+<tr>
+<td class="k"><strong>熊市中的反弹</strong></td>
+<td class="r-why">长尺子要连续两个月放缓才算数</td>
+<td class="r-cost">熊市平均风险仓位 15–30%；偶尔被拉进去半仓再打出，每次付 <strong>2–5%</strong></td>
+<td class="r-cost">熊市平均风险仓位超过 40%</td>
+</tr>
+<tr>
+<td class="k"><strong>大跌后见底</strong></td>
+<td class="r-why">先回半仓，两条腿都成立才满仓</td>
+<td class="r-cost">1–5 周回到半仓，错过底部以来 <strong>10–25%</strong>；满仓要 5–10 周；底部附近可能早进来一次又被打出</td>
+<td class="r-cost">3 个月还没回到半仓</td>
+</tr>
+<tr>
+<td><strong>反弹月份</strong>（大势跌、本月涨）</td>
+<td class="r-why">趋势规则天生落后</td>
+<td class="r-cost"><b>相对基准的超额大概率为负，这是趋势跟踪的结构性代价</b></td>
+<td class="r-cost">超额 t 值低于 −2（入围第 6 条）</td>
+</tr>
+<tr>
+<td class="k"><strong>震荡</strong></td>
+<td class="r-why">前沿在一半附近来回晃</td>
+<td class="r-cost">每年档位变动 15–30 次，六到七成一个月内变回；每年多花约 <strong>1–2 个百分点</strong>成本</td>
+<td class="r-cost">一年超过 40 次</td>
+</tr>
+<tr>
+<td class="k"><strong>两个市场接力</strong></td>
+<td class="r-why">噪音带要强出一倍噪音才换</td>
+<td class="r-cost"><b>慢 1–4 周；领先不明显时会一直留在原市场</b></td>
+<td class="r-cost">另一市场的水平连续 3 个月更高却没换</td>
+</tr>
+</tbody>
+</table></div><p class="table-note note">“来回晃”的根源是前沿在门槛附近摆动，治它要给门槛加回差（多一个数字），留给 v6（D33-4）。</p></div></div>
+<p class="kv"><span class="kv-k"><strong>定稿了，进入设计期检验</strong></span><span class="kv-v">预注册 v5.1（设计稿第 3.2 版）已送 Reviewer R1，签收后冻结，Dev 实现，Reviewer 独立复算读数，然后跑设计期 2006–2015 两个池子和全部对照。长历史复核通过（判据跑前写死）：40 次熊市里见顶后减到半仓中位 10–14 天（12 个月动量 39–72 天），见底后回到半仓中位 14–38 天（104–267 天）。</span></p>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>设计稿第 2 版：两层 FOF + 动态周期（已被第 3 版取代，留档）</span></button><div class="fold-b" hidden="">
+<div class="aside">
+<p><strong>像 FOF 一样分两层：第一层决定钱放在 A、港、美哪个市场，还是撤到国债、黄金、现金；第二层在选中的市场里挑 ETF。看多长跟着市场的快慢伸缩，只有信号明显高于噪音才动。</strong></p>
+</div>
+<div class="overview compact"><div class="ov-h">这一段讲了什么 <span>· 6 节，点击跳转</span></div><div class="ov-chips"><a class="ov-chip" href="#①-四个动作-设计期里做到了没有"><span class="ov-k">①</span>四个动作，设计期里做到了没有</a><a class="ov-chip" href="#②-为什么震荡时换得太勤-复盘一轮完整的走势"><span class="ov-k">②</span>为什么震荡时换得太勤</a><a class="ov-chip" href="#③-规则-草案"><span class="ov-k">③</span>规则（草案）</a><a class="ov-chip" href="#④-每条规则的依据有多硬"><span class="ov-k">④</span>每条规则的依据有多硬</a><a class="ov-chip" href="#⑤-事前画像-第一层每年会持有什么"><span class="ov-k">⑤</span>事前画像</a><a class="ov-chip" href="#⑥-预期疼痛表-初稿-第-3-版定稿后重写-每种行情下-事先认下的代价"><span class="ov-k">⑥</span>预期疼痛表（初稿，第 3 版定稿后重写）</a></div></div><h3 id="①-四个动作-设计期里做到了没有">① 四个动作，设计期里做到了没有</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>行情</th>
+<th>要做到的</th>
+<th class="rh-why">怎么做</th>
+<th>做到了吗</th>
+<th>关键数字（沪深300，和 E2 式比）</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-good">
+<td class="k"><strong>单边牛市</strong></td>
+<td><span class="cat c0">赢家通吃</span></td>
+<td class="r-why">按涨幅比 A、港、美，只持最强的一个</td>
+<td><span class="pill good">做到</span></td>
+<td class="detail">2006–07 年七到九成在 A 股；2010–14 年三到六成在美股</td>
+</tr>
+<tr class="row-warn">
+<td class="k"><strong>牛转熊</strong></td>
+<td><span class="cat c1">少痛离场</span></td>
+<td class="r-why">牛市末段波动上来，周期自动变短</td>
+<td><span class="pill warn">大部分做到</span></td>
+<td class="detail">2015 年见顶 <strong>少跌 25 个点</strong>；2009 年底 <strong>少跌 12 个点</strong>；2007 年差不多</td>
+</tr>
+<tr class="row-warn">
+<td class="k"><strong>大跌之后</strong></td>
+<td><span class="cat c2">快速回场</span></td>
+<td class="r-why">周期在市场平静前一直保持短；回场先买宽基</td>
+<td><span class="pill warn">部分做到</span></td>
+<td class="detail">2008 年底 <strong>早 20 天</strong>；平静中慢慢形成的底（2014 年 3 月）<strong>晚 74 天、多错过 5 个点</strong></td>
+</tr>
+<tr class="row-warn">
+<td class="k"><strong>震荡</strong></td>
+<td><span class="cat c3">不被来回甩</span></td>
+<td class="r-why">换市场要求强度差超过一倍噪音</td>
+<td><span class="pill warn">大部分做到</span></td>
+<td class="detail">十年换手 <strong>153 → 92 次</strong>，回场速度不变；震荡年份仍有每年 13–17 次</td>
+</tr>
+</tbody>
+</table></div>
+<figure><img alt="六次关键转折中，动态周期与 E2 式付出的代价对比" loading="lazy" src="../../assets/v5-memo/m12-adaptive.png"/></figure>
+<h3 id="②-为什么震荡时换得太勤-复盘一轮完整的走势">② 为什么震荡时换得太勤：复盘一轮完整的走势</h3>
+<p>你描述的一轮走势是：牛市里量加速度的尺子越用越短，见顶时加速度衰竭；转熊先在短尺子上向下加速，再传到长尺子；底部短尺子的加速度趋于零；反弹时长尺子在动、短尺子平稳；震荡时都稳定在一个区间里。我用 3 天到 120 天七把尺子量沪深300 的加速度，看每个阶段哪把尺子在响：</p>
+<figure><img alt="一轮走势各阶段里，各把尺子上的加速度响度" loading="lazy" src="../../assets/v5-memo/m14-scales.png"/></figure>
+<div class="score"><div class="seg"><span class="s-good" style="flex:5"></span></div><div class="sl"><b class="t-good num">5</b> 通过<span class="of"> / 共 5 项</span></div></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>你的描述</th>
+<th>数据</th>
+<th>对上了吗</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-good">
+<td class="k"><strong>牛市末段</strong></td>
+<td>尺子越用越短，见顶时加速度衰竭</td>
+<td>120 天尺子先熄火（0.4），40 天还在响（1.4）</td>
+<td><span class="pill good">对</span><span class="pill-note">上</span></td>
+</tr>
+<tr class="row-good">
+<td class="k"><strong>转熊、急跌</strong></td>
+<td>先在短尺子上向下加速</td>
+<td>2015 年急跌：10–60 天最响（1.8–2.3），120 天还没反应（1.0）</td>
+<td><span class="pill good">对</span><span class="pill-note">上</span></td>
+</tr>
+<tr class="row-good">
+<td class="k"><strong>底部</strong></td>
+<td>短尺子的加速度趋于零</td>
+<td>2008 年底各尺子都回到噪音附近（0.7–1.2）</td>
+<td><span class="pill good">大致对</span><span class="pill-note">上</span></td>
+</tr>
+<tr class="row-good">
+<td class="k"><strong>反弹</strong></td>
+<td>长尺子在动，短尺子平稳</td>
+<td>2009 年上半年 120 天最响（2.4），3–40 天只有 0.4–0.7</td>
+<td><span class="pill good">对</span><span class="pill-note">上</span></td>
+</tr>
+<tr class="row-good">
+<td class="k"><strong>震荡</strong></td>
+<td>稳定在一个区间</td>
+<td>2011–14 年七把尺子全在 0.9–1.0，就是噪音</td>
+<td><span class="pill good">对</span><span class="pill-note">上</span></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">响度 = 这一段里加速度的平均大小，按平常的波动折算；1.0 相当于纯噪音。设计期只有一轮完整的牛熊（2006–09）和一次 2015 年，样本很少。</p>
+<p class="kv"><span class="kv-k"><strong>所以换得勤的原因很清楚：震荡时根本没有信号，规则却每周都在做决定。</strong></span><span class="kv-v">设计期第一层一共换了 146 次，其中 <strong class="num"><span class="num">60%</span></strong> 发生在信号还不到噪音一半的时候，<strong class="num"><span class="num">90%</span></strong> 不到噪音的一倍；三分之二是在 A、港、美之间来回换“第一名”。按你说的“在更宽的频率里做更确定的选择”，加一条噪音带。</span></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>噪音带管什么</th>
+<th class="n numcol">十年换几次</th>
+<th class="n numcol rh-cost">2008 年底见底后回到风险市场</th>
+<th class="rh-concl">判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>不加</strong></td>
+<td class="n numcol">153</td>
+<td class="n numcol r-cost">10 天</td>
+<td class="r-concl"><b>换得太勤</b></td>
+</tr>
+<tr class="row-bad">
+<td><strong>换市场、进场、离场都管</strong>（一倍噪音）</td>
+<td class="n numcol"><strong>49</strong></td>
+<td class="n numcol r-cost"><strong>122 天</strong></td>
+<td class="r-concl"><span class="pill bad">不用</span><span class="pill-note"> 回场被拖了 4 个月</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>只管换市场</strong>（一倍噪音）</td>
+<td class="n numcol"><strong>92</strong></td>
+<td class="n numcol r-cost"><strong>10 天</strong></td>
+<td class="r-concl"><span class="pill good">采用</span><span class="pill-note"> 半倍、两倍分别是 104、86 次，结论不变</span></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">为什么第二行不行：大跌之后，“过去一年的平常波动”里装满了暴跌，噪音被算得很大，信号很难超过它，进场就被拖住了。换市场是在两个市场之间比，不受这个影响。第三行是看到第二行的结果后改的，两次都登记了。</p>
+<h3 id="③-规则-草案">③ 规则（草案）</h3>
+<p>每周最后一个交易日决定，下一个交易日收盘成交</p>
+<ol class="steps-n">
+<li><strong>动态周期</strong>：每个市场各自算“最近 1 个月的波动 ÷ 过去一年的平常水平”，看它在自己历史上排第几。越剧烈，看的周期越短，最短 1 个月；越平静越长，最长 12 个月。</li>
+<li><strong>第一层·选市场</strong>：A 股（沪深300）、港股（恒生）、美股（标普500）各算“动态周期里的涨幅 − 同期现金”，大于零才有资格，持有最强的一个。</li>
+<li><strong>防守</strong>：三个市场都没资格，国债、黄金按同样的办法比，取跑赢现金的那个；都不行拿现金。</li>
+<li><strong>噪音带</strong>：只管换市场。另一个市场要比当前持有的强出一倍噪音（噪音 = 平常的日波动 × √周期天数）才换；进场、离场仍按“跑赢现金”的正负，不设噪音带，保住大跌后的快速回场。</li>
+<li><strong>第二层·选 ETF</strong>：在选中的市场里，宽基和行业、主题 ETF 一起，按同一个动态周期的涨幅排名，取前 3 只平分。</li>
+<li><strong>回场先买宽基</strong>：从防守或现金回到某个市场后，最初的一个动态周期内只持宽基，之后才按第 5 条挑行业。</li>
+<li><strong>单只离场</strong>：第二层的 ETF 从持有期高点回落 <span class="num">10%</span> 就卖，钱回到这个市场的宽基。</li>
+</ol>
+<p>和上一稿的区别：第 4 条由“分三批进出”改为“噪音带，只管换市场”，依据是上面的复盘和测试。新增的自由度 4 个：动态周期的伸缩方式、噪音带、第二层取前 3 只、回场先买宽基；1 个月、12 个月两端和 <span class="num">10%</span> 离场沿用 E2。“一倍噪音”是统计上常用的界线（约等于一个标准误），不是照设计期挑的；要求它和半倍、两倍都有效才算数。</p>
+<h3 id="④-每条规则的依据有多硬">④ 每条规则的依据有多硬</h3>
+<div class="table-wrap"><table data-lint="ref">
+<thead>
+<tr>
+<th>规则</th>
+<th>来自你的哪句话</th>
+<th class="rh-why">依据有多硬</th>
+<th class="rh-cost">最大的风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>动态周期</strong></td>
+<td>“单边时周期要变短，震荡时动态调节阀门”</td>
+<td class="r-why"><strong>外部研究 + 设计期</strong> Kaufman 自适应均线；Daniel、Moskowitz</td>
+<td class="r-cost">第一版失败后才改用波动，结论要打折扣</td>
+</tr>
+<tr>
+<td><strong>只持最强的一个市场</strong></td>
+<td>“赢家通吃”“每个阶段选出胜者”</td>
+<td class="r-why"><strong>外部研究强</strong> 跨市场动量两百年；双动量</td>
+<td class="r-cost">三个市场里押一个，十年只有十来次判断</td>
+</tr>
+<tr>
+<td class="k"><strong>噪音带</strong></td>
+<td>“在更宽的频率里做更确定的选择”</td>
+<td class="r-why"><strong>设计期诊断</strong> 60% 的换仓发生在半倍噪音以内；半倍到两倍结果接近</td>
+<td class="r-cost">两个市场接力时（例如 A 股转美股）会慢一两周换过去</td>
+</tr>
+<tr>
+<td><strong>第二层选 ETF</strong></td>
+<td>“市场在分化，指数靠少数权重股带”</td>
+<td class="r-why"><strong>结构判断</strong> 设计期行业排名的信号偏弱（1.6 倍）</td>
+<td class="r-cost">价值主要寄望于未来更分化的市场，设计期证明不了</td>
+</tr>
+<tr>
+<td class="k"><strong>回场先买宽基</strong></td>
+<td>“大跌之后快速回场”</td>
+<td class="r-why"><strong>外部研究强</strong> 动量崩溃：反弹由跌得最惨的品种领涨</td>
+<td class="r-cost">2009 年的教训我们看过，要登记</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="⑤-事前画像-第一层每年会持有什么">⑤ 事前画像：第一层每年会持有什么</h3>
+<figure><img alt="第一层在设计期每年持有各市场的周数占比" loading="lazy" src="../../assets/v5-memo/m13-layer1.png"/></figure>
+<ul class="points">
+<li><strong>和 E2 比</strong>：<span class="num">2006–08 年</span>一样（押 A 股、拿现金）；<span class="num">2012–14 年</span>七成以上在美股，E2 分散在 A 股行业、美股和国债里。这是最可能补上 E2 后五年短板的地方。</li>
+<li><strong>和 A1 比</strong>：多了港股、黄金和动态周期；2009 年先回到港股（<span class="num">51%</span>）和 A 股，A1 那年几乎全在国债。</li>
+<li><strong>震荡年份</strong>：<span class="num">2010–11 年</span>仍每年换 13–17 次，在港股、美股、国债之间来回，这是剩下的主要代价。</li>
+</ul>
+<p>画像只算“规则想持有什么”，含噪音带，不含第二层、离场和成交，不算收益。国债数据 2008 年还不满一年，那年防守只能是现金。脚本 results/v5/diag/design/。</p>
+<h3 id="⑥-预期疼痛表-初稿-第-3-版定稿后重写-每种行情下-事先认下的代价">⑥ 预期疼痛表（初稿，第 3 版定稿后重写）：每种行情下，事先认下的代价</h3>
+<p>下面是根据设计期信号写下的预期，不是收益承诺。封板时冻结，之后每次转折都对照复盘：落在范围里是正常代价；超出范围，说明策略的性格变了，要查原因。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>行情</th>
+<th class="rh-why">规则会怎么动</th>
+<th class="rh-cost">预期代价</th>
+<th class="rh-cost">超出就要查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>单边牛市</strong></td>
+<td class="r-why">领先市场持有八成以上的周数</td>
+<td class="r-cost"><b>主升段前 1–2 个月还没认出领先者，少赚这一段</b></td>
+<td class="r-cost">领先市场持有不到一半的周数</td>
+</tr>
+<tr>
+<td class="k"><strong>牛转熊</strong></td>
+<td class="r-why">1–3 周内先转到别的市场，1–2 个月内全部撤到防守或现金</td>
+<td class="r-cost">见顶后多跌 <strong>10–20%</strong> 才全部撤出</td>
+<td class="r-cost">多跌超过 25%，或 3 个月还没撤完</td>
+</tr>
+<tr>
+<td class="k"><strong>大跌之后</strong></td>
+<td class="r-why">2–4 周内回到某个风险市场，先买宽基</td>
+<td class="r-cost">错过底部以来 <strong>10–25%</strong> 的涨幅；假底回场后再离场，每次付 3–5%</td>
+<td class="r-cost">2 个月还没回场，或连续三次假底</td>
+</tr>
+<tr>
+<td><strong>平静中慢慢起来</strong></td>
+<td class="r-why">周期被拉长，回场晚</td>
+<td class="r-cost">晚 3–6 个月，少赚 <strong>5–15%</strong></td>
+<td class="r-cost">晚超过 9 个月</td>
+</tr>
+<tr>
+<td class="k"><strong>震荡</strong></td>
+<td class="r-why">在几个市场和国债之间换</td>
+<td class="r-cost">每年换 <strong>8–17 次</strong>，每次假换付 1–3%</td>
+<td class="r-cost">一年超过 20 次</td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">范围来自设计期沪深300 和标普500 的信号诊断（离场、回场的天数和涨跌），只有两三次大转折，范围偏宽。别的市场检验后再收紧。</p>
+<p class="kv"><span class="kv-k"><strong>写预注册之前还差一份证据</strong></span><span class="kv-v">美国上市 ETF 2003–2026 的数据（Grok 正在下载），在 2008、2011、2018、2020、2022 年多次转折上检验动态周期和噪音带，并用同样的办法收紧预期疼痛表。其余三项（噪音带、可交易池随机对照、预期疼痛表初稿）已经做完。</span></p>
+</div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>设计稿第 1 版：冠军赛（已被第 2 版取代，留档）</span></button><div class="fold-b" hidden="">
+<div class="aside">
+<p><strong>冠军赛修的是 E2 有机制原因的毛病：可交易池的钱闲着。能排名池后五年那一格，A1 是靠押中美股赢的，我们的数据分不出那是本事还是运气，所以不为它改规则。</strong></p>
+</div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>决定</th>
+<th>选择</th>
+<th>瞄准</th>
+<th class="rh-why">证据</th>
+<th class="rh-cost">反面证据和代价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>① 合格的不够时</strong></td>
+<td>平分给合格的，不留空位</td>
+<td>可交易池两格</td>
+<td class="detail r-why">E2 闲置 71% 输掉两格；A1 从不留空位</td>
+<td class="detail r-cost">探索期“把空位填满”更差，但那次是把名额给了不合格的；这次只给合格的。代价是更集中，单个市场急跌时伤得更重</td>
+</tr>
+<tr>
+<td class="k"><strong>② 在哪里比</strong></td>
+<td>冠军赛：每类一个冠军，冠军之间再比</td>
+<td>四格</td>
+<td class="detail r-why">A 股 14 个容器只相当于 1.37 个独立选择，全池约 2.35 个；类内挑选可信度 1.6 倍，比没有好</td>
+<td class="detail r-cost"><b>A 股独强时 A 股最多一个名额：能排名池前五年 A 股从九成降到六成多</b></td>
+</tr>
+<tr>
+<td class="k"><strong>③ 持几只</strong></td>
+<td>k = 1、2、3 三路平均</td>
+<td>四格</td>
+<td class="detail r-why">独立选择约 2 个；三路平均不押单个数字，和 E2 的 N = 3、5、8 同理</td>
+<td class="detail r-cost"><b>“只持最强一类”（k = 1）的结果我们已经看过，很好；正因为看过，才不单独选它</b></td>
+</tr>
+<tr>
+<td><strong>④ 防守怎么进来</strong></td>
+<td>保留 E2 的同场竞争，不改</td>
+<td>先求不输</td>
+<td class="detail r-why">专门诊断：国债靠稳排到风险冠军前面时，下个月谁赚得多<strong>没有定论</strong>（可信度 −0.29 倍：熊市年份国债赢，牛市年份风险冠军赢）。没有证据就不改。另一种做法是像 A1 那样“风险的不合格才让国债补位”，它的依据在外部，但会让 2008、2011 年的风险仓位分别从 32%、43% 升到 44%、67%</td>
+<td class="detail r-cost"><b>能排名池后五年国债仓位比 E2 更高，那一格可能补不上；按下面的分析，不为这一格改规则</b></td>
+</tr>
+<tr>
+<td><strong>⑤ 回看期、10% 离场</strong></td>
+<td>不变</td>
+<td>—</td>
+<td class="detail r-why">四个回看期单看是 60 天最强（可信度 1.78 倍），但只挑 60 天就是照着结果选；10% 离场在 8–15% 是一片平台</td>
+<td class="detail r-cost"><b>20 天的开关每年切换约 5 次，来回换的成本还在</b></td>
+</tr>
+</tbody>
+</table></div>
+<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">本节新做了三个诊断，都只用 2015 年以前的数据，计入尝试次数：各回看期“跑赢现金”信号的强弱；国债排到风险冠军前面时下个月谁赚得多；领头大市场下个月是否继续领先。</div><div class="rn-i">画像只用信号，不算收益。</div><div class="rn-i">脚本 results/v5/diag/design/。</div></div>
+<div class="overview compact"><div class="ov-h">这一段讲了什么 <span>· 3 节，点击跳转</span></div><div class="ov-chips"><a class="ov-chip" href="#事前画像"><span class="ov-k">1</span>事前画像</a><a class="ov-chip" href="#押最强的大市场-是机制-但我们的数据证明不了"><span class="ov-k">2</span>押最强的大市场</a><a class="ov-chip" href="#这对成功标准意味着什么-四格全赢主要看运气"><span class="ov-k">3</span>这对成功标准意味着什么</a></div></div><h3 id="事前画像">事前画像</h3>
+<figure><img alt="冠军赛与 E2 的风险仓位和国债黄金仓位" loading="lazy" src="../../assets/v5-memo/m10-champion.png"/></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>四格</th>
+<th class="n numcol">E2 新口径</th>
+<th>冠军赛预计</th>
+<th class="h-note rh-why">为什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>能排名的池子 2006–10</strong></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+19.6</em></span></td>
+<td>略低</td>
+<td class="c-note r-why">A 股独强时最多一个名额，A 股从九成降到六成多</td>
+</tr>
+<tr>
+<td><strong>能排名的池子 2011–15</strong></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:4px"></i><em class="g">+0.5</em></span></td>
+<td><strong>补不上，可能更差</strong></td>
+<td class="c-note r-why">风险仓位 55%（E2 64%），国债占了名额</td>
+</tr>
+<tr>
+<td><strong>真能买到的池子 2006–10</strong></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:44px"></i><em class="r">−12.3</em></span></td>
+<td><strong>明显改善</strong></td>
+<td class="c-note r-why">闲置的钱从 71% 降到 26%</td>
+</tr>
+<tr>
+<td><strong>真能买到的池子 2011–15</strong></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:7px"></i><em class="r">−2.0</em></span></td>
+<td><strong>改善</strong></td>
+<td class="c-note r-why">闲置的钱从 26% 降到 8%，风险仓位 74%（E2 67%）</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="押最强的大市场-是机制-但我们的数据证明不了">押最强的大市场：是机制，但我们的数据证明不了</h3>
+<p>A1 赢下“能排名池后五年”那一格，靠的是 <span class="num">2010–14 年</span>几乎全仓标普500。要不要为这一格改规则，先要回答：“押最强的大市场”是能事先写成规则的机制，还是那几年美股恰好最强？跑之前我先写下判定：领头市场下个月跑赢三个市场的平均，可信度到 <span class="num">2 倍</span>、前后两段都为正、去掉最好的一段仍为正，才算机制。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>按过去多久选领头市场</th>
+<th class="n numcol">十年里几段领先期</th>
+<th class="n numcol">下月多赚（月均）</th>
+<th class="n numcol rh-status">可信度</th>
+<th class="n numcol">去掉最好一段后</th>
+<th class="rh-concl">判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>3 个月</strong></td>
+<td class="n numcol">39</td>
+<td class="n numcol">0.67%</td>
+<td class="n numcol r-status"><span class="pill info">1.36 倍</span></td>
+<td class="n numcol">0.04%</td>
+<td class="r-concl"><span class="pill info">分不开</span></td>
+</tr>
+<tr>
+<td class="k"><strong>6 个月</strong></td>
+<td class="n numcol">26</td>
+<td class="n numcol">0.84%</td>
+<td class="n numcol r-status"><span class="pill info">1.78 倍</span></td>
+<td class="n numcol">0.05%</td>
+<td class="r-concl"><span class="pill info">分不开</span></td>
+</tr>
+<tr>
+<td><strong>12 个月（A1 用的）</strong></td>
+<td class="n numcol">12</td>
+<td class="n numcol">0.88%</td>
+<td class="n numcol r-status"><span class="pill info">1.83 倍</span></td>
+<td class="n numcol">0.20%</td>
+<td class="r-concl"><span class="pill info">分不开</span></td>
+</tr>
+</tbody>
+</table></div>
+<figure><img alt="十年 12 段领先期，每段领先市场比三者平均多赚多少" loading="lazy" src="../../assets/v5-memo/m11-leader.png"/></figure>
+<ul class="points">
+<li><strong>我们的数据里只有三个大市场</strong>：2006 年以前就有数据的只有 A 股、港股、美股。十年按 12 个月选只有 12 段领先期，优势几乎全来自 <span class="num">2006–07 年</span> A 股那一段。A1 在 <span class="num">2010–14 年</span>押美股，本质上是一次判断，从它自己的成绩看不出是本事还是运气。</li>
+<li><strong>外部证据说这是真机制</strong>：在几十个国家的股指、债券、外汇、商品里，过去一年涨得多的接下来继续强，这在学术研究里反复出现（Asness、Moskowitz、Pedersen 2013）；有人把多资产动量的历史拉到 200 多年，各类资产里都成立，但也有持续几十年表现不好的时期（Geczy、Samonov）。A1 的原型双动量，在发表前的 <span class="num">1950–73 年</span>和发表后的 <span class="num">2012–18 年</span>都表现不错。</li>
+<li><strong>结论</strong>：机制是真的，但只在三个市场之间押，宽度太小，十年的结果主要看那一两次判断。要验证它，得靠更多市场，也就是别的市场检验（美国上市 ETF 有二十多个国家和行业），不能靠中国这十年。</li>
+</ul>
+<h3 id="这对成功标准意味着什么-四格全赢主要看运气">这对成功标准意味着什么：四格全赢主要看运气</h3>
+<p>按设计期的实际波动做模拟：假设一个策略真的比基准每年多赚若干个点，重来很多次，看它多大概率四格全赢。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>策略真实的超额（每年）</th>
+<th class="n numcol">四格全赢的概率</th>
+<th class="n numcol">十年合计两个池子都赢的概率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>+3 个点</strong></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:30px"></i></span><span class="mg-v strong">28%</span></span></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:43px"></i></span><span class="mg-v">59%</span></span></td>
+</tr>
+<tr>
+<td class="k"><strong>+5 个点</strong></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:43px"></i></span><span class="mg-v strong">40%</span></span></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:53px"></i></span><span class="mg-v">73%</span></span></td>
+</tr>
+<tr>
+<td class="k"><strong>+8 个点</strong></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:64px"></i></span><span class="mg-v">60%</span></span></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:64px"></i></span><span class="mg-v strong">88%</span></span></td>
+</tr>
+<tr>
+<td><strong>A1 按它自己的成绩</strong></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:52px"></i></span><span class="mg-v strong">49%</span></span></td>
+<td class="n numcol">—</td>
+</tr>
+</tbody>
+</table></div>
+<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">模拟用 E2 新口径在两个池子的月度超额波动和相关性（跟踪误差每年约 16–19 个点），每次重来 120 个月。</div><div class="rn-i">十年里，E2 相对基准的超额可信度是 1.29 倍，A1 是 1.2 倍（能排名池）、0.78 倍（可交易池），都不到 2 倍。</div><div class="rn-i">E2 和 A1 在能排名池里的差距是 −1.7 个点，可信度只有 0.36 倍，等于分不出高低；可交易池差 13.9 个点，可信度 2.95 倍，是真差距，原因就是钱闲着。</div></div>
+<p>所以“四格全赢”这道门槛会把四成真正好的策略误判成失败，A1 自己也只有一半的机会通过。门槛应该设在<strong>证据够得着的地方</strong>：十年合计、两个池子都要赢；任何一格不能明显跑输；再加随机对照和别的市场两份更宽的证据。改动见第 1 节的成功标准。</p>
+<p class="kv"><span class="kv-k"><strong>我的判断</strong></span><span class="kv-v">冠军赛修的是一个有机制、有证据的毛病（可交易池的钱闲着，E2 因此明显输给 A1），这是 v5 该做的事。能排名池后五年那一格，不为它改规则：本地数据分不出 A1 是本事还是运气，改了就是照着答案出题。冠军赛在新标准下有机会通过；要证明它，还缺两份证据：可交易池的随机对照，和美国上市 ETF 的别的市场检验。成功标准定下来以后，我再写预注册。</span></p>
+</div></div>
+<p>第 3–11 节是 <strong>v5.1</strong>（设计稿第 3.2 版，两层 FOF）的设计期结果和归因。v5 原版的结果收在节末的留档里。</p>
+</section>
+<section id="sec-3-结论-v5-1-中国十年是最好的一版-换个市场不成立-不入围"><h2 id="3-结论-v5-1-中国十年是最好的一版-换个市场不成立-不入围"><span class="num">03</span>结论：v5.1 中国十年是最好的一版，换个市场不成立，不入围</h2>
+<p class="memo"><strong>中国设计期年化 <span class="num">30.1%</span>、最深回撤 <span class="num">−26%</span>，赢了随机、基准、A1 和两个更简单的版本；但同一套规则放到美国 ETF 上，二十多年只有 <span class="num">1.3%</span>。主要原因是换手太高。按跑之前写死的规则，v5.1 不入围，一次性检验只有 E2 新口径。</strong></p>
+<figure><img alt="中国设计期 v5.1、E2 新口径、A1、基准的净值和回撤" loading="lazy" src="../../assets/v5-memo/m18-v51-china.png"/></figure>
+<div class="table-wrap"><table class="vs-base">
+<thead>
+<tr>
+<th></th>
+<th class="n numcol h-subj">v5.1</th>
+<th class="n numcol">E2 新口径</th>
+<th class="n numcol">A1</th>
+<th class="n numcol">基准</th>
+<th class="rh-concl">判定</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-good">
+<td><strong>能排名的池子 年化</strong></td>
+<td class="n numcol c-subj key vs-good" title="对基准 15.6%：更好"><strong>30.1%</strong></td>
+<td class="n numcol vs-good" title="对基准 15.6%：更好">24.9%</td>
+<td class="n numcol vs-good" title="对基准 15.6%：更好">27.0%</td>
+<td class="n numcol">15.6%</td>
+<td class="r-concl"><span class="pill good">最好</span></td>
+</tr>
+<tr class="row-good">
+<td class="k"><strong>最大回撤</strong></td>
+<td class="n numcol c-subj key vs-good" title="对基准 −65%：更好"><strong>−26%</strong></td>
+<td class="n numcol vs-good" title="对基准 −65%：更好">−35%</td>
+<td class="n numcol vs-good" title="对基准 −65%：更好">−43%</td>
+<td class="n numcol">−65%</td>
+<td class="r-concl"><span class="pill good">最浅</span></td>
+</tr>
+<tr>
+<td><strong>当年真能买到的池子 年化</strong></td>
+<td class="n numcol c-subj vs-good" title="对基准 15.6%：更好">15.8%</td>
+<td class="n numcol vs-bad" title="对基准 15.6%：更差">8.7%</td>
+<td class="n numcol vs-good" title="对基准 15.6%：更好">23.7%</td>
+<td class="n numcol">15.6%</td>
+<td class="r-concl"><span class="pill info">险过基准</span></td>
+</tr>
+<tr class="row-bad">
+<td><strong>美国 ETF（2003–2026）年化</strong></td>
+<td class="n numcol c-subj key vs-bad" title="对基准 8.2%：更差"><strong>1.3%</strong></td>
+<td class="n numcol vs-bad" title="对基准 8.2%：更差">7.0%</td>
+<td class="n numcol vs-good" title="对基准 8.2%：更好">9.0%</td>
+<td class="n numcol">8.2%</td>
+<td class="r-concl"><span class="pill bad">不成立</span></td>
+</tr>
+</tbody>
+</table></div>
+<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">扣费后。</div><div class="rn-i">中国基准 = 70% 沪深300 + 15% 纳指100 + 15% 标普500（人民币全收益）；美国基准 = 60% SPY + 40% IEF。</div><div class="rn-i">E2 新口径、A1 的中国数字引用 v4 账本，美国数字是同一次别的市场检验里跑的。</div></div>
+</section>
+<section id="sec-4-怎么做的-先冻结规则-再一步一步跑-每一步都独立复算"><h2 id="4-怎么做的-先冻结规则-再一步一步跑-每一步都独立复算"><span class="num">04</span>怎么做的</h2><p class="memo">先冻结规则，再一步一步跑，每一步都独立复算</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th class="rh-why">做了什么</th>
+<th class="rh-concl">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>审预注册</strong></td>
+<td class="detail r-why">Reviewer 两轮审稿：第一轮退回 2 处必须改（卖后不买回没写清；画像不是按最终规则算的），改完复审签收</td>
+<td class="r-concl"><strong>冻结</strong> <a href="https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/tree/milestone/v5.1-prereg-freeze">（标签）</a></td>
+</tr>
+<tr>
+<td class="k"><strong>实现、复算</strong></td>
+<td class="detail r-why">Dev 实现 28 把尺子、两条腿、每天减仓、单只替换、默认国债；Reviewer 用独立实现抽样复算读数和持仓</td>
+<td class="r-concl"><strong>逐位一致</strong></td>
+</tr>
+<tr>
+<td class="k"><strong>设计期</strong></td>
+<td class="detail r-why">2006–2015 两个池子；同次跑随机挑选、同结构随机、等权版、波动比版</td>
+<td class="r-concl"><b>见第 5、6 节</b></td>
+</tr>
+<tr>
+<td class="k"><strong>别的市场</strong></td>
+<td class="detail r-why">美国、发达市场、新兴市场三组 ETF，规则一个数都不改；同次跑 E2 式、A1、随机</td>
+<td class="r-concl"><b>见第 8 节</b></td>
+</tr>
+<tr>
+<td class="k"><strong>稳健性</strong></td>
+<td class="detail r-why">17 行：成本、时点、门槛、结构各改一处</td>
+<td class="r-concl"><b>见第 11 节</b></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">每一步一个 PR，Reviewer 签收后才合入。账本 30 行；判据 ⑤ 只数可能入围的配置。中国数据只用到 2015-12-31。</p>
+</section>
+<section id="sec-5-过关-7-条过了-5-条-栽在-换个市场-和-顺应市场"><h2 id="5-过关-7-条过了-5-条-栽在-换个市场-和-顺应市场"><span class="num">05</span>过关</h2><p class="memo">7 条过了 5 条，栽在“换个市场”和“顺应市场”</p>
+<div class="score"><div class="seg"><span class="s-good" style="flex:5"></span><span class="s-bad" style="flex:2"></span></div><div class="sl"><b class="t-good num">5</b> 通过 · <b class="t-bad num">2</b> 未通过<span class="of"> / 共 7 项</span></div></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>条</th>
+<th>要求</th>
+<th>结果</th>
+<th class="rh-concl">判定</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-good">
+<td class="k"><strong>0 先赢随机</strong></td>
+<td>年化 ÷ 回撤高于随机挑选的 95 分位</td>
+<td><b>两个池都高于全部 2000 次；同结构随机（只把挑选换成随机、仓位档位照抄）也高于 99.8%</b></td>
+<td class="r-concl"><span class="pill good">通过</span></td>
+</tr>
+<tr class="row-good">
+<td class="k"><strong>1 跑赢基准</strong></td>
+<td>十年年化高于基准，四格不明显跑输</td>
+<td>能排名的池子 <strong>30.1%</strong>，可交易池 15.8%，基准 15.6%</td>
+<td class="r-concl"><span class="pill good">通过</span><span class="pill-note"> 可交易池险过</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>2 不明显输给 A1</strong></td>
+<td>相对 A1 的 t 值不低于 −2</td>
+<td><b>能排名的池子 +0.45，可交易池 −1.03</b></td>
+<td class="r-concl"><span class="pill good">通过</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>3 赢过更简单的版本</strong></td>
+<td>高于等权版、波动比版</td>
+<td><b>等权版 28.5%，波动比版 14.4%</b></td>
+<td class="r-concl"><span class="pill good">通过</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>4 回撤不比基准深</strong></td>
+<td>最大回撤不深于基准</td>
+<td><strong>−25.9%</strong>，基准 −65.5%</td>
+<td class="r-concl"><span class="pill good">通过</span></td>
+</tr>
+<tr class="row-bad">
+<td><strong>5 别的市场也成立</strong></td>
+<td>美国 ETF 上赢随机、赢基准</td>
+<td>年化 <strong>1.3%</strong>，基准 8.2%</td>
+<td class="r-concl"><span class="pill bad">未通过</span></td>
+</tr>
+<tr class="row-bad">
+<td class="k"><strong>6 顺应市场</strong></td>
+<td>牛市超额 ≥ 0；反弹 t 值 ≥ −2</td>
+<td>牛市 <strong>−28</strong>；反弹 t 值 <strong>−2.36</strong></td>
+<td class="r-concl"><span class="pill bad">未通过</span></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">第 2 条通过，A1 的退路不启用；入围名单只有 E2 新口径。这些都是跑之前写死的，看到结果以后不改。</p>
+</section>
+<section id="sec-6-哪里赢-哪里输-赢在熊市和急跌-输在牛市和反弹"><h2 id="6-哪里赢-哪里输-赢在熊市和急跌-输在牛市和反弹"><span class="num">06</span>哪里赢、哪里输</h2><p class="memo">赢在熊市和急跌，输在牛市和反弹</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>四种行情（能排名的池子，相对基准）</th>
+<th class="n numcol">累计超额</th>
+<th class="rh-concl">判定</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-good">
+<td><strong>熊市</strong>（大势跌、本月跌）</td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+131</em></span></td>
+<td class="r-concl"><span class="pill good">大赢</span><span class="pill-note"> 2008 年八成多在国债</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>回调</strong>（大势涨、本月跌）</td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:24px"></i><em class="g">+45</em></span></td>
+<td class="r-concl"><span class="pill good">赢</span><span class="pill-note"> 回撤面过半当天减仓</span></td>
+</tr>
+<tr class="row-bad">
+<td><strong>牛市</strong>（大势涨、本月涨）</td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:15px"></i><em class="r">−28</em></span></td>
+<td class="r-concl"><span class="pill bad">输</span><span class="pill-note"> 回调时常被减到半仓，换手又多</span></td>
+</tr>
+<tr class="row-bad">
+<td><strong>反弹</strong>（大势跌、本月涨）</td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:20px"></i><em class="r">−37</em></span></td>
+<td class="r-concl"><span class="pill bad">输</span><span class="pill-note"> 趋势规则天生落后</span></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">累计超额 = 该行情所有日子的日超额之和 × 100（百分点，不四舍五入）；行情按沪深300 过去 12 个月和这个月的涨跌划分。</p>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：年份</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table class="vs-base">
+<thead>
+<tr>
+<th>年份</th>
+<th class="numcol h-subj">v5.1</th>
+<th class="numcol">E2 新口径</th>
+<th class="numcol">A1</th>
+<th class="numcol">基准</th>
+<th class="h-take">谁好</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2006–07</strong></td>
+<td class="numcol c-subj vs-bad" title="对基准 83%、104%：更差">74%、93%</td>
+<td class="numcol vs-good" title="对基准 83%、104%：更好">106%、156%</td>
+<td class="numcol vs-good" title="对基准 83%、104%：更好">97%、136%</td>
+<td class="numcol">83%、104%</td>
+<td class="c-take">大牛市里 v5.1 最少</td>
+</tr>
+<tr>
+<td class="k"><strong>2008</strong></td>
+<td class="numcol c-subj key vs-good" title="对基准 −60%：更好"><strong>−1%</strong></td>
+<td class="numcol vs-good" title="对基准 −60%：更好"><span class="neg">−23%</span></td>
+<td class="numcol vs-good" title="对基准 −60%：更好"><span class="pos">+16%</span></td>
+<td class="numcol"><span class="neg">−60%</span></td>
+<td class="c-take">A1 最好，v5.1 第二</td>
+</tr>
+<tr>
+<td class="k"><strong>2009</strong></td>
+<td class="numcol c-subj vs-bad" title="对基准 83%：更差">45%</td>
+<td class="numcol vs-bad" title="对基准 83%：更差">43%</td>
+<td class="numcol vs-bad" title="对基准 83%：更差">0%</td>
+<td class="numcol">83%</td>
+<td class="c-take">都跑输基准</td>
+</tr>
+<tr>
+<td><strong>2010–13</strong></td>
+<td class="numcol c-subj vs-good" title="对基准 −4、−18、12、5%：更好">7、8、9、8%</td>
+<td class="numcol vs-bad" title="对基准 −4、−18、12、5%：更差"><span class="neg">−7</span>、<span class="neg">−10</span>、2、10%</td>
+<td class="numcol vs-good" title="对基准 −4、−18、12、5%：更好">0、<span class="neg">−10</span>、5、30%</td>
+<td class="numcol"><span class="neg">−4</span>、<span class="neg">−18</span>、12、5%</td>
+<td class="c-take"><span class="pill info">v5.1 最稳</span></td>
+</tr>
+<tr>
+<td class="k"><strong>2014</strong></td>
+<td class="numcol c-subj vs-good" title="对基准 45%：更好">49%</td>
+<td class="numcol vs-bad" title="对基准 45%：更差">35%</td>
+<td class="numcol vs-bad" title="对基准 45%：更差">44%</td>
+<td class="numcol">45%</td>
+<td class="c-take">v5.1 最好</td>
+</tr>
+<tr>
+<td class="k"><strong>2015</strong></td>
+<td class="numcol c-subj key vs-good" title="对基准 10%：更好"><strong>30%</strong></td>
+<td class="numcol vs-good" title="对基准 10%：更好">15%</td>
+<td class="numcol vs-bad" title="对基准 10%：更差">3%</td>
+<td class="numcol">10%</td>
+<td class="c-take">v5.1 最好</td>
+</tr>
+</tbody>
+</table></div></div></div>
+</section>
+<section id="sec-7-换一种检验方式-任意时点买入-都要比基准好"><h2 id="7-换一种检验方式-任意时点买入-都要比基准好"><span class="num">07</span>换一种检验方式：任意时点买入，都要比基准好</h2>
+<p class="memo"><strong>能排名的池子里，任何一个月初买入、持有 5 年，v5.1 都跑赢基准（58 个起点全赢，最差也每年多 <span class="num">1.5 个点</span>）。但在当年真能买到的池子里，只有 <span class="num">34%</span> 的起点跑赢；十年 <span class="num">15.8%</span> 的年化，主要来自 2006 年和 <span class="num">2014–15 年</span>。</strong></p>
+<figure><img alt="每个月初买入，持有 1、3、5 年，v5.1 跑赢各个对照的起点占比" loading="lazy" src="../../assets/v5-memo/m21-v51-anystart.png"/></figure>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：持有 5 年（58 个起点）</span></button><div class="fold-b" hidden=""><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>持有 5 年（58 个起点）</th>
+<th>能排名的池子 跑赢的起点 · 中位 · 最差</th>
+<th>能买到的池子 跑赢的起点 · 中位 · 最差</th>
+<th class="h-take rh-concl">读法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-subj">
+<td><strong>v5.1 对基准</strong></td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:64px"></i></span><span class="mg-v strong">100%</span></span><span class="mg-s">· +16.6 · +1.5</span></td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:24px"></i></span><span class="mg-v strong">34%</span></span><span class="mg-s">· −1.5 · −12.2</span></td>
+<td class="c-take"><b>两个池子判若两样</b></td>
+</tr>
+<tr>
+<td>E2 新口径 对基准</td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:41px"></i></span><span class="mg-v">64%</span></span><span class="mg-s">· +4.8 · −4.8</span></td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:21px"></i></span><span class="mg-v">29%</span></span><span class="mg-s">· −3.5 · −12.9</span></td>
+<td class="c-take"><b>入围的那一版，能买到的池子同样弱</b></td>
+</tr>
+<tr>
+<td class="k">A1 对基准</td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:58px"></i></span><span class="mg-v">90%</span></span><span class="mg-s">· +8.5 · −6.0</span></td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:64px"></i></span><span class="mg-v strong">90%</span></span><span class="mg-s">· +8.6 · −4.7</span></td>
+<td class="c-take"><b>只有 A1 两个池子都稳</b></td>
+</tr>
+<tr class="row-subj">
+<td><span class="rid">v</span>5.1 对 E2 新口径</td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:63px"></i></span><span class="mg-v">98%</span></span><span class="mg-s">· +9.4 · −0.5</span></td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:27px"></i></span><span class="mg-v">38%</span></span><span class="mg-s">· −1.7 · −6.0</span></td>
+<td class="c-take"><b>能买到的池子里 v5.1 也没稳赢</b></td>
+</tr>
+<tr class="row-subj">
+<td><span class="rid">v</span>5.1 对 A1</td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:56px"></i></span><span class="mg-v">88%</span></span><span class="mg-s">· +6.9 · −2.6</span></td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:0px"></i></span><span class="mg-v strong">0%</span></span><span class="mg-s">· −9.3 · −14.9</span></td>
+<td class="c-take"><b>能买到的池子里一次都没赢</b></td>
+</tr>
+</tbody>
+</table></div><p class="table-note note">2006–2015 每个月第一个交易日买入，持有 5 年（1260 个交易日），比较年化收益；中位、最差 = 每年多（少）赚的百分点。E2 新口径的数字和<a href="https://claude.ai/artifact/DpJNEma9D9uELPsLkWbRBx">《v4 体检报告》</a>第 4 节相差 <span class="num">1–3 个百分点</span>，是起点取法不同（这里要求持满 1260 天）。</p></div></div>
+<figure><img alt="每个月初买入、持有 3 年，v5.1 相对基准的超额，两个池子" loading="lazy" src="../../assets/v5-memo/m24-v51-bars.png"/></figure>
+<ul class="points">
+<li><strong>能买到的池子里，输赢由起点决定</strong>：2007 年下半年到 2008 年买入的，先躲过一轮大熊市，5 年赢基准 <span class="num">3–6 个点</span>；2006 年初或 2009 年买入的，先碰上一段牛市，v5.1 跟不满，5 年每年少 <span class="num">3–12 个点</span>。这和第 6 节的“赢在熊市、输在牛市”是同一件事。</li>
+<li><strong>为什么两个池子差这么多</strong>：两处。① 能挑的少：可交易池 <span class="num">2006–2012 年</span>平均只拿得到 1.0–1.6 只（能排名的池子 1.7–2.7 只），A 股这一层常常只有沪深300，挑选的本事用不上。② 防守拿不到国债的收益：<span class="num">2008–2012 年</span>可交易池里没有能买的国债基金，防守只相当于现金。2008 年 8–11 月，能排名的池子靠国债赚了约 <span class="num">14 个点</span>，可交易池不到 <span class="num">1 个点</span>。A1 一次拿一样、<span class="num">100%</span> 仓位，① 对它没有影响。</li>
+<li><strong>持有越短越看运气</strong>：能排名的池子持有 1 年只有 <span class="num">68%</span> 的起点跑赢，3 年 <span class="num">95%</span>，5 年 <span class="num">100%</span>。真金白银的人很少拿满 5 年，这是要你知道的一点。</li>
+</ul>
+</section>
+<section id="sec-8-为什么换个市场就不行-优势依赖中国的急涨急跌"><h2 id="8-为什么换个市场就不行-优势依赖中国的急涨急跌"><span class="num">08</span>为什么换个市场就不行：优势依赖中国的急涨急跌</h2>
+<p class="memo"><strong>在美国 ETF 上，v5.1 扣费前 <span class="num">7.4%</span>，已经低于基准 <span class="num">8.2%</span> 和 E2 式 <span class="num">8.9%</span>；换手又吃掉近 <span class="num">6 个点</span>，只剩 <span class="num">1.3%</span>。</strong></p>
+<figure><img alt="别的市场检验：扣费前后的年化" loading="lazy" src="../../assets/v5-memo/m19-v51-gpool.png"/></figure>
+<ul class="points">
+<li><strong>转折照样做得快</strong>：2008、2020、2022 年见顶后 5–34 天减到半仓；2009、2020 年见底后 4–17 天回到半仓。规则在美国也按设计在动。</li>
+<li><strong>但美国的牛市又长又平</strong>：回调浅，前沿在一半附近反复晃，仓位反复被减到一半。中国的牛市也一样（第 6 节牛市 −28），只是中国的大趋势和大崩盘够剧烈，快速离场的好处盖过了这部分代价。</li>
+<li><strong>所以中国十年的 <span class="num">30%</span> 有相当一部分来自中国市场的特性</strong>：急涨急跌时，快速离场、快速回场很值钱；市场平缓时，同一个机制变成了来回付成本。别的市场检验要回答的，正是这个问题。</li>
+</ul>
+</section>
+<section id="sec-9-换手-一大半来自仓位在满仓和半仓之间来回切"><h2 id="9-换手-一大半来自仓位在满仓和半仓之间来回切"><span class="num">09</span>换手</h2><p class="memo">一大半来自仓位在满仓和半仓之间来回切</p>
+<figure><img alt="按来源拆开的每年单边换手" loading="lazy" src="../../assets/v5-memo/m20-v51-turnover.png"/></figure>
+<ul>
+<li><strong>第一层仓位档位</strong>每年单边 <span class="num">12–13 倍</span>，是最大的一块：前沿在门槛附近来回晃，每晃一次换一半仓位。</li>
+<li><strong>第二层每周换人</strong>中国 <span class="num">6 倍</span>、美国 <span class="num">9 倍</span>：每周按水平重排前 3，排名稍一变动就换。</li>
+<li><b>合计双边换手每年中国 <span class="num">43 倍</span>、美国 <span class="num">59 倍</span>，</b>成本中国约 <span class="num">3 个点</span>、美国近 <span class="num">6 个点</span>；同一个美国池子里 E2 式只有 <span class="num">18 倍</span>。</li>
+</ul>
+<p class="kv"><span class="kv-k"><strong>我的错</strong></span><span class="kv-v">疼痛表写的是“震荡时每年多花约 <span class="num">1–2 个百分点</span>”，实际中国约 <span class="num">3 个点</span>、美国近 <span class="num">6 个点</span>。画像里其实已经有这些次数（十年 187 次档位变动、176 次每周换人），是我在“跑前五问”第 4 问上停在了“数次数”，没有往下走一步“算成本”。以后的跑前评估要把触发次数直接换算成每年的换手和成本。</span></p>
+</section>
+<section id="sec-10-跑前预判对照-年份预测大多对了-成本和换个市场估错了"><h2 id="10-跑前预判对照-年份预测大多对了-成本和换个市场估错了"><span class="num">10</span>跑前预判对照</h2><p class="memo">年份预测大多对了，成本和换个市场估错了</p>
+<div class="score"><div class="seg"><span class="s-good" style="flex:8"></span><span class="s-bad" style="flex:2"></span></div><div class="sl"><b class="t-good num">8</b> 对 · <b class="t-bad num">2</b> 错<span class="of"> / 共 10 项</span></div></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>跑之前写下的</th>
+<th>实际</th>
+<th class="rh-concl">对了吗</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-good">
+<td><strong>2006–07 比 E2 新口径少赚</strong></td>
+<td>74%、93% 对 106%、156%</td>
+<td class="r-concl"><span class="pill good">对</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>2008 略好</strong></td>
+<td>−1% 对 −23%</td>
+<td class="r-concl"><span class="pill good">对</span><span class="pill-note"> 好得比预想多</span></td>
+</tr>
+<tr>
+<td><strong>2009 少赚</strong></td>
+<td>45% 对 43%；基准 83%</td>
+<td class="r-concl"><strong>一半</strong> 跑输基准，没输 E2 新口径</td>
+</tr>
+<tr class="row-good">
+<td><strong>2010–14 明显多赚</strong></td>
+<td>五年里四年多赚</td>
+<td class="r-concl"><span class="pill good">对</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>2015 略好</strong></td>
+<td>30% 对 15%</td>
+<td class="r-concl"><span class="pill good">对</span><span class="pill-note"> 好得比预想多</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>回撤比 E2 新口径浅</strong></td>
+<td>−26% 对 −35%</td>
+<td class="r-concl"><span class="pill good">对</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>可交易池明显好于 E2 新口径</strong></td>
+<td>15.8% 对 8.7%</td>
+<td class="r-concl"><span class="pill good">对</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>转折时点落在疼痛表里</strong></td>
+<td>见顶 8–27 天减半，见底 10 天回半仓、45 天满仓</td>
+<td class="r-concl"><span class="pill good">对</span><span class="pill-note"> 和画像完全一致</span></td>
+</tr>
+<tr class="row-bad">
+<td><strong>震荡时每年多花 1–2 个点</strong></td>
+<td>中国约 3 个点，美国近 6 个点</td>
+<td class="r-concl"><span class="pill bad">错</span><span class="pill-note"> 漏算了换手的成本</span></td>
+</tr>
+<tr class="row-bad">
+<td><strong>别的市场约一半能过</strong></td>
+<td>1.3%，远低于基准</td>
+<td class="r-concl"><span class="pill bad">错</span><span class="pill-note"> 低估了对中国市场特性的依赖</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>入围的机会低于一半</strong></td>
+<td>不入围</td>
+<td class="r-concl"><span class="pill good">对</span></td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="sec-11-稳健性-中国的结果不靠参数和运气"><h2 id="11-稳健性-中国的结果不靠参数和运气"><span class="num">11</span>稳健性</h2><p class="memo">中国的结果不靠参数和运气</p>
+<div class="score"><div class="seg"><span class="s-good" style="flex:7"></span><span class="s-warn" style="flex:2"></span></div><div class="sl"><b class="t-good num">7</b> 稳 · <b class="t-warn num">2</b> 待定<span class="of"> / 共 9 项</span></div></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>改一处</th>
+<th>年化</th>
+<th class="numcol">最大回撤</th>
+<th class="rh-concl">判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>原规则</strong></td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:51px"></i></span><span class="mg-v">30.1%</span></span></td>
+<td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:52px"></i></span><span class="mg-v">−26%</span></span></td>
+<td class="r-concl"><b>—</b></td>
+</tr>
+<tr class="row-good">
+<td class="k"><strong>成本加倍</strong></td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:43px"></i></span><span class="mg-v">25.8%</span></span></td>
+<td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:54px"></i></span><span class="mg-v">−27%</span></span></td>
+<td class="r-concl"><span class="pill good">稳</span><span class="pill-note"> 仍高于 E2 新口径</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>去掉最好的 1、2、3 个容器</strong></td>
+<td>31.0%、31.0%、30.8%</td>
+<td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:50px"></i></span><span class="mg-v">−25%</span></span></td>
+<td class="r-concl"><span class="pill good">稳</span><span class="pill-note"> 不靠个别品种</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>前沿门槛 0.4、0.6</strong></td>
+<td>28.9%、29.6%</td>
+<td class="numcol">−27%、−28%</td>
+<td class="r-concl"><span class="pill good">稳</span></td>
+</tr>
+<tr class="row-warn">
+<td><strong>长尺子放缓比 10、40 天前</strong></td>
+<td>26.0%、23.8%</td>
+<td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:52px"></i></span><span class="mg-v">−26%</span></span></td>
+<td class="r-concl"><span class="pill warn">略敏感</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>噪音带 0.5、2</strong></td>
+<td>28.5%、27.9%</td>
+<td class="numcol">−27%、−28%</td>
+<td class="r-concl"><span class="pill good">稳</span></td>
+</tr>
+<tr class="row-good">
+<td class="k"><strong>只在周末减仓</strong></td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:48px"></i></span><span class="mg-v">28.6%</span></span></td>
+<td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:58px"></i></span><span class="mg-v">−29%</span></span></td>
+<td class="r-concl"><span class="pill good">稳</span><span class="pill-note"> 每天减仓只多 1.5 个点</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>硬闸门 8%、12%、不设</strong></td>
+<td>31.6%、30.2%、30.0%</td>
+<td class="numcol">−25%、−26%、−27%</td>
+<td class="r-concl"><span class="pill good">稳</span><span class="pill-note"> 硬闸门主要是保险</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>第一层改为所有 ETF 一起排</strong></td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:45px"></i></span><span class="mg-v">26.8%</span></span></td>
+<td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:64px"></i></span><span class="mg-v">−32%</span></span></td>
+<td class="r-concl"><span class="pill good">先选市场更好</span></td>
+</tr>
+<tr class="row-warn">
+<td><strong>决策日延后 1 天</strong></td>
+<td class="key mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:64px"></i></span><span class="mg-v strong">38.0%</span></span></td>
+<td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:52px"></i></span><span class="mg-v">−26%</span></span></td>
+<td class="r-concl"><span class="pill warn">要警惕</span><span class="pill-note"> 晚一天反而多 8 个点，结果对成交时点很敏感</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>可交易池不含相近替身</strong></td>
+<td class="mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:31px"></i></span><span class="mg-v">18.4%</span></span></td>
+<td class="numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:58px"></i></span><span class="mg-v">−29%</span></span></td>
+<td class="r-concl"><span class="pill good">稳</span></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">能排名的池子，扣费后，2006–2015。所有改动都只报告，不改判。</p>
+</section>
+<section id="sec-12-学到了什么-接下来"><h2 id="12-学到了什么-接下来"><span class="num">12</span>学到了什么，接下来</h2><p class="memo"><strong>读尺子的方法在中国是成立的</strong>：同结构随机对照说明，挑选本身有本事；见顶、见底、急跌的时点都和设计时的画像一致。</p>
+<ul class="points">
+<li><strong>但它把“适应市场”做成了“频繁反应”</strong>：在门槛附近来回晃的成本，在平缓的市场里大于快速离场的好处。适应应该是“状态变了才动”，而不是“读数变了就动”。</li>
+<li><strong>别的市场检验是对的</strong>：没有它，我们会拿着中国十年 <span class="num">30%</span> 的成绩进入一次性检验。</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>接下来</th>
+<th>谁</th>
+<th class="rh-status">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-good">
+<td><strong>封板</strong>：v5 是封板前最后一个版本；v5.1 不再改（D34-1）</td>
+<td>你</td>
+<td class="r-status"><span class="pill good">已批准</span></td>
+</tr>
+<tr class="row-warn">
+<td><strong>一次性检验</strong>：2016-01 到 2026-09，两个池子同次跑 E2 新口径、A1、基准、v5.1；只有 E2 新口径能入围，v5.1 只作对照、不进模拟盘（D34-2、D34-3）。先写 LOCK，再跑，Reviewer 独立复算</td>
+<td>Grok</td>
+<td class="r-status"><span class="pill warn">进行中</span></td>
+</tr>
+<tr>
+<td><strong>v6 的起点</strong>：① 第一层仓位加回差，减仓线和加仓线分开；② 第二层少换人，新的必须明显更强才换；③ 跑前评估把触发次数换算成成本。按 D27-5：设计证据 → 别的市场 → 至少 6 个月并行模拟 → 小资金起步</td>
+<td>封板后</td>
+<td class="r-status"><span class="pill info">—</span></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">全部结果都经 Reviewer 独立复算签收（<code>results/v5.1/</code>）。</p>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>v5 原版（两层 + 防守位）的设计期结果和归因（已淘汰，留档）</span></button><div class="fold-b" hidden="">
+<p>下面是 v5 原版的结论、过关、哪里赢输、四处结构硬伤、预判对照、稳健性和教训。“v5 最终版”都指原版。</p>
+<div class="overview"><div class="ov-h">这一段讲了什么 <span>· 12 节，按顺序读就是一条线；点卡片跳到对应小节</span></div><div class="ov-grid"><a class="ov-card t-bad" href="#原版-结论-v5-原版没有赢过-e2-新口径-不入围"><div class="ov-top"><span class="ov-n">1</span><span class="ov-tag">问题</span></div><div class="ov-m">12.7%</div><div class="ov-t">原版 · 结论</div><div class="ov-c">能排名的池子里 v5 年化 <span class="num">12.7%</span>，连基准的 <span class="num">15.6%</span> 都没跑过；只有在早年能买的很少的可交易池里，v5 比 E2 新口径好。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-info bare" href="#和随机挑比-e2-有真本事-v5-只是-少押一点的随机"><div class="ov-top"><span class="ov-n">2</span><span class="ov-tag">背景</span></div><div class="ov-t">和随机挑比</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-bad" href="#原版-设计依据-v4-的证据-和两条推错的推论"><div class="ov-top"><span class="ov-n">3</span><span class="ov-tag">问题</span></div><div class="ov-t">原版 · 设计依据</div><div class="ov-c">v4 的四个微调都没过关；证据指向同一个方向：<span class="ov-q">该不该持有</span>有信号，<span class="ov-q">挑哪一只</span>几乎没有。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-info" href="#原版-怎么做的-先写死规则-再跑"><div class="ov-top"><span class="ov-n">4</span><span class="ov-tag">背景</span></div><div class="ov-t">原版 · 怎么做的</div><div class="ov-c">从定方向到跑出结果用了两天；规则在跑之前冻结，每一步都有独立复核。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-good" href="#原版-过关-两个部件各试一次-只有-10-离场-留下-最终版没能入围"><div class="ov-top"><span class="ov-n">5</span><span class="ov-tag">有效</span></div><div class="ov-t">原版 · 过关</div><div class="ov-c">规则事先写死：先跑没有任何部件的 v5 基础版，再把部件一个个加上去试，过关才留下；最后拿最终版和 E2 新口径比。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-mixed" href="#原版-哪里赢-哪里输-输在大牛市和下跌年份"><div class="ov-top"><span class="ov-n">6</span><span class="ov-tag">成立，但有代价</span></div><div class="ov-m">130 个百分点</div><div class="ov-t">原版 · 哪里赢、哪里输</div><div class="ov-c">指数池里，v5 在 2006–07 年少赚 <span class="num">130 个百分点</span>，在 2008、2011、2015 年又多亏；赢的几年都是小幅。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-bad" href="#原版-为什么输-四处结构硬伤-都违背了-优中选优"><div class="ov-top"><span class="ov-n">7</span><span class="ov-tag">问题</span></div><div class="ov-t">原版 · 为什么输</div><div class="ov-c">v5 按<span class="ov-q">类别</span>分钱，不按<span class="ov-q">强弱</span>分钱：三成风险仓位给了当天全局排名前 5 以外的品种。这是结构问题，换什么参数都改不掉。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-info bare" href="#比四条规则更根本的-研究流程上的三处错"><div class="ov-top"><span class="ov-n">8</span><span class="ov-tag">背景</span></div><div class="ov-t">比四条规则更根本的</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-bad" href="#原版-跑前预判对照-猜对三条-猜错三条"><div class="ov-top"><span class="ov-n">9</span><span class="ov-tag">问题</span></div><div class="ov-t">原版 · 跑前预判对照</div><div class="ov-c">最大的错是回撤：预计更浅，实际更深。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-good" href="#原版-稳健性-结论不靠运气和参数-唯一明显的改善指向-集中"><div class="ov-top"><span class="ov-n">10</span><span class="ov-tag">有效</span></div><div class="ov-m">4 个点</div><div class="ov-t">原版 · 稳健性</div><div class="ov-c">每一项只改一处，看结论会不会被推翻。十三项里十二项变化不到 <span class="num">4 个点</span>，只有<span class="ov-q">只持最强的一类</span>明显更好。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-info bare" href="#学到了什么"><div class="ov-top"><span class="ov-n">11</span><span class="ov-tag">背景</span></div><div class="ov-t">学到了什么</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-info" href="#原版-接下来-先把-v5-策略讨论清楚-再写预注册"><div class="ov-top"><span class="ov-n">12</span><span class="ov-tag">背景</span></div><div class="ov-t">原版 · 接下来</div><div class="ov-c"><span class="ov-q">跑前五问</span>已写进项目规矩（D30-1）；v5 允许一次设计修正（D30-2）。新的 v5 入围与否，跑完都封板。</div><span class="ov-go">读这一节 ↓</span></a></div></div><h3 id="原版-结论-v5-原版没有赢过-e2-新口径-不入围">原版 · 结论：v5 原版没有赢过 E2 新口径，不入围</h3>
+<div class="claim-box"><strong>能排名的池子里 v5 年化 12.7%，连基准的 15.6% 都没跑过；只有在早年能买的很少的可交易池里，v5 比 E2 新口径好。</strong></div>
+<figure><img alt="E2 新口径、v5、基准、A1 在两个池子里的净值和回撤" loading="lazy" src="../../assets/v5-memo/m1-nav.png"/></figure>
+<div class="table-wrap"><table class="vs-base">
+<thead>
+<tr>
+<th>设计期 2006–2015</th>
+<th class="n numcol">E2 新口径</th>
+<th class="n numcol h-subj">v5 最终版</th>
+<th class="n numcol">基准</th>
+<th class="n numcol">A1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>指数池 年化</strong></td>
+<td class="n numcol vs-good" title="对基准 15.6%：更好">24.9%</td>
+<td class="n numcol c-subj key vs-bad" title="对基准 15.6%：更差"><strong>12.7%</strong></td>
+<td class="n numcol">15.6%</td>
+<td class="n numcol vs-good" title="对基准 15.6%：更好">27.0%</td>
+</tr>
+<tr>
+<td><strong>指数池 最大回撤</strong></td>
+<td class="n numcol vs-good" title="对基准 −66%：更好">−35%</td>
+<td class="n numcol c-subj key vs-good" title="对基准 −66%：更好"><strong>−40%</strong></td>
+<td class="n numcol">−66%</td>
+<td class="n numcol vs-good" title="对基准 −66%：更好">−43%</td>
+</tr>
+<tr>
+<td><strong>可交易池 年化</strong></td>
+<td class="n numcol vs-bad" title="对基准 15.6%：更差">8.7%</td>
+<td class="n numcol c-subj key vs-good" title="对基准 15.6%：更好"><strong>17.4%</strong></td>
+<td class="n numcol">15.6%</td>
+<td class="n numcol vs-good" title="对基准 15.6%：更好">23.7%</td>
+</tr>
+<tr>
+<td><strong>可交易池 最大回撤</strong></td>
+<td class="n numcol vs-good" title="对基准 −66%：更好">−32%</td>
+<td class="n numcol c-subj key vs-good" title="对基准 −66%：更好"><strong>−38%</strong></td>
+<td class="n numcol">−66%</td>
+<td class="n numcol vs-good" title="对基准 −66%：更好">−43%</td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">v5 最终版 = 起点 + <span class="num">10%</span> 离场。绿、橙相对 E2 新口径。数字待 Reviewer 独立复算。</p>
+<ul class="points">
+<li><strong>入围一次性检验的只有 E2 新口径。</strong>按 D27，v5 做完就封板，不论结果。</li>
+<li><strong>可交易池的好成绩不改变结论。</strong>它来自早年“能买的只有一两只时集中持有”。2016 年以后能买的品种多了，这个优势会消失；A1 在同样条件下仍高出 <span class="num">6 个百分点</span>。</li>
+</ul>
+<h3 id="和随机挑比-e2-有真本事-v5-只是-少押一点的随机">和随机挑比：E2 有真本事；v5 只是“少押一点的随机”</h3>
+<figure><img alt="E2、v5、基准、A1 与 2000 次随机挑选的年化和回撤" loading="lazy" src="../../assets/v5-memo/m6-random.png"/></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指数池 2006–2015</th>
+<th class="n numcol">年化</th>
+<th class="n numcol">最大回撤</th>
+<th class="n numcol">年化 ÷ 回撤</th>
+<th>在 2000 次随机里的位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>随机挑 5 只、满仓</strong>（中位数）</td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:52px"></i></span><span class="mg-v">20.1%</span></span></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:64px"></i></span><span class="mg-v">−67%</span></span></td>
+<td class="n numcol">0.30</td>
+<td>—</td>
+</tr>
+<tr>
+<td class="k"><strong>E2 新口径</strong></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:64px"></i></span><span class="mg-v">24.9%</span></span></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:33px"></i></span><span class="mg-v strong">−35%</span></span></td>
+<td class="n numcol"><strong>0.71</strong></td>
+<td>年化高于 96% 的随机；年化 ÷ 回撤<strong>高于全部</strong>随机</td>
+</tr>
+<tr class="row-subj">
+<td class="k"><strong>v5 最终版</strong></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b a" style="width:33px"></i></span><span class="mg-v strong">12.7%</span></span></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:38px"></i></span><span class="mg-v">−40%</span></span></td>
+<td class="n numcol"><strong>0.32</strong></td>
+<td>年化低于全部随机；年化 ÷ 回撤和随机的中位数差不多（高于 62%）：<strong>没有挑选本事</strong></td>
+</tr>
+<tr class="ref">
+<td class="k"><strong>基准</strong></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:40px"></i></span><span class="mg-v">15.6%</span></span></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:63px"></i></span><span class="mg-v">−66%</span></span></td>
+<td class="n numcol">0.24</td>
+<td>年化高于 4% 的随机</td>
+</tr>
+</tbody>
+</table></div>
+<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">随机对照：每月末从当时有数据的风险容器（A 股、港股、美股等）里随机挑 5 只、等权、满仓持有一个月，重复 2000 次，不扣成本。</div><div class="rn-i">它回答“完全不用判断，只靠这个池子能拿到多少”。</div><div class="rn-i">设计期池子以 A 股为主，又碰上 2006–07 年大牛市，所以随机满仓也有 20%；但它扛满了 2008 年的下跌。</div><div class="rn-i"><strong>年化 ÷ 回撤</strong>是每承受 1 份回撤换来多少年化，用来比较押得多和押得少的策略。</div><div class="rn-i">E2 比随机多赚约 5 个点、回撤少一半，这个比值高于全部 2000 次随机，说明它的挑选有真本事。</div><div class="rn-i">v5 回撤浅只是因为押得少，比值和随机的中位数差不多：去掉“少押”这层，它和闭眼挑没有区别。</div><div class="rn-i">一个策略先要赢过随机，才谈得上和基准比；v5 在第一关就没过。</div><div class="rn-i">脚本 results/v5/diag/memo/random_baseline.py；这是对照，不是策略候选。</div></div>
+<h3 id="原版-设计依据-v4-的证据-和两条推错的推论">原版 · 设计依据：v4 的证据，和两条推错的推论</h3>
+<div class="claim-box"><strong>v4 的四个微调都没过关；证据指向同一个方向：“该不该持有”有信号，“挑哪一只”几乎没有。</strong></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>v4 的发现</th>
+<th>关键数字</th>
+<th class="rh-status">可信度</th>
+<th class="h-take rh-concl">当时的推论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>该不该持有</strong></td>
+<td>趋势向上的下个月比现金多赚 1.2%，向下的 −0.2%</td>
+<td class="key r-status"><span class="pill info">2.4 倍</span></td>
+<td class="c-take"><b>把力气放在这一层</b></td>
+</tr>
+<tr>
+<td class="k"><strong>挑哪一只</strong></td>
+<td>打分高的，下个月只是略好一点</td>
+<td class="r-status"><span class="pill info">1.1–1.6 倍</span></td>
+<td class="c-take"><b>少押注挑选</b></td>
+</tr>
+<tr>
+<td class="k"><strong>独立机会</strong></td>
+<td>14 个 A 股容器 ≈ 1.4 个独立选择</td>
+<td class="r-status"><span class="pill info">—</span></td>
+<td class="c-take"><b>按大类分开判断</b></td>
+</tr>
+<tr>
+<td class="k"><strong>超额从哪来</strong></td>
+<td>熊市选到国债、黄金贡献 +50</td>
+<td class="r-status"><span class="pill info">—</span></td>
+<td class="c-take"><b>设一个防守位</b></td>
+</tr>
+<tr>
+<td class="k"><strong>池子小的时候</strong></td>
+<td>可交易池 E2 8.7%，A1 23.7%</td>
+<td class="r-status"><span class="pill info">—</span></td>
+<td class="c-take"><b>能买的少时集中</b></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note"><strong>可信度</strong> = 这个差别比“纯靠运气也会出现的波动”大几倍（统计上叫 t 值），<span class="num">2 倍</span>以上才算比较可信。最后一列是当时从证据推出的设计方向；第 1 节折叠区的例子和第 8 节的持仓数据会看到，“按大类分开判断”和“设一个防守位”这两条推错了。</p>
+<div class="callout"><div class="co-h">当时就有的反面证据，以及你今年 7–10 月的体感</div>
+<ul class="points">
+<li><strong>集中以前试过更差</strong>：探索阶段“把空位填满”，年化更低、回撤更深。当时判断 v5 的集中只发生在跑赢现金的大类之间，会不一样。第 8 节证明这个判断错了。</li>
+<li><strong>A1 不是全面更好</strong>：指数池里和 E2 的差别只有运气波动的 <span class="num">0.4 倍</span>；2015 年满仓扛了 <span class="num">−43%</span>。</li>
+<li><strong>你的体感</strong>：7 月全球科技一起回落，8 月美股创新高、A 股科技反弹失败。7 月时没人知道 8 月会分化。这段行情只作规则冻结后的检验案例，不用来设计。</li>
+</ul>
+</div><h3 id="原版-怎么做的-先写死规则-再跑">原版 · 怎么做的：先写死规则，再跑</h3>
+<div class="claim-box"><strong>从定方向到跑出结果用了两天；规则在跑之前冻结，每一步都有独立复核。</strong></div>
+<div class="log">
+<div><span class="d">10-31</span><span>你同意换架构（D26）、封板条件（D27）</span></div>
+<div><span class="d">10-31</span><span>预注册草案第 1 版，写下跑之前的预判</span></div>
+<div><span class="d">11-01</span><span>Reviewer 两轮复核，4 条必须改、14 条应改全部改完</span></div>
+<div><span class="d">11-01</span><span>你批准四处选择（D29），预注册冻结</span></div>
+<div><span class="d">11-01</span><span>117 个容器的大类表逐行签收</span></div>
+<div class="hl"><span class="d">11-01</span><span>代码复核时发现 v5 没用 E2 那套交易条件，修好后才开跑</span></div>
+<div><span class="d">11-01</span><span>设计期运行：起点 → 加按波动调仓 → 加 10% 离场</span></div>
+</div>
+<p>账本 33 行（上限 45）。只用 2015 年以前的数据，没有算 2016 年以后的中国组合收益。标橙的一条如果没修，v5 和 E2 不在同一套交易条件下，所有比较都不成立。</p>
+<h3 id="原版-过关-两个部件各试一次-只有-10-离场-留下-最终版没能入围">原版 · 过关：两个部件各试一次，只有“10% 离场”留下；最终版没能入围</h3>
+<div class="claim-box"><strong>规则事先写死：先跑没有任何部件的 v5 基础版，再把部件一个个加上去试，过关才留下；最后拿最终版和 E2 新口径比。</strong></div>
+<ol class="steps-n flow" style="counter-reset: fl 0">
+<li><b class="fl-t">v5 基础版</b><span class="fl-d">只有“两层 + 防守位”，不加任何部件。</span></li>
+<li><b class="fl-t">加按波动调仓</b><span class="fl-d">和基础版比，没过，丢掉。</span></li>
+<li><b class="fl-t">加 <span class="num">10%</span> 离场</b><span class="fl-d">还是和基础版比，过关，成为最终版。</span></li>
+<li><b class="fl-t">最终版对 E2</b><span class="fl-d">入围条件两条都不满足。</span></li>
+</ol>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>版本</th>
+<th class="n numcol">前五年 年化超额</th>
+<th class="n numcol">后五年 年化超额</th>
+<th class="n numcol">牛市</th>
+<th class="n numcol">回调</th>
+<th class="n numcol">熊市</th>
+<th class="n numcol">反弹</th>
+<th class="rh-concl">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="ref">
+<td><strong>E2 新口径</strong>（参照）</td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+19.6</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:6px"></i><em class="g">+0.5</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:4px"></i><em class="r">−2</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:54px"></i><em class="g">+27</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+95</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:70px"></i><em class="r">−54</em></span></td>
+<td class="r-concl"><b>—</b></td>
+</tr>
+<tr class="row-subj">
+<td class="k"><strong>v5 基础版</strong></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:22px"></i><em class="r">−6.3</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:70px"></i><em class="r">−5.5</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:53px"></i><em class="r">−93</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:32px"></i><em class="g">+16</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:41px"></i><em class="g">+55</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:52px"></i><em class="r">−40</em></span></td>
+<td class="r-concl"><b>起点，只报告</b></td>
+</tr>
+<tr class="row-bad">
+<td><strong>基础版 + 按波动调仓</strong></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:28px"></i><em class="r">−7.9</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:64px"></i><em class="r">−5.0</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:70px"></i><em class="r">−123</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:70px"></i><em class="g">+35</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:45px"></i><em class="g">+61</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:54px"></i><em class="r">−42</em></span></td>
+<td class="r-concl"><span class="pill bad">没过</span><span class="pill-note"> 牛市多亏 29</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>基础版 + 10% 离场</strong></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:4px"></i><em class="r">−0.6</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:64px"></i><em class="r">−5.0</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:52px"></i><em class="r">−92</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:56px"></i><em class="g">+28</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="g" style="width:48px"></i><em class="g">+65</em></span></td>
+<td class="n numcol ibc"><span class="ib"><i class="r" style="width:51px"></i><em class="r">−39</em></span></td>
+<td class="r-concl"><span class="pill good">过关</span><span class="pill-note"> = 最终版</span></td>
+</tr>
+</tbody>
+</table></div>
+<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">指数池。</div><div class="rn-i"><strong>年化超额</strong> = 相对基准每年多赚几个百分点；<strong>四种行情</strong> = 该行情所有月份相对基准的超额相加。</div><div class="rn-i">部件行的绿、橙相对 v5 基础版；框 = 这个部件本来要改善的行情。</div><div class="rn-i"><strong>过关要四条同时满足</strong>：前后五年都比上一版好；瞄准的行情变好；其他行情不比上一版差 10 以上；可交易池不比上一版差 2 以上。</div><div class="rn-i">“按波动调仓”熊市确实变好了，但前五年变差、牛市多亏 29，没过。</div><div class="rn-i">另外两个部件“小仓试错”“让赢家跑”按 D29 没有放进 v5。</div></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>最终版能不能入围（D29）</th>
+<th>要求</th>
+<th>实际</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-bad">
+<td><strong>(a) 收益更好</strong></td>
+<td>前后五年都赢 E2 新口径</td>
+<td>前五年 −0.6 对 +19.6</td>
+<td><span class="pill bad">不满足</span></td>
+</tr>
+<tr class="row-bad">
+<td><strong>(b) 收益差不多、回撤更浅</strong></td>
+<td>前后五年都不少于 2 个点，回撤浅 5 个点</td>
+<td>前五年少 20 个点；回撤反而深近 5 个点</td>
+<td><span class="pill bad">不满足</span></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="原版-哪里赢-哪里输-输在大牛市和下跌年份">原版 · 哪里赢、哪里输：输在大牛市和下跌年份</h3>
+<div class="claim-box"><strong>指数池里，v5 在 2006–07 年少赚 130 个百分点，在 2008、2011、2015 年又多亏；赢的几年都是小幅。</strong></div>
+<figure><img alt="每年 v5 减 E2 新口径的收益差" loading="lazy" src="../../assets/v5-memo/m2-yearly.png"/></figure>
+<figure><img alt="四种行情下 E2 新口径和 v5 的超额" loading="lazy" src="../../assets/v5-memo/m3-states.png"/></figure>
+<ul class="points">
+<li><strong>牛市</strong>：E2 −2，v5 −92。这是最大的一块损失。</li>
+<li><strong>熊市</strong>：E2 +95，v5 +65。v5 本来就是为“不输”设计的，结果熊市里反而躲得更少。</li>
+<li><strong>反弹</strong>：v5 少输 15。这是 v5 唯一占优的行情，因为它弱市里仍在场内。</li>
+</ul>
+<h3 id="原版-为什么输-四处结构硬伤-都违背了-优中选优">原版 · 为什么输：四处结构硬伤，都违背了“优中选优”</h3>
+<div class="claim-box"><strong>v5 按“类别”分钱，不按“强弱”分钱：三成风险仓位给了当天全局排名前 5 以外的品种。这是结构问题，换什么参数都改不掉。</strong></div>
+<figure><img alt="E2 和 v5 十年平均仓位按大类对比，以及被选中后下个月相对现金的收益" loading="lazy" src="../../assets/v5-memo/m7-flaws.png"/></figure>
+<div class="readnote"><div class="rn-h">怎么读这张图</div><div class="rn-i">愿景里“选强势、跑赢现金才买”的潜台词是<strong>优中选优</strong>：先在所有品种里比，钱只给最强的。</div><div class="rn-i">v5 改成了“每类里选优”：每个大类先出一个代表，再平分。</div><div class="rn-i">一类整体不强，只要有一只勉强跑赢现金，它的代表就和全场最强的那只拿一样多的钱。</div><div class="rn-i">下面四处硬伤都从这里来。</div></div>
+<div class="table-wrap"><table data-lint="ref">
+<thead>
+<tr>
+<th>硬伤</th>
+<th>规则怎么写的</th>
+<th>错在哪</th>
+<th>设计期的数据</th>
+<th>本该怎么做</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>① 挑选放错了层</strong></td>
+<td>先分五类，每类只挑最强的一只</td>
+<td class="detail">强弱差别主要在<strong>不同市场之间</strong>；同一类的容器同涨同跌，类内挑谁差别很小。v5 留下了弱的“类内挑选”，把强的“跨类挑选”换成了平分</td>
+<td class="detail">港股那份在全局排名中位<strong>第 10</strong>，68% 不在前 5；下个月只比现金多赚 <strong>0.4%</strong>，A 股那份 <strong>2.4%</strong></td>
+<td>一张全局排名表；类别只做上限（例如每类最多 2 只），不做配额</td>
+</tr>
+<tr>
+<td><strong>② 门槛最松，仓位一样</strong></td>
+<td>类里<strong>任一只</strong>跑赢现金，这类就开；开着的类平分</td>
+<td class="detail">“任一只”是最松的门槛，成员越多越容易开。跑赢现金 0.1% 和 80% 拿一样的份额：强弱只用来开门，不用来分钱</td>
+<td class="detail">风险持仓的得分只有当天最高分的 <strong>54%</strong>（中位）；<strong>32%</strong> 的风险仓位在全局前 5 以外</td>
+<td>门槛 = 跑赢现金<strong>且</strong>进全局前 N；或仓位随得分递增</td>
+</tr>
+<tr>
+<td><strong>③ 防守是开关，不是竞争</strong></td>
+<td>风险大类<strong>全部</strong>关掉，才用国债、黄金</td>
+<td class="detail">门槛太松，“全部关掉”很少发生。E2 让国债黄金和股票同场排名，股票一弱防守就逐步排进来，这正是 E2 回撤减半的来源；v5 把它拆掉了</td>
+<td class="detail">只有 <strong>10%</strong> 的时间触发；防守加现金平均 <strong>13%</strong>，E2 是 <strong>34%</strong>；“去掉防守位”的检验几乎没变化</td>
+<td>防守资产留在同一张排名表里，随时可以排到前面</td>
+</tr>
+<tr>
+<td><strong>④ 五类其实只有三类</strong></td>
+<td>A 股、港股、美股、其他海外、商品</td>
+<td class="detail">设计期里“其他海外”一次没开过，商品只占 0.2%。实际就是“A 股、港股、美股各三分之一”加开关。A 股和港股都是中国风险，2008 年一起跌，分散只是表面上的</td>
+<td class="detail">v5 平均给港股 <strong>21%</strong>，E2 只给 4%</td>
+<td>定类别前先看设计期里“真正有数据、有独立走势”的类别有几个</td>
+</tr>
+</tbody>
+</table></div>
+<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">统计口径：设计期 2006–2015、指数池，每个月度决策日的四个回看期合并；“全局排名”= 当天所有跑赢现金的容器按同一个得分排。</div><div class="rn-i">下个月收益是挑选后 21 个交易日减现金，不扣成本，只作归因，不是新策略的回测。</div><div class="rn-i">A 股在这十年特别强，所以硬伤 ① 的代价格外大；换个年代代价会小，但方向不变：按身份分钱，就会在某个市场独强时少拿。</div><div class="rn-i">脚本 results/v5/diag/memo/flaws.py。</div></div>
+<h3 id="比四条规则更根本的-研究流程上的三处错">比四条规则更根本的：研究流程上的三处错</h3>
+<div class="cards from-table plain"><div class="card tone-0 tone-bad"><div class="ct">病因和处方没对上</div><div class="cb">v4 暴露的是“可交易池太小，空位拿现金代价大”，这是池子和执行的问题。v5 开的方子却改了整个组合结构，把本来没问题的指数池一起改坏了。</div></div><div class="card tone-1 tone-info"><div class="ct">反面证据被我解释掉了</div><div class="cb">探索期“填满空位更差”已经说明强制持有伤收益。我当时用“v5 只在跑赢现金的大类之间集中”解释掉它；硬伤 ② 说明这层保护太松，等于没有。</div></div><div class="card tone-2 tone-bad"><div class="ct">只设了结果门，没做愿景检查</div><div class="cb">预注册把过关条件写得很严，但跑之前没人问一句：这条规则会不会把钱给不够强的东西？四处硬伤都能在纸面上看出来，不需要跑回测。</div></div></div>
+<p>以后每个版本跑之前，先过这五问（建议成为预注册的固定一节）</p>
+<ol class="steps-n flow" style="counter-reset: fl 0">
+<li><b class="fl-t">钱是否跟着强弱走？</b><span class="fl-d">有没有可能让一个弱品种拿到和最强一样多的钱？</span></li>
+<li><b class="fl-t">挑选发生在哪一层？</b><span class="fl-d">那一层的品种之间差别大不大，独立选择有几个？</span></li>
+<li><b class="fl-t">防守是一直在竞争，还是到极端才打开？</b><span class="fl-d"></span></li>
+<li><b class="fl-t">每个类别、每个开关，在设计期里实际触发过几次？</b><span class="fl-d">从没触发的就是空壳。</span></li>
+<li><b class="fl-t">同结构去掉信号还剩多少？</b><span class="fl-d">先和随机挑选比，再和基准比。</span></li>
+</ol>
+<div class="callout"><div class="co-h">逐年看：牛市分散了、弱市没防守（持仓图和年份表）</div>
+<figure><img alt="E2 新口径和 v5 每月平均持仓，按大类" loading="lazy" src="../../assets/v5-memo/m4-holdings.png"/></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>年份</th>
+<th class="n numcol">E2：A 股</th>
+<th class="n numcol h-subj">v5：A 股</th>
+<th class="n numcol">E2：国债黄金和现金</th>
+<th class="n numcol h-subj">v5：国债黄金和现金</th>
+<th class="h-subj">v5 相对 E2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2006–07 大牛市</strong></td>
+<td class="n numcol">86%</td>
+<td class="n numcol c-subj key"><strong>40%</strong></td>
+<td class="n numcol">6%</td>
+<td class="n numcol c-subj">3%</td>
+<td class="c-subj">少赚 130 个点</td>
+</tr>
+<tr>
+<td><strong>2008 熊市</strong></td>
+<td class="n numcol">27%</td>
+<td class="n numcol c-subj">26%</td>
+<td class="n numcol">67%</td>
+<td class="n numcol c-subj key"><strong>53%</strong></td>
+<td class="c-subj">多亏 11 个点</td>
+</tr>
+<tr>
+<td><strong>2011 弱市</strong></td>
+<td class="n numcol">25%</td>
+<td class="n numcol c-subj">33%</td>
+<td class="n numcol">54%</td>
+<td class="n numcol c-subj key"><strong>23%</strong></td>
+<td class="c-subj">多亏 17 个点</td>
+</tr>
+<tr>
+<td><strong>2012 震荡</strong></td>
+<td class="n numcol">14%</td>
+<td class="n numcol c-subj">25%</td>
+<td class="n numcol">50%</td>
+<td class="n numcol c-subj key"><strong>6%</strong></td>
+<td class="c-subj">多赚 6 个点</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>原因一：牛市里平分了仓位 “跑赢现金的大类平分”，<span class="num">2006–07 年</span>港股、美股也在涨，A 股只分到四成。E2 是一张排名表，A 股的十几个容器挤满了前几名，几乎满仓 A 股，这十年最大的一段行情它吃满了。</li>
+<li>原因二：防守的门槛太高 v5 只有在五个风险大类<strong>全部</strong>不跑赢现金时才放国债、黄金。五类里总有一类短期在涨，于是弱市里 v5 几乎一直满仓风险资产，只剩一类时还全押在它身上。E2 让国债、黄金和股票同场排名，股票一弱，国债就自然排进前几名。</li>
+</ul>
+<p>持仓数字来自对已登记两个配置的复跑，复跑净值与登记逐日一致；脚本 results/v5/diag/memo/holdings.py。</p>
+</div><h3 id="原版-跑前预判对照-猜对三条-猜错三条">原版 · 跑前预判对照：猜对三条，猜错三条</h3>
+<div class="claim-box"><strong>最大的错是回撤：预计更浅，实际更深。</strong></div>
+<div class="score"><div class="seg"><span class="s-good" style="flex:3"></span><span class="s-bad" style="flex:3"></span></div><div class="sl"><b class="t-good num">3</b> 通过 · <b class="t-bad num">3</b> 猜错<span class="of"> / 共 6 项</span></div></div><div class="table-wrap"><table>
+<thead>
+<tr>
+<th>行情</th>
+<th>预判（相对 E2）</th>
+<th>实际</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-good">
+<td><strong>2006–07 A 股大牛市</strong></td>
+<td>更差</td>
+<td><span class="pos">+61%</span>、<span class="pos">+72%</span> 对 <span class="pos">+106%</span>、<span class="pos">+156%</span></td>
+<td><span class="pill good">猜对</span></td>
+</tr>
+<tr class="row-bad">
+<td><strong>2008 熊市</strong></td>
+<td>相近或略好</td>
+<td><span class="neg">−34%</span> 对 <span class="neg">−23%</span></td>
+<td><span class="pill bad">猜错</span></td>
+</tr>
+<tr class="row-good">
+<td><strong>2009 反弹</strong></td>
+<td>相近</td>
+<td><span class="pos">+50%</span> 对 <span class="pos">+43%</span></td>
+<td><span class="pill good">大致对</span></td>
+</tr>
+<tr class="row-bad">
+<td><strong>2010–13 震荡</strong></td>
+<td>略好</td>
+<td>2012–13 更好，2011 年 <span class="neg">−26%</span> 对 <span class="neg">−10%</span></td>
+<td><span class="pill bad">猜错</span></td>
+</tr>
+<tr class="row-bad">
+<td><strong>2015 急跌</strong></td>
+<td>相近</td>
+<td>全年 <span class="pos">+4%</span> 对 <span class="pos">+15%</span></td>
+<td><span class="pill bad">猜错</span></td>
+</tr>
+<tr class="row-good">
+<td class="k"><strong>可交易池</strong></td>
+<td>明显更好</td>
+<td>17.4% 对 8.7%</td>
+<td><span class="pill good">猜对</span></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">猜错的三条都是同一个原因：防守是开关不是竞争（第 8 节硬伤 ③），下跌市里 v5 留在场内。这是设计错了，不是代码错了。</p>
+<h3 id="原版-稳健性-结论不靠运气和参数-唯一明显的改善指向-集中">原版 · 稳健性：结论不靠运气和参数；唯一明显的改善指向“集中”</h3>
+<div class="claim-box"><strong>每一项只改一处，看结论会不会被推翻。十三项里十二项变化不到 4 个点，只有“只持最强的一类”明显更好。</strong></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>检验</th>
+<th class="rh-why">在担心什么</th>
+<th class="rh-why">怎么做</th>
+<th class="rh-concl">结果（前五年 / 后五年）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>邻近回看期</strong></td>
+<td class="r-why">1、3、6、12 个月是不是刚好挑在“峰顶”，换一点就塌</td>
+<td class="r-why">换成稍短、更短、更长三组</td>
+<td class="r-concl"><b><span class="neg">−3.5</span>～<span class="neg">−1.3</span> / <span class="neg">−0.3</span>～<span class="pos">+1.6</span>：不塌</b></td>
+</tr>
+<tr>
+<td class="k"><strong>成本加倍</strong></td>
+<td class="r-why">交易费用被低估</td>
+<td class="r-why">所有费用 × 2</td>
+<td class="r-concl"><b><span class="neg">−1.9</span> / <span class="neg">−1.9</span></b></td>
+</tr>
+<tr>
+<td class="k"><strong>晚一天成交</strong></td>
+<td class="r-why">实盘来不及在信号当天收盘下单</td>
+<td class="r-why">推迟一个交易日成交</td>
+<td class="r-concl"><b>0 / <span class="pos">+0.6</span></b></td>
+</tr>
+<tr>
+<td><strong>去掉最好的 1、2、3 个</strong></td>
+<td class="r-why">十年的成绩是不是靠一两个“明星”撑着，换个年代就没了</td>
+<td class="r-why">把十年里涨得最多的 1、2、3 个容器从池子里拿掉再跑</td>
+<td class="r-concl"><b><span class="neg">−0.3</span>～<span class="pos">+1.7</span> / <span class="pos">+0.2</span>～<span class="pos">+1.2</span>：不靠明星</b></td>
+</tr>
+<tr>
+<td><strong>离场线 8%、12%</strong></td>
+<td class="r-why">10% 是不是刚好最好</td>
+<td class="r-why">改成 8% 或 12%</td>
+<td class="r-concl"><b><span class="neg">−2.1</span>～<span class="neg">−0.9</span> / <span class="neg">−0.1</span>～<span class="pos">+0.3</span></b></td>
+</tr>
+<tr>
+<td class="k"><strong>不设防守位</strong></td>
+<td class="r-why">防守位到底有没有用</td>
+<td class="r-why">五类都不跑赢时直接拿现金</td>
+<td class="r-concl"><b><span class="neg">−0.4</span> / <span class="pos">+0.1</span>：几乎没用</b></td>
+</tr>
+<tr>
+<td><strong>固定预算（A2 式）</strong></td>
+<td class="r-why">平分给“跑赢的”是不是不如每类固定一份</td>
+<td class="r-why">五类各 1/5，没跑赢的那份放防守</td>
+<td class="r-concl"><b>0 / <span class="pos">+1.2</span></b></td>
+</tr>
+<tr>
+<td><strong>只持最强的一类（A1 式）</strong></td>
+<td class="r-why">平分是不是比集中更差</td>
+<td class="r-why">每个回看期只持最强的那一个大类</td>
+<td class="r-concl"><strong><span class="pos">+11.4</span> / <span class="pos">+7.7</span></strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">指数池，数字是相对 v5 最终版的年化超额变化（百分点）。按预注册只报告、不改判，也不能拿来替换 v5。“不设防守位”几乎没有影响，正好印证了第 8 节硬伤 ③：防守位十年里只在 <span class="num">10%</span> 的时间打开。</p>
+<figure><img alt="稳健性和结构对照：相对 v5 最终版的变化" loading="lazy" src="../../assets/v5-memo/m5-robust.png"/></figure>
+<h3 id="学到了什么">学到了什么</h3>
+<div class="cards from-table plain"><div class="card tone-0 tone-info"><div class="ct">注意力是最稀缺的资源</div><div class="cb">仓位就是策略的注意力。平分给所有在涨的大类，等于没有重点；只持最强的一类，前五年多 <span class="num">11 个点</span>。E2 牛市满仓 A 股、A1 一次只拿一样，赢的都是这一点。</div></div><div class="card tone-1 tone-good"><div class="ct">为道日损：减法要减对地方</div><div class="cb">E2 的一张排名表里，本来就藏着“防守资产和股票同场竞争”。v5 把它拆成两层，看起来更清楚，其实把这个机制减掉了。</div></div><div class="card tone-2 tone-info"><div class="ct">先为不可胜</div><div class="cb">v5 想更“不输”，回撤反而更深。不输不靠单独设一个防守开关，而是让防守资产随时有机会排到前面。</div></div></div>
+<p>这些都是封板后 v6 的线索，按 D27 走“设计证据 <span class="arr">→</span> 别的市场 <span class="arr">→</span> 并行模拟”的路径，不改 v5。</p>
+<h3 id="原版-接下来-先把-v5-策略讨论清楚-再写预注册">原版 · 接下来：先把 v5 策略讨论清楚，再写预注册</h3>
+<div class="claim-box"><strong>“跑前五问”已写进项目规矩（D30-1）；v5 允许一次设计修正（D30-2）。新的 v5 入围与否，跑完都封板。</strong></div>
+<ol class="steps-n flow" style="counter-reset: fl 0">
+<li><b class="fl-t">讨论策略</b><span class="fl-d">排名怎么比、持几只、空位放什么、同类挤占怎么办；逐条过“跑前五问”，写事前画像。</span></li>
+<li><b class="fl-t">预注册</b><span class="fl-d">设计定下来再写定稿；Reviewer 复核、你批准后冻结。</span></li>
+<li><b class="fl-t">设计期和别的市场</b><span class="fl-d">各跑一次，逐条对照事前画像。</span></li>
+<li><b class="fl-t">封板、一次性检验</b><span class="fl-d">你定期望线和以哪个池子为准；入围的策略跑 2016 年以后，只跑一次。</span></li>
+</ol>
+<p>v5.1 预注册草案（E2 + 每类上限）已入库作为讨论稿，暂不冻结。原版不再做别的市场检验（你已确认）。v5 策略讨论清楚、过完“跑前五问”之后，再写定稿预注册。</p>
+<div class="callout"><div class="co-h">参考：封板规矩（D20、D27）、急跌和期权、结论报告的六项</div>
+<ul class="points">
+<li><strong>封板</strong>：v5 是最后一个研究版本；D30-2 允许一次设计缺陷修正（v5.1），之后只修程序错误。一次性检验只跑一次。模拟盘只上一个，12 个月不切换，看性格不只看收益。尝试次数有上限，结果按次数打折扣。</li>
+<li><strong>封板之后</strong>：新想法记作 v6，可用全部历史设计，和在跑的策略逐项比；上线前过别的市场检验和至少 6 个月并行模拟，小资金起步。</li>
+<li><strong>急跌和期权</strong>：三周跌完的行情趋势规则躲不开。境内期权数据大多在 2019 年以后；期权研究备忘待写，正式研究放到封板后。</li>
+<li><strong>结论报告的六项</strong>：性格、四种行情、任意起点、优劣对照、市场和时代的变化、适应性。</li>
+</ul>
+</div></div></div></section>
+<footer>内容取自仓库 <a href="https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/main/docs/owner/v5-research-memo.md">docs/owner/v5-research-memo.md</a>（main @ a592981）。图表为原文配图。</footer>
+</main>
+</div>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc ol a'));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function update() {
+    var y = window.scrollY + 120, idx = 0;
+    targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top + window.scrollY <= y) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+
+document.querySelectorAll('.fold-h').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var open = b.getAttribute('aria-expanded') === 'true';
+    b.setAttribute('aria-expanded', open ? 'false' : 'true');
+    var body = b.nextElementSibling;
+    if (open) body.setAttribute('hidden', ''); else body.removeAttribute('hidden');
+  });
+});
+
+</script>
+</body>
+</html>

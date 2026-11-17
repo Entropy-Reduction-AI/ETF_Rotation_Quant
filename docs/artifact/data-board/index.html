@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ETF 轮动 · 数据与容器看板</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  /* 布局：左侧固定目录 + 宽主栏（约 960px），图表按主栏全宽显示；表格自带横向滚动 */
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --ink: #1b2330;
+  --muted: #5b6676;
+  --line: #e1e5eb;
+  --accent: #1f5fd1;
+  --accent-soft: #e8f0fd;
+  --good: #1d7a46;
+  --good-soft: #e5f4ea;
+  --bad: #c2410c;
+  --bad-soft: #fdf0e6;
+  --warn: #8a5a00;
+  --warn-soft: #fbf1dc;
+  --font-body: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1a2029; --ink: #e6eaf0; --muted: #9aa5b4; --line: #2c3440;
+    --accent: #7aa7ff; --accent-soft: #1c2a44;
+    --good: #6fcf97; --good-soft: #17301f; --bad: #fb923c; --bad-soft: #3a2414; --warn: #f2c063; --warn-soft: #3a2e14;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12161d; --surface: #1a2029; --ink: #e6eaf0; --muted: #9aa5b4; --line: #2c3440;
+  --accent: #7aa7ff; --accent-soft: #1c2a44;
+  --good: #6fcf97; --good-soft: #17301f; --bad: #fb923c; --bad-soft: #3a2414; --warn: #f2c063; --warn-soft: #3a2e14;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+strong { font-weight: 700; }
+code { font-family: var(--font-mono); font-size: .88em; background: var(--line); padding: .1em .35em; border-radius: 4px; }
+
+.shell { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 56px; max-width: 1240px; margin: 0 auto; padding: 40px 32px 96px; }
+nav.toc { position: sticky; top: 24px; align-self: start; font-size: 14px; line-height: 1.6; }
+nav.toc .toc-title { font-size: 12px; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+nav.toc a { display: block; color: var(--muted); padding: 4px 10px; border-left: 2px solid var(--line); }
+nav.toc a:hover { color: var(--ink); border-left-color: var(--accent); text-decoration: none; }
+nav.toc ol ol { padding-left: 12px; font-size: 13px; }
+nav.toc a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 500; }
+
+main { min-width: 0; }
+header.top { display: grid; gap: 8px; margin-bottom: 28px; }
+.kicker { font-size: 13px; color: var(--muted); font-family: var(--font-mono); }
+h1 { font-size: 34px; line-height: 1.3; margin: 0; font-weight: 700; text-wrap: balance; }
+.vision { color: var(--muted); margin: 4px 0 0; }
+.vision b { color: var(--ink); font-weight: 500; }
+
+.summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 8px 0 48px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; display: grid; gap: 8px; align-content: start; }
+.card h3 { margin: 0; font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: .04em; }
+.card p { margin: 0; font-size: 15px; line-height: 1.7; }
+.asks { margin: 0; padding-left: 1.3em; font-size: 15px; line-height: 1.7; }
+.asks li { margin: 2px 0; }
+.card.verdict { border-top: 3px solid var(--bad); }
+.card.ask { border-top: 3px solid var(--accent); }
+.card.eng { border-top: 3px solid var(--good); }
+.big { font-family: var(--font-mono); font-size: 28px; font-weight: 500; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.big .vs { font-size: 15px; color: var(--muted); font-family: var(--font-body); }
+
+section { margin: 0 0 64px; scroll-margin-top: 24px; }
+h2 { font-size: 24px; line-height: 1.4; margin: 0 0 14px; font-weight: 700; text-wrap: balance; display: flex; gap: 12px; align-items: baseline; }
+h2 .num { font-family: var(--font-mono); font-size: 15px; color: var(--accent); font-weight: 500; }
+h3 { font-size: 19px; margin: 36px 0 10px; line-height: 1.45; text-wrap: balance; scroll-margin-top: 24px; }
+h4 { font-size: 16px; margin: 24px 0 8px; }
+p { margin: 0 0 12px; }
+ul, ol.steps { margin: 0 0 14px; padding-left: 1.3em; }
+li { margin: 4px 0; }
+
+.lede { font-size: 17px; font-weight: 500; border-left: 3px solid var(--accent); background: var(--surface); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 0 0 20px; max-width: none; }
+
+figure { margin: 14px 0 22px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+figure img { display: block; width: 100%; height: auto; }
+figcaption { font-size: 13px; color: #5b6676; margin-top: 8px; }
+
+.table-wrap { overflow-x: auto; margin: 14px 0 22px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; line-height: 1.65; }
+th, td { text-align: left; vertical-align: top; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+th { font-weight: 500; color: var(--muted); font-size: 13px; background: var(--bg); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; font-family: var(--font-mono); font-size: 14px; }
+td.name { font-weight: 700; white-space: nowrap; }
+.cols-3 td { width: 33.3%; }
+
+.pill { display: inline-block; font-size: 12.5px; font-weight: 500; padding: 1px 9px; border-radius: 999px; white-space: nowrap; margin-right: 4px; }
+.pill.bad { background: var(--bad-soft); color: var(--bad); }
+.pill.good { background: var(--good-soft); color: var(--good); }
+.pill.info { background: var(--accent-soft); color: var(--accent); }
+.pill.warn { background: var(--warn-soft); color: var(--warn); }
+.pill.mute { background: var(--line); color: var(--muted); }
+
+.note { font-size: 14px; color: var(--muted); }
+.claim { font-weight: 700; font-size: 16.5px; margin: 0 0 4px; }
+.aside { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; margin: 14px 0 22px; }
+.aside h4 { margin: 0 0 6px; font-size: 15px; }
+.aside p:last-child, .aside ul:last-child { margin-bottom: 0; }
+
+.archive { margin-top: 40px; border-top: 2px dashed var(--line); padding-top: 4px; }
+.archive-band { font-family: var(--font-mono); font-size: 12px; color: var(--muted); letter-spacing: .06em; margin: 10px 0 0; }
+.archive-head { display: flex; gap: 10px; align-items: baseline; margin-top: 32px; }
+.archive-head .tag { font-family: var(--font-mono); font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; }
+
+.mini { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 14px 0 22px; }
+.mini .card p { font-size: 14.5px; }
+
+ol.next { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; max-width: none; }
+ol.next { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; gap: 0; }
+ol.next li { padding: 14px 18px; display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; margin: 0; border-bottom: 1px solid var(--line); }
+ol.next li:last-child { border-bottom: 0; }
+ol.next .who .pill { margin-top: 4px; font-weight: 500; }
+ol.next .who { font-weight: 700; }
+
+.log { display: grid; gap: 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.log div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 14.5px; line-height: 1.7; }
+.log div:last-child { border-bottom: 0; }
+.log .d { font-family: var(--font-mono); font-size: 13.5px; color: var(--muted); padding-top: 1px; }
+details.older { margin-top: 16px; }
+details.older summary { cursor: pointer; color: var(--accent); font-size: 15px; margin-bottom: 10px; }
+
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+
+@media (max-width: 1000px) {
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 24px 16px 64px; }
+  nav.toc { display: none; }
+  .summary, .mini { grid-template-columns: minmax(0, 1fr); }
+  h1 { font-size: 27px; }
+  ol.next li, .log div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+html { scroll-behavior: smooth; }
+
+/* page-type additions */
+nav.toc li.l3 a { padding-left: 22px; font-size: 13px; }
+nav.toc { max-height: calc(100vh - 48px); overflow-y: auto; }
+.back { font-size: 13px; color: var(--muted); }
+.headline { font-size: 19px; line-height: 1.6; font-weight: 500; margin: 6px 0 0; color: var(--ink); text-wrap: balance; }
+section.intro > p:first-child { margin-top: 0; }
+section.intro { margin-bottom: 40px; }
+.lede p, .claim-box p { margin: 0; }
+.claim-box { font-weight: 700; font-size: 16.5px; margin: 0 0 10px; }
+.aside > p:last-child, .aside > ul:last-child, .aside > ol:last-child { margin-bottom: 0; }
+h4.toggle { font-size: 15.5px; color: var(--ink); margin: 26px 0 8px; padding-left: 10px; border-left: 3px solid var(--line); }
+details.fold { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 18px; margin: 16px 0 22px; }
+details.fold > summary { cursor: pointer; padding: 12px 0; font-weight: 500; color: var(--accent); list-style: none; }
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::before { content: '▸'; display: inline-block; width: 1.1em; transition: transform .15s; }
+details.fold[open] > summary::before { transform: rotate(90deg); }
+details.fold[open] { padding-bottom: 8px; }
+details.fold figure { padding: 10px; }
+pre { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font-size: 13px; }
+pre code { background: none; padding: 0; }
+td del, td s { color: var(--muted); }
+td.k { white-space: nowrap; font-weight: 500; }
+/* table polish */
+.table-wrap { box-shadow: 0 1px 0 var(--line); }
+th { background: var(--bg); color: var(--muted); font-weight: 500; font-size: 12.5px; border-bottom: 2px solid var(--line); vertical-align: bottom; }
+tbody tr:hover td { background: var(--accent-soft); }
+tbody td:first-child { font-weight: 500; color: var(--ink); }
+tr.group td { background: var(--bg); color: var(--muted); font-size: 12.5px; font-weight: 500; letter-spacing: .02em; padding-top: 8px; padding-bottom: 8px; }
+tr.ref td { background: color-mix(in srgb, var(--line) 35%, transparent); color: var(--muted); }
+tr.ref td:first-child { font-style: normal; }
+span.pos { color: var(--good); font-weight: 500; }
+span.neg { color: var(--bad); font-weight: 500; }
+td .pill { margin-right: 6px; vertical-align: 1px; }
+td.good span.pos, td.bad span.neg { color: inherit; }
+td.good { background: var(--good-soft); }
+td.bad, tr.hl td { background: var(--warn-soft); }
+td.boxed { outline: 2px solid var(--accent); outline-offset: -4px; }
+.log div.hl { background: var(--warn-soft); }
+.log div.hl span { color: var(--warn); font-weight: 500; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin: 14px 0 22px; }
+.cards .card .ct { font-size: 14px; color: var(--ink); font-weight: 700; }
+.cards .card .cv { font-family: var(--font-mono); font-size: 20px; font-weight: 500; line-height: 1.3; color: var(--accent); font-variant-numeric: tabular-nums; }
+.cards .card p { font-size: 14.5px; line-height: 1.7; margin: 0; }
+.cards .card p + p { color: var(--muted); font-size: 13.5px; }
+th { white-space: normal; min-width: 4.5em; }
+th.n { white-space: normal; }
+h2 .num { min-width: 1.6em; }
+
+/* ===== storytelling layer ===== */
+/* status cards that open a page */
+.cards.from-table { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.cards.from-table .card { border-top: 3px solid var(--line); }
+.cards.from-table .ct { font-size: 12.5px; font-weight: 500; color: var(--muted); letter-spacing: .04em; }
+.cards.from-table .cb { font-size: 14.5px; line-height: 1.75; }
+.cards.status .tone-0 { border-top-color: var(--muted); }
+.cards.status .tone-1 { border-top-color: var(--accent); }
+.cards.status .tone-2 { border-top-color: var(--warn); }
+.cards.status .tone-2 .ct { color: var(--warn); }
+.cards.status .tone-1 .cb { font-size: 15px; }
+.cards.plain .card { border-top-color: var(--accent); }
+
+/* options with a recommendation */
+.options { display: grid; gap: 10px; margin: 12px 0 18px; }
+.option { display: grid; grid-template-columns: minmax(150px, 220px) minmax(0, 1fr); gap: 16px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+.option .on { font-weight: 700; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.option .od { color: var(--muted); font-size: 14.5px; }
+.option.rec { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.option.rec .od { color: var(--ink); }
+.option .badge { font-size: 12px; font-weight: 500; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 0 8px; }
+
+/* definitions */
+table.deflist thead { display: none; }
+table.deflist td:first-child { width: 9.5em; color: var(--accent); font-weight: 700; border-right: 2px solid var(--accent-soft); }
+table.deflist tr.was td { color: var(--muted); }
+table.deflist tr.was td:last-child { text-decoration: line-through; text-decoration-color: var(--bad); }
+table.deflist tr.now td { background: var(--good-soft); }
+table.deflist tr.now td:first-child { color: var(--good); border-right-color: var(--good); }
+
+/* grouped headers */
+thead tr.grp th.gh { text-align: center; color: var(--ink); font-weight: 700; border-bottom: 1px solid var(--line); background: var(--bg); }
+thead tr.sub th { font-size: 12px; }
+
+/* column roles */
+th.h-subj, td.c-subj { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+th.h-subj { color: var(--accent); font-weight: 700; }
+td.c-take { font-weight: 500; color: var(--ink); border-left: 1px solid var(--line); }
+th.h-take { border-left: 1px solid var(--line); color: var(--ink); }
+td.c-note { color: var(--muted); font-size: 13.5px; }
+tr.row-subj td { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+tr.row-subj td:first-child { box-shadow: inset 3px 0 0 var(--accent); color: var(--accent); }
+
+/* numeric columns */
+td.numcol, th.numcol { text-align: right; }
+td.numcol { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 14px; white-space: nowrap; }
+thead tr.sub th.numcol, thead tr.grp th.numcol { text-align: right; }
+/* heat cells for differences */
+td.heat { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 500; text-align: right; white-space: nowrap; }
+td.heat-pos { color: var(--good); background: color-mix(in srgb, var(--good) var(--h, 8%), transparent); }
+td.heat-neg { color: var(--bad); background: color-mix(in srgb, var(--bad) var(--h, 8%), transparent); }
+td.heat-zero { color: var(--muted); }
+td.key { color: var(--accent); font-weight: 700; }
+td.key strong { font-weight: 700; }
+
+/* verdict rows */
+tr.row-bad td { background: color-mix(in srgb, var(--bad) 5%, transparent); }
+tr.row-bad td:first-child { box-shadow: inset 3px 0 0 var(--bad); }
+tr.row-good td:first-child { box-shadow: inset 3px 0 0 var(--good); }
+tr.row-warn td:first-child { box-shadow: inset 3px 0 0 var(--warn); }
+tr.row-bad td.heat, tr.row-subj td.heat { background: color-mix(in srgb, var(--bad) var(--h, 8%), transparent); }
+tr.row-bad td.heat-pos, tr.row-subj td.heat-pos { background: color-mix(in srgb, var(--good) var(--h, 8%), transparent); }
+.tvc .tv { font-family: var(--font-mono); margin-right: 8px; }
+.who { font-size: 12.5px; color: var(--muted); margin-right: 6px; }
+.pill-note { display: block; font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+td .pill { font-size: 12.5px; }
+
+/* scorecard above verdict tables */
+.score { display: flex; align-items: center; gap: 14px; margin: 14px 0 -6px; }
+.score .seg { display: flex; gap: 3px; width: 200px; height: 8px; }
+.score .seg span { border-radius: 2px; }
+.score .s-good { background: var(--good); }
+.score .s-warn { background: var(--warn); }
+.score .s-bad { background: var(--bad); }
+.score .sl { font-size: 13.5px; color: var(--muted); }
+.score .sl b { font-family: var(--font-mono); font-size: 15px; }
+.score .t-good { color: var(--good); } .score .t-bad { color: var(--bad); } .score .t-warn { color: var(--warn); }
+.score .of { color: var(--muted); }
+
+/* notes under tables read as captions */
+p.table-note { font-size: 13px; color: var(--muted); margin-top: -12px; }
+
+/* key-point lists */
+ul.points { list-style: none; padding-left: 0; display: grid; gap: 8px; }
+ul.points > li { padding: 2px 0 2px 14px; border-left: 3px solid var(--accent-soft); margin: 0; }
+ul.points > li > strong:first-child { color: var(--ink); }
+ol.steps-n { list-style: none; padding-left: 0; counter-reset: st; display: grid; gap: 6px; }
+ol.steps-n > li { counter-increment: st; position: relative; padding-left: 34px; margin: 0; }
+ol.steps-n > li::before { content: counter(st); position: absolute; left: 0; top: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; display: grid; place-items: center; }
+
+/* enrichment */
+td.mgc { white-space: nowrap; min-width: 128px; }
+.mg { display: inline-flex; align-items: center; gap: 8px; }
+.mg-t { position: relative; display: inline-block; width: 64px; height: 8px; background: var(--line); border-radius: 4px; }
+.mg-b { position: absolute; left: 0; top: 0; height: 8px; border-radius: 4px; }
+.mg-b.a { background: var(--accent); } .mg-b.m { background: color-mix(in srgb, var(--muted) 55%, transparent); } .mg-b.o { background: color-mix(in srgb, var(--bad) 70%, transparent); }
+.mk { position: absolute; top: -3px; width: 2px; height: 14px; background: var(--ink); margin-left: -1px; }
+.mg-v { font-family: var(--font-mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.mg-v.strong { font-weight: 700; color: var(--accent); }
+.mg-s { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; padding-left: 72px; }
+td.detail { color: var(--muted); font-size: 13.5px; line-height: 1.65; max-width: 30em; }
+tbody tr:nth-child(even):not(.grp):not(.row-bad):not(.row-subj) td { background: color-mix(in srgb, var(--bg) 60%, transparent); }
+tbody td:first-child strong { font-weight: 700; }
+td.c-take .pill { font-size: 13px; padding: 2px 10px; }
+
+
+/* ===== spec layer: docs/reference/owner-facing-uiux-principles.md §13 ===== */
+:root { --fg: var(--ink); --mono: var(--font-mono); --body: var(--font-body); --rule: var(--line); --ok: var(--good); --ok-soft: var(--good-soft); }
+p.memo { font-size: 17px; font-weight: 700; line-height: 1.65; border-left: 4px solid var(--accent); background: var(--surface); padding: 12px 16px; border-radius: 0 10px 10px 0; margin: 0 0 18px; }
+p.memo strong { color: var(--accent); }
+.fold { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin: 14px 0 20px; }
+.fold-h { all: unset; box-sizing: border-box; display: flex; gap: 8px; align-items: center; width: 100%; padding: 11px 16px; cursor: pointer; color: var(--accent); font-weight: 500; font-size: 15px; border-radius: 10px; }
+.fold-h:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.fold-h .chev { display: inline-block; transition: transform .15s; }
+.fold-h[aria-expanded="true"] .chev { transform: rotate(90deg); }
+.fold-b { padding: 0 16px 12px; }
+.fold-b > .table-wrap:first-child, .fold-b > .score:first-child { margin-top: 4px; }
+td.ibc { min-width: 150px; }
+td.tg { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+section.appendix h3 { font-size: 20px; margin-top: 0; }
+ol.next-steps, ul.next-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; counter-reset: none; }
+ol.next-steps > li, ul.next-steps > li { padding: 12px 16px 12px 18px; border-bottom: 1px solid var(--line); margin: 0; }
+ol.next-steps > li::before { display: none; }
+ol.next-steps > li:last-child, ul.next-steps > li:last-child { border-bottom: 0; }
+ol.next-steps > li > b:first-child, ol.next-steps > li > strong:first-child { display: inline-block; min-width: 7em; color: var(--accent); }
+.pill.tagline { white-space: normal; font-weight: 500; }
+
+.stk-wrap { margin: 8px 0 16px; }
+.stk span { color: #fff; }
+.stk-l span { display: inline-flex; align-items: center; }
+.stk-l b { color: var(--ink); margin-left: 3px; font-family: var(--font-mono); font-weight: 500; }
+
+/* UX pass */
+span.num, strong.num, b.num { font-family: var(--font-mono); font-size: .93em; font-weight: 500; color: var(--ink); background: color-mix(in srgb, var(--accent) 9%, transparent); border-radius: 4px; padding: 0 4px; white-space: nowrap; }
+p.memo span.num { background: none; color: var(--accent); padding: 0; }
+span.arr { color: var(--accent); font-weight: 700; padding: 0 2px; }
+.cards .card { position: relative; border-top: 3px solid var(--accent); transition: transform .12s, box-shadow .12s; }
+.cards .card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(20, 30, 50, .08); }
+.cards .card.tone-good { border-top-color: var(--good); } .cards .card.tone-bad { border-top-color: var(--bad); }
+.cards .card .ct { font-size: 13px; letter-spacing: .02em; }
+.cards .card.tone-good .ct { color: var(--good); } .cards .card.tone-bad .ct { color: var(--bad); } .cards .card.tone-info .ct { color: var(--accent); }
+.cards .card .cv { font-size: 24px; line-height: 1.2; margin: 2px 0 4px; color: var(--ink); }
+.cards .card .cv.delta .from { color: var(--muted); font-size: 18px; }
+.cards .card .cv.delta .to { font-weight: 700; }
+.cards .card.tone-good .cv .to { color: var(--good); } .cards .card.tone-bad .cv .to { color: var(--bad); }
+.cards .card .cv.echo { color: var(--accent); }
+.cards .card p { font-size: 14.5px; }
+ol.flow { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 22px; margin: 14px 0 22px; counter-reset: none; }
+ol.flow > li { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 14px 12px; margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); }
+ol.flow > li { counter-increment: fl; }
+ol.flow > li::before { content: counter(fl); display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 12.5px; margin-bottom: 6px; position: static; }
+ol.flow > li:not(:last-child)::after { content: '→'; position: absolute; right: -18px; top: 50%; transform: translateY(-50%); color: var(--accent); font-weight: 700; }
+ol.flow .fl-n { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 12.5px; margin-bottom: 6px; }
+ol.flow .fl-t { display: block; font-weight: 700; color: var(--ink); font-size: 15px; margin-bottom: 4px; }
+p.kv { display: grid; grid-template-columns: 11em minmax(0, 1fr); gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); margin: 0; }
+p.kv + :not(p.kv) { margin-top: 14px; }
+p.kv .kv-k { font-weight: 700; color: var(--ink); }
+p.kv .kv-k::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: 2px; }
+@media (max-width: 1000px) { p.kv { grid-template-columns: minmax(0, 1fr); gap: 2px; } ol.flow > li::after { display: none; } }
+
+.readnote { margin: -6px 0 22px; padding: 10px 14px; border-radius: 10px; background: var(--bg); border: 1px dashed var(--line); display: grid; gap: 4px; }
+.readnote .rn-h { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .06em; margin-bottom: 2px; }
+.readnote .rn-i { font-size: 13.5px; color: var(--muted); line-height: 1.6; padding-left: 14px; position: relative; }
+.readnote .rn-i::before { content: ''; position: absolute; left: 2px; top: .65em; width: 5px; height: 5px; border-radius: 50%; background: var(--line); }
+.readnote .rn-i:first-of-type { color: var(--ink); font-weight: 500; }
+.readnote span.num { background: none; padding: 0; color: var(--ink); }
+
+/* focus pass */
+.claim-box { font-weight: 700; font-size: 16px; border-left: 4px solid var(--accent); background: var(--surface); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 0 0 14px; }
+.fold-b .claim-box { background: var(--accent-soft); }
+.callout { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--warn); border-radius: 0 10px 10px 0; padding: 12px 16px; margin: 14px 0 20px; }
+.callout .co-h { font-weight: 700; color: var(--warn); font-size: 14.5px; margin-bottom: 6px; }
+.callout > p:last-child, .callout > ul:last-child { margin-bottom: 0; }
+p.oneline { background: var(--accent-soft); border-radius: 10px; padding: 12px 16px; font-size: 15.5px; }
+p.oneline > b:first-child, p.oneline > strong:first-child { display: inline-block; background: var(--accent); color: #fff; border-radius: 4px; padding: 0 8px; margin-right: 8px; font-size: 13px; }
+.overview { margin: 8px 0 26px; padding: 14px; background: var(--bg); border-radius: 12px; border: 1px solid var(--line); }
+.overview .ov-h { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+.overview .ov-h span { font-weight: 400; color: var(--muted); }
+.ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; counter-reset: ov; }
+.ov-card { position: relative; display: flex; flex-direction: column; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 10px; padding: 10px 12px 28px; color: var(--ink); text-decoration: none; transition: transform .12s, box-shadow .12s; }
+.ov-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(20, 30, 50, .08); text-decoration: none; }
+.ov-card.t-bad { border-top-color: var(--bad); } .ov-card.t-good { border-top-color: var(--good); } .ov-card.t-mixed { border-top-color: #b45309; } .ov-card.t-info { border-top-color: var(--muted); }
+.ov-top { display: flex; align-items: center; gap: 8px; }
+.ov-card .ov-n { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 5px; padding: 0 6px; }
+.ov-tag { font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 0 6px; color: var(--muted); background: var(--bg); }
+.t-bad .ov-tag { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.t-good .ov-tag { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.t-mixed .ov-tag { color: #b45309; background: color-mix(in srgb, #b45309 10%, transparent); }
+.ov-m { font-family: var(--font-mono); font-size: 21px; font-weight: 700; line-height: 1.25; margin-top: 4px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ov-m i { font-style: normal; font-size: 14px; color: var(--muted); margin: 0 6px; font-family: var(--font-sans, inherit); }
+.t-bad .ov-m { color: var(--bad); } .t-good .ov-m { color: var(--good); } .t-mixed .ov-m { color: #b45309; }
+.ov-card .ov-t { font-weight: 700; font-size: 15px; line-height: 1.4; }
+.ov-card .ov-c { font-size: 13.5px; line-height: 1.6; color: var(--muted); }
+.ov-card .ov-c .num { color: var(--ink); }
+.ov-q { color: var(--ink); font-weight: 600; }
+.ov-card.bare { border-top-style: dashed; background: transparent; }
+.ov-card.bare .ov-tag { display: none; }
+.ov-go { position: absolute; left: 12px; bottom: 8px; font-size: 12px; color: var(--accent); opacity: 0; transition: opacity .12s; }
+.ov-card:hover .ov-go { opacity: 1; }
+.ov-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.ov-chip { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px 4px 4px; color: var(--ink); font-size: 14px; font-weight: 600; text-decoration: none; }
+.ov-chip:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.ov-k { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 12px; }
+
+.actboard { display: grid; gap: 14px; }
+.ab-strip { display: flex; flex-wrap: wrap; gap: 8px; }
+.ab-s { display: inline-flex; align-items: baseline; gap: 6px; font-size: 13px; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; }
+.ab-s b { font-family: var(--font-mono); font-size: 16px; color: var(--ink); }
+.ab-s.s-me { background: var(--accent); border-color: var(--accent); color: #fff; } .ab-s.s-me b { color: #fff; }
+.ab-s.s-wait b { color: #b45309; } .ab-s.s-done b { color: var(--good); }
+.ab-mine { border: 1.5px solid var(--accent); border-radius: 12px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--surface)), var(--surface)); padding: 14px 16px 16px; }
+.ab-mh { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.ab-mh b { font-size: 16px; color: var(--accent); }
+.ab-mhint { font-size: 13px; color: var(--muted); }
+.ab-decs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.ab-dec { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px 14px 52px; min-height: 52px; }
+.ab-dn { position: absolute; left: 14px; top: 14px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; border: 2px solid var(--accent); color: var(--accent); font-family: var(--font-mono); font-weight: 700; font-size: 13px; }
+.ab-verb { font-size: 22px; font-weight: 800; color: var(--accent); line-height: 1.15; letter-spacing: .04em; }
+.ab-obj { font-size: 14.5px; line-height: 1.6; color: var(--ink); margin-top: 4px; }
+.ab-opts { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ab-opt { font-size: 13.5px; font-weight: 600; border: 1.5px dashed var(--accent); color: var(--accent); border-radius: 8px; padding: 3px 10px; background: var(--accent-soft); }
+.ab-or { font-size: 12px; color: var(--muted); font-weight: 700; }
+.ab-q { font-weight: 700; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+.ab-q.bad { color: var(--bad); border-color: transparent; background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.ab-id { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); background: var(--accent-soft); border-radius: 4px; padding: 0 5px; white-space: nowrap; }
+.ab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.ab-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.ab-who { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+.ab-who b { font-size: 15px; }
+.ab-n { margin-left: auto; font-family: var(--font-mono); font-size: 12px; color: var(--muted); background: var(--bg); border-radius: 999px; padding: 0 8px; }
+.ab-av { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--line); color: var(--ink); font-weight: 700; font-size: 13px; }
+.ab-mh .ab-av { background: var(--accent); color: #fff; }
+.ab-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.ab-items li { margin: 0; padding: 0; display: grid; gap: 3px; font-size: 14px; line-height: 1.6; }
+.ab-items li::before { display: none; }
+.ab-st { justify-self: start; font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 0 7px; color: var(--muted); background: var(--bg); border: 1px solid var(--line); }
+.st-done .ab-st { color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, transparent); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.st-done .ab-st::before { content: '✓ '; }
+.st-done .ab-tx { color: var(--muted); }
+.st-wait .ab-st { color: #b45309; border-color: color-mix(in srgb, #b45309 40%, transparent); background: color-mix(in srgb, #b45309 10%, transparent); }
+.st-wait .ab-st::before { content: '⏳ '; }
+.st-todo .ab-st { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: var(--accent-soft); }
+.st-todo .ab-st::before { content: '→ '; }
+.st-ongoing .ab-st::before { content: '↻ '; }
+.st-later .ab-tx { color: var(--muted); }
+@media (max-width: 1000px) { .ab-decs, .ab-grid { grid-template-columns: minmax(0, 1fr); } }
+
+table.risk tr.risk-hit td { background: color-mix(in srgb, var(--bad) 6%, transparent); }
+table.risk tr.risk-hit td:first-child { box-shadow: inset 4px 0 0 var(--bad); }
+table.risk tr.risk-hit td:first-child .pill { display: table; margin: 6px 0 0; }
+table.risk tr.risk-hit td:nth-child(2) strong.c-bad, table.risk tr.risk-hit td:nth-child(2) strong { color: var(--bad); font-size: 15px; }
+table.risk tr.risk-watch td { color: var(--muted); }
+table.risk tr.risk-watch td:first-child { color: var(--ink); box-shadow: inset 4px 0 0 var(--line); }
+table.risk td:nth-child(3) b { color: var(--ink); }
+.rk-i { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 700; margin-right: 6px; vertical-align: 1px; }
+.rk-i.done { background: var(--good-soft); color: var(--good); }
+
+.declog { position: relative; display: grid; gap: 12px; margin: 6px 0 14px; }
+.dl-track { display: flex; align-items: stretch; gap: 0; margin: 0 0 4px; padding-top: 8px; counter-reset: none; }
+.dl-tk { flex: 1; position: relative; display: grid; gap: 2px; padding: 10px 14px 10px 0; text-decoration: none; color: var(--muted); border-top: 3px solid color-mix(in srgb, var(--accent) 30%, var(--line)); }
+.dl-tk::before { content: ''; position: absolute; top: -8px; left: 0; width: 13px; height: 13px; border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); box-sizing: border-box; }
+.dl-tk:last-child { border-top-color: var(--accent); }
+.dl-tk:last-child::before { background: var(--accent); }
+.dl-tk-id { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); font-weight: 600; }
+.dl-tk-t { font-size: 13.5px; color: var(--ink); }
+.dl-tk:hover .dl-tk-t { color: var(--accent); text-decoration: underline; }
+.dl-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--muted); margin-bottom: 2px; }
+.dl-lg { display: inline-flex; align-items: center; gap: 5px; }
+.dl-row { position: relative; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 20px; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid color-mix(in srgb, var(--accent) 35%, var(--line)); border-radius: 10px; padding: 14px 18px; scroll-margin-top: 80px; transition: box-shadow .12s; }
+.dl-row:hover { box-shadow: 0 6px 18px rgba(20, 30, 50, .07); }
+.dl-row:target { box-shadow: 0 0 0 2px var(--accent); }
+.dl-row.latest { border-left-color: var(--accent); background: linear-gradient(90deg, var(--accent-soft), var(--surface) 40%); }
+.dl-row.latest .dl-side::after { content: '最新'; display: inline-block; margin-top: 6px; font-size: 11.5px; font-weight: 700; color: #fff; background: var(--accent); border-radius: 4px; padding: 1px 7px; }
+.dl-side { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; border-right: 1px dashed var(--line); padding-right: 14px; }
+.dl-id { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 2px 8px; white-space: nowrap; }
+.dl-t { font-weight: 700; font-size: 15.5px; color: var(--ink); line-height: 1.4; }
+.dl-cnt { font-size: 12.5px; color: var(--muted); }
+.dl-cnt b { font-family: var(--font-mono); color: var(--ink); }
+.dl-h { font-size: 19px; font-weight: 700; color: var(--accent); line-height: 1.45; padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+.dl-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 8px 22px; }
+.dl-c { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px; align-items: start; font-size: 14.5px; line-height: 1.6; color: var(--ink); }
+.dl-ic { display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 5px; font-size: 11px; font-weight: 700; margin-top: 3px; color: #fff; background: var(--accent); }
+.dl-ic::before { content: '✓'; }
+.k-guard .dl-ic { background: #7c3aed; } .k-guard .dl-ic::before { content: '!'; }
+.k-swap .dl-ic { background: var(--good); } .k-swap .dl-ic::before { content: '⇄'; }
+.k-change .dl-ic { background: var(--warn, #b45309); } .k-change .dl-ic::before { content: '↻'; }
+.k-outcome .dl-ic { background: var(--good); } .k-outcome .dl-ic::before { content: '★'; }
+.k-guard .dl-tx { color: #4c1d95; }
+.dl-not { color: var(--muted); }
+.dl-not del .num { background: none; color: inherit; padding: 0; }
+.dl-not del { color: var(--bad); text-decoration-color: var(--bad); text-decoration-thickness: 2px; }
+.dl-arrow { display: inline-block; margin: 0 4px; font-size: 12px; font-weight: 700; color: var(--warn, #b45309); background: color-mix(in srgb, #b45309 12%, transparent); border-radius: 4px; padding: 0 6px; }
+.dl-new { font-weight: 700; }
+.dl-win { font-weight: 700; color: var(--good); background: color-mix(in srgb, var(--good) 12%, transparent); border-radius: 4px; padding: 0 5px; }
+.dl-q { font-weight: 600; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+@media (max-width: 1000px) { .dl-row { grid-template-columns: minmax(0, 1fr); gap: 8px; } .dl-side { border-right: 0; padding-right: 0; flex-direction: row; flex-wrap: wrap; align-items: center; } .dl-track { display: none; } }
+
+ol.flow { align-items: stretch; }
+ol.flow .fl-t { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 2px; }
+ol.flow .fl-d { display: block; }
+ol.flow .fl-k { display: block; font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1.35; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+ol.flow > li { color: var(--muted); }
+
+.hero { display: grid; gap: 14px; margin-bottom: 8px; }
+.hv { font-size: 15px; line-height: 1.8; color: var(--muted); padding: 2px 0; }
+.hv-k { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--accent); border: 1px solid var(--accent); border-radius: 4px; padding: 1px 7px; margin-right: 10px; }
+.hv-goal { color: var(--ink); font-weight: 600; border-bottom: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); }
+.hero-g { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); grid-template-areas: 'v a' 'e a'; gap: 14px; }
+.hz.ask { grid-area: a; } .hz.eng { grid-area: e; }
+.hz { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.hz-l { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--muted); }
+.hz.verdict { grid-area: v; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px 24px; border-top: 4px solid var(--bad); align-content: start; }
+.hz.verdict .hz-l, .hz.verdict .hz-v { grid-column: 1 / -1; }
+.hz-v { font-size: 34px; font-weight: 800; color: var(--bad); line-height: 1.1; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.hz-x { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--bad); color: #fff; font-size: 20px; align-self: center; }
+.hz-s { font-size: 16px; font-weight: 500; color: var(--muted); }
+.hz-cap { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.hz-cap b { color: var(--bad); font-weight: 700; margin: 0 2px; }
+.hb { display: grid; grid-template-columns: 6.5em minmax(0, 1fr) 4em; gap: 8px; align-items: center; margin: 6px 0; font-size: 13.5px; }
+.hb-k { color: var(--ink); font-weight: 600; }
+.hb-bar { height: 14px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.hb-bar b { display: block; height: 100%; background: color-mix(in srgb, var(--muted) 55%, transparent); border-radius: 4px; }
+.hb-bar b.bad { background: var(--bad); }
+.hb-v { font-family: var(--font-mono); font-weight: 700; font-size: 16px; text-align: right; }
+.hb-v.bad { color: var(--bad); }
+.hz-gap { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.hz-gap b { font-family: var(--font-mono); color: var(--bad); font-size: 15px; }
+.dots { display: grid; grid-template-columns: repeat(14, 12px); gap: 4px; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--bad); box-sizing: border-box; opacity: .75; }
+.dots i.w { background: var(--good); border-color: var(--good); }
+.hz.ask { border: 1.5px solid var(--accent); background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--surface)), var(--surface)); }
+.hz.ask .hz-l { color: var(--accent); }
+.hq-h { font-size: 22px; font-weight: 800; color: var(--accent); margin: 4px 0 10px; }
+.hq { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: none; }
+.hq li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 8px; margin: 0; padding: 0; font-size: 14.5px; line-height: 1.55; color: var(--ink); }
+.hq li::before { display: none; }
+.hq-n { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--accent); color: var(--accent); font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
+.hq-ref { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.hz.eng { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; padding: 12px 18px; }
+.hz.eng b { color: var(--ink); }
+.eng-ok { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--good); color: #fff; font-size: 12px; font-weight: 700; align-self: center; }
+.eng-d { font-size: 13.5px; color: var(--muted); }
+@media (max-width: 1000px) { .hero-g, .hz.verdict { grid-template-columns: minmax(0, 1fr); } .hero-g { grid-template-areas: 'v' 'a' 'e'; } }
+
+table td.vs-good { color: var(--good); font-weight: 600; background: color-mix(in srgb, var(--good) 8%, transparent); }
+table td.vs-bad { color: var(--bad); font-weight: 600; background: color-mix(in srgb, var(--bad) 7%, transparent); }
+table.vs-base th:last-child, table.vs-base td.numcol:last-child { }
+td.r-concl { font-weight: 600; color: var(--ink); box-shadow: inset 3px 0 0 color-mix(in srgb, var(--accent) 45%, transparent); }
+th.rh-concl { color: var(--accent); }
+td.r-cost { color: color-mix(in srgb, var(--bad) 80%, var(--ink)); font-size: 13.5px; }
+th.rh-cost { color: var(--bad); }
+th.rh-cost::before { content: '⚠ '; }
+td.r-why { color: var(--muted); font-size: 13.5px; }
+td.r-old { color: var(--muted); }
+td.r-new { font-weight: 600; color: var(--ink); background: color-mix(in srgb, var(--accent) 5%, transparent); }
+th.rh-new { color: var(--accent); }
+th.rh-new::before { content: '→ '; }
+.rid { display: inline-grid; place-items: center; min-width: 20px; height: 20px; border-radius: 5px; background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); font-size: 12px; font-weight: 700; margin-right: 8px; padding: 0 4px; }
+.cat { display: inline-block; font-size: 12.5px; font-weight: 600; border-radius: 999px; padding: 1px 10px; border: 1px solid var(--line); }
+.cat.c0 { color: var(--accent); background: var(--accent-soft); border-color: transparent; }
+.cat.c1 { color: #7c3aed; background: color-mix(in srgb, #7c3aed 10%, transparent); border-color: transparent; }
+.cat.c2 { color: #b45309; background: color-mix(in srgb, #b45309 10%, transparent); border-color: transparent; }
+.cat.c3 { color: var(--muted); background: var(--bg); }
+.pill.ditto { opacity: .7; }
+
+.cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 12px; margin: 14px 0 20px; }
+.case { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; padding: 12px 16px; }
+.case.t-bad { border-left-color: var(--bad); } .case.t-good { border-left-color: var(--good); }
+.case-h { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.case-who { font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 5px; padding: 1px 8px; }
+.case-c { font-size: 16.5px; font-weight: 700; color: var(--ink); }
+.case.t-bad .case-c { color: var(--bad); } .case.t-good .case-c { color: var(--good); }
+.case-b p { margin: 6px 0; font-size: 14.5px; }
+.case-b p.kv { display: block; border: 0; padding: 0; }
+.case-b p.kv .kv-k::before { display: none; }
+.subpts { margin: 6px 0 2px; display: grid; gap: 4px; }
+.subpts .sp { position: relative; padding-left: 14px; font-size: 14px; line-height: 1.6; color: var(--ink); }
+.subpts .sp::before { content: ''; position: absolute; left: 2px; top: .65em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+.hz.verdict2 { grid-area: v; border-top: 4px solid var(--accent); }
+.hz.verdict2.t-bad { border-top-color: var(--bad); }
+.hz-hd { font-size: 19px; font-weight: 700; line-height: 1.55; color: var(--ink); margin-top: 6px; }
+.hz-hd .num, .hz-hd strong.num { font-size: 1.12em; color: var(--accent); background: none; padding: 0 1px; }
+.hz-rest { font-size: 14.5px; line-height: 1.7; color: var(--muted); margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+.hz-engs { grid-area: e; display: grid; gap: 10px; margin: 0; padding: 0; }
+.hero-g > .hz.ask { align-self: start; }
+.hz-engs .hz.eng { padding: 10px 16px; }
+.hq-h.calm { color: var(--good); font-size: 20px; }
+.hz.ask.calm { border-color: color-mix(in srgb, var(--good) 50%, var(--line)); background: color-mix(in srgb, var(--good) 5%, var(--surface)); }
+.hz.ask.calm .hz-l { color: var(--good); }
+.hq-b { font-size: 14.5px; line-height: 1.7; margin-top: 6px; }
+
+</style>
+</head>
+<body>
+<div class="shell">
+<nav class="toc" aria-label="目录">
+  <a class="back" href="https://claude.ai/artifact/17bW2rKeeBheRFfhnjsrSU">← Owner 看板</a>
+  <div class="toc-title">目录</div>
+  <ol><li class="l2"><a href="#1-池子随时代长大-设计期里能买的很少">1. 池子随时代长大</a></li><li class="l2"><a href="#2-七个大类-设计期里主要是-a-股-美股和防守资产">2. 七个大类</a></li><li class="l2"><a href="#3-数据靠不靠得住-没有必须修的">3. 数据靠不靠得住</a></li><li class="l2"><a href="#4-别的市场的数据-免费的够用">4. 别的市场的数据：免费的够用</a></li><li class="l3"><a href="#数据规矩">数据规矩</a></li><li class="l3"><a href="#v4-试过的-15-个容器">v4 试过的 15 个容器</a></li><li class="l3"><a href="#怎么更新">怎么更新</a></li><li class="l2"><a href="#5-免费来源拿不到-不再追">5. 免费来源拿不到，不再追</a></li><li class="l2"><a href="#更新记录">更新记录</a></li></ol>
+</nav>
+<main>
+<header class="top">
+  <div class="kicker">ETF_Rotation_Quant</div>
+  <h1>ETF 轮动 · 数据与容器看板</h1>
+  
+</header>
+<section class="intro status"><p class="kv"><span class="kv-k"><strong>这个看板管什么</strong></span><span class="kv-v">　池子里有什么、每一样从哪年起有数据、哪年起能买到、数据靠不靠得住。策略好不好，看其他页面。</span></p>
+<div class="hero"><div class="hero-g n1"><div class="hz verdict2 t-info"><div class="hz-l">池子</div><div class="hz-hd">v5 用 <strong class="num">101</strong> 个容器（另有现金），按 7 个大类排名。</div><div class="hz-rest">v4 试过的美股行业、港股分类 15 个不在 v5 池里。</div></div><div class="hz ask calm"><div class="hz-l">需要你</div><div class="hq-h calm">✓ 暂时不需要</div></div><div class="hz eng"><span class="eng-ok">✓</span><span class="hz-l">数据健康</span><span class="eng-d">场内 QDII、LOF 后复权和净值 <strong>197/197</strong> 全覆盖；2016 年以后的完整性清单必须修 <strong class="num">0</strong> 条。</span></div></div></div>
+</section>
+<section id="sec-1-池子随时代长大-设计期里能买的很少"><h2 id="1-池子随时代长大-设计期里能买的很少"><span class="num">01</span>池子随时代长大：设计期里能买的很少</h2>
+<p class="memo"><strong>2006 年有数据的 17 个，已上市的只有 </strong>1<strong> 个；到今天是 101 个和 96 个。</strong></p>
+<figure><img alt="v5 池子每年末有数据、已上市的容器个数，按大类" loading="lazy" src="../../assets/data-board/d1-pool-growth.png"/></figure>
+<ul class="points">
+<li><strong>设计期的结论主要靠“有数据的”这一边</strong>：2015 年末有数据 29 个、已上市 22 个，<span class="num">2006–2012 年</span>差得更远。</li>
+<li><strong>增长主要来自港股和美股的 QDII</strong>：2015 年以后新上市的基金，大多投香港和美国。规则不知道哪个会强，能买到之后让趋势去选。</li>
+</ul>
+<p class="kv"><span class="kv-k"><b>“有数据”= 有指数历史或基金自己的历史；</b></span><span class="kv-v">“已上市”= 场内基金首个收盘日或场外基金成立日，与回测程序读同一份名单，不含 3,000 万成交额门槛。所以这里的数字比<a href="https://claude.ai/artifact/DpJNEma9D9uELPsLkWbRBx">《v4 体检报告》</a>里“当年能参加排名”的略多（例如 2015 年 22 个对 17 个）。不含现金。</span></p>
+</section>
+<section id="sec-2-七个大类-设计期里主要是-a-股-美股和防守资产"><h2 id="2-七个大类-设计期里主要是-a-股-美股和防守资产"><span class="num">02</span>七个大类：设计期里主要是 A 股、美股和防守资产</h2>
+<p class="memo"><strong>v5 先判断每个大类该不该持有；“其他海外”在设计期几乎没有可用的。</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>大类</th>
+<th class="n numcol">有数据起</th>
+<th class="numcol">能买起</th>
+<th class="n numcol">2015 年末能买</th>
+<th class="n numcol">今天能买</th>
+<th>设计期里</th>
+</tr>
+</thead>
+<tbody>
+<tr class="grp"><td colspan="6">风险大类：先判断该不该持有</td></tr>
+<tr>
+<td class="k"><strong>A股</strong></td>
+<td class="n numcol">2005</td>
+<td class="boxed numcol tg"><strong>2005，仅 1 只</strong></td>
+<td class="n numcol">9</td>
+<td class="n numcol">12</td>
+<td><span class="pill mute tagline">指数全，能买的少</span></td>
+</tr>
+<tr>
+<td class="k"><strong>港股</strong></td>
+<td class="n numcol">2000</td>
+<td class="numcol">2010</td>
+<td class="n numcol">3</td>
+<td class="n numcol">49</td>
+<td><span class="pill mute tagline">只有恒生指数</span></td>
+</tr>
+<tr>
+<td class="k"><strong>美股</strong></td>
+<td class="n numcol">2000</td>
+<td class="numcol">2010</td>
+<td class="n numcol">6</td>
+<td class="n numcol">18</td>
+<td><span class="pill mute tagline">2010 年后才陆续能买</span></td>
+</tr>
+<tr>
+<td class="k"><strong>其他海外</strong></td>
+<td class="n numcol">2014</td>
+<td class="numcol">2014</td>
+<td class="n boxed numcol key tg"><strong>1</strong></td>
+<td class="n numcol">11</td>
+<td><span class="pill mute tagline">几乎没有</span></td>
+</tr>
+<tr>
+<td class="k"><strong>商品</strong></td>
+<td class="n numcol">2010</td>
+<td class="numcol">2010</td>
+<td class="n numcol">1</td>
+<td class="n numcol">3</td>
+<td><span class="pill mute tagline">只有 1 个</span></td>
+</tr>
+<tr class="grp"><td colspan="6">防守大类：风险大类都不持有时才用</td></tr>
+<tr>
+<td class="k"><strong>国债</strong></td>
+<td class="n numcol">2008</td>
+<td class="numcol">2013</td>
+<td class="n numcol">1</td>
+<td class="n numcol">2</td>
+<td><span class="pill mute tagline">有数据早、能买晚</span></td>
+</tr>
+<tr>
+<td class="k"><strong>黄金</strong></td>
+<td class="n numcol">2008</td>
+<td class="numcol">2011</td>
+<td class="n numcol">1</td>
+<td class="n numcol">1</td>
+<td><span class="pill mute tagline">有数据早、能买晚</span></td>
+</tr>
+</tbody>
+</table></div>
+<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">“能买起”= 这一类里第一只基金上市或成立的年份。</div><div class="rn-i">框出的两格：A 股 2005 年起就能买，但 2009 年以前只有沪深300 和红利两只，14 个指数里大多买不到；其他海外到 2015 年末才有 1 个能买。</div><div class="rn-i">归类按跟踪指数或业绩比较基准机械划分（v5 预注册 §3.2），只看成分，不看收益。</div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>A股（17 个）</span></button><div class="fold-b" hidden="">
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>容器</th>
+<th>研究序列</th>
+<th>有数据起</th>
+<th>上市起</th>
+<th class="rh-status">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>中证1000</strong></td>
+<td>H00852 · 全收益</td>
+<td>2005-01</td>
+<td>2016-11</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td class="k"><strong>中证500</strong></td>
+<td>H00905 · 全收益</td>
+<td>2005-01</td>
+<td>2009-09</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证全指主要消费</strong></td>
+<td>H00990 · 全收益</td>
+<td>2005-01</td>
+<td>—</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证全指信息技术</strong></td>
+<td>H00993 · 全收益</td>
+<td>2005-01</td>
+<td>2015-01</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证全指公用事业</strong></td>
+<td>H00995 · 全收益</td>
+<td>2005-01</td>
+<td>—</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证全指医药卫生</strong></td>
+<td>H00991 · 全收益</td>
+<td>2005-01</td>
+<td>2015-05</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证全指原材料</strong></td>
+<td>H00987 · 全收益</td>
+<td>2005-01</td>
+<td>2015-07</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证全指可选消费</strong></td>
+<td>H00989 · 全收益</td>
+<td>2005-01</td>
+<td>2014-06</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td class="k"><strong>中证全指工业</strong></td>
+<td>H00988 · 全收益</td>
+<td>2005-01</td>
+<td>—</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td class="k"><strong>中证全指能源</strong></td>
+<td>H00986 · 全收益</td>
+<td>2005-01</td>
+<td>—</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证全指通信服务</strong></td>
+<td>H00994 · 全收益</td>
+<td>2005-01</td>
+<td>—</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证全指金融地产</strong></td>
+<td>H00992 · 全收益</td>
+<td>2005-01</td>
+<td>2010-04</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证红利全收益</strong></td>
+<td>H00922 · 全收益</td>
+<td>2005-01</td>
+<td>2007-01</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td class="k"><strong>沪深300</strong></td>
+<td>H00300 · 全收益</td>
+<td>2005-01</td>
+<td>2005-01</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr class="row-warn">
+<td class="k"><strong>创业板指</strong></td>
+<td>— · 价格</td>
+<td>2011-06</td>
+<td>2011-06</td>
+<td class="r-status"><span class="pill warn">没有研究序列</span><span class="pill-note">用基金自己的价格</span></td>
+</tr>
+<tr>
+<td class="k"><strong>科创50</strong></td>
+<td>000688 · 价格</td>
+<td>2019-12</td>
+<td>2020-11</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证全球中国教育主题人民币指数</strong></td>
+<td>513360 · 基金净值</td>
+<td>2021-06</td>
+<td>2021-06</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+</tbody>
+</table></div>
+</div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>港股（49 个）</span></button><div class="fold-b" hidden="">
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>容器</th>
+<th>研究序列</th>
+<th>有数据起</th>
+<th>上市起</th>
+<th class="rh-status">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>恒生指数</strong></td>
+<td>HSI · 价格</td>
+<td>2000-01</td>
+<td>2011-11</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生中国企业指数</strong></td>
+<td>160717 · 基金净值</td>
+<td>2010-09</td>
+<td>2010-09</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证海外中国互联网指数</strong></td>
+<td>164906 · 基金净值</td>
+<td>2015-05</td>
+<td>2015-05</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>MSCI China Value Weighted Index</strong></td>
+<td>161229 · 基金净值</td>
+<td>2016-01</td>
+<td>2016-01</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生综合小型股指数</strong></td>
+<td>161124 · 基金净值</td>
+<td>2016-11</td>
+<td>2016-11</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证海外中国互联网50人民币指数</strong></td>
+<td>513050 · 基金净值</td>
+<td>2017-01</td>
+<td>2017-01</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中华交易服务港股通精选100指数</strong></td>
+<td>513900 · 基金净值</td>
+<td>2018-05</td>
+<td>2018-05</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证香港证券投资主题指数</strong></td>
+<td>513090 · 基金净值</td>
+<td>2020-03</td>
+<td>2020-03</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td class="k"><strong>恒生科技</strong></td>
+<td>HSTECH · 价格</td>
+<td>2020-07</td>
+<td>2021-05</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>上证港股通指数</strong></td>
+<td>513990 · 基金净值</td>
+<td>2020-08</td>
+<td>2020-08</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>标普中国新经济行业指数</strong></td>
+<td>159822 · 基金净值</td>
+<td>2020-09</td>
+<td>2020-10</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通50指数</strong></td>
+<td>513550 · 基金净值</td>
+<td>2021-01</td>
+<td>2021-01</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生互联网科技业指数</strong></td>
+<td>159688 · 基金净值</td>
+<td>2021-02</td>
+<td>2021-02</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生医疗保健指数</strong></td>
+<td>159303 · 基金净值</td>
+<td>2021-03</td>
+<td>2021-03</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生港股通高股息率指数</strong></td>
+<td>513690 · 基金净值</td>
+<td>2021-05</td>
+<td>2021-05</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通科技指数</strong></td>
+<td>513860 · 基金净值</td>
+<td>2021-07</td>
+<td>2021-07</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证香港科技指数指数</strong></td>
+<td>159747 · 基金净值</td>
+<td>2021-07</td>
+<td>2021-07</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通医药卫生综合指数</strong></td>
+<td>513700 · 基金净值</td>
+<td>2021-08</td>
+<td>2021-08</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通消费主题指数</strong></td>
+<td>513590 · 基金净值</td>
+<td>2021-08</td>
+<td>2021-08</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生生物科技指数</strong></td>
+<td>159892 · 基金净值</td>
+<td>2021-09</td>
+<td>2021-10</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证海外中国互联网30人民币指数</strong></td>
+<td>159605 · 基金净值</td>
+<td>2021-11</td>
+<td>2021-12</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生港股通中国科技指数</strong></td>
+<td>513160 · 基金净值</td>
+<td>2022-02</td>
+<td>2022-02</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通互联网指数</strong></td>
+<td>513770 · 基金净值</td>
+<td>2022-02</td>
+<td>2022-02</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生港股通新经济指数</strong></td>
+<td>513320 · 基金净值</td>
+<td>2022-03</td>
+<td>2022-03</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通高股息投资港元指数</strong></td>
+<td>513530 · 基金净值</td>
+<td>2022-04</td>
+<td>2022-04</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证香港创新药港币指数</strong></td>
+<td>513120 · 基金净值</td>
+<td>2022-07</td>
+<td>2022-07</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证全球中国互联网人民币指数</strong></td>
+<td>513220 · 基金净值</td>
+<td>2022-07</td>
+<td>2022-07</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通金融服务指数</strong></td>
+<td>513140 · 基金净值</td>
+<td>2022-12</td>
+<td>2023-01</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生港股通红利低波动指数</strong></td>
+<td>513950 · 基金净值</td>
+<td>2023-04</td>
+<td>2023-04</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td class="k"><strong>恒生消费指数</strong></td>
+<td>159699 · 基金净值</td>
+<td>2023-04</td>
+<td>2023-04</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证香港内地国有企业港元指数</strong></td>
+<td>159519 · 基金净值</td>
+<td>2023-08</td>
+<td>2023-08</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通内地金融指数</strong></td>
+<td>513190 · 基金净值</td>
+<td>2023-10</td>
+<td>2023-10</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通非银行金融主题指数</strong></td>
+<td>513750 · 基金净值</td>
+<td>2023-11</td>
+<td>2023-11</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>标普港股通低波红利指数</strong></td>
+<td>513630 · 基金净值</td>
+<td>2023-12</td>
+<td>2023-12</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生港股通中国央企红利指数</strong></td>
+<td>513920 · 基金净值</td>
+<td>2024-01</td>
+<td>2024-01</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通央企红利指数</strong></td>
+<td>513910 · 基金净值</td>
+<td>2024-03</td>
+<td>2024-03</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生中国央企指数</strong></td>
+<td>513170 · 基金净值</td>
+<td>2024-04</td>
+<td>2024-04</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证国新港股通央企红利指数</strong></td>
+<td>520660 · 基金净值</td>
+<td>2024-07</td>
+<td>2024-07</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通创新药指数</strong></td>
+<td>520700 · 基金净值</td>
+<td>2024-10</td>
+<td>2024-10</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生创新药指数</strong></td>
+<td>520500 · 基金净值</td>
+<td>2024-12</td>
+<td>2024-12</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通汽车产业主题指数</strong></td>
+<td>520600 · 基金净值</td>
+<td>2024-12</td>
+<td>2024-12</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒指港股通指数</strong></td>
+<td>520940 · 基金净值</td>
+<td>2025-06</td>
+<td>2025-06</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生港股通创新药精选指数</strong></td>
+<td>520880 · 基金净值</td>
+<td>2025-07</td>
+<td>2025-07</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通医疗主题指数</strong></td>
+<td>520510 · 基金净值</td>
+<td>2025-08</td>
+<td>2025-08</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生港股通科技主题指数</strong></td>
+<td>520670 · 基金净值</td>
+<td>2025-08</td>
+<td>2025-08</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生中国（香港上市）30指数</strong></td>
+<td>520560 · 基金净值</td>
+<td>2025-10</td>
+<td>2025-10</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生港股通50指数</strong></td>
+<td>520950 · 基金净值</td>
+<td>2025-11</td>
+<td>2025-11</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证港股通信息技术综合指数</strong></td>
+<td>526000 · 基金净值</td>
+<td>2026-04</td>
+<td>2026-04</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>恒生港股通汽车主题指数</strong></td>
+<td>520730 · 基金净值</td>
+<td>2026-05</td>
+<td>2026-05</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+</tbody>
+</table></div>
+</div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>美股（18 个）</span></button><div class="fold-b" hidden="">
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>容器</th>
+<th>研究序列</th>
+<th>有数据起</th>
+<th>上市起</th>
+<th class="rh-status">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>标普500全收益</strong></td>
+<td>^SP500TR · 全收益（美元）</td>
+<td>2000-01</td>
+<td>2012-06</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>纳指100全收益</strong></td>
+<td>XNDX · 全收益（美元）</td>
+<td>2005-01</td>
+<td>2010-04</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>标普石油天然气勘探及生产精选行业指数</strong></td>
+<td>159518 · 基金净值</td>
+<td>2011-09</td>
+<td>2011-09</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>标普全球石油指数</strong></td>
+<td>160416 · 基金净值</td>
+<td>2012-03</td>
+<td>2012-03</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>S&amp;P 500 Energy Sector Index(NTR)</strong></td>
+<td>163208 · 基金净值</td>
+<td>2015-02</td>
+<td>2015-02</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>纳斯达克生物科技指数</strong></td>
+<td>513290 · 基金净值</td>
+<td>2015-03</td>
+<td>2015-03</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>标普美国品质消费股票指数</strong></td>
+<td>162415 · 基金净值</td>
+<td>2016-03</td>
+<td>2016-04</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>标普500医疗保健等权重指数</strong></td>
+<td>161126 · 基金净值</td>
+<td>2016-11</td>
+<td>2016-12</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>标普500信息科技指数</strong></td>
+<td>161128 · 基金净值</td>
+<td>2016-12</td>
+<td>2016-12</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>标普生物科技精选行业指数</strong></td>
+<td>161127 · 基金净值</td>
+<td>2016-12</td>
+<td>2016-12</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>道琼斯美国石油开发与生产指数</strong></td>
+<td>162719 · 基金净值</td>
+<td>2017-02</td>
+<td>2017-03</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>道琼斯美国精选REIT指数</strong></td>
+<td>160140 · 基金净值</td>
+<td>2017-10</td>
+<td>2017-11</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>PHLX Semiconductor Sector Index</strong></td>
+<td>501225 · 基金净值</td>
+<td>2023-03</td>
+<td>2023-04</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>纳斯达克科技市值加权指数</strong></td>
+<td>159509 · 基金净值</td>
+<td>2023-07</td>
+<td>2023-08</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>新交所泛东南亚科技指数</strong></td>
+<td>513730 · 基金净值</td>
+<td>2023-11</td>
+<td>2023-12</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>MSCI USA 50 Index</strong></td>
+<td>159577 · 基金净值</td>
+<td>2023-11</td>
+<td>2023-11</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>道琼斯工业平均指数</strong></td>
+<td>513400 · 基金净值</td>
+<td>2024-01</td>
+<td>2024-02</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>标普500消费精选指数</strong></td>
+<td>159529 · 基金净值</td>
+<td>2024-01</td>
+<td>2024-02</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+</tbody>
+</table></div>
+</div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>其他海外（11 个）</span></button><div class="fold-b" hidden="">
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>容器</th>
+<th>研究序列</th>
+<th>有数据起</th>
+<th>上市起</th>
+<th class="rh-status">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>法兰克福DAX指数</strong></td>
+<td>159561 · 基金净值</td>
+<td>2014-08</td>
+<td>2014-08</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>该基金无跟踪标的</strong></td>
+<td>501300 · 基金净值</td>
+<td>2017-02</td>
+<td>2017-02</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>该基金无跟踪标的</strong></td>
+<td>164824 · 基金净值</td>
+<td>2018-08</td>
+<td>2018-08</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td class="k"><strong>东证指数</strong></td>
+<td>513800 · 基金净值</td>
+<td>2019-06</td>
+<td>2019-06</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>东京日经225指数</strong></td>
+<td>159866 · 基金净值</td>
+<td>2019-06</td>
+<td>2019-06</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>法国CAC40指数</strong></td>
+<td>513080 · 基金净值</td>
+<td>2020-05</td>
+<td>2020-06</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>中证韩交所中韩半导体指数</strong></td>
+<td>513310 · 基金净值</td>
+<td>2022-11</td>
+<td>2022-12</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>富时亚太低碳精选指数</strong></td>
+<td>159687 · 基金净值</td>
+<td>2022-12</td>
+<td>2022-12</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>富时沙特阿拉伯指数</strong></td>
+<td>159329 · 基金净值</td>
+<td>2024-07</td>
+<td>2024-07</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>iEdge Emerging Asia Select 50 Index</strong></td>
+<td>520580 · 基金净值</td>
+<td>2025-01</td>
+<td>2025-02</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td><strong>巴西IBOVESPA指数</strong></td>
+<td>520870 · 基金净值</td>
+<td>2025-11</td>
+<td>2025-11</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+</tbody>
+</table></div>
+</div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>商品（3 个）</span></button><div class="fold-b" hidden="">
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>容器</th>
+<th>研究序列</th>
+<th>有数据起</th>
+<th>上市起</th>
+<th class="rh-status">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>跨境商品</strong></td>
+<td>161815 · 基金净值</td>
+<td>2010-12</td>
+<td>2010-12</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr class="row-warn">
+<td class="k"><strong>原油</strong></td>
+<td>— · 超额收益</td>
+<td>2016-06</td>
+<td>2016-06</td>
+<td class="r-status"><span class="pill warn">没有研究序列</span><span class="pill-note">用基金自己的价格</span></td>
+</tr>
+<tr class="row-warn">
+<td class="k"><strong>豆粕</strong></td>
+<td>— · 超额收益</td>
+<td>2019-12</td>
+<td>2019-12</td>
+<td class="r-status"><span class="pill warn">没有研究序列</span><span class="pill-note">用基金自己的价格</span></td>
+</tr>
+</tbody>
+</table></div>
+</div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>国债（2 个）</span></button><div class="fold-b" hidden="">
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>容器</th>
+<th>研究序列</th>
+<th>有数据起</th>
+<th>上市起</th>
+<th class="rh-status">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>10年国债</strong></td>
+<td>CBA04501 · 财富指数</td>
+<td>2008-01</td>
+<td>2017-08</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+<tr>
+<td class="k"><strong>5年国债</strong></td>
+<td>CBA03101 · 财富指数</td>
+<td>2008-01</td>
+<td>2013-03</td>
+<td class="r-status"><span class="pill mute">正常</span></td>
+</tr>
+</tbody>
+</table></div>
+</div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>黄金（1 个）</span></button><div class="fold-b" hidden="">
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>容器</th>
+<th>研究序列</th>
+<th>有数据起</th>
+<th>上市起</th>
+<th class="rh-status">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-warn">
+<td class="k"><strong>黄金</strong></td>
+<td>Au99.99 · 价格</td>
+<td>2008-08</td>
+<td>2011-11</td>
+<td class="r-status"><span class="pill warn">研究序列不完整</span></td>
+</tr>
+</tbody>
+</table></div>
+</div></div>
+</section>
+<section id="sec-3-数据靠不靠得住-没有必须修的"><h2 id="3-数据靠不靠得住-没有必须修的"><span class="num">03</span>数据靠不靠得住：没有必须修的</h2>
+<p class="memo"><strong>后复权和净值全覆盖；剩下 6 个已知缺口，原因和处理办法都写明了。</strong></p>
+<div class="cards from-table plain"><div class="card tone-0 tone-info"><div class="ct">后复权从哪来</div><div class="cb">东财 189、东财（无分红拆分） 4、还原 2、腾讯 2（只）。东财优先，取不到时按分红记录自己还原。</div></div><div class="card tone-1 tone-info"><div class="ct">2016 年以后的完整性</div><div class="cb">共 2430 条：必须修 <strong class="num">0</strong>，可以接受 2404，已定 15，待分类 11。</div></div><div class="card tone-2 tone-info"><div class="ct">数据库</div><div class="cb">行情 1,039,735 行，复权和净值序列 593,481 行，基金净值 236,540 行。</div></div></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>已知缺口</th>
+<th class="rh-why">影响</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创业板指、豆粕、原油的指数历史取不到</td>
+<td class="r-why"><b>只能用基金自己的价格，起点晚</b></td>
+<td>按上市日纳入，不自己造历史</td>
+</tr>
+<tr class="hl">
+<td>恒生指数在设计期只有价格指数</td>
+<td class="r-why"><b>不含股息，港股收益偏低</b></td>
+<td>报告里写明</td>
+</tr>
+<tr>
+<td>通信设备指数 2019 年 1–2 月缺日线</td>
+<td class="r-why"><b>那段时间退出排名</b></td>
+<td>按原规则沿用</td>
+</tr>
+<tr>
+<td>7 只基金代码表有、交易所名单没有</td>
+<td class="r-why"><b>不进池子</b></td>
+<td>没有上市日，不收录</td>
+</tr>
+<tr>
+<td>526090 在 2026-10 才上市</td>
+<td class="r-why"><b>不在数据截止日以内</b></td>
+<td>下次更新时纳入</td>
+</tr>
+<tr>
+<td>两个后复权来源有冲突的日子（160125 有 14 天、160644 有 2 天）</td>
+<td class="r-why"><b>个别日收益略有出入</b></td>
+<td>统一用一条来源，只登记</td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">标橙的是唯一会系统性影响结果的一条：设计期里港股收益偏低，v5 的港股大类因此吃亏。</p>
+<p>期权还有三处免费来源已经试完，确认拿不到。见第 5 节。不进上面这 6 条，也不改池子。</p>
+</section>
+<section id="sec-4-别的市场的数据-免费的够用"><h2 id="4-别的市场的数据-免费的够用"><span class="num">04</span>别的市场的数据：免费的够用</h2>
+<p class="memo"><strong>v5 设计期结果确定后，同一套规则放到美国上市的 ETF 上验一次（2003–2026），数据都免费。</strong></p>
+<div class="table-wrap"><table data-lint="ref">
+<thead>
+<tr>
+<th>大类</th>
+<th>用什么</th>
+<th>最早</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="k"><strong>美股</strong></td>
+<td>SPY、QQQ、9 只行业 ETF</td>
+<td>1998-12</td>
+</tr>
+<tr>
+<td class="k"><strong>其他海外</strong></td>
+<td>EFA、EEM、日本、英国、法国、欧元区、欧洲、巴西 ETF</td>
+<td>1996–2005</td>
+</tr>
+<tr>
+<td class="k"><strong>商品</strong></td>
+<td>DBC</td>
+<td>2006-02</td>
+</tr>
+<tr>
+<td class="k"><strong>国债</strong></td>
+<td>IEF、TLT</td>
+<td>2002-07</td>
+</tr>
+<tr>
+<td class="k"><strong>黄金</strong></td>
+<td>GLD</td>
+<td>2004-11</td>
+</tr>
+<tr>
+<td class="k"><strong>现金</strong></td>
+<td>美国 3 个月国库券利率</td>
+<td>1954</td>
+</tr>
+</tbody>
+</table></div>
+<p class="table-note note">价格是分红调整后的收盘，不是官方全收益指数，报告里写明。官方行业全收益、MSCI 国家指数要付费，10-31 定了先不买。</p>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>参考：数据规矩、v4 试过的 15 个容器、怎么更新</span></button><div class="fold-b" hidden="">
+<div class="overview compact"><div class="ov-h">这一段讲了什么 <span>· 3 节，点击跳转</span></div><div class="ov-chips"><a class="ov-chip" href="#数据规矩"><span class="ov-k">1</span>数据规矩</a><a class="ov-chip" href="#v4-试过的-15-个容器"><span class="ov-k">2</span>v4 试过的 15 个容器</a><a class="ov-chip" href="#怎么更新"><span class="ov-k">3</span>怎么更新</a></div></div><h3 id="数据规矩">数据规矩</h3>
+<ol class="steps-n">
+<li><strong>场内基金一律后复权</strong>：分红、拆分、合并都要处理。</li>
+<li><strong>东财优先</strong>：取不到时按分红记录自己还原，写清来源和方法。</li>
+<li><strong>场外基金只用来还原市场</strong>：不考虑申赎费和到账天数。</li>
+<li><strong>汇率缺了就补</strong>：先找官方来源，找不到用最近数据往前补齐并标明。</li>
+<li><strong>只新增、不覆盖</strong>：每次改库都记录数据库指纹。</li>
+<li><strong>池子随市场长大</strong>：当年能买到才纳入，只看上市日，不看后来的表现。</li>
+</ol>
+<p>全文：docs/manual/data-principles.md；历次数据决定 D14–D22 在 operations/planning/。</p>
+<h3 id="v4-试过的-15-个容器">v4 试过的 15 个容器</h3>
+<p>9–11 只美股行业 ETF（1998 年起）和恒生 4 个分类。v4 的 T4 把它们加进池子，没有过关，所以 v5 不用。数据仍在库里。</p>
+<h3 id="怎么更新">怎么更新</h3>
+<p>每轮数据工作合入后，Manager 运行 <code>results/v4/diag/data-board/build_data_board.py</code> 和 <code>results/v5/diag/data-board/pool_growth.py</code>；Orchestrator 重新发布本页并同步 docs/owner/data-board.md。数字只来自数据库和登记表，不手填。第 5 节是手写登记，脚本不生成。</p>
+</div></div>
+</section>
+<section id="sec-5-免费来源拿不到-不再追"><h2 id="5-免费来源拿不到-不再追"><span class="num">05</span>免费来源拿不到，不再追</h2>
+<p class="memo"><strong>深交所期权日线缺口、两所每日结算价、深交所历史持仓量：免费来源拿不到，不再追。</strong></p>
+<p><strong>不用你做事。</strong> 这三处不再用免费接口重试。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>缺口</th>
+<th>登记日</th>
+<th>票据</th>
+<th class="rh-status">状态</th>
+<th class="rh-why">已试</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>深交所期权日线</strong> 2019-12 → 2022-12（159919 / 159915 / 159922）</td>
+<td>2026-11-03</td>
+<td>#201 C1</td>
+<td class="r-status"><span class="pill bad">won't-pursue-free</span></td>
+<td class="r-why">新浪、深交所历史 K 线、东财、腾讯、网易</td>
+</tr>
+<tr>
+<td><strong>上交所、深交所期权每日结算价</strong></td>
+<td>2026-11-03</td>
+<td>#201 C2</td>
+<td class="r-status"><span class="pill bad">won't-pursue-free</span></td>
+<td class="r-why">云行情结算字段全空；当日合约表不能回溯</td>
+</tr>
+<tr>
+<td><strong>深交所期权历史持仓量</strong></td>
+<td>2026-11-03</td>
+<td>#201 C2</td>
+<td class="r-status"><span class="pill bad">won't-pursue-free</span></td>
+<td class="r-why">公开报表只有当日合约总持仓</td>
+</tr>
+</tbody>
+</table></div>
+<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">窗口和每次尝试的结果见 <a href="https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/main/docs/owner/free-source-gaps.md">《免费来源缺口》</a>。</div><div class="rn-i">证据在 PR #201 的 <code>data/options/raw/r2/SCOPE.txt</code>、<code>blocked-attempts.csv</code>、<code>session-coverage.csv</code>。</div><div class="rn-i"><code>QC.md</code> 只统计日线重复行，不覆盖这三处。</div></div>
+</section>
+<section class="appendix" id="sec-更新记录"><h3 class="appx" id="更新记录">更新记录</h3>
+<div class="log"><div><span class="d">2026-11-03</span><span>登记三处期权免费来源缺口，状态 <code>won't-pursue-free</code>（#201 C1、C2）。见第 5 节。</span></div><div><span class="d">2026-11-01</span><span>改按 v5 的七个大类组织；池子只算 v5 用的 101 个，数字和<a href="https://claude.ai/artifact/DpJNEma9D9uELPsLkWbRBx">《v4 体检报告》</a>对得上；图重画；新增“别的市场的数据”。</span></div><div><span class="d">2026-11-01</span><span>“上市日”改为和回测程序同一份名单（场外联接基金算进来，13 个容器提前）。</span></div><div><span class="d">2026-10-29</span><span>首次发布。</span></div></div></section>
+<footer>内容取自仓库 <a href="https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/main/docs/owner/data-board.md">docs/owner/data-board.md</a>（main @ a592981）。图表为原文配图。</footer>
+</main>
+</div>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc ol a'));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function update() {
+    var y = window.scrollY + 120, idx = 0;
+    targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top + window.scrollY <= y) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+
+document.querySelectorAll('.fold-h').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var open = b.getAttribute('aria-expanded') === 'true';
+    b.setAttribute('aria-expanded', open ? 'false' : 'true');
+    var body = b.nextElementSibling;
+    if (open) body.setAttribute('hidden', ''); else body.removeAttribute('hidden');
+  });
+});
+
+</script>
+</body>
+</html>
