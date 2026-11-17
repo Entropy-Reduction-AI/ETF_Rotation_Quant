@@ -171,6 +171,8 @@ D14-2 删掉的 9 个仍登记在 `docs/manual/milestones.md`（清理前的 12 
 
 ## 最近更新
 
+2026-11-17（Asia/Taipei），Manager。D38 预演 Reviewer 复算完成（两部分均 approve_with_follow_up，跟进项已由 Orchestrator 查清，见预测表 2.1 第 7 节）。#302 rebase-merge 至 main `483aeb6ff49fe885d61ca59bbc77dca54b66b091`；#300 已关闭不合并，分支保留。
+
 2026-10-31（Asia/Taipei），Manager。D25-8 / D25-9 已在 main：#136 开发，#137 签收 `approve_with_follow_up`。行情库指纹 `167d4e39ffab4302e6f55d2b3436b3400ea28b2282cd7f9b9bda644d87c1acf3`，`series_rows` 593481。B0 U-可交易全日历 7.97%，自 2006 8.66%，最大回撤 −31.70%。U-指数自 2006 仍是 24.88% / −35.28%。账本仍是 41 行，U-可交易 `fix: D25-8`。体检输入、设计期简报、数据看板和体检报告第 3 版的可交易池读数已换成这组数字。给 Orchestrator。没有写 `results/v4/LOCK`。没有移动标签。设计期上界 2015-12-31。
 
 2026-10-30（Asia/Taipei），Manager。v4-R5c 改为已合入：#132 `9c3e41c`，#133 `dff13f20`，Decision `approve_with_follow_up`。最终版仍是 B0。U-指数自 2006 为 24.88% / −35.28%，U-可交易全日历 9.97% / −31.70%。数据看板库指纹改为 `550c1aee…`，`series_rows` 593480。简报两个池已换成 D25 之后的读数。体检输入在 `results/v4/diag/health/`。⑥ 等 Orchestrator 体检报告第 3 版，之后由 Manager 写五段。`milestone/v4-code-freeze` 不移动。`milestone/v4-code-freeze-2` 在索引里有 D25-5 说明，标签等本收尾 PR 合入后再打。设计期上界 2015-12-31。仓库里没有 `results/v4/LOCK`。本更新没有移动标签。
