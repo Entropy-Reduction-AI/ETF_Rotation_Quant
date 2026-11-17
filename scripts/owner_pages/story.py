@@ -1277,9 +1277,108 @@ def sensitivity_cards(soup):
             add_class(grp, 'sens-cards')
 
 
+
+_GL_KIND = [('sell', '卖', re.compile(r'就卖|卖出|离场|换成现金|跌破')),
+            ('def', '防守', re.compile(r'^(否则|不在股票里|空仓)|拿\s*10 年国债|换黄金|默认拿')),
+            ('pace', '节奏', re.compile(r'^(仓位)?每(天|周|月)[末初]?$|^(仓位)?每(天|周|月)[^，]{0,6}(可以|才)|再平衡')),
+            ('size', '仓位', re.compile(r'给一半|仓位分|100% 仓位|全仓|各 1/\d|各 1/N')),
+            ('pick', '选', re.compile(r'.'))]
+
+
+def _gl_kind(x):
+    t = re.sub(r'<[^>]+>', '', x)
+    return next((k, lab) for k, lab, rx in _GL_KIND if rx.search(t))
+
+
+def _gl_rows(clause):
+    """Split a clause at top-level commas, tag each piece, merge neighbours with the same tag."""
+    toks, depth, cur = [], 0, ''
+    for ch in re.split(r'(<[^>]+>|[（）()，：])', clause):
+        if ch in ('（', '('):
+            depth += 1
+        elif ch in ('）', ')'):
+            depth -= 1
+        if ch in ('，', '：') and depth == 0:
+            toks.append(cur + ('：' if ch == '：' else '')); cur = ''
+        else:
+            cur += ch
+    if cur.strip():
+        toks.append(cur)
+    out = []
+    for tk in [x.strip() for x in toks if x.strip()]:
+        k = _gl_kind(tk)
+        if out and (out[-1][0] == k or tk.endswith('：') is False and out[-1][1].endswith('：')):
+            out[-1] = (out[-1][0] if out[-1][1].endswith('：') and out[-1][0] != k and False else out[-1][0], out[-1][1] + ('' if out[-1][1].endswith('：') else '，') + tk)
+        else:
+            out.append((k, tk))
+    return out
+
+
+def _gl_clauses(html):
+    parts = [x.strip() for x in re.split(r'(?<=[。；])(?![^<]*>)', html) if x.strip()]
+    return [re.sub(r'[。；]$', '', x) for x in parts]
+
+
+def glossary_cards(soup):
+    """'先认识这几个名字' folds: one profile card per name -- positioning line, then rules tagged 选/卖/防守/节奏."""
+    for fold in soup.select('.fold'):
+        h = fold.select_one('.fold-h')
+        if h is None or '先认识这几个名字' not in h.get_text(strip=True):
+            continue
+        t = fold.select_one('table.deflist')
+        if t is None:
+            continue
+        cards = []
+        for tr in t.select('tbody tr'):
+            tds = tr.find_all('td')
+            if len(tds) < 2:
+                continue
+            name = tds[0].get_text(strip=True)
+            body = tds[1].decode_contents().strip()
+            plain = tds[1].get_text('', strip=True)
+            # sub-entries labelled in bold ("**能排名的池子**：…", "**T1 转折点换挡**：…")
+            subs = re.findall(r'<strong>([^<]{2,24})</strong>\s*：(.*?)(?=<strong>[^<]{2,24}</strong>\s*：|$)', body, re.S)
+            if len(subs) >= 2:
+                lead = body[:body.find('<strong>')].strip()
+                first_sub = body.find('<strong>' + subs[0][0])
+                items = ''.join(f'<div class="gl-sub"><div class="gl-sk">{a}</div><div class="gl-sv">{b.strip()}</div></div>' for a, b in subs)
+                cards.append(f'<div class="gl-card wide t-ref"><div class="gl-n">{name}</div>' + (f'<div class="gl-pos">{lead}</div>' if lead else '') + f'<div class="gl-subs">{items}</div></div>')
+                continue
+            # benchmark-style weights "70% A + 15% B + 15% C"
+            w = re.match(r'^((?:\d+%\s*[^+，]+?\s*\+\s*)+\d+%\s*[^，]+?)，(.*)$', plain)
+            if w:
+                legs = re.findall(r'(\d+)%\s*([^+]+)', w.group(1))
+                cols = ['var(--accent)', '#7c3aed', '#0e7490', '#a16207', 'var(--muted)']
+                bar = ''.join(f'<span style="flex:{a};background:{cols[k % 5]}">{a}%</span>' for k, (a, b) in enumerate(legs))
+                bar += '</div><div class="gl-legend">' + ''.join(f'<span><i style="background:{cols[k % 5]}"></i>{b.strip()} {a}%</span>' for k, (a, b) in enumerate(legs))
+                rest = body.split('，', 1)[1] if '，' in body else ''
+                cards.append(f'<div class="gl-card t-ref"><div class="gl-n">{name}</div><div class="gl-bar">{bar}</div><div class="gl-r"><span class="gl-k k-pace">节奏</span><span>{rest}</span></div></div>')
+                continue
+            cl = _gl_clauses(body)
+            if not cl:
+                continue
+            pos, rules = cl[0], cl[1:]
+            m = re.match(r'^([^：]{2,10})：(.*)$', rules[0]) if rules else None
+            if m and re.search(r'每', m.group(1)):
+                rules[0] = m.group(2)
+                rules.insert(0, m.group(1))
+            tone = 'main' if re.search(r'唯一|入围的策略|最终版', pos) and '没入围' not in pos else ('peer' if '同行' in pos else ('off' if re.search(r'没入围|只作对照', plain) else 'info'))
+            tag = {'main': '入围', 'peer': '公开同行', 'off': '对照', 'info': ''}[tone]
+            rows = []
+            for r in rules:
+                for (k, lab), piece in _gl_rows(r):
+                    rows.append(f'<div class="gl-r"><span class="gl-k k-{k}">{lab}</span><span>{piece.rstrip("：")}</span></div>')
+            wide = ' wide' if len(plain) > 140 else ''
+            cards.append(f'<div class="gl-card t-{tone}{wide}"><div class="gl-n">{name}' + (f'<span class="gl-tag">{tag}</span>' if tag else '') + f'</div><div class="gl-pos">{pos}</div>' + ''.join(rows) + '</div>')
+        if cards:
+            wrap = t.find_parent(class_='table-wrap') or t
+            wrap.replace_with(BeautifulSoup('<div class="gl-grid">' + ''.join(cards) + '</div>', 'html.parser'))
+
+
 def ux_pass(html):
     soup = BeautifulSoup(html, 'html.parser')
     status_hero(soup)
+    glossary_cards(soup)
     inline_bullets(soup)
     case_cards(soup)
     card_ux(soup)
@@ -1639,4 +1738,32 @@ CSS += r"""
 .sk-warn .sens-tag { color: #a16207; background: color-mix(in srgb, #a16207 12%, transparent); }
 .sens-tag { align-self: flex-start; width: fit-content; }
 .cards.sens-cards { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+"""
+
+CSS += r"""
+.gl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 12px; margin: 8px 0 12px; }
+.gl-card { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--muted); border-radius: 10px; padding: 12px 16px 14px; }
+.gl-card.wide { grid-column: 1 / -1; }
+.gl-card.t-main { border-top-color: var(--accent); background: linear-gradient(180deg, var(--accent-soft), var(--surface) 60px); }
+.gl-card.t-peer { border-top-color: #7c3aed; } .gl-card.t-off { border-top-color: #a16207; } .gl-card.t-ref { border-top-color: var(--ink); }
+.gl-n { font-size: 17px; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+.gl-tag { font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 1px 7px; color: #fff; background: var(--muted); }
+.t-main .gl-tag { background: var(--accent); } .t-peer .gl-tag { background: #7c3aed; } .t-off .gl-tag { background: #a16207; }
+.gl-pos { font-size: 14px; font-weight: 600; color: var(--accent); margin: 4px 0 10px; }
+.t-peer .gl-pos { color: #7c3aed; } .t-off .gl-pos { color: #a16207; } .t-ref .gl-pos { color: var(--muted); }
+.gl-r { display: grid; grid-template-columns: 3.4em minmax(0, 1fr); gap: 8px; align-items: baseline; padding: 5px 0; border-top: 1px dashed var(--line); font-size: 14px; line-height: 1.6; }
+.gl-k { justify-self: start; font-size: 11.5px; font-weight: 700; border-radius: 4px; padding: 0 6px; }
+.gl-k.k-pick { color: var(--accent); background: var(--accent-soft); }
+.gl-k.k-sell { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.gl-k.k-def { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.gl-k.k-size { color: #7c3aed; background: color-mix(in srgb, #7c3aed 10%, transparent); }
+.gl-k.k-pace { color: var(--muted); background: var(--bg); border: 1px solid var(--line); }
+.gl-bar { display: flex; height: 26px; border-radius: 6px; overflow: hidden; margin: 2px 0 8px; }
+.gl-bar span { display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; }
+.gl-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12.5px; color: var(--ink); margin: -2px 0 8px; }
+.gl-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.gl-subs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.gl-sub { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; background: var(--bg); }
+.gl-sk { font-weight: 700; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
+.gl-sv { font-size: 13.5px; line-height: 1.6; color: var(--ink); }
 """
