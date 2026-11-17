@@ -20,6 +20,7 @@ links = json.load(open(LINKS, encoding='utf-8')) if os.path.exists(LINKS) else {
 
 PAGES = [
     # slug, file, short title, old artifact id (from the board)
+    ('v6-preflight', 'v6-preflight-forecast.md', 'v6 预演预测表', '__v6_preflight__'),
     ('retro', 'phase2-retrospective.md', '第二阶段复盘', '5MkgZbbcXpkajmwz5qymNF'),
     ('oneshot', 'v5-oneshot-report.md', '一次性检验报告', 'Hqn3e4uwds2bN2JMyGqexq'),
     ('v51-health', 'v5.1-health-check.md', 'v5.1 体检报告', 'CG26Frh88yKyFUqmFBCVvk'),
