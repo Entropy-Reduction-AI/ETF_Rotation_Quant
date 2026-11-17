@@ -267,8 +267,8 @@ K1 真实历史 **2008 并不跌破 60 万底线**，但合成慢牛保费 4.4 p
 | --- | --- |
 | 分支 | `cursor/d38-preflight-review-part3-c6c5` |
 | 依据 commit | `65b2e16eae007d21540c8edb9abb1f6b07866735` |
-| PR | （推送后更新） |
-| Head SHA | （推送后更新） |
+| PR | https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/310 |
+| Head SHA | `2a13477` |
 
 **文件**
 
