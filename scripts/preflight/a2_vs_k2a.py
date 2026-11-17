@@ -41,6 +41,11 @@ def five(gate=True, vol=False, mode='fixed'):
             ok = on & avail[t]
             if mode == 'fixed':
                 tgt = 0.2 * ok * (frac if vol else 1)
+            elif mode in ('r3a', 'r3b'):                          # 第 19 行：防守资产只接刷下来的钱
+                risk = np.zeros(5, bool); risk[[0, 1, 2] + ([4] if mode == 'r3b' else [])] = True
+                okr = ok & risk; cnt = max(okr.sum(), 1)
+                tgt = np.where(okr, min(0.4, 1 / cnt), 0.0)
+                if ok[3]: tgt[3] = 1 - tgt.sum()
             else:
                 if mode == 'top3' and ok.sum() > 3:
                     mom = me.shift(1) / me.shift(12) - 1          # 12−1，按上月末
@@ -76,7 +81,9 @@ n, e, *_ = sim.run(lr2, s_us=0.50, kind='K2A', bond=bond); res['K2A（美股50%�
 for name, kw in (('A2 去掉均线（只有分散）', dict(gate=False)), ('A2（分散+慢趋势）', dict(gate=True)),
                  ('A2+快缩仓（三种都有）', dict(gate=True, vol=True)),
                  ('R1 再分配（过门槛的等分）', dict(gate=True, mode='realloc')),
-                 ('R2 排名（过门槛里取前3）', dict(gate=True, mode='top3'))):
+                 ('R2 排名（过门槛里取前3）', dict(gate=True, mode='top3')),
+                 ('R3a 防守只接刷下来的钱', dict(gate=True, mode='r3a')),
+                 ('R3b 同上，黄金算风险腿', dict(gate=True, mode='r3b'))):
     n, e, tu = five(**kw); res[name] = stats(n, e, tu)
 json.dump(res, open(OUT / 'a2-vs-k2a.json', 'w'), ensure_ascii=False, indent=1)
 print(pd.DataFrame(res).T.to_string())
