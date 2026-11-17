@@ -1,6 +1,7 @@
 """D38 第 16 行 M1：五腿合成行情仿真。基准、增强基准（K2A 美股 50%）、A2、R1 在同一批路径上比较。
 腿：0 A 股、1 美股、2 港股、3 10 年国债、4 黄金。噪声来自项目池 2008-08-13 → 2015-12-31 五腿成对日收益（标准化，20 日块抽样），只取波动和相关。
 行情段落和股票漂移沿用 sim.py（港股取 A 与美股平均）；防守资产两种假设见登记。
+第 19 行加 R3a、R3b：防守资产不和风险资产同台，只接被刷下来的钱。
 用法：python scripts/preflight/msim.py results/v6-preflight [路径数]
 """
 import sys, json, pathlib
@@ -46,18 +47,24 @@ def five(lr, mode):
             ma = lvl[:, t - 210:t + 1:21].mean(axis=1)               # 10 个月末均值（含本月末）
             ok = lvl[:, t] > ma
             if mode == 'fixed': tgt = 0.2 * ok
-            else:
+            elif mode == 'realloc':
                 cnt = ok.sum(1, keepdims=True); tgt = np.where(ok, np.minimum(0.4, 1 / np.maximum(cnt, 1)), 0.0)
+            else:                                                   # R3a / R3b：防守资产只接刷下来的钱
+                risk = np.zeros(K, bool); risk[[0, 1, 2] + ([4] if mode == 'r3b' else [])] = True
+                okr = ok & risk; cnt = okr.sum(1, keepdims=True)
+                tgt = np.where(okr, np.minimum(0.4, 1 / np.maximum(cnt, 1)), 0.0)
+                tgt[:, 3] = np.where(ok[:, 3], 1 - tgt.sum(1), 0.0)
             tr = np.abs(tgt - w).sum(1); v = v * (1 - COST * tr); turn += tr; w = tgt; wc = 1 - tgt.sum(1)
         navs[:, t] = v; expo[:, t] = w[:, :3].sum(1)
     return navs, expo, turn
 
-def summarize(navs, bm_ann, a, b, yrs):
+def summarize(navs, bm_ann, a, b, yrs, bm_end=None):
     seg = navs[:, a - 1:b] / navs[:, a - 1:a]; ann = seg[:, -1] ** (1 / yrs) - 1
     low = 100 * (seg / np.maximum.accumulate(seg, axis=1)).min(axis=1)
     return dict(最低剩_万_中位=round(float(np.median(low)), 1), 最低剩_万_p10=round(float(np.percentile(low, 10)), 1),
                 比基准年化_中位=round(float(np.median(ann - bm_ann)) * 100, 2),
-                比基准年化_p10=round(float(np.percentile(ann - bm_ann, 10)) * 100, 2))
+                比基准年化_p10=round(float(np.percentile(ann - bm_ann, 10)) * 100, 2),
+                期末比基准多_万_中位=round(float(np.median(100 * (seg[:, -1] - bm_end))), 1), 段长_年=round(yrs, 2))
 
 rows = []
 for helps in (True, False):
@@ -68,10 +75,14 @@ for helps in (True, False):
         bm_seg = bm[:, a - 1:b] / bm[:, a - 1:a]; bm_ann = bm_seg[:, -1] ** (1 / yrs) - 1
         ek = sim.run(lr[:, :, :2], s_us=0.50, kind='K2A', bond=np.expm1(lr[:, :, 3]))
         out = {'基准': bm, '增强基准(K2A美50)': ek[0], 'A2': five(lr, 'fixed')[0]}
-        r1 = five(lr, 'realloc'); out['R1'] = r1[0]
+        ex = {}
+        for k, mode in (('R1', 'realloc'), ('R3a', 'r3a'), ('R3b', 'r3b')):
+            res_ = five(lr, mode); out[k] = res_[0]; ex[k] = res_
         for k, nv in out.items():
-            rows.append(dict(防守资产='帮忙' if helps else '不帮忙', 行情=name, 结构=k, **summarize(nv, bm_ann, a, b, yrs)))
-        rows[-1]['R1每年换手_倍'] = round(float(np.median(r1[2]) / (T / D)), 2)
-        rows[-1]['R1平均股票仓位'] = round(float(np.median(r1[1][:, a:].mean(1))), 2)
+            row = dict(防守资产='帮忙' if helps else '不帮忙', 行情=name, 结构=k, **summarize(nv, bm_ann, a, b, yrs, bm_seg[:, -1]))
+            if k in ex:
+                row['每年换手_倍'] = round(float(np.median(ex[k][2]) / (T / D)), 2)
+                row['平均股票仓位'] = round(float(np.median(ex[k][1][:, a:].mean(1))), 2)
+            rows.append(row)
 d = pd.DataFrame(rows); d.to_csv(OUT / 'msim.csv', index=False)
 print(d.to_string(index=False))
