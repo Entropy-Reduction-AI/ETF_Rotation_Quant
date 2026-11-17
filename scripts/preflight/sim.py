@@ -81,11 +81,12 @@ EVENT = {'急跌': ('top', WARM + D), '慢熊': ('top', WARM), 'V型反转': ('b
 # ---------- 结构 ----------
 STRUCT = ('K0', 'K1', 'K2', 'K3', 'K2A')  # K2A：只给 A 股腿用 K2，美股腿一直持有（D38 第 3 版登记，2026-11-17）
 
-def run(lr, s_us=0.30, kind='K0', vol_short=20, band=0.10, tilt=0.20):
+def run(lr, s_us=0.30, kind='K0', vol_short=20, band=0.10, tilt=0.20, bond=None):
     """lr: (NP, T, 2) 日对数收益，列 0 = A 股腿，列 1 = 美股腿。返回逐日净值、股票仓位、各类换手。
     成交在信号日的下一日开盘前（按信号日收盘后的权重变动、当日收益之后计）。"""
     n, T, _ = lr.shape
-    R = np.expm1(lr); bd = (1 + BOND) ** (1 / D) - 1
+    R = np.expm1(lr); bd0 = (1 + BOND) ** (1 / D) - 1
+    # bond：可选，逐日国债收益（长度 T）；不传时用固定 BOND，结果与原来逐位相同（D38 第 4 版 U3）
     P = np.exp(np.cumsum(lr, axis=1))                       # 指数点位（起点 1）
     base = np.array([1 - s_us, s_us])
     tgt_leg = np.tile(base, (n, 1))                          # 每条腿的目标权重（K3 会变）
@@ -97,6 +98,7 @@ def run(lr, s_us=0.30, kind='K0', vol_short=20, band=0.10, tilt=0.20):
     flips = np.zeros(n); last_flip = np.full((n, 2), -10 ** 6); last_state = on.copy()
     for t in range(T):
         # 当日收益
+        bd = bd0 if bond is None else bond[t]
         g = 1 + w[:, 0] * R[:, t, 0] + w[:, 1] * R[:, t, 1] + w[:, 2] * bd
         w = np.column_stack([w[:, 0] * (1 + R[:, t, 0]), w[:, 1] * (1 + R[:, t, 1]), w[:, 2] * (1 + bd)]) / g[:, None]
         nav = nav * g; navs[:, t] = nav; expo[:, t] = w[:, 0] + w[:, 1]
