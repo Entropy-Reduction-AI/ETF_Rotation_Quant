@@ -1375,6 +1375,93 @@ def glossary_cards(soup):
             wrap.replace_with(BeautifulSoup('<div class="gl-grid">' + ''.join(cards) + '</div>', 'html.parser'))
 
 
+
+def risk_return_map(soup):
+    """Cards whose value reads '年化% · 回撤%' are drawn on one return-vs-drawdown map, with the benchmark
+    (and other rows) taken from the page's own 年化/最大回撤 table; each card gets delta chips vs the benchmark."""
+    rx = re.compile(r'^\s*([+\-−]?\d+(?:\.\d+)?)%\s*·\s*([\-−]\d+(?:\.\d+)?)%\s*$')
+    num = lambda x: float(x.replace('−', '-'))
+    for grp in soup.select('.cards'):
+        cards = [c for c in grp.select('.card') if c.select_one('.cv') and rx.match(c.select_one('.cv').get_text())]
+        if len(cards) < 2:
+            continue
+        ref = {}
+        for t in soup.find_all('table'):
+            H = [h.get_text('', strip=True) for h in P.leaf_heads(t)]
+            if '年化' not in H or '最大回撤' not in H:
+                continue
+            ia, idd = H.index('年化'), H.index('最大回撤')
+            for tr in t.select('tbody tr'):
+                tds = tr.find_all('td')
+                if len(tds) <= max(ia, idd):
+                    continue
+                nm = re.sub(r'（.*?）', '', tds[0].get_text('', strip=True)).strip()
+                a = re.match(r'^([+\-−]?\d+(?:\.\d+)?)%$', tds[ia].get_text('', strip=True))
+                d = re.match(r'^([\-−]\d+(?:\.\d+)?)%$', tds[idd].get_text('', strip=True))
+                if a and d:
+                    ref[nm] = (num(a.group(1)), num(d.group(1)))
+            if '基准' in ref:
+                break
+        if '基准' not in ref:
+            continue
+        ba, bd = ref['基准']
+        pts = []
+        for c in cards:
+            name = c.select_one('.ct').get_text(strip=True)
+            m = rx.match(c.select_one('.cv').get_text())
+            a, d = num(m.group(1)), num(m.group(2))
+            da, dd = a - ba, abs(d) - abs(bd)
+            good = (da >= -0.5) + (dd < 0)
+            tone = 'good' if good == 2 else ('mid' if good == 1 else 'bad')
+            c['class'] = [x for x in c['class'] if not x.startswith('tone-')] + ['rr', f'rr-{tone}']
+            chips = (f'<span class="rr-c {"g" if da >= -0.5 else "b"}">年化 {"打平" if abs(da) < 0.5 else ("+" if da > 0 else "−") + f"{abs(da):.1f}"}</span>'
+                     f'<span class="rr-c {"g" if dd < 0 else "b"}">回撤{"浅" if dd < 0 else "深"} {abs(dd):.0f} 个点</span>')
+            c.select_one('.cv').insert_after(BeautifulSoup(f'<div class="rr-chips"><span class="rr-vs">对基准</span>{chips}</div>', 'html.parser'))
+            pts.append((name, a, d, tone, True))
+        names = {p_[0] for p_ in pts}
+        for nm, (a, d) in ref.items():
+            if nm not in names and not any(nm.startswith(x.split()[0]) for x in names):
+                pts.append((nm, a, d, 'ref' if nm == '基准' else 'other', False))
+        W, H_, L, R, T, B = 860, 300, 56, 150, 22, 40
+        xs = [abs(p_[2]) for p_ in pts]; ys = [p_[1] for p_ in pts]
+        x0, x1 = 0, (max(xs) // 10 + 1) * 10
+        y0, y1 = min(0, (min(ys) // 5) * 5), (max(ys) // 5 + 1) * 5
+        X = lambda v: L + (v - x0) / (x1 - x0) * (W - L - R)
+        Y = lambda v: T + (y1 - v) / (y1 - y0) * (H_ - T - B)
+        svg = [f'<svg viewBox="0 0 {W} {H_}" class="rr-svg" role="img" aria-label="年化和最大回撤">']
+        svg.append(f'<rect x="{L}" y="{T}" width="{X(abs(bd)) - L:.1f}" height="{Y(ba) - T:.1f}" class="rr-q"/>')
+        for v in range(int(x0), int(x1) + 1, 10):
+            svg.append(f'<text x="{X(v):.1f}" y="{H_ - B + 16}" class="rr-t" text-anchor="middle">−{v}%</text>')
+        for v in range(int(y0), int(y1) + 1, 5):
+            svg.append(f'<text x="{L - 8}" y="{Y(v) + 4:.1f}" class="rr-t" text-anchor="end">{v}%</text><line x1="{L}" x2="{W - R}" y1="{Y(v):.1f}" y2="{Y(v):.1f}" class="rr-g"/>')
+        svg.append(f'<line x1="{X(abs(bd)):.1f}" x2="{X(abs(bd)):.1f}" y1="{T}" y2="{H_ - B}" class="rr-ref"/><line x1="{L}" x2="{W - R}" y1="{Y(ba):.1f}" y2="{Y(ba):.1f}" class="rr-ref"/>')
+        svg.append(f'<text x="{L + 6}" y="{T + 14}" class="rr-ql">两项都比基准好</text>')
+        svg.append(f'<text x="{W - R - 4}" y="{H_ - B - 8}" class="rr-t" text-anchor="end">← 回撤越浅越好　　最大回撤</text><text x="{L - 40}" y="{T - 4}" class="rr-t">年化</text>')
+        boxes = []
+        for nm, a, d, tone, main in sorted(pts, key=lambda q: -q[1]):
+            r = 7 if main else 5
+            cx, cy = X(abs(d)), Y(a)
+            lab = f'{nm} {a:g}% · {d:g}%'.replace('-', '−')
+            w = len(lab) * 7.2
+            lx, ly = cx + 10, cy - 8
+            while any(abs(ly - by) < 15 and lx < bx + bw and bx < lx + w for bx, by, bw in boxes):
+                ly += 15
+            boxes.append((lx, ly, w))
+            svg.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r}" class="rr-p rr-{tone}"/><text x="{lx:.1f}" y="{ly:.1f}" class="rr-l rr-{tone}{" m" if main else ""}">{lab}</text>')
+        svg.append('</svg>')
+        fig = (f'<figure class="rr-fig"><div class="rr-cap">年化 × 最大回撤：虚线是基准（{ba:g}% · {bd:g}%）'.replace('-', '−') + f'，左上角的浅色区 = 两项都比基准好。</div>' + ''.join(svg) + '</figure>')
+        grp.insert_before(BeautifulSoup(fig, 'html.parser'))
+        add_class(grp, 'rr-cards')
+
+
+def caution_kv(soup):
+    """'不能…/别…' lead-phrase paragraphs read as a caution callout."""
+    for pk in soup.select('p.kv'):
+        k = pk.select_one('.kv-k')
+        if k is not None and re.match(r'^(不能|别|不要|注意)', k.get_text(strip=True)):
+            add_class(pk, 'kv-warn')
+
+
 def ux_pass(html):
     soup = BeautifulSoup(html, 'html.parser')
     status_hero(soup)
@@ -1383,6 +1470,7 @@ def ux_pass(html):
     case_cards(soup)
     card_ux(soup)
     sensitivity_cards(soup)
+    risk_return_map(soup)
     flow_steps(soup)
     kv_paragraphs(soup)
     focus_pass(soup)
@@ -1396,6 +1484,7 @@ def ux_pass(html):
         if el.find_parent('li') is not None and el.name == 'p':
             continue
         mark_numbers(soup, el)
+    caution_kv(soup)
     for b in soup.select('main strong, main b, strong, b'):
         if b.find_parent(['table', 'nav']) is not None:
             continue
@@ -1766,4 +1855,31 @@ CSS += r"""
 .gl-sub { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; background: var(--bg); }
 .gl-sk { font-weight: 700; font-size: 14px; color: var(--ink); margin-bottom: 2px; }
 .gl-sv { font-size: 13.5px; line-height: 1.6; color: var(--ink); }
+"""
+
+CSS += r"""
+.rr-fig { margin: 10px 0 14px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.rr-cap { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+.rr-svg { width: 100%; max-width: 900px; height: auto; display: block; }
+.rr-t { font-size: 11px; fill: var(--muted); font-family: var(--font-mono); }
+.rr-g { stroke: var(--line); stroke-width: 1; }
+.rr-ref { stroke: var(--ink); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.rr-q { fill: color-mix(in srgb, var(--good) 8%, transparent); }
+.rr-ql { font-size: 11px; fill: var(--good); font-weight: 700; }
+.rr-p { stroke: var(--surface); stroke-width: 2; }
+.rr-p.rr-good { fill: var(--good); } .rr-p.rr-mid { fill: #a16207; } .rr-p.rr-bad { fill: var(--bad); } .rr-p.rr-ref { fill: var(--ink); } .rr-p.rr-other { fill: var(--muted); }
+.rr-l { font-size: 11.5px; fill: var(--muted); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; } .rr-l.m { font-weight: 700; font-size: 12.5px; }
+.rr-l.rr-good { fill: var(--good); } .rr-l.rr-mid { fill: #a16207; } .rr-l.rr-bad { fill: var(--bad); } .rr-l.rr-ref { fill: var(--ink); font-weight: 700; }
+.cards .card.rr { border-top: 4px solid var(--line); }
+.cards .card.rr-good { border-top-color: var(--good); } .cards .card.rr-mid { border-top-color: #a16207; } .cards .card.rr-bad { border-top-color: var(--bad); }
+.card.rr-good .cv { color: var(--good); } .card.rr-mid .cv { color: #a16207; } .card.rr-bad .cv { color: var(--bad); }
+.rr-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 2px 0 8px; }
+.rr-vs { font-size: 11.5px; color: var(--muted); }
+.rr-c { font-size: 12px; font-weight: 700; border-radius: 4px; padding: 0 6px; }
+.rr-c.g { color: var(--good); background: color-mix(in srgb, var(--good) 10%, transparent); }
+.rr-c.b { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.cards.rr-cards { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+p.kv.kv-warn { border: 1px solid color-mix(in srgb, #a16207 45%, var(--line)); border-left: 4px solid #a16207; background: color-mix(in srgb, #a16207 6%, var(--surface)); border-radius: 10px; padding: 12px 16px; margin-top: 12px; }
+p.kv.kv-warn .kv-k { color: #a16207; }
+p.kv.kv-warn .kv-k::before { content: '⚠'; width: auto; height: auto; background: none; color: #a16207; border-radius: 0; margin-right: 6px; }
 """
