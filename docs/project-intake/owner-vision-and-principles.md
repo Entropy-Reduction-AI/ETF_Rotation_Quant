@@ -6,10 +6,11 @@
 - Document type: intake
 - Status: active
 - Owner: L. Loric
-- Maintainer: Orchestrator（Notion AI）
-- Last updated: 2026-10-27
+- Maintainer: Orchestrator
+- Last updated: 2026-11-16（D38：现状、角色和路线图更新到第二阶段关闭之后；愿景和判断原则原文未改）
 - Source of truth: Owner 与 Orchestrator 2026-10-21 → 10-25 的对话；决定记录 D9、D10
-- 读完本文再读：`operations/planning/2026-10-25-d10-v3.1-approval.md`、`docs/prereg/etf-multiasset-rotation-prereg-v3.1.md`、`docs/owner/phase2-owner-board.md`
+- 先读：`docs/project-intake/project-diagnosis.md`（项目整体诊断）
+- 读完本文再读：`operations/planning/2026-11-16-d38-project-diagnosis-and-preflight.md`、`docs/owner/phase2-retrospective.md`、`docs/owner/phase2-owner-board.md`
 
 ## Purpose
 
@@ -18,6 +19,8 @@
 ## 1. 愿景
 
 **在动态周期内，从多类资产里选出 Top N 强势 ETF 轮动持有，获得超额收益、稳定跑赢被动基准，同时把回撤控制住。**（按 Owner 2026-10-27 的意思更新，D11-9）
+
+> **2026-11-16 注**：三次尝试之后，“跑赢”和“控回撤”哪个在先、底仓美股放多少，都还没有定。等 D38 的预演出预测表后由 Owner 定；在那之前，本节原文不改。数据对下面每一条深层含义的检验结果，见《项目整体诊断》第 3、4 节。
 
 “动态周期”指看多长、多久调一次仓、什么时候离场，都应跟随市场，而不是固定不变。这是交易系统的核心，v4 研究的主题。
 
@@ -69,29 +72,28 @@
 | 角色 | 做什么 |
 | --- | --- |
 | Owner（L. Loric） | 定方向；批准预注册与修订、一次性检验、模拟盘与真钱、尝试预算超过 60 |
-| Orchestrator（Notion AI） | 设计、写预注册、独立复现、解读结果、维护 Owner 看板；不做主体开发 |
+| Orchestrator | 设计、写预注册、独立复现、解读结果、维护 Owner 看板；不做主体开发。跟随 Owner 当前主要对话的 agent 而变，见 `AGENTS.md`“执行者” |
 | Manager（bot） | 拆任务、派活、维护群看板；Reviewer 批准且测试全过后，执行合入 main 和打 tag。执行类命令只由它一个执行 |
 | Dev（bot） | 取数、开发、运行 |
 | Reviewer（bot） | 独立复核、复算、签收，保管冻结 |
 
 tag 不删、不移；main 不强推、不改写。
 
-## 5. 第二阶段路线图与现状（2026-10-25）
+## 5. 现状（2026-11-16）
 
-| # | 环节 | 状态 |
-| --- | --- | --- |
-| ① | 规则定稿：v3 冻结（`milestone/v3-prereg-freeze`）→ **v3.1 已获 Owner 批准（D10）**，待 Reviewer 核对后冻结 | 进行中 |
-| ② | 标的池：137 个标的登记；L1 返工已合入（同一指数合并）；v3.1 要求设计期使用官方回溯数据 | 返工 |
-| ③ | 交易引擎：两套独立实现一致；2012-10-30 休市日数据错误待修；v3.1 新增单只离场规则 | 返工 |
-| ④ | QDII 溢价控制：完成，但未接入执行链 | 待接入 |
-| ⑤ | 打分卡：五条判据已实现 | 完成 |
-| ⑥ | 业务体检：Orchestrator 复诊完成，见 Owner 看板 | 完成 |
-| ⑦ | 代码冻结（Reviewer 批准后 Manager 打 tag） | 未开始 |
-| ⑧ | 一次性检验 2016–2026（Owner 批准） | 未开始 |
-| ⑨ | 按判据出结论 | 未开始 |
-| ⑩ | 前向模拟盘 → 真钱（Owner） | 未开始 |
+| 阶段 | 状态 |
+| --- | --- |
+| 第一阶段 | 2026-10-23 收尾（D8）。留下核心配置，照常执行 |
+| 第二阶段（第 3 次尝试，v3 → v5.1） | 2026-11-05 按“不成立”关闭（D36）。一次性检验：E2 新口径年化 3.0%，基准 8.7% |
+| v5.1 换手诊断（D37） | 前五轮已签收；第六轮（补 36 条指数）在取数 |
+| 项目整体诊断和 v6 前预演（D38） | 诊断已采纳；预演待 Owner 签字后开跑 |
+| v6 | 未起草。预演出预测表、Owner 定靶子之后再决定 |
 
-## 6. 第二阶段到目前最重要的发现
+路线图的十个环节（规则定稿 → 标的池 → 交易引擎 → 溢价控制 → 打分卡 → 业务体检 → 代码冻结 → 一次性检验 → 结论 → 模拟盘）仍然适用，前面加一步“预测表和仿真”，见 `docs/reference/strategy-design-review.md`。
+
+## 6. 第二阶段早期（v3 时期，2026-10-25）的发现
+
+第二阶段完整的结论见《第二阶段复盘》和《项目整体诊断》。下面四条是 v3 时期写下的，保留原文。
 
 1. **v3 在设计期跑输，问题不在“选强势”，而在一条标的池规则。** “指数发布日之前的数据不能用”使 2006–2011 年只有 4–6 个可选标的，叠加“每个 1/N、空位放现金”，策略常年半仓。只修池子、其他规则不变（E1），设计期年化从 12.6% 变成 22.6%，基准 15.4%。
 2. **离场太慢。** 20–250 日回看期 + 周/月调仓，2015 年两三周的急跌来不及反应。单只从高点跌 10% 就离场（E2），年化 26.0%，8%–15% 是一片平台。组合波动刹车（E3）只管“跌得快”、不管“慢慢跌”，期望下降，不采用。
@@ -100,7 +102,7 @@ tag 不删、不移；main 不强推、不改写。
 
 ## 7. 新会话的工作方式
 
-- 先读本文、D10、v3.1、Owner 看板，再看 `operations/planning/phase2-board.md` 了解群内进度。
+- 先读《项目整体诊断》、本文、D38、Owner 看板，再看 `operations/planning/phase2-board.md` 了解群内进度。
 - Owner 直觉的来源：`docs/reference/trading-notes/`（交易员方法笔记，启发而非规则）。
-- Owner 看板的权威版本在 Notion；仓库里的 `docs/owner/phase2-owner-board.md` 是镜像，每次重大更新后同步。
+- Owner 看板的权威版本在仓库 `docs/owner/phase2-owner-board.md`，并发布为 Claude 页面（D11-8）。
 - 给群里的指令，写成可以直接复制给 Manager 的消息；执行由 Manager 完成。
