@@ -1462,6 +1462,61 @@ def caution_kv(soup):
             add_class(pk, 'kv-warn')
 
 
+
+_DX_GOOD = re.compile(r'对了|赚了钱|拿对|方向对|赢|更好')
+_DX_BAD = re.compile(r'挤掉|太散|只有|成本|回撤|吃掉|来回换|撞上|错|亏|输|太频繁|丢了')
+
+
+def diagnosis_cards(soup):
+    """Cards titled 'Name：diagnosis' (no value line): name chip + big diagnosis, the section memo's
+    per-name figure as a gauge against its 基准, and each clause marked as what worked (✓) or what cost (✕)."""
+    for grp in soup.select('.cards'):
+        cards = grp.select('.card')
+        if len(cards) < 2 or grp.find_parent(class_='status') is not None:
+            continue
+        if any(c.select_one('.cv') for c in cards):
+            continue
+        heads = [re.match(r'^([^：]{1,12})：(.+)$', c.select_one('.ct').get_text(strip=True)) if c.select_one('.ct') else None for c in cards]
+        if not all(heads):
+            continue
+        sec = grp.find_parent('section')
+        memo = sec.select_one('p.memo') if sec else None
+        gauge = {}
+        if memo is not None:
+            mt = memo.get_text('', strip=True)
+            mm = re.search(r'([^。：]{2,16})：((?:[^、（。]+?\s*\d+(?:\.\d+)?%、?)+)（基准\s*(\d+(?:\.\d+)?)%）', mt)
+            if mm:
+                for nm, v in re.findall(r'([^、]+?)\s*(\d+(?:\.\d+)?)%', mm.group(2)):
+                    gauge[nm.strip()] = float(v)
+                gname, gbase = mm.group(1), float(mm.group(3))
+        for c, m in zip(cards, heads):
+            name, diag = m.group(1), m.group(2)
+            p = c.find('p')
+            if p is None:
+                continue
+            body = p.decode_contents()
+            parts = [x for x in re.split(r'(?<=[；。])(?![^<]*>)|(?=但)(?![^<]*>)', body) if x.strip()]
+            rows, good, bad = [], 0, 0
+            for x in parts:
+                t = re.sub(r'<[^>]+>', '', x)
+                k = 'bad' if _DX_BAD.search(t) and not (_DX_GOOD.search(t) and not re.search(r'但|只有|成本', t)) else ('good' if _DX_GOOD.search(t) else 'neu')
+                good += k == 'good'; bad += k == 'bad'
+                x = re.sub(r'（([+\-−]\d+(?:\.\d+)?)）', lambda q: f'（<b class="{"sg-pos" if q.group(1)[0] == "+" else "sg-neg"}">{q.group(1)}</b>）', x)
+                rows.append(f'<div class="dx-r dx-{k}"><span class="dx-i"></span><span>{x.strip()}</span></div>')
+            g = ''
+            key = next((k for k in gauge if k.startswith(name) or name.startswith(k)), None)
+            if key is not None:
+                v = gauge[key]; mx = max(max(gauge.values()), gbase) * 1.1
+                tone = 'g' if v >= gbase else 'b'
+                g = (f'<div class="dx-g"><div class="dx-gl">{gname}</div><div class="dx-gb"><i class="{tone}" style="width:{v / mx * 100:.0f}%"></i>'
+                     f'<em style="left:{gbase / mx * 100:.0f}%"></em></div><div class="dx-gv"><b class="{tone}">{v:g}%</b><span>基准 {gbase:g}%</span></div></div>')
+            tone = 'bad' if good == 0 else 'mid'
+            c['class'] = [x for x in c['class'] if not x.startswith('tone-')] + ['dx', f'dxc-{tone}']
+            c.clear()
+            c.append(BeautifulSoup(f'<div class="dx-h"><span class="dx-n">{name}</span></div><div class="dx-d">{diag}</div>{g}<div class="dx-rows">{"".join(rows)}</div>', 'html.parser'))
+        add_class(grp, 'dx-cards')
+
+
 def ux_pass(html):
     soup = BeautifulSoup(html, 'html.parser')
     status_hero(soup)
@@ -1471,6 +1526,7 @@ def ux_pass(html):
     card_ux(soup)
     sensitivity_cards(soup)
     risk_return_map(soup)
+    diagnosis_cards(soup)
     flow_steps(soup)
     kv_paragraphs(soup)
     focus_pass(soup)
@@ -1478,7 +1534,7 @@ def ux_pass(html):
     risk_table(soup)
     decision_log(soup)
     table_focus(soup)
-    for el in soup.select('p, li, .cb, .od, .dl-tx, .dl-h'):
+    for el in soup.select('p, li, .cb, .od, .dl-tx, .dl-h, .dx-r > span:last-child'):
         if el.find_parent(['table', 'nav', 'footer']) is not None or el.find_parent(class_='fold-h') is not None:
             continue
         if el.find_parent('li') is not None and el.name == 'p':
@@ -1882,4 +1938,29 @@ CSS += r"""
 p.kv.kv-warn { border: 1px solid color-mix(in srgb, #a16207 45%, var(--line)); border-left: 4px solid #a16207; background: color-mix(in srgb, #a16207 6%, var(--surface)); border-radius: 10px; padding: 12px 16px; margin-top: 12px; }
 p.kv.kv-warn .kv-k { color: #a16207; }
 p.kv.kv-warn .kv-k::before { content: '⚠'; width: auto; height: auto; background: none; color: #a16207; border-radius: 0; margin-right: 6px; }
+"""
+
+CSS += r"""
+.cards.dx-cards { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.cards .card.dx { border-top: 4px solid var(--bad); display: flex; flex-direction: column; gap: 8px; }
+.cards .card.dxc-mid { border-top-color: #a16207; }
+.dx-n { font-size: 12.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 5px; padding: 1px 8px; }
+.dx-d { font-size: 18px; font-weight: 800; line-height: 1.4; color: var(--bad); }
+.dxc-mid .dx-d { color: #a16207; }
+.dx-g { background: var(--bg); border-radius: 8px; padding: 8px 10px; }
+.dx-gl { font-size: 11.5px; color: var(--muted); margin-bottom: 4px; }
+.dx-gb { position: relative; height: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 5px; }
+.dx-gb i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; }
+.dx-gb i.g { background: var(--good); } .dx-gb i.b { background: var(--bad); }
+.dx-gb em { position: absolute; top: -4px; bottom: -4px; border-left: 2px dashed var(--ink); }
+.dx-gv { display: flex; justify-content: space-between; margin-top: 4px; font-size: 12px; }
+.dx-gv b { font-family: var(--font-mono); font-size: 15px; } .dx-gv b.g { color: var(--good); } .dx-gv b.b { color: var(--bad); }
+.dx-gv span { color: var(--muted); }
+.dx-rows { display: grid; gap: 6px; }
+.dx-r { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 6px; font-size: 14px; line-height: 1.6; }
+.dx-i { width: 16px; height: 16px; border-radius: 50%; margin-top: 4px; display: grid; place-items: center; font-size: 10px; font-weight: 800; color: #fff; background: var(--muted); }
+.dx-i::before { content: '·'; }
+.dx-bad .dx-i { background: var(--bad); } .dx-bad .dx-i::before { content: '✕'; }
+.dx-good .dx-i { background: var(--good); } .dx-good .dx-i::before { content: '✓'; }
+b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color: var(--bad); font-family: var(--font-mono); }
 """
