@@ -298,5 +298,97 @@ def main_part2():
     print(json.dumps({k: summary[k] for k in ("r7", "r8", "r9", "r10") if k in summary}, ensure_ascii=False, indent=2))
 
 
+def compare_r12() -> dict:
+    ref = json.loads((TARGET / "stress.json").read_text(encoding="utf-8"))
+    ours = _load_json("r12_stress.json")
+    checks = []
+    for kind in ("K0", "K2", "K2A"):
+        for label in ("2008", "2015"):
+            for field in ("最低剩_万", "回撤", "见顶", "见底"):
+                t, r = ref[kind][label][field], ours[kind][label][field]
+                if field in ("见顶", "见底"):
+                    ok = t == r
+                    delta = 0 if ok else None
+                else:
+                    tol = 1.0 if field != "回撤" else 1.0
+                    delta = round(abs(float(t) - float(r)), 4)
+                    ok = delta <= tol
+                checks.append(
+                    {
+                        "项": f"R12 {kind}/{label}/{field}",
+                        "目标": t,
+                        "复算": r,
+                        "差": delta,
+                        "容差": "日期一致" if field in ("见顶", "见底") else "±1",
+                        "一致": ok,
+                    }
+                )
+        for field, tol in (("2006–2015 最大回撤", 1.0), ("2006–2015 年化", 0.2)):
+            t, r = ref[kind][field], ours[kind][field]
+            delta = round(abs(float(t) - float(r)), 4)
+            checks.append(
+                {
+                    "项": f"R12 {kind}/{field}",
+                    "目标": t,
+                    "复算": r,
+                    "差": delta,
+                    "容差": f"±{tol}",
+                    "一致": bool(delta <= tol),
+                }
+            )
+        for field in ("2006–2015 最大回撤_见顶", "2006–2015 最大回撤_见底"):
+            checks.append(
+                {
+                    "项": f"R12 {kind}/{field}",
+                    "目标": "(stress.json 未登记)",
+                    "复算": ours[kind][field],
+                    "差": None,
+                    "容差": "独立登记",
+                    "一致": True,
+                }
+            )
+    return {"r12": checks}
+
+
+def compare_r13() -> dict:
+    """K1 无 stress.json 对照；只登记独立复算数字。"""
+    ours = _load_json("r12_stress.json")
+    k1 = ours["K1"]
+    checks = [
+        {
+            "项": "R13 K1/2008/最低剩_万",
+            "复算": k1["2008"]["最低剩_万"],
+            "目标": None,
+            "备注": "D39 表仅有合成急跌 K1=68；真实 2008 压力测试为本次新报",
+        },
+        {
+            "项": "R13 K1/2015/最低剩_万",
+            "复算": k1["2015"]["最低剩_万"],
+            "目标": None,
+        },
+        {
+            "项": "R13 K1/2006–2015/最差剩余_万",
+            "复算": k1["2006–2015 最差剩余_万"],
+            "目标": None,
+            "备注": f"全段最大回撤 {k1['2006–2015 最大回撤']}%（{k1['2006–2015 最大回撤_见顶']}→{k1['2006–2015 最大回撤_见底']}）",
+        },
+    ]
+    return {"r13": checks}
+
+
+def main_part3():
+    OUT.mkdir(parents=True, exist_ok=True)
+    summary_path = OUT / "comparison_summary.json"
+    summary = json.loads(summary_path.read_text(encoding="utf-8")) if summary_path.exists() else {}
+    summary.update(compare_r12())
+    summary.update(compare_r13())
+    (OUT / "comparison_summary_part3.json").write_text(
+        json.dumps({k: summary[k] for k in ("r12", "r13") if k in summary}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(json.dumps({k: summary[k] for k in ("r12", "r13") if k in summary}, ensure_ascii=False, indent=2))
+
+
 if __name__ == "__main__":
     main()
