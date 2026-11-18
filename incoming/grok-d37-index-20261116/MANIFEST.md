@@ -1,12 +1,12 @@
 # D37 第六轮部分提交 MANIFEST
 
-- 日期：2026-11-18 23:05（Asia/Taipei，UTC+8；本批更新：Dev remain pass 3。S5INFT 的 2001-01-02 至 2001-12-04 已由允许的公开 CNBC 日线补上，不是官方日线。正式计数仍是已完成 31/36、部分完成 5。PR #312 已开，本批将追加）
+- 日期：2026-11-19 00:23（Asia/Taipei，UTC+8；本批更新：Dev remain pass 4。中国新经济 2018-12-24 至 2020-05-13 的第二套独立日线仍未找到，只有阴性证据，没有 date,close CSV。正式计数仍是已完成 31/36、部分完成 5。SPNCSCUP 仍留在部分完成。PR #312 已开，本批将追加）
 - 分支：`grok/d37-r6-partial`（追加提交用同一分支）
 - 路径：`incoming/grok-d37-index-20261116/`
 - 本包用途：给 Orchestrator 看进度、更新数据看板。
 - 入库：仍等 36 条全部完成后再由 Dev 统一做；Reviewer 签收后，再请 Manager 合并。本 PR **不要合并**，也不要开 `cursor/d37-r6` 入库分支。
 
-派单共 36 条（Priority A 30 + Priority B 6）。下方「已完成」指本包已有可交的日线 CSV（官方或已允许的二级源），且至少覆盖所需窗口的大部分，不是入库通过。另有 5 条官方身份已确认、但所需窗口仍未完整覆盖，记在「部分完成」，不计入 31/36。S35 与 DWRTF 已有官方约一年 + TradingView 长日线（重叠 251/251 精确吻合），计入已完成。SPGOGUP 已用 Wayback 官方日线覆盖所需窗口，改入已完成。Dev remain pass 2 和 pass 3 都不改变这个计数：仍是已完成 31/36，部分完成仍是 SPAHLVCP、能源净总回报 SP5NENRS、消费精选 SP5CSSUP、品质消费 IXY、中国新经济 SPNCSCUP。入库仍等整包完成。36 条现在都至少有一段日线。
+派单共 36 条（Priority A 30 + Priority B 6）。下方「已完成」指本包已有可交的日线 CSV（官方或已允许的二级源），且至少覆盖所需窗口的大部分，不是入库通过。另有 5 条官方身份已确认、但所需窗口仍未完整覆盖，记在「部分完成」，不计入 31/36。S35 与 DWRTF 已有官方约一年 + TradingView 长日线（重叠 251/251 精确吻合），计入已完成。SPGOGUP 已用 Wayback 官方日线覆盖所需窗口，改入已完成。Dev remain pass 2、pass 3 和 pass 4 都不改变这个计数：仍是已完成 31/36，部分完成仍是 SPAHLVCP、能源净总回报 SP5NENRS、消费精选 SP5CSSUP、品质消费 IXY、中国新经济 SPNCSCUP。入库仍等整包完成。36 条现在都至少有一段日线。
 
 ## 已完成（31 / 36）
 
@@ -98,7 +98,7 @@ TradingView 均为免费 Supercharts Table 视图抄表（已登录免费账号�
 | theme-S&P 500 Energy Sector Index(NTR) | S&P 500 Energy (Sector) (Net TR)；NTR **SP5NENRS**（Reuters `.NTRGSPE`） | `theme-S&P 500 Energy Sector Index(NTR)-official-usd-ntr-daily-20251117-20261116.xls` + `.csv` | 251 | 2025-11-17（628.31）→ 2026-11-16（907.74） | xls `d4f5937c1cac74f9e88811342f31ec9a041194cae6874b157be26f2b350f3911` / csv `2e18ca92aaf0f27da40070ce9591bf40e333f3be8c87ffd6e52850d16644096e` | 1996-06-28（Quick Facts；NTR 图另有 “earliest possible launch date is not available” 的保守提示。First Value 1989-09-11，未作发布日） | 已确认是净总回报，不是价格收益。所需窗口自 1996-06-28 → 2015-02-17+30d，未覆盖 |
 | theme-标普500消费精选指数 | S&P 500 Consumer Select 15/60 Index；USD PR **SP5CSSUP** / `.SP5CSSUP`（不是 SP500-25） | `theme-标普500消费精选指数-official-usd-pr-daily-20251117-20261116.xls` + `.csv` | 251 | 2025-11-17（4280.43）→ 2026-11-16（4745.26） | xls `1168c83e484b9a2555b1381405866a80fcc9131fe1d4249a9f2182146b13aa84` / csv `31a6f3660119e0977b2058ebd48bc3cfbb3e32ec9bab18cba6f4b5a063cf065e` | 2022-11-21（First Value 2012-03-16，未作发布日） | 官方中文名「标普500消费精选指数」。这就是官方名称，不是近称。所需窗口自 2022-11-21 → 2024-02-02+30d，未覆盖 |
 | theme-标普美国品质消费股票指数 | Consumer Discretionary Select Sector Index；USD PR **IXY** / `.IXY`（官方 ticker 表已印出） | `theme-标普美国品质消费股票指数-official-usd-pr-daily-20251117-20261116.xls` + `.csv` | 251 | 2025-11-17（2310.67）→ 2026-11-16（2386.14） | xls `762b28798ff245d32a8e25c4ba41a4ab96193fc34d1eb07e1c2409aa7f0b6046` / csv `c57a3120cd39c674e00985bc0a9f1860fcc72f9a2b378e10a1218a4ec03a6fc6` | 1998-12-16（First Value 印的是 2003-07-01，晚于发布日，按页面原样记录，未作发布日） | 官方中文名「标普可选消费品精选行业指数」。英文页 H1 省略了 S&P 前缀。IXY 现为这只指数的官方价格收益代码，不是近称替代。不是 Quality 指数，也不是 S&P 500 Consumer Discretionary (Sector) 兄系。所需窗口自 1998-12-16 → 2016-04-06+30d，未覆盖 |
-| theme-标普中国新经济行业指数 | S&P New China Sectors (A-shares Capped) Index；USD PR **SPNCSCUP**（默认港币 PR 为 SPNCSCHP） | `theme-标普中国新经济行业指数-official-usd-pr-SPNCSCUP-daily-20251117-20261116.xls` + `.csv` | 259 | 2025-11-17（1951.09）→ 2026-11-16（1457.47） | xls `c0a8013206ec237d3c6a4b83e0988a5b22a91251bc99ad0d50739280c2f265c0` / csv `30b34768c360f1c6457cc3921c25b4cd14f1a96bf937b728ef97b172572aaa27` | 2018-12-24（First Value 2010-12-31，未作发布日） | 只取 A 股上限版，未用无上限或 Ex-A-Share。页面默认头条是港币价格收益 1,470.99；本文件为切换到 USD 后的官方价格收益。NTR（SPNCSCHN / SPNCSCUN）未用。所需窗口自 2018-12-24 → 2020-10-23+30d，未覆盖。Dev remain pass 2：发布日 2018-12-24 已从官方 Quick Facts 确认，不是从 TV 起始日推断。2018-12-24 至 2020-05-13 的第二套独立日线仍未找到；FT 仍从 2020-05-14 2004.75 起。仍留在部分完成。未用无上限、Ex-A-Share 或 NTR |
+| theme-标普中国新经济行业指数 | S&P New China Sectors (A-shares Capped) Index；USD PR **SPNCSCUP**（默认港币 PR 为 SPNCSCHP） | `theme-标普中国新经济行业指数-official-usd-pr-SPNCSCUP-daily-20251117-20261116.xls` + `.csv` | 259 | 2025-11-17（1951.09）→ 2026-11-16（1457.47） | xls `c0a8013206ec237d3c6a4b83e0988a5b22a91251bc99ad0d50739280c2f265c0` / csv `30b34768c360f1c6457cc3921c25b4cd14f1a96bf937b728ef97b172572aaa27` | 2018-12-24（First Value 2010-12-31，未作发布日） | 只取 A 股上限版，未用无上限或 Ex-A-Share。页面默认头条是港币价格收益 1,470.99；本文件为切换到 USD 后的官方价格收益。NTR（SPNCSCHN / SPNCSCUN）未用。所需窗口自 2018-12-24 → 2020-10-23+30d，未覆盖。Dev remain pass 2：发布日 2018-12-24 已从官方 Quick Facts 确认，不是从 TV 起始日推断。2018-12-24 至 2020-05-13 的第二套独立日线仍未找到；FT 仍从 2020-05-14 2004.75 起。Dev remain pass 4 仍未找到，没有写 date,close CSV。仍留在部分完成。未用无上限、Ex-A-Share 或 NTR |
 
 
 ### TradingView 补充（这 3 条仍算部分完成）
@@ -118,8 +118,9 @@ TradingView 均为免费 Supercharts Table 视图抄表（已登录免费账号 
 - TradingView `SP:IXY` 进行中文件已抄到 2006-04-28（5022 行），接缝完好；表上还有更早行。先停止连续翻表，因为 FT 已从发布日 1998-12-16 覆盖到 2026-11-16，并与官方一年 251/251 精确吻合。
 - Dev remain pass 2 的文件在 `d37-remain-20261118-pass2/`。SPSIBI 所需窗口头、DJSOEP 与 SPSIOP 发布日后几天已补上，这三条仍在已完成。S5INFT 大部分已补上，2001 缺口当时仍缺；pass 3 已用公开 CNBC 日线补上，仍在已完成。SPNCSCUP 发布日已从官方 Quick Facts 确认为 2018-12-24，第二套独立日线仍无，留在部分完成。能源净总回报、SPAHLVCP、消费精选这三段没有新填充。
 - Dev remain pass 3 的文件在 `d37-remain-20261118-pass3/`。S5INFT 的 2001 缺口已由公开 CNBC 日线补上，不是官方日线，仍在已完成。SPAHLVCP 2017-02-20 至 2017-08-03、中国新经济 2018-12-24 至 2020-05-13、能源净总回报 1996-06-28 至 1998-12-30、消费精选 2022-11-21/22/23 本批仍未补上，未编造。
-- 下一步：Manager 继续补官方富时、新交所和恒生完整日线。上面四段仍卡在部分完成。
-- 部分提交 PR 已开：[#312](https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/312)，分支 `grok/d37-r6-partial`。本批 `d37-remain-20261118-pass3/` 将追加到同一 PR。不要合并，也不要入库。入库仍等整包完成。
+- Dev remain pass 4 的文件在 `d37-remain-20261119-pass4/`。中国新经济第二套独立日线仍未找到，没有 date,close CSV，仍留在部分完成。
+- 下一步：Manager 继续补官方富时、新交所和恒生完整日线。SPAHLVCP、能源净总回报、消费精选、中国新经济这四段仍卡在部分完成。
+- 部分提交 PR 已开：[#312](https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/312)，分支 `grok/d37-r6-partial`。本批 `d37-remain-20261119-pass4/` 将追加到同一 PR。不要合并，也不要入库。入库仍等整包完成。
 
 每做完一批，追加提交到同一分支，并更新本文件。
 
@@ -136,7 +137,7 @@ TradingView 均为免费 Supercharts Table 视图抄表（已登录免费账号 
 | theme-SPAHLVCP、theme-S&P 500 Energy Sector Index(NTR) | 免费 Graph View 导出上限约一年；登录免费账号也不能加长。TradingView 无这两只代码。Dev 本批仍未找到允许的日线。SPAHLVCP 仍从 FT 2017-08-04 1231.02 起（官方重叠 243/243，但 2025-11-28 差 0.1766%，窗口内多 13 个日期，不能当官方用；发布日 2017-02-20 至 2017-08-03 的 CNY PR 仍缺；未用港币代码或 ETF）。Dev remain pass 3：三份官方 Wayback 页已打开，只是介绍页或空壳，没有嵌入官方日线；widget API 没有归档。SP5NENRS/NTRGSPE 仍从 FT 1998-12-31 100.00 起（官方 NTR 251/251，max \|rel\|=0.00157%）。Dev remain pass 3：CNBC `.NTRGSPE` 返回 0 根；1996-06-28 至 1998-12-30 仍无净总回报日线，未用价格收益替代。SPICE 付费未用 |
 | theme-标普500消费精选指数 | TradingView 已取 2023-10-23→2026-11-16，与官方 251/251 精确吻合。FT `SP5CSSUP:IOM` 从 2022-11-25 3033.79 补到 2023-10-20（与官方 251/251 精确）。Dev remain pass 3：CNBC 第一根已是 2022-11-25 3033.7884，2022-11-21/22/23 仍没有收盘；未把基期 1000（基日 2012-03-16）写成上市日收盘，未编造。暂不入库 |
 | theme-标普美国品质消费股票指数 | TradingView 进行中文件已抄到 2006-04-28，仍未到发布日，也未截到免费表最早一行。FT `IXY:PSE` 已覆盖 1998-12-16→2026-11-16（7022 行），官方重叠 251/251 精确。TV 2021–2026 的表内缺口仍在。暂不入库 |
-| theme-标普中国新经济行业指数 | TradingView 已从发布日抄到 2026-06-26；所需窗口内基本干净。FT `SPNCSCUP:IOM` 从 2020-05-14 起到 2026-11-16，可补 2021–2022 表内缺口和 2026-06-26 之后，但 2026-09-28 与官方差 0.4636%，不能当官方序列直接用。Dev remain pass 2：发布日 2018-12-24 已从官方 Quick Facts 确认，不是从 TV 起始日推断。Dev remain pass 3：2018-12-24 至 2020-05-13 的第二套独立日线仍未找到。官方 2025-11-14 Wayback 页没有嵌入 `indexLevels`；CNBC/FT 仍从 2020-05-14 起（FT 第一根 2004.75）。未用无上限、Ex-A-Share 或 NTR，未编造。仍留在部分完成，暂不入库 |
+| theme-标普中国新经济行业指数 | TradingView 已从发布日抄到 2026-06-26；所需窗口内基本干净。FT `SPNCSCUP:IOM` 从 2020-05-14 起到 2026-11-16，可补 2021–2022 表内缺口和 2026-06-26 之后，但 2026-09-28 与官方差 0.4636%，不能当官方序列直接用。Dev remain pass 2：发布日 2018-12-24 已从官方 Quick Facts 确认，不是从 TV 起始日推断。Dev remain pass 3：2018-12-24 至 2020-05-13 的第二套独立日线仍未找到。官方 2025-11-14 Wayback 页没有嵌入 `indexLevels`；CNBC 仍从 2020-05-15 2006.63 起，FT 仍从 2020-05-14 2004.75 起。Dev remain pass 4（`d37-remain-20261119-pass4/`，只有阴性证据）：官方英文页 Wayback CDX 从 2020-12-23（302）起，2018-12-24 至 2020-05-13 内 0 条捕获。最早 200 快照 20210302230954 标题正确，`indexLevels` 为 0，默认 widget 92366266 是港币、未用，USD factsheet 是 92366265。2020-09-25 的裸 widget 归档不是 indexId 92366265（`Index [0] was not found!`，`indexLevels` 为 null）。无上限父页未当作替代。Yahoo `^SPNCSCUP` 在该次会话被挡成中国大陆，身份未确认。没有写 date,close CSV，未编造。未用无上限、Ex-A-Share 或 NTR。仍留在部分完成，暂不入库 |
 
 ### 已有二级日线、但官方免费日线仍缺
 
@@ -168,5 +169,6 @@ TradingView 均为免费 Supercharts Table 视图抄表（已登录免费账号 
 - `d37-remain-20261118-pass2/theme-SPSIBI-usspindices-wayback-usd-pr-daily-20041220-20141219.csv`：同一官方快照的未裁切序列，含发布日 2006-01-27 前的回补，不作为所需窗口、不入库。
 - `d37-remain-20261118-pass2/` 里带 `-incl-tv-seam` 的 CSV、S5INFT 的 OHLC 副本，以及 `raw/`：接缝或原始证据，不单独入库。
 - `d37-remain-20261118-pass3/theme-S5INFT-cnbc-SPLRCT-usd-pr-daily-20001215-20011231.csv` 与同目录 OHLC：接缝或原始副本，不单独入库。SPAHLVCP 的 Wayback 页和各未补窗口的 raw 只作阴性证据。
+- `d37-remain-20261119-pass4/`：中国新经济第二套日线的阴性证据。没有 date,close CSV，不入库。
 
-证据文件（截图、`sources.csv`、官方 PDF/XLS、各 `*-NOTE.txt`、`theme-东证指数-pdfs/`、`d37-remain-20261118/`、`d37-remain-20261118-pass2/`、`d37-remain-20261118-pass3/` 的 raw 与 README）与交付 CSV 一并存于本目录，供核对，不单独入库。
+证据文件（截图、`sources.csv`、官方 PDF/XLS、各 `*-NOTE.txt`、`theme-东证指数-pdfs/`、`d37-remain-20261118/`、`d37-remain-20261118-pass2/`、`d37-remain-20261118-pass3/`、`d37-remain-20261119-pass4/` 的 raw 与 README）与交付 CSV 一并存于本目录，供核对，不单独入库。

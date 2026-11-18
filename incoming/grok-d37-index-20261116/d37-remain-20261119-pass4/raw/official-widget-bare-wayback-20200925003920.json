@@ -1,0 +1,5 @@
+
+		
+    	
+			{"status":true,"serviceMessages":["Service Ended Well"],"serviceConfig":"ALL_INDEX_ATTRIBUTES","indexDetailHolder":{"status":false,"serviceMessages":["Index [0] was not found!"],"serviceMessage":"Index [0] was not found!"},"indexLevelsHolder":{"status":false,"serviceMessages":["Index: 0, Size: 0"],"fetchedDate":null,"indexLevels":null,"formattedFetchedDate":null,"formattedDateForWidget":null,"serviceMessage":"Index: 0, Size: 0"},"indexPerformanceHolder":{"status":false,"serviceMessages":["Index[0] was not found!"],"serviceMessage":"Index[0] was not found!"},"idsIndexAdvancedRiskMetricsHolder":{"status":true,"serviceMessages":[],"indexRiskMetrics":{},"serviceMessage":null},"idsIndexCountryBreakdownHolder":[],"idsIndexCurrencyHolder":[],"idsIndexReturnTypeHolder":[],"serviceMessage":"Service Ended Well"}	
+	
