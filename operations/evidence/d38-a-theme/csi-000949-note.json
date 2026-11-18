@@ -1,0 +1,12 @@
+{
+  "url": "https://www.csindex.com.cn/#/indices/family/detail?indexCode=000949",
+  "api_url": "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/000949",
+  "code": "000949",
+  "name": "中证农业主题指数",
+  "short_name": "中证农业",
+  "publish": "2009-10-28",
+  "base_date": "2004-12-31",
+  "screenshot": "operations/evidence/d38-a-theme/000949-csindex-detail.png",
+  "screenshot_bytes": 586428,
+  "fetched_at": "2026-11-18T17:11:04+08:00"
+}

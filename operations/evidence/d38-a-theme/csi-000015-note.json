@@ -1,0 +1,12 @@
+{
+  "url": "https://www.csindex.com.cn/#/indices/family/detail?indexCode=000015",
+  "api_url": "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/000015",
+  "code": "000015",
+  "name": "上证红利指数",
+  "short_name": "红利指数",
+  "publish": "2005-01-04",
+  "base_date": "2004-12-31",
+  "screenshot": "operations/evidence/d38-a-theme/000015-csindex-detail.png",
+  "screenshot_bytes": 589326,
+  "fetched_at": "2026-11-18T17:14:42+08:00"
+}

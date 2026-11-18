@@ -1,0 +1,12 @@
+{
+  "url": "https://www.csindex.com.cn/#/indices/family/detail?indexCode=H30590",
+  "api_url": "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H30590",
+  "code": "H30590",
+  "name": "中证机器人指数",
+  "short_name": "机器人",
+  "publish": "2015-02-10",
+  "base_date": "2010-12-31",
+  "screenshot": "operations/evidence/d38-a-theme/H30590-csindex-detail.png",
+  "screenshot_bytes": 598452,
+  "fetched_at": "2026-11-18T16:54:54+08:00"
+}
