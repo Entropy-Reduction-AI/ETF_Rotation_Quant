@@ -347,3 +347,26 @@ Next: continue the allowed TradingView free Table copy for IXY before
 
 Screenshots include spdji-register-success.png, spdji-register-success-logged-in-home.png,
 spdji-logged-in-chart-range-10y.png, spdji-logged-in-export-10y.png.
+
+UPDATE 2026-11-18 11:37 Asia/Taipei
+Official Graph View → Export ~1y USD PR files obtained for the four previously TV-only series. Site loaded (HTTP 200). Header already showed Hi Karin; no new sign-in; SPICE not used. Existing TradingView files were not overwritten. Free export still 252 dailies 2025-11-17 to 2026-11-17.
+
+- S5INFT: https://www.spglobal.com/spdji/en/indices/equity/sp-500-information-technology-sector/
+  Launch 1996-06-28, First Value 1989-09-11, USD PR S5INFT / .SPLRCT
+  theme-标普500信息科技指数-official-usd-pr-daily-20251117-20261117.xls SHA256 9a66b9eb3116132de29f55fb1a2c0888937d2fd3dbc51f6db49de68b08ae6bb8
+  vs TV 251/252, max |rel|=1.196272% on 2026-06-26
+- SPSIBI: https://www.spglobal.com/spdji/en/indices/equity/sp-biotechnology-select-industry-index/
+  Launch 2006-01-27, First Value 1999-12-17, USD PR SPSIBI / .SPBIO
+  theme-标普生物科技精选行业指数-official-usd-pr-daily-20251117-20261117.xls SHA256 80e490492eda20fc5d8ca46f7050b95e9fb29d4a6ddcb97d1d42f6cad2f20ee1
+  vs TV 251/252, max |rel|=0.014551% on 2026-03-06
+- DJSOEP: https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-select-oil-exploration-production-index/
+  Launch 2006-04-28, First Value 1991-12-31, USD PR DJSOEP / .DJSOEP
+  theme-道琼斯美国石油开发与生产指数-official-usd-pr-daily-20251117-20261117.xls SHA256 b7becfd4a83ad28c7ec7146018251abee25b6e9cf9480a0e4e88b97c6407baf2
+  vs TV 251/251 exact
+- SPSIOP: https://www.spglobal.com/spdji/en/indices/equity/sp-oil-gas-exploration-production-select-industry-index/
+  Found via official Index Finder search for SPSIOP, confirmed before export. Launch 2006-06-19, First Value 1999-12-17, USD PR SPSIOP / .SPSIOP. Not DJSOEP.
+  theme-标普石油天然气勘探及生产精选行业指数-official-usd-pr-daily-20251117-20261117.xls SHA256 55b023b4f7f59605e16c99376613c6423a861432995039a36ee4eae3ee074c2a
+  vs TV 251/252, max |rel|=3.285194% on 2026-03-09 (official 6226.42 vs TV 6430.97)
+
+Needed-window heads still missing on TV after official launch dates were confirmed: S5INFT 1996-06-28 through 2012-09-24; SPSIBI 2006-01-27 through 2014-05-05; DJSOEP launch through 2006-05-04; SPSIOP launch through 2006-06-22.
+Screenshots official-<TICKER>-{overview,graph-1y,launch,tickers}.png. overview and graph-1y are byte-identical (the overview page already shows 1 Year Graph View and Export).

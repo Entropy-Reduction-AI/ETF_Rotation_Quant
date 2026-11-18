@@ -1,6 +1,6 @@
 # D37 第六轮部分提交 MANIFEST
 
-- 日期：2026-11-18 01:17（Asia/Taipei，UTC+8；本批更新：IXY 的 TradingView 进行中文件已抄到 2006-04-28；FT 长日线已入包但尚未入库）
+- 日期：2026-11-18 11:39（Asia/Taipei，UTC+8；本批更新：S5INFT、SPSIBI、DJSOEP、SPSIOP 的官方约一年 USD PR 对照已取到，发布日已从页面截图；PR #312 已开，本批将追加）
 - 分支：`grok/d37-r6-partial`（追加提交用同一分支）
 - 路径：`incoming/grok-d37-index-20261116/`
 - 本包用途：给 Orchestrator 看进度、更新数据看板。
@@ -56,15 +56,24 @@ TradingView 均为免费 Supercharts Table 视图抄表；**未使用** Plus / D
 | theme-富时亚太低碳精选指数 | `theme-富时亚太低碳精选指数-tradingview.csv` | 1157 | 2022-06-06 → 2026-11-16 | `e3a40183a9e4b5d69de0d15dbb02ce2944434b0194d7c4d23e7a3edad84e2d6a` | TV `GPCSP006`。官方发布日 2022-05-27，免费表缺 2022-05-27–06-05 |
 | theme-富时沙特阿拉伯指数 | `theme-富时沙特阿拉伯指数-tradingview-FISAULM-SAR.csv` | 1550 | 2019-02-18 → 2026-11-16 | `8c559a08038f630db34172010d558c5c59dbbea8164502fc19dd81bf6a844400` | TV `FISAULM`（SAR）。官方价格指数 `publish_date` 未核对（不用 Net Tax 说明书的 2019-03-18） |
 | theme-富时沙特阿拉伯指数 | `theme-富时沙特阿拉伯指数-tradingview-FISAULMU-USD.csv` | 1591 | 2018-11-27 → 2026-11-16 | `a23e46a14194c5bfb0a4508d0c89ae35034200978fa563dd6267b25608256fb2` | TV `FISAULMU`（USD）。与 FISAULM 重叠 1543 日，max \|rel\|≈0.43%（2022-09-28） |
-| theme-标普500信息科技指数 | `theme-标普500信息科技指数-tradingview.csv` | 3547 | 2012-09-25 → 2026-11-16 | `4e04cba0c5f50cd53d2b54e0b2dc3fd3529386f31dd656d9e0877fa881304bb7` | TV `S5INFT`。官方 spdji 仍 403。表中若干周中缺口按原样保留 |
-| theme-标普生物科技精选行业指数 | `theme-标普生物科技精选行业指数-tradingview.csv` | 3153 | 2014-05-06 → 2026-11-16 | `e642543a54a6e214317d03462e8d297c02d2f79e6b175568b3713fe7d01b1683` | TV `SPSIBI`。官方 spdji 仍 403 |
-| theme-道琼斯美国石油开发与生产指数 | `theme-道琼斯美国石油开发与生产指数-tradingview.csv` | 5166 | 2006-05-05 → 2026-11-16 | `c0da503c67117d8e70c6e1ffc02cf741318bdf911336507b7268b6e30e1675b0` | TV `DJSOEP`；页面名为 Dow Jones U.S. Select Oil Exploration & Production Index。官方 spdji 仍 403 |
-| theme-标普石油天然气勘探及生产精选行业指数 | `theme-标普石油天然气勘探及生产精选行业指数-tradingview.csv` | 5126 | 2006-06-23 → 2026-11-16 | `aba06667e82696bcb1f79ed2ceb6b1914c54f1627b2971373f31fcfcee3b5038` | TV `SPSIOP`。官方 spdji 仍 403 |
+| theme-标普500信息科技指数 | `theme-标普500信息科技指数-tradingview.csv` | 3547 | 2012-09-25 → 2026-11-16 | `4e04cba0c5f50cd53d2b54e0b2dc3fd3529386f31dd656d9e0877fa881304bb7` | TV `S5INFT`。官方发布日 **1996-06-28**（First Value 1989-09-11，未作发布日），官方代码 USD PR **S5INFT**（Reuters `.SPLRCT`）。官方约一年 XLS 252 行 2025-11-17→2026-11-17，与 TV 重叠 251/252（TV 无 2026-11-17）；中位数相对误差约 0.00015%，2 日高于 0.01%，最大 2026-06-26 约 1.196%（官方 6509.39 vs TV 6431.52）。所需窗口自发布日 → 2016-12-27+30d，TV 仍缺 1996-06-28 至 2012-09-24 |
+| theme-标普生物科技精选行业指数 | `theme-标普生物科技精选行业指数-tradingview.csv` | 3153 | 2014-05-06 → 2026-11-16 | `e642543a54a6e214317d03462e8d297c02d2f79e6b175568b3713fe7d01b1683` | TV `SPSIBI`。官方发布日 **2006-01-27**（First Value 1999-12-17，未作发布日），官方代码 USD PR **SPSIBI**（Reuters `.SPBIO`）。官方约一年 XLS 252 行 2025-11-17→2026-11-17，与 TV 重叠 251/252；中位数约 0.00010%，1 日略高于 0.01%（2026-03-06 约 0.0146%）。所需窗口自发布日 → 2016-12-27+30d，TV 仍缺 2006-01-27 至 2014-05-05 |
+| theme-道琼斯美国石油开发与生产指数 | `theme-道琼斯美国石油开发与生产指数-tradingview.csv` | 5166 | 2006-05-05 → 2026-11-16 | `c0da503c67117d8e70c6e1ffc02cf741318bdf911336507b7268b6e30e1675b0` | TV `DJSOEP`；官方名称 Dow Jones U.S. Select Oil Exploration & Production Index。官方发布日 **2006-04-28**（First Value 1991-12-31，未作发布日），官方代码 USD PR **DJSOEP**（Reuters `.DJSOEP`）。官方约一年 XLS 252 行 2025-11-17→2026-11-17，与 TV 重叠 251/251 精确吻合（TV 无 2026-11-17）。所需窗口自发布日至 2017-03-17+30d；TV 仍缺发布日后至 2006-05-04 的几天 |
+| theme-标普石油天然气勘探及生产精选行业指数 | `theme-标普石油天然气勘探及生产精选行业指数-tradingview.csv` | 5126 | 2006-06-23 → 2026-11-16 | `aba06667e82696bcb1f79ed2ceb6b1914c54f1627b2971373f31fcfcee3b5038` | TV `SPSIOP`。官方发布日 **2006-06-19**（First Value 1999-12-17，未作发布日），官方代码 USD PR **SPSIOP**（Reuters `.SPSIOP`）。官方约一年 XLS 252 行 2025-11-17→2026-11-17，与 TV 重叠 251/252；中位数约 0.00015%，1 日高于 0.01%：2026-03-09 约 3.285%（官方 6226.42 vs TV 6430.97）。所需窗口自发布日至 2012-06-08+30d；TV 仍缺发布日后至 2006-06-22 的几天 |
 | theme-恒生中国企业指数 | `theme-恒生中国企业指数-official-past-month.csv` | 21 | 2026-10-20 → 2026-11-17 | `3baea34e5fa7e30d67925e37ec71782802b52fd1e4598c7b901f69e40d6e229a` | 官方 INdex360 免费 Past month 价格收益，id 00014.00。2026-11-16 Day Close 7981.54 与东方财富、TradingView 过去 20 日全部精确吻合（max \|rel\|=0）。含已收盘的 2026-11-17（7904.37）。发布日冲突见下，未裁切二级源 |
 | theme-恒生中国企业指数 | `theme-恒生中国企业指数-eastmoney.csv` | 7956 | 1994-08-08 → 2026-11-16 | `2a8cdfc18e3a7926f3522d4a5cf97e16954e89fa93e237b404c96ab7b4d83b20` | 东方财富二级源。与官方过去一月 20/20 精确吻合 |
 | theme-恒生中国企业指数 | `theme-恒生中国企业指数-tradingview.csv` | 5780 | 2003-05-28 → 2026-11-16 | `db4a33a2b41856044aee60e9f9a98bae312feea51a6610f90318ea8c44ea2ae1` | TV `HSI:HSCEI`，页面名为 Hang Seng China Enterprises Index。免费表从 2003-05-28 起，缺官方发布日 1994-08-08 至 2003-05-27。与东方财富重叠 5777 日，median \|rel\|=0，max \|rel\|≈0.494993%（2007-09-25），9 日超过 0.01%。2026-11-17 延迟 bar 已剔除 |
 
-> 说明：上表中四条标普/道琼斯 TradingView 二级源（S5INFT、SPSIBI、DJSOEP、SPSIOP）写于官方站点仍 403 之时。2026-11-17 22:28 起桌面浏览器已能打开官方 spdji（HTTP 200）；本批尚未补下这四条的官方长历史。
+> 说明：这四条的官方约一年 USD PR 对照已于 2026-11-18 11:37（Asia/Taipei）取到（Graph View → Export，无需新登录；页眉已是 Hi Karin；未用 SPICE）。免费导出仍只有约一年（252 行，2025-11-17→2026-11-17），盖不住所需窗口。官方发布日已从页面截图，不再写「未核对」。权威文件是官方 `.xls`；同名 `.csv` 是 LibreOffice 抽出的 `date,close`，不是另一来源。截图 `screenshots/official-<TICKER>-overview.png` 与 `official-<TICKER>-graph-1y.png` 是同一张图（概览页已含 1 Year Graph View 和 Export）。发布日与代码见 `official-<TICKER>-launch.png`、`official-<TICKER>-tickers.png`。
+
+官方约一年文件（均为 252 行，2025-11-17 → 2026-11-17）：
+
+| 容器 | 文件 | SHA256（xls / csv） | 官方页与代码 |
+|---|---|---|---|
+| theme-标普500信息科技指数 | `theme-标普500信息科技指数-official-usd-pr-daily-20251117-20261117.xls` + `.csv` | xls `9a66b9eb3116132de29f55fb1a2c0888937d2fd3dbc51f6db49de68b08ae6bb8` / csv `f8603abdf608dca7d62c615edeaf4608985c88a9e23f6e8267d08c6294a260bd` | https://www.spglobal.com/spdji/en/indices/equity/sp-500-information-technology-sector/ ；页名 S&P 500 Information Technology；XLS 序列名 S&P 500 Information Technology (Sector)；USD PR S5INFT |
+| theme-标普生物科技精选行业指数 | `theme-标普生物科技精选行业指数-official-usd-pr-daily-20251117-20261117.xls` + `.csv` | xls `80e490492eda20fc5d8ca46f7050b95e9fb29d4a6ddcb97d1d42f6cad2f20ee1` / csv `bd38dd5ac4d449e5f1aea1d71ba9e242bc54a6478bce0335476457572622aae0` | https://www.spglobal.com/spdji/en/indices/equity/sp-biotechnology-select-industry-index/ ；USD PR SPSIBI |
+| theme-道琼斯美国石油开发与生产指数 | `theme-道琼斯美国石油开发与生产指数-official-usd-pr-daily-20251117-20261117.xls` + `.csv` | xls `b7becfd4a83ad28c7ec7146018251abee25b6e9cf9480a0e4e88b97c6407baf2` / csv `21692108deceec9c63b3c315e7163724f8bf2807d80b37b57ea2e25e1b635c4a` | https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-select-oil-exploration-production-index/ ；USD PR DJSOEP |
+| theme-标普石油天然气勘探及生产精选行业指数 | `theme-标普石油天然气勘探及生产精选行业指数-official-usd-pr-daily-20251117-20261117.xls` + `.csv` | xls `55b023b4f7f59605e16c99376613c6423a861432995039a36ee4eae3ee074c2a` / csv `a9f23ea3ac9ade2e69b05bdf27684d304c7dcfbcbbb195ac217b3b41b63c3944` | https://www.spglobal.com/spdji/en/indices/equity/sp-oil-gas-exploration-production-select-industry-index/ （由官方 Index Finder 按 SPSIOP 找到后核对）；USD PR SPSIOP；不是 DJSOEP |
 
 
 ### 官方约一年 + TradingView 长日线（重叠精确吻合）
@@ -107,8 +116,8 @@ TradingView 均为免费 Supercharts Table 视图抄表（已登录免费账号 
 - 官网免费注册已完成并已登录，但 10 Year 官方日线导出仍只有约一年。免费账号加长官方历史这条路已经关闭；SPICE 付费仍不用。
 - Dev 已从 FT 公开历史价取到这 6 条的更长次级日线，放在 `d37-longhist-20261118/`。Manager 已核对 SHA256、行数和官方重叠，数字一致。按官方缺失时的公开报价次级源收下，误差记下；浏览器历史表有订阅墙，数据来自公开 AJAX，不视为官方。尚未入库，也未开 `cursor/d37-r6`。
 - TradingView `SP:IXY` 进行中文件已抄到 2006-04-28（5022 行），接缝完好；表上还有更早行。先停止连续翻表，因为 FT 已从发布日 1998-12-16 覆盖到 2026-11-16，并与官方一年 251/251 精确吻合。
-- 下一步：补 FT 也没有的窗口——SPGOGUP 2011-07-08 至 2014-12-15、SP5NENRS 1996-06-28 至 1998-12-30、SPAHLVCP 2017-02-20 至 2017-08-03、消费精选 2022-11-21/22/23。中国新经济发布日至 2020-05-13 仍靠已有 TV。
-- 分支 `grok/d37-r6-partial` 及其 PR 仍未开：需要 Owner 在 1:1 完成 GitHub CLI 登录后才能把本包推上去。入库仍等全部完成。
+- 下一步：Dev 继续补 FT 也没有的窗口——SPGOGUP 2011-07-08 至 2014-12-15、SP5NENRS 1996-06-28 至 1998-12-30、SPAHLVCP 2017-02-20 至 2017-08-03、消费精选 2022-11-21/22/23。中国新经济发布日至 2020-05-13 仍靠已有 TV。Manager 接下来仍要补官方富时、新交所和恒生完整日线，以及上述两条官方发布日已确认后 TV 仍缺的所需窗口头（S5INFT 1996-06-28 至 2012-09-24，SPSIBI 2006-01-27 至 2014-05-05）。
+- 部分提交 PR 已开：[#312](https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/312)，分支 `grok/d37-r6-partial`。本批官方约一年文件将追加到同一 PR。不要合并，也不要入库。
 
 每做完一批，追加提交到同一分支，并更新本文件。
 
@@ -135,7 +144,7 @@ TradingView 均为免费 Supercharts Table 视图抄表（已登录免费账号 
 | 官方 FTSE 价格收益日线（GPCSP006、FISAULM 族） | 匿名 factsheet / Historic Values 可用，但 Historic Values 目前只有月末或 Net Tax 兄系（如 GPCSP007），不能当作日线价格入库 |
 | 官方恒生 INdex360 完整日线 | 免费历史仍只有 Past month。12 条 Priority A 官方文件截至 2026-11-16（20 日）；HSCEI 官方文件截至 2026-11-17（21 日）。完整历史未开放 |
 | theme-恒生中国企业指数 官方发布日 | INdex360 Overview → Profile 显示 Launch Date **19 Jul 2017**（Base Value 2000）。官方目录 發佈日为 **08-08-1994**（首个指数点 03-01-2000）。两者都是官方来源，冲突未决；`publish_date` 暂记未核对，避免按 2017-07-19 误裁二级源。与 HSFML25 同类（INdex360 也显示 19 Jul 2017） |
-| 已有 TV 二级源的 4 条标普/道琼斯（S5INFT、SPSIBI、DJSOEP、SPSIOP） | 官方站点现已能打开，但本批尚未补下这些指数的官方约一年对照日线。登录免费账号后的 10 Year 导出已证实仍只有约一年，因此即使补下，也盖不住所需窗口（长历史仍靠已有 TradingView 二级源） |
+| 已有 TV 二级源的 4 条标普/道琼斯（S5INFT、SPSIBI、DJSOEP、SPSIOP） | 官方约一年 USD PR 对照已取到（252 行，2025-11-17→2026-11-17），发布日已从页面截图。免费导出仍盖不住所需窗口。DJSOEP 与官方一年 251/251 精确。S5INFT 最大相对误差约 1.196%（2026-06-26），SPSIOP 约 3.285%（2026-03-09），这两天不能当官方用。所需窗口头仍缺：S5INFT 1996-06-28 至 2012-09-24，SPSIBI 2006-01-27 至 2014-05-05，DJSOEP 发布日至 2006-05-04，SPSIOP 发布日至 2006-06-22。SPICE 未用 |
 | 东证指数 `publish_date` | 事实说明书基准日 1968-01-04 已记录，发布日未核对 |
 | DAXK `publish_date` | 未核对 |
 
