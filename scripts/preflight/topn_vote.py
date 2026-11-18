@@ -28,7 +28,7 @@ def votes(lvl, parent, which):
     v['TRIN'] = (t >= t.expanding(min_periods=24).quantile(2 / 3)).where(t.expanding(min_periods=24).count() >= 24).fillna(0).astype(float)
     return v[which].sum(axis=1), len(which)
 
-def slot_vote(lvl, parent, N, which, bret, cret, cost=0.002):
+def slot_vote(lvl, parent, N, which, bret, cret, cost=0.002, confirm=False):
     cal = lvl.index; r = lvl.pct_change().fillna(0).values; K = lvl.shape[1]; pi = list(lvl.columns).index(parent)
     me_mask = np.r_[cal.month[1:] != cal.month[:-1], True]; me = lvl[me_mask]; mom = me.shift(1) / me.shift(12) - 1
     blvl = np.exp(np.log1p(bret.fillna(0)).cumsum()).where(bret.notna().cumsum() > 0)
@@ -48,13 +48,14 @@ def slot_vote(lvl, parent, N, which, bret, cret, cost=0.002):
             else:
                 pick = [i for i in np.argsort(-np.where(ok, sc, -np.inf))[:N] if ok[i]]
                 k = int(V.get(d.to_period('M'), 0)) if V is not None else 0
-                tgt[pick] = (1 - k / n) / N
+                frac = (1.0 if k < 2 else 1 - k / n) if confirm else 1 - k / n
+                tgt[pick] = frac / N
             left = 1 - tgt.sum(); bok = bool(babove.loc[d]) if d in babove.index else False
             pending = (tgt, left if bok else 0.0, 0.0 if bok else left); log.append((d, k))
     return pd.Series(out, cal), turn, pd.Series(dict(log))
 
-def system(N, which):
-    a, ta, la = slot_vote(A_LVL, 'csi300', N, which, bond, cash); u, tu, lu = slot_vote(US_RMB, 'SPX', N, which, bond, cash)
+def system(N, which, confirm=False):
+    a, ta, la = slot_vote(A_LVL, 'csi300', N, which, bond, cash, confirm=confirm); u, tu, lu = slot_vote(US_RMB, 'SPX', N, which, bond, cash, confirm=confirm)
     ret = 0.5 * a + 0.5 * u; st = stats(ret, '2006-01-01', {'2006–10': ('2006', '2010'), '2011–15': ('2011', '2015')})
     s = (1 + ret.loc['2006':]).cumprod()
     for k, (x0, x1) in {'2008': ('2007-06-01', '2009-12-31'), '2015': ('2015-01-01', '2015-12-31')}.items():
@@ -92,6 +93,7 @@ def run_vote(N, use):
         t, nx = X.index[i], X.index[i + 1]; sc = mom.loc[t, ALL].dropna(); pick = sc.nlargest(N).index
         k = (0 if 'none' in use else (float(not above.loc[t, 'MKT']) + (float(blow.loc[t]) if '宽度' in use else 0)))
         n = 2 if '宽度' in use else 1
+        if 'confirm' in use: k, n = (1, 1) if k >= 2 else (0, 1)
         w = pd.Series(0.0, index=ALL); w[pick] = (1 - k / n) / N; wf = 1 - w.sum(); tr = (w - wp).abs().sum(); wp = w
         out.append((nx, float((w * X.loc[nx].fillna(0)).sum() + wf * rf.loc[nx] - COST * tr), tr))
     return pd.DataFrame(out, columns=['t', 'r', 'tr']).set_index('t')
