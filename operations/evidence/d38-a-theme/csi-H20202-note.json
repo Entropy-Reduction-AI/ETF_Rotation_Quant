@@ -1,0 +1,12 @@
+{
+  "url": "https://www.csindex.com.cn/#/indices/family/detail?indexCode=H20202",
+  "api_url": "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H20202",
+  "code": "H20202",
+  "name": "中证全指软件全收益指数",
+  "short_name": "软件指数全收益",
+  "publish": "2013-07-15",
+  "base_date": "2004-12-31",
+  "screenshot": "operations/evidence/d38-a-theme/H20202-csindex-detail.png",
+  "screenshot_bytes": 532545,
+  "fetched_at": "2026-11-18T16:54:22+08:00"
+}

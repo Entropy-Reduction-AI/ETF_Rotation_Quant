@@ -1,0 +1,12 @@
+{
+  "url": "https://www.csindex.com.cn/#/indices/family/detail?indexCode=399987",
+  "api_url": "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/399987",
+  "code": "399987",
+  "name": "中证酒指数",
+  "short_name": "中证酒",
+  "publish": "2014-12-10",
+  "base_date": "2008-12-31",
+  "screenshot": "operations/evidence/d38-a-theme/399987-csindex-detail.png",
+  "screenshot_bytes": 572643,
+  "fetched_at": "2026-11-18T17:10:29+08:00"
+}

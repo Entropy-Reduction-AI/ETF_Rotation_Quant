@@ -1,0 +1,12 @@
+{
+  "url": "https://www.csindex.com.cn/#/indices/family/detail?indexCode=H30202",
+  "api_url": "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H30202",
+  "code": "H30202",
+  "name": "中证全指软件指数",
+  "short_name": "软件指数",
+  "publish": "2013-07-15",
+  "base_date": "2004-12-31",
+  "screenshot": "operations/evidence/d38-a-theme/H30202-csindex-detail.png",
+  "screenshot_bytes": 606171,
+  "fetched_at": "2026-11-18T16:52:58+08:00"
+}
