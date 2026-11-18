@@ -1,0 +1,750 @@
+{
+  "dev_pr": 313,
+  "dev_head": "ca74943a723bfd94e042b59bc24204747fbf30c9",
+  "before_db": "/agent/repos/ETF_Rotation_Quant/data/market.sqlite",
+  "after_db": "/tmp/d38-pr313/data/market.sqlite",
+  "sha256": {
+    "before": "d0b947d90b444eb1d874a04df6bcb1974cbea4422b489f214a56c0a658abf0d9",
+    "after": "c07297f8372c2b4dd8f79417306f4dda3b2b49db3cb2523a6ad306c13523588b",
+    "expected_before": "d0b947d90b444eb1d874a04df6bcb1974cbea4422b489f214a56c0a658abf0d9",
+    "expected_after": "c07297f8372c2b4dd8f79417306f4dda3b2b49db3cb2523a6ad306c13523588b",
+    "before_match": true,
+    "after_match": true
+  },
+  "append_only": {
+    "before_rows": 1156774,
+    "after_rows": 1164886,
+    "new_rows": 8112,
+    "mismatches": 0,
+    "mismatch_samples": [],
+    "new_row_codes": [
+      "000015",
+      "930606"
+    ],
+    "pass": true
+  },
+  "db_row_deltas": {
+    "930606": {
+      "before_rows": 0,
+      "after_rows": 2811,
+      "delta": 2811,
+      "before_span": [
+        null,
+        null
+      ],
+      "after_span": [
+        "2015-03-31",
+        "2026-09-30"
+      ]
+    },
+    "000015": {
+      "before_rows": 0,
+      "after_rows": 5301,
+      "delta": 5301,
+      "before_span": [
+        null,
+        null
+      ],
+      "after_span": [
+        "2005-01-04",
+        "2026-09-30"
+      ]
+    }
+  },
+  "roster": {
+    "found": 25,
+    "missing_codes": [],
+    "no_publish_date": [],
+    "status_counts": {
+      "spliced": 23,
+      "frozen": 1,
+      "already": 1
+    },
+    "rows": {
+      "H30184": {
+        "container_id": "theme-中证全指半导体产品与设备",
+        "status": "spliced",
+        "publish_date": "2013-07-15",
+        "bars_code": "H30184",
+        "index_code": "H30184"
+      },
+      "931743": {
+        "container_id": "theme-中证半导体材料设备主题",
+        "status": "spliced",
+        "publish_date": "2012-12-21",
+        "bars_code": "931743",
+        "index_code": "931743"
+      },
+      "930713": {
+        "container_id": "theme-中证人工智能主题",
+        "status": "spliced",
+        "publish_date": "2015-07-31",
+        "bars_code": "930713",
+        "index_code": "930713"
+      },
+      "931160": {
+        "container_id": "theme-中证全指通信设备",
+        "status": "spliced",
+        "publish_date": "2013-07-15",
+        "bars_code": "931160",
+        "index_code": "931160"
+      },
+      "H30202": {
+        "container_id": "theme-中证全指软件",
+        "status": "spliced",
+        "publish_date": "2013-07-15",
+        "bars_code": "H30202",
+        "index_code": "H30202"
+      },
+      "H30590": {
+        "container_id": "theme-中证机器人",
+        "status": "spliced",
+        "publish_date": "2015-02-10",
+        "bars_code": "H30590",
+        "index_code": "H30590"
+      },
+      "931494": {
+        "container_id": "theme-中证消费电子主题",
+        "status": "spliced",
+        "publish_date": "2020-06-12",
+        "bars_code": "931494",
+        "index_code": "931494"
+      },
+      "000819": {
+        "container_id": "theme-中证有色金属",
+        "status": "spliced",
+        "publish_date": "2012-05-09",
+        "bars_code": "000819",
+        "index_code": "000819"
+      },
+      "399998": {
+        "container_id": "theme-中证煤炭",
+        "status": "spliced",
+        "publish_date": "2015-02-13",
+        "bars_code": "399998",
+        "index_code": "399998"
+      },
+      "930606": {
+        "container_id": "theme-中证钢铁",
+        "status": "spliced",
+        "publish_date": "2015-03-31",
+        "bars_code": "930606",
+        "index_code": "930606"
+      },
+      "H30187": {
+        "container_id": "theme-中证细分化工产业主题",
+        "status": "frozen",
+        "publish_date": "2013-07-15",
+        "bars_code": "",
+        "index_code": "H30187"
+      },
+      "930997": {
+        "container_id": "theme-中证新能源汽车",
+        "status": "spliced",
+        "publish_date": "2017-07-19",
+        "bars_code": "930997",
+        "index_code": "930997"
+      },
+      "931151": {
+        "container_id": "theme-中证光伏产业",
+        "status": "spliced",
+        "publish_date": "2019-04-22",
+        "bars_code": "931151",
+        "index_code": "931151"
+      },
+      "399967": {
+        "container_id": "theme-中证军工",
+        "status": "spliced",
+        "publish_date": "2013-12-26",
+        "bars_code": "399967",
+        "index_code": "399967"
+      },
+      "000913": {
+        "container_id": "theme-沪深300医药卫生",
+        "status": "spliced",
+        "publish_date": "2007-07-02",
+        "bars_code": "000913",
+        "index_code": "000913"
+      },
+      "931152": {
+        "container_id": "theme-中证创新药产业",
+        "status": "spliced",
+        "publish_date": "2019-04-22",
+        "bars_code": "931152",
+        "index_code": "931152"
+      },
+      "000932": {
+        "container_id": "theme-中证主要消费",
+        "status": "spliced",
+        "publish_date": "2009-07-03",
+        "bars_code": "000932",
+        "index_code": "000932"
+      },
+      "399987": {
+        "container_id": "theme-中证酒",
+        "status": "spliced",
+        "publish_date": "2014-12-10",
+        "bars_code": "399987",
+        "index_code": "399987"
+      },
+      "000949": {
+        "container_id": "theme-中证农业",
+        "status": "spliced",
+        "publish_date": "2009-10-28",
+        "bars_code": "000949",
+        "index_code": "000949"
+      },
+      "399986": {
+        "container_id": "theme-中证银行",
+        "status": "spliced",
+        "publish_date": "2013-07-15",
+        "bars_code": "399986",
+        "index_code": "399986"
+      },
+      "399975": {
+        "container_id": "theme-中证全指证券公司",
+        "status": "spliced",
+        "publish_date": "2013-07-15",
+        "bars_code": "399975",
+        "index_code": "399975"
+      },
+      "931775": {
+        "container_id": "theme-中证全指房地产",
+        "status": "spliced",
+        "publish_date": "2013-07-15",
+        "bars_code": "931775",
+        "index_code": "931775"
+      },
+      "000015": {
+        "container_id": "theme-上证红利",
+        "status": "spliced",
+        "publish_date": "2005-01-04",
+        "bars_code": "000015",
+        "index_code": "000015"
+      },
+      "H30269": {
+        "container_id": "theme-中证红利低波动",
+        "status": "spliced",
+        "publish_date": "2013-12-19",
+        "bars_code": "H30269",
+        "index_code": "H30269"
+      },
+      "000688": {
+        "container_id": "star50",
+        "status": "already",
+        "publish_date": "2020-07-23",
+        "bars_code": "",
+        "index_code": "000688"
+      }
+    }
+  },
+  "evidence_publish": [
+    {
+      "code": "H30184",
+      "note_publish": "2013-07-15",
+      "note_base": "2004-12-31",
+      "roster_publish": "2013-07-15",
+      "match": true,
+      "screenshot_bytes": 596239
+    },
+    {
+      "code": "931743",
+      "note_publish": "2012-12-21",
+      "note_base": "2018-12-28",
+      "roster_publish": "2012-12-21",
+      "match": true,
+      "screenshot_bytes": 600492
+    },
+    {
+      "code": "930713",
+      "note_publish": "2015-07-31",
+      "note_base": "2012-06-29",
+      "roster_publish": "2015-07-31",
+      "match": true,
+      "screenshot_bytes": 608980
+    },
+    {
+      "code": "931160",
+      "note_publish": "2013-07-15",
+      "note_base": "2004-12-31",
+      "roster_publish": "2013-07-15",
+      "match": true,
+      "screenshot_bytes": 623755
+    },
+    {
+      "code": "H30202",
+      "note_publish": "2013-07-15",
+      "note_base": "2004-12-31",
+      "roster_publish": "2013-07-15",
+      "match": true,
+      "screenshot_bytes": 606171
+    },
+    {
+      "code": "H30590",
+      "note_publish": "2015-02-10",
+      "note_base": "2010-12-31",
+      "roster_publish": "2015-02-10",
+      "match": true,
+      "screenshot_bytes": 598452
+    },
+    {
+      "code": "931494",
+      "note_publish": "2020-06-12",
+      "note_base": "2012-12-31",
+      "roster_publish": "2020-06-12",
+      "match": true,
+      "screenshot_bytes": 599213
+    },
+    {
+      "code": "000819",
+      "note_publish": "2012-05-09",
+      "note_base": "2004-12-31",
+      "roster_publish": "2012-05-09",
+      "match": true,
+      "screenshot_bytes": 572605
+    },
+    {
+      "code": "399998",
+      "note_publish": "2015-02-13",
+      "note_base": "2008-12-31",
+      "roster_publish": "2015-02-13",
+      "match": true,
+      "screenshot_bytes": 567407
+    },
+    {
+      "code": "930606",
+      "note_publish": "2015-03-31",
+      "note_base": "2008-12-31",
+      "roster_publish": "2015-03-31",
+      "match": true,
+      "screenshot_bytes": 594942
+    },
+    {
+      "code": "H30187",
+      "note_publish": "2013-07-15",
+      "note_base": "2004-12-31",
+      "roster_publish": "2013-07-15",
+      "match": true,
+      "screenshot_bytes": 554894
+    },
+    {
+      "code": "930997",
+      "note_publish": "2017-07-19",
+      "note_base": "2014-12-31",
+      "roster_publish": "2017-07-19",
+      "match": true,
+      "screenshot_bytes": 599162
+    },
+    {
+      "code": "931151",
+      "note_publish": "2019-04-22",
+      "note_base": "2012-12-31",
+      "roster_publish": "2019-04-22",
+      "match": true,
+      "screenshot_bytes": 583072
+    },
+    {
+      "code": "399967",
+      "note_publish": "2013-12-26",
+      "note_base": "2004-12-31",
+      "roster_publish": "2013-12-26",
+      "match": true,
+      "screenshot_bytes": 574638
+    },
+    {
+      "code": "000913",
+      "note_publish": "2007-07-02",
+      "note_base": "2004-12-31",
+      "roster_publish": "2007-07-02",
+      "match": true,
+      "screenshot_bytes": 592656
+    },
+    {
+      "code": "931152",
+      "note_publish": "2019-04-22",
+      "note_base": "2014-12-31",
+      "roster_publish": "2019-04-22",
+      "match": true,
+      "screenshot_bytes": 585024
+    },
+    {
+      "code": "000932",
+      "note_publish": "2009-07-03",
+      "note_base": "2004-12-31",
+      "roster_publish": "2009-07-03",
+      "match": true,
+      "screenshot_bytes": 616850
+    },
+    {
+      "code": "399987",
+      "note_publish": "2014-12-10",
+      "note_base": "2008-12-31",
+      "roster_publish": "2014-12-10",
+      "match": true,
+      "screenshot_bytes": 572643
+    },
+    {
+      "code": "000949",
+      "note_publish": "2009-10-28",
+      "note_base": "2004-12-31",
+      "roster_publish": "2009-10-28",
+      "match": true,
+      "screenshot_bytes": 586428
+    },
+    {
+      "code": "399986",
+      "note_publish": "2013-07-15",
+      "note_base": "2004-12-31",
+      "roster_publish": "2013-07-15",
+      "match": true,
+      "screenshot_bytes": 587937
+    },
+    {
+      "code": "399975",
+      "note_publish": "2013-07-15",
+      "note_base": "2007-06-29",
+      "roster_publish": "2013-07-15",
+      "match": true,
+      "screenshot_bytes": 590683
+    },
+    {
+      "code": "931775",
+      "note_publish": "2013-07-15",
+      "note_base": "2004-12-31",
+      "roster_publish": "2013-07-15",
+      "match": true,
+      "screenshot_bytes": 598799
+    },
+    {
+      "code": "000015",
+      "note_publish": "2005-01-04",
+      "note_base": "2004-12-31",
+      "roster_publish": "2005-01-04",
+      "match": true,
+      "screenshot_bytes": 589326
+    },
+    {
+      "code": "H30269",
+      "note_publish": "2013-12-19",
+      "note_base": "2005-12-30",
+      "roster_publish": "2013-12-19",
+      "match": true,
+      "screenshot_bytes": 629434
+    },
+    {
+      "code": "000688",
+      "note_publish": "2020-07-23",
+      "note_base": "2019-12-31",
+      "roster_publish": "2020-07-23",
+      "match": true,
+      "screenshot_bytes": 596029
+    }
+  ],
+  "dashboard": {
+    "total_containers": 139,
+    "have_pre_list_history": 84,
+    "grok_r6": 36,
+    "not_spliced": 1,
+    "by_state": {
+      "有自己的历史": 22,
+      "在 Grok 第六轮": 36,
+      "无需接": 18,
+      "已接上指数": 62,
+      "未接上": 1
+    }
+  },
+  "universe_ingest": [
+    {
+      "code": "H30184",
+      "tr_code_candidates": "H30184CNY010;H20184",
+      "bars_code": "H30184",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证全指半导体产品与设备指数。官网发布日 2013-07-15，基日 2004-12-31 的回填不接。入库价格指数 H30184。未采用：H30184CNY010 官网详情页未核对，不用这条全收益或净收益；H20184（中证全指半导体产品"
+    },
+    {
+      "code": "931743",
+      "tr_code_candidates": "931743CNY010",
+      "bars_code": "931743",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证半导体材料设备主题指数。官网发布日 2012-12-21，基日 2018-12-28 的回填不接。入库价格指数 931743。未采用：931743CNY010（中证半导体材料设备主题全收益指数）没有第二条日线。东财 2.931743「半"
+    },
+    {
+      "code": "930713",
+      "tr_code_candidates": "930713CNY010;H20713",
+      "bars_code": "930713",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证人工智能主题指数。官网发布日 2015-07-31，基日 2012-06-29 的回填不接。入库价格指数 930713。未采用：930713CNY010 官网详情页未核对，不用这条全收益或净收益；H20713（中证人工智能主题全收益指数"
+    },
+    {
+      "code": "931160",
+      "tr_code_candidates": "931160CNY010",
+      "bars_code": "931160",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证全指通信设备指数。官网发布日 2013-07-15，基日 2004-12-31 的回填不接。入库价格指数 931160。未采用：931160CNY010 官网详情页未核对，不用这条全收益或净收益。东财 2.931160「通信设备」。重叠"
+    },
+    {
+      "code": "H30202",
+      "tr_code_candidates": "H30202CNY010;H20202",
+      "bars_code": "H30202",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证全指软件指数。官网发布日 2013-07-15，基日 2004-12-31 的回填不接。入库价格指数 H30202。未采用：H30202CNY010 官网详情页未核对，不用这条全收益或净收益；H20202（中证全指软件全收益指数）没有第"
+    },
+    {
+      "code": "H30590",
+      "tr_code_candidates": "H30590CNY010;H20590",
+      "bars_code": "H30590",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证机器人指数。官网发布日 2015-02-10，基日 2010-12-31 的回填不接。入库价格指数 H30590。未采用：H30590CNY010 官网详情页未核对，不用这条全收益或净收益；H20590（中证机器人全收益指数）没有第二条"
+    },
+    {
+      "code": "931494",
+      "tr_code_candidates": "931494CNY010",
+      "bars_code": "931494",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证消费电子主题指数。官网发布日 2020-06-12，基日 2012-12-31 的回填不接。入库价格指数 931494。未采用：931494CNY010 官网详情页未核对，不用这条全收益或净收益。东财 2.931494「消费电子」。重叠"
+    },
+    {
+      "code": "000819",
+      "tr_code_candidates": "H00819;000819CNY010",
+      "bars_code": "000819",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证申万有色金属指数。官网发布日 2012-05-09，基日 2004-12-31 的回填不接。入库价格指数 000819。未采用：000819CNY010 官网详情页未核对，不用这条全收益或净收益；H00819（中证申万有色金属全收益指数"
+    },
+    {
+      "code": "399998",
+      "tr_code_candidates": "399998CNY010;H29998",
+      "bars_code": "399998",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证煤炭指数。官网发布日 2015-02-13，基日 2008-12-31 的回填不接。入库价格指数 399998。未采用：399998CNY010 官网详情页未核对，不用这条全收益或净收益；H29998 官网详情页未核对，不用这条全收益或"
+    },
+    {
+      "code": "930606",
+      "tr_code_candidates": "930606CNY010;H20606",
+      "bars_code": "930606",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证钢铁指数。官网发布日 2015-03-31，基日 2008-12-31 的回填不接。入库价格指数 930606。未采用：930606CNY010 官网详情页未核对，不用这条全收益或净收益；H20606（中证钢铁全收益指数）没有第二条日线"
+    },
+    {
+      "code": "H30187",
+      "tr_code_candidates": "H30187CNY010;H20187",
+      "bars_code": "H30187",
+      "ingest_is_price_index": true,
+      "reason_snippet": "未拼接。H30187CNY010 官网详情页未核对，不用这条全收益或净收益；H20187（中证全指化工全收益指数）没有第二条日线；H30187（中证全指化工指数）没有第二条日线。东财「细分化工」是 000813，不是 H30187，不用。核"
+    },
+    {
+      "code": "930997",
+      "tr_code_candidates": "930997CNY010;H20997",
+      "bars_code": "930997",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证新能源汽车产业指数。官网发布日 2017-07-19，基日 2014-12-31 的回填不接。入库价格指数 930997。未采用：930997CNY010 官网详情页未核对，不用这条全收益或净收益；H20997（中证新能源汽车产业全收益"
+    },
+    {
+      "code": "931151",
+      "tr_code_candidates": "931151CNY010",
+      "bars_code": "931151",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证光伏产业指数。官网发布日 2019-04-22，基日 2012-12-31 的回填不接。入库价格指数 931151。未采用：931151CNY010 官网详情页未核对，不用这条全收益或净收益。东财 2.931151「光伏产业」。重叠 1"
+    },
+    {
+      "code": "399967",
+      "tr_code_candidates": "399967CNY010;H29967",
+      "bars_code": "399967",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证军工指数。官网发布日 2013-12-26，基日 2004-12-31 的回填不接。入库价格指数 399967。未采用：399967CNY010 官网详情页未核对，不用这条全收益或净收益；H29967 官网详情页未核对，不用这条全收益或"
+    },
+    {
+      "code": "000913",
+      "tr_code_candidates": "H00913",
+      "bars_code": "000913",
+      "ingest_is_price_index": true,
+      "reason_snippet": "沪深300医药卫生指数。官网发布日 2007-07-02，基日 2004-12-31 的回填不接。入库价格指数 000913。未采用：H00913（沪深300医药卫生全收益指数）没有第二条日线。东财 1.000913「300医药」。重叠 4"
+    },
+    {
+      "code": "931152",
+      "tr_code_candidates": "931152CNY010",
+      "bars_code": "931152",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证创新药产业指数。官网发布日 2019-04-22，基日 2014-12-31 的回填不接。入库价格指数 931152。未采用：931152CNY010 官网详情页未核对，不用这条全收益或净收益。东财 2.931152「CS创新药」。重叠"
+    },
+    {
+      "code": "000932",
+      "tr_code_candidates": "H00932",
+      "bars_code": "000932",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证主要消费指数。官网发布日 2009-07-03，基日 2004-12-31 的回填不接。入库价格指数 000932。未采用：H00932（中证主要消费全收益指数）没有第二条日线。东财 1.000932「中证消费」。重叠 4189 天，收"
+    },
+    {
+      "code": "399987",
+      "tr_code_candidates": "399987CNY010;H29987",
+      "bars_code": "399987",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证酒指数。官网发布日 2014-12-10，基日 2008-12-31 的回填不接。入库价格指数 399987。未采用：399987CNY010 官网详情页未核对，不用这条全收益或净收益；H29987 官网详情页未核对，不用这条全收益或净"
+    },
+    {
+      "code": "000949",
+      "tr_code_candidates": "H00949",
+      "bars_code": "000949",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证农业主题指数。官网发布日 2009-10-28，基日 2004-12-31 的回填不接。入库价格指数 000949。未采用：H00949（中证农业主题全收益指数）没有第二条日线。东财 1.000949「中证农业」。重叠 4112 天，收"
+    },
+    {
+      "code": "399986",
+      "tr_code_candidates": "399986CNY010;H29986",
+      "bars_code": "399986",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证银行指数。官网发布日 2013-07-15，基日 2004-12-31 的回填不接。入库价格指数 399986。未采用：399986CNY010 官网详情页未核对，不用这条全收益或净收益；H29986 官网详情页未核对，不用这条全收益或"
+    },
+    {
+      "code": "399975",
+      "tr_code_candidates": "399975CNY010;H29975",
+      "bars_code": "399975",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证全指证券公司指数。官网发布日 2013-07-15，基日 2007-06-29 的回填不接。入库价格指数 399975。未采用：399975CNY010 官网详情页未核对，不用这条全收益或净收益；H29975 官网详情页未核对，不用这条"
+    },
+    {
+      "code": "931775",
+      "tr_code_candidates": "931775CNY010",
+      "bars_code": "931775",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证全指房地产指数。官网发布日 2013-07-15，基日 2004-12-31 的回填不接。入库价格指数 931775。未采用：931775CNY010 官网详情页未核对，不用这条全收益或净收益。东财 2.931775「房地产」。重叠 1"
+    },
+    {
+      "code": "000015",
+      "tr_code_candidates": "H00015",
+      "bars_code": "000015",
+      "ingest_is_price_index": true,
+      "reason_snippet": "上证红利指数。官网发布日 2005-01-04，基日 2004-12-31 的回填不接。入库价格指数 000015。未采用：H00015（上证红利全收益指数）没有第二条日线。东财 1.000015「红利指数」。重叠 5279 天，收盘相对差"
+    },
+    {
+      "code": "H30269",
+      "tr_code_candidates": "H30269CNY010;H20269",
+      "bars_code": "H30269",
+      "ingest_is_price_index": true,
+      "reason_snippet": "中证红利低波动指数。官网发布日 2013-12-19，基日 2005-12-30 的回填不接。入库价格指数 H30269。未采用：H30269CNY010 官网详情页未核对，不用这条全收益或净收益；H20269（中证红利低波动全收益指数）没"
+    },
+    {
+      "code": "000688",
+      "tr_code_candidates": "H00688;000688CNY010",
+      "bars_code": "000688",
+      "ingest_is_price_index": true,
+      "reason_snippet": "研究序列已经早于首只场内基金。发布日之前的回填不接。上证科创板50成份指数。官网发布日 2020-07-23，基日 2019-12-31 的回填不接。入库价格指数 000688。未采用：H00688 官网详情页未核对，不用这条全收益或净收益"
+    }
+  ],
+  "spotchecks": [
+    {
+      "code": "931743",
+      "bars_code": "931743",
+      "publish_date": "2012-12-21",
+      "overlap_days": 778,
+      "median_rel_close_gap": 0.0,
+      "median_pct": "0.0000%",
+      "gate_ok": true,
+      "bars_before_publish": 0,
+      "db_rows": 1881,
+      "em_rows_since_pub": 800
+    },
+    {
+      "code": "000688",
+      "bars_code": "000688",
+      "publish_date": "2020-07-23",
+      "overlap_days": 1503,
+      "median_rel_close_gap": 0.0,
+      "median_pct": "0.0000%",
+      "gate_ok": true,
+      "bars_before_publish": 134,
+      "db_rows": 1503,
+      "em_rows_since_pub": 1525
+    },
+    {
+      "code": "H30187",
+      "bars_code": "H30187",
+      "publish_date": "2013-07-15",
+      "overlap_days": 0,
+      "median_rel_close_gap": null,
+      "median_pct": null,
+      "gate_ok": false,
+      "bars_before_publish": 2064,
+      "db_rows": 3215,
+      "em_rows_since_pub": 0
+    },
+    {
+      "code": "000015",
+      "bars_code": "000015",
+      "publish_date": "2005-01-04",
+      "overlap_days": 5279,
+      "median_rel_close_gap": 0.0,
+      "median_pct": "0.0000%",
+      "gate_ok": true,
+      "bars_before_publish": 0,
+      "db_rows": 5301,
+      "em_rows_since_pub": 5304
+    },
+    {
+      "code": "930606",
+      "bars_code": "930606",
+      "publish_date": "2015-03-31",
+      "overlap_days": 1643,
+      "median_rel_close_gap": 0.0,
+      "median_pct": "0.0000%",
+      "gate_ok": true,
+      "bars_before_publish": 0,
+      "db_rows": 2811,
+      "em_rows_since_pub": 1665
+    },
+    {
+      "code": "H30184",
+      "bars_code": "H30184",
+      "publish_date": "2013-07-15",
+      "overlap_days": 3215,
+      "median_rel_close_gap": 0.0,
+      "median_pct": "0.0000%",
+      "gate_ok": true,
+      "bars_before_publish": 2064,
+      "db_rows": 3215,
+      "em_rows_since_pub": 3237
+    },
+    {
+      "code": "000819",
+      "bars_code": "000819",
+      "publish_date": "2012-05-09",
+      "overlap_days": 3501,
+      "median_rel_close_gap": 0.0,
+      "median_pct": "0.0000%",
+      "gate_ok": true,
+      "bars_before_publish": 1779,
+      "db_rows": 3501,
+      "em_rows_since_pub": 3523
+    },
+    {
+      "code": "930713",
+      "bars_code": "930713",
+      "publish_date": "2015-07-31",
+      "overlap_days": 2714,
+      "median_rel_close_gap": 0.0,
+      "median_pct": "0.0000%",
+      "gate_ok": true,
+      "bars_before_publish": 750,
+      "db_rows": 2714,
+      "em_rows_since_pub": 2736
+    },
+    {
+      "code": "399998",
+      "bars_code": "399998",
+      "publish_date": "2015-02-13",
+      "overlap_days": 2826,
+      "median_rel_close_gap": 0.0,
+      "median_pct": "0.0000%",
+      "gate_ok": true,
+      "bars_before_publish": 1483,
+      "db_rows": 2826,
+      "em_rows_since_pub": 2848
+    },
+    {
+      "code": "H30187_check",
+      "h30187_db_rows": 5279,
+      "000813_before_rows": 0,
+      "000813_after_rows": 0,
+      "000813_unchanged": true
+    }
+  ]
+}
