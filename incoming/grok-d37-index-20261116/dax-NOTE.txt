@@ -1,0 +1,33 @@
+Official DAX Price Return (DAXK) daily — 2026-11-17 (Asia/Taipei)
+
+No DB writes, no ingest branch. Price return only; the headline DAX (DE0008469008) is a performance / total-return index and was not used.
+
+Identity
+- Official name on stoxx.com: 1-DAX (DAXK), ISIN DE0008467440.
+- Page classifies it as index-type-price-return, EUR (Price Return).
+- Official page: https://stoxx.com/index/daxk/
+- Container: theme-法兰克福DAX指数.
+- Do not confuse with headline DAX / DE0008469008 (Performance / TR). Chinese listed products named 法兰克福DAX指数 usually track the performance index; this delivery is the price-return series as requested.
+
+Official dates
+- Official methodology (DAX Equity Index Methodology Guide): DAX base value 1,000 on 1987-12-30. The DAX price index continues the Börsen-Zeitung Index back to October 1959; performance-index history starts at the December 1987 baseline.
+- The same guide states that histories up to 1999-06-18 used Frankfurt floor prices, and Xetra / FSE prices have been used since 1999-06-21.
+- The public official delayed series on stoxx.com starts on that Xetra start date 1999-06-21. Earlier official history is described in the guide but is not in this public series.
+- publish_date: 未核对 (no launch-page screenshot). Methodology PDF: https://www.stoxx.com/documents/stoxxnet/Documents/Indices/Common/Indexguide/DAX_Equity_Index_Methodology_Guide.pdf
+
+Daily series
+- Official stoxx.com index page embedded / delayed series for ISIN DE0008467440 (anonymous page load; the quotes API without the page session is 401).
+- Interface: https://quotes.stoxx.com/api/v2/quote/delayed/series?isin=DE0008467440
+- Delivery: theme-法兰克福DAX指数.csv, columns date,close (EUR index levels, no FX).
+- Raw official points (last complete close only): theme-法兰克福DAX指数-official-stoxx-daxk-delayed-series.json
+- 6954 daily rows, 1999-06-21 (4258.35) to 2026-11-16 (9708.55).
+- first_list window 2014-09-05 (5014.59) + 30 trading days is covered.
+- The live delayed series already printed 2026-11-17 (9646.11) at about 12:51 CET on 2026-11-17, while the Frankfurt session was still open; that incomplete print was dropped.
+- Official series repeats the previous close on 4 dates.
+- SHA256 csv: b8c65b5908752c965a8260e5d34367cbe9b775291733c3615d9cd61c52085b97
+- Download time: 2026-11-17 19:51:20
+
+Not used
+- Headline DAX performance / TR (DE0008469008, last complete level in the sibling official page chart was 26379.64 on 2026-11-16).
+- STOXX Academic Data / End-of-the-day Data portals (login).
+- Historical text files under /document/Indices/Current/HistoricalData/ (404).

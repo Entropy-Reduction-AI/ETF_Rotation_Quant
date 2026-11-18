@@ -1,0 +1,349 @@
+S&P Dow Jones Indices (spdji) official free daily PRICE RETURN export check
+Date/time of attempt: 2026-11-17 ~17:14-17:20 Asia/Taipei (UTC+8)
+Box: Grok Bot desktop/browser
+
+================================================================================
+HOW OFFICIAL FREE DAILY HISTORY WORKS IN 2026 (what this run could actually test)
+================================================================================
+
+LIVE official site was NOT reachable from this box.
+
+- First blocked URL: https://www.spglobal.com/spdji/en/
+- Also 403: the known official index URL
+  https://www.spglobal.com/spdji/en/indices/equity/sp-500-information-technology-sector/
+  plus /spdji/zh/, /spdji/cn/, www.spindices.com (redirects to spdji and then 403),
+  www.spglobal.com itself, and the official data-widget API
+  https://www.spglobal.com/spdji/en/util/redesign/index-data/get-performance-data-for-datawidget-redesign.dot?indexId=307&language_id=1
+- Response: HTTP 403, server AkamaiGHost, page title/body:
+  "Access Denied"
+  "You don't have permission to access \"http://www.spglobal.com/spdji/en/\" on this server."
+  Reference via errors.edgesuite.net
+- Tested with: Playwright browser, desktop Chrome (box-chrome), and curl. All 403. No captcha or press-and-hold was presented. This is a hard bot/IP block, not a login wall.
+- Login/registration wall was NOT reached on the live site. The public homepage itself is blocked.
+  Note: https://secure.signin.spglobal.com/ did respond (302/200, Okta). That is not useful here because every www.spglobal.com/spdji page needed to search, open Export, or download is 403. Per instructions, no account was created and no login was submitted.
+- Therefore this run could NOT determine whether anonymous Export still works in 2026, whether a free register is required for Historical, the max free history length, or Price Return vs TR/NTR availability. No daily files were downloaded.
+
+Secondary observations (NOT a live-export test; do not treat as completed official download):
+
+- A Wayback Machine snapshot dated 2026-11-15 of the official IT sector page did render the static shell:
+  https://web.archive.org/web/20261115052722/https://www.spglobal.com/spdji/en/indices/equity/sp-500-information-technology-sector/
+  Official H1 / title: "S&P 500 Information Technology"
+  Header includes "Register / Login".
+  Tabs: Overview, Data, Index-Linked Products.
+  Data tab static outline lists: Quick Facts, Characteristics, Constituents, Sector Breakdown, Tickers, etc.
+  The performance chart / key-facts / Export widget did NOT load from the snapshot. Console 404s showed the live widget is loaded from
+  /spdji/en/util/redesign/index-data/get-performance-data-for-datawidget-redesign.dot?indexId=307&language_id=1
+  No "Export" or "Historical" text was present in the archived static HTML. That matches a JS widget, not a missing feature proof.
+- Prior workspace notes (TARGETS.md / d37-r3) said "Export → Historical after free register" and "标普道琼斯指数页面没有匿名日线". Those are earlier-cycle notes, not re-verified on the live 2026 site in this run.
+
+No unofficial (Yahoo, Investing, MarketWatch, etc.) series were downloaded.
+
+================================================================================
+PER-INDEX RESULTS
+================================================================================
+
+1) theme-标普500信息科技指数 | hint SP500-45 | S&P 500 Information Technology Sector
+- Official page URL (task + live 403 + 2026-11-15 official-page snapshot): 
+  https://www.spglobal.com/spdji/en/indices/equity/sp-500-information-technology-sector/
+- Official name found on archived official page title/H1: "S&P 500 Information Technology"
+  Ticker SP500-45: NOT seen on the live page (blocked) and NOT seen in the archived static shell (Tickers/Quick Facts tables did not load). Identity of the page/name is consistent with the requested index; ticker not visually confirmed in this run.
+- Login required: unknown (live page blocked before any Export). Snapshot header shows Register / Login exists on the site.
+- Export type / file first-last dates / free-history cap: n/a, no file.
+- Launch/publish date: 未核对
+- Download: not downloaded. Reason: live official site Akamai 403 Access Denied.
+- Screenshots:
+  /workspace/incoming/grok-d37-index-20261116/screenshots/spdji-live-access-denied-homepage.png
+  /workspace/incoming/grok-d37-index-20261116/screenshots/spdji-access-denied-homepage.webp
+  /workspace/incoming/grok-d37-index-20261116/screenshots/theme-标普500信息科技指数-archive-20261115-overview.png
+  (archive screenshot is a Wayback copy of the official page, not a live launch-date or download dialog)
+
+2) theme-标普500医疗保健等权重指数 | hint SP5HEW | S&P 500 Equal Weight Health Care
+- Official page URL: not opened live (site-wide 403). Task said confirm exact official name/ticker on the site; do not guess. Not confirmed.
+- Wayback CDX note (not live-verified; not a ticker confirmation): a search of official-looking slugs found other S&P 500 Equal Weight sector pages (Energy Plus, Financials, Real Estate, parent Equal Weight Index) but did not return a capture for a *sp-500-equal-weight-health-care* slug. That is not proof the index is absent from the live site.
+- Login / export / dates: n/a
+- Launch/publish date: 未核对
+- Download: not downloaded. Reason: live official site blocked; official name/ticker not confirmed on the official site.
+
+3) theme-标普500消费精选指数 | hint SP5CSSUP
+- Official page URL: not opened live. Task required searching the official site for ticker SP5CSSUP and confirming the official name before downloading. That search could not be performed.
+- Wayback CDX search for official slug *sp-500-consumer-select* returned no captures. No official name/ticker confirmation from the official site.
+- Third-party hits (Yahoo/MarketScreener etc.) are NOT used as official identity and no data was taken from them.
+- Login / export / dates: n/a
+- Launch/publish date: 未核对
+- Download: not downloaded. Reason: live official site blocked; official identity not confirmed.
+
+4) theme-标普生物科技精选行业指数 | hint SPSIBI | S&P Biotechnology Select Industry Index
+- Candidate official page URL (exists in Wayback CDX as a 200 official HTML page; NOT opened live in this run):
+  https://www.spglobal.com/spdji/en/indices/equity/sp-biotechnology-select-industry-index/
+- Official name/ticker on the live site: not confirmed this run (403). URL slug matches the requested English name; ticker SPSIBI not visually confirmed.
+- Login / export / dates: n/a
+- Launch/publish date: 未核对
+- Download: not downloaded. Reason: live official site blocked.
+
+5) theme-道琼斯美国石油开发与生产指数 | hint DJSOEP
+- Candidate official page URL (Wayback CDX only; do not treat ticker as confirmed):
+  https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-select-oil-exploration-production-index/
+  Nearby official pages also exist (Select Oil Equipment & Services; Dow Jones US Oil & Gas). Task said confirm official English name/ticker; not confirmed on the live site, so this remains a candidate only.
+- Login / export / dates: n/a
+- Launch/publish date: 未核对
+- Download: not downloaded. Reason: live official site blocked; official ticker/name not confirmed on the official site.
+
+6) theme-道琼斯美国精选REIT指数 | hint DJUSRE | Dow Jones U.S. Select REIT Index
+- Candidate official page URL (Wayback CDX; not opened live):
+  https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-select-reit-index/
+  Do not confuse with the also-captured "Dow Jones US Select REIT Capped Index":
+  https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-select-reit-capped-index/
+- Ticker DJUSRE: not visually confirmed on the live official page.
+- Login / export / dates: n/a
+- Launch/publish date: 未核对
+- Download: not downloaded. Reason: live official site blocked.
+
+7) theme-标普美国品质消费股票指数 | no ticker in table
+- Official page URL: not found on the live official site (blocked). Wayback CDX for *quality-consumer* under /spdji/en/indices/equity/ returned no captures. Task said do not pick a near-match.
+- Official name/ticker: not confirmed
+- Login / export / dates: n/a
+- Launch/publish date: 未核对
+- Download: not downloaded. Reason: live official site blocked; no official URL/ticker confirmed; no near-match used.
+
+8) theme-标普中国新经济行业指数 | hint SPNCSCHN
+- Official page URL / ticker: NOT confirmed. Task: do NOT assume this is the S&P New China Sectors A-Shares Capped Index unless the official ticker/name matches SPNCSCHN. That check could not be done on the live site.
+- Wayback CDX official-page candidates (ticker not seen; do not pick among them):
+  https://www.spglobal.com/spdji/en/indices/equity/sp-new-china-sectors-index/
+  https://www.spglobal.com/spdji/en/indices/equity/sp-new-china-sectors-a-shares-capped-index/
+  https://www.spglobal.com/spdji/en/indices/equity/sp-new-china-sectors-ex-a-share-index/
+- Login / export / dates: n/a
+- Launch/publish date: 未核对
+- Download: not downloaded. Reason: live official site blocked; SPNCSCHN not confirmed against official ticker/name.
+
+9) theme-SPAHLVCP | hint SPAHLVCP | 标普港股通低波红利指数
+- Official page URL: not found/opened live. Wayback CDX searches for *sp-hong-kong*, *low-volatility*dividend* under /spdji/en/indices/equity/ did not yield an obvious official slug for this index (Hong Kong BMI / LargeMidCap / listed-China pages appeared instead). Official English name not confirmed.
+- Login / export / dates: n/a
+- Launch/publish date: 未核对
+- Download: not downloaded. Reason: live official site blocked; official English name/ticker not confirmed on the official site.
+
+================================================================================
+FILES SAVED
+================================================================================
+/workspace/incoming/grok-d37-index-20261116/spdji-NOTE.txt
+/workspace/incoming/grok-d37-index-20261116/screenshots/spdji-live-access-denied-homepage.png
+/workspace/incoming/grok-d37-index-20261116/screenshots/spdji-access-denied-homepage.webp
+/workspace/incoming/grok-d37-index-20261116/screenshots/theme-标普500信息科技指数-archive-20261115-overview.png
+
+No official CSV/XLSX exports were saved.
+
+First URL that blocked this run: https://www.spglobal.com/spdji/en/
+(Access Denied / Akamai 403 — this is before any login or Export dialog.)
+Login/registration URL was not reached.
+
+================================================================================
+UPDATE 2026-11-17 22:28–22:41 Asia/Taipei (UTC+8)
+Official site loaded in the desktop browser; five ~1-year official dailies saved
+================================================================================
+
+LIVE official site WAS reachable from the box desktop browser at 22:28.
+
+- https://www.spglobal.com/spdji/en/ returned HTTP 200, title “S&P Dow Jones Indices”.
+- Index Finder and product pages also returned 200.
+- Server was Apache with an Akamai transform header, but the live official site
+  rendered normally (unlike the earlier Akamai 403 Access Denied in this same
+  note). Homepage screenshot:
+  screenshots/spdji-homepage-loaded-20261117.png
+- Earlier 403 screenshots are kept in the folder for the prior block.
+- Shell/curl from the box cloud path may still 403 even when the desktop
+  browser succeeds; do not treat a later Shell 403 as proof the site is down.
+
+Free official daily history, tested without login:
+
+- Graph View → Export works without login.
+- The XLS is capped at about one year of daily levels even after selecting
+  10 Year (a tenYearFlag file was identical to the 1-year file). The 10 Year
+  *chart* can display a longer window; the export file does not lengthen.
+- Table View “Daily” export is a latest-close snapshot, not a time series.
+- Register / Login is present. No SPDJI account was created. SPICE was not used.
+
+Confirmed and downloaded (5). Official .xls is authoritative; a same-stem
+date,close .csv was parsed from each XLS with LibreOffice (not a second source).
+
+1) theme-标普500医疗保健等权重指数
+   Official page: https://www.spglobal.com/spdji/en/indices/equity/sp-500-equal-weighted-health-care-sector/
+   Official name: S&P 500 Equal Weight Health Care Index
+   USD PR Bloomberg ticker: S35 (Reuters .SPXEW35), not SP5HEW.
+     Also listed: NTR SPXEW35N, TR SPXEWHC.
+   Launch Date: Jun 20, 2006 (First Value Date Dec 29, 1989; not used as
+     publish_date; no base-date backfill).
+   File: theme-标普500医疗保健等权重指数-official-usd-pr-daily-20251117-20261116.xls
+   Series: “S&P 500 EQUAL WEIGHTED Health Care (Sector)”
+   251 daily rows, 2025-11-17 (19035.78) to 2026-11-16 (25218.62)
+   SHA256 xls=6a6a2d344c492041c7f4cb9506d4bba938ef71eb34fef67b9fb613aa16b2658a
+   SHA256 csv=3fc934a2df5ed47d487bcfe424019b0a9fccf035fedbdccd3b1a0423d33987f8
+   Needed window (2006-06-20 → 2016-12-14+30d) is not covered.
+
+2) theme-SPAHLVCP
+   Official page (CNY, Price Return):
+   https://www.spglobal.com/spdji/en/indices/dividends-factors/sp-access-hong-kong-low-volatility-high-dividend-index/?currency=CNY&returntype=P-#overview
+   Official name: S&P Access Hong Kong Low Volatility High Dividend Index
+   Widget/table/export series: S&P Access Hong Kong Low Volatility High Dividend Index (CNY), Price Return
+   Launch Date: Feb 20, 2017 (First Value Date Jan 31, 2011; not used as publish_date)
+   Default Data-tab tickers were HKD SPAHLVHP / SPAHLVHT; SPAHLVCP was not
+     printed on that table after switching to CNY, but the CNY PR series name
+     matches exactly. Table View latest close 1290.50 CNY Price Return as of
+     Nov 17, 2026.
+   File: theme-SPAHLVCP-official-cny-pr-daily-20251117-20261117.xls
+   243 daily rows, 2025-11-17 (1389.31) to 2026-11-17 (1290.50)
+   SHA256 xls=41c3f7cd995d5d89c0db98735ac00051396d3b3cf4185da1a49b3d1eca64c94d
+   SHA256 csv=7f0d1baadf69b1cd0335cd3a0df1e3e4029626dc4716001c158648415994e373
+   Needed window (2017-02-20 → 2023-12-08+30d) is not covered.
+
+3) theme-道琼斯美国精选REIT指数
+   Official page: https://www.spglobal.com/spdji/en/indices/equity/dow-jones-us-select-reit-index/
+   Official name confirmed exact: Dow Jones U.S. Select REIT Index
+     (not the broader Dow Jones U.S. Real Estate Index).
+   Official USD PR Bloomberg ticker: DWRTF (Reuters .DWRTF). This is the
+     official price-return ticker for this exact index, not a near-match
+     substitute. Earlier TradingView DJ:DJUSRE was correctly skipped because
+     that symbol’s on-page name is “Dow Jones U.S. Real Estate Index”.
+   Launch Date: Dec 31, 1998 (First Value Date Dec 31, 1986; chart notes
+     information prior to Launch Date is hypothetical back-tested; no backfill).
+   Overview headline 333.71 USD Price Return as of Nov 16, 2026.
+   File: theme-道琼斯美国精选REIT指数-official-usd-pr-daily-20251117-20261116.xls
+   Series: “Dow Jones U.S. Select REIT Index (USD)”
+   251 daily rows, 2025-11-17 (293.19) to 2026-11-16 (333.71)
+   SHA256 xls=741c3922c93f869b13442ff0dfffc4e4027b34e8d709d64c49f3aa0ec9403a1d
+   SHA256 csv=861189a91ca208793d5555150a2ecad15d3fc7f50170eb2b985f43797967cb01
+   Needed window (1998-12-31 → 2017-11-24+30d) is not covered.
+
+4) theme-标普全球石油指数
+   Official page: https://www.spglobal.com/spdji/en/indices/equity/sp-global-oil-index/
+   Official name: S&P Global Oil Index
+   Official USD PR ticker: SPGOGUP (Total Return SPGOGUT); not SGES.
+   Launch Date: Jul 08, 2011 (First Value Date Aug 31, 2000; not used as publish_date)
+   On-page headline 2,650.65 USD Price Return.
+   File: theme-标普全球石油指数-official-usd-pr-SPGOGUP-daily-20251117-20261116.xls
+   Series: “S&P Global Oil Index”
+   261 daily rows, 2025-11-17 (2004.24) to 2026-11-16 (2650.65)
+   SHA256 xls=d91456aa170e44c3fbc94b7b203a40397848fee909ae1fac59b665d872576539
+   SHA256 csv=1c9df0f7b097bc2c971d14633c5d84de12673287b0ee632804c8a0edf932196d
+   Needed window (2011-07-08 → 2012-05-02+30d) is not covered.
+   TradingView still has no SPGOGUP symbol (earlier 404).
+
+5) theme-S&P 500 Energy Sector Index(NTR)
+   Official page (USD, Net Total Return):
+   https://www.spglobal.com/spdji/en/indices/equity/sp-500-energy-sector/?currency=USD&returntype=N-#overview
+   Official name: S&P 500 Energy / export series “S&P 500 Energy (Sector) (Net TR)”
+   This is Net Total Return, not price return.
+   Official NTR ticker: SP5NENRS (Reuters .NTRGSPE)
+   Quick Facts Launch Date: Jun 28, 1996; First Value Date Sep 11, 1989
+     (not used as publish_date). The NTR chart also said the earliest possible
+     launch date is not available; publish_date is recorded from Quick Facts
+     with that caveat.
+   Table View: 907.74 USD Net Total Return as of Nov 16, 2026.
+   File: theme-S&P 500 Energy Sector Index(NTR)-official-usd-ntr-daily-20251117-20261116.xls
+   251 daily rows, 2025-11-17 (628.31) to 2026-11-16 (907.74)
+   SHA256 xls=d4f5937c1cac74f9e88811342f31ec9a041194cae6874b157be26f2b350f3911
+   SHA256 csv=2e18ca92aaf0f27da40070ce9591bf40e333f3be8c87ffd6e52850d16644096e
+   Needed window (1996-06-28 → 2015-02-17+30d) is not covered.
+
+Not downloaded (identity unclear; candidates screenshotted; no near-match used):
+
+- theme-标普500消费精选指数 (SP500-25): Index Finder for “S&P 500 Consumer Select”
+  returned only “S&P 500 Consumer Select 15/60 Index”. Not an exact name match.
+  Screenshot: screenshots/theme-标普500消费精选指数-index-finder-consumer-select-15-60-near-match.png
+- theme-标普美国品质消费股票指数: “Quality Consumer” in Index Finder returned
+  0 Matches / “No matches found”. Still 未核对.
+  Screenshot: screenshots/theme-标普美国品质消费股票指数-index-finder-quality-consumer-0-matches.png
+- theme-标普中国新经济行业指数: price-return ticker still 未核对. Finder returned
+  three official candidates and none was used: S&P New China Sectors Index,
+  S&P New China Sectors (A-shares Capped) Index, S&P New China Sectors Ex-A-Share Index.
+  Screenshots: screenshots/theme-标普中国新经济行业指数-index-finder-new-china-sectors-candidates.png
+  and screenshots/theme-标普中国新经济行业指数-candidate-sp-new-china-sectors-index-page.png
+
+These five official ~1-year files are evidence plus short official dailies,
+not complete delivery for ingest. sources.csv and MANIFEST.md were updated
+for this batch.
+
+================================================================================
+UPDATE 2026-11-17 23:05–23:11 Asia/Taipei (UTC+8)
+Three previously identity-unclear indexes: official pages loaded, ~1-year dailies saved
+================================================================================
+
+Identities follow fund legal documents plus official SPDJI EN/ZH product pages
+(Manager accepted this in the group; ingest still waits). No SPDJI account;
+SPICE not used. Free Graph View export still capped at about one year.
+
+1) theme-标普500消费精选指数
+   Official English name: S&P 500 Consumer Select 15/60 Index
+   Official Chinese name: 标普500消费精选指数
+   Official USD PR ticker on the Tickers table: SP5CSSUP / .SP5CSSUP
+   Launch Date: Nov 21, 2022; First Value Date: Mar 16, 2012
+   XLS 251 rows 2025-11-17 (4280.43) to 2026-11-16 (4745.26)
+   SHA256 xls=1168c83e484b9a2555b1381405866a80fcc9131fe1d4249a9f2182146b13aa84
+   SHA256 csv=31a6f3660119e0977b2058ebd48bc3cfbb3e32ec9bab18cba6f4b5a063cf065e
+   Needed window not covered.
+
+2) theme-标普美国品质消费股票指数
+   Official page H1: Consumer Discretionary Select Sector
+   Export series: Consumer Discretionary Select Sector Index
+   Official Chinese name: 标普可选消费品精选行业指数
+   Official USD PR ticker on the Tickers table: IXY / .IXY (now official, not a substitute)
+   Launch Date: Dec 16, 1998; First Value Date: Jul 01, 2003 (after Launch Date; as printed)
+   XLS 251 rows 2025-11-17 (2310.67) to 2026-11-16 (2386.14)
+   SHA256 xls=762b28798ff245d32a8e25c4ba41a4ab96193fc34d1eb07e1c2409aa7f0b6046
+   SHA256 csv=c57a3120cd39c674e00985bc0a9f1860fcc72f9a2b378e10a1218a4ec03a6fc6
+   Needed window not covered.
+
+3) theme-标普中国新经济行业指数
+   Official English name: S&P New China Sectors (A-shares Capped) Index
+   Official Chinese name: 标普新中国行业（A股上限）指数
+   Official HKD PR (page default): SPNCSCHP; official USD PR: SPNCSCUP
+   USD PR series exported; NTR not used; uncapped / Ex-A-Share not used.
+   Launch Date: Dec 24, 2018; First Value Date: Dec 31, 2010
+   XLS 259 rows 2025-11-17 (1951.09) to 2026-11-16 (1457.47)
+   SHA256 xls=c0a8013206ec237d3c6a4b83e0988a5b22a91251bc99ad0d50739280c2f265c0
+   SHA256 csv=30b34768c360f1c6457cc3921c25b4cd14f1a96bf937b728ef97b172572aaa27
+   Needed window not covered.
+
+All 36 containers now have at least some official or allowed secondary daily.
+Six still have only ~1-year official history and do not cover the needed window.
+
+================================================================================
+UPDATE 2026-11-18 00:28–00:39 Asia/Taipei (UTC+8)
+Free official website account created and logged in; 10 Year Graph export still ~1 year
+================================================================================
+
+Free website registration (not SPICE / not paid) was completed with bot email
+9wmcmz8h@mail.grokbot.com. Step 1 (name Karin / L, Independent Researcher,
+Independent, Individual Investor, country Taiwan, marketing opt-in unchecked,
+Terms checked) was accepted after captcha. The confirmation email from
+S&P Dow Jones Indices <index_services@spglobal.com> asked to set a password.
+Password was vault-generated (vault login id 5123595, title "S&P Dow Jones Indices",
+site https://www.spglobal.com) and never invented or printed. After Submit,
+a “Registration Successful” modal appeared; after Continue, the official
+website login dialog (not SPICE) was completed and the header changed to “Hi Karin”.
+
+Logged-in export test on
+https://www.spglobal.com/spdji/en/indices/equity/sp-500-consumer-select-15-60-index/
+(S&P 500 Consumer Select 15/60 Index, USD PR SP5CSSUP):
+
+- Graph View 10 YEAR selected (no Max/All control). Chart visually showed
+  history from about 2017 through 2026, 10 Yr Return 10.87% annualized,
+  as of Nov 16, 2026.
+- Official Graph Export (yearFlag=tenYearFlag) still contained only 251 daily
+  rows, 2025-11-17 4280.43 to 2026-11-16 4745.26.
+- XLS SHA256 1168c83e484b9a2555b1381405866a80fcc9131fe1d4249a9f2182146b13aa84
+  is BYTE-IDENTICAL to the earlier unauthenticated official file
+  theme-标普500消费精选指数-official-usd-pr-daily-20251117-20261116.xls.
+- Converted csv of this logged-in copy:
+  SHA256 82851cfc755c12d07540b9b88a43b484775c39a04eb43d6de3169043b6b1c217
+  (second LibreOffice conversion of the same XLS, not a second source).
+- Table View “Daily” Export is a latest-close snapshot (4745.26 as of
+  Nov 16, 2026), not a time series.
+  SHA256 85a0693ff3dc27c3c870812a838be57d2f572783eaffdeada9b209b842384a62
+
+Conclusion: a free official website account does not lift the ~1-year Graph
+View daily export cap. Paid SPICE was not used. The six partial official
+series still cannot cover their needed windows from official free export.
+Next: continue the allowed TradingView free Table copy for IXY before
+2012-12-27, toward official launch 1998-12-16 if the free table has it.
+
+Screenshots include spdji-register-success.png, spdji-register-success-logged-in-home.png,
+spdji-logged-in-chart-range-10y.png, spdji-logged-in-export-10y.png.

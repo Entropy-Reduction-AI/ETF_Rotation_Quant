@@ -1,0 +1,17 @@
+East Money secondary daily — 法兰克福DAX指数 (East Money name: 德国DAX30 / GDAXI)
+
+This is a SECONDARY source. publish_date 未核对 (not taken from an official factsheet/table in this file). No DB writes, no ingest branch.
+
+Identity as shown by East Money
+- Payload name: 德国DAX30, code: GDAXI
+- Container: theme-法兰克福DAX指数
+- URL: https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=100.GDAXI&klt=101&fqt=0
+
+Series
+- File: theme-法兰克福DAX指数-eastmoney.csv, columns date,close (native levels, no FX).
+- 8982 daily rows, 1991-07-03 (1606.51) to 2026-11-16 (26598.64).
+- East Money also printed 2026-11-17 close 26422.61; dropped as unconfirmed/intraday vs official close.
+- SHA256 csv: 5a7606c17e085299cb03be6127de7709343d67c47c4d09f5d4b4edbd67f55fc1
+- Download time: 2026-11-17 19:54:40 Asia/Taipei
+
+Official STOXX DAX Equity Index Methodology Guide (August 2026) was saved as theme-法兰克福DAX指数-official-methodology-guide.pdf. It states a base value of 1,000 on December 30, 1987 for DAX; that is a base date, not used as publish_date. The guide did not print a launch/publish date in the passages searched; publish_date remains 未核对. This EM series starts 1991-07-03, so if official launch is earlier there is a post-launch gap. Official free daily history from stoxx.com / boerse-frankfurt historical endpoints was not obtained (legacy historical-data URLs 404; boerse API 403/400).
