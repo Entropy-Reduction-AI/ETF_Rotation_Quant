@@ -1,0 +1,12 @@
+{
+  "url": "https://www.csindex.com.cn/#/indices/family/detail?indexCode=000913",
+  "api_url": "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/000913",
+  "code": "000913",
+  "name": "沪深300医药卫生指数",
+  "short_name": "300医药",
+  "publish": "2007-07-02",
+  "base_date": "2004-12-31",
+  "screenshot": "operations/evidence/d38-a-theme/000913-csindex-detail.png",
+  "screenshot_bytes": 592656,
+  "fetched_at": "2026-11-18T17:06:04+08:00"
+}

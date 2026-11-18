@@ -1,0 +1,12 @@
+{
+  "url": "https://www.csindex.com.cn/#/indices/family/detail?indexCode=931775",
+  "api_url": "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/931775",
+  "code": "931775",
+  "name": "中证全指房地产指数",
+  "short_name": "房地产",
+  "publish": "2013-07-15",
+  "base_date": "2004-12-31",
+  "screenshot": "operations/evidence/d38-a-theme/931775-csindex-detail.png",
+  "screenshot_bytes": 598799,
+  "fetched_at": "2026-11-18T17:14:09+08:00"
+}

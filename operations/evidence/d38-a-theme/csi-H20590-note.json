@@ -1,0 +1,12 @@
+{
+  "url": "https://www.csindex.com.cn/#/indices/family/detail?indexCode=H20590",
+  "api_url": "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/H20590",
+  "code": "H20590",
+  "name": "中证机器人全收益指数",
+  "short_name": "机器人全收益",
+  "publish": "2015-02-10",
+  "base_date": "2010-12-31",
+  "screenshot": "operations/evidence/d38-a-theme/H20590-csindex-detail.png",
+  "screenshot_bytes": 541134,
+  "fetched_at": "2026-11-18T16:55:28+08:00"
+}

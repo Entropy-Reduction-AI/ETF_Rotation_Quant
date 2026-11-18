@@ -1,0 +1,12 @@
+{
+  "url": "https://www.csindex.com.cn/#/indices/family/detail?indexCode=000819",
+  "api_url": "https://www.csindex.com.cn/csindex-home/indexInfo/index-basic-info/000819",
+  "code": "000819",
+  "name": "中证申万有色金属指数",
+  "short_name": "有色金属",
+  "publish": "2012-05-09",
+  "base_date": "2004-12-31",
+  "screenshot": "operations/evidence/d38-a-theme/000819-csindex-detail.png",
+  "screenshot_bytes": 572605,
+  "fetched_at": "2026-11-18T16:56:35+08:00"
+}
