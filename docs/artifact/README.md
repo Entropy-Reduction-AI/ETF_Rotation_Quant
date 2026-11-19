@@ -7,7 +7,7 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Orchestrator
-- Last updated: 2026-11-19（v6 预演预测表第 3.6 版）
+- Last updated: 2026-11-19（v6 预演预测表第 3.7 版）
 
 ## Purpose
 
