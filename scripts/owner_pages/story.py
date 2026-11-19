@@ -570,6 +570,7 @@ def flow_steps(soup):
             continue
         add_class(ol, 'flow')
         keys_ok = []
+        drop = []
         ol['style'] = f'counter-reset: fl {(int(ol["start"]) if ol.get("start") else 1) - 1}'
         for i, li in enumerate(lis):
             b = li.find(['b', 'strong'])
@@ -583,6 +584,10 @@ def flow_steps(soup):
             for kb in li.find_all(['b', 'strong']):
                 if kb is not b and len(kb.get_text(strip=True)) >= 2:
                     key = kb.get_text(strip=True)
+                    # a trailing bold that only restates the focus is dropped from the body later,
+                    # but only when it sits directly in the item (not inside the title) and every step keeps its focus line
+                    if kb.parent is li and re.fullmatch(r'[\s。．.]*', ''.join(str(x) for x in kb.next_siblings)):
+                        drop.append(kb)
                     break
             if key is None:
                 body = li.get_text().replace(b.get_text(), '', 1).strip().rstrip('。')
@@ -593,6 +598,59 @@ def flow_steps(soup):
                 if c is not b:
                     d.append(c.extract())
             li.append(d)
+            # an "例：" clause becomes a tinted example line at the bottom of the card
+            for t in list(d.find_all(string=re.compile('例(（[^）]*）)?：'))):
+                m = re.search('例(?:（([^）]*)）)?：', str(t))
+                before, after = str(t)[:m.start()], str(t)[m.end():]
+                sibs = []
+                for sib in list(t.next_siblings):
+                    if getattr(sib, 'name', None) in ('b', 'strong'):
+                        break                      # the focus bold stays put; the trailing-bold rule handles it
+                    sibs.append(sib)
+                rest = after + ''.join(q.get_text() if hasattr(q, 'get_text') else str(q) for q in sibs)
+                for sib in sibs:
+                    sib.extract()
+                x = soup.new_tag('span', attrs={'class': ['fl-x']})
+                lab = soup.new_tag('span', attrs={'class': ['fl-xl']}); lab.string = '例' + (f'：{m.group(1)}' if m.group(1) else '')
+                x.append(lab)
+                left, _, res = rest.strip().rstrip('。').partition('→')
+                parts = [q.strip() for q in left.split('·') if q.strip()]
+                if len(parts) > 1 or res:
+                    for q in parts:
+                        c = soup.new_tag('span', attrs={'class': ['fl-c']}); c.string = q; x.append(c)
+                    if res.strip():
+                        r = soup.new_tag('span', attrs={'class': ['fl-r']}); r.string = '→ ' + res.strip(); x.append(r)
+                else:
+                    x.append(NavigableString(rest.strip()))
+                t.replace_with(NavigableString(before.rstrip()))
+                body = soup.new_tag('span', attrs={'class': ['fl-b']})
+                for c in list(d.contents):
+                    body.append(c.extract())
+                d.append(body)
+                d.append(x)
+                break
+            # a spec card: "看：…｜规则：…｜结果：…" becomes labelled rows (what it looks at, the rule, what comes out)
+            body = d.find('span', class_='fl-b') or d
+            bt = ''.join(c.get_text() if hasattr(c, 'get_text') and not (getattr(c, 'get', lambda *_: None)('class') or []) == ['fl-x'] else (str(c) if not hasattr(c, 'get_text') else '') for c in body.contents)
+            if '看：' in bt and '｜' in bt:
+                parts = [q.strip().rstrip('。') for q in bt[bt.index('看：'):].split('｜') if '：' in q]
+                # the author's bold inside a row (e.g. **取前 3**) marks that row's core rule
+                marks = [x.get_text(strip=True) for x in body.find_all(['b', 'strong']) if x.get_text(strip=True) != key]
+                for c in list(body.contents):
+                    if not ('fl-x' in (getattr(c, 'get', lambda *_: None)('class') or [])):
+                        c.extract()
+                rows = soup.new_tag('span', attrs={'class': ['fl-rows']})
+                for q in parts:
+                    lb, v = q.split('：', 1)
+                    r = soup.new_tag('span', attrs={'class': ['fl-row'] + (['out'] if lb.strip() == '结果' else [])})
+                    a_ = soup.new_tag('span', attrs={'class': ['fl-lb']}); a_.string = lb.strip()
+                    b_ = soup.new_tag('span', attrs={'class': ['fl-v']}); b_.string = v.strip()
+                    mk = [m_ for m_ in marks if m_ in v]
+                    if mk:
+                        b_['data-key'] = '｜'.join(mk)
+                    r.append(a_); r.append(b_); rows.append(r)
+                body.insert(0, rows)
+                add_class(ol, 'spec')
             if key and '。' not in key and len(key) <= 18:
                 k = soup.new_tag('span', attrs={'class': ['fl-k']})
                 k.string = key
@@ -602,7 +660,124 @@ def flow_steps(soup):
         if len(keys_ok) != len(lis):
             for k in keys_ok:
                 k.decompose()
+        elif len(drop) == len(lis):
+            for kb in drop:
+                for x in list(kb.next_siblings):
+                    x.extract()
+                prev = kb.previous_sibling
+                kb.decompose()
+                if isinstance(prev, NavigableString):
+                    prev.replace_with(NavigableString(re.sub(r'[\s。，,；]+$', '。', str(prev))))
 
+
+
+def _ex_visual(chips, res, key):
+    """Draw a step's worked example from its own numbers: a ranking as bars, votes as dots,
+    a money split as a stacked bar, a premium gap against the rule's threshold. None if no shape fits."""
+    from html import escape as e
+    num = r'(-?\d+(?:\.\d+)?)'
+    m = [re.fullmatch(r'(.+?)\s*' + num + '%', q) for q in chips]
+    # a ranking: "军工 106% · 软件 100% · 公用 95%"
+    if len(chips) >= 3 and all(m):
+        mx = max(float(x.group(2)) for x in m)
+        rows = ''.join(f'<span class="xv-bn">{e(x.group(1))}</span><span class="xv-bt"><i style="width:{float(x.group(2)) / mx * 100:.0f}%"></i></span>'
+                       f'<span class="xv-bv">{e(x.group(2))}%</span>' for x in m)
+        return f'<div class="xv xv-rank">{rows}</div>'
+    # two levels: "常态 9% · 今天 16%" against "高 5 点以上…"
+    if len(chips) == 2 and all(m):
+        a, b = float(m[0].group(2)), float(m[1].group(2))
+        th = re.search(r'(\d+(?:\.\d+)?)\s*点', key)
+        d = abs(b - a) or 1
+        lo, hi = min(a, b) - d * .8, max(a, b) + d * .5      # zoom on the gap; the labels carry the levels
+        pos = lambda y: (y - lo) / (hi - lo) * 100
+        pa, pb = pos(a), pos(b)
+        thr = ''
+        if th:
+            pt = pos(a + float(th.group(1)))
+            thr = f'<span class="xv-th" style="left:{pt:.1f}%"><em>常态 +{e(th.group(1))} 点</em></span>'
+        over = th is not None and b - a > float(th.group(1))
+        return (f'<div class="xv xv-gap{" over" if over else ""}"><div class="xv-track">'
+                f'<span class="xv-seg" style="left:{min(pa, pb):.1f}%;width:{abs(pb - pa):.1f}%"></span>{thr}'
+                f'<span class="xv-pt a" style="left:{pa:.1f}%"><em>{e(m[0].group(1))} {e(m[0].group(2))}%</em></span>'
+                f'<span class="xv-pt b" style="left:{pb:.1f}%"><em>{e(m[1].group(1))} {e(m[1].group(2))}%</em></span>'
+                f'</div></div>')
+    # votes: "均线 ✓ · 宽度 ✓ · TRIN ✓"
+    v = [re.fullmatch(r'(.+?)\s*([✓✗])', q) for q in chips]
+    if len(chips) >= 2 and all(v):
+        dots = ''.join(f'<span class="xv-vote{" on" if x.group(2) == "✓" else ""}"><b>{"✓" if x.group(2) == "✓" else ""}</b>{e(x.group(1))}</span>' for x in v)
+        return f'<div class="xv xv-votes">{dots}</div>'
+    # a money split in the result: "股票 12 万，国债 28 万"
+    sp = re.fullmatch(r'(\S+?)\s*' + num + r'\s*万[，,]\s*(\S+?)\s*' + num + r'\s*万', res)
+    if sp:
+        a, b = float(sp.group(2)), float(sp.group(4))
+        ins = ''.join(f'<span class="sg-chip">{e(q)}</span>' for q in chips)
+        return (f'<div class="xv xv-split"><div class="xv-in">{ins}</div><div class="xv-bar">'
+                f'<span class="s1" style="flex:{a}">{e(sp.group(1))} {e(sp.group(2))} 万</span>'
+                f'<span class="s2" style="flex:{b}">{e(sp.group(3))} {e(sp.group(4))} 万</span></div></div>')
+    return None
+
+
+def spec_grid(soup):
+    """A spec list (steps written as 看：…｜规则：…｜结果：… with an 例) reads as full-width rows of chips, not narrow text cards."""
+    for ol in soup.select('ol.flow.spec'):
+        lis = ol.find_all('li', recursive=False)
+        grid = soup.new_tag('div', attrs={'class': ['specgrid']})
+        hd = soup.new_tag('div', attrs={'class': ['sg-row', 'sg-hd']})
+        ex_lab = None
+        for li in lis:
+            x = li.find('span', class_='fl-x')
+            if x is not None and x.find('span', class_='fl-xl'):
+                ex_lab = x.find('span', class_='fl-xl').get_text(strip=True)
+                break
+        for lab in ('步骤', '看什么', '怎么判', '得出', ex_lab or '例'):
+            c = soup.new_tag('span', attrs={'class': ['sg-h']}); c.string = lab; hd.append(c)
+        grid.append(hd)
+        for i, li in enumerate(lis, 1):
+            row = soup.new_tag('div', attrs={'class': ['sg-row']})
+            head = soup.new_tag('div', attrs={'class': ['sg-step']})
+            n = soup.new_tag('span', attrs={'class': ['sg-n']}); n.string = str(i); head.append(n)
+            t = li.find('b', class_='fl-t'); k = li.find('span', class_='fl-k')
+            nm = soup.new_tag('span', attrs={'class': ['sg-name']}); nm.string = t.get_text(strip=True).rstrip('：:') if t else ''
+            head.append(nm)
+            if k is not None:
+                pu = soup.new_tag('span', attrs={'class': ['sg-purpose']}); pu.string = k.get_text(strip=True); head.append(pu)
+            row.append(head)
+            vals, keys = {}, {}
+            for r in li.select('span.fl-row'):
+                lb_ = r.find('span', class_='fl-lb').get_text(strip=True); fv = r.find('span', class_='fl-v')
+                vals[lb_] = fv.get_text(strip=True)
+                keys[lb_] = [q for q in (fv.get('data-key') or '').split('｜') if q]
+            for lb, cls in (('看', 'sg-see'), ('规则', 'sg-rule'), ('结果', 'sg-out')):
+                cell = soup.new_tag('div', attrs={'class': ['sg-cell', cls], 'data-lb': {'看': '看什么', '规则': '怎么判', '结果': '得出'}[lb]})
+                qs = [q.strip() for q in vals.get(lb, '').split('·') if q.strip()]
+                # the row's core rule (the author's bold) leads the cell, big; the other conditions follow, small
+                qs = [q for q in qs if q in keys.get(lb, [])] + [q for q in qs if q not in keys.get(lb, [])]
+                for q in qs:
+                    c = soup.new_tag('span', attrs={'class': ['sg-chip'] + (['sg-key'] if q in keys.get(lb, []) else [])}); c.string = q; cell.append(c)
+                if lb == '规则' and keys.get(lb):
+                    add_class(cell, 'has-key')
+                row.append(cell)
+            x = li.find('span', class_='fl-x')
+            ex = soup.new_tag('div', attrs={'class': ['sg-cell', 'sg-ex'], 'data-lb': ex_lab or '例'})
+            if x is not None:
+                xl = x.find('span', class_='fl-xl')
+                if xl is not None and xl.get_text(strip=True) != ex_lab:
+                    m = soup.new_tag('span', attrs={'class': ['sg-exl']}); m.string = xl.get_text(strip=True).replace('例：', ''); ex.append(m)
+                    ex['data-lb'] = '例'                 # its own example, not the header's month
+                chips = [c.get_text(strip=True) for c in x.select('span.fl-c')]
+                r = x.find('span', class_='fl-r')
+                res = r.get_text(strip=True).lstrip('→').strip() if r is not None else ''
+                vis = _ex_visual(chips, res, ' '.join(keys.get('规则', [])))
+                if vis:
+                    ex.append(BeautifulSoup(vis, 'html.parser'))
+                else:
+                    for q in chips:
+                        cc = soup.new_tag('span', attrs={'class': ['sg-chip']}); cc.string = q; ex.append(cc)
+                if res:
+                    rr = soup.new_tag('span', attrs={'class': ['sg-res']}); rr.string = res; ex.append(rr)
+            row.append(ex)
+            grid.append(row)
+        ol.replace_with(grid)
 
 
 def kv_paragraphs(soup):
@@ -1528,6 +1703,7 @@ def ux_pass(html):
     risk_return_map(soup)
     diagnosis_cards(soup)
     flow_steps(soup)
+    spec_grid(soup)
     kv_paragraphs(soup)
     focus_pass(soup)
     action_board(soup)
@@ -1731,6 +1907,77 @@ ol.flow { align-items: stretch; }
 ol.flow .fl-t { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 2px; }
 ol.flow .fl-d { display: block; }
 ol.flow .fl-k { display: block; font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1.35; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+ol.flow .fl-x { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 10px; padding: 8px 9px; background: var(--accent-soft); border-radius: 8px; font-size: 12.5px; line-height: 1.5; color: var(--ink); }
+ol.flow .fl-xl { width: 100%; font-size: 11.5px; color: var(--muted); }
+ol.flow .fl-c { display: inline-block; padding: 1px 7px; border-radius: 5px; background: var(--surface); border: 1px solid var(--line); font-size: 12.5px; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink); }
+ol.flow .fl-r { width: 100%; font-weight: 700; color: var(--accent); font-size: 13.5px; }
+ol.flow .fl-x .num { all: unset; }
+ol.flow.spec .fl-t { font-size: 19px; font-weight: 800; color: var(--ink); margin: 2px 0 0; }
+ol.flow.spec .fl-k { font-size: 14px; font-weight: 700; color: var(--accent); margin: 2px 0 10px; padding-bottom: 10px; }
+ol.flow.spec .fl-rows { display: grid; gap: 6px; }
+ol.flow.spec .fl-row { display: grid; grid-template-columns: 2.8em minmax(0, 1fr); gap: 6px; font-size: 13.5px; line-height: 1.55; color: var(--ink); }
+ol.flow.spec .fl-lb { font-size: 12px; color: var(--muted); padding-top: 1px; }
+ol.flow.spec .fl-row.out .fl-v { font-weight: 700; }
+ol.flow.spec .fl-v .num { all: unset; }
+.specgrid { display: grid; gap: 10px; margin: 14px 0 22px; }
+.specgrid .sg-row { display: grid; grid-template-columns: 168px minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, .85fr) minmax(0, 1.3fr); gap: 14px; align-items: center; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.specgrid .sg-hd { background: none; border: 0; padding: 0 16px; }
+.specgrid .sg-h { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: .02em; }
+.specgrid .sg-step { display: grid; grid-template-columns: 26px 1fr; column-gap: 8px; align-items: center; }
+.specgrid .sg-n { grid-row: span 2; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 13px; }
+.specgrid .sg-name { font-size: 18px; font-weight: 800; color: var(--ink); line-height: 1.2; }
+.specgrid .sg-purpose { font-size: 12.5px; font-weight: 700; color: var(--accent); line-height: 1.35; }
+.specgrid .sg-cell { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.specgrid .sg-chip { display: inline-block; padding: 3px 9px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); font-size: 13px; line-height: 1.4; color: var(--ink); white-space: nowrap; }
+.specgrid .sg-out .sg-chip { background: var(--accent-soft); border-color: transparent; color: var(--accent); font-weight: 700; }
+.specgrid .sg-ex { background: var(--accent-soft); border-radius: 8px; padding: 8px 10px; }
+.specgrid .sg-ex .sg-chip { background: var(--surface); }
+.specgrid .sg-exl { width: 100%; font-size: 11.5px; color: var(--muted); }
+.specgrid .sg-res { width: 100%; font-size: 13px; font-weight: 700; color: var(--accent); }
+.specgrid .sg-res::before { content: '→ '; }
+.specgrid .sg-see .sg-chip { background: none; border: 0; padding: 0 2px; color: var(--muted); font-size: 13px; }
+.specgrid .sg-see .sg-chip { flex-basis: 100%; }
+.specgrid .sg-see .sg-chip::before, .specgrid .sg-rule.has-key .sg-chip:not(.sg-key)::before { content: ''; display: inline-block; width: 4px; height: 4px; margin: 0 7px 3px 0; border-radius: 50%; background: var(--muted); opacity: .6; }
+.specgrid .sg-rule.has-key .sg-chip:not(.sg-key) { background: none; border: 0; padding: 0 2px; color: var(--muted); font-size: 12.5px; }
+.specgrid .sg-rule.has-key .sg-chip:not(.sg-key) { flex-basis: 100%; }
+.specgrid .sg-chip.sg-key { width: fit-content; max-width: 100%; padding: 5px 12px 5px 10px; border: 2px solid var(--accent); border-radius: 7px; background: var(--surface); color: var(--ink); font-size: 16px; font-weight: 800; white-space: normal; }
+.specgrid .sg-rule.has-key { align-content: center; }
+.specgrid .sg-rule.has-key .sg-key { flex-basis: 100%; }
+.specgrid .sg-out .sg-chip { font-size: 14px; padding: 5px 11px; }
+.specgrid .sg-out .sg-chip::before { content: '⇒ '; opacity: .6; }
+.specgrid .xv { width: 100%; }
+.specgrid .xv-rank { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 8px; align-items: center; font-size: 13px; }
+.specgrid .xv-bn { color: var(--ink); font-weight: 600; }
+.specgrid .xv-bt { height: 8px; border-radius: 4px; background: var(--surface); overflow: hidden; }
+.specgrid .xv-bt i { display: block; height: 100%; border-radius: 0 4px 4px 0; background: var(--accent); }
+.specgrid .xv-bv { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); text-align: right; }
+.specgrid .xv-votes { display: flex; gap: 12px; }
+.specgrid .xv-vote { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 12px; color: var(--muted); }
+.specgrid .xv-vote b { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface); font-size: 13px; color: #fff; }
+.specgrid .xv-vote.on b { background: var(--warn); border-color: var(--warn); }
+.specgrid .xv-vote.on { color: var(--ink); font-weight: 600; }
+.specgrid .xv-split .xv-in { display: flex; gap: 5px; margin-bottom: 6px; }
+.specgrid .xv-bar { display: flex; gap: 2px; height: 24px; border-radius: 5px; overflow: hidden; font-size: 12px; font-weight: 700; }
+.specgrid .xv-bar span { display: grid; place-items: center; white-space: nowrap; }
+.specgrid .xv-bar .s1 { background: var(--accent); color: #fff; }
+.specgrid .xv-bar .s2 { background: var(--surface); color: var(--muted); }
+.specgrid .xv-gap .xv-track { position: relative; height: 8px; margin: 22px 6px 20px; border-radius: 4px; background: var(--surface); }
+.specgrid .xv-seg { position: absolute; top: 0; height: 100%; background: var(--accent); }
+.specgrid .xv-gap.over .xv-seg { background: var(--warn); }
+.specgrid .xv-pt { position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+.specgrid .xv-pt.b { border-color: var(--warn); background: var(--warn); }
+.specgrid .xv-pt em { position: absolute; top: -23px; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 12px; white-space: nowrap; color: var(--ink); }
+.specgrid .xv-pt.a em { top: auto; bottom: -20px; color: var(--muted); }
+.specgrid .xv-th { position: absolute; top: -3px; bottom: -3px; width: 0; border-left: 2px dashed var(--ink); opacity: .55; }
+.specgrid .xv-th em { position: absolute; bottom: -18px; left: 4px; font-style: normal; font-size: 11px; white-space: nowrap; }
+@media (max-width: 900px) {
+  .specgrid .sg-hd { display: none; }
+  .specgrid .sg-row { grid-template-columns: 1fr; gap: 8px; }
+  .specgrid .sg-cell::before { content: attr(data-lb); width: 100%; font-size: 11.5px; color: var(--muted); }
+}
+ol.flow > li:has(.fl-x) { display: flex; flex-direction: column; }
+ol.flow > li:has(.fl-x) > .fl-d { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+ol.flow > li:has(.fl-x) .fl-x { margin-top: auto; }
 ol.flow > li { color: var(--muted); }
 """
 
