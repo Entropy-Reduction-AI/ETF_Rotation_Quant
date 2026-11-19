@@ -831,7 +831,7 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <nav class="toc" aria-label="目录">
   <a class="back" href="https://claude.ai/artifact/17bW2rKeeBheRFfhnjsrSU">← Owner 看板</a>
   <div class="toc-title">目录</div>
-  <ol><li class="l2"><a href="#0-策略怎么执行-每月最后一个交易日走四步-下一个交易日调仓">0. 策略怎么执行</a></li><li class="l2"><a href="#1-预测表-每年比基准多约-0-6-个点-唯一的超额来源是美股名额的挑选">1. 预测表</a></li><li class="l2"><a href="#2-挑选有没有用-美国-70-年每月选最强的-3-个行业-每年比全市场多约-5-">2. 挑选有没有用</a></li><li class="l2"><a href="#3-防守放在哪-逐个候选卡均线会吃掉进攻-只在市场层面防守几乎不吃">3. 防守放在哪</a></li><li class="l2"><a href="#4-市场信息怎么用-宽度-trin-预测的是风险-不是方向">4. 市场信息怎么用</a></li><li class="l2"><a href="#5-六种合成行情-慢牛保费-1-6-个点-中间情况都守住-60-万">5. 六种合成行情</a></li><li class="l2"><a href="#6-设计期和美股-60-a-股证据薄-钱多放在证据强的一边">6. 设计期和美股 60%</a></li><li class="l2"><a href="#7-溢价规则-看比自己常态高多少-不看绝对水平">7. 溢价规则</a></li><li class="l2"><a href="#8-疼痛表-这些情况会发生-事先接受">8. 疼痛表</a></li><li class="l2"><a href="#9-已经定了什么-进攻-防守-美股比例-溢价都定了-d40">9. 已经定了什么</a></li><li class="l2"><a href="#10-接下来-补齐美股候选-复算-然后决定是否起草">10. 接下来</a></li></ol>
+  <ol><li class="l2"><a href="#0-策略怎么执行-每月最后一个交易日走四步-下一个交易日调仓">0. 策略怎么执行</a></li><li class="l2"><a href="#1-预测表-每年比基准多约-0-6-个点-唯一的超额来源是美股名额的挑选">1. 预测表</a></li><li class="l2"><a href="#2-挑选有没有用-美国-70-年每月选最强的-3-个行业-每年比全市场多约-5-">2. 挑选有没有用</a></li><li class="l2"><a href="#3-防守放在哪-逐个候选卡均线会吃掉进攻-只在市场层面防守几乎不吃">3. 防守放在哪</a></li><li class="l2"><a href="#4-市场信息怎么用-宽度-trin-预测的是风险-不是方向">4. 市场信息怎么用</a></li><li class="l2"><a href="#5-六种合成行情-慢牛保费-1-6-个点-中间情况都守住-60-万">5. 六种合成行情</a></li><li class="l2"><a href="#6-设计期和美股-60-a-股证据薄-钱多放在证据强的一边">6. 设计期和美股 60%</a></li><li class="l2"><a href="#7-溢价规则-看比自己常态高多少-不看绝对水平">7. 溢价规则</a></li><li class="l2"><a href="#8-疼痛表-这些情况会发生-事先接受">8. 疼痛表</a></li><li class="l2"><a href="#9-已经定了什么-进攻-防守-美股比例-溢价都定了-d40">9. 已经定了什么</a></li><li class="l2"><a href="#10-接下来-grok-第六轮入库-加候选去重-补更长的-a-股证据-然后决定是">10. 接下来</a></li></ol>
 </nav>
 <main>
 <header class="top">
@@ -899,6 +899,7 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <div class="specgrid"><div class="sg-row sg-hd"><span class="sg-h">步骤</span><span class="sg-h">看什么</span><span class="sg-h">怎么判</span><span class="sg-h">得出</span><span class="sg-h">例：2015 年 8 月 A 股</span></div><div class="sg-row"><div class="sg-step"><span class="sg-n">1</span><span class="sg-name">选人</span><span class="sg-purpose">决定买哪 3 只</span></div><div class="sg-cell sg-see" data-lb="看什么"><span class="sg-chip">过去一年涨幅</span><span class="sg-chip">不算最近 1 个月</span></div><div class="sg-cell sg-rule has-key" data-lb="怎么判"><span class="sg-chip sg-key">取前 3</span><span class="sg-chip">从高到低排</span><span class="sg-chip">母指数也参加排名</span></div><div class="sg-cell sg-out" data-lb="得出"><span class="sg-chip">3 只候选</span></div><div class="sg-cell sg-ex" data-lb="例：2015 年 8 月 A 股"><div class="xv xv-rank"><span class="xv-bn">军工</span><span class="xv-bt"><i style="width:100%"></i></span><span class="xv-bv">106%</span><span class="xv-bn">软件</span><span class="xv-bt"><i style="width:94%"></i></span><span class="xv-bv">100%</span><span class="xv-bn">公用</span><span class="xv-bt"><i style="width:90%"></i></span><span class="xv-bv">95%</span></div><span class="sg-res">这 3 只入选</span></div></div><div class="sg-row"><div class="sg-step"><span class="sg-n">2</span><span class="sg-name">看市场</span><span class="sg-purpose">决定现在紧不紧张</span></div><div class="sg-cell sg-see" data-lb="看什么"><span class="sg-chip">母指数均线</span><span class="sg-chip">宽度</span><span class="sg-chip">TRIN</span></div><div class="sg-cell sg-rule has-key" data-lb="怎么判"><span class="sg-chip sg-key">≥ 2 票 = 紧张</span><span class="sg-chip">每项越过历史门槛 = 1 票</span></div><div class="sg-cell sg-out" data-lb="得出"><span class="sg-chip">紧张 / 不紧张</span></div><div class="sg-cell sg-ex" data-lb="例：2015 年 8 月 A 股"><div class="xv xv-votes"><span class="xv-vote on"><b>✓</b>均线</span><span class="xv-vote on"><b>✓</b>宽度</span><span class="xv-vote on"><b>✓</b>TRIN</span></div><span class="sg-res">3 票，紧张</span></div></div><div class="sg-row"><div class="sg-step"><span class="sg-n">3</span><span class="sg-name">定仓位</span><span class="sg-purpose">决定股票买多少钱</span></div><div class="sg-cell sg-see" data-lb="看什么"><span class="sg-chip">紧不紧张</span><span class="sg-chip">把握 p</span></div><div class="sg-cell sg-rule has-key" data-lb="怎么判"><span class="sg-chip sg-key">紧张：股票 × p</span><span class="sg-chip">不紧张：每只 1/3</span><span class="sg-chip">其余买国债</span></div><div class="sg-cell sg-out" data-lb="得出"><span class="sg-chip">每只的金额</span></div><div class="sg-cell sg-ex" data-lb="例：2015 年 8 月 A 股"><div class="xv xv-split"><div class="xv-in"><span class="sg-chip">40 万</span><span class="sg-chip">p = 0.30</span></div><div class="xv-bar"><span class="s1" style="flex:12.0">股票 12 万</span><span class="s2" style="flex:28.0">国债 28 万</span></div></div><span class="sg-res">股票 12 万，国债 28 万</span></div></div><div class="sg-row"><div class="sg-step"><span class="sg-n">4</span><span class="sg-name">下单</span><span class="sg-purpose">决定买哪只基金</span></div><div class="sg-cell sg-see" data-lb="看什么"><span class="sg-chip">同指数的几只基金</span><span class="sg-chip">溢价比 60 天常态高几点</span></div><div class="sg-cell sg-rule has-key" data-lb="怎么判"><span class="sg-chip sg-key">高 5 点以上换一只</span><span class="sg-chip">下一个交易日调仓</span></div><div class="sg-cell sg-out" data-lb="得出"><span class="sg-chip">实际买入的基金</span></div><div class="sg-cell sg-ex" data-lb="例"><span class="sg-exl">纳指科技，假设</span><div class="xv xv-gap over"><div class="xv-track"><span class="xv-seg" style="left:34.8%;width:43.5%"></span><span class="xv-th" style="left:65.8%"><em>常态 +5 点</em></span><span class="xv-pt a" style="left:34.8%"><em>常态 9%</em></span><span class="xv-pt b" style="left:78.3%"><em>今天 16%</em></span></div></div><span class="sg-res">高 7 点，换另一只</span></div></div></div>
 <figure><img alt="一个月怎么定持仓：2015 年 8 月股灾后，A 股 40 万里只拿 12 万股票，美股照常满仓" src="../../assets/v6-preflight/f8-exec.png"/></figure>
 <ul class="points">
+<li><strong>把握 p 怎么算</strong>：把这个市场以往每个紧张月里“前 3 名下个月的平均涨幅”记下来，只记已经知道结果的月份。平均越高、越稳、月数越多，p 越接近 1；平均是负的，p 就低于 0.5。公式是 p = Φ(平均 ÷ 波动 × √月数)，不足 12 个月时 p = 0.5。2015 年 8 月：A 股之前 38 个紧张月，领头者平均略跌，p = 0.30；美股有 156 个紧张月的经验，领头者平均在涨，p = 1.00。</li>
 <li><strong>读这张图</strong>：2015 年 8 月股灾后，A 股三票全中，以往紧张时 A 股领头者也跟着跌，把握只有 0.30，40 万里只拿 12 万股票；美股也算紧张，但美股领头者以往紧张时照样涨，把握 1.00，照常满仓。</li>
 <li><strong>一条附加规则</strong>：母指数跌破均线时，只选过去一年是涨的候选，选不满的空位也放国债。</li>
 <li><strong>待补规则</strong>：2013 年 4 月 A 股前两名“300 医药”和“全指医药”是同一个行业，三分之二押在医药上。起草前要加去重：同一行业只留分数高的那个。</li>
@@ -1113,7 +1114,7 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <section id="sec-2-挑选有没有用-美国-70-年每月选最强的-3-个行业-每年比全市场多约-5-"><h2 id="2-挑选有没有用-美国-70-年每月选最强的-3-个行业-每年比全市场多约-5-"><span class="num">02</span>挑选有没有用：美国 70 年每月选最强的 3 个行业，每年比全市场多约 5 个点</h2>
 <p class="memo"><strong>前 3 名只有一半的月份跑赢平均，但跑赢时赢得多；只要抓到理论最大值的 <span class="num">5%</span> 就够每年多 <span class="num">5 个点</span>。</strong></p>
 <figure><img alt="美国 70 年：每月选最强的 3 个行业，每年比全市场多约 5 个点" src="../../assets/v6-preflight/f4-topn-longhist.png"/></figure>
-<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：分段、候选个数、港股</span></button><div class="fold-b" hidden="">
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>明细表：分段、候选个数、港股、回看速度</span></button><div class="fold-b" hidden="">
 <div class="score"><div class="seg"><span class="s-good" style="flex:2"></span><span class="s-bad" style="flex:2"></span></div><div class="sl"><b class="t-good num">2</b> 通过 · <b class="t-bad num">2</b> 没过<span class="of"> / 共 4 项</span></div></div><div class="table-wrap"><table>
 <thead>
 <tr>
@@ -1153,13 +1154,32 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <td><b>前 2 年化 3.5%，沪深300 5.9%</b></td>
 <td class="c-take"><span class="pill bad">输</span></td>
 </tr>
+<tr>
+<td>回看速度（美国 1955–2026，前 3，比全市场）</td>
+<td><b>12−1 +5.6；6−1 +0.05；随市场状态换速度 +3.3 点</b></td>
+<td class="c-take"><b>12−1 最好</b></td>
+</tr>
+<tr>
+<td>12−1 在四种市场状态下（美国）</td>
+<td><b>牛 +5.8、回调 +8.5、熊 +11.7、反弹 +12.9 点</b></td>
+<td class="c-take"><b>都成立</b></td>
+</tr>
+<tr>
+<td>A 股 2011–2015 换速度（52 个月，比沪深300）</td>
+<td><b>12−1 +4.8；6−1 −6.9；上月涨幅 +20.1 点（t 2.07）</b></td>
+<td class="c-take"><b>线索，待验证</b></td>
+</tr>
 </tbody>
 </table></div>
-</div></div>
 <ul class="points">
 <li><strong>它预测的是延续，不是下个月</strong>：过去一年强的，平均来说接下来还会再强一些；具体哪个月谁第一，预测不了。</li>
 <li><strong>整体排序的准确度会骗人</strong>：美国行业的秩相关近十年只有 0.01，但前 3 名照样每年多 4.8 点。挑选层要量“前 N 比平均多多少”，不量整体排序（D38 第 20 行替换了尺子）。</li>
-<li><strong>候选个数是硬门槛</strong>：港股 4 个就失效；美股现在 14 个，等 Grok 第六轮补齐标普科技、标普生物、全球芯片等。</li>
+</ul>
+</div></div>
+<ul class="points">
+<li><strong>候选个数是硬门槛</strong>：港股 4 个就失效。Grok 第六轮的 7 条美股长日线里，6 条和现有候选几乎一样（相关 0.93–1.00，如可选消费对 XLY），只有 REIT 是新的；美股有效候选从 14 个变成约 15 个，预测不变。</li>
+<li><strong>12−1 不改</strong>：回看速度跟着市场状态变（牛熊用 12−1，回调、反弹改用快一些的信号），美国 70 年每年反而少 2.3 点；12−1 的超额在牛、回调、熊、反弹四种状态里都为正（D38 第 42 行）。</li>
+<li><strong>A 股可能“记忆更短”</strong>：<span class="num">2011–2015 年</span> A 股按上个月涨幅选前 3，每年比沪深300 多 20 点（t 2.07），按 12−1 只多 4.8；美股正好相反。但只有 52 个月、含一次泡沫，不据此改规则，先补更长的 A 股证据（D38 第 43 行）。</li>
 </ul>
 </section>
 <section id="sec-3-防守放在哪-逐个候选卡均线会吃掉进攻-只在市场层面防守几乎不吃"><h2 id="3-防守放在哪-逐个候选卡均线会吃掉进攻-只在市场层面防守几乎不吃"><span class="num">03</span>防守放在哪：逐个候选卡均线会吃掉进攻，只在市场层面防守几乎不吃</h2>
@@ -1585,8 +1605,8 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 </tbody>
 </table></div>
 </section>
-<section id="sec-10-接下来-补齐美股候选-复算-然后决定是否起草"><h2 id="10-接下来-补齐美股候选-复算-然后决定是否起草"><span class="num">10</span>接下来：补齐美股候选、复算，然后决定是否起草</h2>
-<p class="memo"><strong>还差三件事：Grok 第六轮的 36 条美股、港股指数；Reviewer 复算第 20–41 行；A 股前向数据。</strong></p>
+<section id="sec-10-接下来-grok-第六轮入库-加候选去重-补更长的-a-股证据-然后决定是"><h2 id="10-接下来-grok-第六轮入库-加候选去重-补更长的-a-股证据-然后决定是"><span class="num">10</span>接下来：Grok 第六轮入库、加候选去重、补更长的 A 股证据，然后决定是否起草</h2>
+<p class="memo"><strong>复算和合同边界都已完成；还差 3 件事：Grok 第六轮入库、候选去重、A 股“记忆更短”的更长证据。</strong></p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -1597,23 +1617,35 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 </tr>
 </thead>
 <tbody>
-<tr class="row-warn">
-<td>补齐美股候选（标普科技、标普生物、全球芯片、标普油气、标普消费等 36 条指数），重算美股名额</td>
+<tr>
+<td>Grok 第六轮：31 条完成，5 条缺官方拿不到的窗口；美股 7 条里 6 条是重复</td>
 <td>Grok、Dev</td>
-<td><strong>Grok 第六轮在做</strong></td>
-<td class="r-status"><span class="pill warn">进行中</span></td>
+<td><strong>等你定：按现有窗口入库，不再追这 5 条</strong></td>
+<td class="r-status"><span class="pill info">等你拍板</span></td>
 </tr>
-<tr class="row-warn">
-<td>复算 D38 第 20–41 行，重点是 A 股发布日校正、把握 p 和合成行情</td>
-<td>Reviewer</td>
+<tr>
+<td>加候选去重：同一行业只留分数高的（如医药两只、油气开采两只），先登记再测</td>
+<td>Orchestrator</td>
+<td><strong>你定了入库之后</strong></td>
+<td class="r-status"><span class="pill warn">待做</span></td>
+</tr>
+<tr>
+<td>补更长的 A 股证据：沪深300 十个行业指数（发布日待核实），检验 A 股按上月涨幅选是否站得住</td>
+<td>Grok、Orchestrator</td>
 <td><strong>等派单</strong></td>
-<td class="r-status"><span class="pill warn">待定</span></td>
+<td class="r-status"><span class="pill warn">待做</span></td>
 </tr>
-<tr class="row-warn">
+<tr class="row-good">
+<td>复算 D38 第 20–41 行</td>
+<td>Reviewer</td>
+<td><strong>已签收（PR #317）</strong></td>
+<td class="r-status"><span class="pill good">已完成</span></td>
+</tr>
+<tr class="row-good">
 <td>合入 PR #315（五问、等权投票的合同边界）</td>
 <td>Manager</td>
-<td><strong>等合入</strong></td>
-<td class="r-status"><span class="pill warn">待定</span></td>
+<td><strong>已合入</strong></td>
+<td class="r-status"><span class="pill good">已完成</span></td>
 </tr>
 <tr class="row-warn">
 <td>决定是否起草 v6 预注册；预注册里单列执行层规则（溢价偏离、单只上限）</td>
