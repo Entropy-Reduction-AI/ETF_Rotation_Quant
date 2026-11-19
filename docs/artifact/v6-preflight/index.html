@@ -760,7 +760,7 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <nav class="toc" aria-label="目录">
   <a class="back" href="https://claude.ai/artifact/17bW2rKeeBheRFfhnjsrSU">← Owner 看板</a>
   <div class="toc-title">目录</div>
-  <ol><li class="l2"><a href="#1-预测表-每年比基准多约-0-6-个点-唯一的超额来源是美股名额的挑选">1. 预测表</a></li><li class="l2"><a href="#2-挑选有没有用-美国-70-年每月选最强的-3-个行业-每年比全市场多约-5-">2. 挑选有没有用</a></li><li class="l2"><a href="#3-防守放在哪-逐个候选卡均线会吃掉进攻-只在市场层面防守几乎不吃">3. 防守放在哪</a></li><li class="l2"><a href="#4-市场信息怎么用-宽度-trin-预测的是风险-不是方向">4. 市场信息怎么用</a></li><li class="l2"><a href="#5-六种合成行情-慢牛保费-1-6-个点-中间情况都守住-60-万">5. 六种合成行情</a></li><li class="l2"><a href="#6-设计期和美股-60-a-股证据薄-钱多放在证据强的一边">6. 设计期和美股 60%</a></li><li class="l2"><a href="#7-溢价规则-看比自己常态高多少-不看绝对水平">7. 溢价规则</a></li><li class="l2"><a href="#8-疼痛表-这些情况会发生-事先接受">8. 疼痛表</a></li><li class="l2"><a href="#9-已经定了什么-进攻-防守-美股比例-溢价都定了-d40">9. 已经定了什么</a></li><li class="l2"><a href="#10-接下来-补齐美股候选-复算-然后决定是否起草">10. 接下来</a></li></ol>
+  <ol><li class="l2"><a href="#0-策略怎么执行-每月最后一个交易日算一次-五步定出下个月的持仓">0. 策略怎么执行</a></li><li class="l2"><a href="#1-预测表-每年比基准多约-0-6-个点-唯一的超额来源是美股名额的挑选">1. 预测表</a></li><li class="l2"><a href="#2-挑选有没有用-美国-70-年每月选最强的-3-个行业-每年比全市场多约-5-">2. 挑选有没有用</a></li><li class="l2"><a href="#3-防守放在哪-逐个候选卡均线会吃掉进攻-只在市场层面防守几乎不吃">3. 防守放在哪</a></li><li class="l2"><a href="#4-市场信息怎么用-宽度-trin-预测的是风险-不是方向">4. 市场信息怎么用</a></li><li class="l2"><a href="#5-六种合成行情-慢牛保费-1-6-个点-中间情况都守住-60-万">5. 六种合成行情</a></li><li class="l2"><a href="#6-设计期和美股-60-a-股证据薄-钱多放在证据强的一边">6. 设计期和美股 60%</a></li><li class="l2"><a href="#7-溢价规则-看比自己常态高多少-不看绝对水平">7. 溢价规则</a></li><li class="l2"><a href="#8-疼痛表-这些情况会发生-事先接受">8. 疼痛表</a></li><li class="l2"><a href="#9-已经定了什么-进攻-防守-美股比例-溢价都定了-d40">9. 已经定了什么</a></li><li class="l2"><a href="#10-接下来-补齐美股候选-复算-然后决定是否起草">10. 接下来</a></li></ol>
 </nav>
 <main>
 <header class="top">
@@ -821,6 +821,165 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 </tr>
 </tbody>
 </table></div>
+</div></div>
+</section>
+<section id="sec-0-策略怎么执行-每月最后一个交易日算一次-五步定出下个月的持仓"><h2 id="0-策略怎么执行-每月最后一个交易日算一次-五步定出下个月的持仓"><span class="num">00</span>策略怎么执行：每月最后一个交易日算一次，五步定出下个月的持仓</h2>
+<p class="memo"><strong>按 100 万本金：A 股名额 40 万、美股名额 60 万，各自独立走五步；平时每个名额拿 3 只、各占三分之一，市场确认紧张时股票只拿“把握 p”那么多，其余放国债。</strong></p>
+<ol class="steps-n flow" style="counter-reset: fl 0">
+<li><b class="fl-t">打分</b><span class="fl-k">分数高 = 过去一年强</span><span class="fl-d">每个候选算“12−1 涨幅” = 上个月末的点位 ÷ 12 个月前月末的点位 − 1，最近一个月不算。母指数（沪深300、标普500）也打分。<strong>分数高 = 过去一年强</strong>。</span></li>
+<li><b class="fl-t">看市场</b><span class="fl-k">两票以上才算紧张</span><span class="fl-d">每个名额投三票：母指数跌破自己的 10 个月均线算一票；站上均线的候选占比落在历史低的三分之一算一票；TRIN 落在历史高的三分之一算一票。<strong>两票以上才算紧张</strong>。</span></li>
+<li><b class="fl-t">选人</b><span class="fl-k">母指数也是候选</span><span class="fl-d">按分数从高到低取 3 个；如果母指数跌破了均线，只从分数大于 0 的候选里取，取不满就空着。<strong>母指数也是候选</strong>。</span></li>
+<li><b class="fl-t">定仓位</b><span class="fl-k">紧张时股票仓位 = 把握 p</span><span class="fl-d">平时每只占名额的三分之一；确认紧张时每只占“名额 × p ÷ 3”。剩下的钱买 10 年国债，国债也跌破自己的均线就放货币基金。<strong>紧张时股票仓位 = 把握 p</strong>。</span></li>
+<li><b class="fl-t">买基金</b><span class="fl-k">溢价偏离超 <span class="num">5 个点</span>不买</span><span class="fl-d">每个指数找对应的场内基金，下一个交易日调到目标仓位。溢价比这只基金自己 60 天常态高 <span class="num">5 个点</span>以上就不买，换同指数偏离最小的基金，都不行就给下一名。<strong>溢价偏离超 <span class="num">5 个点</span>不买</strong>。</span></li>
+</ol>
+<div class="table-wrap"><table data-lint="ref">
+<thead>
+<tr>
+<th>执行标准</th>
+<th>怎么算</th>
+<th>用在哪一步</th>
+<th>数字从哪来</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12−1 涨幅</td>
+<td>上月末点位 ÷ 12 个月前月末点位 − 1；全收益口径，美股按人民币</td>
+<td>打分、选人</td>
+<td>文献默认值</td>
+</tr>
+<tr>
+<td>10 个月均线</td>
+<td>最近 10 个月末点位的平均（含本月末）</td>
+<td>母指数、国债是否跌破</td>
+<td>文献默认值</td>
+</tr>
+<tr>
+<td class="k">宽度</td>
+<td>站上自己均线的候选数 ÷ 有 10 个月数据的候选数</td>
+<td>第二票</td>
+<td>门槛 = 到当时为止全部月份的 1/3 分位</td>
+</tr>
+<tr>
+<td>TRIN（10 日均值）</td>
+<td>每天：（涨的候选数 ÷ 跌的候选数）÷（涨的成交额 ÷ 跌的成交额），取最近 10 天平均</td>
+<td>第三票</td>
+<td>门槛 = 到当时为止的 2/3 分位</td>
+</tr>
+<tr>
+<td class="k">确认紧张</td>
+<td>三票里至少两票</td>
+<td>定仓位</td>
+<td>等权投票，事先写死</td>
+</tr>
+<tr>
+<td class="k">把握 p</td>
+<td>以往每个紧张月记下“当时前 3 名下个月的平均涨幅”；p = Φ(平均 ÷ 标准差 × √月数)</td>
+<td>定仓位</td>
+<td>只用已知结果；不足 12 个月份时 p = 0.5</td>
+</tr>
+<tr>
+<td class="k">候选准入</td>
+<td>指数官方发布日（或基金上市日）起满 12 个月</td>
+<td>打分</td>
+<td>D38 第 39 行教训</td>
+</tr>
+<tr>
+<td class="k">溢价偏离</td>
+<td>当日溢价 − 最近 60 个交易日溢价的中位数</td>
+<td>买基金</td>
+<td>执行层规则，不计入 3 个数字</td>
+</tr>
+<tr>
+<td class="k">成本</td>
+<td>回测按单边 0.2% 计</td>
+<td>全部</td>
+<td>上限口径</td>
+</tr>
+</tbody>
+</table></div>
+<ul class="points">
+<li><strong>把握 p 怎么读</strong>：t = 平均 ÷ 标准差 × √月数，越大越有把握。t = 0 时 p = 0.5，t = 1 时 0.84，t = 2 时 0.98。</li>
+<li><strong>什么时候动手</strong>：只在每月最后一个交易日收盘后计算、下一个交易日执行，月中不操作。每月都把各只调回目标仓位。</li>
+<li><strong>美股候选</strong>：设计期回测用美国本土的行业 ETF（科技、医疗、能源、消费等 9 个）加纳指、道指、费城半导体、纳斯达克生物科技代替；v6 实盘用对应的 QDII，清单等 Grok 第六轮补齐后定。</li>
+</ul>
+<div class="table-wrap"><table data-lint="ref">
+<thead>
+<tr>
+<th>示例：2015 年 8 月 31 日（A 股刚经历股灾）</th>
+<th>A 股名额（40 万）</th>
+<th>美股名额（60 万）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 打分前 3</td>
+<td>中证军工 106%、全指软件 100%、全指公用 95%</td>
+<td>纳斯达克生物科技 37%、医疗 19%、可选消费 16%</td>
+</tr>
+<tr>
+<td>② 母指数和均线</td>
+<td>沪深300 低于均线约 12%：只选分数为正的，前 3 都为正</td>
+<td>标普500 低于均线约 0.7%：同左</td>
+</tr>
+<tr>
+<td class="k">② 三票</td>
+<td>均线 ✓；宽度 0.00（门槛 0.35）✓；TRIN 1.29（门槛 1.22）✓：3 票</td>
+<td>均线 ✓；宽度 0.43（门槛 0.62）✓；TRIN 1.25（门槛 1.92）✗：2 票</td>
+</tr>
+<tr>
+<td class="k">④ 把握 p</td>
+<td>0.30（之前 38 个紧张月，领头者表现差）</td>
+<td>1.00（含美国长历史 156 个紧张月）</td>
+</tr>
+<tr>
+<td class="k">④ 股票仓位</td>
+<td>40 万 × 0.30 = 12 万，每只 4 万</td>
+<td>60 万 × 1.00 = 60 万，每只 20 万</td>
+</tr>
+<tr>
+<td class="k">④ 其余</td>
+<td>28 万买 10 年国债（国债在均线上方）</td>
+<td>0</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-wrap"><table data-lint="ref">
+<thead>
+<tr>
+<th>示例：2013 年 4 月 26 日（平静月份）</th>
+<th>A 股名额（40 万）</th>
+<th>美股名额（60 万）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 打分前 3</td>
+<td>沪深300医药卫生 37%、全指医药 34%、创业板 20%</td>
+<td>纳斯达克生物科技 27%、医疗 22%、金融 17%</td>
+</tr>
+<tr>
+<td class="k">② 三票</td>
+<td>母指数在均线上方；宽度 0.74；TRIN 历史不足 24 个月不投票：0 票</td>
+<td>0 票</td>
+</tr>
+<tr>
+<td class="k">④ 仓位</td>
+<td>每只 13.3 万，股票 40 万</td>
+<td>每只 20 万，股票 60 万</td>
+</tr>
+</tbody>
+</table></div>
+<ul class="points">
+<li><strong>示例暴露了一个还没处理的问题</strong>：2013 年 4 月 A 股的前两名“沪深300医药卫生”和“全指医药”几乎是同一个行业，等于把三分之二押在医药上。</li>
+<li><strong>要补的规则</strong>：起草前加一条去重，同一行业或走势高度重合的候选只留分数高的那个。同类重复计数只是变相加码（D38 第 17 行）。</li>
+<li><strong>示例都来自设计期真实数据</strong>：按 D40 的规则逐步复现，数字可以复核。</li>
+</ul>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>工程用：示例的脚本和结果文件</span></button><div class="fold-b" hidden="">
+<ul>
+<li>脚本：<code>scripts/preflight/exec_example.py</code></li>
+<li>结果：<code>results/v6-preflight/exec-example.json</code></li>
+</ul>
 </div></div>
 </section>
 <section id="sec-1-预测表-每年比基准多约-0-6-个点-唯一的超额来源是美股名额的挑选"><h2 id="1-预测表-每年比基准多约-0-6-个点-唯一的超额来源是美股名额的挑选"><span class="num">01</span>预测表：每年比基准多约 0.6 个点，唯一的超额来源是美股名额的挑选</h2>
