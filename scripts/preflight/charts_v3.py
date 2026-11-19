@@ -91,3 +91,32 @@ title(fig, '预计每年比基准多约 0.6 个点，唯一的超额来源是美
       '来自历史的超额打五折，再按候选个数（约 14 个）打六折；成本按单边 0.2% 已扣；美股比 A 股每年强或弱 10 点，仓位差约 ±3 点')
 fig.savefig(OUT / 'f7-forecast.png', dpi=150, bbox_inches='tight'); plt.close(fig)
 print('ok')
+
+# ---------- f8：一个月怎么定持仓（流程 + 两个真实月份的结果） ----------
+from matplotlib.patches import FancyBboxPatch
+ex = json.load(open(RES / 'exec-example.json'))
+fig = plt.figure(figsize=(12, 3.6))
+ax = fig.add_axes([0.22, 0.02, 0.64, 0.92])
+NAMES = {'theme-中证军工': '军工', 'theme-中证全指软件': '软件', 'allshare-utilities': '公用', 'NBI': '生物科技', 'XLV': '医疗', 'XLY': '可选消费',
+         'theme-沪深300医药卫生': '300医药', 'allshare-healthcare': '全指医药', 'chinext': '创业板', 'XLF': '金融'}
+rows = [('2015-08-31', 'A 股名额（40 万）', 40), ('2015-08-31', '美股名额（60 万）', 60), ('2013-04-26', 'A 股名额（40 万）', 40), ('2013-04-26', '美股名额（60 万）', 60)]
+key = {'A 股名额（40 万）': 'A 股名额（40%）', '美股名额（60 万）': '美股名额（60%）'}
+for i, (d, slot, amt) in enumerate(rows):
+    y = len(rows) - 1 - i - (0.4 if i >= 2 else 0); e = ex[key[slot]][d]; x = 0
+    for nm in e['入选']:
+        w_ = amt * e['每只仓位_占名额']
+        ax.barh(y, w_, left=x, height=.62, color=C['新系统'], edgecolor='white', lw=2)
+        ax.text(x + w_ / 2, y, f"{NAMES.get(nm, nm)}\n{w_:.0f} 万", ha='center', va='center', color='white', fontsize=10.5, weight='bold')
+        x += w_
+    rest = amt - x
+    if rest > .5:
+        ax.barh(y, rest, left=x, height=.62, color='#d1d5db', edgecolor='white', lw=2)
+        ax.text(x + rest / 2, y, f'国债 {rest:.0f} 万', ha='center', va='center', color=INK, fontsize=10)
+    lab = f"{'股灾后 2015-08' if d.startswith('2015') else '平静 2013-04'}  {slot}"
+    ax.text(-1.5, y, lab, ha='right', va='center', fontsize=12, color=INK)
+    ax.text(amt + 1.2, y, f"{e['票数']} 票 · 把握 {e['把握p']:.2f}" if e['确认紧张'] else f"{e['票数']} 票 · 不紧张", va='center', fontsize=10, color=BAD if e['确认紧张'] else MUTED)
+ax.set_xlim(0, 72); ax.axis('off')
+title(fig, '一个月怎么定持仓：2015 年 8 月股灾后，A 股 40 万里只拿 12 万股票，美股照常满仓',
+      '用设计期真实数据按规则复现的两个月，100 万本金；青绿 = 股票，灰 = 国债；右侧是当月的票数和把握 p')
+fig.savefig(OUT / 'f8-exec.png', dpi=150, bbox_inches='tight'); plt.close(fig)
+print('f8 ok')
