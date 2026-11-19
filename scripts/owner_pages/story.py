@@ -666,6 +666,55 @@ def flow_steps(soup):
 
 
 
+def spec_grid(soup):
+    """A spec list (steps written as 看：…｜规则：…｜结果：… with an 例) reads as full-width rows of chips, not narrow text cards."""
+    for ol in soup.select('ol.flow.spec'):
+        lis = ol.find_all('li', recursive=False)
+        grid = soup.new_tag('div', attrs={'class': ['specgrid']})
+        hd = soup.new_tag('div', attrs={'class': ['sg-row', 'sg-hd']})
+        ex_lab = None
+        for li in lis:
+            x = li.find('span', class_='fl-x')
+            if x is not None and x.find('span', class_='fl-xl'):
+                ex_lab = x.find('span', class_='fl-xl').get_text(strip=True)
+                break
+        for lab in ('步骤', '看什么', '怎么判', '得出', ex_lab or '例'):
+            c = soup.new_tag('span', attrs={'class': ['sg-h']}); c.string = lab; hd.append(c)
+        grid.append(hd)
+        for i, li in enumerate(lis, 1):
+            row = soup.new_tag('div', attrs={'class': ['sg-row']})
+            head = soup.new_tag('div', attrs={'class': ['sg-step']})
+            n = soup.new_tag('span', attrs={'class': ['sg-n']}); n.string = str(i); head.append(n)
+            t = li.find('b', class_='fl-t'); k = li.find('span', class_='fl-k')
+            nm = soup.new_tag('span', attrs={'class': ['sg-name']}); nm.string = t.get_text(strip=True).rstrip('：:') if t else ''
+            head.append(nm)
+            if k is not None:
+                pu = soup.new_tag('span', attrs={'class': ['sg-purpose']}); pu.string = k.get_text(strip=True); head.append(pu)
+            row.append(head)
+            vals = {}
+            for r in li.select('span.fl-row'):
+                vals[r.find('span', class_='fl-lb').get_text(strip=True)] = r.find('span', class_='fl-v').get_text(strip=True)
+            for lb, cls in (('看', 'sg-see'), ('规则', 'sg-rule'), ('结果', 'sg-out')):
+                cell = soup.new_tag('div', attrs={'class': ['sg-cell', cls], 'data-lb': {'看': '看什么', '规则': '怎么判', '结果': '得出'}[lb]})
+                for q in [q.strip() for q in vals.get(lb, '').split('·') if q.strip()]:
+                    c = soup.new_tag('span', attrs={'class': ['sg-chip']}); c.string = q; cell.append(c)
+                row.append(cell)
+            x = li.find('span', class_='fl-x')
+            ex = soup.new_tag('div', attrs={'class': ['sg-cell', 'sg-ex'], 'data-lb': ex_lab or '例'})
+            if x is not None:
+                xl = x.find('span', class_='fl-xl')
+                if xl is not None and xl.get_text(strip=True) != ex_lab:
+                    m = soup.new_tag('span', attrs={'class': ['sg-exl']}); m.string = xl.get_text(strip=True).replace('例：', ''); ex.append(m)
+                for c in x.select('span.fl-c'):
+                    cc = soup.new_tag('span', attrs={'class': ['sg-chip']}); cc.string = c.get_text(strip=True); ex.append(cc)
+                r = x.find('span', class_='fl-r')
+                if r is not None:
+                    rr = soup.new_tag('span', attrs={'class': ['sg-res']}); rr.string = r.get_text(strip=True).lstrip('→').strip(); ex.append(rr)
+            row.append(ex)
+            grid.append(row)
+        ol.replace_with(grid)
+
+
 def kv_paragraphs(soup):
     for p in soup.find_all('p'):
         if p.get('class') and {'memo', 'note', 'table-note'} & set(p.get('class')):
@@ -1589,6 +1638,7 @@ def ux_pass(html):
     risk_return_map(soup)
     diagnosis_cards(soup)
     flow_steps(soup)
+    spec_grid(soup)
     kv_paragraphs(soup)
     focus_pass(soup)
     action_board(soup)
@@ -1804,6 +1854,27 @@ ol.flow.spec .fl-row { display: grid; grid-template-columns: 2.8em minmax(0, 1fr
 ol.flow.spec .fl-lb { font-size: 12px; color: var(--muted); padding-top: 1px; }
 ol.flow.spec .fl-row.out .fl-v { font-weight: 700; }
 ol.flow.spec .fl-v .num { all: unset; }
+.specgrid { display: grid; gap: 10px; margin: 14px 0 22px; }
+.specgrid .sg-row { display: grid; grid-template-columns: 168px minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, .85fr) minmax(0, 1.3fr); gap: 14px; align-items: center; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.specgrid .sg-hd { background: none; border: 0; padding: 0 16px; }
+.specgrid .sg-h { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: .02em; }
+.specgrid .sg-step { display: grid; grid-template-columns: 26px 1fr; column-gap: 8px; align-items: center; }
+.specgrid .sg-n { grid-row: span 2; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 13px; }
+.specgrid .sg-name { font-size: 18px; font-weight: 800; color: var(--ink); line-height: 1.2; }
+.specgrid .sg-purpose { font-size: 12.5px; font-weight: 700; color: var(--accent); line-height: 1.35; }
+.specgrid .sg-cell { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.specgrid .sg-chip { display: inline-block; padding: 3px 9px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); font-size: 13px; line-height: 1.4; color: var(--ink); white-space: nowrap; }
+.specgrid .sg-out .sg-chip { background: var(--accent-soft); border-color: transparent; color: var(--accent); font-weight: 700; }
+.specgrid .sg-ex { background: var(--accent-soft); border-radius: 8px; padding: 8px 10px; }
+.specgrid .sg-ex .sg-chip { background: var(--surface); }
+.specgrid .sg-exl { width: 100%; font-size: 11.5px; color: var(--muted); }
+.specgrid .sg-res { width: 100%; font-size: 13px; font-weight: 700; color: var(--accent); }
+.specgrid .sg-res::before { content: '→ '; }
+@media (max-width: 900px) {
+  .specgrid .sg-hd { display: none; }
+  .specgrid .sg-row { grid-template-columns: 1fr; gap: 8px; }
+  .specgrid .sg-cell::before { content: attr(data-lb); width: 100%; font-size: 11.5px; color: var(--muted); }
+}
 ol.flow > li:has(.fl-x) { display: flex; flex-direction: column; }
 ol.flow > li:has(.fl-x) > .fl-d { flex: 1; display: flex; flex-direction: column; gap: 10px; }
 ol.flow > li:has(.fl-x) .fl-x { margin-top: auto; }
