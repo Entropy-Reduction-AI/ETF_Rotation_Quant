@@ -570,6 +570,7 @@ def flow_steps(soup):
             continue
         add_class(ol, 'flow')
         keys_ok = []
+        drop = []
         ol['style'] = f'counter-reset: fl {(int(ol["start"]) if ol.get("start") else 1) - 1}'
         for i, li in enumerate(lis):
             b = li.find(['b', 'strong'])
@@ -583,6 +584,10 @@ def flow_steps(soup):
             for kb in li.find_all(['b', 'strong']):
                 if kb is not b and len(kb.get_text(strip=True)) >= 2:
                     key = kb.get_text(strip=True)
+                    # a trailing bold that only restates the focus is dropped from the body later,
+                    # but only when it sits directly in the item (not inside the title) and every step keeps its focus line
+                    if kb.parent is li and re.fullmatch(r'[\s。．.]*', ''.join(str(x) for x in kb.next_siblings)):
+                        drop.append(kb)
                     break
             if key is None:
                 body = li.get_text().replace(b.get_text(), '', 1).strip().rstrip('。')
@@ -593,6 +598,20 @@ def flow_steps(soup):
                 if c is not b:
                     d.append(c.extract())
             li.append(d)
+            # an "例：" clause becomes a tinted example line at the bottom of the card
+            for t in list(d.find_all(string=re.compile('例：'))):
+                before, after = str(t).split('例：', 1)
+                x = soup.new_tag('span', attrs={'class': ['fl-x']})
+                x.append(NavigableString('例：' + after))
+                for sib in list(t.next_siblings):
+                    x.append(sib.extract())
+                t.replace_with(NavigableString(before.rstrip()))
+                body = soup.new_tag('span', attrs={'class': ['fl-b']})
+                for c in list(d.contents):
+                    body.append(c.extract())
+                d.append(body)
+                d.append(x)
+                break
             if key and '。' not in key and len(key) <= 18:
                 k = soup.new_tag('span', attrs={'class': ['fl-k']})
                 k.string = key
@@ -602,6 +621,14 @@ def flow_steps(soup):
         if len(keys_ok) != len(lis):
             for k in keys_ok:
                 k.decompose()
+        elif len(drop) == len(lis):
+            for kb in drop:
+                for x in list(kb.next_siblings):
+                    x.extract()
+                prev = kb.previous_sibling
+                kb.decompose()
+                if isinstance(prev, NavigableString):
+                    prev.replace_with(NavigableString(re.sub(r'[\s。，,；]+$', '。', str(prev))))
 
 
 
@@ -1731,6 +1758,10 @@ ol.flow { align-items: stretch; }
 ol.flow .fl-t { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 2px; }
 ol.flow .fl-d { display: block; }
 ol.flow .fl-k { display: block; font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1.35; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+ol.flow .fl-x { display: block; margin-top: 10px; padding: 7px 9px; background: var(--accent-soft); border-radius: 6px; font-size: 12.5px; line-height: 1.55; color: var(--ink); }
+ol.flow > li:has(.fl-x) { display: flex; flex-direction: column; }
+ol.flow > li:has(.fl-x) > .fl-d { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+ol.flow > li:has(.fl-x) .fl-x { margin-top: auto; }
 ol.flow > li { color: var(--muted); }
 """
 

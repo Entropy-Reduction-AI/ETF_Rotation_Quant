@@ -538,6 +538,10 @@ ol.flow { align-items: stretch; }
 ol.flow .fl-t { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 2px; }
 ol.flow .fl-d { display: block; }
 ol.flow .fl-k { display: block; font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1.35; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+ol.flow .fl-x { display: block; margin-top: 10px; padding: 7px 9px; background: var(--accent-soft); border-radius: 6px; font-size: 12.5px; line-height: 1.55; color: var(--ink); }
+ol.flow > li:has(.fl-x) { display: flex; flex-direction: column; }
+ol.flow > li:has(.fl-x) > .fl-d { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+ol.flow > li:has(.fl-x) .fl-x { margin-top: auto; }
 ol.flow > li { color: var(--muted); }
 
 .hero { display: grid; gap: 14px; margin-bottom: 8px; }
@@ -826,10 +830,10 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <section id="sec-0-策略怎么执行-每月最后一个交易日走四步-下一个交易日调仓"><h2 id="0-策略怎么执行-每月最后一个交易日走四步-下一个交易日调仓"><span class="num">00</span>策略怎么执行：每月最后一个交易日走四步，下一个交易日调仓</h2>
 <p class="memo"><strong>100 万分成 A 股 40 万、美股 60 万，各自走四步；平时每边拿 3 只、各占三分之一，市场确认紧张时股票只拿“把握 p”那么多，其余买国债。</strong></p>
 <ol class="steps-n flow" style="counter-reset: fl 0">
-<li><b class="fl-t">打分选人</b><span class="fl-k">母指数也是候选</span><span class="fl-d">按过去一年的涨幅（最近一个月不算）排名，取前 3。<strong>母指数也是候选</strong>。</span></li>
-<li><b class="fl-t">看市场</b><span class="fl-k">两票以上 = 紧张</span><span class="fl-d">母指数跌破均线、宽度低、TRIN 高，各算一票。<strong>两票以上 = 紧张</strong>。</span></li>
-<li><b class="fl-t">定仓位</b><span class="fl-k">紧张时股票只拿 p</span><span class="fl-d">平时每只占三分之一；紧张时股票只拿 p，其余买国债。<strong>紧张时股票只拿 p</strong>。</span></li>
-<li><b class="fl-t">买基金</b><span class="fl-k">溢价冲高不买</span><span class="fl-d">下一个交易日调仓，月中不动；溢价比自己常态高 <span class="num">5 个点</span>就换一只。<strong>溢价冲高不买</strong>。</span></li>
+<li><b class="fl-t">打分选人</b><span class="fl-k">母指数也是候选</span><span class="fl-d"><span class="fl-b">比过去一年的涨幅（不算最近一个月），取前 3。</span><span class="fl-x">例：2015-08 A 股选出军工 <span class="num">106%</span>、软件 <span class="num">100%</span>、公用 <span class="num">95%</span>。</span></span></li>
+<li><b class="fl-t">看市场</b><span class="fl-k">两票以上 = 紧张</span><span class="fl-d"><span class="fl-b">母指数跌破均线、宽度低、TRIN 高，各算一票。</span><span class="fl-x">例：2015-08 A 股 3 票、美股 2 票，两边都算紧张。</span></span></li>
+<li><b class="fl-t">定仓位</b><span class="fl-k">紧张时股票只拿 p</span><span class="fl-d"><span class="fl-b">平时每只占三分之一；紧张时按把握 p 打折，其余买国债。</span><span class="fl-x">例：A 股 p = 0.30，40 万只拿 12 万；美股 p = 1.00，照常满仓。</span></span></li>
+<li><b class="fl-t">买基金</b><span class="fl-k">溢价冲高不买</span><span class="fl-d"><span class="fl-b">下一个交易日调仓，月中不动；溢价比自己常态高 <span class="num">5 个点</span>，换同指数的另一只。</span><span class="fl-x">例：纳指科技常态 <span class="num">9%</span>，冲到 <span class="num">16%</span> 就暂缓。</span></span></li>
 </ol>
 <figure><img alt="一个月怎么定持仓：2015 年 8 月股灾后，A 股 40 万里只拿 12 万股票，美股照常满仓" src="../../assets/v6-preflight/f8-exec.png"/></figure>
 <ul class="points">
