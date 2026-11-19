@@ -1,0 +1,234 @@
+{
+  "check": "row39_yearly_candidate_counts",
+  "sources": [
+    "config/v3/universe.toml",
+    "results/v51-diag/d37/s1-splice-roster.csv",
+    "data/market.sqlite",
+    "src/v4/r5/design Markets index ≤2015"
+  ],
+  "derived_all_years": {
+    "2005": 0,
+    "2006": 1,
+    "2007": 1,
+    "2008": 3,
+    "2009": 4,
+    "2010": 6,
+    "2011": 6,
+    "2012": 17,
+    "2013": 18,
+    "2014": 24,
+    "2015": 27
+  },
+  "claimed_a_official_json": {
+    "2005": 0,
+    "2006": 1,
+    "2007": 1,
+    "2008": 3,
+    "2009": 4,
+    "2010": 6,
+    "2011": 6,
+    "2012": 17,
+    "2013": 18,
+    "2014": 24,
+    "2015": 27
+  },
+  "pr_body_sequence_2006_2015": [
+    1,
+    1,
+    3,
+    4,
+    6,
+    6,
+    17,
+    18,
+    24,
+    27
+  ],
+  "derived_2006_2015": [
+    1,
+    1,
+    3,
+    4,
+    6,
+    6,
+    17,
+    18,
+    24,
+    27
+  ],
+  "match_a_official": true,
+  "match_pr_body_sequence": true,
+  "mismatches_vs_a_official": {},
+  "stress_json_checksum": {
+    "committed_sha256": "f5dc95b3f2c12a4fc1c59bb8f4542bd79672631e980c9bc6df537c27d27442e3",
+    "rerun_sha256": "f5dc95b3f2c12a4fc1c59bb8f4542bd79672631e980c9bc6df537c27d27442e3",
+    "byte_identical": true,
+    "json_equal": true
+  },
+  "sim_bond_audit": {
+    "sim_bond_none_vs_1d_fixed_3pct": {
+      "K0": {
+        "max_abs_nav_diff": 0.0,
+        "identical_allclose": true
+      },
+      "K2": {
+        "max_abs_nav_diff": 0.0,
+        "identical_allclose": true
+      },
+      "K2A": {
+        "max_abs_nav_diff": 0.0,
+        "identical_allclose": true
+      }
+    }
+  },
+  "phi_confidence_audit": {
+    "static_audit": [
+      {
+        "rule": "monthly(): pend 在 stress 月记入 raw_top，下月迭代才 hist.append(pend)",
+        "evidence": "lines 37-39 topn_phi.py",
+        "lookahead_risk": "none_if_code_matches"
+      },
+      {
+        "rule": "slot_phi(): pend 在 stress 月记入领头者下月收益，me_mask 月末才 hist.append",
+        "evidence": "lines 113-115 topn_phi.py",
+        "lookahead_risk": "none_if_code_matches"
+      },
+      {
+        "rule": "conf(): len(hist)<12 → 0.5；否则只用 hist+prior",
+        "evidence": "lines 12-17 topn_phi.py",
+        "lookahead_risk": "none"
+      },
+      {
+        "rule": "美股 prior = French 1926-07:1998-12 紧张月领头者下月收益（a_official US_PRIOR）",
+        "evidence": "a_official.py L66-70",
+        "lookahead_risk": "none_for_design_period_2006_2015"
+      },
+      {
+        "rule": "A 股 prior=None，紧张月<12 时 p=0.5",
+        "evidence": "a_official slot_phi(..., None)",
+        "lookahead_risk": "none"
+      }
+    ],
+    "simulated_leak_test": {
+      "design_period_year_end_p": [
+        {
+          "year_end": "2005",
+          "rerun_a_official_script": 0.5,
+          "committed": 0.5
+        },
+        {
+          "year_end": "2006",
+          "rerun_a_official_script": 0.5,
+          "committed": 0.5
+        },
+        {
+          "year_end": "2007",
+          "rerun_a_official_script": 0.5,
+          "committed": 0.5
+        },
+        {
+          "year_end": "2008",
+          "rerun_a_official_script": 0.5,
+          "committed": 0.5
+        },
+        {
+          "year_end": "2009",
+          "rerun_a_official_script": 0.19,
+          "committed": 0.19
+        },
+        {
+          "year_end": "2010",
+          "rerun_a_official_script": 0.24,
+          "committed": 0.24
+        },
+        {
+          "year_end": "2011",
+          "rerun_a_official_script": 0.23,
+          "committed": 0.23
+        },
+        {
+          "year_end": "2012",
+          "rerun_a_official_script": 0.3,
+          "committed": 0.3
+        },
+        {
+          "year_end": "2013",
+          "rerun_a_official_script": 0.34,
+          "committed": 0.34
+        },
+        {
+          "year_end": "2014",
+          "rerun_a_official_script": 0.39,
+          "committed": 0.39
+        },
+        {
+          "year_end": "2015",
+          "rerun_a_official_script": 0.47,
+          "committed": 0.47
+        }
+      ],
+      "script_rerun_matches_committed": true,
+      "note": "前瞻审计见 static_audit；数值用 a_official.py 重跑对照 committed JSON（同年末 p）"
+    }
+  },
+  "pre_publish_registry": {
+    "planning_row_39_addendum_present": true,
+    "topn_system_no_publish_truncate": true,
+    "authoritative_row39_fields_in_a_official": [
+      "前2 按把握调节，美股 50%",
+      "前2 按把握调节，美股 55%",
+      "前2 按把握调节，美股 60%",
+      "A 股名额单独（前2）",
+      "A 股名额把握 p（年末）",
+      "前3 按把握调节，美股 50%",
+      "前3 按把握调节，美股 55%",
+      "前3 按把握调节，美股 60%",
+      "参照 一直持有沪深300",
+      "校正前 前2 按把握调节（美 50%）",
+      "校正前 前2 按把握调节，美股常驻 60%",
+      "参照 基准（美股30%）",
+      "参照 增强基准（K2A 美股50%）"
+    ],
+    "correction_flips_performance": {
+      "校正后_前2_美60_年化": 15.47,
+      "校正前_前2_美60_年化": 16.47,
+      "校正后_A股名额单独_2011-15": 3.49,
+      "校正前 implication": "rows 22-38 A-share used topn_system A_LVL without publish truncate (topn_system.py L16-17)"
+    }
+  },
+  "spotcheck": {
+    "d40_design_period_claimed_in_md": true,
+    "a_official_design": {
+      "前3_美60_年化": 12.63,
+      "前3_美60_最低剩": 71.1
+    },
+    "msim_n3_synthetic_new_system_不帮忙": {
+      "急跌": {
+        "最低剩_p10": 58.8,
+        "最低剩_中位": 66.8
+      },
+      "慢熊": {
+        "最低剩_p10": 60.8,
+        "最低剩_中位": 69.8
+      },
+      "震荡": {
+        "最低剩_p10": 59.9,
+        "最低剩_中位": 73.5
+      }
+    },
+    "forecast_v3_mentions_0.6_excess": true,
+    "leader_stress_a_share_t": 1.05
+  },
+  "msim_v6_n3": {
+    "paths": 200,
+    "reran_script": "scripts/preflight/msim_v6_n3.py",
+    "seed": 20261117,
+    "compare_committed_vs_rerun": {
+      "row_count_match": true,
+      "column_max_diffs_over_0.05": [],
+      "cell_mismatches": [],
+      "focus_new_system_p10_mismatches": [],
+      "all_match_within_0.05": true
+    }
+  }
+}
