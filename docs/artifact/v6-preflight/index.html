@@ -538,6 +538,77 @@ ol.flow { align-items: stretch; }
 ol.flow .fl-t { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 2px; }
 ol.flow .fl-d { display: block; }
 ol.flow .fl-k { display: block; font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1.35; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+ol.flow .fl-x { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 10px; padding: 8px 9px; background: var(--accent-soft); border-radius: 8px; font-size: 12.5px; line-height: 1.5; color: var(--ink); }
+ol.flow .fl-xl { width: 100%; font-size: 11.5px; color: var(--muted); }
+ol.flow .fl-c { display: inline-block; padding: 1px 7px; border-radius: 5px; background: var(--surface); border: 1px solid var(--line); font-size: 12.5px; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink); }
+ol.flow .fl-r { width: 100%; font-weight: 700; color: var(--accent); font-size: 13.5px; }
+ol.flow .fl-x .num { all: unset; }
+ol.flow.spec .fl-t { font-size: 19px; font-weight: 800; color: var(--ink); margin: 2px 0 0; }
+ol.flow.spec .fl-k { font-size: 14px; font-weight: 700; color: var(--accent); margin: 2px 0 10px; padding-bottom: 10px; }
+ol.flow.spec .fl-rows { display: grid; gap: 6px; }
+ol.flow.spec .fl-row { display: grid; grid-template-columns: 2.8em minmax(0, 1fr); gap: 6px; font-size: 13.5px; line-height: 1.55; color: var(--ink); }
+ol.flow.spec .fl-lb { font-size: 12px; color: var(--muted); padding-top: 1px; }
+ol.flow.spec .fl-row.out .fl-v { font-weight: 700; }
+ol.flow.spec .fl-v .num { all: unset; }
+.specgrid { display: grid; gap: 10px; margin: 14px 0 22px; }
+.specgrid .sg-row { display: grid; grid-template-columns: 168px minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, .85fr) minmax(0, 1.3fr); gap: 14px; align-items: center; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.specgrid .sg-hd { background: none; border: 0; padding: 0 16px; }
+.specgrid .sg-h { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: .02em; }
+.specgrid .sg-step { display: grid; grid-template-columns: 26px 1fr; column-gap: 8px; align-items: center; }
+.specgrid .sg-n { grid-row: span 2; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 13px; }
+.specgrid .sg-name { font-size: 18px; font-weight: 800; color: var(--ink); line-height: 1.2; }
+.specgrid .sg-purpose { font-size: 12.5px; font-weight: 700; color: var(--accent); line-height: 1.35; }
+.specgrid .sg-cell { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.specgrid .sg-chip { display: inline-block; padding: 3px 9px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); font-size: 13px; line-height: 1.4; color: var(--ink); white-space: nowrap; }
+.specgrid .sg-out .sg-chip { background: var(--accent-soft); border-color: transparent; color: var(--accent); font-weight: 700; }
+.specgrid .sg-ex { background: var(--accent-soft); border-radius: 8px; padding: 8px 10px; }
+.specgrid .sg-ex .sg-chip { background: var(--surface); }
+.specgrid .sg-exl { width: 100%; font-size: 11.5px; color: var(--muted); }
+.specgrid .sg-res { width: 100%; font-size: 13px; font-weight: 700; color: var(--accent); }
+.specgrid .sg-res::before { content: '→ '; }
+.specgrid .sg-see .sg-chip { background: none; border: 0; padding: 0 2px; color: var(--muted); font-size: 13px; }
+.specgrid .sg-see .sg-chip { flex-basis: 100%; }
+.specgrid .sg-see .sg-chip::before, .specgrid .sg-rule.has-key .sg-chip:not(.sg-key)::before { content: ''; display: inline-block; width: 4px; height: 4px; margin: 0 7px 3px 0; border-radius: 50%; background: var(--muted); opacity: .6; }
+.specgrid .sg-rule.has-key .sg-chip:not(.sg-key) { background: none; border: 0; padding: 0 2px; color: var(--muted); font-size: 12.5px; }
+.specgrid .sg-rule.has-key .sg-chip:not(.sg-key) { flex-basis: 100%; }
+.specgrid .sg-chip.sg-key { width: fit-content; max-width: 100%; padding: 5px 12px 5px 10px; border: 2px solid var(--accent); border-radius: 7px; background: var(--surface); color: var(--ink); font-size: 16px; font-weight: 800; white-space: normal; }
+.specgrid .sg-rule.has-key { align-content: center; }
+.specgrid .sg-rule.has-key .sg-key { flex-basis: 100%; }
+.specgrid .sg-out .sg-chip { font-size: 14px; padding: 5px 11px; }
+.specgrid .sg-out .sg-chip::before { content: '⇒ '; opacity: .6; }
+.specgrid .xv { width: 100%; }
+.specgrid .xv-rank { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 8px; align-items: center; font-size: 13px; }
+.specgrid .xv-bn { color: var(--ink); font-weight: 600; }
+.specgrid .xv-bt { height: 8px; border-radius: 4px; background: var(--surface); overflow: hidden; }
+.specgrid .xv-bt i { display: block; height: 100%; border-radius: 0 4px 4px 0; background: var(--accent); }
+.specgrid .xv-bv { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); text-align: right; }
+.specgrid .xv-votes { display: flex; gap: 12px; }
+.specgrid .xv-vote { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 12px; color: var(--muted); }
+.specgrid .xv-vote b { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface); font-size: 13px; color: #fff; }
+.specgrid .xv-vote.on b { background: var(--warn); border-color: var(--warn); }
+.specgrid .xv-vote.on { color: var(--ink); font-weight: 600; }
+.specgrid .xv-split .xv-in { display: flex; gap: 5px; margin-bottom: 6px; }
+.specgrid .xv-bar { display: flex; gap: 2px; height: 24px; border-radius: 5px; overflow: hidden; font-size: 12px; font-weight: 700; }
+.specgrid .xv-bar span { display: grid; place-items: center; white-space: nowrap; }
+.specgrid .xv-bar .s1 { background: var(--accent); color: #fff; }
+.specgrid .xv-bar .s2 { background: var(--surface); color: var(--muted); }
+.specgrid .xv-gap .xv-track { position: relative; height: 8px; margin: 22px 6px 20px; border-radius: 4px; background: var(--surface); }
+.specgrid .xv-seg { position: absolute; top: 0; height: 100%; background: var(--accent); }
+.specgrid .xv-gap.over .xv-seg { background: var(--warn); }
+.specgrid .xv-pt { position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+.specgrid .xv-pt.b { border-color: var(--warn); background: var(--warn); }
+.specgrid .xv-pt em { position: absolute; top: -23px; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 12px; white-space: nowrap; color: var(--ink); }
+.specgrid .xv-pt.a em { top: auto; bottom: -20px; color: var(--muted); }
+.specgrid .xv-th { position: absolute; top: -3px; bottom: -3px; width: 0; border-left: 2px dashed var(--ink); opacity: .55; }
+.specgrid .xv-th em { position: absolute; bottom: -18px; left: 4px; font-style: normal; font-size: 11px; white-space: nowrap; }
+@media (max-width: 900px) {
+  .specgrid .sg-hd { display: none; }
+  .specgrid .sg-row { grid-template-columns: 1fr; gap: 8px; }
+  .specgrid .sg-cell::before { content: attr(data-lb); width: 100%; font-size: 11.5px; color: var(--muted); }
+}
+ol.flow > li:has(.fl-x) { display: flex; flex-direction: column; }
+ol.flow > li:has(.fl-x) > .fl-d { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+ol.flow > li:has(.fl-x) .fl-x { margin-top: auto; }
 ol.flow > li { color: var(--muted); }
 
 .hero { display: grid; gap: 14px; margin-bottom: 8px; }
@@ -825,12 +896,7 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 </section>
 <section id="sec-0-策略怎么执行-每月最后一个交易日走四步-下一个交易日调仓"><h2 id="0-策略怎么执行-每月最后一个交易日走四步-下一个交易日调仓"><span class="num">00</span>策略怎么执行：每月最后一个交易日走四步，下一个交易日调仓</h2>
 <p class="memo"><strong>100 万分成 A 股 40 万、美股 60 万，各自走四步；平时每边拿 3 只、各占三分之一，市场确认紧张时股票只拿“把握 p”那么多，其余买国债。</strong></p>
-<ol class="steps-n flow" style="counter-reset: fl 0">
-<li><b class="fl-t">打分选人</b><span class="fl-k">母指数也是候选</span><span class="fl-d">按过去一年的涨幅（最近一个月不算）排名，取前 3。<strong>母指数也是候选</strong>。</span></li>
-<li><b class="fl-t">看市场</b><span class="fl-k">两票以上 = 紧张</span><span class="fl-d">母指数跌破均线、宽度低、TRIN 高，各算一票。<strong>两票以上 = 紧张</strong>。</span></li>
-<li><b class="fl-t">定仓位</b><span class="fl-k">紧张时股票只拿 p</span><span class="fl-d">平时每只占三分之一；紧张时股票只拿 p，其余买国债。<strong>紧张时股票只拿 p</strong>。</span></li>
-<li><b class="fl-t">买基金</b><span class="fl-k">溢价冲高不买</span><span class="fl-d">下一个交易日调仓，月中不动；溢价比自己常态高 <span class="num">5 个点</span>就换一只。<strong>溢价冲高不买</strong>。</span></li>
-</ol>
+<div class="specgrid"><div class="sg-row sg-hd"><span class="sg-h">步骤</span><span class="sg-h">看什么</span><span class="sg-h">怎么判</span><span class="sg-h">得出</span><span class="sg-h">例：2015 年 8 月 A 股</span></div><div class="sg-row"><div class="sg-step"><span class="sg-n">1</span><span class="sg-name">选人</span><span class="sg-purpose">决定买哪 3 只</span></div><div class="sg-cell sg-see" data-lb="看什么"><span class="sg-chip">过去一年涨幅</span><span class="sg-chip">不算最近 1 个月</span></div><div class="sg-cell sg-rule has-key" data-lb="怎么判"><span class="sg-chip sg-key">取前 3</span><span class="sg-chip">从高到低排</span><span class="sg-chip">母指数也参加排名</span></div><div class="sg-cell sg-out" data-lb="得出"><span class="sg-chip">3 只候选</span></div><div class="sg-cell sg-ex" data-lb="例：2015 年 8 月 A 股"><div class="xv xv-rank"><span class="xv-bn">军工</span><span class="xv-bt"><i style="width:100%"></i></span><span class="xv-bv">106%</span><span class="xv-bn">软件</span><span class="xv-bt"><i style="width:94%"></i></span><span class="xv-bv">100%</span><span class="xv-bn">公用</span><span class="xv-bt"><i style="width:90%"></i></span><span class="xv-bv">95%</span></div><span class="sg-res">这 3 只入选</span></div></div><div class="sg-row"><div class="sg-step"><span class="sg-n">2</span><span class="sg-name">看市场</span><span class="sg-purpose">决定现在紧不紧张</span></div><div class="sg-cell sg-see" data-lb="看什么"><span class="sg-chip">母指数均线</span><span class="sg-chip">宽度</span><span class="sg-chip">TRIN</span></div><div class="sg-cell sg-rule has-key" data-lb="怎么判"><span class="sg-chip sg-key">≥ 2 票 = 紧张</span><span class="sg-chip">每项越过历史门槛 = 1 票</span></div><div class="sg-cell sg-out" data-lb="得出"><span class="sg-chip">紧张 / 不紧张</span></div><div class="sg-cell sg-ex" data-lb="例：2015 年 8 月 A 股"><div class="xv xv-votes"><span class="xv-vote on"><b>✓</b>均线</span><span class="xv-vote on"><b>✓</b>宽度</span><span class="xv-vote on"><b>✓</b>TRIN</span></div><span class="sg-res">3 票，紧张</span></div></div><div class="sg-row"><div class="sg-step"><span class="sg-n">3</span><span class="sg-name">定仓位</span><span class="sg-purpose">决定股票买多少钱</span></div><div class="sg-cell sg-see" data-lb="看什么"><span class="sg-chip">紧不紧张</span><span class="sg-chip">把握 p</span></div><div class="sg-cell sg-rule has-key" data-lb="怎么判"><span class="sg-chip sg-key">紧张：股票 × p</span><span class="sg-chip">不紧张：每只 1/3</span><span class="sg-chip">其余买国债</span></div><div class="sg-cell sg-out" data-lb="得出"><span class="sg-chip">每只的金额</span></div><div class="sg-cell sg-ex" data-lb="例：2015 年 8 月 A 股"><div class="xv xv-split"><div class="xv-in"><span class="sg-chip">40 万</span><span class="sg-chip">p = 0.30</span></div><div class="xv-bar"><span class="s1" style="flex:12.0">股票 12 万</span><span class="s2" style="flex:28.0">国债 28 万</span></div></div><span class="sg-res">股票 12 万，国债 28 万</span></div></div><div class="sg-row"><div class="sg-step"><span class="sg-n">4</span><span class="sg-name">下单</span><span class="sg-purpose">决定买哪只基金</span></div><div class="sg-cell sg-see" data-lb="看什么"><span class="sg-chip">同指数的几只基金</span><span class="sg-chip">溢价比 60 天常态高几点</span></div><div class="sg-cell sg-rule has-key" data-lb="怎么判"><span class="sg-chip sg-key">高 5 点以上换一只</span><span class="sg-chip">下一个交易日调仓</span></div><div class="sg-cell sg-out" data-lb="得出"><span class="sg-chip">实际买入的基金</span></div><div class="sg-cell sg-ex" data-lb="例"><span class="sg-exl">纳指科技，假设</span><div class="xv xv-gap over"><div class="xv-track"><span class="xv-seg" style="left:34.8%;width:43.5%"></span><span class="xv-th" style="left:65.8%"><em>常态 +5 点</em></span><span class="xv-pt a" style="left:34.8%"><em>常态 9%</em></span><span class="xv-pt b" style="left:78.3%"><em>今天 16%</em></span></div></div><span class="sg-res">高 7 点，换另一只</span></div></div></div>
 <figure><img alt="一个月怎么定持仓：2015 年 8 月股灾后，A 股 40 万里只拿 12 万股票，美股照常满仓" src="../../assets/v6-preflight/f8-exec.png"/></figure>
 <ul class="points">
 <li><strong>读这张图</strong>：2015 年 8 月股灾后，A 股三票全中，以往紧张时 A 股领头者也跟着跌，把握只有 0.30，40 万里只拿 12 万股票；美股也算紧张，但美股领头者以往紧张时照样涨，把握 1.00，照常满仓。</li>
