@@ -629,6 +629,23 @@ def flow_steps(soup):
                 d.append(body)
                 d.append(x)
                 break
+            # a spec card: "看：…｜规则：…｜结果：…" becomes labelled rows (what it looks at, the rule, what comes out)
+            body = d.find('span', class_='fl-b') or d
+            bt = ''.join(c.get_text() if hasattr(c, 'get_text') and not (getattr(c, 'get', lambda *_: None)('class') or []) == ['fl-x'] else (str(c) if not hasattr(c, 'get_text') else '') for c in body.contents)
+            if '看：' in bt and '｜' in bt:
+                parts = [q.strip().rstrip('。') for q in bt[bt.index('看：'):].split('｜') if '：' in q]
+                for c in list(body.contents):
+                    if not ('fl-x' in (getattr(c, 'get', lambda *_: None)('class') or [])):
+                        c.extract()
+                rows = soup.new_tag('span', attrs={'class': ['fl-rows']})
+                for q in parts:
+                    lb, v = q.split('：', 1)
+                    r = soup.new_tag('span', attrs={'class': ['fl-row'] + (['out'] if lb.strip() == '结果' else [])})
+                    a_ = soup.new_tag('span', attrs={'class': ['fl-lb']}); a_.string = lb.strip()
+                    b_ = soup.new_tag('span', attrs={'class': ['fl-v']}); b_.string = v.strip()
+                    r.append(a_); r.append(b_); rows.append(r)
+                body.insert(0, rows)
+                add_class(ol, 'spec')
             if key and '。' not in key and len(key) <= 18:
                 k = soup.new_tag('span', attrs={'class': ['fl-k']})
                 k.string = key
@@ -1780,6 +1797,13 @@ ol.flow .fl-xl { width: 100%; font-size: 11.5px; color: var(--muted); }
 ol.flow .fl-c { display: inline-block; padding: 1px 7px; border-radius: 5px; background: var(--surface); border: 1px solid var(--line); font-size: 12.5px; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink); }
 ol.flow .fl-r { width: 100%; font-weight: 700; color: var(--accent); font-size: 13.5px; }
 ol.flow .fl-x .num { all: unset; }
+ol.flow.spec .fl-t { font-size: 19px; font-weight: 800; color: var(--ink); margin: 2px 0 0; }
+ol.flow.spec .fl-k { font-size: 14px; font-weight: 700; color: var(--accent); margin: 2px 0 10px; padding-bottom: 10px; }
+ol.flow.spec .fl-rows { display: grid; gap: 6px; }
+ol.flow.spec .fl-row { display: grid; grid-template-columns: 2.8em minmax(0, 1fr); gap: 6px; font-size: 13.5px; line-height: 1.55; color: var(--ink); }
+ol.flow.spec .fl-lb { font-size: 12px; color: var(--muted); padding-top: 1px; }
+ol.flow.spec .fl-row.out .fl-v { font-weight: 700; }
+ol.flow.spec .fl-v .num { all: unset; }
 ol.flow > li:has(.fl-x) { display: flex; flex-direction: column; }
 ol.flow > li:has(.fl-x) > .fl-d { flex: 1; display: flex; flex-direction: column; gap: 10px; }
 ol.flow > li:has(.fl-x) .fl-x { margin-top: auto; }
