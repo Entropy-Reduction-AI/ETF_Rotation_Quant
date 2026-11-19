@@ -599,12 +599,29 @@ def flow_steps(soup):
                     d.append(c.extract())
             li.append(d)
             # an "例：" clause becomes a tinted example line at the bottom of the card
-            for t in list(d.find_all(string=re.compile('例：'))):
-                before, after = str(t).split('例：', 1)
-                x = soup.new_tag('span', attrs={'class': ['fl-x']})
-                x.append(NavigableString('例：' + after))
+            for t in list(d.find_all(string=re.compile('例(（[^）]*）)?：'))):
+                m = re.search('例(?:（([^）]*)）)?：', str(t))
+                before, after = str(t)[:m.start()], str(t)[m.end():]
+                sibs = []
                 for sib in list(t.next_siblings):
-                    x.append(sib.extract())
+                    if getattr(sib, 'name', None) in ('b', 'strong'):
+                        break                      # the focus bold stays put; the trailing-bold rule handles it
+                    sibs.append(sib)
+                rest = after + ''.join(q.get_text() if hasattr(q, 'get_text') else str(q) for q in sibs)
+                for sib in sibs:
+                    sib.extract()
+                x = soup.new_tag('span', attrs={'class': ['fl-x']})
+                lab = soup.new_tag('span', attrs={'class': ['fl-xl']}); lab.string = '例' + (f'：{m.group(1)}' if m.group(1) else '')
+                x.append(lab)
+                left, _, res = rest.strip().rstrip('。').partition('→')
+                parts = [q.strip() for q in left.split('·') if q.strip()]
+                if len(parts) > 1 or res:
+                    for q in parts:
+                        c = soup.new_tag('span', attrs={'class': ['fl-c']}); c.string = q; x.append(c)
+                    if res.strip():
+                        r = soup.new_tag('span', attrs={'class': ['fl-r']}); r.string = '→ ' + res.strip(); x.append(r)
+                else:
+                    x.append(NavigableString(rest.strip()))
                 t.replace_with(NavigableString(before.rstrip()))
                 body = soup.new_tag('span', attrs={'class': ['fl-b']})
                 for c in list(d.contents):
@@ -1758,7 +1775,11 @@ ol.flow { align-items: stretch; }
 ol.flow .fl-t { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 2px; }
 ol.flow .fl-d { display: block; }
 ol.flow .fl-k { display: block; font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1.35; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
-ol.flow .fl-x { display: block; margin-top: 10px; padding: 7px 9px; background: var(--accent-soft); border-radius: 6px; font-size: 12.5px; line-height: 1.55; color: var(--ink); }
+ol.flow .fl-x { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 10px; padding: 8px 9px; background: var(--accent-soft); border-radius: 8px; font-size: 12.5px; line-height: 1.5; color: var(--ink); }
+ol.flow .fl-xl { width: 100%; font-size: 11.5px; color: var(--muted); }
+ol.flow .fl-c { display: inline-block; padding: 1px 7px; border-radius: 5px; background: var(--surface); border: 1px solid var(--line); font-size: 12.5px; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink); }
+ol.flow .fl-r { width: 100%; font-weight: 700; color: var(--accent); font-size: 13.5px; }
+ol.flow .fl-x .num { all: unset; }
 ol.flow > li:has(.fl-x) { display: flex; flex-direction: column; }
 ol.flow > li:has(.fl-x) > .fl-d { flex: 1; display: flex; flex-direction: column; gap: 10px; }
 ol.flow > li:has(.fl-x) .fl-x { margin-top: auto; }
