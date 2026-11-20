@@ -4,11 +4,11 @@
 
 - Project: ETF_Rotation_Quant
 - Document type: owner report（D38 预演第 6 项）
-- Status: active（第 3.9 版：“把握 p 怎么算”改成三步算式 + 两个市场的逐步数字 + 换算曲线；第 2 节补回看速度与 A 股短记忆的检验（D38 第 42–44 行）；第 10 节更新 Grok 第六轮）
+- Status: active（第 3.10 版：第 10 节按 D40-8、D40-9 更新；第 3.9 版：“把握 p 怎么算”改成三步算式 + 两个市场的逐步数字 + 换算曲线；第 2 节补回看速度与 A 股短记忆的检验（D38 第 42–44 行）；第 10 节更新 Grok 第六轮）
 - Owner: L. Loric
 - Maintainer: Orchestrator
 - Date: 2026-11-19（Asia/Taipei）
-- 依据：`operations/planning/2026-11-16-d38-project-diagnosis-and-preflight.md`（运行附表第 10–44 行，每一行都先登记、后运行）；`operations/planning/2026-11-19-d40-v6-structure.md`（D40）；结果在 `results/v6-preflight/`
+- 依据：`operations/planning/2026-11-16-d38-project-diagnosis-and-preflight.md`（运行附表第 10–46 行，每一行都先登记、后运行）；`operations/planning/2026-11-19-d40-v6-structure.md`（D40）；结果在 `results/v6-preflight/`
 - 数据：合成行情；美国 49 个行业 1926–2026（Kenneth French 公开数据）；港股恒生四个分类 1993–2015；项目池和行情库 ≤2015-12-31，A 股候选按官方发布日截断。2016 年以后只用美国行业数据和执行层的溢价数据，不读项目池收益
 - 页面：Claude 页面“v6 预演预测表”；本文件是仓库镜像
 
@@ -293,9 +293,9 @@
 
 | 事项 | 谁 | 现在 | 状态 |
 | --- | --- | --- | --- |
-| Grok 第六轮：31 条完成，5 条缺官方拿不到的窗口；美股 7 条里 6 条是重复 | Grok、Dev | **等你定：按现有窗口入库，不再追这 5 条** | 等你拍板 |
-| 加候选去重：同一行业只留分数高的（如医药两只、油气开采两只），先登记再测 | Orchestrator | **你定了入库之后** | 待做 |
-| 补更长的 A 股证据：沪深300 十个行业指数（发布日待核实），检验 A 股按上月涨幅选是否站得住 | Grok、Orchestrator | **等派单** | 待做 |
+| Grok 第六轮按现有窗口入库，不再追 5 条部分完成的（D40-8） | Dev、Reviewer | **你已同意，等入库和签收** | 进行中 |
+| 加候选去重：同一行业只留分数高的（如医药两只、油气开采两只） | Orchestrator | **已登记（D38 第 46 行），入库后就测** | 待做 |
+| 补更长的 A 股证据：沪深300 十个行业指数，检验 A 股按上月涨幅选是否站得住（D40-9） | Grok、Orchestrator | **Grok 在取；检验已先登记（D38 第 45 行）** | 进行中 |
 | 复算 D38 第 20–41 行 | Reviewer | **已签收（PR #317）** | 已完成 |
 | 合入 PR #315（五问、等权投票的合同边界） | Manager | **已合入** | 已完成 |
 | 决定是否起草 v6 预注册；预注册里单列执行层规则（溢价偏离、单只上限） | 你 | **上面三件有结果、预测表没有大偏差之后** | 待定 |
