@@ -7,6 +7,7 @@ Runs after polish.py. Only restructures and formats the source's own words: it n
 - reference tables (definitions, lists) get data-lint="ref"
 - conclusion cells get bold; list items and long paragraphs open with a bold phrase taken from their own text
 """
+import math
 import re
 import polish as P
 from bs4 import BeautifulSoup, NavigableString, Tag
@@ -715,6 +716,86 @@ def _ex_visual(chips, res, key):
                 f'<span class="s1" style="flex:{a}">{e(sp.group(1))} {e(sp.group(2))} 万</span>'
                 f'<span class="s2" style="flex:{b}">{e(sp.group(3))} {e(sp.group(4))} 万</span></div></div>')
     return None
+
+
+def _phi_svg(points, w=440, h=180):
+    """p = Φ(t) 的换算曲线，标出每个名额的 (t, p)。points: [(名称, t, p, tone)]。"""
+    from html import escape as e
+    lo, hi = -3.0, 3.5; L, R, T, B = 34, 12, 22, 30
+    X = lambda t: L + (t - lo) / (hi - lo) * (w - L - R); Y = lambda p: T + (1 - p) * (h - T - B)
+    Phi = lambda t: 0.5 * (1 + math.erf(t / math.sqrt(2)))
+    path = 'M' + ' L'.join(f'{X(lo + i * (hi - lo) / 120):.1f},{Y(Phi(lo + i * (hi - lo) / 120)):.1f}' for i in range(121))
+    g = [f'<line x1="{L}" x2="{w - R}" y1="{Y(0):.1f}" y2="{Y(0):.1f}" class="ax"/>',
+         f'<line x1="{L}" x2="{w - R}" y1="{Y(.5):.1f}" y2="{Y(.5):.1f}" class="mid"/>',
+         f'<line x1="{X(0):.1f}" x2="{X(0):.1f}" y1="{T}" y2="{Y(0):.1f}" class="mid"/>']
+    for pv in (0, .5, 1):
+        g.append(f'<text x="{L - 6}" y="{Y(pv) + 4:.1f}" text-anchor="end" class="tk">{pv:g}</text>')
+    for tv in (-2, -1, 0, 1, 2, 3):
+        g.append(f'<text x="{X(tv):.1f}" y="{h - B + 16}" text-anchor="middle" class="tk">{tv:+d}</text>' if tv else f'<text x="{X(tv):.1f}" y="{h - B + 16}" text-anchor="middle" class="tk">t = 0</text>')
+    g.append(f'<text x="{L - 6}" y="{T - 5}" text-anchor="end" class="tk">p</text>')
+    g.append(f'<path d="{path}" class="crv"/>')
+    for nm, t, pv, tone in points:
+        x, y = X(max(lo, min(hi, t))), Y(pv); right = x < w * .6
+        g.append(f'<line x1="{x:.1f}" x2="{x:.1f}" y1="{y:.1f}" y2="{Y(0):.1f}" class="drop {tone}"/>'
+                 f'<circle cx="{x:.1f}" cy="{y:.1f}" r="6" class="pt {tone}"/>'
+                 f'<text x="{x + (10 if right else -10):.1f}" y="{y + (-8 if pv > .9 else 18):.1f}" text-anchor="{"start" if right else "end"}" class="lb {tone}">{e(nm)}：t {t:+.2f} → p {pv:.2f}</text>')
+    return f'<svg class="phi" viewBox="0 0 {w} {h}" role="img" aria-label="p = Φ(t) 换算曲线">{"".join(g)}</svg>'
+
+
+def calc_grid(soup):
+    """“名称：步骤一 → 步骤二 → 步骤三。说明”段落 + 表头带 ①②③ 的算例表 → 一张逐步算式表：
+    表头是每一步的算式，每行是一个算例的逐步数字，下方是 p = Φ(t) 的换算曲线。"""
+    for para in soup.select('p.kv'):
+        v = para.find('span', class_='kv-v'); nxt = para.find_next_sibling()
+        if v is None or v.get_text().count('→') < 2 or nxt is None or 'table-wrap' not in (nxt.get('class') or []):
+            continue
+        tb = nxt.find('table'); hd = [th.get_text(strip=True) for th in tb.select('thead th')]
+        if not any(x.startswith('①') for x in hd):
+            continue
+        full = v.get_text(' ', strip=True).replace(' → ', '→').replace('→', '→')
+        chain, _, note = full.partition('。')
+        steps = [q.strip() for q in chain.split('→')]
+        rows = [[td.get_text(strip=True) for td in tr.find_all('td')] for tr in tb.select('tbody tr')]
+        grp = {}
+        for j, x in enumerate(hd[1:-1], 1):
+            k = '①②③④⑤'.index(x[0]); grp.setdefault(k, []).append((x[1:].strip(), j))
+        H = ['<div class="calcgrid">', f'<div class="cg-title">{html_escape(para.find("span", class_="kv-k").get_text(strip=True))}</div>',
+             f'<div class="cg-grid" style="--n:{len(steps)}">', f'<div class="cg-hd cg-lab">{html_escape(hd[0])}</div>']
+        for i, st in enumerate(steps):
+            verb, _, body = st.partition('：'); sub = ''
+            m = re.match(r'(.*?)（(.+)）$', body)
+            if m: body, sub = m.group(1), m.group(2)
+            fm = ' cg-fm' if '=' in body else ''
+            H.append(f'<div class="cg-hd cg-step"><span class="cg-n">{"①②③④⑤"[i]}</span><span class="cg-verb">{html_escape(verb)}</span>'
+                     f'<span class="cg-body{fm}">{html_escape(body)}</span>' + (f'<span class="cg-sub">{html_escape(sub)}</span>' if sub else '') + '</div>')
+        H.append(f'<div class="cg-hd cg-out"><span class="cg-verb">得出</span><span class="cg-body">{html_escape(hd[-1])}</span></div>')
+        pts = []
+        for r in rows:
+            vals = {k: [(nm, r[j]) for nm, j in grp.get(k, [])] for k in range(len(steps))}
+            last = vals[len(steps) - 1][-1][1] if vals.get(len(steps) - 1) else ''
+            try: pv = float(last)
+            except ValueError: pv = None
+            tone = 'good' if pv is not None and pv >= .5 else 'bad'
+            H.append(f'<div class="cg-lab cg-row {tone}">{html_escape(r[0])}</div>')
+            for k in range(len(steps)):
+                cells = vals.get(k, []); lb = steps[k].partition('：')[0]
+                if len(cells) > 1:
+                    inner = ''.join(f'<span class="cg-kv"><em>{html_escape(nm)}</em><b>{html_escape(x)}</b></span>' for nm, x in cells)
+                    H.append(f'<div class="cg-c cg-multi" data-lb="{html_escape(lb)}">{inner}</div>')
+                else:
+                    nm, x = cells[0] if cells else ('', '')
+                    bar = f'<span class="cg-bar"><i style="width:{pv * 100:.0f}%"></i></span>' if k == len(steps) - 1 and pv is not None else ''
+                    H.append(f'<div class="cg-c cg-big {tone}" data-lb="{html_escape(lb)}"><em>{html_escape(nm)} =</em><b>{html_escape(x)}</b>{bar}</div>')
+            res = r[-1]; a_, eq, b_ = res.rpartition('=')
+            H.append(f'<div class="cg-c cg-res" data-lb="得出">' + (f'<span>{html_escape(a_.strip())} =</span><b>{html_escape(b_.strip())}</b>' if eq else f'<b>{html_escape(res)}</b>') + '</div>')
+            try: pts.append((r[0].replace('名额', ''), float(vals[1][0][1].replace('−', '-').replace('+', '')), pv, tone))
+            except (KeyError, IndexError, ValueError, TypeError): pass
+        H.append('</div>')
+        if note or pts:
+            H.append('<div class="cg-foot">' + (_phi_svg(pts) if pts else '') + (f'<p class="cg-note"><b>怎么读</b>{html_escape(note.strip())}</p>' if note else '') + '</div>')
+        H.append('</div>')
+        new = BeautifulSoup(''.join(H), 'html.parser')
+        para.replace_with(new); nxt.decompose()
 
 
 def spec_grid(soup):
@@ -1705,6 +1786,7 @@ def ux_pass(html):
     flow_steps(soup)
     spec_grid(soup)
     kv_paragraphs(soup)
+    calc_grid(soup)
     focus_pass(soup)
     action_board(soup)
     risk_table(soup)
@@ -1970,6 +2052,59 @@ ol.flow.spec .fl-v .num { all: unset; }
 .specgrid .xv-pt.a em { top: auto; bottom: -20px; color: var(--muted); }
 .specgrid .xv-th { position: absolute; top: -3px; bottom: -3px; width: 0; border-left: 2px dashed var(--ink); opacity: .55; }
 .specgrid .xv-th em { position: absolute; bottom: -18px; left: 4px; font-style: normal; font-size: 11px; white-space: nowrap; }
+.calcgrid { margin: 18px 0 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
+.calcgrid .cg-title { padding: 12px 18px; font-size: 17px; font-weight: 800; color: var(--ink); border-bottom: 1px solid var(--line); background: var(--accent-soft); }
+.calcgrid .cg-grid { display: grid; grid-template-columns: 96px repeat(var(--n), minmax(0, 1fr)) minmax(0, .8fr); }
+.calcgrid .cg-grid > div { padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.calcgrid .cg-hd { background: var(--bg); display: flex; flex-direction: column; gap: 4px; }
+.calcgrid .cg-hd.cg-lab { justify-content: flex-end; font-size: 12.5px; color: var(--muted); }
+.calcgrid .cg-step { position: relative; border-left: 1px solid var(--line); }
+.calcgrid .cg-step + .cg-step::before, .calcgrid .cg-out::before { content: '→'; position: absolute; left: -9px; top: 12px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); color: var(--accent); font-size: 12px; line-height: 16px; text-align: center; font-weight: 800; }
+.calcgrid .cg-out { position: relative; border-left: 1px solid var(--line); }
+.calcgrid .cg-n { color: var(--accent); font-weight: 800; font-size: 15px; }
+.calcgrid .cg-verb { font-size: 15px; font-weight: 800; color: var(--ink); }
+.calcgrid .cg-body { font-size: 13px; color: var(--ink); line-height: 1.5; }
+.calcgrid .cg-body.cg-fm { width: fit-content; max-width: 100%; padding: 4px 10px; border: 2px solid var(--accent); border-radius: 7px; background: var(--surface); font-size: 14px; font-weight: 800; white-space: nowrap; }
+.calcgrid .num { all: unset; }
+.calcgrid .cg-sub { font-size: 12px; color: var(--muted); }
+.calcgrid .cg-lab.cg-row { display: flex; align-items: center; font-weight: 800; font-size: 14px; border-left: 4px solid var(--line); }
+.calcgrid .cg-lab.cg-row.good { border-left-color: var(--good); }
+.calcgrid .cg-lab.cg-row.bad { border-left-color: var(--warn); }
+.calcgrid .cg-c { border-left: 1px solid var(--line); display: flex; flex-direction: column; justify-content: center; gap: 2px; }
+.calcgrid .cg-multi { flex-direction: row; flex-wrap: wrap; gap: 6px 16px; justify-content: flex-start; align-items: center; }
+.calcgrid .cg-kv { display: flex; flex-direction: column; }
+.calcgrid .cg-kv em, .calcgrid .cg-big em { font-style: normal; font-size: 11.5px; color: var(--muted); }
+.calcgrid .cg-kv b { font-family: var(--font-mono); font-size: 15px; color: var(--ink); }
+.calcgrid .cg-big b { font-family: var(--font-mono); font-size: 24px; line-height: 1.1; font-weight: 800; }
+.calcgrid .cg-big.good b { color: var(--good); }
+.calcgrid .cg-big.bad b { color: var(--warn); }
+.calcgrid .cg-bar { display: block; height: 8px; margin-top: 6px; border-radius: 4px; background: var(--bg); overflow: hidden; }
+.calcgrid .cg-bar i { display: block; height: 100%; border-radius: 4px; }
+.calcgrid .cg-big.good .cg-bar i { background: var(--good); }
+.calcgrid .cg-big.bad .cg-bar i { background: var(--warn); }
+.calcgrid .cg-res span { font-size: 12.5px; color: var(--muted); }
+.calcgrid .cg-res b { font-size: 18px; font-weight: 800; color: var(--ink); }
+.calcgrid .cg-foot { display: grid; grid-template-columns: minmax(0, 440px) 1fr; gap: 8px 24px; align-items: center; padding: 14px 18px 16px; }
+.calcgrid svg.phi { width: 100%; height: auto; display: block; }
+.calcgrid svg.phi .ax { stroke: var(--line); stroke-width: 1; }
+.calcgrid svg.phi .mid { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 4; opacity: .6; }
+.calcgrid svg.phi .crv { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+.calcgrid svg.phi .tk { fill: var(--muted); font-size: 11px; }
+.calcgrid svg.phi .pt { stroke: var(--surface); stroke-width: 2; }
+.calcgrid svg.phi .pt.good { fill: var(--good); } .calcgrid svg.phi .pt.bad { fill: var(--warn); }
+.calcgrid svg.phi .drop { stroke-width: 1.5; stroke-dasharray: 2 3; } .calcgrid svg.phi .drop.good { stroke: var(--good); } .calcgrid svg.phi .drop.bad { stroke: var(--warn); }
+.calcgrid svg.phi .lb { font-size: 12px; font-weight: 700; } .calcgrid svg.phi .lb.good { fill: var(--good); } .calcgrid svg.phi .lb.bad { fill: var(--warn); }
+.calcgrid .cg-note { margin: 0; font-size: 13.5px; line-height: 1.7; color: var(--ink); }
+.calcgrid .cg-note b { display: block; font-size: 12.5px; color: var(--muted); margin-bottom: 2px; }
+@media (max-width: 900px) {
+  .calcgrid .cg-grid { grid-template-columns: 1fr; }
+  .calcgrid .cg-hd.cg-lab { display: none; }
+  .calcgrid .cg-step, .calcgrid .cg-out, .calcgrid .cg-c { border-left: 0; }
+  .calcgrid .cg-step + .cg-step::before, .calcgrid .cg-out::before { display: none; }
+  .calcgrid .cg-c::before { content: attr(data-lb); font-size: 11.5px; font-weight: 700; color: var(--accent); }
+  .calcgrid .cg-multi::before { flex-basis: 100%; }
+  .calcgrid .cg-foot { grid-template-columns: 1fr; }
+}
 @media (max-width: 900px) {
   .specgrid .sg-hd { display: none; }
   .specgrid .sg-row { grid-template-columns: 1fr; gap: 8px; }
