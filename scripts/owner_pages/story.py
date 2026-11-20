@@ -1575,6 +1575,24 @@ def _gl_clauses(html):
     return [re.sub(r'[。；]$', '', x) for x in parts]
 
 
+def _bell_svg(t0, w=420, h=130):
+    """钟形曲线，t0 左边涂色，标出面积 = Φ(t0)。"""
+    lo, hi, L, R, T, B = -3.5, 3.5, 10, 10, 18, 26
+    X = lambda t: L + (t - lo) / (hi - lo) * (w - L - R); pdf = lambda t: math.exp(-t * t / 2) / math.sqrt(2 * math.pi)
+    Y = lambda d: h - B - d / pdf(0) * (h - T - B)
+    xs = [lo + i * (hi - lo) / 140 for i in range(141)]
+    crv = 'M' + ' L'.join(f'{X(t):.1f},{Y(pdf(t)):.1f}' for t in xs)
+    left = [t for t in xs if t <= t0] + [t0]
+    area = f'M{X(lo):.1f},{Y(0):.1f} L' + ' L'.join(f'{X(t):.1f},{Y(pdf(t)):.1f}' for t in left) + f' L{X(t0):.1f},{Y(0):.1f} Z'
+    ph = 0.5 * (1 + math.erf(t0 / math.sqrt(2)))
+    ticks = ''.join(f'<text x="{X(v):.1f}" y="{h - B + 15}" text-anchor="middle" class="tk">{v:+d}</text>' if v else f'<text x="{X(0):.1f}" y="{h - B + 15}" text-anchor="middle" class="tk">0</text>' for v in (-3, -2, -1, 0, 1, 2, 3))
+    return (f'<svg class="bell" viewBox="0 0 {w} {h}" role="img" aria-label="钟形曲线在 t 左边的面积">'
+            f'<path d="{area}" class="ar"/><path d="{crv}" class="cv"/><line x1="{L}" x2="{w - R}" y1="{Y(0):.1f}" y2="{Y(0):.1f}" class="ax"/>'
+            f'<line x1="{X(t0):.1f}" x2="{X(t0):.1f}" y1="{T - 6}" y2="{Y(0):.1f}" class="t0"/>{ticks}'
+            f'<text x="{X(t0) + 6:.1f}" y="{T + 2}" class="lb">t = {t0:g}</text>'
+            f'<text x="{X(-0.4):.1f}" y="{Y(0) - 14:.1f}" text-anchor="middle" class="ar-lb">左边面积 = {ph:.2f} = p</text></svg>')
+
+
 def term_cards(soup):
     """'名词解释' folds: one card per term -- the definition big, then 为什么 / 例 / 说明 rows, the formula boxed."""
     for fold in soup.select('.fold'):
@@ -1603,6 +1621,8 @@ def term_cards(soup):
                 k = 'ex' if lab == '例' else ('why' if lab.startswith('为什么') else 'note')
                 rows.append(f'<div class="tm-r"><span class="tm-k k-{k}">{html_escape(lab)}</span><span>{html_escape(txt)}</span></div>')
             wide = ' wide' if len(body) > 110 else ''
+            if name.startswith('Φ'):
+                rows.insert(1, _bell_svg(1.0))
             cards.append(f'<div class="tm-card{wide}"><div class="tm-n">{html_escape(name)}</div><div class="tm-d">{html_escape(head)}</div>{"".join(rows)}</div>')
         if cards:
             wrap = t.find_parent(class_='table-wrap') or t
@@ -2087,7 +2107,7 @@ ol.flow.spec .fl-v .num { all: unset; }
 .specgrid .xv-pt.a em { top: auto; bottom: -20px; color: var(--muted); }
 .specgrid .xv-th { position: absolute; top: -3px; bottom: -3px; width: 0; border-left: 2px dashed var(--ink); opacity: .55; }
 .specgrid .xv-th em { position: absolute; bottom: -18px; left: 4px; font-style: normal; font-size: 11px; white-space: nowrap; }
-.tm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); grid-auto-flow: dense; gap: 12px; margin: 10px 0 6px; }
+.tm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin: 10px 0 6px; }
 .tm-card { padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); display: flex; flex-direction: column; gap: 8px; }
 .tm-card.wide { grid-column: span 2; }
 .tm-n { font-size: 17px; font-weight: 800; color: var(--accent); }
@@ -2099,6 +2119,11 @@ ol.flow.spec .fl-v .num { all: unset; }
 .tm-k.k-why { background: var(--accent-soft); color: var(--accent); }
 .tm-k.k-note { background: var(--bg); color: var(--muted); }
 @media (max-width: 700px) { .tm-card.wide { grid-column: auto; } }
+.tm-card svg.bell { width: 100%; max-width: 440px; height: auto; display: block; }
+.tm-card svg.bell .ar { fill: var(--accent-soft); } .tm-card svg.bell .cv { fill: none; stroke: var(--accent); stroke-width: 2; }
+.tm-card svg.bell .ax { stroke: var(--line); } .tm-card svg.bell .t0 { stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 3 3; }
+.tm-card svg.bell .tk { fill: var(--muted); font-size: 11px; } .tm-card svg.bell .lb { fill: var(--ink); font-size: 12px; font-weight: 700; }
+.tm-card svg.bell .ar-lb { fill: var(--accent); font-size: 13px; font-weight: 800; }
 .calcgrid { margin: 18px 0 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
 .calcgrid .cg-title { padding: 12px 18px; font-size: 17px; font-weight: 800; color: var(--ink); border-bottom: 1px solid var(--line); background: var(--accent-soft); }
 .calcgrid .cg-grid { display: grid; grid-template-columns: 96px repeat(var(--n), minmax(0, 1fr)) minmax(0, .8fr); }
