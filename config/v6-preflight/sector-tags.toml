@@ -1,0 +1,64 @@
+# D38 第 46 行：候选去重的行业标签（跑前登记，2026-11-20，运行前写定）
+# 规则：前 N 选人时，同一标签只留分数最高的一个，空位由下一名递补；没有标签的候选（宽基、母指数）不去重。
+# 标签取指数公司的一级行业：美股按 GICS，A 股按中证一级（金融地产仍按旧口径合为一类，与中证全指一级行业一致）。
+# 主题指数没有官方一级行业，按其成份所属的主要一级行业标注（人工智能 → 信息技术，机器人、军工 → 工业，农业、酒 → 主要消费）。
+# 红利类是策略指数，不属于任何行业，但三只是同一个押注，单列“红利”标签。
+# SP5NENRS 是净总回报口径，与其余价格指数不可比，本行不参选（且与 XLE 重复）。
+
+[us]
+SPX = ""        # 母指数
+NDX = ""        # 宽基
+DJIA = ""       # 宽基
+SOX = "信息技术"
+XLK = "信息技术"
+S5INFT = "信息技术"
+NBI = "医疗保健"
+XLV = "医疗保健"
+S35 = "医疗保健"
+SPSIBI = "医疗保健"
+XLE = "能源"
+DJSOEP = "能源"
+SPSIOP = "能源"
+SPGOGUP = "能源"
+XLY = "可选消费"
+IXY = "可选消费"
+XLP = "必需消费"
+XLF = "金融"
+DWRTF = "房地产"
+XLI = "工业"
+XLB = "材料"
+XLU = "公用事业"
+
+[a]
+csi300 = ""     # 母指数
+csi500 = ""
+csi1000 = ""
+chinext = ""
+"csi-dividend" = "红利"
+"theme-上证红利" = "红利"
+"theme-中证红利低波动" = "红利"
+"allshare-energy" = "能源"
+"theme-中证煤炭" = "能源"
+"allshare-materials" = "原材料"
+"theme-中证有色金属" = "原材料"
+"theme-中证钢铁" = "原材料"
+"allshare-industrials" = "工业"
+"theme-中证机器人" = "工业"
+"theme-中证军工" = "工业"
+"allshare-discretionary" = "可选消费"
+"allshare-staples" = "主要消费"
+"theme-中证主要消费" = "主要消费"
+"theme-中证酒" = "主要消费"
+"theme-中证农业" = "主要消费"
+"allshare-healthcare" = "医药卫生"
+"theme-沪深300医药卫生" = "医药卫生"
+"allshare-financials-re" = "金融地产"
+"theme-中证银行" = "金融地产"
+"theme-中证全指证券公司" = "金融地产"
+"theme-中证全指房地产" = "金融地产"
+"allshare-it" = "信息技术"
+"theme-中证全指半导体产品与设备" = "信息技术"
+"theme-中证全指软件" = "信息技术"
+"theme-中证人工智能主题" = "信息技术"
+"allshare-communication" = "通信服务"
+"allshare-utilities" = "公用事业"

@@ -46,7 +46,7 @@ ncand = (A.drop(columns=['csi300']).notna().astype(float).rolling(252).sum() >= 
 ncand_y = {str(k): int(v) for k, v in ncand.groupby(ncand.index.year).last().items()}
 
 # 官方 A 股 TRIN（日 TRIN 10 日均）：有成交额的候选，按发布日截断
-AM = pd.DataFrame(AMT).reindex(idx); PX = A[AM.columns]
+AM = pd.DataFrame(AMT).astype(float).reindex(idx); PX = A[AM.columns]   # 第六轮入库后成交额可能是 object 列
 dr = PX.pct_change(); up, dn = dr > 0, dr < 0
 d_ = ((up.sum(axis=1) / dn.sum(axis=1).replace(0, np.nan)) / ((AM * up).sum(axis=1) / (AM * dn).sum(axis=1).replace(0, np.nan))).replace([np.inf, -np.inf], np.nan)
 d_ = d_.where(up.sum(axis=1) + dn.sum(axis=1) >= 4)
