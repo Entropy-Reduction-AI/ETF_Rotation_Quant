@@ -106,17 +106,17 @@ for i, (d, slot, amt) in enumerate(rows):
     for nm in e['入选']:
         w_ = amt * e['每只仓位_占名额']
         ax.barh(y, w_, left=x, height=.62, color=C['新系统'], edgecolor='white', lw=2)
-        ax.text(x + w_ / 2, y, f"{NAMES.get(nm, nm)}\n{w_:.0f} 万", ha='center', va='center', color='white', fontsize=10.5, weight='bold')
+        ax.text(x + w_ / 2, y, f"{NAMES.get(nm, nm)}\n{w_:.1f}" if w_ < 6 else f"{NAMES.get(nm, nm)}\n{w_:.1f} 万", ha='center', va='center', color='white', fontsize=8.5 if w_ < 6 else 10.5, weight='bold')
         x += w_
     rest = amt - x
     if rest > .5:
         ax.barh(y, rest, left=x, height=.62, color='#d1d5db', edgecolor='white', lw=2)
-        ax.text(x + rest / 2, y, f'国债 {rest:.0f} 万', ha='center', va='center', color=INK, fontsize=10)
+        ax.text(x + rest / 2, y, f'国债 {rest:.1f} 万', ha='center', va='center', color=INK, fontsize=10)
     lab = f"{'股灾后 2015-08' if d.startswith('2015') else '平静 2013-04'}  {slot}"
     ax.text(-1.5, y, lab, ha='right', va='center', fontsize=12, color=INK)
-    ax.text(amt + 1.2, y, f"{e['票数']} 票 · 把握 {e['把握p']:.2f}" if e['确认紧张'] else f"{e['票数']} 票 · 不紧张", va='center', fontsize=10, color=BAD if e['确认紧张'] else MUTED)
+    ax.text(amt + 1.2, y, f"{e['票数']} 票 · 把握 {e['把握p']:.3g}" if e['确认紧张'] else f"{e['票数']} 票 · 不紧张", va='center', fontsize=10, color=BAD if e['确认紧张'] else MUTED)
 ax.set_xlim(0, 72); ax.axis('off')
-title(fig, '一个月怎么定持仓：2015 年 8 月股灾后，A 股 40 万里只拿 12 万股票，美股照常满仓',
+title(fig, '一个月怎么定持仓：2015 年 8 月股灾后，A 股 40 万里只拿 10.6 万股票，美股几乎满仓',
       '用设计期真实数据按规则复现的两个月，100 万本金；青绿 = 股票，灰 = 国债；右侧是当月的票数和把握 p')
 fig.savefig(OUT / 'f8-exec.png', dpi=150, bbox_inches='tight'); plt.close(fig)
 print('f8 ok')
