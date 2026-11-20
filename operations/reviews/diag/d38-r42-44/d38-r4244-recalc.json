@@ -1,0 +1,88 @@
+{
+  "topn_speed": {
+    "script": "scripts/preflight/topn_speed.py",
+    "rerun_output": "operations/reviews/diag/d38-r42-44/topn-speed-rerun.json",
+    "inputs": {
+      "french_49_csv": "/agent/repos/ETF_Rotation_Quant/operations/reviews/diag/d38-r42-44/cache/49_Industry_Portfolios.csv",
+      "french_sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
+      "dtb3": "/agent/repos/ETF_Rotation_Quant/results/v5/other-market/raw/DTB3.csv"
+    },
+    "tolerance": 0.02,
+    "diff_count": 0,
+    "diffs_sample": [],
+    "all_match_within_tolerance": true,
+    "focus_derived": {
+      "R0_excess_全程": "16.61% / 34.3 / 比全市场 +5.61",
+      "R1_excess_全程": "11.05% / 40.8 / 比全市场 +0.05",
+      "R2_excess_全程": "14.3% / 44.3 / 比全市场 +3.3",
+      "A1_A_上月涨幅": "+20.1 点（t 2.07，52 个月）",
+      "A1_A_12-1": "+4.8 点（t 0.42，52 个月）",
+      "R0+q_最低剩_2008": 69.6,
+      "R0_最低剩_2008": 79.3
+    }
+  },
+  "row44_correlations": {
+    "window": [
+      "2007-01-01",
+      "2015-12-31"
+    ],
+    "pairs": {
+      "IXY_vs_XLY": {
+        "grok_files": [
+          "d37-longhist-20261118/theme-IXY-ft-usd-pr-daily-19981216-20261116.csv"
+        ],
+        "months": 107,
+        "corr": 1.0
+      },
+      "S5INFT_vs_XLK": {
+        "grok_files": [
+          "d37-remain-20261118-pass2/theme-S5INFT-ft-SP500-45-usd-pr-daily-19960628-20120924.csv",
+          "theme-标普500信息科技指数-tradingview.csv"
+        ],
+        "months": 107,
+        "corr": 0.99
+      },
+      "DJSOEP_vs_XLE": {
+        "grok_files": [
+          "theme-道琼斯美国石油开发与生产指数-tradingview.csv"
+        ],
+        "months": 107,
+        "corr": 0.96
+      },
+      "SPSIOP_vs_XLE": {
+        "grok_files": [
+          "theme-标普石油天然气勘探及生产精选行业指数-tradingview.csv"
+        ],
+        "months": 107,
+        "corr": 0.94
+      },
+      "S35_vs_XLV": {
+        "grok_files": [
+          "theme-标普500医疗保健等权重指数-tradingview.csv"
+        ],
+        "months": 107,
+        "corr": 0.95
+      },
+      "SPSIBI_vs_NBI": {
+        "grok_files": [
+          "d37-remain-20261118-pass2/theme-SPSIBI-usspindices-wayback-usd-pr-daily-20060127-20140505.csv",
+          "theme-标普生物科技精选行业指数-tradingview.csv"
+        ],
+        "months": 107,
+        "corr": 0.93
+      }
+    },
+    "cross_DJSOEP_SPSIOP": {
+      "months": 108,
+      "corr": 0.98
+    },
+    "reit": {
+      "grok": "DWRTF",
+      "best_match_code": "XLF",
+      "corr": 0.77,
+      "files": [
+        "theme-道琼斯美国精选REIT指数-tradingview.csv"
+      ]
+    }
+  }
+}
