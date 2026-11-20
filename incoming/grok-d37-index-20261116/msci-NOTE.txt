@@ -1,0 +1,162 @@
+MSCI official free EOD / factsheet check
+Run: 2026-11-17 (box), official "as of" date observed on tools: Nov 16, 2026
+Source: official MSCI site only (www.msci.com / www-cdn.msci.com / app2.msci.com). No secondaries. No paid data. No login submitted.
+
+========================================================================
+How official MSCI free end-of-day history works (observed this run)
+========================================================================
+- Entry: https://www.msci.com/ -> Indexes -> Index resources
+  "Performance": Analyze returns ... with end of day performance data
+  Tool URL: https://www-cdn.msci.com/web/msci/index-tools/end-of-day-index-data-search
+  The tool loads in an iframe from: https://app2.msci.com/products/index-data-search/
+- Equity Factsheets (free PDF, keyword search, Variant filter Price/Gross/Net):
+  https://www-cdn.msci.com/web/msci/index-tools/equity-fact-sheet-search
+- Indexes explorer (subset of ~3,932 equity indexes; name/code search, Variant Price):
+  https://www.msci.com/indexes
+
+Anonymous vs login:
+- Homepage, factsheet search, factsheet PDFs, EOD search, index chart, and "Download Data"
+  all worked WITHOUT registration or login in this run.
+- No login/sign-up wall was reached. Did not type email or create an account.
+- The EOD tool footer says: "For additional historical index data, contact MSCI Client Service."
+
+Price vs TR:
+- EOD tool "Index Level" offers Price (selected), Net, Gross (and decrement/risk-control variants).
+  Price is price return, not total return / net total return.
+- Chart "Download Data" files state "Index Level :,Price" and "Currency :,USD" in the header.
+- Do not silently substitute Net/Gross if Price is unavailable for a given listing.
+
+Observed free-history cap (actually tested on CHINA VALUE WEIGHTED, Price, USD, Daily):
+- Term "4 Year" keeps Frequency = Daily. Chart/export window observed:
+  Start Nov 16, 2022 -> End Nov 16, 2026 (daily).
+- Term "5 Year", "Full History", or a custom Start Date earlier than that ~4-year window
+  causes the form to switch Frequency to Monthly on Update (Daily does not stick).
+- Full History monthly for this index opened Start Jan 31, 1997 -> End Nov 16, 2026
+  (file month-ends through Oct 30, 2026). That series INCLUDES pre-launch backtest.
+- Export format: historyIndex.xls (Excel), convertible to csv. Columns: Date, index level.
+- Factsheets give launch language + period/annual returns (and sometimes only NET tables);
+  they are not a daily EOD series.
+
+Important: First Value / base date on a factsheet is NOT the official launch/publish date.
+Do not treat pre-launch backtest as live official history.
+
+========================================================================
+1) theme-MSCI China Value Weighted Index
+========================================================================
+Official name found: MSCI China Value Weighted Index (USD)
+EOD short name: CHINA VALUE WEIGHTED
+Ticker: not shown on the official factsheet
+Index code (EOD tool): 702033
+Identity: exact official-name match. Distinguished from near-matches that also appeared
+  (MSCI China Value Index; MSCI China A Value Weighted; MSCI China A Onshore Value Weighted;
+  MSCI China A RMB Value Weighted). Those were not downloaded as this index.
+
+Official URLs:
+- Factsheet search (exact hit listed as (USD)(NET)):
+  https://www-cdn.msci.com/web/msci/index-tools/equity-fact-sheet-search
+- Official factsheet PDF:
+  https://www-cdn.msci.com/documents/10199/198ecc63-90da-69c5-37bb-559cacbaf141
+- EOD search (Country tab, Emerging Markets, Index Suite = Value Weighted, Index Level = Price, USD, Standard Large+Mid Cap):
+  https://app2.msci.com/products/index-data-search/
+- EOD chart (Price, USD):
+  https://app2.msci.com/products/index-data-search/country_chart.jsp?asOf=16/Nov/2026&size=Standard%20(Large%2BMid%20Cap)&scope=C&style=None&currency=USD&priceLevel=STRD&indexId=702033&indexName=CHINA%20VALUE%20WEIGHTED&suite=L
+
+Login required: no
+
+Factsheet variant note: the catalog's exact-name listing was "MSCI China Value Weighted Index (USD) (NET)".
+A separate (USD)(PRICE) factsheet listing was not found in Price-filtered results.
+The official PDF title is "MSCI China Value Weighted Index (USD)"; performance tables on that
+factsheet are labeled NET RETURNS. Launch-date wording was still used. EOD exports below are Price.
+
+Launch/publish date (read from official factsheet, not guessed): Jan 16, 2012
+  Quote: "The MSCI China Value Weighted Index was launched on Jan 16, 2012. Data prior to the
+  launch date is back-tested ..."
+  Factsheet also shows a longer risk window from Dec 29, 2000 — that is not the publish date.
+  first_list in TARGETS (2016-01-04) is after this official launch.
+
+Exports (Price, USD; downloaded 2026-11-17):
+- Daily, 4-year cap (NOT a complete history from launch):
+  first date 2022-11-16, last date 2026-11-16, 1044 daily observations
+  first close 1148.91, last close 1685.11 (matches EOD table Last 1,685.110 as of Nov 16, 2026)
+  Files:
+    theme-MSCI China Value Weighted Index-official-price-daily-4y-20221116-20261116.csv
+    theme-MSCI China Value Weighted Index-official-price-daily-4y-20221116-20261116.xls
+    theme-MSCI China Value Weighted Index-official-price-daily-4y-20221116-20261116.xlsx
+  Named as a short window on purpose; this daily file does not reach official launch or first_list.
+- Monthly Full History (includes pre-launch backtest from 1997-01-31):
+  first date 1997-01-31, last month-end 2026-10-30, 358 months, Price USD
+  Files:
+    theme-MSCI China Value Weighted Index-official-price-monthly-full-history.xls
+    theme-MSCI China Value Weighted Index-official-price-monthly-full-history-incl-backtest.csv
+- Monthly trimmed at official launch (do not use pre-launch months as live history):
+  first date 2012-01-31 (first month-end on/after Jan 16, 2012), last 2026-10-30, 178 months
+  File:
+    theme-MSCI China Value Weighted Index-official-price-monthly-from-launch-20120116.csv
+
+========================================================================
+2) theme-MSCI USA 50 Index
+========================================================================
+Official name found: MSCI USA 50 Index (USD) (PRICE)
+Ticker: not shown on the official factsheet
+Index code: not shown on the factsheet; not obtained from the EOD tool
+Identity: exact official-name match in the Equity Factsheet search (Variant visible as PRICE).
+  Near-matches were listed and were NOT used (MSCI USA Top 50 Dividend Index, MSCI USA Momentum
+  Top 50 Select Index, MSCI USA Sustainable Select 50 Index, 25/50 sector indexes, MSCI USA 500
+  Index, etc.).
+
+Official URLs:
+- Factsheet search exact hit:
+  https://www-cdn.msci.com/web/msci/index-tools/equity-fact-sheet-search
+  (keyword "MSCI USA 50 Index"; first result = MSCI USA 50 Index (USD) (PRICE))
+- Official PRICE factsheet PDF:
+  https://www-cdn.msci.com/documents/10199/8a6ad319-0ac0-c553-ed99-e8080e5201d8
+- Indexes explorer search (Price, USD) did not contain this exact name among 38 fuzzy hits:
+  https://www.msci.com/indexes?index-variant=strd&index-keyword=MSCI+USA+50+Index
+
+Login required: no (factsheet and explorer were anonymous). EOD export was not reached for this index
+because the exact name was not found in the EOD tool filters tried, not because of a login wall.
+
+Launch/publish date (read from official PRICE factsheet): Jun 08, 2022
+  Quote: "The MSCI USA 50 Index was launched on Jun 08, 2022. Data prior to the launch date is
+  back-tested ..."
+  Risk table window from May 31, 2000 is a base/first-value style date, not the publish date.
+  first_list in TARGETS (2023-11-17) is after this official launch.
+
+Factsheet export type: PRICE RETURNS (USD). The PDF has annual and period price returns plus a
+cumulative price-return chart — not a daily EOD series. Saved as:
+  msci-docs/theme-MSCI-USA-50-Index-factsheet-usd-price.pdf
+
+Daily EOD history: NOT downloaded.
+Reason: exact "USA 50" / "MSCI USA 50 Index" was not found in the official End of day index data
+search after these anonymous Price/USD queries:
+  - Country tab, Developed Markets (DM), Index Level = Price, Size = Standard (Large+Mid Cap),
+    Index Suite = Other (value FO): results were other USA factor indexes (e.g. USA LOW SIZE,
+    MSCI USA Factor Switch Select Index), not USA 50.
+  - Same filters, Index Suite = Other (value MO): empty result table.
+  - Country tab, DM, Size = IMI (Large+Mid+Small Cap), Suite = Other (FO): did not show USA 50
+    (example hit: JAPAN IMI CUST LIQ AND YIELD LOW VOL).
+  - www.msci.com/indexes explorer, Variant Price, USD, keyword "MSCI USA 50 Index": 38 fuzzy
+    equity hits across 2 pages; none was the exact "MSCI USA 50 Index".
+  - Site search https://www.msci.com/search?q=MSCI%20USA%2050%20Index also did not surface the
+    exact index in the first results (decrement / Select 50 names instead).
+Did not pick a near-match and did not invent an index id for the chart URL.
+
+========================================================================
+File paths under /workspace/incoming/grok-d37-index-20261116/
+========================================================================
+msci-NOTE.txt (this file)
+msci-docs/theme-MSCI-China-Value-Weighted-Index-factsheet-usd-net.pdf
+msci-docs/theme-MSCI-USA-50-Index-factsheet-usd-price.pdf
+theme-MSCI China Value Weighted Index-official-price-daily-4y-20221116-20261116.csv
+theme-MSCI China Value Weighted Index-official-price-daily-4y-20221116-20261116.xls
+theme-MSCI China Value Weighted Index-official-price-daily-4y-20221116-20261116.xlsx
+theme-MSCI China Value Weighted Index-official-price-monthly-full-history.xls
+theme-MSCI China Value Weighted Index-official-price-monthly-full-history-incl-backtest.csv
+theme-MSCI China Value Weighted Index-official-price-monthly-from-launch-20120116.csv
+screenshots/theme-MSCI China Value Weighted Index-launch-date.png
+screenshots/theme-MSCI China Value Weighted Index-download.png
+screenshots/theme-MSCI USA 50 Index-launch-date.png
+screenshots/theme-MSCI USA 50 Index-download.png  (factsheet-search page; no EOD file)
+screenshots/theme-MSCI USA 50 Index-explorer-no-exact-match-p1.png
+screenshots/theme-MSCI USA 50 Index-explorer-no-exact-match-p2.png
+plus supporting factsheet/EOD screenshots with the same theme- prefixes.

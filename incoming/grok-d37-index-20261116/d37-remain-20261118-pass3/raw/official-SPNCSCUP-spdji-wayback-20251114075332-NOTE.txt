@@ -1,0 +1,19 @@
+Official S&P Dow Jones Indices page recovered from Wayback (id_ raw), 2026-11-18 Asia/Taipei.
+
+URL: https://web.archive.org/web/20251114075332id_/https://www.spglobal.com/spdji/en/indices/equity/sp-new-china-sectors-a-shares-capped-index/
+Live official page / widget from this box: HTTP 403 (Akamai, title "Error | S&P").
+
+Page title: S&P New China Sectors (A-shares Capped) Index | S&P Dow Jones Indices
+Default headline currency on the archived shell: HKD (keywords: "s&p new china sectors (a-shares capped) index (hkd)").
+Default data-widget indexId: 92366266 (HKD).
+USD factsheet indexId: 92366265 (label: "S&P New China Sectors (A-shares Capped) Index (USD) Factsheet").
+
+The daily series is loaded by JS from
+  /spdji/en/util/redesign/index-data/get-performance-data-for-datawidget-redesign.dot
+with initialFlagStatus = "oneYearFlag". This 1,234,980-byte HTML contains 0 occurrences of indexLevels
+and no embedded official daily closes for 2018-12-24 through 2020-05-13.
+
+Wayback CDX for the widget URL with indexId=92366265 or 92366266 returned no captures.
+Live widget https://www.spglobal.com/spdji/en/util/redesign/index-data/get-performance-data-for-datawidget-redesign.dot?indexId=92366265&language_id=1
+returned HTTP 403 from this box. Path stopped (would need an interactive browser / unblocked official IP).
+Uncapped / Ex-A-Share / NTR / HKD series were not used as a substitute for USD PR SPNCSCUP.

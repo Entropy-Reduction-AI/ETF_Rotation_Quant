@@ -1,0 +1,202 @@
+TradingView Supercharts Table-view secondary pull — batch 2 (FTSE:GPCSP006, FTSE:FISAULM, FTSE:FISAULMU)
+Attempt time (Asia/Taipei): 2026-11-17 20:01–20:40 CST
+
+This is a SECONDARY source only. No sign-in, registration, or paid TradingView feature was used.
+"Get started" / "Join for free" were not clicked. CSV export / "Download chart data" was not used.
+sources.csv and MANIFEST.md were not edited. No sqlite DB was written. No substitute symbols
+(GPCSP007 Net Tax, TRIGPCSP* TR, FISAULMN, WISAUNT, capped / All Cap / ETF near-matches) were opened.
+No rows were invented.
+
+============================================================
+1) theme-富时亚太低碳精选指数
+============================================================
+On-page full name: FTSE Asia Pacific Low Carbon Select Index
+Ticker: GPCSP006  (exchange prefix FTSE). Confirmed in the Supercharts toolbar as
+  "FTSE Asia Pacific Low Carbon Select Index · 1D · FTSE". Feed shown as FTSE_DLY:GPCSP006.
+  Not GPCSP007 (Net Tax) and not a TRIGPCSP* total-return sibling.
+Chart URL: https://www.tradingview.com/chart/?symbol=FTSE%3AGPCSP006
+Symbol page: https://www.tradingview.com/symbols/FTSE-GPCSP006/
+Symbol-page title: "FTSE Asia Pacific Low Carbon Select Index Today — FTSE:GPCSP006 Index Chart — TradingView"
+
+Currency on the TradingView symbol page / table header: not shown (header is "GPCSP006 · FTSE" only).
+Price vs net-tax / total-return on the TV page: the on-page name does not say Net Tax or Total Return.
+  The ticker is the official price-return code GPCSP006.
+Launch date visible on the TradingView page: 未核对
+  Official launch 2022-05-27 was already recorded from the official factsheet (not re-guessed here).
+
+Delivery file: theme-富时亚太低碳精选指数-tradingview.csv
+  1157 daily rows, columns date,close.
+  First: 2022-06-06, 1363.84
+  Last:  2026-11-16, 2100.49
+  2026-11-17 dropped?: yes
+    The table's last bar was Tue 17 Nov '26. The chart legend said "Market open · Data is delayed".
+    The printed close moved while the table was open (e.g. 2062.64, 2062.83, 2062.57, 2062.33, 2062.24, 2062.32).
+    It was treated as a delayed/intraday/unconfirmed bar and omitted from the delivery file.
+
+Untrimmed file: theme-富时亚太低碳精选指数-tradingview-full.csv
+  1158 rows, same span plus the dropped 2026-11-17 bar (close 2062.32, last print captured).
+
+Coverage vs official launch
+- Official launch 2022-05-27 is not in the free table. The series starts Mon 2022-06-06
+  (the first table row; its Change cell was ∅). Missing post-launch days before 2022-06-06 were
+  not visible and were not invented.
+- After 2022-06-06, weekday gaps in the copied series are only:
+    2023-09-01 (Fri), 2024-01-01, 2025-01-01, 2026-01-01.
+  Other gaps are weekends.
+
+What happened
+- The symbol page loaded without sign-in and confirmed the exact name and ticker. Key data points
+  (Volume, Previous close, Open, Day's range) were empty. No launch/inception date was visible.
+- Supercharts plotted GPCSP006 without a "Delayed data for FTSE is only available to registered
+  users" wall. Table view was opened from the chart right-click menu and the full visible daily
+  history was copied from the on-screen table (Date, Close only in the delivery CSV).
+- A later marketing overlay appeared: "Look first / Then leap. ... Create a free account ...
+  Join for free". This was not the FTSE delayed-data registration wall. "Join for free" was not
+  clicked. The overlay was screenshot and dismissed / worked around by reloading; the requested
+  symbol still plotted after reload. The chart did not fall back to AAPL.
+
+Screenshots (under screenshots/)
+- FTSE-GPCSP006-symbol-page-header.png
+- FTSE-GPCSP006-supercharts-1D.png
+- FTSE-GPCSP006-table-latest-dates.png (top of table, including 2026-11-17)
+- FTSE-GPCSP006-table-earliest-dates.png (bottom of table, first bar 2022-06-06)
+- FTSE-GPCSP006-signup-promo-overlay.png (marketing "Join for free" overlay; not an FTSE data wall)
+
+============================================================
+2) theme-富时沙特阿拉伯指数
+============================================================
+Two official PRICE-RETURN currency variants were checked on their symbol pages and Supercharts
+tables. Neither page or table uses the words Net Tax, Total Return, FISAULMN, WISAUNT,
+30/18 Capped, All Cap, Free, or Government Bond. On-page heading for both is
+"FTSE Saudi Arabia Index". Currency is not printed on the TradingView symbol page or the
+table header. Tickers match the official price-return codes given in the task:
+FISAULM = SAR PR (RIC .FTFISAULM), FISAULMU = USD PR (RIC .FTFISAULMU).
+Launch date visible on the TradingView pages: 未核对.
+
+----------------------------------------
+2a) FTSE:FISAULM (SAR price return) — delivery written
+----------------------------------------
+On-page full name: FTSE Saudi Arabia Index
+Ticker: FISAULM  (exchange prefix FTSE). Confirmed in the Supercharts toolbar as
+  "FTSE Saudi Arabia Index · 1D · FTSE". Legend also showed "Open · 15 min delayed".
+Chart URL: https://www.tradingview.com/chart/?symbol=FTSE%3AFISAULM
+Symbol page: https://www.tradingview.com/symbols/FTSE-FISAULM/
+Symbol-page title: "FTSE Saudi Arabia Index Today — FTSE:FISAULM Index Chart — TradingView"
+
+The chart and Table view loaded without an FTSE delayed-data registration wall and without
+falling back to AAPL. The free table was scrolled to both ends and date,close rows were
+copied from the on-screen table only (not from memory or the earliest-dates screenshot).
+The earlier 2019-02-18 through 2024-04-24 rows, which had not been left on disk after the
+previous pass, were re-copied from the live table and joined to the already-saved recent
+rows at 2024-04-25,1680.28 (three overlap dates 2024-04-25/29/30 matched exactly).
+
+Delivery file: theme-富时沙特阿拉伯指数-tradingview-FISAULM-SAR.csv
+  1550 daily rows, columns date,close.
+  First: 2019-02-18, 1273.38  (Mon 18 Feb '19; Change ∅; start of the free FISAULM table)
+  Last:  2026-11-16, 1430.46
+  2026-11-17 dropped?: yes
+    The table's last bar was Tue 17 Nov '26, close 1,427.35, with "Open · 15 min delayed".
+    It was treated as a delayed/intraday/unconfirmed bar and omitted from the delivery file.
+
+Untrimmed file: theme-富时沙特阿拉伯指数-tradingview-FISAULM-SAR-full.csv
+  1551 rows, same span plus the dropped 2026-11-17 bar (close 1427.35).
+
+Working raw also kept: _tv_raw_FISAULM.csv (recent 2024-04-25+) and
+  _tv_raw_FISAULM_early.csv (re-copied 2019-02-18 through the join).
+
+The Saudi week is Sun–Thu; most Fridays are absent from the table (8 Friday rows in the
+copied series, mainly a 2026 window of flat/0% rows). Those Friday rows were copied as
+shown, not dropped. Longer holiday-style gaps (not invented) include 2019-05-30→06-10,
+2019-08-08→08-19, 2020-05-21→06-01, 2021-07-15→07-26, 2022-04-28→05-09, 2023-06-22→07-03,
+2024-04-04→04-15, 2024-06-13→06-24, 2026-05-21→06-01 (11 calendar days), and several
+5–8 day stretches around Eid / New Year. Missing days were not filled in.
+
+A marketing "Look first / Then leap … Join for free" overlay reappeared on the FISAULM
+table while re-copying early rows. "Join for free" was not clicked. Force-clicking a
+rowheader still allowed keyboard PageUp/PageDown through the virtualized grid, so the
+overlay was left in place and screenshot.
+
+Screenshots (under screenshots/)
+- FTSE-FISAULM-symbol-page-header.png
+- FTSE-FISAULM-supercharts-1D.png
+- FTSE-FISAULM-table-latest-dates.png
+- FTSE-FISAULM-table-earliest-dates.png (first bar Mon 18 Feb '19, Change ∅)
+- FTSE-FISAULM-signup-promo-overlay.png (marketing "Join for free" overlay; not an FTSE data wall)
+
+----------------------------------------
+2b) FTSE:FISAULMU (USD price return) — delivery written
+----------------------------------------
+On-page full name: FTSE Saudi Arabia Index
+Ticker: FISAULMU  (exchange prefix FTSE). Confirmed in the Supercharts toolbar as
+  "FISAULMU" and "FTSE Saudi Arabia Index · 1D · FTSE". Chart canvas aria-label was
+  "Chart for FTSE_DLY:FISAULMU, 1 day". Legend showed "Open · 15 min delayed".
+  Not a Net Tax / TR / capped / All Cap substitute.
+Chart URL: https://www.tradingview.com/chart/?symbol=FTSE%3AFISAULMU
+Symbol page: https://www.tradingview.com/symbols/FTSE-FISAULMU/
+Symbol-page title: "FTSE Saudi Arabia Index Today — FTSE:FISAULMU Index Chart — TradingView"
+Currency / price vs net-tax / TR: currency not shown; name does not say Net Tax or Total Return.
+  Ticker is the official USD price-return code FISAULMU.
+Launch date visible on the TradingView page: 未核对
+
+The Supercharts Table view opened without an FTSE delayed-data registration wall and
+without falling back to AAPL. Date,close rows were copied from the on-screen table for
+the full visible span. The free FISAULMU table starts earlier than FISAULM:
+
+Delivery file: theme-富时沙特阿拉伯指数-tradingview-FISAULMU-USD.csv
+  1591 daily rows, columns date,close.
+  First: 2018-11-27, 1104.26  (Tue 27 Nov '18; Change ∅; start of the free FISAULMU table)
+  Last:  2026-11-16, 1429.73
+  2026-11-17 dropped?: yes
+    The table's last bar was Tue 17 Nov '26, close 1,426.89, with "Open · 15 min delayed".
+    It was treated as a delayed/intraday/unconfirmed bar and omitted from the delivery file.
+
+Untrimmed file: theme-富时沙特阿拉伯指数-tradingview-FISAULMU-USD-full.csv
+  1592 rows, same span plus the dropped 2026-11-17 bar (close 1426.89).
+
+Working raw also kept: _tv_raw_FISAULMU.csv (full captured series including 2026-11-17).
+
+Closes are close to, but not identical with, FISAULM SAR levels on overlapping dates
+(expected for a separate USD PR series). The FISAULMU table did not include the 2026
+Friday flat bars that appear in FISAULM (2026-10-02, 10-09, 10-16, 10-23, 10-30, 11-06,
+11-13); those were not invented for FISAULMU. FISAULMU has additional early rows
+2018-11-27 through 2019-02-14 that were not on the FISAULM table. Holiday-style gaps
+match the FISAULM calendar closely and were left as copied (not filled). Only 2 Friday
+rows appear in the FISAULMU series.
+
+No "Join for free" overlay appeared during the FISAULMU table copy. "Download data"
+was visible and was not clicked.
+
+Screenshots (under screenshots/)
+- FTSE-FISAULMU-symbol-page-header.png
+- FTSE-FISAULMU-supercharts-1D.png
+- FTSE-FISAULMU-table-latest-dates.png (top of table, including 2026-11-17)
+- FTSE-FISAULMU-table-earliest-dates.png (bottom of table, first bar 2018-11-27)
+
+============================================================
+Sign-in / registration
+============================================================
+No "Delayed data for FTSE is only available to registered users" wall appeared for
+GPCSP006, FISAULM, or FISAULMU. FTSE delayed data was visible without an account, unlike
+the earlier SP and DJ walls in tv-batch1-NOTE.txt. A generic "Join for free" marketing
+overlay appeared after several minutes on the GPCSP006 table and again on the FISAULM
+table during the early-row recopy; both were screenshot and not accepted. FISAULMU was
+copied without that overlay. Did not sign in or register. Did not click Get started /
+Join for free / Download data / CSV export.
+
+============================================================
+Files written this run
+============================================================
+- /workspace/incoming/grok-d37-index-20261116/tv-batch2-NOTE.txt (this file)
+- theme-富时亚太低碳精选指数-tradingview.csv (1157 rows; 2026-11-17 dropped) — unchanged this pass
+- theme-富时亚太低碳精选指数-tradingview-full.csv (1158 rows; last bar 2026-11-17 kept) — unchanged this pass
+- theme-富时沙特阿拉伯指数-tradingview-FISAULM-SAR.csv (1550 rows; 2026-11-17 dropped; last 2026-11-16,1430.46)
+- theme-富时沙特阿拉伯指数-tradingview-FISAULM-SAR-full.csv (1551 rows; includes 2026-11-17,1427.35)
+- theme-富时沙特阿拉伯指数-tradingview-FISAULMU-USD.csv (1591 rows; 2026-11-17 dropped; last 2026-11-16,1429.73)
+- theme-富时沙特阿拉伯指数-tradingview-FISAULMU-USD-full.csv (1592 rows; includes 2026-11-17,1426.89)
+- working raw: _tv_raw_FISAULM.csv, _tv_raw_FISAULM_early.csv, _tv_raw_FISAULMU.csv
+- screenshots listed above
+- sources.csv / MANIFEST.md not edited
+
+What is left
+- Nothing in this batch-2 Table-view job: GPCSP006, FISAULM-SAR, and FISAULMU-USD delivery
+  CSVs are all written. Official launch dates on TV remain 未核对 where not shown.
