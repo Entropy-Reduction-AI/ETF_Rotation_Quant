@@ -1,0 +1,351 @@
+{
+  "pr": {
+    "number": 321,
+    "head": "aee4b7f780b9fce1e4cea07a3f1662f3ab3c312c",
+    "base": "1d56fd90304b44ae965cfb2aa5674cd332046f3c"
+  },
+  "sha256": {
+    "after_worktree": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52",
+    "expected_after": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52",
+    "after_match": true,
+    "before_baseline": "c07297f8372c2b4dd8f79417306f4dda3b2b49db3cb2523a6ad306c13523588b",
+    "expected_before": "c07297f8372c2b4dd8f79417306f4dda3b2b49db3cb2523a6ad306c13523588b",
+    "before_match": true
+  },
+  "inventory": {
+    "changed_files": 823,
+    "commits": 2,
+    "lock_body_changed": [],
+    "src_paths": [
+      "src/v51/d37_round6.py"
+    ],
+    "has_incoming": true
+  },
+  "append_only": {
+    "codes_before": 411,
+    "codes_after": 436,
+    "new_codes": [
+      "399006.SZSE",
+      "DJSOEP",
+      "DWRTF",
+      "HSBIO",
+      "HSCSOE",
+      "HSFML25",
+      "HSIDI",
+      "HSISC",
+      "HSSC50",
+      "HSSCAM",
+      "HSSCHKY",
+      "HSSCITI",
+      "HSSCPB",
+      "HSSCSOY",
+      "HSSCT",
+      "IXY",
+      "S35",
+      "S5INFT",
+      "SP5CSSUP",
+      "SP5NENRS",
+      "SPAHLVCP",
+      "SPGOGUP",
+      "SPNCSCUP",
+      "SPSIBI",
+      "SPSIOP"
+    ],
+    "missing_codes": [],
+    "altered": [],
+    "ok": true
+  },
+  "ingest_check": {
+    "exit_code": 0,
+    "ok": true,
+    "stdout_tail": [
+      "check theme-恒生创新药指数",
+      "  OK 262 2023-12-01→2024-12-24 median 0.0000% []",
+      "check theme-恒生生物科技指数",
+      "  OK 452 2019-12-16→2021-10-18 median 0.0000% []",
+      "check chinext",
+      "  OK 371 2010-06-01→2011-12-08 median 0.0001% []",
+      "check theme-标普全球石油指数",
+      "  OK 213 2011-07-08→2012-05-01 median 0.0001% []",
+      "check theme-标普500信息科技指数",
+      "  OK 5164 1996-06-28→2016-12-23 median 0.0002% []",
+      "check theme-标普生物科技精选行业指数",
+      "  OK 2748 2006-01-27→2016-12-23 median 0.0001%,0.0001% []",
+      "check theme-道琼斯美国石油开发与生产指数",
+      "  OK 2740 2006-04-28→2017-03-16 median 0.0000% []",
+      "check theme-标普石油天然气勘探及生产精选行业指数",
+      "  OK 1505 2006-06-19→2012-06-07 median 0.0002% []",
+      "check theme-标普500医疗保健等权重指数",
+      "  OK 2544 2006-11-02→2016-12-13 median 0.0000% []",
+      "check theme-道琼斯美国精选REIT指数",
+      "  OK 4752 1998-12-31→2017-11-22 median 0.0000% []",
+      "check theme-SPAHLVCP",
+      "  OK 1507 2017-08-04→2023-12-07 median 0.0000%,0.0000% []",
+      "check theme-S&P 500 Energy Sector Index(NTR)",
+      "  OK 4038 1998-12-31→2015-02-13 median 0.0000% []",
+      "check theme-标普500消费精选指数",
+      "  OK 294 2022-11-25→2024-02-01 median 0.0000%,0.0000% []",
+      "check theme-标普美国品质消费股票指数",
+      "  OK 4351 1998-12-16→2016-04-05 median 0.0000%,0.0000% []",
+      "check theme-标普中国新经济行业指数",
+      "  OK 116 2020-05-14→2020-10-22 median 0.0000%,0.0000% []"
+    ],
+    "stderr_tail": []
+  },
+  "held": {
+    "held_list_match": true,
+    "held_ids": [
+      "soymeal",
+      "theme-巴西IBOVESPA指数",
+      "theme-东证指数",
+      "theme-MSCI China Value Weighted Index",
+      "theme-MSCI USA 50 Index",
+      "theme-法兰克福DAX指数",
+      "theme-iEdge Emerging Asia Select 50 Index",
+      "theme-新交所泛东南亚科技指数",
+      "theme-富时亚太低碳精选指数",
+      "theme-富时沙特阿拉伯指数",
+      "theme-恒生中国企业指数"
+    ],
+    "d37_r6_codes": [
+      "399006.SZSE",
+      "DJSOEP",
+      "DWRTF",
+      "HSBIO",
+      "HSCSOE",
+      "HSFML25",
+      "HSIDI",
+      "HSISC",
+      "HSSC50",
+      "HSSCAM",
+      "HSSCHKY",
+      "HSSCITI",
+      "HSSCPB",
+      "HSSCSOY",
+      "HSSCT",
+      "IXY",
+      "S35",
+      "S5INFT",
+      "SP5CSSUP",
+      "SP5NENRS",
+      "SPAHLVCP",
+      "SPGOGUP",
+      "SPNCSCUP",
+      "SPSIBI",
+      "SPSIOP"
+    ],
+    "unexpected_d37_r6": [],
+    "ok": true
+  },
+  "spot_checks": [
+    {
+      "name": "chinext split 399006 / 399006.SZSE",
+      "ok": true,
+      "tencent_rows": 3967,
+      "szse_rows": 371,
+      "399006_sources": [
+        "tencent_index"
+      ]
+    },
+    {
+      "name": "399006.SZSE ingest start",
+      "ok": true,
+      "db_first": "2010-06-01",
+      "expected": "2010-06-01",
+      "first_close": 973.2333
+    },
+    {
+      "name": "Hang Seng HSFML25",
+      "ok": true,
+      "min": "2017-07-19",
+      "max": "2025-10-10",
+      "rows": 2026,
+      "ingest_median": 0.0,
+      "claimed": 2026
+    },
+    {
+      "name": "Hang Seng HSISC",
+      "ok": true,
+      "min": "2024-03-08",
+      "max": "2025-06-06",
+      "rows": 304,
+      "ingest_median": 0.0,
+      "claimed": 304
+    },
+    {
+      "name": "IXY 2000-01-21 FT 288.89 preserved",
+      "ok": true,
+      "close_2000-01-21": 288.89,
+      "ingest_first": "1998-12-16"
+    },
+    {
+      "name": "partial SPAHLVCP start",
+      "ok": true,
+      "db_min": "2017-08-04",
+      "expected": "2017-08-04",
+      "rows": 1507
+    },
+    {
+      "name": "partial SP5NENRS start",
+      "ok": true,
+      "db_min": "1998-12-31",
+      "expected": "1998-12-31",
+      "rows": 4038
+    },
+    {
+      "name": "partial SP5CSSUP start",
+      "ok": true,
+      "db_min": "2022-11-25",
+      "expected": "2022-11-25",
+      "rows": 294
+    },
+    {
+      "name": "partial IXY start",
+      "ok": true,
+      "db_min": "1998-12-16",
+      "expected": "1998-12-16",
+      "rows": 4351
+    },
+    {
+      "name": "partial SPNCSCUP start",
+      "ok": true,
+      "db_min": "2020-05-14",
+      "expected": "2020-05-14",
+      "rows": 116
+    },
+    {
+      "name": "S5INFT 2001-09-11..14 not filled",
+      "ok": true,
+      "has_2001-01-02": true,
+      "gap_present": []
+    },
+    {
+      "name": "SPGOGUP official start",
+      "ok": true,
+      "db_min": "2011-07-08"
+    },
+    {
+      "name": "SPAHLVCP no pre-continuous fill",
+      "ok": true,
+      "has_2017-02-20": false,
+      "has_2017-08-04": true
+    }
+  ],
+  "rerun": {
+    "s0_rerun_vs_r5": {
+      "days": 2611,
+      "problems": [],
+      "same": true
+    },
+    "cells": {
+      "S0检验段V0": {
+        "days": 2611,
+        "problems": [],
+        "same": true
+      },
+      "S1设计期V0": {
+        "dev": {
+          "ann": 0.10129517186096626,
+          "max_drawdown": -0.23598581227932824,
+          "trades_per_year": 19.6,
+          "cost_per_year": 0.0163559234756922
+        },
+        "ref": {
+          "ann": 0.10247253931599198,
+          "max_drawdown": -0.2359858122793287,
+          "trades_per_year": 19.8,
+          "cost_per_year": 0.01616086335661375
+        },
+        "match": false
+      },
+      "S1检验段V0": {
+        "dev": {
+          "ann": 0.016478783825997656,
+          "max_drawdown": -0.4188947170853362,
+          "trades_per_year": 51.24932975871314,
+          "cost_per_year": 0.05157033274748238
+        },
+        "ref": {
+          "ann": 0.01659603589708003,
+          "max_drawdown": -0.41819982422422075,
+          "trades_per_year": 51.24932975871314,
+          "cost_per_year": 0.05171330003420095
+        },
+        "match": false
+      },
+      "S1检验段B": {
+        "dev": {
+          "ann": 0.06236021544979509,
+          "max_drawdown": -0.32287078266031133,
+          "trades_per_year": 76.53619302949062,
+          "cost_per_year": 0.07183069615359274
+        },
+        "ref": {
+          "ann": 0.061972697650517494,
+          "max_drawdown": -0.32287078266031133,
+          "trades_per_year": 76.4396782841823,
+          "cost_per_year": 0.0717852385880105
+        },
+        "match": false
+      },
+      "dev_round6_S0": {
+        "days": 2611,
+        "problems": [],
+        "same": true
+      },
+      "S1设计期V0_r6": {
+        "dev": {
+          "ann": 0.10129517186096626,
+          "max_drawdown": -0.23598581227932824,
+          "trades_per_year": 19.6,
+          "cost_per_year": 0.0163559234756922
+        },
+        "ref": {
+          "ann": 0.10129517186096626,
+          "max_drawdown": -0.23598581227932824,
+          "trades_per_year": 19.6,
+          "cost_per_year": 0.0163559234756922
+        },
+        "match": true
+      },
+      "S1检验段V0_r6": {
+        "dev": {
+          "ann": 0.016478783825997656,
+          "max_drawdown": -0.4188947170853362,
+          "trades_per_year": 51.24932975871314,
+          "cost_per_year": 0.05157033274748238
+        },
+        "ref": {
+          "ann": 0.016478783825997656,
+          "max_drawdown": -0.4188947170853362,
+          "trades_per_year": 51.24932975871314,
+          "cost_per_year": 0.05157033274748238
+        },
+        "match": true
+      },
+      "S1检验段B_r6": {
+        "dev": {
+          "ann": 0.06236021544979509,
+          "max_drawdown": -0.32287078266031133,
+          "trades_per_year": 76.53619302949062,
+          "cost_per_year": 0.07183069615359274
+        },
+        "ref": {
+          "ann": 0.06236021544979509,
+          "max_drawdown": -0.32287078266031133,
+          "trades_per_year": 76.53619302949062,
+          "cost_per_year": 0.07183069615359274
+        },
+        "match": true
+      }
+    }
+  },
+  "ingest_counts": {
+    "accepted": 25,
+    "held": 11,
+    "complete": 20,
+    "partial": 5
+  },
+  "must_fix": [],
+  "decision": "approve"
+}
