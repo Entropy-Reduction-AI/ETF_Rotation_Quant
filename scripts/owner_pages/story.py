@@ -738,7 +738,7 @@ def _phi_svg(points, w=440, h=180):
         x, y = X(max(lo, min(hi, t))), Y(pv); right = x < w * .6
         g.append(f'<line x1="{x:.1f}" x2="{x:.1f}" y1="{y:.1f}" y2="{Y(0):.1f}" class="drop {tone}"/>'
                  f'<circle cx="{x:.1f}" cy="{y:.1f}" r="6" class="pt {tone}"/>'
-                 f'<text x="{x + (10 if right else -10):.1f}" y="{y + (-8 if pv > .9 else 18):.1f}" text-anchor="{"start" if right else "end"}" class="lb {tone}">{e(nm)}：t {t:+.2f} → p {pv:.2f}</text>')
+                 f'<text x="{x + (10 if right else -10):.1f}" y="{y + (-8 if pv > .9 else 18):.1f}" text-anchor="{"start" if right else "end"}" class="lb {tone}">{e(nm)}：t {t:+.2f} → p {pv:.3g}</text>')
     return f'<svg class="phi" viewBox="0 0 {w} {h}" role="img" aria-label="p = Φ(t) 换算曲线">{"".join(g)}</svg>'
 
 
