@@ -1,0 +1,1248 @@
+{
+  "label": "d37-round6",
+  "packet": "332b88fdb1b1b4272edb154754c3bf2925b5889d",
+  "before": "c07297f8372c2b4dd8f79417306f4dda3b2b49db3cb2523a6ad306c13523588b",
+  "after": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52",
+  "accepted": [
+    {
+      "container_id": "theme-HSFML25",
+      "group": "complete",
+      "bars_code": "HSFML25",
+      "index_code": "HSFML25",
+      "currency": "HKD",
+      "publish_date": "2017-07-19",
+      "continuous_start": "2017-07-19",
+      "ingest_start": "2017-07-19",
+      "first_list": "2025-10-13",
+      "row_count": 2026,
+      "first": "2017-07-19",
+      "last": "2025-10-10",
+      "hole_count": 122,
+      "holes_head": [
+        "2017-08-23",
+        "2017-10-02",
+        "2017-10-05",
+        "2017-12-25",
+        "2017-12-26",
+        "2018-01-01",
+        "2018-02-16",
+        "2018-02-19",
+        "2018-03-30",
+        "2018-04-02",
+        "2018-04-05",
+        "2018-05-01"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-HSFML25-official-past-month.csv",
+          "n": 20,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 20
+        }
+      ],
+      "notes": [
+        "基底 theme-HSFML25-eastmoney.csv 2297 行 2017-07-19→2026-11-17"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-HSISC",
+      "group": "complete",
+      "bars_code": "HSISC",
+      "index_code": "HSISC",
+      "currency": "HKD",
+      "publish_date": "2024-03-08",
+      "continuous_start": "2024-03-08",
+      "ingest_start": "2024-03-08",
+      "first_list": "2025-06-09",
+      "row_count": 304,
+      "first": "2024-03-08",
+      "last": "2025-06-06",
+      "hole_count": 22,
+      "holes_head": [
+        "2024-03-29",
+        "2024-04-01",
+        "2024-04-04",
+        "2024-05-01",
+        "2024-05-15",
+        "2024-06-10",
+        "2024-07-01",
+        "2024-09-06",
+        "2024-09-18",
+        "2024-10-01",
+        "2024-10-11",
+        "2024-12-25"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-HSISC-official-past-month.csv",
+          "n": 20,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 20
+        }
+      ],
+      "notes": [
+        "基底 theme-HSISC-eastmoney.csv 662 行 2024-03-08→2026-11-17"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-HSSC50",
+      "group": "complete",
+      "bars_code": "HSSC50",
+      "index_code": "HSSC50",
+      "currency": "HKD",
+      "publish_date": "2025-01-13",
+      "continuous_start": "2025-01-13",
+      "ingest_start": "2025-01-13",
+      "first_list": "2025-11-25",
+      "row_count": 214,
+      "first": "2025-01-13",
+      "last": "2025-11-24",
+      "hole_count": 12,
+      "holes_head": [
+        "2025-01-29",
+        "2025-01-30",
+        "2025-01-31",
+        "2025-04-04",
+        "2025-04-18",
+        "2025-04-21",
+        "2025-05-01",
+        "2025-05-05",
+        "2025-07-01",
+        "2025-10-01",
+        "2025-10-07",
+        "2025-10-29"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-HSSC50-official-past-month.csv",
+          "n": 20,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 20
+        }
+      ],
+      "notes": [
+        "基底 theme-HSSC50-eastmoney.csv 455 行 2025-01-13→2026-11-17"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-HSSCAMHI",
+      "group": "complete",
+      "bars_code": "HSSCAM",
+      "index_code": "HSSCAM",
+      "currency": "HKD",
+      "publish_date": "2024-05-31",
+      "continuous_start": "2024-05-31",
+      "ingest_start": "2024-05-31",
+      "first_list": "2026-05-15",
+      "row_count": 479,
+      "first": "2024-05-31",
+      "last": "2026-05-14",
+      "hole_count": 31,
+      "holes_head": [
+        "2024-06-10",
+        "2024-07-01",
+        "2024-09-06",
+        "2024-09-18",
+        "2024-10-01",
+        "2024-10-11",
+        "2024-12-25",
+        "2024-12-26",
+        "2025-01-01",
+        "2025-01-29",
+        "2025-01-30",
+        "2025-01-31"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-HSSCAMHI-official-past-month.csv",
+          "n": 20,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 20
+        }
+      ],
+      "notes": [
+        "基底 theme-HSSCAMHI-eastmoney.csv 607 行 2024-05-31→2026-11-17"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-HSSCHKY",
+      "group": "complete",
+      "bars_code": "HSSCHKY",
+      "index_code": "HSSCHKY",
+      "currency": "HKD",
+      "publish_date": "2019-11-18",
+      "continuous_start": "2019-11-18",
+      "ingest_start": "2019-11-18",
+      "first_list": "2021-05-20",
+      "row_count": 370,
+      "first": "2019-11-18",
+      "last": "2021-05-18",
+      "hole_count": 22,
+      "holes_head": [
+        "2019-12-25",
+        "2019-12-26",
+        "2020-01-01",
+        "2020-01-27",
+        "2020-01-28",
+        "2020-04-10",
+        "2020-04-13",
+        "2020-04-30",
+        "2020-05-01",
+        "2020-06-25",
+        "2020-07-01",
+        "2020-10-01"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-HSSCHKY-official-past-month.csv",
+          "n": 20,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 20
+        }
+      ],
+      "notes": [
+        "基底 theme-HSSCHKY-eastmoney.csv 1722 行 2019-11-18→2026-11-17"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-HSSCITI",
+      "group": "complete",
+      "bars_code": "HSSCITI",
+      "index_code": "HSSCITI",
+      "currency": "HKD",
+      "publish_date": "2023-07-17",
+      "continuous_start": "2023-07-17",
+      "ingest_start": "2023-07-17",
+      "first_list": "2025-08-19",
+      "row_count": 419,
+      "first": "2023-12-01",
+      "last": "2025-08-18",
+      "hole_count": 28,
+      "holes_head": [
+        "2023-12-25",
+        "2023-12-26",
+        "2024-01-01",
+        "2024-02-12",
+        "2024-02-13",
+        "2024-03-29",
+        "2024-04-01",
+        "2024-04-04",
+        "2024-05-01",
+        "2024-05-15",
+        "2024-06-10",
+        "2024-07-01"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-HSSCITI-official-past-month.csv",
+          "n": 20,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 20
+        }
+      ],
+      "notes": [
+        "基底 theme-HSSCITI-eastmoney.csv 727 行 2023-12-01→2026-11-17"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-HSSCPB",
+      "group": "complete",
+      "bars_code": "HSSCPB",
+      "index_code": "HSSCPB",
+      "currency": "HKD",
+      "publish_date": "2023-07-17",
+      "continuous_start": "2023-07-17",
+      "ingest_start": "2023-07-17",
+      "first_list": "2025-07-07",
+      "row_count": 388,
+      "first": "2023-12-01",
+      "last": "2025-07-04",
+      "hole_count": 28,
+      "holes_head": [
+        "2023-12-25",
+        "2023-12-26",
+        "2024-01-01",
+        "2024-02-12",
+        "2024-02-13",
+        "2024-03-29",
+        "2024-04-01",
+        "2024-04-04",
+        "2024-05-01",
+        "2024-05-15",
+        "2024-06-10",
+        "2024-07-01"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-HSSCPB-official-past-month.csv",
+          "n": 20,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 20
+        }
+      ],
+      "notes": [
+        "基底 theme-HSSCPB-eastmoney.csv 727 行 2023-12-01→2026-11-17"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-HSSCSOY",
+      "group": "complete",
+      "bars_code": "HSSCSOY",
+      "index_code": "HSSCSOY",
+      "currency": "HKD",
+      "publish_date": "2023-06-12",
+      "continuous_start": "2023-06-12",
+      "ingest_start": "2023-06-12",
+      "first_list": "2024-01-05",
+      "row_count": 22,
+      "first": "2023-12-01",
+      "last": "2024-01-04",
+      "hole_count": 3,
+      "holes_head": [
+        "2023-12-25",
+        "2023-12-26",
+        "2024-01-01"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-HSSCSOY-official-past-month.csv",
+          "n": 20,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 20
+        }
+      ],
+      "notes": [
+        "基底 theme-HSSCSOY-eastmoney.csv 727 行 2023-12-01→2026-11-17"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-HSSCT",
+      "group": "complete",
+      "bars_code": "HSSCT",
+      "index_code": "HSSCT",
+      "currency": "HKD",
+      "publish_date": "2020-02-17",
+      "continuous_start": "2020-02-17",
+      "ingest_start": "2020-02-17",
+      "first_list": "2022-02-09",
+      "row_count": 459,
+      "first": "2020-03-30",
+      "last": "2022-02-08",
+      "hole_count": 28,
+      "holes_head": [
+        "2020-04-10",
+        "2020-04-13",
+        "2020-04-30",
+        "2020-05-01",
+        "2020-06-25",
+        "2020-07-01",
+        "2020-10-01",
+        "2020-10-02",
+        "2020-10-13",
+        "2020-10-26",
+        "2020-12-25",
+        "2021-01-01"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-HSSCT-official-past-month.csv",
+          "n": 20,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 20
+        }
+      ],
+      "notes": [
+        "基底 theme-HSSCT-eastmoney.csv 1632 行 2020-03-30→2026-11-17"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-恒生中国央企指数",
+      "group": "complete",
+      "bars_code": "HSCSOE",
+      "index_code": "HSCSOE",
+      "currency": "HKD",
+      "publish_date": "2023-04-17",
+      "continuous_start": "2023-04-17",
+      "ingest_start": "2023-04-17",
+      "first_list": "2024-04-19",
+      "row_count": 92,
+      "first": "2023-12-01",
+      "last": "2024-04-18",
+      "hole_count": 8,
+      "holes_head": [
+        "2023-12-25",
+        "2023-12-26",
+        "2024-01-01",
+        "2024-02-12",
+        "2024-02-13",
+        "2024-03-29",
+        "2024-04-01",
+        "2024-04-04"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-恒生中国央企指数-official-past-month.csv",
+          "n": 20,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 20
+        }
+      ],
+      "notes": [
+        "基底 theme-恒生中国央企指数-eastmoney.csv 727 行 2023-12-01→2026-11-17"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-恒生创新药指数",
+      "group": "complete",
+      "bars_code": "HSIDI",
+      "index_code": "HSIDI",
+      "currency": "HKD",
+      "publish_date": "2023-05-15",
+      "continuous_start": "2023-05-15",
+      "ingest_start": "2023-05-15",
+      "first_list": "2024-12-27",
+      "row_count": 262,
+      "first": "2023-12-01",
+      "last": "2024-12-24",
+      "hole_count": 16,
+      "holes_head": [
+        "2023-12-25",
+        "2023-12-26",
+        "2024-01-01",
+        "2024-02-12",
+        "2024-02-13",
+        "2024-03-29",
+        "2024-04-01",
+        "2024-04-04",
+        "2024-05-01",
+        "2024-05-15",
+        "2024-06-10",
+        "2024-07-01"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-恒生创新药指数-official-past-month.csv",
+          "n": 20,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 20
+        }
+      ],
+      "notes": [
+        "基底 theme-恒生创新药指数-eastmoney.csv 727 行 2023-12-01→2026-11-17"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-恒生生物科技指数",
+      "group": "complete",
+      "bars_code": "HSBIO",
+      "index_code": "HSBIO",
+      "currency": "HKD",
+      "publish_date": "2019-12-16",
+      "continuous_start": "2019-12-16",
+      "ingest_start": "2019-12-16",
+      "first_list": "2021-10-19",
+      "row_count": 452,
+      "first": "2019-12-16",
+      "last": "2021-10-18",
+      "hole_count": 29,
+      "holes_head": [
+        "2019-12-25",
+        "2019-12-26",
+        "2020-01-01",
+        "2020-01-27",
+        "2020-01-28",
+        "2020-04-10",
+        "2020-04-13",
+        "2020-04-30",
+        "2020-05-01",
+        "2020-06-25",
+        "2020-07-01",
+        "2020-10-01"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-恒生生物科技指数-official-past-month.csv",
+          "n": 20,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 20
+        }
+      ],
+      "notes": [
+        "基底 theme-恒生生物科技指数-eastmoney.csv 1702 行 2019-12-16→2026-11-17"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "chinext",
+      "group": "complete",
+      "bars_code": "399006.SZSE",
+      "index_code": "399006",
+      "currency": "CNY",
+      "publish_date": "2010-06-01",
+      "continuous_start": "2010-06-01",
+      "ingest_start": "2010-06-01",
+      "first_list": "2011-12-09",
+      "row_count": 371,
+      "first": "2010-06-01",
+      "last": "2011-12-08",
+      "hole_count": 27,
+      "holes_head": [
+        "2010-06-14",
+        "2010-06-15",
+        "2010-06-16",
+        "2010-09-22",
+        "2010-09-23",
+        "2010-09-24",
+        "2010-10-01",
+        "2010-10-04",
+        "2010-10-05",
+        "2010-10-06",
+        "2010-10-07",
+        "2011-01-03"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "chinext-eastmoney.csv",
+          "n": 3996,
+          "median": 1.2505582851485286e-06,
+          "max": 7.658724591275146e-05,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 30
+        }
+      ],
+      "notes": [
+        "基底 chinext.csv 3996 行 2010-06-01→2026-11-16"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-标普全球石油指数",
+      "group": "complete",
+      "bars_code": "SPGOGUP",
+      "index_code": "SPGOGUP",
+      "currency": "USD",
+      "publish_date": "2011-07-08",
+      "continuous_start": "2011-07-08",
+      "ingest_start": "2011-07-08",
+      "first_list": "2012-05-02",
+      "row_count": 213,
+      "first": "2011-07-08",
+      "last": "2012-05-01",
+      "hole_count": 0,
+      "holes_head": [],
+      "checks": [
+        {
+          "left": "d37-remain-20261118/theme-SPGOGUP-usspindices-wayback-usd-pr-daily-20110708-20150123.csv",
+          "right": "d37-longhist-20261118/theme-SPGOGUP-ft-usd-pr-daily-20141216-20261116.csv",
+          "n": 28,
+          "median": 1.2578103398830365e-06,
+          "max": 2.679922860182593e-06,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 20
+        }
+      ],
+      "notes": [
+        "基底 d37-remain-20261118/theme-SPGOGUP-usspindices-wayback-usd-pr-daily-20110708-20141215.csv 895 行 2011-07-08→2014-12-15"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-标普500信息科技指数",
+      "group": "complete",
+      "bars_code": "S5INFT",
+      "index_code": "S5INFT",
+      "currency": "USD",
+      "publish_date": "1996-06-28",
+      "continuous_start": "1996-06-28",
+      "ingest_start": "1996-06-28",
+      "first_list": "2016-12-27",
+      "row_count": 5164,
+      "first": "1996-06-28",
+      "last": "2016-12-23",
+      "hole_count": 182,
+      "holes_head": [
+        "1996-07-04",
+        "1996-09-02",
+        "1996-11-28",
+        "1996-12-25",
+        "1997-01-01",
+        "1997-02-17",
+        "1997-03-28",
+        "1997-05-26",
+        "1997-07-04",
+        "1997-09-01",
+        "1997-11-27",
+        "1997-12-25"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-标普500信息科技指数-official-usd-pr-daily-20251117-20261117.csv",
+          "n": 251,
+          "median": 1.5090490123048639e-06,
+          "max": 0.01196271847285224,
+          "n_over": 2,
+          "ok": true,
+          "min_n": 30
+        }
+      ],
+      "notes": [
+        "基底 d37-remain-20261118-pass2/theme-S5INFT-ft-SP500-45-usd-pr-daily-19960628-20120924.csv 3864 行 1996-06-28→2012-09-24",
+        "补缺 d37-remain-20261118-pass3/theme-S5INFT-cnbc-SPLRCT-usd-pr-daily-20010102-20011204.csv 2001-01-02→2001-12-04 新增 230 行，不覆盖已有日",
+        "后续 theme-标普500信息科技指数-tradingview.csv 接在最后一天之后，新增 3547 行"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-标普生物科技精选行业指数",
+      "group": "complete",
+      "bars_code": "SPSIBI",
+      "index_code": "SPSIBI",
+      "currency": "USD",
+      "publish_date": "2006-01-27",
+      "continuous_start": "2006-01-27",
+      "ingest_start": "2006-01-27",
+      "first_list": "2016-12-27",
+      "row_count": 2748,
+      "first": "2006-01-27",
+      "last": "2016-12-23",
+      "hole_count": 98,
+      "holes_head": [
+        "2006-02-20",
+        "2006-04-14",
+        "2006-05-29",
+        "2006-07-04",
+        "2006-09-04",
+        "2006-11-23",
+        "2006-12-25",
+        "2007-01-01",
+        "2007-01-02",
+        "2007-01-15",
+        "2007-02-19",
+        "2007-04-06"
+      ],
+      "checks": [
+        {
+          "left": "d37-remain-20261118-pass2/theme-SPSIBI-usspindices-wayback-usd-pr-daily-20060127-20141219.csv",
+          "right": "theme-标普生物科技精选行业指数-tradingview.csv",
+          "n": 160,
+          "median": 5.993050813390965e-07,
+          "max": 1.4919891965226029e-06,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 30
+        },
+        {
+          "left": "primary",
+          "right": "theme-标普生物科技精选行业指数-official-usd-pr-daily-20251117-20261117.csv",
+          "n": 251,
+          "median": 9.5164591917829e-07,
+          "max": 0.00014550948443203815,
+          "n_over": 1,
+          "ok": true,
+          "min_n": 30
+        }
+      ],
+      "notes": [
+        "基底 d37-remain-20261118-pass2/theme-SPSIBI-usspindices-wayback-usd-pr-daily-20060127-20140505.csv 2081 行 2006-01-27→2014-05-05",
+        "后续 theme-标普生物科技精选行业指数-tradingview.csv 接在最后一天之后，新增 3153 行"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-道琼斯美国石油开发与生产指数",
+      "group": "complete",
+      "bars_code": "DJSOEP",
+      "index_code": "DJSOEP",
+      "currency": "USD",
+      "publish_date": "2006-04-28",
+      "continuous_start": "2006-04-28",
+      "ingest_start": "2006-04-28",
+      "first_list": "2017-03-17",
+      "row_count": 2740,
+      "first": "2006-04-28",
+      "last": "2017-03-16",
+      "hole_count": 100,
+      "holes_head": [
+        "2006-05-29",
+        "2006-07-04",
+        "2006-09-04",
+        "2006-11-23",
+        "2006-12-25",
+        "2007-01-01",
+        "2007-01-02",
+        "2007-01-15",
+        "2007-02-19",
+        "2007-04-06",
+        "2007-05-28",
+        "2007-07-04"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-道琼斯美国石油开发与生产指数-official-usd-pr-daily-20251117-20261117.csv",
+          "n": 251,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 30
+        }
+      ],
+      "notes": [
+        "基底 d37-remain-20261118-pass2/theme-DJSOEP-ft-usd-pr-daily-20060428-20060504.csv 5 行 2006-04-28→2006-05-04",
+        "后续 theme-道琼斯美国石油开发与生产指数-tradingview.csv 接在最后一天之后，新增 5166 行"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-标普石油天然气勘探及生产精选行业指数",
+      "group": "complete",
+      "bars_code": "SPSIOP",
+      "index_code": "SPSIOP",
+      "currency": "USD",
+      "publish_date": "2006-06-19",
+      "continuous_start": "2006-06-19",
+      "ingest_start": "2006-06-19",
+      "first_list": "2012-06-08",
+      "row_count": 1505,
+      "first": "2006-06-19",
+      "last": "2012-06-07",
+      "hole_count": 54,
+      "holes_head": [
+        "2006-07-04",
+        "2006-09-04",
+        "2006-11-23",
+        "2006-12-25",
+        "2007-01-01",
+        "2007-01-02",
+        "2007-01-15",
+        "2007-02-19",
+        "2007-04-06",
+        "2007-05-28",
+        "2007-07-04",
+        "2007-09-03"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-标普石油天然气勘探及生产精选行业指数-official-usd-pr-daily-20251117-20261117.csv",
+          "n": 251,
+          "median": 1.5216230240255868e-06,
+          "max": 0.03285194381362011,
+          "n_over": 1,
+          "ok": true,
+          "min_n": 30
+        }
+      ],
+      "notes": [
+        "基底 d37-remain-20261118-pass2/theme-SPSIOP-ft-usd-pr-daily-20060619-20060622.csv 4 行 2006-06-19→2006-06-22",
+        "后续 theme-标普石油天然气勘探及生产精选行业指数-tradingview.csv 接在最后一天之后，新增 5126 行"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-标普500医疗保健等权重指数",
+      "group": "complete",
+      "bars_code": "S35",
+      "index_code": "S35",
+      "currency": "USD",
+      "publish_date": "2006-06-20",
+      "continuous_start": "2006-11-02",
+      "ingest_start": "2006-11-02",
+      "first_list": "2016-12-14",
+      "row_count": 2544,
+      "first": "2006-11-02",
+      "last": "2016-12-13",
+      "hole_count": 95,
+      "holes_head": [
+        "2006-11-23",
+        "2006-12-04",
+        "2006-12-25",
+        "2007-01-01",
+        "2007-01-15",
+        "2007-02-19",
+        "2007-04-06",
+        "2007-05-28",
+        "2007-07-04",
+        "2007-09-03",
+        "2007-11-22",
+        "2007-12-25"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-标普500医疗保健等权重指数-official-usd-pr-daily-20251117-20261116.csv",
+          "n": 251,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 30
+        }
+      ],
+      "notes": [
+        "基底 theme-标普500医疗保健等权重指数-tradingview.csv 5038 行 2006-11-02→2026-11-16"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-道琼斯美国精选REIT指数",
+      "group": "complete",
+      "bars_code": "DWRTF",
+      "index_code": "DWRTF",
+      "currency": "USD",
+      "publish_date": "1998-12-31",
+      "continuous_start": "1998-12-31",
+      "ingest_start": "1998-12-31",
+      "first_list": "2017-11-24",
+      "row_count": 4752,
+      "first": "1998-12-31",
+      "last": "2017-11-22",
+      "hole_count": 178,
+      "holes_head": [
+        "1999-01-01",
+        "1999-01-18",
+        "1999-02-15",
+        "1999-04-02",
+        "1999-05-31",
+        "1999-07-05",
+        "1999-09-06",
+        "1999-11-25",
+        "1999-12-24",
+        "2000-01-17",
+        "2000-02-21",
+        "2000-04-21"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-道琼斯美国精选REIT指数-official-usd-pr-daily-20251117-20261116.csv",
+          "n": 251,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 30
+        }
+      ],
+      "notes": [
+        "基底 theme-道琼斯美国精选REIT指数-tradingview.csv 7008 行 1998-12-31→2026-11-16"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-SPAHLVCP",
+      "group": "partial",
+      "bars_code": "SPAHLVCP",
+      "index_code": "SPAHLVCP",
+      "currency": "CNY",
+      "publish_date": "2017-02-20",
+      "continuous_start": "2017-08-04",
+      "ingest_start": "2017-08-04",
+      "first_list": "2023-12-08",
+      "row_count": 1507,
+      "first": "2017-08-04",
+      "last": "2023-12-07",
+      "hole_count": 148,
+      "holes_head": [
+        "2017-08-23",
+        "2017-10-02",
+        "2017-10-05",
+        "2017-12-25",
+        "2017-12-26",
+        "2018-01-01",
+        "2018-02-16",
+        "2018-02-19",
+        "2018-03-30",
+        "2018-04-02",
+        "2018-04-05",
+        "2018-05-01"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-SPAHLVCP-official-cny-pr-daily-20251117-20261117.csv",
+          "n": 243,
+          "median": 0.0,
+          "max": 0.0017659716554128124,
+          "n_over": 1,
+          "ok": true,
+          "min_n": 30
+        },
+        {
+          "left": "primary",
+          "right": "d37-longhist-20261118/theme-SPAHLVCP-xueqiu-cny-pr-daily-20180711-20261117.csv",
+          "n": 1960,
+          "median": 0.0,
+          "max": 0.0019979805358023572,
+          "n_over": 2,
+          "ok": true,
+          "min_n": 30
+        }
+      ],
+      "notes": [
+        "基底 d37-longhist-20261118/theme-SPAHLVCP-ft-cny-pr-daily-20170804-20261117.csv 2251 行 2017-08-04→2026-11-17"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-S&P 500 Energy Sector Index(NTR)",
+      "group": "partial",
+      "bars_code": "SP5NENRS",
+      "index_code": "SP5NENRS",
+      "currency": "USD",
+      "publish_date": "1996-06-28",
+      "continuous_start": "1998-12-31",
+      "ingest_start": "1998-12-31",
+      "first_list": "2015-02-17",
+      "row_count": 4038,
+      "first": "1998-12-31",
+      "last": "2015-02-13",
+      "hole_count": 169,
+      "holes_head": [
+        "1999-01-01",
+        "1999-01-18",
+        "1999-02-15",
+        "1999-04-02",
+        "1999-05-31",
+        "1999-07-05",
+        "1999-09-06",
+        "1999-11-25",
+        "1999-12-24",
+        "2000-01-17",
+        "2000-02-21",
+        "2000-04-21"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-S&P 500 Energy Sector Index(NTR)-official-usd-ntr-daily-20251117-20261116.csv",
+          "n": 251,
+          "median": 0.0,
+          "max": 1.5655332206154782e-05,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 30
+        }
+      ],
+      "notes": [
+        "基底 d37-longhist-20261118/theme-SP5NENRS-ft-NTRGSPE-usd-ntr-daily-19981231-20261116.csv 6992 行 1998-12-31→2026-11-16"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-标普500消费精选指数",
+      "group": "partial",
+      "bars_code": "SP5CSSUP",
+      "index_code": "SP5CSSUP",
+      "currency": "USD",
+      "publish_date": "2022-11-21",
+      "continuous_start": "2022-11-25",
+      "ingest_start": "2022-11-25",
+      "first_list": "2024-02-02",
+      "row_count": 294,
+      "first": "2022-11-25",
+      "last": "2024-02-01",
+      "hole_count": 16,
+      "holes_head": [
+        "2022-12-26",
+        "2023-01-02",
+        "2023-01-16",
+        "2023-02-20",
+        "2023-04-07",
+        "2023-05-29",
+        "2023-06-19",
+        "2023-07-04",
+        "2023-09-04",
+        "2023-10-24",
+        "2023-10-25",
+        "2023-10-26"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-标普500消费精选指数-official-usd-pr-daily-20251117-20261116.csv",
+          "n": 251,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 30
+        },
+        {
+          "left": "primary",
+          "right": "theme-标普500消费精选指数-tradingview.csv",
+          "n": 767,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 30
+        }
+      ],
+      "notes": [
+        "基底 d37-longhist-20261118/theme-SP5CSSUP-ft-usd-pr-daily-20221125-20261116.csv 994 行 2022-11-25→2026-11-16"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-标普美国品质消费股票指数",
+      "group": "partial",
+      "bars_code": "IXY",
+      "index_code": "IXY",
+      "currency": "USD",
+      "publish_date": "1998-12-16",
+      "continuous_start": "1998-12-16",
+      "ingest_start": "1998-12-16",
+      "first_list": "2016-04-06",
+      "row_count": 4351,
+      "first": "1998-12-16",
+      "last": "2016-04-05",
+      "hole_count": 164,
+      "holes_head": [
+        "1998-12-25",
+        "1999-01-01",
+        "1999-01-18",
+        "1999-02-15",
+        "1999-04-02",
+        "1999-05-31",
+        "1999-07-05",
+        "1999-09-06",
+        "1999-11-25",
+        "1999-12-24",
+        "2000-01-17",
+        "2000-02-21"
+      ],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-标普美国品质消费股票指数-official-usd-pr-daily-20251117-20261116.csv",
+          "n": 251,
+          "median": 0.0,
+          "max": 0.0,
+          "n_over": 0,
+          "ok": true,
+          "min_n": 30
+        },
+        {
+          "left": "primary",
+          "right": "d37-remain-20261119-pass5/theme-IXY-cnbc-usd-pr-daily-19981216-20060427.csv",
+          "n": 1851,
+          "median": 0.0,
+          "max": 0.016142764703879098,
+          "n_over": 1,
+          "ok": true,
+          "min_n": 30
+        }
+      ],
+      "notes": [
+        "基底 d37-longhist-20261118/theme-IXY-ft-usd-pr-daily-19981216-20261116.csv 7022 行 1998-12-16→2026-11-16",
+        "剔除 FT 在 2001-09-11 重复的前收，纽交所停市。"
+      ],
+      "problems": [],
+      "ok": true
+    },
+    {
+      "container_id": "theme-标普中国新经济行业指数",
+      "group": "partial",
+      "bars_code": "SPNCSCUP",
+      "index_code": "SPNCSCUP",
+      "currency": "USD",
+      "publish_date": "2018-12-24",
+      "continuous_start": "2020-05-14",
+      "ingest_start": "2020-05-14",
+      "first_list": "2020-10-23",
+      "row_count": 116,
+      "first": "2020-05-14",
+      "last": "2020-10-22",
+      "hole_count": 0,
+      "holes_head": [],
+      "checks": [
+        {
+          "left": "primary",
+          "right": "theme-标普中国新经济行业指数-tradingview.csv",
+          "n": 1419,
+          "median": 0.0,
+          "max": 0.0019899630331685625,
+          "n_over": 101,
+          "ok": true,
+          "min_n": 30
+        },
+        {
+          "left": "primary",
+          "right": "theme-标普中国新经济行业指数-official-usd-pr-SPNCSCUP-daily-20251117-20261116.csv",
+          "n": 257,
+          "median": 0.0,
+          "max": 0.004635843978968435,
+          "n_over": 1,
+          "ok": true,
+          "min_n": 30
+        }
+      ],
+      "notes": [
+        "基底 d37-longhist-20261118/theme-SPNCSCUP-ft-usd-pr-daily-20200514-20261116.csv 1687 行 2020-05-14→2026-11-16"
+      ],
+      "problems": [],
+      "ok": true
+    }
+  ],
+  "held": [
+    {
+      "container_id": "soymeal",
+      "reason": "只有大商所一条官方日线。soymeal-official-full.csv 是同一条未裁切序列，不是第二条独立日线。不入库。"
+    },
+    {
+      "container_id": "theme-巴西IBOVESPA指数",
+      "reason": "数据包只有巴西央行美元兑雷亚尔，没有指数点位文件。不另去下载指数，也不单独写入汇率。"
+    },
+    {
+      "container_id": "theme-东证指数",
+      "reason": "只有 JPX 统计月报这一条日线，publish_date 仍是未核对。没有第二条独立日线。不入库。"
+    },
+    {
+      "container_id": "theme-MSCI China Value Weighted Index",
+      "reason": "官方日线和 4 年文件是同一来源的两种导出，不是两条独立日线。不入库。"
+    },
+    {
+      "container_id": "theme-MSCI USA 50 Index",
+      "reason": "只有一条官方日线。不入库。"
+    },
+    {
+      "container_id": "theme-法兰克福DAX指数",
+      "reason": "入库候选只有价格收益 DAXK 一条。东财是绩效 DAX，不是 DAXK 的第二来源。publish_date 未核对。不入库。"
+    },
+    {
+      "container_id": "theme-iEdge Emerging Asia Select 50 Index",
+      "reason": "只有 TradingView 价格收益。官方复述三点的相对差约 0.13% 至 0.54%，过不了 0.01%。不用净总回报顶替。不入库。"
+    },
+    {
+      "container_id": "theme-新交所泛东南亚科技指数",
+      "reason": "只有 TradingView 价格收益 ASIATECP。没有第二条日线。不用 ASIATECN 净总回报。不入库。"
+    },
+    {
+      "container_id": "theme-富时亚太低碳精选指数",
+      "reason": "只有 TradingView 价格收益。官方月末文件是净税兄系，不是价格日线。不入库。"
+    },
+    {
+      "container_id": "theme-富时沙特阿拉伯指数",
+      "reason": "沙特里亚尔和美元两条不是同一点位（重叠最大相对差约 0.43%）。价格指数发布日未核对。不入库。"
+    },
+    {
+      "container_id": "theme-恒生中国企业指数",
+      "reason": "东财与官方过去一月 20 日一致，但发布日未决：INdex360 为 2017-07-19，目录为 1994-08-08。前者晚于首只基金上市日，后者会放进一段很长的打分窗口。两个都是官方日期，不选边，不入库。"
+    }
+  ],
+  "partial_start": {
+    "theme-SPAHLVCP": {
+      "publish": "2017-02-20",
+      "continuous": "2017-08-04",
+      "ingest": "2017-08-04"
+    },
+    "theme-S&P 500 Energy Sector Index(NTR)": {
+      "publish": "1996-06-28",
+      "continuous": "1998-12-31",
+      "ingest": "1998-12-31"
+    },
+    "theme-标普500消费精选指数": {
+      "publish": "2022-11-21",
+      "continuous": "2022-11-25",
+      "ingest": "2022-11-25"
+    },
+    "theme-标普美国品质消费股票指数": {
+      "publish": "1998-12-16",
+      "continuous": "1998-12-16",
+      "ingest": "1998-12-16"
+    },
+    "theme-标普中国新经济行业指数": {
+      "publish": "2018-12-24",
+      "continuous": "2020-05-14",
+      "ingest": "2020-05-14"
+    }
+  }
+}

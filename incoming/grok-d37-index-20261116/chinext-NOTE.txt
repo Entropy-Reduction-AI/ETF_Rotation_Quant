@@ -1,0 +1,41 @@
+Official ChiNext / 创业板指数 (399006) daily — 17 Nov 2026 (Asia/Taipei)
+
+Official sources only. No DB writes, no ingest branch, no Tencent series.
+
+Identity
+- Official name: 创业板指数 / ChiNext Index, code 399006 (SZSE / 国证指数).
+- Container: chinext.
+
+Official launch / publish date
+- From official SZSE 指数列表 (CATALOGID=1812_zs, txtDMorMC=399006):
+  基日 jrnew=2010-05-31, 基日指数 jrzs=1000, 起始计算日 qsrnew=2010-06-01.
+- URL: https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1812_zs&TABKEY=tab1&txtDMorMC=399006
+- Saved: chinext-official-szse-index-list.json, chinext-official-szse-metadata.json
+- publish_date used for the delivery series: 2010-06-01 (起始计算日).
+- 基日 2010-05-31 close 1000 was present in the official daily file and was dropped (no base-date backfill).
+- A browser screenshot of the SZSE table is not yet in screenshots/; the launch date is taken from the official JSON table, not guessed.
+
+Daily series
+- Official 国证指数 / cnindex daily API (anonymous):
+  https://hq.cnindex.com.cn/market/market/getIndexDailyData?indexCode=399006
+  Index name in payload: 创业板指 / ChiNext.
+- Raw payload saved: chinext-official-cnindex-daily.json
+- Delivery: chinext.csv, columns date,close (native CNY index levels, no FX).
+- 3996 daily rows, 2010-06-01 (973.2333) to 2026-11-16 (2320.0199).
+- Dates converted from epoch milliseconds with Asia/Shanghai (not UTC). 2010-05-31 base row dropped.
+- SHA256 csv: 195eeece26573879e344bbd534fc4b8e5c97432d90b719472fc984d9b49c5296
+- Download time: 2026-11-17 19:48:47
+
+Notes
+- first_list window 2011-12-09 + 30 trading days is covered.
+- Do not use any Tencent series already in the DB as a substitute.
+- Official page screenshot still pending.
+
+Second source (East Money public kline)
+- https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=0.399006&klt=101&fqt=0
+- Name in payload: 创业板指 / 399006. Delivery: chinext-eastmoney.csv, date,close.
+- 3996 rows, 2010-06-01 (973.23) to 2026-11-16 (2320.02). East Money also printed 2026-11-17 (intraday/unconfirmed); dropped.
+- Closes are 2-decimal rounded vs official 4-decimal levels.
+- Overlap vs official chinext.csv: 3996/3996 days, median |rel|≈0.000125%, max |rel|≈0.00766% (2013-08-06), 0 days above 0.01%.
+- SHA256 csv: 3da3d63659ec892398ae653ee1a9f3cef8d55b04a01cff144109fa29bd6a4767
+- Download time: 2026-11-17 19:52:55 Asia/Taipei

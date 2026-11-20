@@ -1,0 +1,22 @@
+D37-R6 Hang Seng secondary survey 2026-11-17 Asia/Taipei
+Public front-end probe after official INdex360 free history = Past month only (~20 days).
+No paid/cracked data used (Wind terminal, THS iFinD/quant dataplatform, Gugudata skipped).
+
+East Money public quote kline (push2his, secid 124.TICKER, klt=101, fqt=0):
+All 12 Price Indexes match official INdex360 past-month Day Close exactly (20/20 overlap, max |rel|=0, median=0).
+HSBIO official ticker HSBIO (catalogue First Value 2013-12-31, Launch 2019-12-16); East Money/Yahoo vendor code HSHKBIO, same Chinese name 恒生生物科技指数; 20 official points match, treated as same parent Price Index, not a substitute.
+Series trimmed to INdex360 publish/launch date and after (no base-date backfill). HSFML25 launch conflict remains (INdex360 2017-07-19 vs catalogue 2003-01-20); this drop uses 2017-07-19 as in sources.csv.
+Official past-month CSVs end 2026-11-16; EM (and Yahoo HSHKBIO.HK) also have 2026-11-17 close, included but not official-point checked.
+
+theme-HSFML25 official=HSFML25 em=HSFML25 name=恒生中国(香港上市)30指数 raw=6611 trimmed=2297 dropped_pre_launch=4314 2017-07-19 -> 2026-11-17
+theme-HSISC official=HSISC em=HSISC name=恒指港股通指数 raw=662 trimmed=662 dropped_pre_launch=0 2024-03-08 -> 2026-11-17
+theme-HSSC50 official=HSSC50 em=HSSC50 name=恒生港股通50指数 raw=455 trimmed=455 dropped_pre_launch=0 2025-01-13 -> 2026-11-17
+theme-HSSCAMHI official=HSSCAM em=HSSCAM name=恒生港股通汽车主题指数 raw=607 trimmed=607 dropped_pre_launch=0 2024-05-31 -> 2026-11-17
+theme-HSSCHKY official=HSSCHKY em=HSSCHKY name=恒生港股通高股息率指数 raw=1722 trimmed=1722 dropped_pre_launch=0 2019-11-18 -> 2026-11-17
+theme-HSSCITI official=HSSCITI em=HSSCITI name=恒生港股通科技主题指数 raw=727 trimmed=727 dropped_pre_launch=0 2023-12-01 -> 2026-11-17; EM first daily 2023-12-01 is after official launch 2023-07-17 (gap unfilled)
+theme-HSSCPB official=HSSCPB em=HSSCPB name=恒生港股通创新药精选指数 raw=727 trimmed=727 dropped_pre_launch=0 2023-12-01 -> 2026-11-17; EM first daily 2023-12-01 is after official launch 2023-07-17 (gap unfilled)
+theme-HSSCSOY official=HSSCSOY em=HSSCSOY name=恒生港股通中国央企红利指数 raw=727 trimmed=727 dropped_pre_launch=0 2023-12-01 -> 2026-11-17; EM first daily 2023-12-01 is after official launch 2023-06-12 (gap unfilled)
+theme-HSSCT official=HSSCT em=HSSCT name=恒生港股通中国科技指数 raw=1632 trimmed=1632 dropped_pre_launch=0 2020-03-30 -> 2026-11-17; EM first daily 2020-03-30 is after official launch 2020-02-17 (gap unfilled)
+theme-恒生中国央企指数 official=HSCSOE em=HSCSOE name=恒生中国央企指数 raw=727 trimmed=727 dropped_pre_launch=0 2023-12-01 -> 2026-11-17; EM first daily 2023-12-01 is after official launch 2023-04-17 (gap unfilled)
+theme-恒生创新药指数 official=HSIDI em=HSIDI name=恒生创新药指数 raw=727 trimmed=727 dropped_pre_launch=0 2023-12-01 -> 2026-11-17; EM first daily 2023-12-01 is after official launch 2023-05-15 (gap unfilled)
+theme-恒生生物科技指数 official=HSBIO em=HSHKBIO name=恒生生物科技指数 raw=3170 trimmed=1702 dropped_pre_launch=1468 2019-12-16 -> 2026-11-17

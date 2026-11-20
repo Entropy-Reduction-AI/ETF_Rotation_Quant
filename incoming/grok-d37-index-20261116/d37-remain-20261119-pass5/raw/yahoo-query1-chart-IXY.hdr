@@ -1,0 +1,9 @@
+HTTP/2 403 
+date: Thu, 19 Nov 2026 07:11:02 GMT
+strict-transport-security: max-age=31536000
+server: ATS
+x-content-type-options: nosniff
+referrer-policy: no-referrer-when-downgrade
+content-length: 3369
+content-type: text/html
+
