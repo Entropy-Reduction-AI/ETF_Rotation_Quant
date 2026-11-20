@@ -34,7 +34,7 @@ def trace(lvl, parent, prior, want):
                                      母指数在均线上方=bool(above.loc[d, parent]),
                                      票_均线=vm, 宽度=round(float(b1.get(per)), 2) if pd.notna(b1.get(per)) else None, 宽度门槛_历史低三分之一=round(float(b1q.get(per)), 2) if pd.notna(b1q.get(per)) else None, 票_宽度=vb,
                                      TRIN=round(float(t.get(per)), 2) if pd.notna(t.get(per)) else None, TRIN门槛_历史高三分之一=round(float(tq.get(per)), 2) if pd.notna(tq.get(per)) else None, 票_TRIN=vt,
-                                     票数=nv, 确认紧张=stress, 已知紧张月数=len(hist) + len(prior or []), 把握p=round(p, 2),
+                                     票数=nv, 确认紧张=stress, 已知紧张月数=len(hist) + len(prior or []), **_pstat(list(prior or []) + hist), 把握p=round(p, 2),
                                      候选数=int(ok.sum()), 前6名分数={k: round(float(v) * 100, 1) for k, v in sc[ok].nlargest(6).items()},
                                      入选=list(pick), 每只仓位_占名额=round(frac / 3, 3), 股票仓位_占名额=round(frac * len(pick) / 3, 3),
                                      国债或现金_占名额=round(1 - frac * len(pick) / 3, 3), 国债在均线上方=bool(babove.loc[d]) if d in babove.index else None)
@@ -42,6 +42,11 @@ def trace(lvl, parent, prior, want):
             v = mnx.loc[d, raw]
             if v.notna().all(): pend = float(v.mean())
     return out
+def _pstat(h):
+    """把握 p 的三个输入：以往紧张月领头者下月的平均涨幅、波动（%），以及 t = 平均 ÷ 波动 × √月数。"""
+    if len(h) < 2: return {}
+    a = np.array(h); sd = a.std(ddof=1)
+    return dict(紧张月领头者下月平均涨幅_pct=round(a.mean() * 100, 2), 波动_pct=round(sd * 100, 2), t=round(a.mean() / sd * len(a) ** 0.5, 2))
 res = {'A 股名额（40%）': trace(A, 'csi300', None, DATES), '美股名额（60%）': trace(US_RMB, 'SPX', US_PRIOR, DATES)}
 json.dump(res, open(ROOT / 'results/v6-preflight/exec-example.json', 'w'), ensure_ascii=False, indent=1, default=str)
 print(json.dumps(res, ensure_ascii=False, indent=1, default=str))
