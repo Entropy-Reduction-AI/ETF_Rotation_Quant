@@ -1575,6 +1575,40 @@ def _gl_clauses(html):
     return [re.sub(r'[。；]$', '', x) for x in parts]
 
 
+def term_cards(soup):
+    """'名词解释' folds: one card per term -- the definition big, then 为什么 / 例 / 说明 rows, the formula boxed."""
+    for fold in soup.select('.fold'):
+        h = fold.select_one('.fold-h')
+        if h is None or not h.get_text(strip=True).lstrip('▸▾ ').startswith('名词解释'):
+            continue
+        t = fold.find('table')
+        if t is None:
+            continue
+        cards = []
+        for tr in t.select('tbody tr'):
+            tds = tr.find_all('td')
+            if len(tds) < 2:
+                continue
+            name = tds[0].get_text(strip=True); body = tds[1].get_text('', strip=True)
+            sents = [x for x in re.split(r'(?<=。)', body) if x.strip()]
+            head, rest = sents[0], sents[1:]
+            rows = []
+            for x in rest:
+                x = x.strip()
+                fm = re.fullmatch(r'(.{0,4}?)([A-Za-zΦ]+\s*=\s*[^。，；]+)。', x)
+                if fm:
+                    rows.append(f'<div class="tm-fm">{html_escape(fm.group(2))}</div>'); continue
+                m = re.match(r'^(例|为什么[^：]*|用在[^：]*)：(.*)$', x)
+                lab, txt = (('例', m.group(2)) if m.group(1) == '例' else (m.group(1), m.group(2))) if m else ('说明', x)
+                k = 'ex' if lab == '例' else ('why' if lab.startswith('为什么') else 'note')
+                rows.append(f'<div class="tm-r"><span class="tm-k k-{k}">{html_escape(lab)}</span><span>{html_escape(txt)}</span></div>')
+            wide = ' wide' if len(body) > 110 else ''
+            cards.append(f'<div class="tm-card{wide}"><div class="tm-n">{html_escape(name)}</div><div class="tm-d">{html_escape(head)}</div>{"".join(rows)}</div>')
+        if cards:
+            wrap = t.find_parent(class_='table-wrap') or t
+            wrap.replace_with(BeautifulSoup('<div class="tm-grid">' + ''.join(cards) + '</div>', 'html.parser'))
+
+
 def glossary_cards(soup):
     """'先认识这几个名字' folds: one profile card per name -- positioning line, then rules tagged 选/卖/防守/节奏."""
     for fold in soup.select('.fold'):
@@ -1777,6 +1811,7 @@ def ux_pass(html):
     soup = BeautifulSoup(html, 'html.parser')
     status_hero(soup)
     glossary_cards(soup)
+    term_cards(soup)
     inline_bullets(soup)
     case_cards(soup)
     card_ux(soup)
@@ -2052,6 +2087,18 @@ ol.flow.spec .fl-v .num { all: unset; }
 .specgrid .xv-pt.a em { top: auto; bottom: -20px; color: var(--muted); }
 .specgrid .xv-th { position: absolute; top: -3px; bottom: -3px; width: 0; border-left: 2px dashed var(--ink); opacity: .55; }
 .specgrid .xv-th em { position: absolute; bottom: -18px; left: 4px; font-style: normal; font-size: 11px; white-space: nowrap; }
+.tm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); grid-auto-flow: dense; gap: 12px; margin: 10px 0 6px; }
+.tm-card { padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); display: flex; flex-direction: column; gap: 8px; }
+.tm-card.wide { grid-column: span 2; }
+.tm-n { font-size: 17px; font-weight: 800; color: var(--accent); }
+.tm-d { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.6; }
+.tm-fm { width: fit-content; padding: 4px 12px; border: 2px solid var(--accent); border-radius: 7px; font-weight: 800; font-size: 14.5px; color: var(--ink); }
+.tm-r { display: grid; grid-template-columns: auto 1fr; gap: 8px; align-items: baseline; font-size: 13.5px; line-height: 1.65; color: var(--ink); }
+.tm-k { padding: 1px 7px; border-radius: 5px; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+.tm-k.k-ex { background: var(--good-soft); color: var(--good); }
+.tm-k.k-why { background: var(--accent-soft); color: var(--accent); }
+.tm-k.k-note { background: var(--bg); color: var(--muted); }
+@media (max-width: 700px) { .tm-card.wide { grid-column: auto; } }
 .calcgrid { margin: 18px 0 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
 .calcgrid .cg-title { padding: 12px 18px; font-size: 17px; font-weight: 800; color: var(--ink); border-bottom: 1px solid var(--line); background: var(--accent-soft); }
 .calcgrid .cg-grid { display: grid; grid-template-columns: 96px repeat(var(--n), minmax(0, 1fr)) minmax(0, .8fr); }
