@@ -75,8 +75,8 @@ title(fig, '六种合成行情：新系统的中间情况都守住 60 万；较�
 fig.savefig(OUT / 'f6-synthetic.png', dpi=150, bbox_inches='tight'); plt.close(fig)
 
 # ---------- f7：预测表 ----------
-rows = [('美股名额挑选（前 3）', 1.0, 0.3, 1.5), ('A 股名额挑选（前 3）', 0.0, -1.0, 1.0), ('防守的平时保费', -0.4, -1.6, -0.4),
-        ('美股 60% 的仓位差\n（两地一样强时）', 0.0, -3.0, 3.0), ('合计（不含仓位差）', 0.6, -2.3, 2.1)]
+rows = [('美股名额挑选（前 3）', 1.0, 0.3, 1.5), ('A 股名额挑选（前 3）', 0.6, 0.0, 1.3), ('防守的平时保费', -0.4, -1.6, -0.4),
+        ('美股 60% 的仓位差\n（两地一样强时）', 0.0, -3.0, 3.0), ('合计（不含仓位差）', 1.2, -1.3, 2.4)]
 fig, ax = plt.subplots(figsize=(12, 4.4))
 for i, (n, c, lo, hi) in enumerate(rows):
     y = len(rows) - 1 - i; col = GOOD if c > 0 else (BAD if c < 0 else C['参照'])
@@ -87,8 +87,8 @@ ax.set_yticks(range(len(rows))); ax.set_yticklabels([r[0] for r in rows][::-1], 
 ax.set_xticks(range(-3, 4)); ax.set_xticklabels([fmt(v, 0) for v in range(-3, 4)])
 ax.set_xlim(-3.6, 3.6); ax.set_ylim(-.6, len(rows) - .2); ax.grid(axis='x', alpha=.22)
 ax.set_xlabel('每年比基准（沪深300 70% + 美股 30%）多或少几个点；粗线 = 范围，圆点 = 中间值', color=MUTED)
-title(fig, '预计每年比基准多约 0.6 个点，唯一的超额来源是美股名额的挑选',
-      '来自历史的超额打五折，再按候选个数（约 14 个）打六折；成本按单边 0.2% 已扣；美股比 A 股每年强或弱 10 点，仓位差约 ±3 点')
+title(fig, '预计每年比基准多约 1.2 个点，美股挑选为主、A 股挑选为辅',
+      '来自历史的超额打五折，再按候选个数打六折（美股证据 t 3.4，A 股 t 1.0）；成本按单边 0.2% 已扣；美股比 A 股每年强或弱 10 点，仓位差约 ±3 点')
 fig.savefig(OUT / 'f7-forecast.png', dpi=150, bbox_inches='tight'); plt.close(fig)
 print('ok')
 
