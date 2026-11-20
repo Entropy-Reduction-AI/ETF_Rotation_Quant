@@ -1,0 +1,7 @@
+Checked once, then stopped. This is the UNCAPPED parent family, not the target.
+https://web.archive.org/web/20200610144527id_/https://us.spindices.com/indices/equity/sp-new-china-sectors-index
+HTTP 200, 163,437 bytes. Title: S&P New China Sectors Index - S&P Dow Jones Indices.
+indexLevels: 0 (already a JS-widget shell). No indexId 92366265, no ticker SPNCSCUP, no "A-shares Capped" heading.
+Tickers/indexIds on the page belong to other China family indices (e.g. SPNCSHP; indexIds 92279260, 92315890, etc.).
+The capped USD PR slug was not present on us.spindices.com CDX.
+This page was not used as a substitute and the HTML is not staged, to avoid mix-ups.

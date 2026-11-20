@@ -1,0 +1,58 @@
+D37-R6 TradingView free Table copy 2026-11-17 23:12–23:29 Asia/Taipei (UTC+8)
+Signed in as wmcmz8h, Basic/free plan. No Plus / Download chart data.
+
+1) theme-标普500消费精选指数-tradingview.csv
+   SP:SP5CSSUP, on-page name S&P 500 Consumer Select 15/60 Index (USD)
+   770 rows 2023-10-23 3040.69 to 2026-11-16 4745.26
+   SHA256 9b5cc311ffa6c8cfca0d409f1d712d368e5c3503441fa4c08d6776845a6dcbc5
+   Official overlap 251/251 exact. Launch gap 2022-11-21 through 2023-10-22 (~240 weekdays).
+   2026-11-17 4747.96 only in -full.csv
+   SHA256 full 03395543ec6d8c95c0f37b845f27612254124754f38525302b2bc32b717611d4
+
+2) theme-标普美国品质消费股票指数-tradingview-partial-inprogress.csv
+   SP:IXY, on-page name Consumer Discretionary Select Sector Index
+   3344 rows 2012-12-27 471.54 to 2026-11-16 2386.14
+   SHA256 12fae9e4153e186edcd55a5151a4f78fc62cc912e7e057552fe7763b57bb14dc
+   Official overlap 236/251 exact; 15 official days missing. Did not reach launch 1998-12-16.
+   2021–2026 virtualization holes. Not a delivery file.
+
+3) theme-标普中国新经济行业指数-tradingview.csv
+   SP:SPNCSCUP, on-page name S&P New China Sectors (A-shares Capped) Index (USD)
+   1784 rows 2018-12-24 1551.58 to 2026-06-26 1463.21
+   SHA256 676509555eef750001bf385bb3782e59181cb6b78bf262d405052df4bf418893
+   Table latest row is 2026-06-26 (screenshot confirmed). Official overlap 158 days,
+   median |rel|=0, 4 days slightly above 0.01%, max |rel|≈0.020748% on 2026-06-05.
+   Needed window through 2020-12-31 only has New Year holes; 2021:73 and 2022:96 weekday holes remain.
+
+UPDATE 2026-11-17 23:33–23:56 Asia/Taipei (UTC+8)
+Small-step recopy. Many remaining holes are on the TradingView free table itself.
+
+IXY (SP:IXY):
+- Small-step recopy of 2025-07-03 through 2026-11-16 agreed exactly with the previous
+  partial on every overlapping row. Trimmed smallsteps file SHA256 is identical to
+  the original in-progress file: 12fae9e4153e186edcd55a5151a4f78fc62cc912e7e057552fe7763b57bb14dc
+  (3344 rows, 2012-12-27 471.54 to 2026-11-16 2386.14).
+- The 15 official 1y dates still missing are visible as jumps on the table
+  (screenshot SP-IXY-table-202512-202601-missing-official-dates-visible.png).
+  Examples: Wed 24 Dec '25 then Fri 19 Dec '25 (skips 2025-12-22 and 2025-12-23);
+  Mon 05 Jan '26, then Wed 07, then Fri 09 (skips 2026-01-06 and 2026-01-08).
+  Still missing, not invented: 2025-12-22, 2025-12-23, 2026-01-06, 2026-01-08,
+  2026-01-13, 2026-01-14, 2026-01-21, 2026-01-22, 2026-01-28, 2026-02-02,
+  2026-02-17, 2026-02-23, 2026-03-05, 2026-03-12, 2026-06-03.
+- Official overlap remains 236/251 exact. No delivery CSV. Start still 2012-12-27;
+  official launch 1998-12-16 not reached; no earliest-dates screenshot.
+- 2026-11-17 live bar dropped from trimmed file. New full snapshot close 2389.96
+  (earlier full snapshot was 2393.37, still moving).
+  smallsteps-full SHA256 b01fbc087233cc11fc32cba755708d6f1ad3da5520b1a1ffe342a43ab03745dc
+
+SPNCSCUP (SP:SPNCSCUP):
+- Latest row still Fri 2026-06-26, close 1463.21 (rechecked). Earliest still
+  official launch 2018-12-24, 1551.58, Change ∅.
+- Small-step recopy 2021-05-12 through 2022-12-30: 261 rows, all already in the
+  delivery file, 0 disagreements, 0 new dates. Delivery file left unchanged
+  SHA256 676509555eef750001bf385bb3782e59181cb6b78bf262d405052df4bf418893
+  (1784 rows). Backup before-2021-2022-fill.csv is a byte-identical copy.
+- 2021–2022 weekday holes remain 73 and 96 and are visible on the table
+  (e.g. Tue 30 Nov '21 jumps to Wed 08 Dec '21; screenshot
+  SP-SPNCSCUP-table-2021-nov-dec.png). Not reduced to holiday-like counts.
+- 2021 Jan–early May was not fully small-step recopied (time budget).

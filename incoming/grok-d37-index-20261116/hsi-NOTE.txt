@@ -1,0 +1,35 @@
+D37-R6 Part 1 — Hang Seng INdex360 official fetch (Priority A, 12 indexes)
+
+Download window: Asia/Taipei 2026-11-17 16:21–16:33.
+Account: free INdex360 registration with Manager bot email; login saved in the vault as "Hang Seng INdex360".
+No paid Data Product Service, no Customise time period, no Order Now, no DB or git changes.
+
+Official free Historical Data is limited to Past month. For these 12 indexes the official Price Index CSVs each have 20 trading days, 2026-10-20 through 2026-11-16 (columns: Date, Day Open, Day High, Day Low, Day Close). The CSV header says Date (dd-mm-yyyy) but the date values are yyyy-mm-dd. close for ingest is Day Close. These files are named *-official-past-month.csv and are not full-history delivery series; the needed window (launch date → first listed fund + 30 trading days) is not covered.
+
+Launch dates were read from INdex360 Overview → Profile → Launch Date and screenshotted. They were also cross-checked against the official Index Catalogue PDF (hsi-docs/index_catalogue.pdf, https://www.hsi.com.hk/content/dam/wpb/hsil/index/index_catalogue.pdf, updated 12 October 2026). Do not use First Value Date / 首個指數點日 as publish_date, and do not backfill to the base/first-value date.
+
+Launch Date (INdex360 Overview) vs Catalogue 發佈日:
+- theme-HSFML25 / HSFML25 / Hang Seng China (Hong Kong-listed) 30 Index: INdex360 19 Jul 2017; Catalogue Launch 20-01-2003, First Value 03-01-2000. CONFLICT — both official; not resolved here.
+- theme-HSISC / HSISC / HSI SCHK Index: 8 Mar 2024 (matches 08-03-2024)
+- theme-HSSC50 / HSSC50 / Hang Seng SCHK 50 Index: 13 Jan 2025 (matches 13-01-2025)
+- theme-HSSCAMHI / HSSCAM / Hang Seng SCHK Automobile Index: 31 May 2024 (matches 31-05-2024); official ticker is HSSCAM, not HSSCAMHI
+- theme-HSSCHKY / HSSCHKY / Hang Seng SCHK High Dividend Yield Index: 18 Nov 2019 (matches 18-11-2019); Chinese name now 恒生港股通红利指數
+- theme-HSSCITI / HSSCITI / Hang Seng SCHK Technology Index: 17 Jul 2023 (matches 17-07-2023)
+- theme-HSSCPB / HSSCPB / Hang Seng SCHK Innovative Drug Select Index: 17 Jul 2023 (matches 17-07-2023)
+- theme-HSSCSOY / HSSCSOY / Hang Seng SCHK China Central SOEs High Dividend Yield Index: 12 Jun 2023 (matches 12-06-2023)
+- theme-HSSCT / HSSCT / Hang Seng SCHK China Technology Index: 17 Feb 2020 (matches 17-02-2020)
+- theme-恒生中国央企指数 / HSCSOE / Hang Seng China Central SOEs Index: 17 Apr 2023 (matches 17-04-2023)
+- theme-恒生创新药指数 / HSIDI / Hang Seng Innovative Drug Index: 15 May 2023 (matches 15-05-2023)
+- theme-恒生生物科技指数 / HSBIO / Hang Seng Biotech Index: 16 Dec 2019 (matches 16-12-2019); parent only
+
+HSCEI (Priority B) was not fetched in this pass.
+
+Search in INdex360 is by index name, not Bloomberg ticker. Tickers were confirmed on the Overview / heading after name search.
+
+HSCEI (Priority B) official INdex360 past-month — 2026-11-17 22:22 Asia/Taipei
+INdex360 id 00014.00, URL https://www.hsi.com.hk/index360/en-hk/indexes/historical-data/?id=00014.00
+On-page name Hang Seng China Enterprises Index, ticker HSCEI (Bloomberg HSCEI, Refinitiv .HSCE).
+File: theme-恒生中国企业指数-official-past-month.csv, 21 trading days 2026-10-20 (8030.26) to 2026-11-17 (7904.37), SHA256 3baea34e5fa7e30d67925e37ec71782802b52fd1e4598c7b901f69e40d6e229a.
+Overlap vs East Money and TradingView through 2026-11-16: 20/20 exact, max |rel|=0. Official 2026-11-17 7904.37 matches the TradingView bar previously dropped as unconfirmed.
+Launch Date conflict unresolved: INdex360 Profile 19 Jul 2017 (Base Value 2000; First Value Date not shown) vs official Index Catalogue Launch 08-08-1994 / First Value 03-01-2000. publish_date left 未核对. Same type of conflict as HSFML25.
+Free history remains Past month only; no Customise / Data Product Service / Order Now.

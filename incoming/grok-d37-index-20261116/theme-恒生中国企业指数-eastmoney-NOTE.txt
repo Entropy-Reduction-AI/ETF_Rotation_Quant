@@ -1,0 +1,23 @@
+East Money secondary daily — 恒生中国企业指数 / HSCEI
+
+This is a SECONDARY source. No DB writes, no ingest branch.
+
+Official identity and dates (Hang Seng Family of Indexes - Index Catalogue, updated 12 October 2026 / 於2026年10月12日更新; already in this folder as hsi-docs/index_catalogue.pdf)
+- Official name: Hang Seng China Enterprises Index / 恒生中國企業指數
+- Tickers in catalogue: Refinitiv .HSCE, Bloomberg HSCEI
+- First Value Date 首個指數點日: 03-01-2000 (2000-01-03)
+- Launch Date 發佈日: 08-08-1994 (1994-08-08)  ← used as publish_date
+- Date format in the catalogue is D-M-Y.
+
+East Money series
+- Payload name: 国企指数, code HSCEI, secid 100.HSCEI
+- URL: https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=100.HSCEI&klt=101&fqt=0
+- Delivery: theme-恒生中国企业指数-eastmoney.csv, date,close, 7956 rows from official launch 1994-08-08 (5748.01) to 2026-11-16 (7981.54).
+- 266 pre-launch rows (1993-07-15 to 1994-08-05) were dropped from the delivery file (no base-date / pre-launch backfill). The untrimmed EM series is kept as theme-恒生中国企业指数-eastmoney-full.csv (8222 rows after also dropping 2026-11-17).
+- East Money also printed 2026-11-17 (7904.37); dropped as unconfirmed/intraday.
+- On 2000-01-03 EM close is exactly 2000.0, which matches the official First Value Date. There is no large jump between 1999-12-30 (1972.6) and 2000-01-03. Post-launch, pre-first-value history (1994-08-08 to 1999-12-30) is kept in the delivery file and flagged here for Dev/Reviewer.
+- SHA256 delivery csv: 2a8cdfc18e3a7926f3522d4a5cf97e16954e89fa93e237b404c96ab7b4d83b20
+- SHA256 full csv: c5c6d5ea3e3997e93231ba3a7a280e6ed508813b59c220ea394a064a18312800
+- Download time: 2026-11-17 19:56:41 Asia/Taipei
+
+Official INdex360 past-month cross-check for this Priority B index is not yet in this folder.

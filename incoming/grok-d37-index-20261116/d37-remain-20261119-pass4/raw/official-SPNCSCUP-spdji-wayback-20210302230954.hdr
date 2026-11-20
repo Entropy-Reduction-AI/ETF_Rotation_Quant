@@ -1,0 +1,51 @@
+HTTP/2 200 
+server: nginx
+date: Wed, 18 Nov 2026 16:10:08 GMT
+content-type: text/html;charset=UTF-8
+content-length: 162649
+x-archive-orig-x-crawler-content-length: 21929
+x-archive-orig-content-length: 162649
+x-archive-orig-connection: keep-alive
+x-archive-orig-date: Tue, 02 Mar 2021 23:09:53 GMT
+x-archive-orig-server: Apache
+x-archive-orig-x-frame-options: SAMEORIGIN
+x-archive-orig-strict-transport-security: max-age=63072000; includeSubdomains;
+x-archive-orig-x-xss-protection: 1; mode=block
+x-archive-orig-expires: Tue, 02 Mar 2021 23:09:50 GMT
+x-archive-orig-vary: Accept-Encoding,User-Agent
+x-archive-orig-x-crawler-content-encoding: gzip
+x-archive-orig-cache-control: max-age=0, private, no-cache, no-store
+x-archive-orig-set-cookie: AWSALB=L8lLfMur8IPesYcRwRhSNf//iZ6HZ6Z25t0cBiMnXUPMEkR3s8ld/26nvQIoWx+wf4P0ESWi1XGPwGBRPYPEgIEjww4mhkreZncPEoiIyXg/qNOPN7sGzxpEu5Au; Expires=Tue, 09 Mar 2021 23:09:51 GMT; Path=/; HttpOnly; secure
+x-archive-orig-set-cookie: AWSALBCORS=L8lLfMur8IPesYcRwRhSNf//iZ6HZ6Z25t0cBiMnXUPMEkR3s8ld/26nvQIoWx+wf4P0ESWi1XGPwGBRPYPEgIEjww4mhkreZncPEoiIyXg/qNOPN7sGzxpEu5Au; Expires=Tue, 09 Mar 2021 23:09:51 GMT; Path=/; SameSite=None; HttpOnly; secure
+x-archive-orig-set-cookie: JSESSIONID=706A986C56F3F70E846C2DA9AB0828CB.ip-10-165-244-176.us-west-2.compute.internal; Domain=.spglobal.com; Path=/; HttpOnly; secure
+x-archive-orig-set-cookie: opvc=2aaba118-f7e3-43d5-96e1-8d0dc579a2a8; Path=/; HttpOnly; secure
+x-archive-orig-set-cookie: sitevisitscookie=1; Expires=Thu, 15-Jan-2026 23:09:51 GMT; Path=/; HttpOnly; secure
+x-archive-orig-set-cookie: dmid=a0e80b98-aabe-44c6-a03d-6bf997d3ee5d; Expires=Thu, 15-Jan-2026 23:09:51 GMT; Path=/; HttpOnly; secure
+x-archive-orig-x-cache: Miss from cloudfront
+x-archive-orig-via: 1.1 88b63cb2f8aab28c7291262ffc15282f.cloudfront.net (CloudFront)
+x-archive-orig-x-amz-cf-pop: IAD89-C1
+x-archive-orig-x-amz-cf-id: vlzPnIOqgdB432z0ZPPXWGvJ9KfaU9Xk0wVn_ZPPrzH3A2hck8OffQ==
+cache-control: max-age=1800
+accept-ranges: bytes
+memento-datetime: Tue, 02 Mar 2021 23:09:54 GMT
+link: <https://www.spglobal.com/spdji/en/indices/equity/sp-new-china-sectors-a-shares-capped-index/>; rel="original", <https://web.archive.org/web/timemap/link/https://www.spglobal.com/spdji/en/indices/equity/sp-new-china-sectors-a-shares-capped-index/>; rel="timemap"; type="application/link-format", <https://web.archive.org/web/https://www.spglobal.com/spdji/en/indices/equity/sp-new-china-sectors-a-shares-capped-index/>; rel="timegate"
+content-security-policy: default-src 'self' 'unsafe-eval' 'unsafe-inline' data: blob: archive.org web.archive.org web-static.archive.org wayback-api.archive.org athena.archive.org analytics.archive.org pragma.archivelab.org wwwb-events.archive.org
+x-archive-src: CC-MAIN-2021-10-1614178364932.30-0020/CC-MAIN-20210302221633-20210303011633-00409.warc.gz
+server-timing: captures_list;dur=0.684638, exclusion.robots;dur=0.082517, exclusion.robots.policy;dur=0.065721, esindex;dur=0.009903, cdx.remote;dur=39.416517, LoadShardBlock;dur=735.552574, PetaboxLoader3.datanode;dur=698.681578, PetaboxLoader3.resolve;dur=73.827036, load_resource;dur=141.546586
+x-app-server: wwwb-app263
+x-ts: 200
+x-tr: 940
+server-timing: TR;dur=0,Tw;dur=842,Tc;dur=3
+set-cookie: wb-p-b-SERVER=wwwb-app263; path=/
+cache-control: private
+x-location: All
+x-as: 13335
+x-rl: 0
+x-na: 0
+x-page-cache: MISS
+server-timing: MISS
+x-nid: Cloudflare, Inc.
+referrer-policy: no-referrer-when-downgrade
+permissions-policy: interest-cohort=()
+x-sd: 1
+

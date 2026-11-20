@@ -1,0 +1,7 @@
+23e9a59faa26806eae6af53278ff0a54445057d1387a3eab49beeb1d08e112c1  ./README-REPORT.md
+d53ffe62f73f92097d70dddee2706b246d9a29773ea49a420dbbe461c9d8b206  ./raw/spgogup-usspindices-wayback-20141223033856.html
+f7b13fb6343322ffa245c213368427f1631aeb54e4ed7bc9385632b3e9601ba9  ./raw/spgogup-usspindices-wayback-20150126100537-indexLevels.json
+0b92137bbae12626e7316f689d77687a0ded9f21c80d28bdd3c56984b319776b  ./raw/spgogup-usspindices-wayback-20150126100537.html
+da55af55720f70f73618909c0886f2fb75044b370a38a4e0bb15cefaf6be71d7  ./theme-SPGOGUP-usspindices-wayback-usd-pr-daily-20050124-20150123.csv
+43534668fced8de43b7cec9eb250ce5e025eebbd9da2c9ea882e84bf3f0bc990  ./theme-SPGOGUP-usspindices-wayback-usd-pr-daily-20110708-20141215.csv
+63253ed9f63de50f88ec201e10dc27721739075a64236005207da663359cba23  ./theme-SPGOGUP-usspindices-wayback-usd-pr-daily-20110708-20150123.csv

@@ -1,0 +1,33 @@
+IXY pass5 sources tried (2026-11-19, Asia/Taipei)
+
+Official product page (live, previously probed 2026-11-17, Akamai 403; not re-hit this pass):
+  https://www.spglobal.com/spdji/en/indices/equity/consumer-discretionary-select-sector-index/
+  probe: raw/official-live-spdji-ixy-403.hdr (HTTP 403 Access Denied)
+
+Wayback CDX (HTTP 200) for the historical official us.spindices.com page:
+  http://us.spindices.com/indices/equity/consumer-discretionary-select-sector-index
+  43 captures, first 20130803161339 (CDX length 30196), last 20190313180341.
+  raw/cdx-us-spindices-consumer-discretionary-select-sector-index.json
+Wayback CDX for the current official spdji URL: 9 captures, first 20210125111003.
+  raw/cdx-spdji-consumer-discretionary-select-sector-index.json
+  These later pages use a JS widget (no embedded indexLevels expected).
+
+Wayback id_ page fetches (curl, this pass) — all HTTP 429 “suspected abusive bot traffic”:
+  https://web.archive.org/web/20130803161339id_/http://us.spindices.com/indices/equity/consumer-discretionary-select-sector-index
+  https://web.archive.org/web/20141216121600id_/http://us.spindices.com/indices/equity/consumer-discretionary-select-sector-index
+  https://web.archive.org/web/20150116043712id_/http://us.spindices.com/indices/equity/consumer-discretionary-select-sector-index
+  Retry of 20141216121600 also HTTP 429. No official indexLevels recovered. Official indexId for IXY was not read from a page this pass and was not guessed.
+  A ~10-year official window from the earliest us.spindices.com capture (2013-08-03) would start about 2003-08 and would not reach official publish date 1998-12-16.
+
+CNBC public daily API (allowed; this is the delivery — not official):
+  Quote: https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=.IXY&requestMethod=quick&output=json
+  Bars:  https://ts-api.cnbc.com/harmony/app/bars/.IXY/1D/{start}000000/{end}000000/adjusted/GMT.json
+  Note: the end timestamp at 000000 is exclusive of that calendar day (a request ending 20060429 includes 2006-04-28; ending 20060428 includes 2006-04-27).
+  Identity: name “Consumer Discretionary Select Sector Index”; type INDEX; currency USD; Reuters / feed symbol .IXY; issue_id 29686427.
+  issue_id does not equal the FT xid 591542 used for IXY:PSE; identity is confirmed by the official ticker .IXY, the exact series name, official 1y 251/251 exact, and FT publish-date / 2006-04-28 seams.
+
+Other public cross-checks this pass (no substitute series used):
+  MarketWatch download CSV https://www.marketwatch.com/investing/index/ixy/downloaddatapartial?... HTTP 200, content-length 0. Quote page /investing/index/ixy HTTP 302 to search?q=ixy.
+  Nasdaq api.nasdaq.com/api/quote/IXY/historical and /.IXY/historical assetclass=index HTTP 200, “Symbol not exists.”
+  Yahoo query1 https://query1.finance.yahoo.com/v8/finance/chart/%5EIXY?period1=947000000&period2=949000000&interval=1d&events=history HTTP 403 (ATS). Public history page also exists at https://finance.yahoo.com/quote/%5EIXY/history — not opened (no browser; box egress treated as CN).
+  S5COND / broad S&P 500 Consumer Discretionary and XLY were not used.
