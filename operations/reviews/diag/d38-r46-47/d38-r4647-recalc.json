@@ -1,0 +1,71 @@
+{
+  "inputs": {
+    "market_sqlite_sha256": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52",
+    "french_49_csv": "/agent/repos/ETF_Rotation_Quant/operations/reviews/diag/d38-r46-47/cache/49_Industry_Portfolios.csv",
+    "french_sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
+    "dtb3": "/agent/repos/ETF_Rotation_Quant/results/v5/other-market/raw/DTB3.csv",
+    "dtb3_sha256": "29fe11e20522b4d293cdbbbfd37f2862264692519a251e712747a8532ee95a00",
+    "head_sha": "8a4f0e00d4b15817029e4e7b5d535697e58e78d0"
+  },
+  "reruns": {
+    "results/v6-preflight/topn-dedupe.json": {
+      "byte_identical": true,
+      "diff_count": 0,
+      "diffs_sample": [],
+      "artifact": "operations/reviews/diag/d38-r46-47/rerun-topn-dedupe.json"
+    },
+    "results/v6-preflight/a-official.json": {
+      "byte_identical": true,
+      "diff_count": 0,
+      "diffs_sample": [],
+      "artifact": "operations/reviews/diag/d38-r46-47/rerun-a-official.json"
+    },
+    "results/v6-preflight/exec-example.json": {
+      "byte_identical": true,
+      "diff_count": 0,
+      "diffs_sample": [],
+      "artifact": "operations/reviews/diag/d38-r46-47/rerun-exec-example.json"
+    },
+    "results/v6-preflight/topn-speed.json": {
+      "byte_identical": true,
+      "diff_count": 0,
+      "diffs_sample": [],
+      "artifact": "operations/reviews/diag/d38-r46-47/rerun-topn-speed.json"
+    }
+  },
+  "drift_note2": {
+    "pre_r6_ref": "b1fde39",
+    "design_前3_美股60_pre": {
+      "年化": 12.63,
+      "最低剩": 71.1,
+      "年化_2006–10": 13.31,
+      "年化_2011–15": 11.96,
+      "最低剩_2008": 79.3,
+      "最低剩_2015": 71.1,
+      "最差一年": -13.0,
+      "每年换手_倍": 5.75
+    },
+    "design_前3_美股60_post": {
+      "年化": 13.03,
+      "最低剩": 71.2,
+      "年化_2006–10": 13.31,
+      "年化_2011–15": 12.75,
+      "最低剩_2008": 79.3,
+      "最低剩_2015": 71.2,
+      "最差一年": -13.0,
+      "每年换手_倍": 5.57
+    },
+    "dev_claimed_design": "12.63% / 71.1 → 13.03% / 71.2",
+    "reviewer_derived_pre": {
+      "年化": 12.63,
+      "最低剩": 71.1
+    },
+    "reviewer_derived_post": {
+      "年化": 13.03,
+      "最低剩": 71.2
+    },
+    "a_share_p_2015_08_pre": 0.3,
+    "a_share_p_2015_08_post": 0.265,
+    "dev_claimed_p": "0.30 → 0.265"
+  }
+}
