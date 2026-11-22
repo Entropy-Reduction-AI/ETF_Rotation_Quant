@@ -1,0 +1,159 @@
+{
+  "subject_head_row55": "e43cfa33e332328b77c35b9c19b4ec463ed6e328",
+  "subject_head_row54": "1206a458a4198f131e9b65a2107119ef93072082",
+  "main_tip": "4b3b533c7e0d8788d5814092c884c6bd1f85a1af",
+  "inputs": {
+    "french_49_csv": {
+      "path": "/agent/repos/ETF_Rotation_Quant/operations/reviews/diag/d38-r54-55/cache/49_Industry_Portfolios.csv",
+      "sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
+      "matches_prior_signed": true
+    },
+    "dtb3_csv": {
+      "path": "/agent/repos/ETF_Rotation_Quant/results/v5/other-market/raw/DTB3.csv",
+      "sha256": "29fe11e20522b4d293cdbbbfd37f2862264692519a251e712747a8532ee95a00",
+      "matches_prior_signed": true
+    },
+    "market_sqlite": {
+      "path": "/agent/repos/ETF_Rotation_Quant/data/market.sqlite",
+      "sha256": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52",
+      "matches_prior_signed": true
+    }
+  },
+  "commit_order": {
+    "row54_reg": {
+      "full": "533ebe979063177cee6b29bdace963f68d6f9aec",
+      "parent": "4b3b533c7e0d8788d5814092c884c6bd1f85a1af",
+      "author_date": "2026-11-22 13:26:28 +0000",
+      "committer_date": "2026-11-22 13:26:28 +0000",
+      "subject": "D38 第 54 行跑前登记：A 股反应式处理（快速出场、结构市才挑选）、三条反对意见的量、与 v2 的相关",
+      "planning_only": true
+    },
+    "row54_res": {
+      "full": "1206a458a4198f131e9b65a2107119ef93072082",
+      "parent": "533ebe979063177cee6b29bdace963f68d6f9aec",
+      "author_date": "2026-11-22 13:28:49 +0000",
+      "committer_date": "2026-11-22 13:28:49 +0000",
+      "subject": "D38 第 54 行结果：A 股快速出场（B1）被短期反转打败、与 v2 同类；结构市才挑选（B2）只赢两个阶段；维持现规则；预测表 3.20 版",
+      "planning_only": false
+    },
+    "row55_reg": {
+      "full": "bd96c8a4f2ae382b6a5205bfa0097ee01dea733e",
+      "parent": "1206a458a4198f131e9b65a2107119ef93072082",
+      "author_date": "2026-11-22 15:12:53 +0000",
+      "committer_date": "2026-11-22 15:12:53 +0000",
+      "subject": "D38 第 55 行跑前登记：A 股名额拆开涨幅（连续性版、隔夜版）、两步判据与停止规则、随机对照",
+      "planning_only": true
+    },
+    "row55_res": {
+      "full": "e43cfa33e332328b77c35b9c19b4ec463ed6e328",
+      "parent": "bd96c8a4f2ae382b6a5205bfa0097ee01dea733e",
+      "author_date": "2026-11-22 15:15:52 +0000",
+      "committer_date": "2026-11-22 15:15:52 +0000",
+      "subject": "D38 第 55 行结果：连续性版一级行业五段赢四段但官方池方向相反，隔夜版初步更差；不换规则，触发停止规则",
+      "planning_only": false
+    }
+  },
+  "registration_order_proof": {
+    "row54_reg_parent_is_main": true,
+    "row54_reg_planning_only": true,
+    "row54_artifacts_404_at_reg": {
+      "scripts/preflight/a_reactive.py": true,
+      "results/v6-preflight/a-reactive.json": true
+    },
+    "row54_res_parent_is_reg": true,
+    "row54_reg_before_res_author_time": true,
+    "row55_reg_parent_is_row54_res": true,
+    "row55_reg_planning_only": true,
+    "row55_artifacts_404_at_reg": {
+      "scripts/preflight/a_decompose.py": true,
+      "results/v6-preflight/a-decompose-step1.json": true,
+      "results/v6-preflight/a-decompose.json": true
+    },
+    "row55_res_parent_is_reg": true,
+    "row55_reg_before_res_author_time": true
+  },
+  "row55_unique_files_vs_1206a458": {
+    "expected": [
+      "operations/planning/2026-11-16-d38-project-diagnosis-and-preflight.md",
+      "scripts/preflight/a_decompose.py",
+      "results/v6-preflight/a-decompose-step1.json",
+      "results/v6-preflight/a-decompose.json"
+    ],
+    "actual": [
+      "operations/planning/2026-11-16-d38-project-diagnosis-and-preflight.md",
+      "results/v6-preflight/a-decompose-step1.json",
+      "results/v6-preflight/a-decompose.json",
+      "scripts/preflight/a_decompose.py"
+    ],
+    "exact_set_match": true
+  },
+  "rerun": {
+    "scripts": {
+      "a_reactive": {
+        "semantic_equal": true,
+        "bytes_unchanged_after_rerun": true,
+        "committed_body_sha256": "802f05eaa6522a560a7904e016fda2abb7c2611ec3dfe4b60d6aa4ae7d5d84bb"
+      },
+      "a_decompose_step1": {
+        "step": "step1",
+        "semantic_equal": true,
+        "bytes_unchanged_after_rerun": true,
+        "committed_body_sha256": "49c68362189457ed294b67aa49383395c42e310d23b660c4684dd375da64f196"
+      },
+      "a_decompose_step2": {
+        "step": "step2",
+        "semantic_equal": true,
+        "bytes_unchanged_after_rerun": true,
+        "committed_body_sha256": "5fc52b6e0853d1450fc1f742b46b0e772566ed4959cc0067c16e641de205cfb3"
+      }
+    }
+  },
+  "implementation_audit": {
+    "v2_ema_same_basket": true
+  },
+  "claims_row54": {
+    "B1_L1_vs_EW_pts": -4.8,
+    "B1_L1_cost_per_year": 6.58,
+    "B2_minus_B0_L1_ew": 0.6,
+    "B2_minus_B0_theme_ew": 1.5,
+    "B2_phase_wins_out_of_5": 2,
+    "sell_fly_beat_median_ratio": 0.47,
+    "pr332_half_rebound_wording_note": true,
+    "keep_B0_implied": true
+  },
+  "claims_row55": {
+    "implementation_C1_top_half_ceil": true,
+    "implementation_C1_lowest_ID": true,
+    "implementation_C2_overnight_nlargest": true,
+    "implementation_MINDAYS_200": true,
+    "implementation_bars_cutoff_2015": true,
+    "P1_C1_beats_B0_phases": 4,
+    "P1_C1_vs_EW_t": 1.04,
+    "P1_C1_vs_B0_pts": 2.0,
+    "P2_C1_vs_B0_pts": -0.7,
+    "criteria_from_json": {
+      "P1 五段至少四段好于 B0": true,
+      "P1 对等权 t ≥ 1": true,
+      "P1、P2 对 B0 同为正": false,
+      "换规则": false,
+      "报钱（P1 对等权 t ≥ 2）": false
+    },
+    "stop_rule_triggered": true,
+    "C2_section_marked_preliminary": true
+  },
+  "invariants": {
+    "lock_diff_bytes_vs_533ebe9": 0,
+    "sqlite_diff_bytes_vs_533ebe9": 0,
+    "lock_diff_bytes_vs_bd96c8a": 0,
+    "sqlite_diff_bytes_vs_bd96c8a": 0
+  },
+  "decision_inputs": {
+    "registration_order_ok": true,
+    "rerun_ok": true,
+    "inputs_ok": true,
+    "lock_sqlite_unchanged": true,
+    "row54_claims_ok": true,
+    "row55_stop_rule_ok": true,
+    "row55_unique_files_ok": true
+  }
+}
