@@ -1,0 +1,138 @@
+{
+  "subject_head": "f378a7bc6af25714bd03ad555a9feaa953e867cf",
+  "dev_pr328_head": "f378a7bc6af25714bd03ad555a9feaa953e867cf",
+  "inputs": {
+    "french_49_csv": {
+      "path": "/agent/repos/ETF_Rotation_Quant/operations/reviews/diag/d38-r49/cache/49_Industry_Portfolios.csv",
+      "sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
+      "exists": true
+    },
+    "dtb3_csv": {
+      "path": "/agent/repos/ETF_Rotation_Quant/results/v5/other-market/raw/DTB3.csv",
+      "sha256": "29fe11e20522b4d293cdbbbfd37f2862264692519a251e712747a8532ee95a00",
+      "exists": true
+    },
+    "market_sqlite": {
+      "path": "/agent/repos/ETF_Rotation_Quant/data/market.sqlite",
+      "sha256": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52",
+      "exists": true
+    }
+  },
+  "implementation_audit": {
+    "A4_hot_threshold_0_9": true,
+    "CSCV_S_equals_8": true,
+    "A3_scoring_present": true,
+    "amount_cutoff_2015": true
+  },
+  "commit_order": {
+    "registration": {
+      "sha": "9db6b0ee816981193d5fecad6d0ddd26885a8dcb",
+      "parent": "092bdc053533c03630fa9c1f3144eb37b534d464",
+      "author_date": "2026-11-22 06:05:35 +0000",
+      "committer_date": "2026-11-22 06:05:35 +0000",
+      "subject": "D38 第 49 行跑前登记：A 股选法有限候选集 A0–A4、滚动前推与过拟合概率",
+      "has_a_signals_json": false,
+      "has_a_signals_py": false
+    },
+    "results": {
+      "sha": "f378a7bc6af25714bd03ad555a9feaa953e867cf",
+      "parent": "9db6b0ee816981193d5fecad6d0ddd26885a8dcb",
+      "author_date": "2026-11-22 06:07:26 +0000",
+      "committer_date": "2026-11-22 06:07:26 +0000",
+      "subject": "D38 第 49 行结果：A 股 6−1、风险调整、拥挤度刹车都不替换 12−1，滚动前推不赢，过拟合概率 0.83；A3 待补开盘价；预测表 3.16 版",
+      "has_a_signals_json": true,
+      "has_a_signals_py": true
+    },
+    "registration_strictly_before_results": true,
+    "results_parent_is_registration": true
+  },
+  "rerun": {
+    "committed_bytes_sha256": "0c3ebc5f754352b0d4c14fef70fb7e8ffc33d296c04b54c48a0a685f45b82bbe",
+    "semantic_equal": true,
+    "bytes_unchanged_after_rerun": true
+  },
+  "key_figures": {
+    "A0_full": {
+      "净超额_点每年": 5.3,
+      "毛超额_点每年": 6.3,
+      "t_净": 1.03,
+      "月数": 119,
+      "每年换手_倍": 4.9
+    },
+    "A1_full": {
+      "净超额_点每年": -2.9,
+      "毛超额_点每年": -1.4,
+      "t_净": -0.57,
+      "月数": 119,
+      "每年换手_倍": 7.2
+    },
+    "A2_full": {
+      "净超额_点每年": 5.1,
+      "毛超额_点每年": 6.1,
+      "t_净": 1.06,
+      "月数": 119,
+      "每年换手_倍": 5.1
+    },
+    "A4": {
+      "发布后可算月份（2012-08 起）": {
+        "净超额_点每年": 1.3,
+        "毛超额_点每年": 2.6,
+        "t_净": 0.11,
+        "月数": 40,
+        "每年换手_倍": 6.5
+      },
+      "对照 A0 同月份": {
+        "净超额_点每年": 7.6,
+        "毛超额_点每年": 8.6,
+        "t_净": 0.68,
+        "月数": 40,
+        "每年换手_倍": 5.1
+      }
+    },
+    "walk_forward": {
+      "每年选中的": {
+        "2008": "A0 12−1",
+        "2009": "A0 12−1",
+        "2010": "A2 风险调整 12−1",
+        "2011": "A0 12−1",
+        "2012": "A2 风险调整 12−1",
+        "2013": "A2 风险调整 12−1",
+        "2014": "A2 风险调整 12−1",
+        "2015": "A0 12−1"
+      },
+      "滚动前推净超额_点每年": 5.5,
+      "t": 0.94,
+      "一直用 A0 同期_点每年": 5.8,
+      "A0 t": 0.91
+    },
+    "cscv": {
+      "PBO": 0.83,
+      "组合数": 70,
+      "样本内最好者在样本外排名后一半的比例即 PBO": ""
+    },
+    "A0_A2_corr": 0.96,
+    "match_expected_dev_claims": {
+      "A0_full_net": true,
+      "A0_full_t": true,
+      "A1_full_net": true,
+      "A2_full_net": true,
+      "A2_corr_vs_A0": true,
+      "A4_net": true,
+      "A4_A0_same_months": true,
+      "wf_net": true,
+      "always_A0": true,
+      "PBO": true
+    },
+    "all_claims_match": true
+  },
+  "pr_scope": {
+    "results/v5/LOCK": {
+      "diff_bytes": 0,
+      "unchanged": true
+    },
+    "data/market.sqlite": {
+      "diff_bytes": 0,
+      "unchanged": true
+    }
+  }
+}
