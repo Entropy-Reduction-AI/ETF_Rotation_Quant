@@ -1,0 +1,267 @@
+{
+  "subject_head": "30185bb03c7d915b19804f00386bf7b11f8df35f",
+  "subject_tree": "6aa197494e29803b8557e52277f902c3808ecb82",
+  "main_tip": "982243d9d4445ac0289ff7a665ac74e8b6a6b401",
+  "unique_work_start": "ca08b30cb68d6a43e2c61f9aaedd9136f87ded73",
+  "oldest_unique_parent": "982243d9d4445ac0289ff7a665ac74e8b6a6b401",
+  "merge_base_with_main": "982243d9d4445ac0289ff7a665ac74e8b6a6b401",
+  "inputs": {
+    "french_49_csv": {
+      "path": "/agent/repos/ETF_Rotation_Quant/operations/reviews/diag/d38-r50-52/cache/49_Industry_Portfolios.csv",
+      "sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
+      "matches_prior_signed": true
+    },
+    "dtb3_csv": {
+      "path": "/agent/repos/ETF_Rotation_Quant/results/v5/other-market/raw/DTB3.csv",
+      "sha256": "29fe11e20522b4d293cdbbbfd37f2862264692519a251e712747a8532ee95a00",
+      "matches_prior_signed": true
+    },
+    "market_sqlite": {
+      "path": "/agent/repos/ETF_Rotation_Quant/data/market.sqlite",
+      "sha256": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52",
+      "matches_prior_signed": true
+    }
+  },
+  "commit_order": {
+    "row50_reg": {
+      "full": "ca08b30cb68d6a43e2c61f9aaedd9136f87ded73",
+      "parent": "982243d9d4445ac0289ff7a665ac74e8b6a6b401",
+      "author_date": "2026-11-22 06:22:59 +0000",
+      "committer_date": "2026-11-22 10:43:46 +0000",
+      "author_date_taipei": "2026-11-22 06:22:59  UTC → Taipei +8h",
+      "subject": "D38 第 50 行跑前登记：A 股结构的描述性统计（挑选空间、收益集中度、红利、t ≥ 2 所需超额）",
+      "planning_only": true,
+      "artifacts_present": {
+        "results/v6-preflight/a-structure.json": false,
+        "results/v6-preflight/voi-value.json": false,
+        "results/v6-preflight/a-n5.json": false,
+        "results/v6-preflight/a-theme-split.json": false,
+        "scripts/preflight/a_structure.py": false,
+        "scripts/preflight/voi_value.py": false,
+        "scripts/preflight/a_n5.py": false,
+        "scripts/preflight/a_theme_split.py": false
+      }
+    },
+    "row50_res": {
+      "full": "9f5b1b8e26bc238934efbf77e99a9705d6b90d1b",
+      "parent": "ca08b30cb68d6a43e2c61f9aaedd9136f87ded73",
+      "author_date": "2026-11-22 06:25:03 +0000",
+      "committer_date": "2026-11-22 10:43:46 +0000",
+      "author_date_taipei": "2026-11-22 06:25:03  UTC → Taipei +8h",
+      "subject": "D38 第 50 行结果：A 股市场波动是行业差异的 2.3 倍、收益集中在少数月份、2016 年前红利不防守、t ≥ 2 需约 37 年；预测表 3.17 版",
+      "planning_only": false,
+      "artifacts_present": {
+        "results/v6-preflight/a-structure.json": true,
+        "results/v6-preflight/voi-value.json": false,
+        "results/v6-preflight/a-n5.json": false,
+        "results/v6-preflight/a-theme-split.json": false,
+        "scripts/preflight/a_structure.py": true,
+        "scripts/preflight/voi_value.py": false,
+        "scripts/preflight/a_n5.py": false,
+        "scripts/preflight/a_theme_split.py": false
+      }
+    },
+    "row51_52_reg": {
+      "full": "26690a5d392570b3e7be5fd0b621e0be420060a0",
+      "parent": "9f5b1b8e26bc238934efbf77e99a9705d6b90d1b",
+      "author_date": "2026-11-22 10:26:49 +0000",
+      "committer_date": "2026-11-22 10:43:46 +0000",
+      "author_date_taipei": "2026-11-22 10:26:49  UTC → Taipei +8h",
+      "subject": "D38 第 51 行（估值信号的信息价值预估）、第 52 行（A 股名额选 5 个）跑前登记",
+      "planning_only": true,
+      "artifacts_present": {
+        "results/v6-preflight/a-structure.json": true,
+        "results/v6-preflight/voi-value.json": false,
+        "results/v6-preflight/a-n5.json": false,
+        "results/v6-preflight/a-theme-split.json": false,
+        "scripts/preflight/a_structure.py": true,
+        "scripts/preflight/voi_value.py": false,
+        "scripts/preflight/a_n5.py": false,
+        "scripts/preflight/a_theme_split.py": false
+      }
+    },
+    "row51_note1": {
+      "full": "131a6db3a3def1ca6859aacedce47f4f4ea92416",
+      "parent": "26690a5d392570b3e7be5fd0b621e0be420060a0",
+      "author_date": "2026-11-22 10:27:57 +0000",
+      "committer_date": "2026-11-22 10:43:47 +0000",
+      "author_date_taipei": "2026-11-22 10:27:57  UTC → Taipei +8h",
+      "subject": "D38 第 51 行补注跑前登记：A 股不挑选的等权基线（拆开挑选与大小盘）",
+      "planning_only": true,
+      "artifacts_present": {
+        "results/v6-preflight/a-structure.json": true,
+        "results/v6-preflight/voi-value.json": false,
+        "results/v6-preflight/a-n5.json": false,
+        "results/v6-preflight/a-theme-split.json": false,
+        "scripts/preflight/a_structure.py": true,
+        "scripts/preflight/voi_value.py": false,
+        "scripts/preflight/a_n5.py": false,
+        "scripts/preflight/a_theme_split.py": false
+      }
+    },
+    "row51_note2": {
+      "full": "dc09a680572c560c403aba93ea8d1e035a590821",
+      "parent": "131a6db3a3def1ca6859aacedce47f4f4ea92416",
+      "author_date": "2026-11-22 10:29:09 +0000",
+      "committer_date": "2026-11-22 10:43:47 +0000",
+      "author_date_taipei": "2026-11-22 10:29:09  UTC → Taipei +8h",
+      "subject": "D38 第 51 行补注 2 跑前登记：美股同样拆开挑选与等权倾斜",
+      "planning_only": true,
+      "artifacts_present": {
+        "results/v6-preflight/a-structure.json": true,
+        "results/v6-preflight/voi-value.json": false,
+        "results/v6-preflight/a-n5.json": false,
+        "results/v6-preflight/a-theme-split.json": false,
+        "scripts/preflight/a_structure.py": true,
+        "scripts/preflight/voi_value.py": false,
+        "scripts/preflight/a_n5.py": false,
+        "scripts/preflight/a_theme_split.py": false
+      }
+    },
+    "row51_52_res": {
+      "full": "4859cb29a3feea878b0601585623aaffbcfd11c2",
+      "parent": "dc09a680572c560c403aba93ea8d1e035a590821",
+      "author_date": "2026-11-22 10:30:45 +0000",
+      "committer_date": "2026-11-22 10:43:47 +0000",
+      "author_date_taipei": "2026-11-22 10:30:45  UTC → Taipei +8h",
+      "subject": "D38 第 51、52 行结果：估值信息价值不够、不补；A 股 +5.3 拆开挑选只占 +0.7（美股挑选 +5.7 不变）；A 股选 5 个不通过；设计评审加“0 信息价值”；预测表 3.18 版",
+      "planning_only": false,
+      "artifacts_present": {
+        "results/v6-preflight/a-structure.json": true,
+        "results/v6-preflight/voi-value.json": true,
+        "results/v6-preflight/a-n5.json": true,
+        "results/v6-preflight/a-theme-split.json": false,
+        "scripts/preflight/a_structure.py": true,
+        "scripts/preflight/voi_value.py": true,
+        "scripts/preflight/a_n5.py": true,
+        "scripts/preflight/a_theme_split.py": false
+      }
+    },
+    "row53_reg": {
+      "full": "09b1d039e40bb35d672c9d3c6074a990c2b0f251",
+      "parent": "4859cb29a3feea878b0601585623aaffbcfd11c2",
+      "author_date": "2026-11-22 10:46:32 +0000",
+      "committer_date": "2026-11-22 10:47:51 +0000",
+      "author_date_taipei": "2026-11-22 10:46:32  UTC → Taipei +8h",
+      "subject": "D38 第 53 行跑前登记：A 股含主题的候选池，拆开等权与挑选",
+      "planning_only": true,
+      "artifacts_present": {
+        "results/v6-preflight/a-structure.json": true,
+        "results/v6-preflight/voi-value.json": true,
+        "results/v6-preflight/a-n5.json": true,
+        "results/v6-preflight/a-theme-split.json": false,
+        "scripts/preflight/a_structure.py": true,
+        "scripts/preflight/voi_value.py": true,
+        "scripts/preflight/a_n5.py": true,
+        "scripts/preflight/a_theme_split.py": false
+      }
+    },
+    "row53_res": {
+      "full": "30185bb03c7d915b19804f00386bf7b11f8df35f",
+      "parent": "09b1d039e40bb35d672c9d3c6074a990c2b0f251",
+      "author_date": "2026-11-22 10:47:26 +0000",
+      "committer_date": "2026-11-22 10:47:51 +0000",
+      "author_date_taipei": "2026-11-22 10:47:26  UTC → Taipei +8h",
+      "subject": "D38 第 53 行结果：A 股含主题候选池里挑选平均为零但分阶段（2011–13 +16.9、2014–15 −21.1）；更正第 51 行的过强结论；预测表 3.19 版",
+      "planning_only": false,
+      "artifacts_present": {
+        "results/v6-preflight/a-structure.json": true,
+        "results/v6-preflight/voi-value.json": true,
+        "results/v6-preflight/a-n5.json": true,
+        "results/v6-preflight/a-theme-split.json": true,
+        "scripts/preflight/a_structure.py": true,
+        "scripts/preflight/voi_value.py": true,
+        "scripts/preflight/a_n5.py": true,
+        "scripts/preflight/a_theme_split.py": true
+      }
+    }
+  },
+  "registration_order_proof": {
+    "row50_parent_is_main": true,
+    "row50_json_absent_at_reg": true,
+    "row50_res_parent_is_reg": true,
+    "row50_reg_before_res_author_time": true,
+    "voi_absent_at_note2": true,
+    "an5_absent_at_note2": true,
+    "note1_before_results_author_time": true,
+    "note2_before_results_author_time": true,
+    "row51_52_res_parent_is_note2": true,
+    "theme_absent_at_row53_reg": true,
+    "theme_script_absent_at_row53_reg": true,
+    "row53_reg_before_res_author_time": true,
+    "row53_res_parent_is_reg": true,
+    "no_328_replay": true
+  },
+  "rerun": {
+    "scripts": {
+      "a_structure": {
+        "output_json": "results/v6-preflight/a-structure.json",
+        "semantic_equal": true,
+        "bytes_unchanged_after_rerun": true,
+        "committed_body_sha256": "b627d6b4edd6e22f3d5b48606544ec047ac82b77d6dd20b70c837e8f32c99fe4"
+      },
+      "voi_value": {
+        "output_json": "results/v6-preflight/voi-value.json",
+        "semantic_equal": true,
+        "bytes_unchanged_after_rerun": true,
+        "committed_body_sha256": "2c1eead9fbc39131b5dea049c7c7fe8c03c5533f0110c31888165751c2e4b790"
+      },
+      "a_n5": {
+        "output_json": "results/v6-preflight/a-n5.json",
+        "semantic_equal": true,
+        "bytes_unchanged_after_rerun": true,
+        "committed_body_sha256": "c8564d645eb5a92f9f27f0e17cf1e81ee65cc1f4dc5126a9020dc6664ffc2281"
+      },
+      "a_theme_split": {
+        "output_json": "results/v6-preflight/a-theme-split.json",
+        "semantic_equal": true,
+        "bytes_unchanged_after_rerun": true,
+        "committed_body_sha256": "4e805a268e1b24515e68fe16a1f296081d698db56029bc5fc36369020bc0db40"
+      }
+    },
+    "all_semantic_equal": true,
+    "all_bytes_unchanged": true
+  },
+  "checklist_2_1": {
+    "introduced_in_commit": "4859cb29a3feea878b0601585623aaffbcfd11c2",
+    "change_1_zero_information_value_step": true,
+    "change_2_q5_equal_weight_baseline_example": true,
+    "diff_vs_main_hunks": 6,
+    "matches_voi_industry_split": true
+  },
+  "row53_design_review_touch": {
+    "strategy_design_review_diff_bytes_vs_4859cb2": 0,
+    "row53_only_forecast_artifacts_theme_json": true
+  },
+  "claims": {
+    "row50_vol_ratio_us_market": 2.21,
+    "row50_years_for_t2": 37.4,
+    "row51_portfolio_increment": 0.14,
+    "row51_do_not_fetch_valuation": true,
+    "row51_ew_full_industry_only": 4.6,
+    "row51_sel_full_industry_only": 0.7,
+    "row51_us_sel": 5.7,
+    "row52_recommend_n5": false,
+    "row52_annual_gap": 1.01,
+    "row53_full_sel_vs_ew": 0.1,
+    "row53_phase_early_sel": 16.9,
+    "row53_phase_late_sel": -21.1,
+    "row53_claims_match_commit_msg": true
+  },
+  "invariants": {
+    "lock_diff_bytes_vs_unique_start": 0,
+    "sqlite_diff_bytes_vs_unique_start": 0
+  },
+  "pr_state": {
+    "commits_on_branch": 8,
+    "behind_main": 0,
+    "mergeable_clean_per_owner": true
+  },
+  "decision_inputs": {
+    "registration_order_ok": true,
+    "rerun_ok": true,
+    "inputs_ok": true,
+    "lock_sqlite_unchanged": true,
+    "row53_claims_ok": true
+  }
+}
