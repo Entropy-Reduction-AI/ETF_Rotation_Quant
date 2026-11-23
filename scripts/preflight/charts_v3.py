@@ -98,7 +98,7 @@ ex = json.load(open(RES / 'exec-example.json'))
 fig = plt.figure(figsize=(12, 3.6))
 ax = fig.add_axes([0.22, 0.02, 0.64, 0.92])
 NAMES = {'theme-中证军工': '军工', 'theme-中证全指软件': '软件', 'allshare-utilities': '公用', 'NBI': '生物科技', 'XLV': '医疗', 'XLY': '可选消费',
-         'theme-沪深300医药卫生': '300医药', 'allshare-healthcare': '全指医药', 'chinext': '创业板', 'XLF': '金融'}
+         'theme-沪深300医药卫生': '300医药', 'allshare-healthcare': '全指医药', 'chinext': '创业板', 'XLF': '金融', 'NDX': '纳指100', 'XLP': '必需消费'}
 rows = [('2015-08-31', 'A 股名额（40 万）', 40), ('2015-08-31', '美股名额（60 万）', 60), ('2013-04-26', 'A 股名额（40 万）', 40), ('2013-04-26', '美股名额（60 万）', 60)]
 key = {'A 股名额（40 万）': 'A 股名额（40%）', '美股名额（60 万）': '美股名额（60%）'}
 for i, (d, slot, amt) in enumerate(rows):
@@ -116,7 +116,7 @@ for i, (d, slot, amt) in enumerate(rows):
     ax.text(-1.5, y, lab, ha='right', va='center', fontsize=12, color=INK)
     ax.text(amt + 1.2, y, f"{e['票数']} 票 · 把握 {e['把握p']:.3g}" if e['确认紧张'] else f"{e['票数']} 票 · 不紧张", va='center', fontsize=10, color=BAD if e['确认紧张'] else MUTED)
 ax.set_xlim(0, 72); ax.axis('off')
-title(fig, '一个月怎么定持仓：2015 年 8 月股灾后，A 股 40 万里只拿 10.6 万股票，美股几乎满仓',
+title(fig, '一个月怎么定持仓：2015 年 8 月股灾后，A 股 40 万里只拿 9.4 万股票，美股几乎满仓',
       '用设计期真实数据按规则复现的两个月，100 万本金；青绿 = 股票，灰 = 国债；右侧是当月的票数和把握 p')
 fig.savefig(OUT / 'f8-exec.png', dpi=150, bbox_inches='tight'); plt.close(fig)
 print('f8 ok')
