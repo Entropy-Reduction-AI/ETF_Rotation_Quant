@@ -1,0 +1,29 @@
+{
+  "document": "operations/reviews/2026-11-23-pr343-grok-sw-l1-signoff.md",
+  "verified_at": "2026-11-23 Asia/Taipei after 16:24",
+  "pr": 343,
+  "pr_url": "https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/343",
+  "pr_state": "OPEN",
+  "head_branch": "cursor/incoming-sw-l1-20261123",
+  "head_sha": "48e0ec02ad9b584f96ebb8ecea480ed3bdb3517f",
+  "head_tree": "ee1e7dc47cb817d7b7be5f83c480474fa309111a",
+  "parent_pack_tip": "4797949fe02b7def89e349baf99fa177f0859613",
+  "stored_pr_base_main": "120becee585a0fe7a3e4555942e656919c5ed392",
+  "current_main_at_verify": "b2aef6a0db3d67cb27d082b2a9f8212accd3b6b9",
+  "pack_prefix": "incoming/grok-sw-l1-20261123/",
+  "decision": "approve",
+  "must_fix": 0,
+  "should_fix": 0,
+  "checks": {
+    "1_manifest_and_dailies": "PASS",
+    "2_columns_mapping": "PASS",
+    "3_official_gap_not_download_miss": "PASS",
+    "4_live_trend_spot_15_of_15": "PASS",
+    "5_grok_wei_zhao_dao": "PASS"
+  },
+  "grok_historical_methodology_conclusion": "未找到",
+  "incoming_only": true,
+  "no_market_sqlite": true,
+  "no_ingest": true,
+  "no_pnl": true
+}
