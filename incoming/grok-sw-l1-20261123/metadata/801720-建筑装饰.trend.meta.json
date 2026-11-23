@@ -1,0 +1,30 @@
+{
+  "code": "801720",
+  "name": "建筑装饰",
+  "ok": true,
+  "http_status": 200,
+  "url": "https://www.swsresearch.com/institute-sw/api/index_publish/trend/?swindexcode=801720&period=DAY",
+  "reused": false,
+  "n": 3082,
+  "first_date": "2014-02-21",
+  "last_date": "2026-11-20",
+  "raw_bytes": 718835,
+  "sha256": "7ad6b934616b5a9319680397a45976fb848e96a20a5209a61df79e9d6dabcb4c",
+  "api_code": "200",
+  "api_message": "ok",
+  "raw_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801720-建筑装饰.trend.json",
+  "csv_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801720-建筑装饰.trend.csv",
+  "elapsed_s": 1.89,
+  "first_row": {
+    "swindexcode": "801720",
+    "bargaindate": "2014-02-21",
+    "openindex": 1507.22,
+    "maxindex": 1508.49,
+    "minindex": 1483.39,
+    "closeindex": 1492.41,
+    "bargainamount": 6.26770982,
+    "bargainsum": 44.447522584,
+    "hike": -15.01,
+    "markup": -1.0
+  }
+}

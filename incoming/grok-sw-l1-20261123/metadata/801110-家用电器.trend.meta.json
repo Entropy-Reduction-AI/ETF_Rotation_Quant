@@ -1,0 +1,30 @@
+{
+  "code": "801110",
+  "name": "家用电器",
+  "ok": true,
+  "http_status": 200,
+  "url": "https://www.swsresearch.com/institute-sw/api/index_publish/trend/?swindexcode=801110&period=DAY",
+  "reused": false,
+  "n": 6496,
+  "first_date": "1999-12-30",
+  "last_date": "2026-11-20",
+  "raw_bytes": 1506798,
+  "sha256": "badc9b2aa646fff67650e93075cae69362227980d16979f79b2e9cb4bdb02c24",
+  "api_code": "200",
+  "api_message": "ok",
+  "raw_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801110-家用电器.trend.json",
+  "csv_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801110-家用电器.trend.csv",
+  "elapsed_s": 9.21,
+  "first_row": {
+    "swindexcode": "801110",
+    "bargaindate": "1999-12-30",
+    "openindex": 1000.0,
+    "maxindex": 1000.0,
+    "minindex": 1000.0,
+    "closeindex": 1000.0,
+    "bargainamount": 0.09900889,
+    "bargainsum": 1.3229478426999999,
+    "hike": 0.0,
+    "markup": 0.0
+  }
+}
