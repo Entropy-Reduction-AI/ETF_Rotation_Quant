@@ -1,0 +1,30 @@
+{
+  "code": "801120",
+  "name": "食品饮料",
+  "ok": true,
+  "http_status": 200,
+  "url": "https://www.swsresearch.com/institute-sw/api/index_publish/trend/?swindexcode=801120&period=DAY",
+  "reused": false,
+  "n": 6496,
+  "first_date": "1999-12-30",
+  "last_date": "2026-11-20",
+  "raw_bytes": 1521406,
+  "sha256": "ad96e2dfaad0c97f6c1331612bf38a18423dec0f478db3e8b04679367e7c6b50",
+  "api_code": "200",
+  "api_message": "ok",
+  "raw_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801120-食品饮料.trend.json",
+  "csv_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801120-食品饮料.trend.csv",
+  "elapsed_s": 5.24,
+  "first_row": {
+    "swindexcode": "801120",
+    "bargaindate": "1999-12-30",
+    "openindex": 1000.0,
+    "maxindex": 1000.0,
+    "minindex": 1000.0,
+    "closeindex": 1000.0,
+    "bargainamount": 0.22650915,
+    "bargainsum": 2.4228916783,
+    "hike": 0.0,
+    "markup": 0.0
+  }
+}

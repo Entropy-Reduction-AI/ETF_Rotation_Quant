@@ -1,0 +1,30 @@
+{
+  "code": "801730",
+  "name": "电力设备",
+  "ok": true,
+  "http_status": 200,
+  "url": "https://www.swsresearch.com/institute-sw/api/index_publish/trend/?swindexcode=801730&period=DAY",
+  "reused": false,
+  "n": 3082,
+  "first_date": "2014-02-21",
+  "last_date": "2026-11-20",
+  "raw_bytes": 723486,
+  "sha256": "b757c59e369cbb3dd2faad9cd33ecbc6daab29a946b52273a364421c0e6ca94b",
+  "api_code": "200",
+  "api_message": "ok",
+  "raw_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801730-电力设备.trend.json",
+  "csv_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801730-电力设备.trend.csv",
+  "elapsed_s": 1.94,
+  "first_row": {
+    "swindexcode": "801730",
+    "bargaindate": "2014-02-21",
+    "openindex": 3838.7,
+    "maxindex": 3868.23,
+    "minindex": 3793.22,
+    "closeindex": 3836.72,
+    "bargainamount": 10.21101521,
+    "bargainsum": 116.358324673,
+    "hike": -9.63,
+    "markup": -0.25
+  }
+}

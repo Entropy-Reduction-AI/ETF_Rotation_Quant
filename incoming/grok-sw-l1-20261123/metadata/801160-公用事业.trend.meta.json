@@ -1,0 +1,30 @@
+{
+  "code": "801160",
+  "name": "公用事业",
+  "ok": true,
+  "http_status": 200,
+  "url": "https://www.swsresearch.com/institute-sw/api/index_publish/trend/?swindexcode=801160&period=DAY",
+  "reused": false,
+  "n": 6496,
+  "first_date": "1999-12-30",
+  "last_date": "2026-11-20",
+  "raw_bytes": 1511870,
+  "sha256": "ae399b64ffd7a97ae7770673d7a5bf3d50620ee0c443ff64786d626ffe378406",
+  "api_code": "200",
+  "api_message": "ok",
+  "raw_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801160-公用事业.trend.json",
+  "csv_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801160-公用事业.trend.csv",
+  "elapsed_s": 38.12,
+  "first_row": {
+    "swindexcode": "801160",
+    "bargaindate": "1999-12-30",
+    "openindex": 1000.0,
+    "maxindex": 1000.0,
+    "minindex": 1000.0,
+    "closeindex": 1000.0,
+    "bargainamount": 0.2677078,
+    "bargainsum": 2.66992229,
+    "hike": 0.0,
+    "markup": 0.0
+  }
+}

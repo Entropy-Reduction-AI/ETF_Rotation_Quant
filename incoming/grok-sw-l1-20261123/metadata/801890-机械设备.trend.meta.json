@@ -1,0 +1,30 @@
+{
+  "code": "801890",
+  "name": "机械设备",
+  "ok": true,
+  "http_status": 200,
+  "url": "https://www.swsresearch.com/institute-sw/api/index_publish/trend/?swindexcode=801890&period=DAY",
+  "reused": false,
+  "n": 3082,
+  "first_date": "2014-02-21",
+  "last_date": "2026-11-20",
+  "raw_bytes": 718874,
+  "sha256": "2a23ca67936b579e816d382bb98abccb2ad627c92746276f72e15e8ce3a19623",
+  "api_code": "200",
+  "api_message": "ok",
+  "raw_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801890-机械设备.trend.json",
+  "csv_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801890-机械设备.trend.csv",
+  "elapsed_s": 3.96,
+  "first_row": {
+    "swindexcode": "801890",
+    "bargaindate": "2014-02-21",
+    "openindex": 997.46,
+    "maxindex": 1001.31,
+    "minindex": 984.59,
+    "closeindex": 993.69,
+    "bargainamount": 12.87700665,
+    "bargainsum": 141.4920316941,
+    "hike": -6.31,
+    "markup": -0.63
+  }
+}

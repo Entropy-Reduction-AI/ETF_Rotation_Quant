@@ -1,0 +1,30 @@
+{
+  "code": "801950",
+  "name": "煤炭",
+  "ok": true,
+  "http_status": 200,
+  "url": "https://www.swsresearch.com/institute-sw/api/index_publish/trend/?swindexcode=801950&period=DAY",
+  "reused": false,
+  "n": 3089,
+  "first_date": "2014-02-21",
+  "last_date": "2026-11-20",
+  "raw_bytes": 716743,
+  "sha256": "18c2501255ec1bf83b3a137b9d52184c3b64b911b5df9d37440a098ab6785f2f",
+  "api_code": "200",
+  "api_message": "ok",
+  "raw_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801950-煤炭.trend.json",
+  "csv_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801950-煤炭.trend.csv",
+  "elapsed_s": 5.51,
+  "first_row": {
+    "swindexcode": "801950",
+    "bargaindate": "2014-02-21",
+    "openindex": 996.02,
+    "maxindex": 1015.05,
+    "minindex": 974.68,
+    "closeindex": 997.49,
+    "bargainamount": 0.271547,
+    "bargainsum": 6.00218274,
+    "hike": -2.51,
+    "markup": -0.25
+  }
+}

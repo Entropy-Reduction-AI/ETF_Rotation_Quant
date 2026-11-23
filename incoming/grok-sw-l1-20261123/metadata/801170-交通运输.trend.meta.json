@@ -1,0 +1,30 @@
+{
+  "code": "801170",
+  "name": "交通运输",
+  "ok": true,
+  "http_status": 200,
+  "url": "https://www.swsresearch.com/institute-sw/api/index_publish/trend/?swindexcode=801170&period=DAY",
+  "reused": false,
+  "n": 6496,
+  "first_date": "1999-12-30",
+  "last_date": "2026-11-20",
+  "raw_bytes": 1514500,
+  "sha256": "02722f0e5ca6421b553a541bb30d916c149a336e6216d8603c12a8823f1640fe",
+  "api_code": "200",
+  "api_message": "ok",
+  "raw_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801170-交通运输.trend.json",
+  "csv_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801170-交通运输.trend.csv",
+  "elapsed_s": 15.01,
+  "first_row": {
+    "swindexcode": "801170",
+    "bargaindate": "1999-12-30",
+    "openindex": 1000.0,
+    "maxindex": 1000.0,
+    "minindex": 1000.0,
+    "closeindex": 1000.0,
+    "bargainamount": 0.20996984,
+    "bargainsum": 2.0852459832,
+    "hike": 0.0,
+    "markup": 0.0
+  }
+}

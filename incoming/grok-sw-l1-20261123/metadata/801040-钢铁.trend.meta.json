@@ -1,0 +1,30 @@
+{
+  "code": "801040",
+  "name": "钢铁",
+  "ok": true,
+  "http_status": 200,
+  "url": "https://www.swsresearch.com/institute-sw/api/index_publish/trend/?swindexcode=801040&period=DAY",
+  "reused": false,
+  "n": 6496,
+  "first_date": "1999-12-30",
+  "last_date": "2026-11-20",
+  "raw_bytes": 1512331,
+  "sha256": "d59894dd6e67b2577328cc181fd58bbc10f5545b0140bd54106c98af2c115162",
+  "api_code": "200",
+  "api_message": "ok",
+  "raw_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801040-钢铁.trend.json",
+  "csv_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801040-钢铁.trend.csv",
+  "elapsed_s": 13.07,
+  "first_row": {
+    "swindexcode": "801040",
+    "bargaindate": "1999-12-30",
+    "openindex": 1000.0,
+    "maxindex": 1000.0,
+    "minindex": 1000.0,
+    "closeindex": 1000.0,
+    "bargainamount": 0.15973525,
+    "bargainsum": 1.0090941669,
+    "hike": 0.0,
+    "markup": 0.0
+  }
+}

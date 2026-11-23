@@ -1,0 +1,30 @@
+{
+  "code": "801140",
+  "name": "轻工制造",
+  "ok": true,
+  "http_status": 200,
+  "url": "https://www.swsresearch.com/institute-sw/api/index_publish/trend/?swindexcode=801140&period=DAY",
+  "reused": false,
+  "n": 6496,
+  "first_date": "1999-12-30",
+  "last_date": "2026-11-20",
+  "raw_bytes": 1507913,
+  "sha256": "2fb3a599cc423a866412547c96d00a9b3f278567605bafe2b0f075237697eb41",
+  "api_code": "200",
+  "api_message": "ok",
+  "raw_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801140-轻工制造.trend.json",
+  "csv_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801140-轻工制造.trend.csv",
+  "elapsed_s": 4.65,
+  "first_row": {
+    "swindexcode": "801140",
+    "bargaindate": "1999-12-30",
+    "openindex": 1000.0,
+    "maxindex": 1000.0,
+    "minindex": 1000.0,
+    "closeindex": 1000.0,
+    "bargainamount": 0.09385293,
+    "bargainsum": 0.9721319565000001,
+    "hike": 0.0,
+    "markup": 0.0
+  }
+}
