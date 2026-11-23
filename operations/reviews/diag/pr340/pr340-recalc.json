@@ -1,0 +1,1406 @@
+{
+  "reviewed_at": "2026-11-23T02:50:22Z",
+  "subject_pr": 340,
+  "head_sha": "fc5834d0bc4b76c793d8064ab65b92cb9a94bedc",
+  "checks": {
+    "1_manifest_hashes": {
+      "pass": true,
+      "failures": [],
+      "counts": {
+        "csi300": {
+          "total": 93,
+          "factsheets": 30,
+          "dailies_full": 30,
+          "dailies_from_publish": 30,
+          "metadata": 2,
+          "manifest": 1
+        },
+        "allshare": {
+          "total": 63,
+          "factsheets": 20,
+          "dailies_full": 20,
+          "dailies_from_publish": 20,
+          "metadata": 2,
+          "manifest": 1
+        },
+        "diff_paths_only_incoming": true
+      },
+      "detail_buckets": {
+        "factsheet_sha": 50,
+        "manifest_factsheet_sha": 50,
+        "from_publish_csv_sha": 50,
+        "official_json_sha": 50,
+        "csv_file_pin_sha256": 50
+      },
+      "note": "MANIFEST/dailies-summary sha256 for full dailies is official index-perf JSON body, not CSV bytes."
+    },
+    "1b_allshare_no_net_series": {
+      "pass": true,
+      "n_path_count": 0,
+      "deriv_N_empty": true
+    },
+    "2_publish_dates": {
+      "pass": true,
+      "mismatches": [],
+      "series": 50
+    },
+    "3_price_completeness": {
+      "pass": true,
+      "calendar_sessions": 5314,
+      "series": [
+        {
+          "pack": "csi300",
+          "code": "000908",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "csi300",
+          "code": "000909",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "csi300",
+          "code": "000910",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "csi300",
+          "code": "000911",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "csi300",
+          "code": "000912",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "csi300",
+          "code": "000913",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "csi300",
+          "code": "000914",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "csi300",
+          "code": "000915",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "csi300",
+          "code": "000916",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": [
+            "20080527"
+          ]
+        },
+        {
+          "pack": "csi300",
+          "code": "000917",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "allshare",
+          "code": "000986",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "allshare",
+          "code": "000987",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "allshare",
+          "code": "000988",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "allshare",
+          "code": "000989",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "allshare",
+          "code": "000990",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "allshare",
+          "code": "000991",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "allshare",
+          "code": "000992",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "allshare",
+          "code": "000993",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "allshare",
+          "code": "000994",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        },
+        {
+          "pack": "allshare",
+          "code": "000995",
+          "last_day": "20261120",
+          "last_ok": true,
+          "missing_count": 0,
+          "missing_sample": [],
+          "zero_turnover_days": []
+        }
+      ]
+    },
+    "3b_official_spot": {
+      "pass": true,
+      "samples": [
+        {
+          "code": "000908",
+          "day": "20050104",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000908&startDate=20050104&endDate=20050104",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "981.33",
+              "official": 981.33,
+              "ok": true
+            },
+            "high": {
+              "packed": "981.33",
+              "official": 981.33,
+              "ok": true
+            },
+            "low": {
+              "packed": "956.18",
+              "official": 956.18,
+              "ok": true
+            },
+            "close": {
+              "packed": "959.16",
+              "official": 959.16,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "3.44",
+              "official": 3.44,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000908",
+          "day": "20150612",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000908&startDate=20150612&endDate=20150612",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "3096.23",
+              "official": 3096.23,
+              "ok": true
+            },
+            "high": {
+              "packed": "3158.24",
+              "official": 3158.24,
+              "ok": true
+            },
+            "low": {
+              "packed": "3082.69",
+              "official": 3082.69,
+              "ok": true
+            },
+            "close": {
+              "packed": "3139.5",
+              "official": 3139.5,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "351.71",
+              "official": 351.71,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000908",
+          "day": "20200309",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000908&startDate=20200309&endDate=20200309",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "1358.1",
+              "official": 1358.1,
+              "ok": true
+            },
+            "high": {
+              "packed": "1383.02",
+              "official": 1383.02,
+              "ok": true
+            },
+            "low": {
+              "packed": "1342.77",
+              "official": 1342.77,
+              "ok": true
+            },
+            "close": {
+              "packed": "1366.78",
+              "official": 1366.78,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "68.41",
+              "official": 68.41,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000908",
+          "day": "20240930",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000908&startDate=20240930&endDate=20240930",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "2502.5",
+              "official": 2502.5,
+              "ok": true
+            },
+            "high": {
+              "packed": "2642.96",
+              "official": 2642.96,
+              "ok": true
+            },
+            "low": {
+              "packed": "2473.22",
+              "official": 2473.22,
+              "ok": true
+            },
+            "close": {
+              "packed": "2594.73",
+              "official": 2594.73,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "248.81",
+              "official": 248.81,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000908",
+          "day": "20261120",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000908&startDate=20261120&endDate=20261120",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "2543.86",
+              "official": 2543.86,
+              "ok": true
+            },
+            "high": {
+              "packed": "2609.83",
+              "official": 2609.83,
+              "ok": true
+            },
+            "low": {
+              "packed": "2537.12",
+              "official": 2537.12,
+              "ok": true
+            },
+            "close": {
+              "packed": "2602.42",
+              "official": 2602.42,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "105.86",
+              "official": 105.86,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000990",
+          "day": "20050104",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000990&startDate=20050104&endDate=20050104",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "996.55",
+              "official": 996.55,
+              "ok": true
+            },
+            "high": {
+              "packed": "996.55",
+              "official": 996.55,
+              "ok": true
+            },
+            "low": {
+              "packed": "984.41",
+              "official": 984.41,
+              "ok": true
+            },
+            "close": {
+              "packed": "984.82",
+              "official": 984.82,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "2.13",
+              "official": 2.13,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000990",
+          "day": "20110802",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000990&startDate=20110802&endDate=20110802",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "7037.26",
+              "official": 7037.26,
+              "ok": true
+            },
+            "high": {
+              "packed": "7037.26",
+              "official": 7037.26,
+              "ok": true
+            },
+            "low": {
+              "packed": "6923.54",
+              "official": 6923.54,
+              "ok": true
+            },
+            "close": {
+              "packed": "7022.33",
+              "official": 7022.33,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "88.8",
+              "official": 88.8,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000990",
+          "day": "20180619",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000990&startDate=20180619&endDate=20180619",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "11278.08",
+              "official": 11278.08,
+              "ok": true
+            },
+            "high": {
+              "packed": "11321.45",
+              "official": 11321.45,
+              "ok": true
+            },
+            "low": {
+              "packed": "10791.15",
+              "official": 10791.15,
+              "ok": true
+            },
+            "close": {
+              "packed": "10899.91",
+              "official": 10899.91,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "346.15",
+              "official": 346.15,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000990",
+          "day": "20241115",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000990&startDate=20241115&endDate=20241115",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "14572.6",
+              "official": 14572.6,
+              "ok": true
+            },
+            "high": {
+              "packed": "14705.01",
+              "official": 14705.01,
+              "ok": true
+            },
+            "low": {
+              "packed": "14431.25",
+              "official": 14431.25,
+              "ok": true
+            },
+            "close": {
+              "packed": "14431.25",
+              "official": 14431.25,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "316.56",
+              "official": 316.56,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000990",
+          "day": "20261120",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000990&startDate=20261120&endDate=20261120",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "11122.85",
+              "official": 11122.85,
+              "ok": true
+            },
+            "high": {
+              "packed": "11176.54",
+              "official": 11176.54,
+              "ok": true
+            },
+            "low": {
+              "packed": "10980.28",
+              "official": 10980.28,
+              "ok": true
+            },
+            "close": {
+              "packed": "11156.98",
+              "official": 11156.98,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "297.34",
+              "official": 297.34,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000993",
+          "day": "20050104",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000993&startDate=20050104&endDate=20050104",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "995.37",
+              "official": 995.37,
+              "ok": true
+            },
+            "high": {
+              "packed": "1004.37",
+              "official": 1004.37,
+              "ok": true
+            },
+            "low": {
+              "packed": "987.83",
+              "official": 987.83,
+              "ok": true
+            },
+            "close": {
+              "packed": "996.87",
+              "official": 996.87,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "5.67",
+              "official": 5.67,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000993",
+          "day": "20150708",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000993&startDate=20150708&endDate=20150708",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "6541.59",
+              "official": 6541.59,
+              "ok": true
+            },
+            "high": {
+              "packed": "6638.55",
+              "official": 6638.55,
+              "ok": true
+            },
+            "low": {
+              "packed": "6540.07",
+              "official": 6540.07,
+              "ok": true
+            },
+            "close": {
+              "packed": "6626.93",
+              "official": 6626.93,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "810.43",
+              "official": 810.43,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000993",
+          "day": "20200203",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000993&startDate=20200203&endDate=20200203",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "5838.55",
+              "official": 5838.55,
+              "ok": true
+            },
+            "high": {
+              "packed": "5924.19",
+              "official": 5924.19,
+              "ok": true
+            },
+            "low": {
+              "packed": "5838.55",
+              "official": 5838.55,
+              "ok": true
+            },
+            "close": {
+              "packed": "5860.5",
+              "official": 5860.5,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "679.01",
+              "official": 679.01,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000993",
+          "day": "20251009",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000993&startDate=20251009&endDate=20251009",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "9194.31",
+              "official": 9194.31,
+              "ok": true
+            },
+            "high": {
+              "packed": "9507.45",
+              "official": 9507.45,
+              "ok": true
+            },
+            "low": {
+              "packed": "9192.71",
+              "official": 9192.71,
+              "ok": true
+            },
+            "close": {
+              "packed": "9312.06",
+              "official": 9312.06,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "5086.16",
+              "official": 5086.16,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        },
+        {
+          "code": "000993",
+          "day": "20261120",
+          "url": "https://www.csindex.com.cn/csindex-home/perf/index-perf?indexCode=000993&startDate=20261120&endDate=20261120",
+          "fields": [
+            "open",
+            "high",
+            "low",
+            "close",
+            "tradingValue"
+          ],
+          "match": {
+            "open": {
+              "packed": "7351.19",
+              "official": 7351.19,
+              "ok": true
+            },
+            "high": {
+              "packed": "7443.69",
+              "official": 7443.69,
+              "ok": true
+            },
+            "low": {
+              "packed": "7264.21",
+              "official": 7264.21,
+              "ok": true
+            },
+            "close": {
+              "packed": "7274.98",
+              "official": 7274.98,
+              "ok": true
+            },
+            "tradingValue": {
+              "packed": "2349.98",
+              "official": 2349.98,
+              "ok": true
+            }
+          },
+          "all_ok": true
+        }
+      ],
+      "errors": []
+    },
+    "4_hn_turnover_start": {
+      "series": [
+        {
+          "pack": "csi300",
+          "code": "H00908",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "H00909",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "H00910",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "H00911",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "H00912",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "H00913",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "H00914",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "H00915",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "H00916",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "H00917",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "N00908",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "N00909",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "N00910",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "N00911",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "N00912",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "N00913",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "N00914",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "N00915",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "N00916",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "csi300",
+          "code": "N00917",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "allshare",
+          "code": "H00986",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "allshare",
+          "code": "H00987",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "allshare",
+          "code": "H00988",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "allshare",
+          "code": "H00989",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "allshare",
+          "code": "H00990",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "allshare",
+          "code": "H00991",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "allshare",
+          "code": "H00992",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "allshare",
+          "code": "H00993",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "allshare",
+          "code": "H00994",
+          "first_nonnull_tradingValue": "20040101"
+        },
+        {
+          "pack": "allshare",
+          "code": "H00995",
+          "first_nonnull_tradingValue": "20040101"
+        }
+      ]
+    },
+    "5_duplicates_gaps_zero": {
+      "pass": true,
+      "price_series": [
+        {
+          "pack": "csi300",
+          "code": "000908",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000909",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000910",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000911",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000912",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000913",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000914",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000915",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000916",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [
+            "20080527"
+          ],
+          "zero_turnover_count": 1
+        },
+        {
+          "pack": "csi300",
+          "code": "000917",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000986",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000987",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000988",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000989",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000990",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000991",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000992",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000993",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000994",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000995",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000908",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000909",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000910",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000911",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000912",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000913",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000914",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000915",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "csi300",
+          "code": "000916",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [
+            "20080527"
+          ],
+          "zero_turnover_count": 1
+        },
+        {
+          "pack": "csi300",
+          "code": "000917",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000986",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000987",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000988",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000989",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000990",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000991",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000992",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000993",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000994",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        },
+        {
+          "pack": "allshare",
+          "code": "000995",
+          "duplicate_dates": [],
+          "trading_day_gaps_20050104_20261120": [],
+          "trading_day_gap_count": 0,
+          "zero_turnover_on_trading_days": [],
+          "zero_turnover_count": 0
+        }
+      ]
+    },
+    "1c_oss_n_factsheet_probe_sample": [
+      {
+        "code": "N00986",
+        "error": "HTTP Error 404: Not Found",
+        "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/N00986factsheet.pdf"
+      },
+      {
+        "code": "N00987",
+        "error": "HTTP Error 404: Not Found",
+        "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/N00987factsheet.pdf"
+      },
+      {
+        "code": "N00988",
+        "error": "HTTP Error 404: Not Found",
+        "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/N00988factsheet.pdf"
+      },
+      {
+        "code": "N00989",
+        "error": "HTTP Error 404: Not Found",
+        "url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/indices/detail/files/zh_CN/N00989factsheet.pdf"
+      }
+    ]
+  },
+  "inventory": {
+    "csi300": {
+      "total": 93,
+      "factsheets": 30,
+      "dailies_full": 30,
+      "dailies_from_publish": 30,
+      "metadata": 2,
+      "manifest": 1
+    },
+    "allshare": {
+      "total": 63,
+      "factsheets": 20,
+      "dailies_full": 20,
+      "dailies_from_publish": 20,
+      "metadata": 2,
+      "manifest": 1
+    },
+    "diff_paths_only_incoming": true
+  }
+}
