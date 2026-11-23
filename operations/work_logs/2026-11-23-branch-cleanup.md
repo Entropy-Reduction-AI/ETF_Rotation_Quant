@@ -50,7 +50,7 @@ done
 
 | 标签 | 指向提交 | 附注 |
 | --- | --- | --- |
-| `milestone/phase2-archive` | `8875fe57e`（PR #294 合入后的 main） | `phase 2 archive (D36: v3→v5.1 closed as not established; D35 listed-only recalc, turnover deep-dive, D37 diagnostics done; last main before v6 preflight D38 #295)` |
+| `milestone/phase2-archive` | `8875fe576496e9dacfb0681ac93df4f42cd894ca`（PR #294 合入后的 main） | `phase 2 archive (D36: v3→v5.1 closed as not established; D35 listed-only recalc, turnover deep-dive, D37 diagnostics done; last main before v6 preflight D38 #295)` |
 
 既有 9 个标签不移动、不删除、不改写。
 
