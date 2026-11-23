@@ -9,8 +9,8 @@ PAGES = [p for p in re.findall(r"^\s*\('([\w-]+)',\s*'", _b.split('PAGES = [', 1
 if len(sys.argv) > 2:
     PAGES = [p for p in PAGES if p in sys.argv[2:]]
 # a section's evidence visual: the element that shows its conclusion before any table
-EVID = 'figure, svg, .specgrid, .calcgrid, .score, .hero, .cards, ol.flow, .dl, .actboard, .critgrid, .probbars, .ovw, .rrmap, .dxgrid'
-VIS='pill|ib|mg|big|boxed|stk|verdict|tag|risk-hit|win|best|good|bad'
+EVID = 'figure, svg, .specgrid, .calcgrid, .score, .hero, .cards, ol.flow, .dl, .actboard, .critgrid, .probbars, .ovw, .rrmap, .dxgrid, .ledger, .cases'
+VIS='pill|ib|mg|big|boxed|stk|verdict|tag|risk-hit|win|best|good|bad|c-take'
 for p in PAGES:
     s=BeautifulSoup(open(f'{PAGES_DIR}/{p}/index.html').read(),'html.parser')
     main=s.select_one('main')
