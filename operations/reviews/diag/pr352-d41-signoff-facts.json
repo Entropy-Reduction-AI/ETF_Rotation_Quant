@@ -1,0 +1,115 @@
+{
+  "document": "operations/reviews/2026-11-23-pr352-d41-signoff.md",
+  "reviewer_run": "bc-d5e2ad27-613f-5b62-b7ef-0238f91f1e59",
+  "verified_at_utc": "2026-11-23T10:26:00Z",
+  "subject_pr": 352,
+  "subject_pr_url": "https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/352",
+  "subject_pr_state": "OPEN",
+  "subject_head_branch": "cursor/d41-phase2-archive-register-60e1",
+  "subject_head_sha": "ddfee847218bc8ce100c0c8fbd54669182557192",
+  "subject_base_branch": "main",
+  "subject_base_sha": "89f030d5bba53c9fae3194cae807d3ae4e1459ef",
+  "subject_parent_sha": "89f030d5bba53c9fae3194cae807d3ae4e1459ef",
+  "subject_commits": 1,
+  "subject_mergeable": true,
+  "subject_mergeable_state": "clean",
+  "subject_diff_stat": "+67/-3",
+  "subject_changed_files": [
+    {
+      "path": "docs/manual/milestones.md",
+      "blob_at_head": "acb6caeae784748116f26e58301557b5150399b4",
+      "blob_at_main": "7a43001ddd9bda655bb701315b9ad3acea55cf5a"
+    },
+    {
+      "path": "operations/work_logs/2026-11-23-branch-cleanup.md",
+      "blob_at_head": "72cfd253ebd4f02eb48f7e1905ae265cbe6120ba",
+      "blob_at_main": "af735fd4c8b7e3fe54669b03f805ac13db3ea6b2"
+    }
+  ],
+  "csv_delete_list_on_main": {
+    "path": "operations/work_logs/2026-11-23-branch-cleanup-list.csv",
+    "blob_sha": "a42a7fa54c2db76f3e29264a176cef3a81baa75c",
+    "data_rows": 282,
+    "last_row_branch": "cursor/v6-prereg-r1-reviews-745d",
+    "last_row_sha": "53a03cc2ed1fc2e6fa0cff111e9acf8bd9e250cd"
+  },
+  "decision": "approve",
+  "must_fix": 0,
+  "should_fix": 0,
+  "note": 2,
+  "checks": {
+    "1_branch_cleanup_csv": "PASS",
+    "2_open_pr_branch_refs": "PASS",
+    "3_milestone_tags_docs_vs_origin": "PASS",
+    "4_v350_review_files_vs_pr338": "PASS",
+    "5_pr352_scope_and_integrity": "PASS"
+  },
+  "check1": {
+    "csv_branches_still_on_origin": 0,
+    "csv_branches_absent": 282,
+    "remaining_heads_not_on_csv_excl_main": 9,
+    "pre_delete_tip_reobserve_possible": false,
+    "work_log_skip_count": 0,
+    "execution_method_section_unchanged_in_pr352": true,
+    "live_heads_after_snapshot_extra_expected": [
+      "cursor/d41-phase2-archive-register-60e1"
+    ]
+  },
+  "check2_open_prs": {
+    "312": {
+      "branch": "grok/d37-r6-partial",
+      "head_sha": "332b88fdb1b1b4272edb154754c3bf2925b5889d"
+    },
+    "339": {
+      "branch": "claude/v6-prereg-r1",
+      "head_sha": "2a452ae55a69e524dcca2bf6e72096e145777fef"
+    },
+    "346": {
+      "branch": "claude/d38-r45-r56",
+      "head_sha": "0bff3eda70c64d62944940a4cd94ea702cd95adb"
+    },
+    "347": {
+      "branch": "claude/owner-page-ledger-score",
+      "head_sha": "462d1d32e2695708cc0c79f1fd814d6148dde4be"
+    },
+    "348": {
+      "branch": "claude/data-board-1123",
+      "head_sha": "b08f0e49a6743cd0ce4592213bfdfa6c6cb622e0"
+    },
+    "349": {
+      "branch": "claude/owner-board-v6",
+      "head_sha": "bd62984d988299a9607f0b35643ead999a424b0d"
+    }
+  },
+  "check2_extra_retained_heads": {
+    "claude/d41-cleanup": "16770fa70dd46b2d6a91a20affadcac251479a05",
+    "claude/v6-prereg-r1-review-files": "50f52a9db748a640df29f9a4da89ebfff1a68df0"
+  },
+  "check3": {
+    "origin_tag_name_count": 10,
+    "phase2_archive_tag_object_type": "tag",
+    "phase2_archive_tag_object_sha": "48b63a84274b9d8349049630971095f82c9da7b9",
+    "phase2_archive_peeled_commit": "8875fe576496e9dacfb0681ac93df4f42cd894ca",
+    "twelve_tag_historical_table_unchanged_vs_main": true,
+    "v5_code_freeze_object": "0aeae744177074c84bce68206021c21c6963341a",
+    "v5_code_freeze_peeled": "8970bcbc7986c9a67d9ca535ca58a8855c910495",
+    "work_log_tag_snapshot_lines_vs_live_mismatches": 0
+  },
+  "check4": {
+    "operations/reviews/2026-11-23-v6-prereg-draft-r1.md": {
+      "main_89f030d5": "5d173972f5c044e31d884f207c9e546462c06bba",
+      "pr338_53a03cc2": "5d173972f5c044e31d884f207c9e546462c06bba"
+    },
+    "operations/reviews/diag/v6-prereg-r1-checklist.json": {
+      "main_89f030d5": "8b9e6a10870c560045feee21470920d469affc68",
+      "pr338_53a03cc2": "8b9e6a10870c560045feee21470920d469affc68"
+    }
+  },
+  "check5_pr352": {
+    "no_market_sqlite_in_diff": true,
+    "no_tag_or_branch_mutations_in_diff": true,
+    "work_log_status_done": true
+  },
+  "docs_only": true,
+  "no_pnl": true
+}
