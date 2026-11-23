@@ -1,0 +1,37 @@
+{
+  "generated_at": "2026-11-23T01:50:00Z",
+  "reviewer": "ETF Rotation Reviewer (Cloud Agent, independent)",
+  "target_pr": 335,
+  "prereg_path": "docs/prereg/etf-multiasset-rotation-prereg-v6.md",
+  "verified": {
+    "pr_head": "06f0e53f01aab8d2021a89700e9a10680252c343",
+    "pr_tree": "f11c333d87649be0b0cff902aacbc36b35fcf853",
+    "pr_base_main": "296a8f20a816f2fd650af06ae0e84cc81e0f9a06",
+    "prereg_blob": "47dd35ae7086381e137b3038298ef7c379ce811a",
+    "commits_in_pr": 1,
+    "unique_files": ["docs/prereg/etf-multiasset-rotation-prereg-v6.md"],
+    "diff_stat": "+262/0",
+    "mergeable_state": "clean",
+    "merged": false
+  },
+  "forecast_3_21_ref": {
+    "pr": 336,
+    "head": "96a53fbef6b2ecd8e5cbabce6f677f23e2c6e0cd",
+    "on_pr335_tree_forecast_md_status": "3.20",
+    "prereg_section_3_1_vs_336_table": "numeric_match",
+    "forecast_canonical_on_tree": false
+  },
+  "synthetic_msim_source": "results/v6-preflight/msim-v6-n3.csv",
+  "synthetic_scenario_match": true,
+  "checklist": {
+    "design_review_2_1_section3": "partial_pass_with_gaps",
+    "forecast_3_21": "pass_text_numbers_fail_canonical_path",
+    "synthetic_d38_40_41": "pass",
+    "eight_questions": "partial_deferred_9_2",
+    "section_1_4_count_three": true,
+    "section_4_contamination": "pass",
+    "section_5_autocheck": "partial",
+    "script_consistency": "fail_items_listed_in_memo"
+  },
+  "recommended_conclusion": "approve_with_follow_up"
+}
