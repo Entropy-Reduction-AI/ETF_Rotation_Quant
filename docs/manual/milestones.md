@@ -7,7 +7,7 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Manager
-- Last updated: 2026-11-04（`milestone/v5-code-freeze` 指向 `8970bcbc`：D34-1 #251+#252；`results/v5/LOCK` 待 D34-3 PR 合入；设计期 ≤2015-12-31；过关 B0；既有标签不移动）
+- Last updated: 2026-11-23（Asia/Taipei；登记 `milestone/phase2-archive`，标签对象 `48b63a84274b9d8349049630971095f82c9da7b9`，指向 `8875fe576496e9dacfb0681ac93df4f42cd894ca`）
 - Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`；D26-5 见 `operations/planning/2026-10-31-d26-v5-direction.md`；2026-11-01 新增见 `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`；2026-11-04 新增见 `operations/work_logs/2026-11-04-v5.1-prereg-freeze-tag.md`；2026-11-04 代码冻结见 `operations/work_logs/2026-11-04-v5-code-freeze-tag.md`
 
 ## Purpose
@@ -141,6 +141,20 @@ D26-5 / v5-R1（决定 `operations/planning/2026-10-31-d26-v5-direction.md`；�
 
 核对见 `operations/work_logs/2026-11-04-v5-code-freeze-tag.md`。
 
+## `milestone/phase2-archive`
+
+2026-11-23（Asia/Taipei）。`milestone/phase2-archive` 已在 origin 上。附注标签对象是 `48b63a84274b9d8349049630971095f82c9da7b9`（附注标签对象本身，不是剥开后的提交），指向提交 `8875fe576496e9dacfb0681ac93df4f42cd894ca`。本索引只登记这个已经存在的标签。没有移动、删除或改写任何既有标签。
+
+附注说明：`phase 2 archive (D36: v3→v5.1 closed as not established; D35 listed-only recalc, turnover deep-dive, D37 diagnostics done; last main before v6 preflight D38 #295)`。
+
+| 标签 | 标签对象 SHA | 指向提交 SHA | 说明 | 处置 | 理由 |
+| --- | --- | --- | --- | --- | --- |
+| `milestone/phase2-archive` | `48b63a84274b9d8349049630971095f82c9da7b9` | `8875fe576496e9dacfb0681ac93df4f42cd894ca` | phase 2 archive (D36: v3→v5.1 closed as not established; D35 listed-only recalc, turnover deep-dive, D37 diagnostics done; last main before v6 preflight D38 #295) | 保留 | 第二阶段归档。名字 `milestone/phase2-archive` |
+
+本索引提交只补上表。没有移动、删除或改写任何既有标签。
+
+核对见 `operations/work_logs/2026-11-23-branch-cleanup.md`。
+
 ## Related Files
 
 - `operations/planning/2026-10-28-d14-owner-decisions.md`
@@ -149,6 +163,7 @@ D26-5 / v5-R1（决定 `operations/planning/2026-10-31-d26-v5-direction.md`；�
 - `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`
 - `operations/work_logs/2026-11-04-v5.1-prereg-freeze-tag.md`
 - `operations/work_logs/2026-11-04-v5-code-freeze-tag.md`
+- `operations/work_logs/2026-11-23-branch-cleanup.md`
 - `operations/reviews/2026-11-01-v5-classes-draft-signoff.md`
 - `operations/planning/2026-10-30-v4-r5c-plan.md`
 - `operations/reviews/2026-10-30-v4-r5c-d25-signoff.md`
