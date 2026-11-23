@@ -572,4 +572,6 @@ h2 .num {{ min-width: 1.6em; }}
 
 
 for args in PAGES:
+    if not os.path.exists(os.path.join(DOCS, args[1])):          # e.g. the v6 prereg draft lives on its PR branch until freeze
+        print(f'{args[0]:12} skipped: source not on this branch'); continue
     build(*args)
