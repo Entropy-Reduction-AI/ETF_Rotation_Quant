@@ -1,0 +1,30 @@
+{
+  "code": "801050",
+  "name": "有色金属",
+  "ok": true,
+  "http_status": 200,
+  "url": "https://www.swsresearch.com/institute-sw/api/index_publish/trend/?swindexcode=801050&period=DAY",
+  "reused": false,
+  "n": 6496,
+  "first_date": "1999-12-30",
+  "last_date": "2026-11-20",
+  "raw_bytes": 1514675,
+  "sha256": "1b08befe2ea8305cc10d9a4385d4afabf6c175f833b0baef634e6ca17ce8e7b1",
+  "api_code": "200",
+  "api_message": "ok",
+  "raw_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801050-有色金属.trend.json",
+  "csv_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801050-有色金属.trend.csv",
+  "elapsed_s": 12.33,
+  "first_row": {
+    "swindexcode": "801050",
+    "bargaindate": "1999-12-30",
+    "openindex": 1000.0,
+    "maxindex": 1000.0,
+    "minindex": 1000.0,
+    "closeindex": 1000.0,
+    "bargainamount": 0.10413133,
+    "bargainsum": 0.8739785717,
+    "hike": 0.0,
+    "markup": 0.0
+  }
+}

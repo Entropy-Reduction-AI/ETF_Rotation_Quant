@@ -1,0 +1,30 @@
+{
+  "code": "801760",
+  "name": "传媒",
+  "ok": true,
+  "http_status": 200,
+  "url": "https://www.swsresearch.com/institute-sw/api/index_publish/trend/?swindexcode=801760&period=DAY",
+  "reused": false,
+  "n": 3082,
+  "first_date": "2014-02-21",
+  "last_date": "2026-11-20",
+  "raw_bytes": 708650,
+  "sha256": "a09ae45dc54e09a1883133656af749dead186406f38256dfb012132bb36a6c15",
+  "api_code": "200",
+  "api_message": "ok",
+  "raw_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801760-传媒.trend.json",
+  "csv_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801760-传媒.trend.csv",
+  "elapsed_s": 12.74,
+  "first_row": {
+    "swindexcode": "801760",
+    "bargaindate": "2014-02-21",
+    "openindex": 997.65,
+    "maxindex": 1007.01,
+    "minindex": 987.36,
+    "closeindex": 1000.62,
+    "bargainamount": 5.62605603,
+    "bargainsum": 119.2680436425,
+    "hike": 0.62,
+    "markup": 0.06
+  }
+}

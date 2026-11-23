@@ -1,0 +1,30 @@
+{
+  "code": "801150",
+  "name": "医药生物",
+  "ok": true,
+  "http_status": 200,
+  "url": "https://www.swsresearch.com/institute-sw/api/index_publish/trend/?swindexcode=801150&period=DAY",
+  "reused": false,
+  "n": 6496,
+  "first_date": "1999-12-30",
+  "last_date": "2026-11-20",
+  "raw_bytes": 1516416,
+  "sha256": "175e0e61394cb086121cc02fcbd039a5da9c0d3590f310963c0a9c89c86e1fc8",
+  "api_code": "200",
+  "api_message": "ok",
+  "raw_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801150-医药生物.trend.json",
+  "csv_path": "/workspace/incoming-prep/grok-sw-index-20261122/shenwan/dailies-2021/801150-医药生物.trend.csv",
+  "elapsed_s": 13.85,
+  "first_row": {
+    "swindexcode": "801150",
+    "bargaindate": "1999-12-30",
+    "openindex": 1000.0,
+    "maxindex": 1000.0,
+    "minindex": 1000.0,
+    "closeindex": 1000.0,
+    "bargainamount": 0.19626287,
+    "bargainsum": 2.279919357,
+    "hike": 0.0,
+    "markup": 0.0
+  }
+}
