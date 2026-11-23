@@ -544,7 +544,7 @@ h2 .num {{ min-width: 1.6em; }}
   {sub_html}
 </header>
 {content}
-<footer>内容取自仓库 <a href="{GH}docs/owner/{fname}">docs/owner/{fname}</a>（main @ a592981）。图表为原文配图。</footer>
+<footer>内容取自仓库 <a href="{GH}{os.path.normpath('docs/owner/' + fname)}">{os.path.normpath('docs/owner/' + fname)}</a>。图表为原文配图。</footer>
 </main>
 </div>
 <script>
