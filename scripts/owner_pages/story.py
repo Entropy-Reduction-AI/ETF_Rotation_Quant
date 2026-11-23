@@ -1351,6 +1351,21 @@ def table_focus(soup):
                         v = r[ci].get_text('', strip=True)
                         r[ci].clear()
                         r[ci].append(BeautifulSoup(f'<span class="cat c{order.index(v)}">{v}</span>', 'html.parser'))
+                continue
+            # same idea when the values share a lead word: “计 1 / 计 2 / 文献 / 约定，Reviewer 核” -> 计 · 文献 · 约定
+            key = lambda v: re.split(r'[\s，,（(\d]', v, maxsplit=1)[0]
+            keys = [key(v) for v in vals]
+            ukeys = set(k for k in keys if k)
+            if (len(vals) >= 4 and 2 <= len(ukeys) <= 4 and len(uniq) > len(ukeys) and all(0 < len(k) <= 4 for k in keys)
+                    and all(len(v) <= 14 for v in vals) and all(re.fullmatch(r'[\u4e00-\u9fff]{1,4}', k) for k in keys)
+                    and not any(r[ci].find(class_=re.compile(r'^(ib|ibc|pill|mg)$')) or r[ci].find('a') for r in grid if ci < len(r))
+                    and all(re.fullmatch(r'[\u4e00-\u9fff]{1,4}(\s*\d{1,2}|，.{1,10})?', v) for v in vals if v)):
+                order = sorted(ukeys, key=keys.index)
+                for r in grid:
+                    if ci < len(r) and r[ci].get_text(strip=True) and not r[ci].find(class_='pill'):
+                        v = r[ci].get_text('', strip=True)
+                        r[ci].clear()
+                        r[ci].append(BeautifulSoup(f'<span class="cat c{order.index(key(v))}">{html_escape(v)}</span>', 'html.parser'))
         # G. yes/no answers in a question column (“会不会…”) -> tag
         qi = len(H) - 1
         if re.search(r'(会不会|是不是|有没有|能不能)', H[qi]):
@@ -1420,6 +1435,80 @@ def case_cards(soup):
                 cb.append(b.extract())
             h.decompose()
             wrap.append(card)
+
+
+def ledger_cards(soup):
+    """Case tables read as a ledger of cases, one card each. Triggered by a table whose header has a column
+    starting with 超出, whose first column is 陷阱, or that the md marks with <!-- 页面：卡片 --> right above it.
+    The card's large line is the column named 代价 / 结论 / 状态; the foot is the last other column (⚠ when it
+    is a tripwire "超出…"); a leading # column becomes a number badge before the title. Every cell is kept."""
+    from bs4 import Comment
+    for t in list(soup.find_all('table')):
+        if t.find_parent(class_='fold-b') is not None:
+            continue
+        H = [th.get_text('', strip=True) for th in t.select('thead th')]
+        w = t.find_parent(class_='table-wrap') or t
+        prev = w.find_previous_sibling(string=lambda x: isinstance(x, Comment)) if w.previous_sibling is not None else None
+        marked = False
+        sib = w.previous_sibling
+        while sib is not None and isinstance(sib, NavigableString):
+            if isinstance(sib, Comment) and '页面：卡片' in sib:
+                marked = True
+                sib.extract()
+                break
+            if sib.strip():
+                break
+            sib = sib.previous_sibling
+        if len(H) < (2 if marked else 3) or not (marked or any(h.startswith('超出') for h in H) or H[0] == '陷阱'):
+            continue
+        rows0 = [tr.find('td') for tr in t.select('tbody tr')]
+        num = H[0] in ('#', '编号') and all(c is not None and re.fullmatch(r'\d{1,2}', c.get_text('', strip=True)) for c in rows0)
+        ti = 1 if num else 0
+        big = next((i for i, h in enumerate(H) if i > ti and ('代价' in h or h in ('结论', '状态', '门槛'))), None)
+        foot = next((i for i in range(len(H) - 1, ti, -1) if i != big), None)
+        mids = [i for i in range(ti + 1, len(H)) if i not in (big, foot)]
+        trip = foot is not None and H[foot].startswith('超出')
+
+        def chips(td):
+            # a cell that is a list of 4+ short items reads as chips
+            items = [x.strip() for x in td.get_text('', strip=True).split('、')]
+            # only when every item carries its own note, so nothing shared (“均 …”) is split off
+            if (len(items) >= 4 and all(0 < len(x) <= 22 and x.endswith('）') for x in items)
+                    and td.find(['a', 'code']) is None and '均' not in td.get_text()):
+                return '<span class="lg-chips">' + ''.join(f'<span class="lg-c">{html_escape(x)}</span>' for x in items) + '</span>'
+            return td.decode_contents()
+        cards = []
+        for tr in t.select('tbody tr'):
+            tds = tr.find_all('td')
+            if len(tds) != len(H):
+                break
+            badge = f'<span class="lg-n">{tds[0].get_text("", strip=True)}</span>' if num else ''
+            tone = ''
+            if big is not None:
+                for pl in tds[big].select('.pill'):
+                    pl.unwrap()
+            if big is not None and H[big] == '状态':
+                tone = ' t-' + _tf_status_tone(tds[big].get_text('', strip=True))
+            bl = (f'<div class="lg-big{tone}">{tds[big].decode_contents()}</div>' +
+                  ('' if H[big] in ('结论', '状态') else f'<div class="lg-bl">{H[big]}</div>')) if big is not None else ''
+            md = ''.join(f'<div class="lg-m"><span class="lg-k">{H[i]}</span>{chips(tds[i])}</div>' for i in mids)
+            if len(H) == 2:
+                # a two-column list: the second column is the card's body
+                cards.append(f'<div class="lg"><div class="lg-h">{tds[0].decode_contents()}</div><div class="lg-m lg-t">{chips(tds[1])}</div></div>')
+                continue
+            ft = '' if foot is None else (f'<div class="lg-f{" trip" if trip else ""}"><span class="lg-fi">{"⚠" if trip else "→"}</span>'
+                  f'<span class="lg-k">{H[foot]}</span>{chips(tds[foot])}</div>')
+            if len(tds[ti].get_text('', strip=True)) > 26 and bl and H[big] != '状态':
+                # a long title reads as the card's body; the short verdict leads
+                head = f'<div class="lg-h">{badge}</div>' if badge else ''
+                cards.append(f'<div class="lg">{head}{bl}<div class="lg-m lg-t">{tds[ti].decode_contents()}</div>{md}{ft}</div>')
+            else:
+                cards.append(f'<div class="lg"><div class="lg-h">{badge}{tds[ti].decode_contents()}</div>{bl}{md}{ft}</div>')
+        else:
+            g = BeautifulSoup(f'<div class="ledger n{len(cards)}">' + ''.join(cards) + '</div>', 'html.parser')
+            w.replace_with(g)
+            for b in g.select('.lg-big b, .lg-big strong'):
+                b.unwrap()
 
 
 def inline_bullets(soup):
@@ -1834,6 +1923,7 @@ def ux_pass(html):
     term_cards(soup)
     inline_bullets(soup)
     case_cards(soup)
+    ledger_cards(soup)
     card_ux(soup)
     sensitivity_cards(soup)
     risk_return_map(soup)
@@ -2417,4 +2507,28 @@ CSS += r"""
 .dx-bad .dx-i { background: var(--bad); } .dx-bad .dx-i::before { content: '✕'; }
 .dx-good .dx-i { background: var(--good); } .dx-good .dx-i::before { content: '✓'; }
 b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color: var(--bad); font-family: var(--font-mono); }
+"""
+
+
+CSS += r"""
+/* ledger cards: one card per case, cost large, tripwire at the foot */
+.ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 14px 0 20px; }
+.ledger .lg { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px 10px; display: flex; flex-direction: column; gap: 6px; }
+.ledger .lg-h { font-size: 13.5px; font-weight: 700; color: var(--accent); line-height: 1.5; }
+.ledger .lg-n { display: inline-grid; place-items: center; min-width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 11.5px; margin-right: 8px; vertical-align: 1px; }
+.ledger .lg-big.t-good { color: var(--good); } .ledger .lg-big.t-warn { color: var(--warn); } .ledger .lg-big.t-bad { color: var(--bad); }
+.ledger .lg-big { font-size: 19px; line-height: 1.35; font-weight: 700; color: var(--ink); }
+.ledger .lg-bl { font-size: 12px; color: var(--muted); margin-top: -4px; }
+.ledger .lg-m { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.ledger .lg-t { color: var(--ink); }
+.ledger .lg-t b, .ledger .lg-t strong { font-weight: 600; }
+.ledger .lg-k { display: inline-block; font-size: 12px; color: var(--muted); background: var(--bg); border-radius: 4px; padding: 0 6px; margin-right: 6px; }
+.ledger .lg-f { margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); font-size: 14px; color: var(--ink); line-height: 1.6; }
+.ledger .lg-f.trip { color: var(--bad); }
+.ledger .lg-f.trip .lg-k { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.ledger .lg-fi { font-weight: 700; margin-right: 4px; }
+.ledger.n4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 700px) { .ledger.n4 { grid-template-columns: minmax(0, 1fr); } }
+.ledger .lg-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+.ledger .lg-c { font-size: 12.5px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; line-height: 1.6; }
 """

@@ -21,6 +21,7 @@ links = json.load(open(LINKS, encoding='utf-8')) if os.path.exists(LINKS) else {
 PAGES = [
     # slug, file, short title, old artifact id (from the board)
     ('v6-preflight', 'v6-preflight-forecast.md', 'v6 预演预测表', '__v6_preflight__'),
+    ('v6-prereg', '../prereg/etf-multiasset-rotation-prereg-v6.md', 'v6 预注册', '__v6_prereg__'),
     ('retro', 'phase2-retrospective.md', '第二阶段复盘', '5MkgZbbcXpkajmwz5qymNF'),
     ('oneshot', 'v5-oneshot-report.md', '一次性检验报告', 'Hqn3e4uwds2bN2JMyGqexq'),
     ('v51-health', 'v5.1-health-check.md', 'v5.1 体检报告', 'CG26Frh88yKyFUqmFBCVvk'),
@@ -543,7 +544,7 @@ h2 .num {{ min-width: 1.6em; }}
   {sub_html}
 </header>
 {content}
-<footer>内容取自仓库 <a href="{GH}docs/owner/{fname}">docs/owner/{fname}</a>（main @ a592981）。图表为原文配图。</footer>
+<footer>内容取自仓库 <a href="{GH}{os.path.normpath('docs/owner/' + fname)}">{os.path.normpath('docs/owner/' + fname)}</a>。图表为原文配图。</footer>
 </main>
 </div>
 <script>
