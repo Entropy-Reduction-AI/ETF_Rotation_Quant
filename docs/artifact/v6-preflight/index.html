@@ -1607,7 +1607,7 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 </table></div>
 <ul class="points">
 <li><strong>怎么算</strong>：每天算“场内价格 ÷ 净值 − 1”；取最近 60 个交易日的中位数当常态；今天减常态就是偏离。偏离超过 <span class="num">5 个点</span>不买，已持有的不受影响。</li>
-<li><strong>纳指科技这类稀缺品种可以买</strong>：常态溢价约 <span class="num">9%</span>，全部交易日里下个月溢价跌超 <span class="num">5 个点</span>的比例约 <span class="num">10%</span>；但额度放开时可能一次性消失，所以单只设仓位上限。</li>
+<li><strong>纳指科技这类稀缺品种可以买</strong>：常态溢价约 <span class="num">9%</span>，全部交易日里下个月溢价跌超 <span class="num">5 个点</span>的比例约 <span class="num">10%</span>；额度放开时可能一次性消失。按 D40-14 不另设单只上限，每只最多占名额的 1/3，一次性损失约 1.8 万写进疼痛表。</li>
 <li><strong>最强的时候溢价也最高</strong>：被挡住时先找跟踪同一指数、偏离小的基金；没有就给下一名候选或母指数。</li>
 </ul>
 </section>
@@ -1675,72 +1675,72 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <tbody>
 <tr class="row-good">
 <td class="k">D40-1</td>
-<td>每个市场按 12−1 选前 N，母指数也是候选；候选从官方发布日起、满 12 个月才参选</td>
+<td class="detail">每个市场按 12−1 选前 N，母指数也是候选；候选从官方发布日起、满 12 个月才参选</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 <tr class="row-good">
 <td class="k">D40-2</td>
-<td>防守不再逐个卡均线：母指数跌破均线时入选者须过去一年是涨的；确认紧张时股票仓位 = 把握 p</td>
+<td class="detail">防守不再逐个卡均线：母指数跌破均线时入选者须过去一年是涨的；确认紧张时股票仓位 = 把握 p</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 <tr class="row-good">
 <td class="k">D40-3</td>
-<td>把握 p = Φ(t)，只用已知结果；美股以美国长历史为起点，A 股从 0.5 起</td>
+<td class="detail">把握 p = Φ(t)，只用已知结果；美股以美国长历史为起点，A 股从 0.5 起</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 <tr class="row-good">
 <td class="k">D40-4</td>
-<td>美股 60%、A 股 40%；港股不单设名额</td>
+<td class="detail">美股 60%、A 股 40%；港股不单设名额</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 <tr class="row-good">
 <td class="k">D40-5</td>
-<td>溢价看偏离：比自身 60 天常态高 5 个点以上不买；稀缺品种设单只上限</td>
+<td class="detail">溢价看偏离：比自身 60 天常态高 5 个点以上不买；稀缺品种设单只上限</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 <tr class="row-good">
 <td class="k">D40-6</td>
-<td>替代 D39 的 K2A；D39 的底线 60 万、保费 4 点继续有效</td>
+<td class="detail">替代 D39 的 K2A；D39 的底线 60 万、保费 4 点继续有效</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 <tr class="row-good">
 <td class="k">D40-7</td>
-<td>每个名额选前 3；合成行情的底线按中间情况判；三票等权写进合同边界（PR #315）</td>
+<td class="detail">每个名额选前 3；合成行情的底线按中间情况判；三票等权写进合同边界（PR #315）</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 <tr class="row-good">
 <td class="k">D40-8</td>
-<td>Grok 第六轮按已有历史入库，不再追 5 条部分完成的指数</td>
+<td class="detail">Grok 第六轮按已有历史入库，不再追 5 条部分完成的指数</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 <tr class="row-good">
 <td class="k">D40-9</td>
-<td>取沪深300 十个行业指数，检验 A 股“记忆更短”（D38 第 45 行）</td>
+<td class="detail">取沪深300 十个行业指数，检验 A 股“记忆更短”（D38 第 45 行）</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 <tr class="row-good">
 <td class="k">D40-10</td>
-<td>A 股名额预测从“记 0”改为每年约 +0.6（D38 第 48 行）</td>
+<td class="detail">A 股名额预测从“记 0”改为每年约 +0.6（D38 第 48 行）</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 <tr class="row-good">
 <td class="k">D40-11</td>
-<td>美股候选池只追加 REIT；新候选须带来池子里没有的行业</td>
+<td class="detail">美股候选池只追加 REIT；新候选须带来池子里没有的行业</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 <tr class="row-good">
 <td class="k">D40-12</td>
-<td>A 股名额预测维持每年约 +0.6；挑选、等权倾斜两块的拆分留作事后对账口径</td>
+<td class="detail">A 股名额预测维持每年约 +0.6；挑选、等权倾斜两块的拆分留作事后对账口径</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 <tr class="row-good">
 <td class="k">D40-13</td>
-<td>预注册同时写入 A 股 12−1（主规则）与连续性版（挑战者），一次性检验两个都验</td>
+<td class="detail">预注册同时写入 A 股 12−1（主规则）与连续性版（挑战者），一次性检验两个都验</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 <tr class="row-good">
 <td class="k">D40-14</td>
-<td>常年溢价品种不另设单只上限；保费只量防守成本；对增强基准比年化 ÷ 最大回撤；对同仓位基准不低于 0</td>
+<td class="detail">常年溢价品种不另设单只上限（取代 D40-5 的“设上限”）；保费只量防守成本；对增强基准比年化 ÷ 最大回撤；对同仓位基准不低于 0</td>
 <td class="c-take"><span class="pill good">采用</span></td>
 </tr>
 </tbody>
@@ -1748,7 +1748,7 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 </section>
 <section id="sec-10-接下来-起草-v6-预注册"><h2 id="10-接下来-起草-v6-预注册"><span class="num">10</span>接下来：起草 v6 预注册</h2>
 <p class="memo"><strong>A 股名额预测维持 +0.6（D40-12），12−1 与连续性版一起进预注册（D40-13）；开始起草，冻结前补完沪深300 行业和申万的检验。</strong></p>
-<div class="table-wrap"><table>
+<div class="score"><div class="seg"><span class="s-good" style="flex:5"></span><span class="s-warn" style="flex:3"></span></div><div class="sl"><b class="t-good num">5</b> 已完成 · <b class="t-warn num">3</b> 进行中<span class="of"> / 共 8 项</span></div></div><div class="table-wrap"><table>
 <thead>
 <tr>
 <th>事项</th>
@@ -1764,11 +1764,11 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <td><strong>初稿第 2 版：R1 两条必须改已闭合，D40-14 已写入，待 R1b</strong></td>
 <td class="r-status"><span class="pill warn">进行中</span></td>
 </tr>
-<tr>
+<tr class="row-good">
 <td>一次性检验两个都验：12−1 定过不过；连续性版过判据且胜过 12−1 才换上</td>
 <td>Orchestrator</td>
-<td><strong>写进预注册</strong></td>
-<td class="r-status"><span class="pill warn">待做</span></td>
+<td><strong>已写进预注册 §1.3、§5.3</strong></td>
+<td class="r-status"><span class="pill good">已完成</span></td>
 </tr>
 <tr class="row-warn">
 <td>沪深300 十个行业指数（D40-9，第 45 行）</td>
@@ -1788,11 +1788,11 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <td><strong>按第 55 行停止规则，v6 不再加</strong></td>
 <td class="r-status"><span class="pill good">已完成</span></td>
 </tr>
-<tr>
+<tr class="row-good">
 <td>前向影子跟踪：结构市才挑选、12−1 与连续性版各拿一半</td>
 <td>Orchestrator</td>
-<td><strong>写进预注册的影子清单</strong></td>
-<td class="r-status"><span class="pill warn">待做</span></td>
+<td><strong>已写进预注册 §7</strong></td>
+<td class="r-status"><span class="pill good">已完成</span></td>
 </tr>
 <tr class="row-good">
 <td>复核 D38 第 50–53 行</td>
@@ -1800,11 +1800,11 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <td><strong>已签收（PR #330）</strong></td>
 <td class="r-status"><span class="pill good">已完成</span></td>
 </tr>
-<tr class="row-warn">
+<tr class="row-good">
 <td>复核并合入 D38 第 54、55 行（PR #332、#333）</td>
 <td>Reviewer、Manager</td>
-<td><strong>等复核</strong></td>
-<td class="r-status"><span class="pill warn">进行中</span></td>
+<td><strong>已签收、已合入</strong></td>
+<td class="r-status"><span class="pill good">已完成</span></td>
 </tr>
 </tbody>
 </table></div>
