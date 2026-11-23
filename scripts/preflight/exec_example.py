@@ -1,16 +1,29 @@
 """预测表第 0 节的执行示例：按 D40 规则（前 3、美股 60%）逐步记录某个月末的计算过程（设计期数据，只导出过程，不改规则）。
-用法：python scripts/preflight/exec_example.py <49_Industry_Portfolios.csv> <DTB3.csv> 2015-08-31 2013-04-30
+用法：python -I scripts/preflight/exec_example.py <49_Industry_Portfolios.csv> <DTB3.csv> 2015-08-31 2013-04-26
+（2026-11-23 起按 v6 规则去重、美股含 REIT；领头者 = 去重后 12−1 前 3，不做“须为正”过滤，与 topn_dedupe.py 一致）
 """
 import sys, json, pathlib, warnings
 warnings.filterwarnings('ignore')
 HERE = pathlib.Path(__file__).resolve().parent; ROOT = HERE.parents[1]
 FFP, DTBP, DATES = sys.argv[1], sys.argv[2], sys.argv[3:]
 import numpy as np, pandas as pd
-G = {'__file__': str(HERE / 'a_official.py'), '__name__': 'x'}; sys.argv = ['x', FFP, DTBP]
-exec(open(HERE / 'a_official.py').read().split("res = {'每年末")[0], G)
-A, US_RMB, bond, cash, V, conf, US_PRIOR = G['A'], G['US_RMB'], G['bond'], G['cash'], G['V'], G['conf'], G['US_PRIOR']
+# 与设计期整套（topn_dedupe.py，第 47 行）同一候选池和标签：美股 = 旧 14 个 + REIT（D40-11），同一行业标签只留分数最高的一个（第 46 行）
+G2 = {'__file__': str(HERE / 'topn_dedupe.py'), '__name__': 'x'}; sys.argv = ['x', FFP, DTBP]
+exec(open(HERE / 'topn_dedupe.py').read().split('def slot(')[0], G2)
+G = G2['G']; TAGS = G2['TAGS']
+A, US_RMB, bond, cash, V, conf, US_PRIOR = G['A'], G['US_RMB'].copy(), G['bond'], G['cash'], G['V'], G['conf'], G['US_PRIOR']
+US_RMB['DWRTF'] = G2['US_NEW']['DWRTF']
+def dtop(sc, tags, n=3):
+    """按分数从高到低取前 n，同一行业标签只留分数最高的一个（宽基、母指数不标签、不去重）。"""
+    out, used = [], set()
+    for k in sc.sort_values(ascending=False).index:
+        tg = tags.get(k, '')
+        if tg and tg in used: continue
+        out.append(k); used.add(tg)
+        if len(out) == n: break
+    return pd.Index(out)
 votes_detail = V['votes']
-def trace(lvl, parent, prior, want):
+def trace(lvl, parent, prior, want, tags):
     cal = lvl.index; me_mask = np.r_[cal.month[1:] != cal.month[:-1], True]; me = lvl[me_mask]
     mom = me.shift(1) / me.shift(12) - 1; above = me > me.rolling(10).mean(); ma = me.rolling(10).mean(); mnx = me.pct_change().shift(-1)
     blvl = np.exp(np.log1p(bond.fillna(0)).cumsum()).where(bond.notna().cumsum() > 0); bme = blvl[me_mask]; babove = (bme > bme.rolling(10).mean()) & bme.notna()
@@ -27,7 +40,7 @@ def trace(lvl, parent, prior, want):
         nv = int(vm) + int(vb) + int(vt); stress = nv >= 2; p = conf(hist, prior=prior)
         elig = ok.copy()
         if not bool(above.loc[d, parent]): elig &= sc > 0
-        raw = sc[ok].nlargest(3).index; pick = sc[elig].nlargest(3).index
+        raw = dtop(sc[ok], tags); pick = dtop(sc[elig], tags)
         frac = p if stress else 1.0
         if str(d.date()) in want:
             out[str(d.date())] = dict(母指数=parent, 母指数月末点位=round(float(me.loc[d, parent]), 2), 母指数10个月均线=round(float(ma.loc[d, parent]), 2),
@@ -35,7 +48,7 @@ def trace(lvl, parent, prior, want):
                                      票_均线=vm, 宽度=round(float(b1.get(per)), 2) if pd.notna(b1.get(per)) else None, 宽度门槛_历史低三分之一=round(float(b1q.get(per)), 2) if pd.notna(b1q.get(per)) else None, 票_宽度=vb,
                                      TRIN=round(float(t.get(per)), 2) if pd.notna(t.get(per)) else None, TRIN门槛_历史高三分之一=round(float(tq.get(per)), 2) if pd.notna(tq.get(per)) else None, 票_TRIN=vt,
                                      票数=nv, 确认紧张=stress, 已知紧张月数=len(hist) + len(prior or []), **_pstat(list(prior or []) + hist), 把握p=round(p, 3),
-                                     候选数=int(ok.sum()), 前6名分数={k: round(float(v) * 100, 1) for k, v in sc[ok].nlargest(6).items()},
+                                     候选数=int(ok.sum()), 前6名分数={k: round(float(v) * 100, 1) for k, v in sc[ok].nlargest(6).items()}, 前6名行业={k: tags.get(k, '') for k in sc[ok].nlargest(6).index},
                                      入选=list(pick), 每只仓位_占名额=round(frac / 3, 3), 股票仓位_占名额=round(frac * len(pick) / 3, 3),
                                      国债或现金_占名额=round(1 - frac * len(pick) / 3, 3), 国债在均线上方=bool(babove.loc[d]) if d in babove.index else None)
         if stress and len(raw):
@@ -47,6 +60,6 @@ def _pstat(h):
     if len(h) < 2: return {}
     a = np.array(h); sd = a.std(ddof=1)
     return dict(紧张月领头者下月平均涨幅_pct=round(a.mean() * 100, 2), 波动_pct=round(sd * 100, 2), t=round(a.mean() / sd * len(a) ** 0.5, 2))
-res = {'A 股名额（40%）': trace(A, 'csi300', None, DATES), '美股名额（60%）': trace(US_RMB, 'SPX', US_PRIOR, DATES)}
+res = {'A 股名额（40%）': trace(A, 'csi300', None, DATES, TAGS['a']), '美股名额（60%）': trace(US_RMB, 'SPX', US_PRIOR, DATES, TAGS['us'])}
 json.dump(res, open(ROOT / 'results/v6-preflight/exec-example.json', 'w'), ensure_ascii=False, indent=1, default=str)
 print(json.dumps(res, ensure_ascii=False, indent=1, default=str))
