@@ -176,8 +176,8 @@
 | `operations/reviews/pr339-r1b-commands.md` | 复现命令 |
 | `operations/reviews/pr339-r1b-audit.py` | 审计生成器 |
 
-### Companion NET @ `d69099c`
+### Companion NET @ `a459701`
 
-`git diff --stat origin/main...HEAD`：以 companion 分支 **tip 全量 SHA** 为准（`git diff --stat origin/main...HEAD` 在推送后更新；见 verify.json 六路径）。
+`git diff --stat origin/main...HEAD`：**+9045 / 6 files**。
 
-`git ls-tree HEAD` blobs：`d8a01c43…` memo · `c9d05d53…` verify · `fed8771b…` audit.json · `88b1d8a0…` keypoint · `5b845bc8…` commands · `b9d4d84a…` audit.py。
+`git ls-tree HEAD` blobs：`a5cf357d…` memo · `474e21b9…` verify · `d16dfa61…` audit.json · `0d32c8e9…` keypoint · `5b845bc8…` commands · `f757ca19…` audit.py。
