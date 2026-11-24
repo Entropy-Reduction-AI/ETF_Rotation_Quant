@@ -1,4 +1,4 @@
-# v6 预注册初稿 R1b · 2026-11-24（修订 h）
+# v6 预注册初稿 R1b · 2026-11-24（修订 i）
 
 ## 技术结论
 
@@ -178,4 +178,6 @@
 
 ### Companion 净差异与 blob
 
-不在此 memo 写入 companion tip SHA 或 `git diff --stat` 行数（随提交变动）。基线：`origin/main`；分支：`cursor/pr339-r1b-reviewer-d912`；六路径见 `pr339-r1b-verify.json`。当次全量 SHA 与 stat 见交付回复。
+不在此 memo 写入 companion tip SHA 或 `git diff --stat` 行数（随提交变动）。基线：`origin/main`；分支：`cursor/pr339-r1b-reviewer-d912`；**七路径**见 `pr339-r1b-verify.json` → `companion_artifacts_seven_paths_owner_scope`。当次全量 SHA 与 stat 见交付回复。
+
+**修订 i**：`table_index` 12 路线表改绑 §9.1/§9.2（修正 653→292568ba 后逐步错位）；§5 增强基准 K2A 补 D39-3 + §5.3③；§6 打折行补 §3 五折/六折原文。
