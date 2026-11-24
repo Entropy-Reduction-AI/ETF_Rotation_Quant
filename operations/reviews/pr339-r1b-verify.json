@@ -1,0 +1,70 @@
+{
+  "review_start_head": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
+  "review_finish_head": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
+  "head_delta_after_refresh": null,
+  "compare_base_v21": "27036630f6916aa921e7b9a2eb6f905c7c642551",
+  "prerequisites": {
+    "main_head": "24762d27f08786d4045bf4d40259d7c1ab878b16",
+    "merge_361": {
+      "sha": "c7253ec812d35b1481d271585c932b020c9e2ae3",
+      "parents": ["05e39c5650acb52e0de8632bcaef8e6d05fe5597", "ce058680fabec19b12982bffce37e891808d4641"],
+      "ok": true
+    },
+    "merge_362_net_files": 3,
+    "market_sqlite_lfs_oid": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8",
+    "main_db_query": {
+      "DJIA_max_raw": "2026-09-30",
+      "DWRTF_max_raw": "2026-09-30",
+      "pseudo_2024_12_25_rows": 0,
+      "ok": true
+    }
+  },
+  "workspace": {
+    "code_commit": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
+    "data_baseline": "main LFS 02458762… (333 MiB copy at /tmp/market-r1b-main.sqlite → overlay)",
+    "overlay_root": "/tmp/v6-r1b-overlay",
+    "french_49_csv_sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
+    "no_2016_project_pool_pnl_run": true,
+    "appendix_b_design_end": "2015-12-31"
+  },
+  "check_a_appendix_a": {
+    "script": "python -I scripts/preflight/v6_appendix_a.py",
+    "subject_csv_sha256": "96a21d56ee2936c91ec390a262794dbee0ad54d15acd875f0d34d5c3d5b4e372",
+    "main_db_rerun_sha256": "3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94",
+    "byte_equal_subject_commit": false,
+    "diff_rows": ["DJIA 库内止/行数", "DWRTF 库内止/行数"],
+    "owner_confirmations": {
+      "allshare_backfill_remark": true,
+      "semi_931743_note_in_csv": "发布日 2012-12-21；备注官网早于基日；prereg 参选起点 2023-07-27",
+      "chem_frozen_listed_not_electing": true
+    },
+    "us_maps_to_v4": {
+      "with_theme_key_10_of_10": "pass",
+      "spx_ndx_so_on": "each has ≥1 CN fund maps_to match"
+    }
+  },
+  "check_b_appendix_b": {
+    "byte_equal_subject_commit_on_main_db": true,
+    "decomposition_sum_ok_all_3_periods": true,
+    "v6_net_2006_15_pct": 15.54,
+    "prose_rounded_15_5": true,
+    "sf1_appendix_b_closed_in_9_2": true,
+    "stdout_log": "/tmp/r1b-b-run.log"
+  },
+  "check_e_page_gates": {
+    "owner_page_lint_errors": 0,
+    "owner_page_lint_warns": 6,
+    "story_check_errors": 0,
+    "story_check_owner_required_gate": false,
+    "lint_exit": 0,
+    "story_exit": 0
+  },
+  "r1_closure": {
+    "SF-1": "closed — §9.2#3 附表 B 已完成；附录 B 脚本/bitwise JSON 在 main DB 上复现",
+    "J-3": "closed — §9.2#2 与附表 A 叙事「细分化工不参选」；CSV 仍含 frozen 行作登记"
+  },
+  "blockers": [
+    "appendix_a_csv_not_byte_identical_on_main_db_after_pr361"
+  ],
+  "verdict_hint": "approve_with_follow_up"
+}
