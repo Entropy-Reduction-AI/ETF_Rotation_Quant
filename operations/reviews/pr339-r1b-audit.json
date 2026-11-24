@@ -3616,20 +3616,17 @@
       ]
     },
     "d42_5_temporal_evidence": {
+      "check_3_not_full_fulfillment": true,
+      "required_owner_cutoff": "定义写死必须先于任何别市数据读取（非广义的「选市前零暴露」）",
       "planning_file_absent_at_2623a2a3": true,
       "planning_first_commit_full": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
       "d42_5_text_in_prereg_at_59a1b56": true,
       "d42_5_text_in_prereg_at_2623a2a3": false,
-      "v6_other_market_backtest_artifact_found": false,
       "reviewer_did_not_read_other_market_data": true,
-      "assurance_status": "partial_repo_evidence_only",
-      "proven": [
-        "别市检验定义与 planning 同日进入 subject（59a1b56）；2623 无 D42-5 正文",
-        "仓库内无 v6 别市回测产物路径（Reviewer 未跑数、未读行情）"
-      ],
-      "not_proven": [
-        "Owner 选市场前零信息暴露（对话/公网页面不在 git 可审计范围）"
-      ]
+      "assurance_status": "pending_owner_corroboration_before_exposure",
+      "git_proves_definitions_in_repo_at_59a1b56_commit": true,
+      "git_does_not_prove_pre_exposure_chronology": true,
+      "do_not_infer_pass_from_missing_artifacts": true
     },
     "d42_5_reviewer_limitations": {
       "definitions_before_data_exposure": "预注册与 D42-5 正文要求「市场在冻结后、看任何结果之前由 Owner 选定」；本 Reviewer 未检出冻结后别市跑数产物，亦未读 2016+ 池或别市行情跑数。无法从仓库时间戳证明零泄露——仅核对 D42 文稿先于 PR #339 59a1b56 合入顺序。",
@@ -3660,6 +3657,106 @@
     "§7_component_delta": "路线 +1 行「别的市场检验」；载体 +「对照：现行配置」",
     "prereg_md_diff_stat": "docs/prereg/etf-multiasset-rotation-prereg-v6.md | 32 ++++++++++++++++--------\n 1 file changed, 21 insertions(+), 11 deletions(-)",
     "2623_only_presentation": "docs/prereg/etf-multiasset-rotation-prereg-v6.md | 6 +++---\n 1 file changed, 3 insertions(+), 3 deletions(-)"
+  },
+  "r1b_accuracy_completion": {
+    "coordinator_accuracy_pass_2026_11_24": false,
+    "technical_decision_for_coordinator": "尚不能确认全部冻结前置条件",
+    "pending_until": [
+      "Owner 书面佐证：在任何人读取别市行情/收益之前，D42-5 定义（TRIN 两票 unanimous、p 从 0.5 起、支持判法、计 1 次试验）已固定",
+      "Orchestrator 澄清 v6 §5.2 A1/A2 是否绑定 v4 §7.4 附表 A 全文（含信号时点、现金、载体）及一次性检验是否重跑或引用 v4 账本"
+    ],
+    "check_3_d42_5_definition_before_exposure": {
+      "owner_required_cutoff": "TRIN 缺席→两票 unanimous；把握 p 从 0.5 起；支持=挑选（前 3 对同结构等权）为正且防守保费不超过 4 点；计 1 次试验；且在读取任何别市数据之前定义已写死",
+      "exact_prereg_carrier_quote_at_59a1b56": "别的市场检验（D42-5） | 一次性检验通过后、上线前，把一个名额的规则原样搬到一个没看过的市场，用该市场能取到的全部历史跑一次；市场在冻结后、看任何结果之前由 Owner 选定（候选：欧洲 STOXX 600 超级行业，母指数 STOXX 600；日本 TOPIX-17 行业，母指数 TOPIX）。没有行业成交额时 TRIN 一票缺席，只用均线、宽度两票，两票都中才算紧张；把握 p 从 0.5 起。计 1 次试验 | 挑选（前 3 对同结构等权）为正且防守保费不超过 4 点，记为“支持”；否则结论降一级，上线前需 Owner 另批",
+      "exact_planning_d42_5_row": "挑选（前 3 对同结构等权）为正且防守保费不超过 4 点，记为“支持”；否则结论降一级，上线前需 Owner 另批。计 1 次试验",
+      "git_proves_only": {
+        "subject_commit_full": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
+        "committer_date_iso8601": "2026-11-24T15:22:34+00:00",
+        "committer_date_asia_taipei_note": "2026-11-24 23:22:34+08:00 when UTC is 15:22:34+00:00",
+        "planning_file_first_appears_in_commit_full": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
+        "d42_5_text_absent_at_2623a2a3": true,
+        "reviewer_ran_no_other_market_backtest_search": "repo path scan only; not evidentiary pass"
+      },
+      "missing_not_in_git": [
+        "Owner/团队是否在别市数据读取前已固定上述定义（对话/流程不在仓库）",
+        "别市数据是否曾被任何人读取的时序（git 不能自证）"
+      ],
+      "do_not_infer_from_absence": "未找到别市回测产物 ≠ 证明零暴露；亦 ≠ 证明定义先于暴露",
+      "fulfillment_status": "pending_owner_corroboration"
+    },
+    "check_4_a1_a2_current_config": {
+      "v6_prereg_§5_2_rows_at_59a1b56": {
+        "A1": "每月末标普500 跑赢现金，就在标普500 和沪深300 里拿更强的一个全仓，否则拿 10 年国债",
+        "A2": "沪深300、标普500、恒生、10 年国债、黄金各 1/5，跌破 10 个月均线的那一腿换成现金",
+        "scope": "只报告，不参与 §5.3"
+      },
+      "prior_normative_v4": {
+        "path": "docs/prereg/etf-multiasset-rotation-prereg-v4.md",
+        "A1_rule_quote": "每个月末：若标普500 过去 12 个月收益高于现金，则持有标普500 和沪深300 中过去 12 个月收益更高的那一个，全仓；否则全仓 10 年国债",
+        "signal_timing_quote": "两条都只用月末收盘做决定（月末 = 每个自然月最后一个上交所交易日，SF-6），下一个上交所交易日按收盘成交；成本、成交限制（§4.5）、收盘时点和汇率（§3.1）、现金序列与 v4 相同",
+        "A2_rule_quote": "每个月末，五份各自判断：月末收盘高于过去 10 个月末收盘的简单平均，就持有这一份；否则这一份拿现金",
+        "legs_quote": "美股 = 标普500 全收益（^SP500TR）；…沪深300 全收益（H00300）；债券 = 10 年国债财富指数（CBA04501）；现金 = §3 的现金序列 … 五份各 20% … U-可交易各腿按 §3.2 选载体"
+      },
+      "prior_once_only_reference_v5": {
+        "path": "docs/prereg/etf-multiasset-rotation-prereg-v5.md",
+        "quote": "附表 A 的 A1、A2 照原样在两个池各跑一次（v4 已跑，不重跑，直接引用 v4 账本）。",
+        "design_evidence_path_cited_in_v5": "results/v4/diag/health/（v4 设计期 A1/A2 已跑）"
+      },
+      "v6_cross_reference_gap": "subject @59a1b56 §5.2 未引用 v4 §7.4 附表 A；未说明 v6 一次性检验对 A1/A2 是重跑还是引用 v4 账本",
+      "algorithm_wording_gaps": [
+        "v6 A1 写「跑赢现金」未写明 v4 的「过去 12 个月收益高于现金」",
+        "v6 A2 写「跌破 10 个月均线」≠ v4「高于过去 10 个月末收盘的简单平均」",
+        "v6 未写 v4 的月末/次交易日成交、§3 现金序列、§4.5 成交限制、U-可交易载体"
+      ],
+      "current_config_vs_portfolio_toml": {
+        "prereg_summary_quote": "A 股 70%（16 个容器等权）、海外 30%（纳指100、标普500 各半），每月再平衡（D5、D7 portfolio.toml）",
+        "portfolio_toml_facts_on_main": {
+          "a_share_weight": 0.7,
+          "overseas_weight": 0.3,
+          "a_share_container_count": 16,
+          "a_share_containers": [
+            "沪深300",
+            "中证500",
+            "中证1000",
+            "创业板",
+            "AI/算力",
+            "有色",
+            "煤炭",
+            "军工",
+            "医药",
+            "消费",
+            "白酒",
+            "农业",
+            "银行",
+            "券商",
+            "地产",
+            "红利"
+          ],
+          "overseas_containers": [
+            "纳指100",
+            "标普500"
+          ],
+          "rebalance": "monthly",
+          "band": 0.075,
+          "valve_enabled": false,
+          "cost_one_way": 0.0005,
+          "a_share_book_count": 16
+        },
+        "match_assessment": "partial",
+        "prereg_omits_on_main": [
+          "execution.band=0.075",
+          "[[a_share.book]] 主/备选基金与 list_date",
+          "overseas.pool 代码列表",
+          "valve.enabled=false（D7）",
+          "cost_one_way=0.0005"
+        ]
+      },
+      "fulfillment_status": "gaps_documented_pending_orchestrator_clarification"
+    },
+    "check_5_appendix_ab_unchanged": {
+      "appendix_a_unchanged_since_292568ba": true,
+      "appendix_b_unchanged_since_292568ba": true
+    }
   },
   "component_tables_exhaustive": {
     "subject_head": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",

@@ -705,6 +705,136 @@ def incremental_653_to_292568ba() -> dict:
 
 MERGE_MAIN_INTO_PR = "a1a36f6660d00b8d9b34b1f52892be032a5d5be3"
 MAIN_AT_MERGE = "24762d27f08786d4045bf4d40259d7c1ab878b16"
+V4_A1_A2_NORMATIVE_PATH = "docs/prereg/etf-multiasset-rotation-prereg-v4.md"
+V5_ONCE_ONLY_A1_A2_PATH = "docs/prereg/etf-multiasset-rotation-prereg-v5.md"
+PORTFOLIO_TOML_PATH = "config/portfolio.toml"
+
+
+def r1b_accuracy_completion() -> dict:
+    """Checks ③–⑤ accuracy gaps (coordinator 2026-11-24); no 2016+ runs."""
+    import subprocess
+
+    commit_ts = subprocess.check_output(
+        ["git", "log", "-1", "--format=%cI", HEAD_CURRENT],
+        cwd=ROOT,
+        text=True,
+    ).strip()
+    d42_5_carrier_quote = (
+        "别的市场检验（D42-5） | 一次性检验通过后、上线前，把一个名额的规则原样搬到一个没看过的市场，"
+        "用该市场能取到的全部历史跑一次；市场在冻结后、看任何结果之前由 Owner 选定（候选：欧洲 STOXX 600 超级行业，"
+        "母指数 STOXX 600；日本 TOPIX-17 行业，母指数 TOPIX）。没有行业成交额时 TRIN 一票缺席，只用均线、宽度两票，"
+        "两票都中才算紧张；把握 p 从 0.5 起。计 1 次试验 | 挑选（前 3 对同结构等权）为正且防守保费不超过 4 点，"
+        "记为“支持”；否则结论降一级，上线前需 Owner 另批"
+    )
+    v4_a1_rule = (
+        "每个月末：若标普500 过去 12 个月收益高于现金，则持有标普500 和沪深300 中过去 12 个月收益更高的那一个，"
+        "全仓；否则全仓 10 年国债"
+    )
+    v4_a1_timing = (
+        "两条都只用月末收盘做决定（月末 = 每个自然月最后一个上交所交易日，SF-6），"
+        "下一个上交所交易日按收盘成交；成本、成交限制（§4.5）、收盘时点和汇率（§3.1）、现金序列与 v4 相同"
+    )
+    v4_a2_rule = (
+        "每个月末，五份各自判断：月末收盘高于过去 10 个月末收盘的简单平均，就持有这一份；否则这一份拿现金"
+    )
+    v6_a1_row = "每月末标普500 跑赢现金，就在标普500 和沪深300 里拿更强的一个全仓，否则拿 10 年国债"
+    v6_a2_row = "沪深300、标普500、恒生、10 年国债、黄金各 1/5，跌破 10 个月均线的那一腿换成现金"
+    v5_once_only_quote = "附表 A 的 A1、A2 照原样在两个池各跑一次（v4 已跑，不重跑，直接引用 v4 账本）。"
+    portfolio = tomllib.load(open(ROOT / PORTFOLIO_TOML_PATH, "rb"))
+    a_containers = portfolio["a_share"]["containers"]
+    return {
+        "coordinator_accuracy_pass_2026_11_24": False,
+        "technical_decision_for_coordinator": "尚不能确认全部冻结前置条件",
+        "pending_until": [
+            "Owner 书面佐证：在任何人读取别市行情/收益之前，D42-5 定义（TRIN 两票 unanimous、p 从 0.5 起、支持判法、计 1 次试验）已固定",
+            "Orchestrator 澄清 v6 §5.2 A1/A2 是否绑定 v4 §7.4 附表 A 全文（含信号时点、现金、载体）及一次性检验是否重跑或引用 v4 账本",
+        ],
+        "check_3_d42_5_definition_before_exposure": {
+            "owner_required_cutoff": (
+                "TRIN 缺席→两票 unanimous；把握 p 从 0.5 起；支持=挑选（前 3 对同结构等权）为正且防守保费不超过 4 点；计 1 次试验；"
+                "且在读取任何别市数据之前定义已写死"
+            ),
+            "exact_prereg_carrier_quote_at_59a1b56": d42_5_carrier_quote,
+            "exact_planning_d42_5_row": (
+                "挑选（前 3 对同结构等权）为正且防守保费不超过 4 点，记为“支持”；否则结论降一级，"
+                "上线前需 Owner 另批。计 1 次试验"
+            ),
+            "git_proves_only": {
+                "subject_commit_full": HEAD_CURRENT,
+                "committer_date_iso8601": commit_ts,
+                "committer_date_asia_taipei_note": "2026-11-24 23:22:34+08:00 when UTC is 15:22:34+00:00",
+                "planning_file_first_appears_in_commit_full": HEAD_CURRENT,
+                "d42_5_text_absent_at_2623a2a3": True,
+                "reviewer_ran_no_other_market_backtest_search": "repo path scan only; not evidentiary pass",
+            },
+            "missing_not_in_git": [
+                "Owner/团队是否在别市数据读取前已固定上述定义（对话/流程不在仓库）",
+                "别市数据是否曾被任何人读取的时序（git 不能自证）",
+            ],
+            "do_not_infer_from_absence": (
+                "未找到别市回测产物 ≠ 证明零暴露；亦 ≠ 证明定义先于暴露"
+            ),
+            "fulfillment_status": "pending_owner_corroboration",
+        },
+        "check_4_a1_a2_current_config": {
+            "v6_prereg_§5_2_rows_at_59a1b56": {"A1": v6_a1_row, "A2": v6_a2_row, "scope": "只报告，不参与 §5.3"},
+            "prior_normative_v4": {
+                "path": V4_A1_A2_NORMATIVE_PATH,
+                "A1_rule_quote": v4_a1_rule,
+                "signal_timing_quote": v4_a1_timing,
+                "A2_rule_quote": v4_a2_rule,
+                "legs_quote": (
+                    "美股 = 标普500 全收益（^SP500TR）；…沪深300 全收益（H00300）；债券 = 10 年国债财富指数（CBA04501）；"
+                    "现金 = §3 的现金序列 … 五份各 20% … U-可交易各腿按 §3.2 选载体"
+                ),
+            },
+            "prior_once_only_reference_v5": {
+                "path": V5_ONCE_ONLY_A1_A2_PATH,
+                "quote": v5_once_only_quote,
+                "design_evidence_path_cited_in_v5": "results/v4/diag/health/（v4 设计期 A1/A2 已跑）",
+            },
+            "v6_cross_reference_gap": (
+                "subject @59a1b56 §5.2 未引用 v4 §7.4 附表 A；未说明 v6 一次性检验对 A1/A2 是重跑还是引用 v4 账本"
+            ),
+            "algorithm_wording_gaps": [
+                "v6 A1 写「跑赢现金」未写明 v4 的「过去 12 个月收益高于现金」",
+                "v6 A2 写「跌破 10 个月均线」≠ v4「高于过去 10 个月末收盘的简单平均」",
+                "v6 未写 v4 的月末/次交易日成交、§3 现金序列、§4.5 成交限制、U-可交易载体",
+            ],
+            "current_config_vs_portfolio_toml": {
+                "prereg_summary_quote": (
+                    "A 股 70%（16 个容器等权）、海外 30%（纳指100、标普500 各半），每月再平衡（D5、D7 portfolio.toml）"
+                ),
+                "portfolio_toml_facts_on_main": {
+                    "a_share_weight": portfolio["a_share"]["weight"],
+                    "overseas_weight": portfolio["overseas"]["weight"],
+                    "a_share_container_count": len(a_containers),
+                    "a_share_containers": a_containers,
+                    "overseas_containers": portfolio["overseas"]["containers"],
+                    "rebalance": portfolio["execution"]["rebalance"],
+                    "band": portfolio["execution"]["band"],
+                    "valve_enabled": portfolio["valve"]["enabled"],
+                    "cost_one_way": portfolio["execution"]["cost_one_way"],
+                    "a_share_book_count": len(portfolio["a_share"]["book"]),
+                },
+                "match_assessment": "partial",
+                "prereg_omits_on_main": [
+                    "execution.band=0.075",
+                    "[[a_share.book]] 主/备选基金与 list_date",
+                    "overseas.pool 代码列表",
+                    "valve.enabled=false（D7）",
+                    "cost_one_way=0.0005",
+                ],
+            },
+            "fulfillment_status": "gaps_documented_pending_orchestrator_clarification",
+        },
+        "check_5_appendix_ab_unchanged": {
+            "appendix_a_unchanged_since_292568ba": True,
+            "appendix_b_unchanged_since_292568ba": True,
+        },
+    }
+
+
 D42_EIGHT_PATHS = [
     "docs/prereg/etf-multiasset-rotation-prereg-v6.md",
     "operations/planning/2026-11-24-d42-v6-prereg-final-items.md",
@@ -843,20 +973,17 @@ def incremental_292568ba_to_59a1b56() -> dict:
             ],
         },
         "d42_5_temporal_evidence": {
+            "check_3_not_full_fulfillment": True,
+            "required_owner_cutoff": "定义写死必须先于任何别市数据读取（非广义的「选市前零暴露」）",
             "planning_file_absent_at_2623a2a3": planning_exists_at_mid,
             "planning_first_commit_full": HEAD_CURRENT,
             "d42_5_text_in_prereg_at_59a1b56": d42_5_in_59,
             "d42_5_text_in_prereg_at_2623a2a3": d42_5_in_mid,
-            "v6_other_market_backtest_artifact_found": False,
             "reviewer_did_not_read_other_market_data": True,
-            "assurance_status": "partial_repo_evidence_only",
-            "proven": [
-                "别市检验定义与 planning 同日进入 subject（59a1b56）；2623 无 D42-5 正文",
-                "仓库内无 v6 别市回测产物路径（Reviewer 未跑数、未读行情）",
-            ],
-            "not_proven": [
-                "Owner 选市场前零信息暴露（对话/公网页面不在 git 可审计范围）",
-            ],
+            "assurance_status": "pending_owner_corroboration_before_exposure",
+            "git_proves_definitions_in_repo_at_59a1b56_commit": True,
+            "git_does_not_prove_pre_exposure_chronology": True,
+            "do_not_infer_pass_from_missing_artifacts": True,
         },
         "d42_5_reviewer_limitations": {
             "definitions_before_data_exposure": "预注册与 D42-5 正文要求「市场在冻结后、看任何结果之前由 Owner 选定」；本 Reviewer 未检出冻结后别市跑数产物，亦未读 2016+ 池或别市行情跑数。无法从仓库时间戳证明零泄露——仅核对 D42 文稿先于 PR #339 59a1b56 合入顺序。",
@@ -1249,6 +1376,7 @@ def main() -> None:
         "incremental_653_review": incremental_653_review(),
         "incremental_653_to_292568ba": incremental_653_to_292568ba(),
         "incremental_292568ba_to_59a1b56": incremental_292568ba_to_59a1b56(),
+        "r1b_accuracy_completion": r1b_accuracy_completion(),
         "component_tables_exhaustive": component_tables_exhaustive(),
         "page_lint": {
             "at_review_window_8f7ffbae": {"owner_page_lint_errors": 0, "owner_page_lint_warns": 6, "note": "prior R1b run"},
