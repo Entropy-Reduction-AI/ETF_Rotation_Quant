@@ -1036,6 +1036,30 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 .cr-k { font-size: 14px; color: var(--ink); } .cr-k b { font-size: 20px; font-family: var(--font-mono); margin-right: 4px; }
 .cr-cs { display: flex; flex-wrap: wrap; gap: 5px; }
 .cr-c { font-size: 13px; padding: 2px 8px; border-radius: 5px; background: var(--bg); border: 1px solid var(--line); }
+.pain { display: grid; gap: 10px; }
+.pn-g { display: grid; grid-template-columns: 5.5em minmax(0, 1fr); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.pn-gk { padding: 12px 10px; font-size: 15px; font-weight: 800; color: var(--ink); border-right: 1px solid var(--line); border-left: 5px solid var(--muted); display: grid; align-content: start; gap: 2px; }
+.pn-gk em { font-style: normal; font-size: 12px; font-weight: 500; color: var(--muted); }
+.pn-gk em::after { content: ' 种'; }
+.pn-g.t-accent .pn-gk { border-left-color: var(--accent); } .pn-g.t-warn .pn-gk { border-left-color: var(--warn); } .pn-g.t-good .pn-gk { border-left-color: var(--good); }
+.pn-r { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1fr); gap: 14px; padding: 10px 14px; border-top: 1px solid var(--line); align-items: start; }
+.pn-r:first-child { border-top: 0; }
+.pn-s b { display: block; font-size: 14.5px; color: var(--ink); }
+.pn-s span, .pn-v span { display: block; font-size: 12.5px; color: var(--muted); line-height: 1.45; margin-top: 2px; }
+.pn-v b { display: block; font-size: 19px; line-height: 1.25; color: var(--ink); font-weight: 800; }
+.pn-t { font-size: 13.5px; color: var(--bad); line-height: 1.45; }
+.pn-tl { display: block; font-size: 11.5px; color: var(--muted); font-weight: 700; letter-spacing: .04em; }
+.risks { display: grid; gap: 6px; }
+.risks > .rk { display: grid; grid-template-columns: 2.4em minmax(0, 1fr) minmax(0, 15em); gap: 12px; align-items: center; padding: 10px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.risks > .rk:first-child { border: 2px solid var(--bad); }
+.rk-n { font-size: 24px; font-weight: 800; color: var(--muted); font-family: var(--font-mono); text-align: center; }
+  .risks > .rk:first-child .rk-n { color: var(--bad); }
+.rk-b b { display: block; font-size: 15px; color: var(--ink); }
+.rk-b span { display: block; font-size: 13px; color: var(--muted); line-height: 1.45; margin-top: 2px; }
+.rk-w { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.rk-w em { font-style: normal; font-size: 11.5px; color: var(--muted); font-weight: 700; margin-right: 2px; }
+.rk-c { font-size: 12.5px; padding: 1px 7px; border-radius: 5px; background: var(--bg); border: 1px solid var(--line); }
+@media (max-width: 760px) { .pn-g, .pn-r, .risks > .rk { grid-template-columns: minmax(0, 1fr); } .pn-gk { border-right: 0; border-bottom: 1px solid var(--line); } }
 @media (max-width: 760px) { .cp-r, .cr-r { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
 
 </style>
@@ -1282,10 +1306,12 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </tr>
 </tbody>
 </table></div>
-</div></div>
-<ul class="points">
-<li><strong>不设单只上限的代价</strong>：按纳指科技常态溢价约 <span class="num">9%</span> 估，额度放开时一次性损失约 1.8 万，约为组合的 <span class="num">1.8%</span>，已写进 §6 疼痛表。</li>
+<ul>
 <li><strong>这些规则不计入 3 个数字</strong>：执行层单列，来历都写在表里（D38-2 的边界）。</li>
+</ul>
+</div></div>
+<ul>
+<li><strong>不设单只上限的代价</strong>：按纳指科技常态溢价约 <span class="num">9%</span> 估，额度放开时一次性损失约 1.8 万，约为组合的 <span class="num">1.8%</span>，已写进 §6 疼痛表。</li>
 </ul>
 <a class="sl-next" href="#sec-3-设计评审-预计每年比基准多约-1-2-个点-六种合成行情的中间情况都守住-6"><span class="sl-nl">所以</span><span class="sl-nt">规则和执行都定了；下一节看这套东西事先估计能多赚多少、在坏行情里守不守得住 <b class="sl-n">60 万</b></span><span class="sl-ng">§3 设计评审 →</span></a>
 </section>
@@ -1341,6 +1367,9 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </div></div>
 <h3 id="3-2-合成行情-d38-第-40-41-行-前-3-美股-60-200-条路径">3.2 合成行情（D38 第 40、41 行，前 3、美股 60%，200 条路径，没有动量）</h3>
 <figure><img alt="六种合成行情：新系统的中间情况都守住 60 万" src="../../assets/v6-preflight/f6-synthetic.png"/></figure>
+<ul>
+<li><strong>读这两张图</strong>：预测合计 +1.2 在“低于 0 不做”的线之上；六种合成行情的中间情况都守住 60 万，慢牛保费 1.6 点低于 4 点上限。</li>
+</ul>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>六种行情的明细表</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><table class="vs-base">
 <thead>
@@ -1481,42 +1510,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </table></div>
 <div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i"><strong>事前预判</strong>（写在 Owner 批准检验之前）：第 ① 条底线大概率过（约八成）；第 ② 条保费（只量防守成本）约八成五；第 ③ 条对增强基准约六成；第 ④ 条对同仓位基准不低于 0 约五成。</div><div class="rn-i">合起来全部通过的机会约三成。</div><div class="rn-i">连续性版换上的机会约两成。</div><div class="rn-i">这是事先的判断，不影响规则。</div></div>
 </div></div>
-<div class="table-wrap"><table data-lint="ref">
-<thead>
-<tr>
-<th class="n">红队</th>
-<th>最可能让 v6 失败的原因</th>
-<th>在哪里盯</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="n">1</td>
-<td>超额只有一个来源：美股挑选失灵，判据 ④ 就过不了</td>
-<td>判据 ④；同结构等权</td>
-</tr>
-<tr>
-<td class="n">2</td>
-<td>能买到的抓不到能排名的</td>
-<td>可交易池报告</td>
-</tr>
-<tr>
-<td class="n">3</td>
-<td>A 股把握 p 学错</td>
-<td>附表 B 的 p 轨迹</td>
-</tr>
-<tr>
-<td class="n">4</td>
-<td>V 型急跌急涨</td>
-<td>疼痛表；判据 ②</td>
-</tr>
-<tr>
-<td class="n">5</td>
-<td>候选池变了</td>
-<td>逐年可参选个数；S3–S5</td>
-</tr>
-</tbody>
-</table></div>
+<div class="table-wrap"><div class="comp comp-风险" data-lint="ref"><div class="comp-h">红队：最可能让 v6 失败的五个原因，按严重程度排</div><div class="risks"><div class="rk"><span class="rk-n">1</span><div class="rk-b"><b>超额只有一个来源</b><span>A 股挑选平均约为 0，美股挑选一旦在检验段失灵，判据 ④ 就过不了</span></div><div class="rk-w"><em>盯</em><span class="rk-c">判据 ④</span><span class="rk-c">同结构等权</span></div></div><div class="rk"><span class="rk-n">2</span><div class="rk-b"><b>能买到的抓不到能排名的</b><span>美股领头者常是溢价高的 QDII，可交易池少抓一截</span></div><div class="rk-w"><em>盯</em><span class="rk-c">可交易池报告</span><span class="rk-c">疼痛表</span></div></div><div class="rk"><span class="rk-n">3</span><div class="rk-b"><b>A 股把握 p 学错</b><span>2016 年后紧张月领头者的表现若和 2015 年前不同，p 会滞后</span></div><div class="rk-w"><em>盯</em><span class="rk-c">附表 B 的 p 轨迹</span></div></div><div class="rk"><span class="rk-n">4</span><div class="rk-b"><b>V 型急跌急涨</b><span>紧张时减了仓，反弹时回来得晚</span></div><div class="rk-w"><em>盯</em><span class="rk-c">疼痛表</span><span class="rk-c">判据 ②</span></div></div><div class="rk"><span class="rk-n">5</span><div class="rk-b"><b>候选池变了</b><span>检验段 A 股候选增加到四十个左右，去重和挑选的行为可能和设计期不同</span></div><div class="rk-w"><em>盯</em><span class="rk-c">逐年可参选个数</span><span class="rk-c">S3–S5</span></div></div></div></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>3.5 红队：最可能让 v6 失败的五个原因（R1 SF-3）</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><table data-lint="ref">
 <thead>
@@ -1561,9 +1555,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </tbody>
 </table></div>
 </div></div>
-<ul class="points">
-<li><strong>读这两张图</strong>：预测合计 +1.2 在“低于 0 不做”的线之上；六种合成行情的中间情况都守住 60 万，慢牛保费 1.6 点低于 4 点上限。</li>
-<li><strong>最大的风险是超额只有一个来源</strong>：A 股挑选平均约为 0，超额几乎全靠美股挑选（红队第 1 条）。</li>
+<ul>
 <li><strong>全部判据通过的机会约三成</strong>：事前预判见 §5 的图。</li>
 </ul>
 <a class="sl-next" href="#sec-4-已经看过的信息-检验段不干净-美股-60-是在知道美股强之后定的"><span class="sl-nl">所以</span><span class="sl-nt">这些预期是在已经看过不少结果之后定的；下一节把看过什么摊开，说清楚哪些会让检验对 v6 偏心</span><span class="sl-ng">§4 已经看过的信息 →</span></a>
@@ -1739,7 +1731,8 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </tr>
 </tbody>
 </table></div>
-<ul>
+<ul class="points">
+<li><strong>结果怎么用</strong>：通过 <span class="arr">→</span> 进入 6 个月前向模拟盘（D27），小资金起步需 Owner 另批；不通过 <span class="arr">→</span> 如实记录、关闭，新想法另起版本并注明第几次尝试。</li>
 <li><strong>连续性版换上的条件</strong>（D40-13）：连续性版整套也满足 ①–④，且检验段 A 股名额里连续性版比 12−1 的月度差均值为正；两者计 2 次试验。要往预测表里给 A 股挑选“报钱”，需该月度差的 t ≥ 2.24（两次比较的 Bonferroni 调整，单侧 0.025 ÷ 2）。</li>
 </ul>
 </div></div>
@@ -1791,58 +1784,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </section>
 <section id="sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受"><h2 id="6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受">§6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受</h2>
 <p class="memo"><strong>8 种情形各有一条警戒线：落在“事先认下的代价”里是正常代价；越过“超出就要查”的线，说明策略性格变了，先查原因（冻结后不改）。</strong></p>
-<div class="table-wrap"><div class="comp comp-计数" data-lint="ref"><div class="comp-h">八种代价从哪来：结构 1、防守 2、挑选 3、执行 2</div><div class="countbar"><div class="cb-bar"><span style="flex:1;background:var(--accent)"></span><span style="flex:2;background:color-mix(in srgb, var(--accent) 50%, white)"></span><span style="flex:3;background:var(--good)"></span><span style="flex:2;background:var(--warn)"></span></div><div class="cb-l"><span class="cb-i"><i style="background:var(--accent)"></i><b class="num">1</b> 结构<em>A 股只占 40%</em></span><span class="cb-i"><i style="background:color-mix(in srgb, var(--accent) 50%, white)"></i><b class="num">2</b> 防守<em>V 型、突发急跌</em></span><span class="cb-i"><i style="background:var(--good)"></i><b class="num">3</b> 挑选<em>无动量年份、分阶段、挑选偏差</em></span><span class="cb-i"><i style="background:var(--warn)"></i><b class="num">2</b> 执行<em>稀缺 QDII、换手成本</em></span><span class="cb-t">共 8</span></div></div></div></div>
-<div class="table-wrap"><table data-lint="ref">
-<thead>
-<tr>
-<th>情形</th>
-<th>事先认下</th>
-<th>警戒线（越过就先查原因）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="k">A 股大牛市</td>
-<td>2006–2010 每年少约 9 点</td>
-<td>单年落后 BM-主超过 20 点</td>
-</tr>
-<tr>
-<td>V 型急跌急涨</td>
-<td>合成 V 型每年落后约 15 点</td>
-<td>见底后 3 个月股票仓位仍低于一半</td>
-</tr>
-<tr>
-<td class="k">突发急跌</td>
-<td>较差的十分之一约剩 58.8 万</td>
-<td>低于 55 万</td>
-</tr>
-<tr>
-<td>挑选没有动量的年份</td>
-<td>每年少约 1.6 点</td>
-<td>连续 3 年挑选部分为负</td>
-</tr>
-<tr>
-<td>A 股挑选分阶段</td>
-<td>两段各约 ±16 万（40 万本金）</td>
-<td>单年挑选部分低于 −25 点</td>
-</tr>
-<tr>
-<td>稀缺 QDII 溢价消失</td>
-<td>一次性约 1.8 万</td>
-<td>单次损失超过组合的 3%</td>
-</tr>
-<tr>
-<td>试了很多种防守和选法</td>
-<td>已按打折处理</td>
-<td>检验段明显低于预测下限</td>
-</tr>
-<tr>
-<td class="k">换手和成本</td>
-<td>每年约 1.0–1.5 点</td>
-<td>每年成本超过 2 点</td>
-</tr>
-</tbody>
-</table></div>
+<div class="table-wrap"><div class="comp comp-代价" data-lint="ref"><div class="pain"><div class="pn-g t-mute"><div class="pn-gk">仓位结构<em>1</em></div><div class="pn-gb"><div class="pn-r"><div class="pn-s"><b>A 股大牛市</b><span>基准 70% 在 A 股，我们只有 40%</span></div><div class="pn-v"><b>每年少约 9 点</b><span>2006–2010 设计期</span></div><div class="pn-t"><span class="pn-tl">越过就查</span>单年落后 BM-主超过 20 点</div></div></div></div><div class="pn-g t-warn"><div class="pn-gk">防守<em>2</em></div><div class="pn-gb"><div class="pn-r"><div class="pn-s"><b>V 型急跌急涨</b><span>紧张时减了仓，反弹时回来得晚</span></div><div class="pn-v"><b>每年落后约 15 点</b><span>合成 V 型，短期年化</span></div><div class="pn-t"><span class="pn-tl">越过就查</span>见底后 3 个月股票仓位仍低于一半</div></div><div class="pn-r"><div class="pn-s"><b>突发急跌</b><span>每月看一次来不及</span></div><div class="pn-v"><b>约剩 58.8 万</b><span>较差的十分之一</span></div><div class="pn-t"><span class="pn-tl">越过就查</span>低于 55 万</div></div></div></div><div class="pn-g t-good"><div class="pn-gk">挑选<em>3</em></div><div class="pn-gb"><div class="pn-r"><div class="pn-s"><b>挑选没有动量的年份</b><span>前 3 只是噪声，多付换手</span></div><div class="pn-v"><b>每年少约 1.6 点</b><span>合成慢牛</span></div><div class="pn-t"><span class="pn-tl">越过就查</span>连续 3 年挑选部分（对同结构等权）为负</div></div><div class="pn-r"><div class="pn-s"><b>A 股挑选分阶段</b><span>结构市里 12−1 有效，轮动和崩盘时反噬</span></div><div class="pn-v"><b>两段各约 ±16 万</b><span>2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金）</span></div><div class="pn-t"><span class="pn-tl">越过就查</span>单年 A 股挑选部分低于 −25 点</div></div><div class="pn-r"><div class="pn-s"><b>试了很多种防守和选法</b><span>设计期挑出来的最好结果有挑选偏差</span></div><div class="pn-v"><b>已按打折处理</b><span>超额打五折，再按候选个数打六折</span></div><div class="pn-t"><span class="pn-tl">越过就查</span>检验段明显低于预测下限</div></div></div></div><div class="pn-g t-mute"><div class="pn-gk">执行<em>2</em></div><div class="pn-gb"><div class="pn-r"><div class="pn-s"><b>稀缺 QDII 溢价消失</b><span>额度放开时一次性损失</span></div><div class="pn-v"><b>约 1.8 万</b><span>常态溢价约 9%、单只 20 万</span></div><div class="pn-t"><span class="pn-tl">越过就查</span>单次损失超过组合的 3%</div></div><div class="pn-r"><div class="pn-s"><b>换手和成本</b><span>两个名额每月换人</span></div><div class="pn-v"><b>每年约 1.0–1.5 点</b><span>预演 1.0–1.1，附表 B 重估约 1.5</span></div><div class="pn-t"><span class="pn-tl">越过就查</span>每年成本超过 2 点</div></div></div></div></div></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>八种情形原文：会发生什么、事先认下的代价、超出就要查</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><table>
 <thead>
@@ -1904,11 +1846,11 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </tr>
 </tbody>
 </table></div>
-</div></div>
 <ul class="points">
 <li><strong>最大的两笔代价都来自结构</strong>：A 股只占 <span class="num">40%</span>，大牛市每年少约 9 点；紧张时减仓，V 型反弹每年落后约 15 点。</li>
-<li><strong>右列是警戒线</strong>：越过它说明策略性格变了，先查原因，冻结后不改规则。</li>
+<li><strong>红字是警戒线</strong>：越过它说明策略性格变了，先查原因，冻结后不改规则。</li>
 </ul>
+</div></div>
 <a class="sl-next" href="#sec-7-前向模拟盘与影子跟踪-通过后至少-6-个月模拟盘-另外-3-种规则只记录不交"><span class="sl-nl">所以</span><span class="sl-nt">代价认下了；下一节说检验通过以后怎么上线：先模拟盘，另外三种规则只在旁边记录</span><span class="sl-ng">§7 前向模拟盘与影子跟踪 →</span></a>
 </section>
 <section id="sec-7-前向模拟盘与影子跟踪-通过后至少-6-个月模拟盘-另外-3-种规则只记录不交"><h2 id="7-前向模拟盘与影子跟踪-通过后至少-6-个月模拟盘-另外-3-种规则只记录不交">§7 前向模拟盘与影子跟踪：通过后至少 6 个月模拟盘，另外 3 种规则只记录不交易</h2>
@@ -1922,6 +1864,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 <li><b class="fl-t">影子</b><span class="fl-k">只记录，不交易</span><span class="fl-d">结构市才挑选、12−1 与连续性版各拿一半、连续性版，<strong>只记录，不交易</strong>。</span></li>
 <li><b class="fl-t">暂停</b><span class="fl-k">暂停并报告</span><span class="fl-d">跌破 60 万，或连续 6 个月对同仓位基准累计落后超过 6 点，<strong>暂停并报告</strong>。</span></li>
 </ol>
+<p>上线：模拟盘之后，小资金起步需 Owner 另批（§5.3“结果怎么用”）。</p>
 </div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>模拟盘、三个影子和暂停线（条款原文）</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><table data-lint="ref">
@@ -2066,7 +2009,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>9.1 顺序：看初稿 → R1 → 冻结 → 实现与复算 → 一致性检查 → 一次性检验 → 模拟盘</span></button><div class="fold-b" hidden="">
 <ol class="steps-n">
 <li><strong>Owner 看初稿</strong>：已确认 §9.2 第 6 条三项（D40-14）。</li>
-<li><strong>Reviewer R1</strong>：逐条核对设计评审、§1.4 计数、§4 已看信息；Orchestrator 闭合后 Reviewer R1b。</li>
+<li><strong>Reviewer R1</strong>：逐条核对设计评审、§1.4 计数、§4 已看信息；Orchestrator 闭合后 Reviewer R1b（当前所在步骤，见页首“进度”）。</li>
 <li><strong>冻结</strong>：<code>milestone/v6-prereg-freeze</code>，由 Cloud Agent 按 Owner 指令打。</li>
 <li><strong>实现与复算</strong>：Dev 在 <code>src/v6/</code>、<code>config/v6/</code> 实现；Reviewer 独立实现复算设计期整套和两个月份示例（逐位一致），并复现 §3.2 合成行情。</li>
 <li><strong>设计期一致性检查</strong>：只报告。</li>
@@ -2274,7 +2217,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </tbody>
 </table></div>
 </div></div>
-<div class="table-wrap"><div class="comp comp-载体" data-lint="ref"><div class="comp-h">A 股名额 40 个参选（另有细分化工不参选），按组分</div><div class="carriers"><div class="cr-r t-mute"><div class="cr-k"><b class="num">5</b> 宽基</div><div class="cr-cs"><span class="cr-c">沪深300</span><span class="cr-c">中证500</span><span class="cr-c">中证1000</span><span class="cr-c">创业板指</span><span class="cr-c">科创50</span></div></div><div class="cr-r t-mute"><div class="cr-k"><b class="num">3</b> 红利</div><div class="cr-cs"><span class="cr-c">中证红利</span><span class="cr-c">上证红利</span><span class="cr-c">红利低波动</span></div></div><div class="cr-r t-mute"><div class="cr-k"><b class="num">10</b> 一级行业</div><div class="cr-cs"><span class="cr-c">能源</span><span class="cr-c">原材料</span><span class="cr-c">工业</span><span class="cr-c">可选消费</span><span class="cr-c">主要消费</span><span class="cr-c">医药卫生</span><span class="cr-c">金融地产</span><span class="cr-c">信息技术</span><span class="cr-c">通信服务</span><span class="cr-c">公用事业</span></div></div><div class="cr-r t-mute"><div class="cr-k"><b class="num">22</b> 主题</div><div class="cr-cs"><span class="cr-c">300医药</span><span class="cr-c">主要消费</span><span class="cr-c">农业</span><span class="cr-c">酒</span><span class="cr-c">创新药</span><span class="cr-c">半导体材料设备</span><span class="cr-c">全指半导体</span><span class="cr-c">全指软件</span><span class="cr-c">通信设备</span><span class="cr-c">人工智能</span><span class="cr-c">消费电子</span><span class="cr-c">有色金属</span><span class="cr-c">煤炭</span><span class="cr-c">钢铁</span><span class="cr-c">银行</span><span class="cr-c">证券公司</span><span class="cr-c">房地产</span><span class="cr-c">军工</span><span class="cr-c">机器人</span><span class="cr-c">新能源汽车</span><span class="cr-c">光伏</span><span class="cr-c">教育</span></div></div><div class="cr-r t-bad"><div class="cr-k"><b class="num">7</b> 一级行业里无场内基金</div><div class="cr-cs"><span class="cr-c">通信服务</span><span class="cr-c">能源</span><span class="cr-c">医药卫生</span><span class="cr-c">工业</span><span class="cr-c">信息技术</span><span class="cr-c">主要消费</span><span class="cr-c">公用事业</span></div></div></div></div></div>
+<div class="table-wrap"><div class="comp comp-载体" data-lint="ref"><div class="comp-h">A 股名额 40 个参选（另有细分化工不参选），按组分</div><div class="carriers"><div class="cr-r t-mute"><div class="cr-k"><b class="num">5</b> 宽基</div><div class="cr-cs"><span class="cr-c">沪深300</span><span class="cr-c">中证500</span><span class="cr-c">中证1000</span><span class="cr-c">创业板指</span><span class="cr-c">科创50</span></div></div><div class="cr-r t-mute"><div class="cr-k"><b class="num">3</b> 红利</div><div class="cr-cs"><span class="cr-c">中证红利</span><span class="cr-c">上证红利</span><span class="cr-c">红利低波动</span></div></div><div class="cr-r t-mute"><div class="cr-k"><b class="num">10</b> 一级行业</div><div class="cr-cs"><span class="cr-c">能源</span><span class="cr-c">原材料</span><span class="cr-c">工业</span><span class="cr-c">可选消费</span><span class="cr-c">主要消费</span><span class="cr-c">医药卫生</span><span class="cr-c">金融地产</span><span class="cr-c">信息技术</span><span class="cr-c">通信服务</span><span class="cr-c">公用事业</span></div></div><div class="cr-r t-mute"><div class="cr-k"><b class="num">22</b> 主题</div><div class="cr-cs"><span class="cr-c">300医药</span><span class="cr-c">主要消费</span><span class="cr-c">农业</span><span class="cr-c">酒</span><span class="cr-c">创新药</span><span class="cr-c">半导体材料设备</span><span class="cr-c">全指半导体</span><span class="cr-c">全指软件</span><span class="cr-c">通信设备</span><span class="cr-c">人工智能</span><span class="cr-c">消费电子</span><span class="cr-c">有色金属</span><span class="cr-c">煤炭</span><span class="cr-c">钢铁</span><span class="cr-c">银行</span><span class="cr-c">证券公司</span><span class="cr-c">房地产</span><span class="cr-c">军工</span><span class="cr-c">机器人</span><span class="cr-c">新能源汽车</span><span class="cr-c">光伏</span><span class="cr-c">教育</span></div></div><div class="cr-r t-bad"><div class="cr-k"><b class="num">7</b> 其中无场内基金</div><div class="cr-cs"><span class="cr-c">通信服务</span><span class="cr-c">能源</span><span class="cr-c">医药卫生</span><span class="cr-c">工业</span><span class="cr-c">信息技术</span><span class="cr-c">主要消费</span><span class="cr-c">公用事业</span></div></div></div></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>A 股按组：候选和发布日</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><table class="deflist" data-lint="ref">
 <thead>

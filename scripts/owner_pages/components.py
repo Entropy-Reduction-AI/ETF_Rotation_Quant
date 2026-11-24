@@ -109,6 +109,35 @@ def chain(rows):
     return f'<div class="chain">{out}</div>'
 
 
+def pain(rows):
+    # grouped rows: a coloured group rail, the scenario, the accepted cost as a big value, the tripwire in red
+    out, last = '', None
+    tones = {'结构': 'accent', '防守': 'warn', '挑选': 'good', '执行': 'mute'}
+    groups = []
+    for r in rows:
+        g = _txt(r['组'])
+        if not groups or groups[-1][0] != g:
+            groups.append((g, []))
+        groups[-1][1].append(r)
+    for g, rs in groups:
+        items = ''
+        for r in rs:
+            items += (f'<div class="pn-r"><div class="pn-s"><b>{_inner(r["情形"])}</b><span>{_inner(r["会发生什么"])}</span></div>'
+                      f'<div class="pn-v"><b>{_inner(r["代价"])}</b><span>{_inner(r["代价说明"])}</span></div>'
+                      f'<div class="pn-t"><span class="pn-tl">越过就查</span>{_inner(r["警戒线"])}</div></div>')
+        out += f'<div class="pn-g t-{tones.get(g, "mute")}"><div class="pn-gk">{g}<em>{len(rs)}</em></div><div class="pn-gb">{items}</div></div>'
+    return f'<div class="pain">{out}</div>'
+
+
+def risks(rows):
+    out = ''
+    for r in rows:
+        watch = ''.join(f'<span class="rk-c">{x.strip()}</span>' for x in re.split(r'[；;]', _txt(r['在哪里盯'])) if x.strip())
+        out += (f'<div class="rk"><span class="rk-n">{_txt(r["排名"])}</span><div class="rk-b"><b>{_inner(r["原因"])}</b>'
+                f'<span>{_inner(r["会怎样"])}</span></div><div class="rk-w"><em>盯</em>{watch}</div></div>')
+    return f'<div class="risks">{out}</div>'
+
+
 def carriers(rows):
     tone = {'同一指数': 'good', '相近指数': 'warn', '无场内基金': 'bad', '通过': 'good', '不通过': 'bad', '暂停线': 'bad'}
     out = ''
@@ -122,7 +151,7 @@ def carriers(rows):
     return f'<div class="carriers">{out}</div>'
 
 
-RENDER = {'退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers}
+RENDER = {'代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers}
 
 
 def apply(soup):
@@ -202,5 +231,29 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 .cr-k { font-size: 14px; color: var(--ink); } .cr-k b { font-size: 20px; font-family: var(--font-mono); margin-right: 4px; }
 .cr-cs { display: flex; flex-wrap: wrap; gap: 5px; }
 .cr-c { font-size: 13px; padding: 2px 8px; border-radius: 5px; background: var(--bg); border: 1px solid var(--line); }
+.pain { display: grid; gap: 10px; }
+.pn-g { display: grid; grid-template-columns: 5.5em minmax(0, 1fr); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.pn-gk { padding: 12px 10px; font-size: 15px; font-weight: 800; color: var(--ink); border-right: 1px solid var(--line); border-left: 5px solid var(--muted); display: grid; align-content: start; gap: 2px; }
+.pn-gk em { font-style: normal; font-size: 12px; font-weight: 500; color: var(--muted); }
+.pn-gk em::after { content: ' 种'; }
+.pn-g.t-accent .pn-gk { border-left-color: var(--accent); } .pn-g.t-warn .pn-gk { border-left-color: var(--warn); } .pn-g.t-good .pn-gk { border-left-color: var(--good); }
+.pn-r { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1fr); gap: 14px; padding: 10px 14px; border-top: 1px solid var(--line); align-items: start; }
+.pn-r:first-child { border-top: 0; }
+.pn-s b { display: block; font-size: 14.5px; color: var(--ink); }
+.pn-s span, .pn-v span { display: block; font-size: 12.5px; color: var(--muted); line-height: 1.45; margin-top: 2px; }
+.pn-v b { display: block; font-size: 19px; line-height: 1.25; color: var(--ink); font-weight: 800; }
+.pn-t { font-size: 13.5px; color: var(--bad); line-height: 1.45; }
+.pn-tl { display: block; font-size: 11.5px; color: var(--muted); font-weight: 700; letter-spacing: .04em; }
+.risks { display: grid; gap: 6px; }
+.risks > .rk { display: grid; grid-template-columns: 2.4em minmax(0, 1fr) minmax(0, 15em); gap: 12px; align-items: center; padding: 10px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.risks > .rk:first-child { border: 2px solid var(--bad); }
+.rk-n { font-size: 24px; font-weight: 800; color: var(--muted); font-family: var(--font-mono); text-align: center; }
+  .risks > .rk:first-child .rk-n { color: var(--bad); }
+.rk-b b { display: block; font-size: 15px; color: var(--ink); }
+.rk-b span { display: block; font-size: 13px; color: var(--muted); line-height: 1.45; margin-top: 2px; }
+.rk-w { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.rk-w em { font-style: normal; font-size: 11.5px; color: var(--muted); font-weight: 700; margin-right: 2px; }
+.rk-c { font-size: 12.5px; padding: 1px 7px; border-radius: 5px; background: var(--bg); border: 1px solid var(--line); }
+@media (max-width: 760px) { .pn-g, .pn-r, .risks > .rk { grid-template-columns: minmax(0, 1fr); } .pn-gk { border-right: 0; border-bottom: 1px solid var(--line); } }
 @media (max-width: 760px) { .cp-r, .cr-r { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
 """
