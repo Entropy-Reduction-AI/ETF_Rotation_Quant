@@ -106,3 +106,26 @@ f2ab4f527b3081b0b73ebc860f3aedd8ee54523e	refs/tags/milestone/v5-prereg-freeze^{}
 ```
 
 这一步清理没有移动、删除或改写任何标签。`milestone/phase2-archive` 在清理前已经存在（附注标签对象 `48b63a84274b9d8349049630971095f82c9da7b9`，剥开后指向 `8875fe576496e9dacfb0681ac93df4f42cd894ca`）。
+
+### 尾清理（2026-11-24 10:59:50–11:00:02 Asia/Taipei）
+
+Owner 2026-11-24 授权。只删除下面四条已经合并的远程分支。每条在删除前立刻 `git ls-remote`；远程尖端等于授权 SHA，关联 PR 为 MERGED，且 PR head ref、head SHA 与该授权 SHA 一致，才删除。不一致或引用不在则 SKIP。比较并交换被拒则 SKIP，不换 SHA 重试。
+
+```bash
+git push --porcelain -v origin --force-with-lease=refs/heads/<branch>:<expected-sha> :refs/heads/<branch>
+```
+
+| 分支 | PR | 授权 SHA | 删除前观察到的 SHA | 结果 |
+| --- | --- | --- | --- | --- |
+| `claude/d41-cleanup` | #351 MERGED，merge `403ac7afe97ecd823737c0ea5016dd218de25b29` | `16770fa70dd46b2d6a91a20affadcac251479a05` | `16770fa70dd46b2d6a91a20affadcac251479a05` | 已删除 |
+| `claude/v6-prereg-r1-review-files` | #350 MERGED，merge `89f030d5bba53c9fae3194cae807d3ae4e1459ef` | `50f52a9db748a640df29f9a4da89ebfff1a68df0` | `50f52a9db748a640df29f9a4da89ebfff1a68df0` | 已删除 |
+| `cursor/d41-phase2-archive-register-60e1` | #352 MERGED，head 即该 SHA，merge `707237fc40651f35570dd8786433e24cca662ea9` | `ddfee847218bc8ce100c0c8fbd54669182557192` | `ddfee847218bc8ce100c0c8fbd54669182557192` | 已删除 |
+| `cursor/d41-pr352-reviews-1e59` | #353 MERGED，head 即该 SHA，merge `981f466d7acd10211d1aea9e9e3399a7bbc7d0a0` | `f88fccc3883e9cb58281b1d7f7bbeba1b3ff800b` | `f88fccc3883e9cb58281b1d7f7bbeba1b3ff800b` | 已删除 |
+
+合计：删除 4，SKIP 0。四条删除后的 `git ls-remote` 输出都为空。
+
+heads 前后差异只有这四条。同期仍在的分支尖端未变：`claude/d38-r45-r56` `0bff3eda70c64d62944940a4cd94ea702cd95adb`，`claude/v6-prereg-r1` `2a452ae55a69e524dcca2bf6e72096e145777fef`，`grok/d37-r6-partial` `332b88fdb1b1b4272edb154754c3bf2925b5889d`，`claude/owner-page-ledger-score` `462d1d32e2695708cc0c79f1fd814d6148dde4be`，`claude/data-board-1123` `b08f0e49a6743cd0ce4592213bfdfa6c6cb622e0`，`claude/owner-board-v6` `bd62984d988299a9607f0b35643ead999a424b0d`。
+
+标签对象：删除前与删除后 `git ls-remote --tags origin` 经 `LC_ALL=C sort` 后逐字节相同，SHA256 都是 `5c4056ceb6d33fc95475467c38feb199ca02a657919d2a84cb150f665acc8feb`，各 20 行。这一步没有移动、删除或改写任何标签。
+
+`main` 只读。删除前与删除后远程 `refs/heads/main` 都是 `67e249d4e50c4783f59c1deef246bf246be5e8e4`。本次没有推送 `main`。
