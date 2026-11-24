@@ -114,7 +114,7 @@
 
 - **范围**：summary / `p.memo` / ledger `lg-big` / md 要点 blockquote（不含全页 CSS 噪声）。
 - **103 token**：88 已锚至规范节或附表 B JSON；15 显式 **excluded**（D9-1、12−1 标签、§2 交叉引用、日期碎片、v6 版本名等），各附 `exclusion_rationale`。
-- **23 个 `semantic_groups`**：同一可见主张合并；`source_occurrences` 列 html memo 与 md 重复出现。
+- **33 个 `semantic_groups`**：同一可见主张合并；`source_occurrences` 列 html memo 与 md 重复出现。
 - **机器可读**：`pr339-r1b-keypoint-numbers.json`（非产品阻塞；无 demonstrated mismatch）。
 
 ---
