@@ -55,7 +55,7 @@ fig, axs = plt.subplots(1, 2, figsize=(11, 3.9), sharey=True)
 for ax, S, nm, avg in ((axs[0], A, 'A 股名额（40 万）', D['信号画像：A 股名额']['紧张时平均股票仓位']),
                         (axs[1], U, '美股名额（60 万）', D['信号画像：美股名额']['紧张时平均股票仓位'])):
     m = [S[str(y)]['紧张月数'] for y in yrs]
-    ax.bar(yrs, m, color=AMBER, width=.7)
+    ax.bar(yrs, m, color='#64748b', width=.7)
     for y, v in zip(yrs, m):
         if v:
             ax.text(y, v + .25, str(v), ha='center', color=INK, fontsize=10.5, weight='bold')

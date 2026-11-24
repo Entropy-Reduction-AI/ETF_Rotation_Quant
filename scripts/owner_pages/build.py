@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import polish as P
 import story as S
 import story_layer as L
+import components as C
 
 REPO, OUT, LINKS = sys.argv[1], sys.argv[2], sys.argv[3]
 DOCS = os.path.join(REPO, 'docs', 'owner')
@@ -534,6 +535,7 @@ h2 .num {{ min-width: 1.6em; }}
 {P.CSS}
 {S.CSS}
 {L.CSS}
+{C.CSS}
 </style>
 </head>
 <body>

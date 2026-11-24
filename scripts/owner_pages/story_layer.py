@@ -14,6 +14,7 @@ The 问 markers also build the story spine at the top of the page.
 """
 import re
 from bs4 import BeautifulSoup, Comment, NavigableString
+import components as C
 
 MARK = re.compile(r'^\s*(问|看点|接力)：(.*)$', re.S)
 SRC = re.compile(r'（([^（）]*(?:D\d|R1|第 ?\d+ ?行|§|SC-|J-|MF-|Owner)[^（）]*)）')
@@ -46,11 +47,29 @@ def pre(html):
     """问 markers move onto their h2 as data-sl-q, so later passes see the heading's real first sibling (the memo).
     Definition lists: '**名词**：第一句。其余……（出处）' → a three-column grid that later passes leave alone."""
     soup = BeautifulSoup(html, 'html.parser')
+    C.apply(soup)
     for c in list(soup.find_all(string=lambda x: isinstance(x, Comment) and re.match(r'^\s*问：', str(x)))):
         h2 = c.find_previous('h2')
         if h2 is not None:
             h2['data-sl-q'] = MARK.match(str(c)).group(2).strip()
         c.extract()
+    for c in list(soup.find_all(string=lambda x: isinstance(x, Comment) and '页面：要点' in x)):
+        ul = c.find_next_sibling(['ul', 'ol'])     # '- **大字**：一句说明' → a row of key tiles, the section's first focus
+        c.extract()
+        if ul is None:
+            continue
+        tiles = []
+        for li in ul.find_all('li', recursive=False):
+            b = li.find(['strong', 'b'])
+            if b is None:
+                continue
+            v = b.get_text('', strip=True)
+            b.extract()
+            cap = re.sub(r'^\s*[：:]\s*', '', li.decode_contents().strip())
+            tone = ' t-good' if v.startswith('+') else (' t-bad' if v[:1] in '−-' else '')
+            tiles.append(f'<div class="kt-i{tone}"><div class="kt-v">{_esc(v)}</div><div class="kt-c">{cap}</div></div>')
+        if tiles:
+            ul.replace_with(BeautifulSoup(f'<div class="kt n{len(tiles)}" data-lint="ref">' + ''.join(tiles) + '</div>', 'html.parser'))
     for c in list(soup.find_all(string=lambda x: isinstance(x, Comment) and '页面：参考' in x)):
         t = c.find_next('table')                       # a reference table: the 看点 carries the point, cells are lookup
         if t is not None:
@@ -139,7 +158,6 @@ def post(html):
             tone = {'已定': 'ok', '待你定': 'you', '待补': 'todo'}.get(st, 'ok')
             q = BeautifulSoup(f'<div class="sl-q"><span class="sl-ql">这一节回答</span><span class="sl-qt">{_esc(f[""])}</span>'
                               + (f'<span class="sl-st t-{tone}">{_esc(st)}</span>' if st else '') + '</div>', 'html.parser')
-            h2.insert_after(q)
             ht = h2.get_text('', strip=True)
             km = re.match(r'(§\s*\d+|附表\s*[A-ZＡ-Ｚ])', ht)
             spine.append((sec.get('id'), f.get('短', ht[:6]), f[''], st, tone, km.group(1).replace(' ', '') if km else ''))
@@ -178,6 +196,32 @@ def post(html):
                 n = BeautifulSoup(f'<a class="sl-next" href="{href}"><span class="sl-nl">所以</span>'
                                   f'<span class="sl-nt">{_hl(f[""])}</span><span class="sl-ng">{_esc(tgt_t)} {"→" if nxt is not None else "↑"}</span></a>', 'html.parser')
                 c.replace_with(n)
+    for c in list(soup.find_all(string=lambda x: isinstance(x, Comment) and re.match(r'^\s*框：', str(x)))):
+        t = c.find_next('table')                         # frame the one decisive cell of a visible table, no focus line
+        keys = [k.strip() for k in str(c).split('：', 1)[1].split('/') if k.strip()]
+        c.extract()
+        if t is not None:
+            for k in keys:
+                td = next((x for x in t.find_all('td') if x.get_text('', strip=True) == k), None)
+                if td is not None:
+                    td['class'] = (td.get('class') or []) + ['tg']
+    for c in list(soup.find_all(string=lambda x: isinstance(x, Comment) and '页面：精简' in str(x))):
+        lg = c.find_next(class_='ledger')                # compact cards: title + verdict; the clause text folds inside each card
+        c.extract()
+        if lg is None:
+            continue
+        for card in lg.find_all(class_='lg', recursive=False):
+            rest = [x for x in card.find_all(True, recursive=False)
+                    if not ({'lg-h', 'lg-big', 'trip'} & set(x.get('class') or []))]
+            if not rest:
+                continue
+            d = soup.new_tag('details', attrs={'class': ['lg-more']})
+            sm = soup.new_tag('summary'); sm.string = '原文'
+            d.append(sm)
+            for x in rest:
+                d.append(x.extract())
+            card.append(d)
+        lg['class'] = lg.get('class', []) + ['compact']
     if spine:
         nodes = ''.join(f'<a class="sl-sp-i t-{tone}" href="#{sid}" title="{_esc(q)}"><span class="sl-sp-k">{_esc(k)}</span>'
                         f'<span class="sl-sp-s">{_esc(short)}</span>'
@@ -193,6 +237,19 @@ def post(html):
 
 CSS = r"""
 /* ===== story layer (author focus lines) ===== */
+.kt { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0; margin: 6px 0 18px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.kt-i { padding: 14px 16px 12px; border-left: 1px solid var(--line); display: grid; gap: 4px; align-content: start; }
+.kt-i:first-child { border-left: 0; }
+.kt-v { font-size: 26px; line-height: 1.15; font-weight: 800; color: var(--accent); font-family: var(--font-body); letter-spacing: -.01em; }
+.kt-i.t-good .kt-v { color: var(--good); } .kt-i.t-bad .kt-v { color: var(--bad); }
+.kt-c { font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+.kt-c b, .kt-c strong { color: var(--ink); font-weight: 600; }
+.ledger.compact .lg { gap: 4px; }
+.ledger.compact .lg-big { font-size: 18px; }
+details.lg-more { margin-top: 4px; }
+details.lg-more > summary { cursor: pointer; font-size: 12px; color: var(--muted); list-style: none; }
+details.lg-more > summary::before { content: '▸ '; } details.lg-more[open] > summary::before { content: '▾ '; }
+details.lg-more[open] { padding-top: 4px; }
 .sl-q { display: flex; gap: 10px; align-items: baseline; margin: -4px 0 10px; font-size: 15px; }
 .sl-ql { flex: none; font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--muted); border: 1px solid var(--line); border-radius: 99px; padding: 1px 9px; }
 .sl-qt { color: var(--ink); font-weight: 600; }
@@ -203,7 +260,7 @@ CSS = r"""
 .sl-look { display: flex; gap: 12px; align-items: baseline; margin: 18px 0 8px; padding: 10px 14px; border-radius: 10px;
   background: color-mix(in srgb, var(--accent) 7%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); }
 .sl-ll { flex: none; font-size: 12px; font-weight: 800; color: #fff; background: var(--accent); border-radius: 6px; padding: 2px 8px; letter-spacing: .08em; }
-.sl-lt { font-size: 16px; font-weight: 600; line-height: 1.6; color: var(--ink); }
+.sl-lt { font-size: 15px; font-weight: 600; line-height: 1.55; color: var(--ink); }
 .sl-n { color: var(--accent); font-family: var(--font-mono); font-weight: 700; white-space: nowrap; }
 .ledger .lg .lg-big.sl-box, .lg-big.sl-box, .fl-k.sl-box, b.sl-box, strong.sl-box { padding: 1px 8px; margin-left: -8px; display: inline-block; width: auto; }
 .lg-f.sl-box, .lg-h.sl-box { outline-offset: 3px !important; }
