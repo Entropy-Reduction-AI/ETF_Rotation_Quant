@@ -112,7 +112,7 @@ skills 和 domain modeling 是按需能力，不是默认关卡。
 
 ### 新会话必读（Owner 2026-10-25）
 
-新会话先读 `docs/project-intake/project-diagnosis.md`（项目整体诊断：三次尝试之后流程的三个缺口，D38），再读 `docs/project-intake/owner-vision-and-principles.md`：愿景的深层含义、Owner 的判断原则、路线图与现状。Owner 看板见 `docs/owner/phase2-owner-board.md`（2026-10-27 起在仓库维护，并发布为 Claude 页面；Notion 页面停止同步，D11-8）。面向 Owner 的文档与页面按 `docs/reference/owner-facing-uiux-principles.md` 编写。页面原始 HTML 存在 `docs/artifact/`，由 `scripts/owner_pages/` 从 md 生成；做页面时按 `.pi/skills/owner-page-uiux/SKILL.md` 执行。
+新会话先读 `docs/project-intake/project-diagnosis.md`（项目整体诊断：三次尝试之后流程的三个缺口，D38），再读 `docs/project-intake/owner-vision-and-principles.md`：愿景的深层含义、Owner 的判断原则、路线图与现状。Owner 看板见 `docs/owner/owner-board.md`（2026-10-27 起在仓库维护，并发布为 Claude 页面；Notion 页面停止同步，D11-8）。面向 Owner 的文档与页面按 `docs/reference/owner-facing-uiux-principles.md` 编写。页面原始 HTML 存在 `docs/artifact/`，由 `scripts/owner_pages/` 从 md 生成；做页面时按 `.pi/skills/owner-page-uiux/SKILL.md` 执行。
 
 ### 目标
 

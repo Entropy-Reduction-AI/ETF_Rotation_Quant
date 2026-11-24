@@ -29,7 +29,7 @@ PAGES = [
     ('v4-health', 'v4-health-check.md', 'v4 体检报告', 'FTHcH1SY1m5cvLtu7qxteJ'),
     ('v4-memo', 'v4-research-memo.md', 'v4 研究备忘', 'SwFZBC2Qrcxk1AURv1iab8'),
     ('data-board', 'data-board.md', 'ETF 轮动 · 数据与容器看板', 'Rsguim7WUoBYRZ7EzvqKuH'),
-    ('board', 'phase2-owner-board.md', 'ETF 轮动 · 第二阶段 Owner 看板', '__board_self__'),
+    ('board', 'owner-board.md', 'ETF 轮动 · Owner 看板', '__board_self__'),
 ]
 GH = 'https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/main/'
 
@@ -572,4 +572,6 @@ h2 .num {{ min-width: 1.6em; }}
 
 
 for args in PAGES:
+    if not os.path.exists(os.path.join(DOCS, args[1])):          # e.g. the v6 prereg draft lives on its PR branch until freeze
+        print(f'{args[0]:12} skipped: source not on this branch'); continue
     build(*args)

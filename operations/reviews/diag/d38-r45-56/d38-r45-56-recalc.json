@@ -1,0 +1,274 @@
+{
+  "subject_pr": 346,
+  "subject_head_expected": "0bff3eda70c64d62944940a4cd94ea702cd95adb",
+  "subject_head_remote": "0bff3eda70c64d62944940a4cd94ea702cd95adb",
+  "worktree_HEAD": "31481e26506c7559654401bdef4c9f09ab55e919",
+  "head_drift": false,
+  "inputs": {
+    "french_49_csv": {
+      "path": "/agent/repos/ETF_Rotation_Quant/operations/reviews/diag/d38-r45-56/cache/49_Industry_Portfolios.csv",
+      "sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
+      "matches_signed": true
+    },
+    "dtb3_csv": {
+      "path": "/agent/repos/ETF_Rotation_Quant/results/v5/other-market/raw/DTB3.csv",
+      "sha256": "29fe11e20522b4d293cdbbbfd37f2862264692519a251e712747a8532ee95a00",
+      "matches_signed": true
+    },
+    "market_sqlite": {
+      "path": "/agent/repos/ETF_Rotation_Quant/data/market.sqlite",
+      "sha256": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52",
+      "matches_signed": true
+    }
+  },
+  "commit_order": {
+    "row45_56_reg": {
+      "full": "4de51bc40268380e11be08ec1c71b11026d107a4",
+      "parent": "c78bc45241033ba369cef06c43fc87103d987efe",
+      "author_date": "2026-11-23 09:16:06 +0000",
+      "committer_date": "2026-11-23 09:16:06 +0000",
+      "subject": "D38 第 45 行运行口径、第 56 行跑前登记（C2 正式判据、申万一级参考检验）；未看任何收益",
+      "planning_only": true
+    },
+    "row45_56_res": {
+      "full": "0bff3eda70c64d62944940a4cd94ea702cd95adb",
+      "parent": "4de51bc40268380e11be08ec1c71b11026d107a4",
+      "author_date": "2026-11-23 09:18:45 +0000",
+      "committer_date": "2026-11-23 09:18:45 +0000",
+      "subject": "D38 第 45、56 行结果：上月涨幅不进 v6；C2 关闭；申万一级参考检验（12−1 对等权 −5.9，连续性版比 12−1 好 6.5 但只追平等权）",
+      "planning_only": false
+    }
+  },
+  "registration_order_proof": {
+    "reg_is_ancestor_of_res": true,
+    "reg_planning_only": true,
+    "res_parent_is_reg": true,
+    "reg_before_res_author_time": true,
+    "artifacts_missing_at_reg": {
+      "scripts/preflight/a_memory_csi300.py": true,
+      "scripts/preflight/a_decompose_sw.py": true,
+      "results/v6-preflight/a-memory-csi300.json": true,
+      "results/v6-preflight/a-decompose-sw-step1.json": true,
+      "results/v6-preflight/a-decompose-sw.json": true
+    },
+    "reg_commit_touches_only_planning": true
+  },
+  "independent_recalc": {
+    "row45": {
+      "新段_S1_净_每年点": -3.6,
+      "新段_R0_净_每年点": -2.9,
+      "全段_S1_t": 0.08,
+      "全段_S1_t_未四舍五入": 0.08050665849884132,
+      "判据_新段S1净>0": false,
+      "判据_新段S1>R0": false,
+      "判据_全段S1_t>=2": false
+    },
+    "row45_vs_committed": {
+      "新段_S1_净": "True",
+      "全段_S1_t": true
+    },
+    "p3_independent": {
+      "B0": {
+        "对等权_每月差_未四舍五入均值": -0.004916246513446141,
+        "对等权_每年点": -5.9,
+        "对等权_t": -1.56,
+        "对B0_每年点": null,
+        "对B0_t": null,
+        "月数": 119
+      },
+      "C1": {
+        "对等权_每月差_未四舍五入均值": 0.0004606365218937815,
+        "对等权_每年点": 0.6,
+        "对等权_t": 0.19,
+        "对B0_每年点": 6.5,
+        "对B0_t": 1.73,
+        "月数": 119
+      }
+    },
+    "p3_vs_committed_after_calc": {
+      "B0_对等权": true,
+      "B0_t": true,
+      "C1_对等权": true,
+      "C1_t": true,
+      "C1_对B0": true,
+      "C1_对B0_t": true,
+      "committed_for_diff_only": {
+        "B0": {
+          "对沪深300 每年点": -2.4,
+          "对等权全部 每年点": -5.9,
+          "对等权 t": -1.56,
+          "每年成本点": 1.28,
+          "对等权 信息比率": -0.49,
+          "5 年跑赢等权的概率 Φ(IR×√5)": 0.13
+        },
+        "C1": {
+          "对沪深300 每年点": 4.0,
+          "对等权全部 每年点": 0.6,
+          "对等权 t": 0.19,
+          "每年成本点": 1.48,
+          "对等权 信息比率": 0.06,
+          "5 年跑赢等权的概率 Φ(IR×√5)": 0.55,
+          "对 B0 每年点": 6.5,
+          "对 B0 t": 1.73
+        }
+      }
+    },
+    "c2_independent": {
+      "P1_summary": {
+        "B0": {
+          "对等权_每月差_未四舍五入均值": 0.0008007018899893999,
+          "对等权_每年点": 1.0,
+          "对等权_t": 0.3,
+          "对B0_每年点": null,
+          "对B0_t": null,
+          "月数": 119
+        },
+        "C2": {
+          "对等权_每月差_未四舍五入均值": 0.0011048866228620935,
+          "对等权_每年点": 1.3,
+          "对等权_t": 0.57,
+          "对B0_每年点": 0.4,
+          "对B0_t": 0.09,
+          "月数": 119
+        }
+      },
+      "P2_summary": {
+        "B0": {
+          "对等权_每月差_未四舍五入均值": -0.0003211512471981938,
+          "对等权_每年点": -0.4,
+          "对等权_t": -0.07,
+          "对B0_每年点": null,
+          "对B0_t": null,
+          "月数": 52
+        },
+        "C2": {
+          "对等权_每月差_未四舍五入均值": 0.004042388929144075,
+          "对等权_每年点": 4.9,
+          "对等权_t": 1.18,
+          "对B0_每年点": 5.2,
+          "对B0_t": 0.72,
+          "月数": 52
+        }
+      },
+      "P1_C2分阶段对B0每年点": {
+        "2006-01 → 2007-10 大牛": -21.1,
+        "2007-11 → 2008-10 崩盘": 16.0,
+        "2008-11 → 2009-07 反弹": 1.2,
+        "2009-08 → 2014-06 结构与震荡": 0.4,
+        "2014-07 → 2015-11 大牛与崩盘": 16.7
+      },
+      "P2_C2分阶段对B0每年点": {
+        "2011-08 → 2013-12": -6.1,
+        "2014-01 → 2015-11": 19.5
+      },
+      "正式三项独立判定": {
+        "P1_五段C2好于B0_段数": 4,
+        "P1_五段至少四段": true,
+        "P1_C2对等权_t": 0.57,
+        "P1_C2对等权_t>=1": false,
+        "P1_C2对B0_每年点": 0.4,
+        "P2_C2对B0_每年点": 5.2,
+        "P1与P2子池对B0同为正": true,
+        "换规则": false,
+        "结论_C2关闭": true
+      },
+      "plumbing_note": "债券=cgb-10y via Markets(signal)；A 池=sqlite+universe.toml"
+    },
+    "c2_vs_committed_after_calc": {
+      "P1_C2_对等权_t": true,
+      "P1_C2_对B0": true,
+      "P1_阶段赢数": true,
+      "P2_C2_对B0": true
+    }
+  },
+  "rerun_dev_scripts": {
+    "memory": {
+      "semantic_equal_to_head_commit": true
+    },
+    "sw_s1": {
+      "semantic_equal_to_head_commit": true
+    },
+    "sw": {
+      "semantic_equal_to_head_commit": true
+    }
+  },
+  "criteria_audit": {
+    "row45_preregistered_three_independent": {
+      "def_source": "operations/planning row45 + 运行口径",
+      "checks": {
+        "新段 S1 净超额 > 0": false,
+        "新段 S1 > R0": false,
+        "全段 S1 净超额 t ≥ 2": false
+      },
+      "conclusion_independent": "维持 12−1，上月涨幅不进 v6"
+    },
+    "row56_C2_three_formal_independent": {
+      "def_source": "planning row56 / row55 C2 正式判据",
+      "three_core": {
+        "P1五段至少四段C2好于B0": true,
+        "P1对等权_t_ge_1": false,
+        "P1与P2对B0同为正": true
+      },
+      "numbers": {
+        "P1_五段C2好于B0_段数": 4,
+        "P1_五段至少四段": true,
+        "P1_C2对等权_t": 0.57,
+        "P1_C2对等权_t>=1": false,
+        "P1_C2对B0_每年点": 0.4,
+        "P2_C2对B0_每年点": 5.2,
+        "P1与P2子池对B0同为正": true,
+        "换规则": false,
+        "结论_C2关闭": true
+      },
+      "committed_json_for_diff": {
+        "P1 子池五段至少四段好于 B0": true,
+        "P1 子池对等权 t ≥ 1": false,
+        "P1 子池、P2 子池对 B0 同为正": true,
+        "换规则": false,
+        "报钱（P1 子池对等权 t ≥ 2）": false,
+        "结论": "C2 关闭"
+      }
+    },
+    "row56_P3_reference_independent": {
+      "B0_vs_EW": {
+        "对等权_每月差_未四舍五入均值": -0.004916246513446141,
+        "对等权_每年点": -5.9,
+        "对等权_t": -1.56,
+        "对B0_每年点": null,
+        "对B0_t": null,
+        "月数": 119
+      },
+      "C1_vs_EW_and_B0": {
+        "对等权_每月差_未四舍五入均值": 0.0004606365218937815,
+        "对等权_每年点": 0.6,
+        "对等权_t": 0.19,
+        "对B0_每年点": 6.5,
+        "对B0_t": 1.73,
+        "月数": 119
+      }
+    }
+  },
+  "definition_continuity_row55": {
+    "C1_ID_formula": true,
+    "C1_pick_lowest_ID": true,
+    "C2_overnight_sum": true,
+    "MINDAYS_200": true,
+    "cost_0.002": true,
+    "sw_reuses_decompose_core": true,
+    "a_decompose_unchanged_vs_row55_main": true
+  },
+  "method": "independent_reviewer_backtest_v2",
+  "computation_recommendation": "approve",
+  "formal_reviewer_decision_record": "operations/reviews/diag/d38-r45-56/d38-r45-56-reviewer-formal-decision.json",
+  "decision_inputs": {
+    "subject_head_match": true,
+    "registration_order_ok": true,
+    "inputs_ok": true,
+    "rerun_ok": true,
+    "independent_spot_ok": true,
+    "row55_definitions_unchanged": true,
+    "row45_three_criteria_fail_independent": true,
+    "c2_closed_independent": true
+  },
+  "verify_exit_code": 0
+}

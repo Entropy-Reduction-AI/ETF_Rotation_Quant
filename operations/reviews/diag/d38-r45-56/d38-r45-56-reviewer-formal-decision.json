@@ -1,0 +1,48 @@
+{
+  "document_type": "reviewer_formal_decision",
+  "authority": "ETF Rotation Reviewer",
+  "authority_note": "本 Decision 由 ETF Rotation Reviewer 在项目组织内签发；非 Owner 个人签收。",
+  "decision": "approve",
+  "issued": {
+    "date_utc": "2026-11-24",
+    "subject_pr": 346,
+    "subject_head_reviewed": "0bff3eda70c64d62944940a4cd94ea702cd95adb",
+    "companion_pr": 355,
+    "reviewed_evidence_commit": "fa11df88dce8ed10c58aa47786978facbb3ca81a",
+    "evidence_machine_json": "operations/reviews/diag/d38-r45-56/d38-r45-56-recalc.json"
+  },
+  "subject_merge_observed": {
+    "pr346_merged": true,
+    "merge_commit_sha": "c45a20e9fffd094b320b2bee353272231af12ad3",
+    "merge_commit_tree_sha": "ac6cf4c7f4109a6cf5bcc3041d13cac7f996f590",
+    "main_tip_after_merge": "c45a20e9fffd094b320b2bee353272231af12ad3",
+    "subject_branch_head_unchanged": "0bff3eda70c64d62944940a4cd94ea702cd95adb"
+  },
+  "verdict_counts": {
+    "must_fix": 0,
+    "should_fix": 0,
+    "note": 3
+  },
+  "notes_nonblocking": [
+    {
+      "id": "N1",
+      "topic": "Shared Markets data-loader",
+      "detail": "独立回测仍经 src.v4.r5.design.Markets(signal) 载入 A 股设计期层级序列与 cgb-10y 日收益（非仅日历）；非挑选逻辑，但与纯 sqlite 全自建仍有耦合。"
+    },
+    {
+      "id": "N2",
+      "topic": "Shenwan L1 reference / backfill",
+      "detail": "P3 申万一级为 Owner Option A：参考检验、可能回填、不改主规则、不报钱；incoming 起始日各异，与主规则 Universe 不等价。"
+    },
+    {
+      "id": "N3",
+      "topic": "Rounded gate statistics",
+      "detail": "表观 t/每年点经四舍五入；多项门槛（如 C2 t≥1、row45 全段 t≥2）距通过仍远；独立未四舍五入值见 d38-r45-56-recalc.json。"
+    }
+  ],
+  "distinction": {
+    "computation_recommendation": "Verifier 据 decision_inputs 输出的 computation_recommendation=approve（机器复核，可随重跑更新）。",
+    "formal_reviewer_decision": "approve — 人工对照 v2 证据链后对 subject #346 @ 0bff3eda 的正式签收；不以 Owner 查证为前置。"
+  },
+  "v1_to_v2_limitation_preserved": "v1 companion 因 exec 作者 a_decompose prep/pick/run/report 不构成独立正确性证明；v2 已换 Reviewer 自写引擎；数值与 head JSON 在容差内一致。"
+}
