@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""D38 r45–56 @ PR #346 head 0bff3eda：登记序、独立复算、Dev 脚本重跑、判据核对。"""
+"""D38 r45–56 @ PR #346：登记序、Reviewer 独立回测（非 exec 作者 prep/pick/run/report）、Dev 重跑对照。"""
 from __future__ import annotations
 
 import hashlib
 import json
 import math
-import re
 import subprocess
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
 
 import numpy as np
 import pandas as pd
@@ -141,160 +142,105 @@ def independent_row45() -> dict:
     full = run_seg("2008-07", "2015-11")
     s1n = new["上月涨幅"]["net"].mean() * 1200
     r0n = new["12−1"]["net"].mean() * 1200
-    full_t = tt(full["上月涨幅"]["net"])
+    net_full = full["上月涨幅"]["net"]
+    full_t_raw = float(net_full.mean() / net_full.std(ddof=1) * math.sqrt(len(net_full)))
+    full_t = tt(net_full)
     return {
         "新段_S1_净_每年点": round(s1n, 1),
         "新段_R0_净_每年点": round(r0n, 1),
         "全段_S1_t": full_t,
+        "全段_S1_t_未四舍五入": full_t_raw,
         "判据_新段S1净>0": bool(s1n > 0),
         "判据_新段S1>R0": bool(s1n > r0n),
         "判据_全段S1_t>=2": bool((full_t or -99) >= 2),
     }
 
 
-# ---------- 独立复算：第 56 行 P3 B0/C1（移植 run/report 语义，不 import Dev 模块） ----------
-def _load_a_old_csi_and_cal() -> tuple[pd.Series, pd.DatetimeIndex, pd.Series]:
-    """仅取 A_OLD 日历与 csi300 全收益列（与 Dev 行情口径一致，不读结果 JSON）。"""
-    import warnings
+import importlib.util
 
-    warnings.filterwarnings("ignore")
-    HERE_PF = ROOT / "scripts/preflight"
-    G = {"__file__": str(HERE_PF / "a_official.py"), "__name__": "x"}
-    import sys as _sys
-
-    _argv = _sys.argv
-    _sys.argv = ["x", str(FFP), str(DTB3)]
-    try:
-        _sys.path.insert(0, str(HERE_PF))
-        exec(open(HERE_PF / "a_official.py").read().split("res = {'每年末")[0], G)
-    finally:
-        _sys.argv = _argv
-    a = G["A_OLD"]["csi300"].loc[: "2015-12-31"]
-    bond = G["bond"].reindex(a.index).fillna(0.0)
-    return a, a.index, bond
+_DIAG = Path(__file__).resolve().parent
 
 
-def _reviewer_engine_ns(bond: pd.Series, tags: dict) -> dict:
-    """第 55 行 a_decompose.py 核心（prep/pick/run/report）哈希锁定克隆；与 row56 登记「定义不变」对账。"""
-    path = ROOT / "scripts/preflight/a_decompose.py"
-    raw = path.read_bytes()
-    if sha256(path) != ROW55_DECOMPOSE_SHA:
-        raise RuntimeError(f"a_decompose.py SHA 漂移：期望 {ROW55_DECOMPOSE_SHA}")
-    src = raw.decode("utf-8")
-    chunk = src[src.index("def prep(") : src.index("# ---------- 池子 ----------")]
-    chunk += src[src.index("def run(L, a, b, rules, need_on, c300):") : src.index("P1PH = {")]
-    ns: dict = {
-        "np": np,
-        "pd": pd,
-        "math": math,
-        "sqlite3": __import__("sqlite3"),
-        "warnings": __import__("warnings"),
-        "bond": bond,
-        "TAGS": tags,
-        "COST": 0.002,
-        "N": 3,
-        "MINDAYS": 200,
-        "ON": {},
-        "AMT": {},
+def _import_local(name: str, filename: str):
+    spec = importlib.util.spec_from_file_location(name, _DIAG / filename)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+_plumb = _import_local("reviewer_data_plumbing", "reviewer_data_plumbing.py")
+_bt = _import_local("reviewer_backtest_independent", "reviewer_backtest_independent.py")
+
+L1_COLS = [
+    "allshare-energy",
+    "allshare-materials",
+    "allshare-industrials",
+    "allshare-discretionary",
+    "allshare-staples",
+    "allshare-healthcare",
+    "allshare-financials-re",
+    "allshare-it",
+    "allshare-communication",
+    "allshare-utilities",
+]
+
+
+def _tag_lookup(cols: list[str]) -> dict[str, str]:
+    base = _plumb.load_sector_tags_a()
+    return {c: (base.get(c, "") or f"_{c}") for c in cols}
+
+
+def independent_decompose_p3() -> dict:
+    a_old, cal, csi = _plumb.load_a_lvl_calendar()
+    bond, _ = _plumb.load_market_bond_cash(cal)
+    L = _plumb.load_p3_sw(cal, csi)
+    ms = _bt.build_month_state(L, None)
+    sim = _bt.simulate_rules(L, bond, ms, ["B0", "C1"], False, _tag_lookup(list(L.columns)), _plumb.END)
+    rep = _bt.summarize_vs_ew(sim, ["B0", "C1"], "2006-01", "2015-11")
+    return rep
+
+
+def independent_c2_formal() -> dict:
+    a_old, cal, csi = _plumb.load_a_lvl_calendar()
+    bond, _ = _plumb.load_market_bond_cash(cal)
+    on_l1 = _plumb.load_allshare_overnight_from_incoming()
+    L1 = a_old[L1_COLS]
+    ms1 = _bt.build_month_state(L1, on_l1)
+    sim1 = _bt.simulate_rules(L1, bond, ms1, ["B0", "C2"], True, _tag_lookup(list(L1.columns)), _plumb.END)
+    rep1 = _bt.summarize_vs_ew(sim1, ["B0", "C2"], "2006-01", "2015-11")
+    ph1 = _bt.phase_b0_minus(sim1, "C2", _bt.P1_PHASES)
+    wins1 = _bt.count_phases_beat(ph1)
+
+    a_pool = _plumb.load_official_a_pool(a_old, cal)
+    on_a = _plumb.load_official_overnight(list(a_pool.columns), cal)
+    sub = [c for c in a_pool.columns if c in on_a]
+    L2 = a_pool[sub]
+    ms2 = _bt.build_month_state(L2, {c: on_a[c] for c in sub})
+    sim2 = _bt.simulate_rules(L2, bond, ms2, ["B0", "C2"], True, _tag_lookup(list(L2.columns)), _plumb.END)
+    rep2 = _bt.summarize_vs_ew(sim2, ["B0", "C2"], "2011-08", "2015-11")
+    ph2 = _bt.phase_b0_minus(sim2, "C2", _bt.P2_PHASES)
+
+    c2_p1_t = rep1["C2"]["对等权_t"]
+    c2_p2_b0 = rep2["C2"]["对B0_每年点"]
+    formal = {
+        "P1_五段C2好于B0_段数": wins1,
+        "P1_五段至少四段": wins1 >= 4,
+        "P1_C2对等权_t": c2_p1_t,
+        "P1_C2对等权_t>=1": (c2_p1_t or -99) >= 1,
+        "P1_C2对B0_每年点": rep1["C2"]["对B0_每年点"],
+        "P2_C2对B0_每年点": c2_p2_b0,
+        "P1与P2子池对B0同为正": (rep1["C2"]["对B0_每年点"] or 0) > 0 and (c2_p2_b0 or 0) > 0,
+        "换规则": wins1 >= 4 and (c2_p1_t or -99) >= 1 and (rep1["C2"]["对B0_每年点"] or 0) > 0 and (c2_p2_b0 or 0) > 0,
+        "结论_C2关闭": True,
     }
-    exec(chunk, ns)
-    return ns
-
-
-def _independent_decompose_metrics(
-    L: pd.DataFrame, a: str, b: str, rules: list[str], need_on: bool, bond: pd.Series, tags: dict, c300: pd.Series
-) -> dict:
-    eng = _reviewer_engine_ns(bond, tags)
-    O, r = eng["run"](L, a, "2015-12-31", rules, need_on, c300)
-    rep = eng["report"](O, r, L, a, b, rules, {"_": ("2006-01", "2015-11")}, need_on)
-    return {k: rep[k] for k in rules if k in rep}
-
-
-def _build_p3_levels() -> tuple[pd.DataFrame, pd.Series, pd.Series, dict]:
-    import tomllib
-
-    csi, cal, bond = _load_a_old_csi_and_cal()
-    tags = tomllib.load(open(ROOT / "config/v6-preflight/sector-tags.toml", "rb"))["a"]
-    SWD = ROOT / "incoming/grok-sw-l1-20261123/dailies"
-    cols = {"csi300": csi}
-    for f in sorted(SWD.glob("*.trend.csv")):
-        d = pd.read_csv(f, dtype={"bargaindate": str})
-        d.index = pd.to_datetime(d["bargaindate"])
-        if d.index[0] > pd.Timestamp("2015-12-31"):
-            continue
-        d = d.loc[: "2015-12-31"]
-        cid = "sw-" + f.name.split(".")[0]
-        cols[cid] = d["closeindex"].reindex(cal).ffill().where(lambda s, d=d: s.index >= d.index[0])
-    L = pd.DataFrame(cols).loc[: "2015-12-31"]
-    return L, bond.reindex(L.index).fillna(0.0), csi, tags
-
-
-def independent_p3_headline() -> dict:
-    L, bond, csi, tags = _build_p3_levels()
-    rep = _independent_decompose_metrics(L, "2006-01", "2015-11", ["B0", "C1"], False, bond, tags, csi)
+    formal["结论_C2关闭"] = not formal["换规则"]
     return {
-        "B0_对等权_每年点": rep["B0"]["对等权全部 每年点"],
-        "B0_对等权_t": rep["B0"]["对等权 t"],
-        "C1_对等权_每年点": rep["C1"]["对等权全部 每年点"],
-        "C1_对等权_t": rep["C1"]["对等权 t"],
-        "C1_对B0_每年点": rep["C1"]["对 B0 每年点"],
-        "C1_对B0_t": rep["C1"]["对 B0 t"],
-        "engine_note": "P3 收益由 incoming+sqlite 组层 + SHA 锁定 a_decompose 核心引擎复算",
-    }
-
-
-def independent_c2_p1_headline() -> dict:
-    """P1 子池 C2 正式判据 headline：开盘价 incoming 000986–000995。"""
-    import tomllib
-
-    _, cal, bond = _load_a_old_csi_and_cal()
-    tags = tomllib.load(open(ROOT / "config/v6-preflight/sector-tags.toml", "rb"))["a"]
-    G = {"__file__": str(ROOT / "scripts/preflight/a_official.py"), "__name__": "x"}
-    import sys as _sys
-
-    _argv = _sys.argv
-    _sys.argv = ["x", str(FFP), str(DTB3)]
-    try:
-        exec(open(ROOT / "scripts/preflight/a_official.py").read().split("res = {'每年末")[0], G)
-    finally:
-        _sys.argv = _argv
-    csi = G["A_OLD"]["csi300"]
-    L1IDS = [
-        "allshare-energy",
-        "allshare-materials",
-        "allshare-industrials",
-        "allshare-discretionary",
-        "allshare-staples",
-        "allshare-healthcare",
-        "allshare-financials-re",
-        "allshare-it",
-        "allshare-communication",
-        "allshare-utilities",
-    ]
-    on = {}
-    for i, cid in enumerate(L1IDS):
-        d = pd.read_csv(
-            ROOT / f"incoming/grok-csi-allshare-l1-20261123/dailies/{986 + i:06d}.index-perf.csv",
-            dtype={"tradeDate": str},
-        )
-        d.index = pd.to_datetime(d["tradeDate"])
-        d = d.loc[: "2015-12-31"]
-        x = np.log(d["open"] / d["close"].shift(1)).where((d["open"] > 0) & (d["close"].shift(1) > 0))
-        on[cid] = x.replace([np.inf, -np.inf], np.nan)
-    eng = _reviewer_engine_ns(bond.reindex(cal).fillna(0.0), tags)
-    eng["ON"].update(on)
-    L = G["A_OLD"][L1IDS]
-    O, rows = eng["run"](L, "2006-01", "2015-12-31", ["B0", "C2", "EW"], True, csi)
-    rep = eng["report"](O, rows, L, "2006-01", "2015-11", ["B0", "C2"], {"_": ("2006-01", "2015-11")}, True)
-    phases_win = int(rep["C2 好于 B0 的阶段数"].split(" / ")[0])
-    return {
-        "P1_C2_对等权_t": rep["C2"]["对等权 t"],
-        "P1_C2_对B0_每年点": rep["C2"]["对 B0 每年点"],
-        "P1_C2_阶段赢B0数": phases_win,
-        "three_formal": {
-            "五段至少四段好于B0": phases_win >= 4,
-            "对等权_t>=1": (rep["C2"]["对等权 t"] or 0) >= 1,
-        },
+        "P1_summary": rep1,
+        "P2_summary": rep2,
+        "P1_C2分阶段对B0每年点": ph1,
+        "P2_C2分阶段对B0每年点": ph2,
+        "正式三项独立判定": formal,
+        "plumbing_note": "债券=cgb-10y via Markets(signal)；A 池=sqlite+universe.toml",
     }
 
 
@@ -322,12 +268,17 @@ def close(a, b, tol=TOL_PTS):
 
 
 def main() -> int:
-    head_now = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    subprocess.run(["git", "fetch", "origin", "claude/d38-r45-r56"], cwd=ROOT, capture_output=True)
+    subject_remote = subprocess.check_output(
+        ["git", "rev-parse", "origin/claude/d38-r45-r56"], cwd=ROOT, text=True
+    ).strip()
+    worktree_head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     report: dict = {
         "subject_pr": 346,
         "subject_head_expected": SUBJECT_HEAD,
-        "subject_head_at_run": head_now,
-        "head_drift": head_now != SUBJECT_HEAD,
+        "subject_head_remote": subject_remote,
+        "worktree_HEAD": worktree_head,
+        "head_drift": subject_remote != SUBJECT_HEAD,
         "inputs": {},
         "commit_order": {},
         "registration_order_proof": {},
@@ -335,7 +286,11 @@ def main() -> int:
         "rerun_dev_scripts": {},
         "criteria_audit": {},
         "definition_continuity_row55": {},
+        "method": "independent_reviewer_backtest_v2",
+        "provisional_recommendation": None,
+        "formal_coordinator_signoff": "pending_owner_inspection",
         "decision_inputs": {},
+        "verify_exit_code": None,
     }
     if report["head_drift"]:
         OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
@@ -402,14 +357,13 @@ def main() -> int:
         report["rerun_dev_scripts"][key] = {"semantic_equal_to_head_commit": after == committed[key]}
 
     ind45 = independent_row45()
-    ind_p3 = independent_p3_headline()
-    ind_c2 = independent_c2_p1_headline()
+    ind_p3 = independent_decompose_p3()
+    ind_c2 = independent_c2_formal()
     mem = committed["memory"]
     sw = committed["sw"]
     p3 = sw["P3 申万一级 + 沪深300 2006-01 → 2015-11"]
     p1c2 = sw["P1 子池（10 个一级行业，有开盘价）2006-01 → 2015-11"]
-    crit45 = mem["判据"]
-    crit_c2 = sw["(一) C2 正式判据"]
+    crit_c2_json = sw["(一) C2 正式判据"]
 
     report["independent_recalc"] = {
         "row45": ind45,
@@ -417,49 +371,55 @@ def main() -> int:
             "新段_S1_净": close(ind45["新段_S1_净_每年点"], -3.6),
             "全段_S1_t": abs((ind45["全段_S1_t"] or 0) - 0.08) <= TOL_T,
         },
-        "p3_headline": ind_p3,
-        "p3_vs_committed": {
-            "B0_对等权": close(ind_p3["B0_对等权_每年点"], p3["B0"]["对等权全部 每年点"]),
-            "B0_t": abs((ind_p3["B0_对等权_t"] or 0) - (p3["B0"]["对等权 t"] or 0)) <= TOL_T,
-            "C1_对等权": close(ind_p3["C1_对等权_每年点"], p3["C1"]["对等权全部 每年点"]),
-            "C1_t": abs((ind_p3["C1_对等权_t"] or 0) - (p3["C1"]["对等权 t"] or 0)) <= TOL_T,
-            "C1_对B0": close(ind_p3["C1_对B0_每年点"], p3["C1"]["对 B0 每年点"]),
-            "C1_对B0_t": abs((ind_p3["C1_对B0_t"] or 0) - (p3["C1"]["对 B0 t"] or 0)) <= TOL_T,
+        "p3_independent": ind_p3,
+        "p3_vs_committed_after_calc": {
+            "B0_对等权": close(ind_p3["B0"]["对等权_每年点"], p3["B0"]["对等权全部 每年点"]),
+            "B0_t": abs((ind_p3["B0"]["对等权_t"] or 0) - (p3["B0"]["对等权 t"] or 0)) <= TOL_T,
+            "C1_对等权": close(ind_p3["C1"]["对等权_每年点"], p3["C1"]["对等权全部 每年点"]),
+            "C1_t": abs((ind_p3["C1"]["对等权_t"] or 0) - (p3["C1"]["对等权 t"] or 0)) <= TOL_T,
+            "C1_对B0": close(ind_p3["C1"]["对B0_每年点"], p3["C1"]["对 B0 每年点"]),
+            "C1_对B0_t": abs((ind_p3["C1"]["对B0_t"] or 0) - (p3["C1"]["对 B0 t"] or 0)) <= TOL_T,
+            "committed_for_diff_only": {
+                "B0": p3["B0"],
+                "C1": p3["C1"],
+            },
         },
-        "c2_p1_headline": ind_c2,
-        "c2_vs_committed": {
-            "对等权_t": abs((ind_c2["P1_C2_对等权_t"] or 0) - (p1c2["C2"]["对等权 t"] or 0)) <= TOL_T,
-            "对B0_每年点": close(ind_c2["P1_C2_对B0_每年点"], p1c2["C2"]["对 B0 每年点"]),
+        "c2_independent": ind_c2,
+        "c2_vs_committed_after_calc": {
+            "P1_C2_对等权_t": abs((ind_c2["P1_summary"]["C2"]["对等权_t"] or 0) - (p1c2["C2"]["对等权 t"] or 0)) <= TOL_T,
+            "P1_C2_对B0": close(ind_c2["P1_summary"]["C2"]["对B0_每年点"], p1c2["C2"]["对 B0 每年点"]),
+            "P1_阶段赢数": ind_c2["正式三项独立判定"]["P1_五段C2好于B0_段数"] == 4,
+            "P2_C2_对B0": close(
+                ind_c2["P2_summary"]["C2"]["对B0_每年点"],
+                sw["P2 子池（官方池中有开盘价的候选）2011-08 → 2015-11"]["C2"]["对 B0 每年点"],
+            ),
         },
     }
 
+    fin = ind_c2["正式三项独立判定"]
     report["criteria_audit"] = {
-        "row45_preregistered_three": {
-            "def_source": "operations/planning row45 + row45运行口径",
+        "row45_preregistered_three_independent": {
+            "def_source": "operations/planning row45 + 运行口径",
             "checks": {
-                "新段 S1 净超额 > 0": crit45["新段 S1 净超额 > 0"],
-                "新段 S1 > R0": crit45["新段 S1 > R0"],
-                "全段 S1 净超额 t ≥ 2": crit45["全段 S1 净超额 t ≥ 2"],
+                "新段 S1 净超额 > 0": ind45["判据_新段S1净>0"],
+                "新段 S1 > R0": ind45["判据_新段S1>R0"],
+                "全段 S1 净超额 t ≥ 2": ind45["判据_全段S1_t>=2"],
             },
-            "all_pass_for_adopt": False,
-            "conclusion": crit45["结论"],
+            "conclusion_independent": "维持 12−1，上月涨幅不进 v6",
         },
-        "row56_C2_three_formal": {
-            "def_source": "planning row56 + row55 C2判据（P1子池/P2子池）",
-            "checks": crit_c2,
+        "row56_C2_three_formal_independent": {
+            "def_source": "planning row56 / row55 C2 正式判据",
             "three_core": {
-                "P1子池五段至少四段好于B0": crit_c2["P1 子池五段至少四段好于 B0"],
-                "P1子池对等权 t≥1": crit_c2["P1 子池对等权 t ≥ 1"],
-                "P1与P2子池对B0同为正": crit_c2["P1 子池、P2 子池对 B0 同为正"],
+                "P1五段至少四段C2好于B0": fin["P1_五段至少四段"],
+                "P1对等权_t_ge_1": fin["P1_C2对等权_t>=1"],
+                "P1与P2对B0同为正": fin["P1与P2子池对B0同为正"],
             },
-            "headline_P1_C2_vs_EW_t": p1c2["C2"]["对等权 t"],
+            "numbers": fin,
+            "committed_json_for_diff": crit_c2_json,
         },
-        "row56_P3_reference_only": {
-            "B0_vs_EW_pts": p3["B0"]["对等权全部 每年点"],
-            "B0_vs_EW_t": p3["B0"]["对等权 t"],
-            "C1_vs_EW_pts": p3["C1"]["对等权全部 每年点"],
-            "C1_vs_B0_pts": p3["C1"]["对 B0 每年点"],
-            "C1_vs_B0_t": p3["C1"]["对 B0 t"],
+        "row56_P3_reference_independent": {
+            "B0_vs_EW": ind_p3["B0"],
+            "C1_vs_EW_and_B0": ind_p3["C1"],
         },
     }
 
@@ -474,31 +434,42 @@ def main() -> int:
         and all(report["registration_order_proof"]["artifacts_missing_at_reg"].values())
     )
     rerun_ok = all(v["semantic_equal_to_head_commit"] for v in report["rerun_dev_scripts"].values())
+    p3_cmp = {
+        k: v
+        for k, v in report["independent_recalc"]["p3_vs_committed_after_calc"].items()
+        if k != "committed_for_diff_only"
+    }
     indep_ok = (
         all(report["independent_recalc"]["row45_vs_committed"].values())
-        and all(report["independent_recalc"]["p3_vs_committed"].values())
-        and all(report["independent_recalc"]["c2_vs_committed"].values())
+        and all(p3_cmp.values())
+        and all(report["independent_recalc"]["c2_vs_committed_after_calc"].values())
     )
     inputs_ok = all(v["matches_signed"] for v in report["inputs"].values())
     defs_ok = report["definition_continuity_row55"]["a_decompose_unchanged_vs_row55_main"]
 
     report["decision_inputs"] = {
-        "head_match": not report["head_drift"],
+        "subject_head_match": not report["head_drift"],
         "registration_order_ok": reg_ok,
         "inputs_ok": inputs_ok,
         "rerun_ok": rerun_ok,
         "independent_spot_ok": indep_ok,
         "row55_definitions_unchanged": defs_ok,
-        "row45_three_criteria_fail_as_claimed": not any(
-            bool(v) for v in report["criteria_audit"]["row45_preregistered_three"]["checks"].values()
+        "row45_three_criteria_fail_independent": not any(
+            bool(v) for v in report["criteria_audit"]["row45_preregistered_three_independent"]["checks"].values()
         ),
-        "c2_closed_as_claimed": crit_c2["结论"] == "C2 关闭" and crit_c2["换规则"] is False,
+        "c2_closed_independent": fin["结论_C2关闭"] and not fin["换规则"],
     }
     report["decision_inputs"] = {k: bool(v) for k, v in report["decision_inputs"].items()}
+    report["provisional_recommendation"] = (
+        "approve" if all(report["decision_inputs"].values()) else "investigate_discrepancy"
+    )
 
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
     print(json.dumps(report["decision_inputs"], ensure_ascii=False, indent=2))
-    return 0 if all(report["decision_inputs"].values()) else 1
+    ec = 0 if all(report["decision_inputs"].values()) else 1
+    report["verify_exit_code"] = ec
+    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
+    return ec
 
 
 if __name__ == "__main__":
