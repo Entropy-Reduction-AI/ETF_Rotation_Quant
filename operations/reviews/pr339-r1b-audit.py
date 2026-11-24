@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import importlib.util
 import json
 import re
 import subprocess
@@ -742,42 +743,16 @@ def _table_rows(table_md: str) -> list[list[str]]:
 
 
 def _details_corpus(blob: str) -> str:
-    parts = re.findall(r"<details>.*?</details>", blob, flags=re.S)
-    app = blob
-    return "\n".join(parts) + "\n" + re.sub(r"<!--.*?-->", "", app, flags=re.S)
+    return "\n".join(re.findall(r"<details>.*?</details>", blob, flags=re.S))
 
 
-def _anchor_line(text: str, corpus: str) -> tuple[str, str]:
-    """Return (verdict, quote_line)."""
-    corpus_lines = [ln.strip() for ln in corpus.splitlines() if ln.strip()]
-    nums = NUM_CELL.findall(text)
-    labels = [t for t in re.split(r"[\s|，、；：]+", text) if len(t) >= 2 and not NUM_CELL.fullmatch(t)]
-    hits = []
-    for ln in corpus_lines:
-        ok = True
-        for n in nums:
-            n2 = n.replace("−", "-").replace("–", "-")
-            if n2 not in ln.replace("−", "-").replace("–", "-"):
-                ok = False
-                break
-        if nums and ok:
-            hits.append(ln)
-            continue
-        if not nums and labels:
-            hit_ct = sum(1 for lb in labels[:4] if lb in ln)
-            if hit_ct >= min(2, len(labels[:4])):
-                hits.append(ln)
-    if hits:
-        return "anchored", hits[0][:500]
-    for n in nums:
-        for ln in corpus_lines:
-            if n.replace("−", "-") in ln.replace("−", "-"):
-                return "anchored", ln[:500]
-    for lb in labels:
-        for ln in corpus_lines:
-            if lb in ln:
-                return "anchored", ln[:500]
-    return "unanchored", ""
+def _load_component_manual():
+    path = ROOT / "operations/reviews/pr339-r1b-component-manual.py"
+    spec = importlib.util.spec_from_file_location("pr339_r1b_component_manual", path)
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+    return mod.manual_anchor
 
 
 def _html_section_hint(html: str, section_header: str) -> str:
@@ -795,18 +770,11 @@ def _html_section_hint(html: str, section_header: str) -> str:
 
 
 def component_tables_exhaustive() -> dict:
+    manual_anchor = _load_component_manual()
     md = git_show(f"{HEAD_REFRESH}:docs/prereg/etf-multiasset-rotation-prereg-v6.md")
     html = git_show(f"{HEAD_REFRESH}:docs/artifact/v6-prereg/index.html")
     sec_map = dict(_md_sections(md))
-    full_appendix = sec_map.get(
-        "## 附表 A：候选清单——美股 15 个、A 股 40 个，各自从参选起点算；5 个美股、7 个一级行业没有场内基金",
-        "",
-    ) + "\n" + sec_map.get(
-        "## 附表 B：设计期画像——v6 净每年 15.5%，比 BM-主多 0.4 点；挑选 +4.3 抵掉了仓位差和成本",
-        "",
-    )
     b = json.loads((OVERLAY / "results/v6-preflight/v6-appendix-b.json").read_text(encoding="utf-8"))
-    appendix_b_corpus = json.dumps(b, ensure_ascii=False)
 
     tables: list[dict] = []
     claims: list[dict] = []
@@ -814,7 +782,6 @@ def component_tables_exhaustive() -> dict:
     for header, blob in _md_sections(md):
         if not header.startswith("##"):
             continue
-        corpus = _details_corpus(blob) + "\n" + (full_appendix if "附表" in header else "")
         pos = 0
         while True:
             m = COMP_MARKER.search(blob, pos)
@@ -848,17 +815,7 @@ def component_tables_exhaustive() -> dict:
                 text = " | ".join(cells)
                 nums = [x for x in NUM_CELL.findall(text) if not re.fullmatch(r"\d+", x) or int(x) > 9 or "." in x or "点" in x or "%" in x or "万" in x]
                 nums += [x for x in re.findall(r"\b\d+\b", text) if x not in [y.rstrip("%点万") for y in nums]]
-                verdict, quote = _anchor_line(text, corpus + "\n" + appendix_b_corpus)
-                if header.startswith("## §6") and "换手" in text and "1.0" in text:
-                    quote = (
-                        corpus.split("换手和成本", 1)[-1][:280]
-                        if "换手和成本" in corpus
-                        else appendix_b_corpus[:200]
-                    )
-                    if "1.5" in text or "1.1" in text:
-                        verdict = "anchored_appendix_b_turnover"
-                if "附表" in header and verdict == "unanchored":
-                    verdict, quote = _anchor_line(text, _details_corpus(full_appendix))
+                man = manual_anchor(t_idx, kind, r_i, text)
                 item = {
                     "table_index": t_idx,
                     "table_kind": kind,
@@ -870,8 +827,10 @@ def component_tables_exhaustive() -> dict:
                     "visible_numbers": nums,
                     "visible_labels": [c for c in cells if c and not NUM_CELL.search(c)],
                     "row_text": text,
-                    "verdict": verdict,
-                    "normative_quote": quote,
+                    "verdict": man["verdict"],
+                    "normative_sources": man.get("normative_sources", []),
+                    "reviewer_notes": man.get("reviewer_notes", ""),
+                    "automated_regex_anchor_disallowed": True,
                 }
                 row_claims.append(item)
                 claims.append(item)
@@ -888,7 +847,8 @@ def component_tables_exhaustive() -> dict:
             )
             pos = m.end()
 
-    unanchored = [c for c in claims if c["verdict"] == "unanchored"]
+    review_incomplete = [c for c in claims if c["verdict"] == "review_incomplete"]
+    anchored = [c for c in claims if c["verdict"] == "anchored"]
     contradictory: list[dict] = []
 
     # §6 Owner check + numerical basis
@@ -909,10 +869,11 @@ def component_tables_exhaustive() -> dict:
         "reviewer_agrees": bool(only_footnote and guard_unchanged),
         "agree_disagree": "agree",
         "numerical_basis": {
-            "appendix_b_turnover_A": turnover.get("A 股名额"),
-            "appendix_b_turnover_US": turnover.get("美股名额"),
-            "appendix_b_cost_component_2006_15_pp": cost_decomp,
-            "prose_turnover_cost_line": "按单边 0.2% 每年约 1.5 点（附表 B 文）",
+            "appendix_b_json_cost_2006_15_pp": cost_decomp,
+            "appendix_b_json_turnover_A_名义倍": turnover.get("A 股名额"),
+            "appendix_b_json_turnover_US_名义倍": turnover.get("美股名额"),
+            "appendix_b_md_prose": "附表 B 折叠：换手 6.6/5.9 倍、单边 0.2% 每年约 1.5 点成本（文述，非本审计手算恒等式）",
+            "explicit_not_claimed": "不主张 turnover×0.2% 复利恒等于 JSON −1.48；以拆分表与文述相互印证",
             "8f7_details_cost_cell": (old_cost_row.group(0)[:120] if old_cost_row else ""),
             "653_details_cost_cell": (new_cost_row.group(0)[:160] if new_cost_row else ""),
         },
@@ -931,8 +892,10 @@ def component_tables_exhaustive() -> dict:
             v: sum(1 for c in claims if c["verdict"] == v)
             for v in sorted({c["verdict"] for c in claims})
         },
-        "unanchored_claims": unanchored,
+        "anchored_claim_count": len(anchored),
+        "review_incomplete_claims": review_incomplete,
         "contradictory_product_claims": contradictory,
+        "methodology": "manual row specs in pr339-r1b-component-manual.py; no regex self-quote",
         "sec6_owner_alignment": sec6,
         "tables": tables,
     }

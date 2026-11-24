@@ -1,4 +1,4 @@
-# v6 预注册初稿 R1b · 2026-11-24（修订 f）
+# v6 预注册初稿 R1b · 2026-11-24（修订 g）
 
 ## 技术结论
 
@@ -133,19 +133,15 @@
 
 见 **`incremental_653_review`**（12 节人工行）+ **`page_lint.at_refresh_653de22`**（0 ERROR / 1 WARN）。  
 **无非许可 §1–8 规则改写**；唯一数字相关良性措辞：§6/附表 B 披露换手重估 **~1.5 点**（警戒线仍 **2 点**）。  
-要点：`incremental_653de22` **8** 个增量 token（追加映射，103 基线保留）。**不替代**下方组件表审计。
+要点：`incremental_653de22.entries` 长度（与 `in_scope_new_tokens` 一致）见 `pr339-r1b-keypoint-numbers.json`。**不替代**组件表审计。
 
 ## 组件小表穷举 @653de22（`<!-- 组件：… -->`）
 
-权威：`pr339-r1b-audit.json` → `component_tables_exhaustive`（13 表、**60** claim 行；含 §6 `页面：参考` companion）。
+权威：`pr339-r1b-audit.json` → `component_tables_exhaustive`（13 表、60 claim；人工 `pr339-r1b-component-manual.py`，禁止 regex 自引用）。
 
-| 统计 | 值 |
-| --- | --- |
-| 未锚定 | **0** |
-| 矛盾产品主张 | **0** |
-| 锚定 | 59 + 1（§6 换手→附表 B turnover） |
+计数见 `component_tables_exhaustive.claim_verdict_counts` 与 `review_incomplete_claims`（非旧的「0 未锚定」自动化结论）。
 
-**§6 与 Owner 表述（同意/不同意）**：**同意**。653 相对 8f7ffbae 的条款增量仅为折叠内「附表 B 按设计期换手重估约 **1.5** 点（2.2 版补）」；**警戒线「每年成本超过 2 点」未改**。数值依据：附表 B JSON 换手 A **6.63** / 美 **5.93** 倍、成本拆分 2006–15 **−1.48** pp、文述单边 0.2%→**~1.5** 点；页首 companion 写 **1.0–1.5** 与脚注一致，**非**改阈值。`reviewer_agrees: true`。
+**§6 agree/disagree**：**同意** Owner（仅脚注 1.5 点、警戒线 2 点未改）。数值：**不**用手算 turnover×0.2% 恒等式；以附表 B JSON 成本 **−1.48** pp（2006–15）与 md 文述「每年约 1.5 点」对照。
 
 ---
 
@@ -176,8 +172,6 @@
 | `operations/reviews/pr339-r1b-commands.md` | 复现命令 |
 | `operations/reviews/pr339-r1b-audit.py` | 审计生成器 |
 
-### Companion NET @ `a459701`
+### Companion 净差异与 blob
 
-`git diff --stat origin/main...HEAD`：**+9045 / 6 files**。
-
-`git ls-tree HEAD` blobs：`a5cf357d…` memo · `474e21b9…` verify · `d16dfa61…` audit.json · `0d32c8e9…` keypoint · `5b845bc8…` commands · `f757ca19…` audit.py。
+不在此 memo 写入 companion tip SHA 或 `git diff --stat` 行数（随提交变动）。基线：`origin/main`；分支：`cursor/pr339-r1b-reviewer-d912`；六路径见 `pr339-r1b-verify.json`。当次全量 SHA 与 stat 见交付回复。

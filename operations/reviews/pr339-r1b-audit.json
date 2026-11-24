@@ -3487,20 +3487,93 @@
     "component_table_count": 13,
     "claim_count_total": 60,
     "claim_verdict_counts": {
-      "anchored": 59,
-      "anchored_appendix_b_turnover": 1
+      "anchored": 57,
+      "review_incomplete": 3
     },
-    "unanchored_claims": [],
+    "anchored_claim_count": 57,
+    "review_incomplete_claims": [
+      {
+        "table_index": 6,
+        "table_kind": "component",
+        "component_title": "载体｜结果怎么用",
+        "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+        "row_index": 1,
+        "cells": [
+          "不通过",
+          "如实记录并关闭、新想法另起版本并注明第几次尝试"
+        ],
+        "visible_numbers": [],
+        "visible_labels": [
+          "不通过",
+          "如实记录并关闭、新想法另起版本并注明第几次尝试"
+        ],
+        "row_text": "不通过 | 如实记录并关闭、新想法另起版本并注明第几次尝试",
+        "verdict": "review_incomplete",
+        "normative_sources": [],
+        "reviewer_notes": "653 @653de22 无折叠条款承载「不通过→关闭」；仅组件表。8f7ffbae §5.3 曾有「结果怎么用」子弹（历史，不作 653 正文锚）",
+        "automated_regex_anchor_disallowed": true
+      },
+      {
+        "table_index": 8,
+        "table_kind": "component",
+        "component_title": "路线",
+        "section_header": "## §7 前向模拟盘与影子跟踪：通过后至少 6 个月模拟盘，另外 3 种规则只记录不交易",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-7",
+        "row_index": 2,
+        "cells": [
+          "小资金上线",
+          "Owner 另批",
+          "你批准"
+        ],
+        "visible_numbers": [],
+        "visible_labels": [
+          "小资金上线",
+          "Owner 另批",
+          "你批准"
+        ],
+        "row_text": "小资金上线 | Owner 另批 | 你批准",
+        "verdict": "review_incomplete",
+        "normative_sources": [],
+        "reviewer_notes": "653 折叠条款无「小资金/另批」句；仅 §5/§7 组件表与 8f7ffbae §5.3「结果怎么用」历史句",
+        "automated_regex_anchor_disallowed": true
+      },
+      {
+        "table_index": 11,
+        "table_kind": "component",
+        "component_title": "路线",
+        "section_header": "## §9 运行纪律与冻结前待办：冻结前的 6 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
+        "row_index": 3,
+        "cells": [
+          "R1b",
+          "Reviewer",
+          "现在"
+        ],
+        "visible_numbers": [],
+        "visible_labels": [
+          "Reviewer",
+          "现在"
+        ],
+        "row_text": "R1b | Reviewer | 现在",
+        "verdict": "review_incomplete",
+        "normative_sources": [],
+        "reviewer_notes": "组件路线图「R1b|现在」无 §9.2 待办表或 9.1 有序列表等价句；流程态叙述非阈值条款",
+        "automated_regex_anchor_disallowed": true
+      }
+    ],
     "contradictory_product_claims": [],
+    "methodology": "manual row specs in pr339-r1b-component-manual.py; no regex self-quote",
     "sec6_owner_alignment": {
       "owner_statement": "653 仅 §6 条款增量：附表 B 换手重估约1.5点（2.2版补）；警戒线>2点未改",
       "reviewer_agrees": true,
       "agree_disagree": "agree",
       "numerical_basis": {
-        "appendix_b_turnover_A": 6.63,
-        "appendix_b_turnover_US": 5.93,
-        "appendix_b_cost_component_2006_15_pp": -1.48,
-        "prose_turnover_cost_line": "按单边 0.2% 每年约 1.5 点（附表 B 文）",
+        "appendix_b_json_cost_2006_15_pp": -1.48,
+        "appendix_b_json_turnover_A_名义倍": 6.63,
+        "appendix_b_json_turnover_US_名义倍": 5.93,
+        "appendix_b_md_prose": "附表 B 折叠：换手 6.6/5.9 倍、单边 0.2% 每年约 1.5 点成本（文述，非本审计手算恒等式）",
+        "explicit_not_claimed": "不主张 turnover×0.2% 复利恒等于 JSON −1.48；以拆分表与文述相互印证",
         "8f7_details_cost_cell": "换手和成本 | 两个名额每月换人 | **每年约 1.0–1.1 点** | 每年成本超过 2 点 |",
         "653_details_cost_cell": "换手和成本 | 两个名额每月换人 | **每年约 1.0–1.1 点**（附表 B 按设计期换手重估约 1.5 点，2.2 版补） | 每年成本超过 2 点 |"
       },
@@ -3537,7 +3610,22 @@
             ],
             "row_text": "看过数据后定 | 3 | 选几只、美股比例、确认票数",
             "verdict": "anchored",
-            "normative_quote": "| A 股（40%） | 沪深300 | 沪深300、中证500、中证1000、创业板指、科创50、中证红利、10 个中证全指一级行业、已接入的 A 股主题指数（清单见附表 A） | D40-1；D38 第 39、48 行 |"
+            "normative_sources": [
+              {
+                "location": "§1 details 1.4",
+                "quote": "| 每个名额选几只 | 3 |"
+              },
+              {
+                "location": "§1 details 1.4",
+                "quote": "| 美股比例 | 60% |"
+              },
+              {
+                "location": "§1 details 1.4",
+                "quote": "| 确认紧张的票数 | ≥ 2 |"
+              }
+            ],
+            "reviewer_notes": "3 = 计 1/2/3 rows",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 1,
@@ -3563,7 +3651,18 @@
             ],
             "row_text": "文献默认值 | 2 | 回看期 12−1、均线 10 个月",
             "verdict": "anchored",
-            "normative_quote": "- **准入**：每个候选从官方发布日（或基金上市日）起参选，满 12 个月才有分数（D38 第 39 行）。10 个中证全指一级行业按 D38 第 48 行允许用 2011-08-02 之前的回填点位（Owner 2026-11-24 确认：机械分类的行业回填偏差小）；主题指数一律从发布日起；例外见附表 A。"
+            "normative_sources": [
+              {
+                "location": "§1 details 1.4",
+                "quote": "| 回看期 | 12−1 | Jegadeesh"
+              },
+              {
+                "location": "§1 details 1.4",
+                "quote": "| 均线 | 10 个月 | Faber"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 1,
@@ -3586,7 +3685,26 @@
             ],
             "row_text": "跑前写死的约定 | 4 | 门槛、平滑等",
             "verdict": "anchored",
-            "normative_quote": "<summary>1.1 候选池：美股 15 个、A 股约 40 个，各自从发布日起参选</summary>"
+            "normative_sources": [
+              {
+                "location": "§1 details 1.4",
+                "quote": "| 宽度、TRIN 门槛 | 1/3、2/3 分位 |"
+              },
+              {
+                "location": "§1 details 1.4",
+                "quote": "| TRIN 平滑 | 10 日均值 |"
+              },
+              {
+                "location": "§1 details 1.4",
+                "quote": "| 最少历史 | 分位 24 个月"
+              },
+              {
+                "location": "§1 details 1.4",
+                "quote": "| 连续性版 | 前一半、200 天 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           }
         ]
       },
@@ -3617,7 +3735,18 @@
             ],
             "row_text": "同指数选溢价偏离最小的 | 只用场内基金，信号日的下一个交易日收盘价成交 | ",
             "verdict": "anchored",
-            "normative_quote": "1. **成交**：信号日的下一个交易日收盘价成交，**只用场内基金**。"
+            "normative_sources": [
+              {
+                "location": "§2 details 执行四步",
+                "quote": "成交**：信号日的下一个交易日收盘价成交，**只用场内基金"
+              },
+              {
+                "location": "§2 details 规则表",
+                "quote": "| 成交 | 信号日的下一个交易日收盘价成交 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 2,
@@ -3640,7 +3769,18 @@
             ],
             "row_text": "换同指数另一只 | 偏离最小的那只 | 溢价比常态高 5 点以上",
             "verdict": "anchored",
-            "normative_quote": "3. **溢价冲高**：**高 5 点以上换一只**；都不行时给下一名候选，再不行给母指数。"
+            "normative_sources": [
+              {
+                "location": "§2 details 执行四步",
+                "quote": "**选溢价偏离最小的**"
+              },
+              {
+                "location": "§2 details 规则表",
+                "quote": "高 5 个点以上不买，换同指数偏离最小的一只"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 2,
@@ -3665,7 +3805,18 @@
             ],
             "row_text": "给下一名候选 | 按 12−1 排名递补 | 都不行",
             "verdict": "anchored",
-            "normative_quote": "| 给下一名候选 | 按 12−1 排名递补 | 都不行 |"
+            "normative_sources": [
+              {
+                "location": "§2 details 规则表",
+                "quote": "都不行时给下一名候选，再不行给母指数"
+              },
+              {
+                "location": "§2 details 执行四步",
+                "quote": "都不行时给下一名候选，再不行给母指数"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 2,
@@ -3689,7 +3840,22 @@
             ],
             "row_text": "给母指数 | 标普500 或沪深300 | 再不行",
             "verdict": "anchored",
-            "normative_quote": "| 给母指数 | 标普500 或沪深300 | 再不行 |"
+            "normative_sources": [
+              {
+                "location": "§1 details 1.1",
+                "quote": "| 美股（60%） | 标普500（SPX） |"
+              },
+              {
+                "location": "§1 details 1.1",
+                "quote": "| A 股（40%） | 沪深300 |"
+              },
+              {
+                "location": "§2 details 规则表",
+                "quote": "再不行给母指数"
+              }
+            ],
+            "reviewer_notes": "SPX/沪深300 来自名额母指数列；退路句在 §2",
+            "automated_regex_anchor_disallowed": true
           }
         ]
       },
@@ -3726,7 +3892,14 @@
             ],
             "row_text": "会让检验偏向 v6 | 美股强已经知道 → 用同仓位基准判，仓位差单独报告 | 2 | 美国 49 行业 2016–2026 的前 3 超额",
             "verdict": "anchored",
-            "normative_quote": "| 2 | **美国 49 行业 2016–2026**：第 20、24、25、42 行看过前 3 在 2016–2026 的超额（约 +4.8 到 +5.2 点/年）和四种市场状态 | 美股挑选的检验段不干净，只作一致性检查 | 只作一致性检查 |"
+            "normative_sources": [
+              {
+                "location": "§4 details 七条",
+                "quote": "| 2 | **美国 49 行业 2016–2026**"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 3,
@@ -3751,7 +3924,14 @@
             ],
             "row_text": "会让检验偏向 v6 | 美股强已经知道 → 用同仓位基准判，仓位差单独报告 | 5 | 常识性的市场历史：2016–2025 美股大幅跑赢 A 股",
             "verdict": "anchored",
-            "normative_quote": "| 5 | **常识性的市场历史**：2016–2025 年美股大幅跑赢 A 股；A 股有 2018 年熊市、2019–2021 年结构牛（新能源、白酒、医药）、2021 年后的教育与互联网监管冲击、2024 年 2 月微盘股踩踏与 9 月政策反弹 | **美股 60% 是在知道这些的情况下定的**，检验段对 v6 的仓位天然有利；本文用同仓位基准（§5.1）判，仓位差单独报告，不让它替挑选和防守记功 | 用同仓位基准判 |"
+            "normative_sources": [
+              {
+                "location": "§4 details 七条",
+                "quote": "| 5 | **常识性的市场历史**：2016–2025 年美股大幅跑赢 A 股"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 3,
@@ -3775,7 +3955,14 @@
             ],
             "row_text": "只当参照 | 都不拿来判 v6 过不过 | 1 | 项目池 ≤ 2015 的全部预演结果",
             "verdict": "anchored",
-            "normative_quote": "| 7 | **冻结前新增的三项检验**（2026-11-23，D38 第 45、56 行，都只用 ≤ 2015）：沪深300 十个行业——上月涨幅新段每年 −3.6、全段 t 0.08，12−1 前 3 对沪深300 −3.3；隔夜版（全指一级开盘价）对等权 t 0.57；申万一级（**可能回填，只作参考**）——12−1 前 3 对等权每年 −5.9（t −1.56），在随机选 3 个里排第 5.6 百分位；连续性版比 12−1 每年 +6.5（t 1.73），但对等权只 +0.6 | 上月涨幅不进 v6，隔夜版关闭；三个新池子里 12−1 都没挑出东西，按 40% 名额折算到组合，全指一级（对等权 +1.0）约 +0.4，在预测表 A 股挑选的范围（−0.5 到 +0.5）内，申万（−5.9）约 −2.4，低于下限（只作参考）；加重红队第 1 条；连续性版比 12−1 好的方向在申万上重现 | 12−1 没挑出东西，规则不改 |"
+            "normative_sources": [
+              {
+                "location": "§4 details 七条",
+                "quote": "| 1 | **项目池 ≤ 2015 的全部预演结果**"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 3,
@@ -3799,7 +3986,14 @@
             ],
             "row_text": "只当参照 | 都不拿来判 v6 过不过 | 3 | QDII 溢价 2016 年以后的分布",
             "verdict": "anchored",
-            "normative_quote": "| 2 | **美国 49 行业 2016–2026**：第 20、24、25、42 行看过前 3 在 2016–2026 的超额（约 +4.8 到 +5.2 点/年）和四种市场状态 | 美股挑选的检验段不干净，只作一致性检查 | 只作一致性检查 |"
+            "normative_sources": [
+              {
+                "location": "§4 details 七条",
+                "quote": "| 3 | **QDII 溢价 2016 年以后的分布**"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 3,
@@ -3824,7 +4018,14 @@
             ],
             "row_text": "只当参照 | 都不拿来判 v6 过不过 | 4 | v2、v3–v5.1 的一次性检验结果",
             "verdict": "anchored",
-            "normative_quote": "| 4 | **v2、v3–v5.1 在 2016-01 → 2026-09 的一次性检验结果**：A 股趋势择时、E2 新口径、A1、A2 等，以及当时看到的基准构成（六成收益来自美股） | 知道检验段的大致样貌 | 知道大致样貌 |"
+            "normative_sources": [
+              {
+                "location": "§4 details 七条",
+                "quote": "| 4 | **v2、v3–v5.1 在 2016-01 → 2026-09 的一次性检验结果**"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 3,
@@ -3849,7 +4050,14 @@
             ],
             "row_text": "反过来锁住规则 | 不再加新变体，规则不改 | 6 | A 股选人已试约 12 种",
             "verdict": "anchored",
-            "normative_quote": "| 6 | **A 股选人的试验次数约 12 种**：12−1、上月涨幅、6−1、风险调整、拥挤度刹车、选 5 个、快速出场、结构市才挑选、速度随状态、挑选把握 q、连续性版、隔夜版 | 按第 55 行的停止规则，v6 不再加新变体 | 不再加新变体 |"
+            "normative_sources": [
+              {
+                "location": "§4 details 七条",
+                "quote": "| 6 | **A 股选人的试验次数约 12 种**"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 3,
@@ -3876,7 +4084,14 @@
             ],
             "row_text": "反过来锁住规则 | 不再加新变体，规则不改 | 7 | 冻结前新增三项检验，12−1 都没挑出东西",
             "verdict": "anchored",
-            "normative_quote": "| 1 | **项目池 ≤ 2015 的全部预演结果**：D38 运行附表第 10–55 行，含设计期整套（现规则：美股旧 14 个 + REIT、去重，年化 13.3%、最低剩 72.3 万，第 47 行）、A 股 12−1 与 11 种替代选法、连续性版与隔夜版（第 55 行） | 设计期只作一致性检查 | 只作一致性检查 |"
+            "normative_sources": [
+              {
+                "location": "§4 details 七条",
+                "quote": "| 7 | **冻结前新增的三项检验**"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           }
         ]
       },
@@ -3911,7 +4126,18 @@
             ],
             "row_text": "① 底线 | 最大回撤 | ≤ 40% | 80%",
             "verdict": "anchored",
-            "normative_quote": "| ① 底线 | 最大回撤 | ≤ 40% | 80% |"
+            "normative_sources": [
+              {
+                "location": "§5 details 5.3",
+                "quote": "| ① 底线 | 回撤 ≤ 40% |"
+              },
+              {
+                "location": "§3 details 3.2",
+                "quote": "第 ① 条底线大概率过（约八成）"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 4,
@@ -3936,7 +4162,18 @@
             ],
             "row_text": "② 保费 | 防守的平时成本 | ≤ 4 点 | 85%",
             "verdict": "anchored",
-            "normative_quote": "| ② 保费 | 防守的平时成本 | ≤ 4 点 | 85% |"
+            "normative_sources": [
+              {
+                "location": "§5 details 5.3",
+                "quote": "| ② 保费 | ≤ 4 点 |"
+              },
+              {
+                "location": "§3 details 3.2",
+                "quote": "第 ② 条保费（只量防守成本）约八成五"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 4,
@@ -3960,7 +4197,18 @@
             ],
             "row_text": "③ 增强基准 | 年化 ÷ 回撤 | 高于 K2A | 60%",
             "verdict": "anchored",
-            "normative_quote": "| ③ 增强基准 | 年化 ÷ 回撤 | 高于 K2A | 60% |"
+            "normative_sources": [
+              {
+                "location": "§5 details 5.3",
+                "quote": "| ③ 不输增强基准 | 高于 K2A |"
+              },
+              {
+                "location": "§3 details 3.2",
+                "quote": "第 ③ 条对增强基准约六成"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 4,
@@ -3985,7 +4233,18 @@
             ],
             "row_text": "④ 同仓位基准 | 年化之差 | ≥ 0 | 50%",
             "verdict": "anchored",
-            "normative_quote": "| **增强基准** | K2A（D39，美股 50%） | 判据 ③ |"
+            "normative_sources": [
+              {
+                "location": "§5 details 5.3",
+                "quote": "| ④ 对同仓位基准 | ≥ 0 |"
+              },
+              {
+                "location": "§3 details 3.2",
+                "quote": "第 ④ 条对同仓位基准不低于 0 约五成"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 4,
@@ -4010,7 +4269,18 @@
             ],
             "row_text": "合计 | 四条全部满足 | 通过 | 30%",
             "verdict": "anchored",
-            "normative_quote": "| **BM-同仓位** | 40% 沪深300 全收益 + 30% 纳指100 + 30% 标普500，同口径 | 判据 ④；v6 的仓位差 = BM-同仓位 − BM-主，挑选、防守、成本的合计 = v6 − BM-同仓位 |"
+            "normative_sources": [
+              {
+                "location": "§3 details 3.2",
+                "quote": "合起来全部通过的机会约三成"
+              },
+              {
+                "location": "§5 details 5.3",
+                "quote": "四条都要过，合起来约三成"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           }
         ]
       },
@@ -4048,7 +4318,14 @@
             ],
             "row_text": "BM-主 | 沪深300 70｜纳指100 15｜标普500 15 | 并列列出，不判过不过",
             "verdict": "anchored",
-            "normative_quote": "| **BM-主** | 70% 沪深300 全收益 + 15% 纳指100 全收益 + 15% 标普500 全收益，人民币，每月第一个交易日再平衡 | AGENTS.md 规定的并列基准，逐年列出 |"
+            "normative_sources": [
+              {
+                "location": "§5 details 5.1",
+                "quote": "**BM-主** | 70% 沪深300 全收益 + 15% 纳指100"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 5,
@@ -4076,7 +4353,14 @@
             ],
             "row_text": "BM-同仓位 | 沪深300 40｜纳指100 30｜标普500 30 | 判据 ④；拆出美股 60% 的仓位差",
             "verdict": "anchored",
-            "normative_quote": "| BM-同仓位 | 沪深300 40｜纳指100 30｜标普500 30 | 判据 ④；拆出美股 60% 的仓位差 |"
+            "normative_sources": [
+              {
+                "location": "§5 details 5.1",
+                "quote": "**BM-同仓位** | 40% 沪深300 全收益 + 30% 纳指100 + 30% 标普500"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 5,
@@ -4099,7 +4383,14 @@
             "visible_labels": [],
             "row_text": "增强基准 K2A | A 股 50｜美股 50 | 判据 ③（D39，美股 50%）",
             "verdict": "anchored",
-            "normative_quote": "| **增强基准** | K2A（D39，美股 50%） | 判据 ③ |"
+            "normative_sources": [
+              {
+                "location": "§5 details 5.1",
+                "quote": "**增强基准** | K2A（D39，美股 50%）"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           }
         ]
       },
@@ -4131,7 +4422,18 @@
             ],
             "row_text": "通过 | 进入 6 个月前向模拟盘（D27）、小资金起步需 Owner 另批",
             "verdict": "anchored",
-            "normative_quote": "| 通过 | 进入 6 个月前向模拟盘（D27）、小资金起步需 Owner 另批 |"
+            "normative_sources": [
+              {
+                "location": "§7 details 四步",
+                "quote": "2. **模拟盘**：按冻结规则每月出持仓，**至少 6 个月**"
+              },
+              {
+                "location": "§7 details 条款表",
+                "quote": "一次性检验通过后，按冻结规则每月出持仓，至少 6 个月（D27）"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 6,
@@ -4150,8 +4452,10 @@
               "如实记录并关闭、新想法另起版本并注明第几次尝试"
             ],
             "row_text": "不通过 | 如实记录并关闭、新想法另起版本并注明第几次尝试",
-            "verdict": "anchored",
-            "normative_quote": "| 不通过 | 如实记录并关闭、新想法另起版本并注明第几次尝试 |"
+            "verdict": "review_incomplete",
+            "normative_sources": [],
+            "reviewer_notes": "653 @653de22 无折叠条款承载「不通过→关闭」；仅组件表。8f7ffbae §5.3 曾有「结果怎么用」子弹（历史，不作 653 正文锚）",
+            "automated_regex_anchor_disallowed": true
           }
         ]
       },
@@ -4184,7 +4488,14 @@
             ],
             "row_text": "结构 | 1 | A 股只占 40%",
             "verdict": "anchored",
-            "normative_quote": "| A 股大牛市 | 基准 70% 在 A 股，我们只有 40% | **2006–2010 每年少约 9 点**（设计期） | 单年落后 BM-主超过 20 点 |"
+            "normative_sources": [
+              {
+                "location": "§6 details 疼痛表",
+                "quote": "| A 股大牛市 | 基准 70% 在 A 股，我们只有 40% |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 7,
@@ -4207,7 +4518,18 @@
             ],
             "row_text": "防守 | 2 | V 型、突发急跌",
             "verdict": "anchored",
-            "normative_quote": "| A 股大牛市 | 基准 70% 在 A 股，我们只有 40% | **2006–2010 每年少约 9 点**（设计期） | 单年落后 BM-主超过 20 点 |"
+            "normative_sources": [
+              {
+                "location": "§6 details",
+                "quote": "| V 型急跌急涨 |"
+              },
+              {
+                "location": "§6 details",
+                "quote": "| 突发急跌 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 7,
@@ -4230,7 +4552,22 @@
             ],
             "row_text": "挑选 | 3 | 无动量年份、分阶段、挑选偏差",
             "verdict": "anchored",
-            "normative_quote": "| V 型急跌急涨 | 紧张时减了仓，反弹时回来得晚 | **合成 V 型每年落后约 15 点**（短期年化） | 见底后 3 个月股票仓位仍低于一半 |"
+            "normative_sources": [
+              {
+                "location": "§6 details",
+                "quote": "| 挑选没有动量的年份 |"
+              },
+              {
+                "location": "§6 details",
+                "quote": "| A 股挑选分阶段 |"
+              },
+              {
+                "location": "§6 details",
+                "quote": "| 试了很多种防守和选法 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 7,
@@ -4253,7 +4590,18 @@
             ],
             "row_text": "执行 | 2 | 稀缺 QDII、换手成本",
             "verdict": "anchored",
-            "normative_quote": "| A 股大牛市 | 基准 70% 在 A 股，我们只有 40% | **2006–2010 每年少约 9 点**（设计期） | 单年落后 BM-主超过 20 点 |"
+            "normative_sources": [
+              {
+                "location": "§6 details",
+                "quote": "| 稀缺 QDII 溢价消失 |"
+              },
+              {
+                "location": "§6 details",
+                "quote": "| 换手和成本 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 7,
@@ -4278,7 +4626,14 @@
             ],
             "row_text": "A 股大牛市 | 2006–2010 每年少约 9 点 | 单年落后 BM-主超过 20 点",
             "verdict": "anchored",
-            "normative_quote": "| A 股大牛市 | 基准 70% 在 A 股，我们只有 40% | **2006–2010 每年少约 9 点**（设计期） | 单年落后 BM-主超过 20 点 |"
+            "normative_sources": [
+              {
+                "location": "§6 details 八种情形原文",
+                "quote": "| A 股大牛市 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 7,
@@ -4301,7 +4656,14 @@
             ],
             "row_text": "V 型急跌急涨 | 合成 V 型每年落后约 15 点 | 见底后 3 个月股票仓位仍低于一半",
             "verdict": "anchored",
-            "normative_quote": "| V 型急跌急涨 | 紧张时减了仓，反弹时回来得晚 | **合成 V 型每年落后约 15 点**（短期年化） | 见底后 3 个月股票仓位仍低于一半 |"
+            "normative_sources": [
+              {
+                "location": "§6 details 八种情形原文",
+                "quote": "| V 型急跌急涨 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 7,
@@ -4326,7 +4688,14 @@
             ],
             "row_text": "突发急跌 | 较差的十分之一约剩 58.8 万 | 低于 55 万",
             "verdict": "anchored",
-            "normative_quote": "| 突发急跌 | 每月看一次来不及 | **较差的十分之一约剩 58.8 万** | 低于 55 万 |"
+            "normative_sources": [
+              {
+                "location": "§6 details 八种情形原文",
+                "quote": "| 突发急跌 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 7,
@@ -4351,7 +4720,14 @@
             ],
             "row_text": "挑选没有动量的年份 | 每年少约 1.6 点 | 连续 3 年挑选部分为负",
             "verdict": "anchored",
-            "normative_quote": "| 挑选没有动量的年份 | 前 3 只是噪声，多付换手 | **每年少约 1.6 点** | 连续 3 年挑选部分（对同结构等权）为负 |"
+            "normative_sources": [
+              {
+                "location": "§6 details 八种情形原文",
+                "quote": "| 挑选没有动量的年份 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 7,
@@ -4376,7 +4752,14 @@
             ],
             "row_text": "A 股挑选分阶段 | 两段各约 ±16 万（40 万本金） | 单年挑选部分低于 −25 点",
             "verdict": "anchored",
-            "normative_quote": "| A 股挑选分阶段 | 结构市里 12−1 有效，轮动和崩盘时反噬 | **两段各约 ±16 万**：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层） | 单年 A 股挑选部分低于 −25 点 |"
+            "normative_sources": [
+              {
+                "location": "§6 details 八种情形原文",
+                "quote": "| A 股挑选分阶段 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 7,
@@ -4401,7 +4784,14 @@
             ],
             "row_text": "稀缺 QDII 溢价消失 | 一次性约 1.8 万 | 单次损失超过组合的 3%",
             "verdict": "anchored",
-            "normative_quote": "| 稀缺 QDII 溢价消失 | 额度放开时一次性损失 | **约 1.8 万**（常态溢价约 9%、单只 20 万，D40-14 不另设上限） | 单次损失超过组合的 3% |"
+            "normative_sources": [
+              {
+                "location": "§6 details 八种情形原文",
+                "quote": "| 稀缺 QDII 溢价消失 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 7,
@@ -4423,7 +4813,14 @@
             ],
             "row_text": "试了很多种防守和选法 | 已按打折处理 | 检验段明显低于预测下限",
             "verdict": "anchored",
-            "normative_quote": "| 试了很多种防守和选法 | 设计期挑出来的最好结果有挑选偏差 | **已按打折处理** | 检验段明显低于预测下限，先查是否偏差所致 |"
+            "normative_sources": [
+              {
+                "location": "§6 details 八种情形原文",
+                "quote": "| 试了很多种防守和选法 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 7,
@@ -4450,8 +4847,23 @@
               "换手和成本"
             ],
             "row_text": "换手和成本 | 每年约 1.0–1.5 点 | 每年成本超过 2 点",
-            "verdict": "anchored_appendix_b_turnover",
-            "normative_quote": " | 两个名额每月换人 | **每年约 1.0–1.1 点**（附表 B 按设计期换手重估约 1.5 点，2.2 版补） | 每年成本超过 2 点 |\n\n</details>\n## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受\n\n\n\n> **8 种情形各有一条警戒线：落在“事先认下的代价”里是正常代价；越过“超出就要查”的线，说明策略性格变了，先查原因（冻结后不改）。**\n\n\n\n| 类别 | 个数 | 含义 |\n| --- | --- | --- |\n| 结构 | 1 | A 股只占 40% |\n| 防守 | 2 | "
+            "verdict": "anchored",
+            "normative_sources": [
+              {
+                "location": "§6 details 八种情形原文",
+                "quote": "| 换手和成本 |"
+              },
+              {
+                "location": "附表 B 文",
+                "quote": "A 股名额每年 6.6 倍，美股名额 5.9 倍；按单边 0.2% 每年约 1.5 点成本"
+              },
+              {
+                "location": "results/v6-preflight/v6-appendix-b.json",
+                "quote": "收益拆分.成本.2006–15 = -1.48"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           }
         ]
       },
@@ -4483,7 +4895,14 @@
             ],
             "row_text": "一次性检验通过 | Owner 批准跑 | 之后",
             "verdict": "anchored",
-            "normative_quote": "| 一次性检验通过 | Owner 批准跑 | 之后 |"
+            "normative_sources": [
+              {
+                "location": "§7 details 条款表",
+                "quote": "| **前向模拟盘** | 一次性检验通过后"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 8,
@@ -4506,7 +4925,14 @@
             ],
             "row_text": "模拟盘至少 6 个月 | 每月对账预测表和疼痛表 | 之后",
             "verdict": "anchored",
-            "normative_quote": "2. **模拟盘**：按冻结规则每月出持仓，**至少 6 个月**；每月对账预测表各项和疼痛表。"
+            "normative_sources": [
+              {
+                "location": "§7 details 四步",
+                "quote": "2. **模拟盘**：…**至少 6 个月**；每月对账预测表各项和疼痛表"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 8,
@@ -4527,8 +4953,10 @@
               "你批准"
             ],
             "row_text": "小资金上线 | Owner 另批 | 你批准",
-            "verdict": "anchored",
-            "normative_quote": "| 小资金上线 | Owner 另批 | 你批准 |"
+            "verdict": "review_incomplete",
+            "normative_sources": [],
+            "reviewer_notes": "653 折叠条款无「小资金/另批」句；仅 §5/§7 组件表与 8f7ffbae §5.3「结果怎么用」历史句",
+            "automated_regex_anchor_disallowed": true
           }
         ]
       },
@@ -4561,7 +4989,14 @@
             ],
             "row_text": "影子（只记录） | 结构市才挑选、12−1 与连续性版各一半、连续性版",
             "verdict": "anchored",
-            "normative_quote": "3. **影子**：结构市才挑选、12−1 与连续性版各拿一半、连续性版，**只记录，不交易**。"
+            "normative_sources": [
+              {
+                "location": "§7 details 条款表",
+                "quote": "| **影子：结构市才挑选**"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 9,
@@ -4584,7 +5019,14 @@
             ],
             "row_text": "暂停线 | 跌破 60 万、6 个月对同仓位基准累计落后 6 点",
             "verdict": "anchored",
-            "normative_quote": "4. **暂停**：跌破 60 万，或连续 6 个月对同仓位基准累计落后超过 6 点，**暂停并报告**。"
+            "normative_sources": [
+              {
+                "location": "§7 details 四步",
+                "quote": "4. **暂停**：跌破 60 万，或连续 6 个月对同仓位基准累计落后超过 6 点"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           }
         ]
       },
@@ -4617,7 +5059,14 @@
             ],
             "row_text": "必须声明，并改变候选名单 | 1 | 主题指数回填",
             "verdict": "anchored",
-            "normative_quote": "| **主题指数回填** | 中证行业价格指数 2011-08 发布，之前是回溯 | 主题指数从发布日起参选；10 个一级行业按 D38 第 48 行允许回填（Owner 2026-11-24 确认） |"
+            "normative_sources": [
+              {
+                "location": "§8 details 陷阱表",
+                "quote": "| **主题指数回填** |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 10,
@@ -4640,7 +5089,22 @@
             ],
             "row_text": "必须声明 | 3 | 指数与 ETF、qfq、份额折算",
             "verdict": "anchored",
-            "normative_quote": "| **主题指数回填** | 中证行业价格指数 2011-08 发布，之前是回溯 | 主题指数从发布日起参选；10 个一级行业按 D38 第 48 行允许回填（Owner 2026-11-24 确认） |"
+            "normative_sources": [
+              {
+                "location": "§8 details",
+                "quote": "| **指数与 ETF 的差异** |"
+              },
+              {
+                "location": "§8 details",
+                "quote": "| **腾讯减法 qfq** |"
+              },
+              {
+                "location": "§8 details",
+                "quote": "| **份额折算假跳空** |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 10,
@@ -4663,7 +5127,18 @@
             ],
             "row_text": "另加声明 | 2 | 美股代理、申万回溯",
             "verdict": "anchored",
-            "normative_quote": "| **主题指数回填** | 中证行业价格指数 2011-08 发布，之前是回溯 | 主题指数从发布日起参选；10 个一级行业按 D38 第 48 行允许回填（Owner 2026-11-24 确认） |"
+            "normative_sources": [
+              {
+                "location": "§8 details",
+                "quote": "| **美股代理与 QDII** |"
+              },
+              {
+                "location": "§8 details",
+                "quote": "| **申万一级的历史点位** |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           }
         ]
       },
@@ -4695,7 +5170,14 @@
             ],
             "row_text": "看初稿 | Owner | 已完成",
             "verdict": "anchored",
-            "normative_quote": "1. **Owner 看初稿**：已确认 §9.2 第 6 条三项（D40-14）。"
+            "normative_sources": [
+              {
+                "location": "§9 details 9.1",
+                "quote": "1. **Owner 看初稿**：已确认 §9.2 第 6 条三项"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 11,
@@ -4716,7 +5198,14 @@
             ],
             "row_text": "R1 | Reviewer | 已完成",
             "verdict": "anchored",
-            "normative_quote": "<summary>9.1 顺序：看初稿 → R1 → 冻结 → 实现与复算 → 一致性检查 → 一次性检验 → 模拟盘</summary>"
+            "normative_sources": [
+              {
+                "location": "§9 details 9.1",
+                "quote": "2. **Reviewer R1**"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 11,
@@ -4739,7 +5228,22 @@
             ],
             "row_text": "冻结前 6 件待办 | Orchestrator、Grok | 已完成",
             "verdict": "anchored",
-            "normative_quote": "1. **Owner 看初稿**：已确认 §9.2 第 6 条三项（D40-14）。"
+            "normative_sources": [
+              {
+                "location": "§9 details 9.2",
+                "quote": "冻结前待办：6 件全部完成"
+              },
+              {
+                "location": "§9 details 9.2",
+                "quote": "| 1 | 行业标签补齐检验段全部 A 股候选 | … | 已完成 |"
+              },
+              {
+                "location": "§9 details 9.2",
+                "quote": "| 6 | Owner 确认：单只上限、判据 ② 的算法、判据 ③ ④ 的门槛 | … | 已完成 |"
+              }
+            ],
+            "reviewer_notes": "组件「冻结前6件待办」对 §9.2 六行完成态",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 11,
@@ -4759,8 +5263,10 @@
               "现在"
             ],
             "row_text": "R1b | Reviewer | 现在",
-            "verdict": "anchored",
-            "normative_quote": "<summary>9.1 顺序：看初稿 → R1 → 冻结 → 实现与复算 → 一致性检查 → 一次性检验 → 模拟盘</summary>"
+            "verdict": "review_incomplete",
+            "normative_sources": [],
+            "reviewer_notes": "组件路线图「R1b|现在」无 §9.2 待办表或 9.1 有序列表等价句；流程态叙述非阈值条款",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 11,
@@ -4782,7 +5288,14 @@
             ],
             "row_text": "冻结 | Owner | 你批准",
             "verdict": "anchored",
-            "normative_quote": "3. **冻结**：`milestone/v6-prereg-freeze`，由 Cloud Agent 按 Owner 指令打。"
+            "normative_sources": [
+              {
+                "location": "§9 details 9.1",
+                "quote": "3. **冻结**：`milestone/v6-prereg-freeze`"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 11,
@@ -4804,7 +5317,14 @@
             ],
             "row_text": "实现与复算 | Dev、Reviewer | 之后",
             "verdict": "anchored",
-            "normative_quote": "4. **实现与复算**：Dev 在 `src/v6/`、`config/v6/` 实现；Reviewer 独立实现复算设计期整套和两个月份示例（逐位一致），并复现 §3.2 合成行情。"
+            "normative_sources": [
+              {
+                "location": "§9 details 9.1",
+                "quote": "4. **实现与复算**：Dev 在 `src/v6/`"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 11,
@@ -4826,7 +5346,14 @@
             ],
             "row_text": "一次性检验 | Owner | 你批准",
             "verdict": "anchored",
-            "normative_quote": "6. **一次性检验**：Owner 批准后跑一次，出报告并对账。"
+            "normative_sources": [
+              {
+                "location": "§9 details 9.1",
+                "quote": "6. **一次性检验**：Owner 批准后跑一次"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 11,
@@ -4848,7 +5375,14 @@
             ],
             "row_text": "模拟盘 | 全体 | 之后",
             "verdict": "anchored",
-            "normative_quote": "| 模拟盘 | 全体 | 之后 |"
+            "normative_sources": [
+              {
+                "location": "§9 details 9.1",
+                "quote": "7. **前向模拟盘**：见 §7"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           }
         ]
       },
@@ -4878,7 +5412,22 @@
             ],
             "row_text": "同一指数 | SPX、NDX、DJIA、SOX、NBI、XLY、DWRTF",
             "verdict": "anchored",
-            "normative_quote": "| SPX（母） | — | 价格，美元按人民币中间价换算 | 2000-01-03 → 2026-09-30 | 513500（2014-01-15）；161125（2016-12-14）；159612（2022-05-20） | 同一指数 |"
+            "normative_sources": [
+              {
+                "location": "附表 A 美股明细",
+                "quote": "| SPX（母） | … | 同一指数 |"
+              },
+              {
+                "location": "附表 A 美股明细",
+                "quote": "| NDX | … | 同一指数 |"
+              },
+              {
+                "location": "附表 A 美股明细",
+                "quote": "| DJIA | … | 同一指数 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 12,
@@ -4898,7 +5447,22 @@
             ],
             "row_text": "相近指数 | XLK、XLV、XLE",
             "verdict": "anchored",
-            "normative_quote": "| XLK | 信息技术 | 同上 | 1998-12-22 → 2026-09-30 | 161128（2016-12-27） | 相近指数 |"
+            "normative_sources": [
+              {
+                "location": "附表 A 美股明细",
+                "quote": "| XLK | … | 相近指数 |"
+              },
+              {
+                "location": "附表 A 美股明细",
+                "quote": "| XLV | … | 相近指数 |"
+              },
+              {
+                "location": "附表 A 美股明细",
+                "quote": "| XLE | … | 相近指数 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 12,
@@ -4918,7 +5482,30 @@
             ],
             "row_text": "无场内基金 | XLP、XLF、XLI、XLB、XLU",
             "verdict": "anchored",
-            "normative_quote": "| XLP | 必需消费 | 同上 | 1998-12-22 → 2026-09-30 | — | 无场内基金 |"
+            "normative_sources": [
+              {
+                "location": "附表 A 美股明细",
+                "quote": "| XLP | … | 无场内基金 |"
+              },
+              {
+                "location": "附表 A 美股明细",
+                "quote": "| XLF | … | 无场内基金 |"
+              },
+              {
+                "location": "附表 A 美股明细",
+                "quote": "| XLI | … | 无场内基金 |"
+              },
+              {
+                "location": "附表 A 美股明细",
+                "quote": "| XLB | … | 无场内基金 |"
+              },
+              {
+                "location": "附表 A 美股明细",
+                "quote": "| XLU | … | 无场内基金 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           }
         ]
       },
@@ -4952,7 +5539,14 @@
             ],
             "row_text": "宽基 | 沪深300、中证500、中证1000、创业板指、科创50",
             "verdict": "anchored",
-            "normative_quote": "| 宽基 | 沪深300（母，2005-04-08）、中证500（2007-01-15）、中证1000（2014-10-17）、创业板指（2010-06-01）、科创50（2020-07-23） |"
+            "normative_sources": [
+              {
+                "location": "附表 A A股按组",
+                "quote": "| 宽基 | 沪深300（母，2005-04-08）、中证500"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 13,
@@ -4972,7 +5566,14 @@
             ],
             "row_text": "红利 | 中证红利、上证红利、红利低波动",
             "verdict": "anchored",
-            "normative_quote": "| 红利 | 中证红利（2008-05-26）、上证红利（2005-01-04）、中证红利低波动（2013-12-19） |"
+            "normative_sources": [
+              {
+                "location": "附表 A A股按组",
+                "quote": "| 红利 | 中证红利（2008-05-26）、上证红利"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 13,
@@ -4992,7 +5593,14 @@
             ],
             "row_text": "一级行业 | 能源、原材料、工业、可选消费、主要消费、医药卫生、金融地产、信息技术、通信服务、公用事业",
             "verdict": "anchored",
-            "normative_quote": "| 中证全指一级行业 | 能源、原材料、工业、可选消费、主要消费、医药卫生、金融地产、信息技术、通信服务、公用事业（2011-08-02 发布，允许用回填点位，Owner 2026-11-24 确认） |"
+            "normative_sources": [
+              {
+                "location": "附表 A A股按组",
+                "quote": "| 中证全指一级行业 | 能源、原材料、工业、可选消费"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 13,
@@ -5013,7 +5621,30 @@
             ],
             "row_text": "主题 | 300医药、主要消费、农业、酒、创新药、半导体材料设备、全指半导体、全指软件、通信设备、人工智能、消费电子、有色金属、煤炭、钢铁、银行、证券公司、房地产、军工、机器人、新能源汽车、光伏、教育",
             "verdict": "anchored",
-            "normative_quote": "| NDX | — | 同上 | 2000-01-03 → 2026-09-30 | 513100（2013-05-15）；159941（2015-07-13）；513300（2020-11-05） | 同一指数 |"
+            "normative_sources": [
+              {
+                "location": "附表 A 主题：医药消费",
+                "quote": "300 医药卫生（2007-07-02）"
+              },
+              {
+                "location": "附表 A 主题：科技",
+                "quote": "半导体材料设备"
+              },
+              {
+                "location": "附表 A 主题：周期",
+                "quote": "有色金属（2012-05-09）"
+              },
+              {
+                "location": "附表 A 主题：金融地产",
+                "quote": "银行、全指证券公司、全指房地产"
+              },
+              {
+                "location": "附表 A 主题：制造与其他",
+                "quote": "军工（2013-12-26）、机器人"
+              }
+            ],
+            "reviewer_notes": "组件用短名；各主题行在 A 股按组明细",
+            "automated_regex_anchor_disallowed": true
           },
           {
             "table_index": 13,
@@ -5033,7 +5664,42 @@
             ],
             "row_text": "一级行业里无场内基金 | 通信服务、能源、医药卫生、工业、信息技术、主要消费、公用事业",
             "verdict": "anchored",
-            "normative_quote": "| 中证全指一级行业 | 能源、原材料、工业、可选消费、主要消费、医药卫生、金融地产、信息技术、通信服务、公用事业（2011-08-02 发布，允许用回填点位，Owner 2026-11-24 确认） |"
+            "normative_sources": [
+              {
+                "location": "附表 A 文后说明",
+                "quote": "7 个一级行业（通信服务、能源、医药卫生、工业、信息技术、主要消费、公用事业）"
+              },
+              {
+                "location": "附表 A 41 明细",
+                "quote": "| 全指通信服务 | … | 无场内基金 |"
+              },
+              {
+                "location": "附表 A 41 明细",
+                "quote": "| 全指能源 | … | 无场内基金 |"
+              },
+              {
+                "location": "附表 A 41 明细",
+                "quote": "| 全指医药卫生 | … | 无场内基金 |"
+              },
+              {
+                "location": "附表 A 41 明细",
+                "quote": "| 全指工业 | … | 无场内基金 |"
+              },
+              {
+                "location": "附表 A 41 明细",
+                "quote": "| 全指信息技术 | … | 无场内基金 |"
+              },
+              {
+                "location": "附表 A 41 明细",
+                "quote": "| 全指主要消费 | … | 无场内基金 |"
+              },
+              {
+                "location": "附表 A 41 明细",
+                "quote": "| 全指公用事业 | … | 无场内基金 |"
+              }
+            ],
+            "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
           }
         ]
       }
