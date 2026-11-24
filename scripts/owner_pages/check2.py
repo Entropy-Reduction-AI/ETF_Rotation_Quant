@@ -2,7 +2,7 @@ import re, html, os
 import sys
 REPO = os.path.join(sys.argv[1], 'docs', 'owner')  # repo root
 PAGES_DIR = sys.argv[2] if len(sys.argv) > 2 else 'docs/artifact'
-pages={'v6-preflight':'v6-preflight-forecast.md','board':'phase2-owner-board.md','retro':'phase2-retrospective.md','oneshot':'v5-oneshot-report.md','v51-health':'v5.1-health-check.md','v5-memo':'v5-research-memo.md','v4-health':'v4-health-check.md','v4-memo':'v4-research-memo.md','data-board':'data-board.md'}
+pages={'v6-preflight':'v6-preflight-forecast.md','board':'owner-board.md','retro':'phase2-retrospective.md','oneshot':'v5-oneshot-report.md','v51-health':'v5.1-health-check.md','v5-memo':'v5-research-memo.md','v4-health':'v4-health-check.md','v4-memo':'v4-research-memo.md','data-board':'data-board.md'}
 P=re.compile(r'[\s：:，,。·、；;（）()“”"\'⭐★\-—–|/]')
 def norm(s): return P.sub('',s)
 for slug,f in pages.items():

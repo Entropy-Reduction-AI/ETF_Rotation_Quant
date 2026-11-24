@@ -10,7 +10,7 @@
 - Last updated: 2026-11-16（D38：现状、角色和路线图更新到第二阶段关闭之后；愿景和判断原则原文未改）
 - Source of truth: Owner 与 Orchestrator 2026-10-21 → 10-25 的对话；决定记录 D9、D10
 - 先读：`docs/project-intake/project-diagnosis.md`（项目整体诊断）
-- 读完本文再读：`operations/planning/2026-11-16-d38-project-diagnosis-and-preflight.md`、`docs/owner/phase2-retrospective.md`、`docs/owner/phase2-owner-board.md`
+- 读完本文再读：`operations/planning/2026-11-16-d38-project-diagnosis-and-preflight.md`、`docs/owner/phase2-retrospective.md`、`docs/owner/owner-board.md`
 
 ## Purpose
 
@@ -104,5 +104,5 @@ tag 不删、不移；main 不强推、不改写。
 
 - 先读《项目整体诊断》、本文、D38、Owner 看板，再看 `operations/planning/phase2-board.md` 了解群内进度。
 - Owner 直觉的来源：`docs/reference/trading-notes/`（交易员方法笔记，启发而非规则）。
-- Owner 看板的权威版本在仓库 `docs/owner/phase2-owner-board.md`，并发布为 Claude 页面（D11-8）。
+- Owner 看板的权威版本在仓库 `docs/owner/owner-board.md`，并发布为 Claude 页面（D11-8）。
 - 给群里的指令，写成可以直接复制给 Manager 的消息；执行由 Manager 完成。
