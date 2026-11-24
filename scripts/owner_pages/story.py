@@ -1451,14 +1451,20 @@ def ledger_cards(soup):
         prev = w.find_previous_sibling(string=lambda x: isinstance(x, Comment)) if w.previous_sibling is not None else None
         marked = False
         sib = w.previous_sibling
-        while sib is not None and isinstance(sib, NavigableString):
+        between = []                                   # a score bar polish put between the marker and the table
+        while sib is not None and (isinstance(sib, NavigableString) or (getattr(sib, 'name', None) == 'div' and 'score' in (sib.get('class') or []))):
             if isinstance(sib, Comment) and '页面：卡片' in sib:
                 marked = True
                 sib.extract()
                 break
-            if sib.strip():
+            if isinstance(sib, NavigableString) and sib.strip():
                 break
+            if not isinstance(sib, NavigableString):
+                between.append(sib)
             sib = sib.previous_sibling
+        if marked:
+            for x in between:                          # the cards carry each row's status; a partial count would mislead
+                x.decompose()
         if len(H) < (2 if marked else 3) or not (marked or any(h.startswith('超出') for h in H) or H[0] == '陷阱'):
             continue
         rows0 = [tr.find('td') for tr in t.select('tbody tr')]
