@@ -1,0 +1,1120 @@
+{
+  "pr359_head_before": "74ea30699d184c01971ee55a0abdbcc1e36d5d84",
+  "formula": "abs(left - right) / abs(right)",
+  "sqlite_sources": {
+    "DJIA": "eastmoney_index",
+    "DWRTF": "d37_r6"
+  },
+  "sqlite_overlap_counts": {
+    "DJIA": 63,
+    "DWRTF": 81
+  },
+  "sqlite_overlap_ge_60": {
+    "DJIA": true,
+    "DWRTF": true
+  },
+  "pairs": {
+    "djia_fred_vs_cnbc_req": {
+      "start": "2024-02-01",
+      "end": "2026-09-30",
+      "denominator": "right",
+      "n_overlap": 668,
+      "only_left": [],
+      "only_right": [
+        "2024-12-25"
+      ],
+      "max_rel": 1.3075431785816616e-07,
+      "worst": {
+        "date": "2024-04-26",
+        "left": 38239.66,
+        "right": 38239.655,
+        "rel": 1.3075431785816616e-07
+      },
+      "n_above_0_01pct": 0,
+      "n_above_0_1pct": 0
+    },
+    "djia_fred_vs_db_ovl": {
+      "start": "2023-11-01",
+      "end": "2024-02-01",
+      "denominator": "right",
+      "n_overlap": 63,
+      "only_left": [],
+      "only_right": [],
+      "max_rel": 0.0,
+      "worst": {
+        "date": "2023-11-01",
+        "left": 33274.58,
+        "right": 33274.58,
+        "rel": 0.0
+      },
+      "n_above_0_01pct": 0,
+      "n_above_0_1pct": 0
+    },
+    "djia_cnbc_vs_db_ovl": {
+      "start": "2023-11-01",
+      "end": "2024-02-01",
+      "denominator": "right",
+      "n_overlap": 63,
+      "only_left": [],
+      "only_right": [],
+      "max_rel": 1.4356388729030788e-07,
+      "worst": {
+        "date": "2023-11-14",
+        "left": 34827.695,
+        "right": 34827.7,
+        "rel": 1.4356388729030788e-07
+      },
+      "n_above_0_01pct": 0,
+      "n_above_0_1pct": 0
+    },
+    "djia_yahoo_vs_db_ovl": {
+      "start": "2023-11-01",
+      "end": "2024-02-01",
+      "denominator": "right",
+      "n_overlap": 63,
+      "only_left": [],
+      "only_right": [],
+      "max_rel": 5.634932136622701e-08,
+      "worst": {
+        "date": "2023-11-01",
+        "left": 33274.578125,
+        "right": 33274.58,
+        "rel": 5.634932136622701e-08
+      },
+      "n_above_0_01pct": 0,
+      "n_above_0_1pct": 0
+    },
+    "dw_cnbc_vs_tv_req": {
+      "start": "2017-11-22",
+      "end": "2026-09-30",
+      "denominator": "right",
+      "n_overlap": 2223,
+      "only_left": [
+        "2024-12-25"
+      ],
+      "only_right": [
+        "2023-04-06"
+      ],
+      "max_rel": 0.00040752564015487523,
+      "worst": {
+        "date": "2019-08-12",
+        "left": 294.58,
+        "right": 294.46,
+        "rel": 0.00040752564015487523
+      },
+      "n_above_0_01pct": 1,
+      "n_above_0_1pct": 0
+    },
+    "dw_cnbc_vs_db_ovl": {
+      "start": "2017-08-01",
+      "end": "2017-11-22",
+      "denominator": "right",
+      "n_overlap": 81,
+      "only_left": [],
+      "only_right": [],
+      "max_rel": 0.0,
+      "worst": {
+        "date": "2017-08-01",
+        "left": 275.51,
+        "right": 275.51,
+        "rel": 0.0
+      },
+      "n_above_0_01pct": 0,
+      "n_above_0_1pct": 0
+    }
+  },
+  "database_stop_pairs": [],
+  "calendar_notes": {
+    "djia_ovl_weekdays": 67,
+    "fred_dates_in_ovl": 63,
+    "cnbc_dates_in_ovl": 63,
+    "cnbc_weekend_in_required": []
+  },
+  "fred_independent_redownload": {
+    "pr_sha256": "256b9f380c3b20aef06cf4e0846d1527897e6cd6c3db1d5b700b22da08577f69",
+    "independent_sha256": "256b9f380c3b20aef06cf4e0846d1527897e6cd6c3db1d5b700b22da08577f69",
+    "sha_match": true,
+    "independent_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DJIA",
+    "retrieved_utc": "2026-11-24T08:21:20.767938+00:00",
+    "n_mismatch_all_dates": 0,
+    "mismatches_sample": []
+  },
+  "cnbc_independent_redownload": {
+    "url": "https://ts-api.cnbc.com/harmony/app/bars/.DWRTF/1D/20170801000000/20171231235959/adjusted/GMT",
+    "http_result": "200 with browser User-Agent",
+    "pr_chunk_sha256": "9afe71e0d4cab6b045fe422b8383e5476438278672a66007331829f51ec5a668",
+    "independent_chunk_sha256": "9afe71e0d4cab6b045fe422b8383e5476438278672a66007331829f51ec5a668",
+    "byte_identical_to_pr": true,
+    "adjusted_field": "UNADJUSTED",
+    "company_name": "DJUSslct REIT"
+  },
+  "date_samples": {
+    "djia_gapfill": [
+      {
+        "label": "fred",
+        "date": "2024-02-01",
+        "close": 38519.84
+      },
+      {
+        "label": "fred",
+        "date": "2024-03-22",
+        "close": 39475.9
+      },
+      {
+        "label": "fred",
+        "date": "2024-05-13",
+        "close": 39431.51
+      },
+      {
+        "label": "fred",
+        "date": "2024-07-03",
+        "close": 39308.0
+      },
+      {
+        "label": "fred",
+        "date": "2024-08-22",
+        "close": 40712.78
+      },
+      {
+        "label": "fred",
+        "date": "2024-10-11",
+        "close": 42863.86
+      },
+      {
+        "label": "fred",
+        "date": "2024-12-02",
+        "close": 44782.0
+      },
+      {
+        "label": "fred",
+        "date": "2025-01-24",
+        "close": 44424.25
+      },
+      {
+        "label": "fred",
+        "date": "2025-03-17",
+        "close": 41841.63
+      },
+      {
+        "label": "fred",
+        "date": "2025-05-06",
+        "close": 40829.0
+      },
+      {
+        "label": "fred",
+        "date": "2025-06-02",
+        "close": 42305.48
+      },
+      {
+        "label": "fred",
+        "date": "2025-06-03",
+        "close": 42519.64
+      },
+      {
+        "label": "fred",
+        "date": "2025-06-04",
+        "close": 42427.74
+      },
+      {
+        "label": "fred",
+        "date": "2025-06-26",
+        "close": 43386.84
+      },
+      {
+        "label": "fred",
+        "date": "2025-08-15",
+        "close": 44946.12
+      },
+      {
+        "label": "fred",
+        "date": "2025-10-06",
+        "close": 46694.97
+      },
+      {
+        "label": "fred",
+        "date": "2025-11-24",
+        "close": 46448.27
+      },
+      {
+        "label": "fred",
+        "date": "2026-01-15",
+        "close": 49442.44
+      },
+      {
+        "label": "fred",
+        "date": "2026-03-09",
+        "close": 47740.8
+      },
+      {
+        "label": "fred",
+        "date": "2026-04-28",
+        "close": 49141.93
+      },
+      {
+        "label": "fred",
+        "date": "2026-06-17",
+        "close": 51492.55
+      },
+      {
+        "label": "fred",
+        "date": "2026-08-07",
+        "close": 54036.93
+      },
+      {
+        "label": "fred",
+        "date": "2026-09-28",
+        "close": 51481.51
+      },
+      {
+        "label": "fred",
+        "date": "2026-09-30",
+        "close": 50906.05
+      },
+      {
+        "label": "cnbc",
+        "date": "2024-02-01",
+        "close": 38519.8398
+      },
+      {
+        "label": "cnbc",
+        "date": "2024-03-22",
+        "close": 39475.904
+      },
+      {
+        "label": "cnbc",
+        "date": "2024-05-13",
+        "close": 39431.5114
+      },
+      {
+        "label": "cnbc",
+        "date": "2024-07-03",
+        "close": 39308.0029
+      },
+      {
+        "label": "cnbc",
+        "date": "2024-08-22",
+        "close": 40712.78
+      },
+      {
+        "label": "cnbc",
+        "date": "2024-10-11",
+        "close": 42863.86
+      },
+      {
+        "label": "cnbc",
+        "date": "2024-12-02",
+        "close": 44782.0
+      },
+      {
+        "label": "cnbc",
+        "date": "2025-01-23",
+        "close": 44565.07
+      },
+      {
+        "label": "cnbc",
+        "date": "2025-03-14",
+        "close": 41488.19
+      },
+      {
+        "label": "cnbc",
+        "date": "2025-05-05",
+        "close": 41218.83
+      },
+      {
+        "label": "cnbc",
+        "date": "2025-05-30",
+        "close": 42270.07
+      },
+      {
+        "label": "cnbc",
+        "date": "2025-06-02",
+        "close": 42305.48
+      },
+      {
+        "label": "cnbc",
+        "date": "2025-06-03",
+        "close": 42519.64
+      },
+      {
+        "label": "cnbc",
+        "date": "2025-06-25",
+        "close": 42982.43
+      },
+      {
+        "label": "cnbc",
+        "date": "2025-08-14",
+        "close": 44911.26
+      },
+      {
+        "label": "cnbc",
+        "date": "2025-10-03",
+        "close": 46758.28
+      },
+      {
+        "label": "cnbc",
+        "date": "2025-11-21",
+        "close": 46245.41
+      },
+      {
+        "label": "cnbc",
+        "date": "2026-01-14",
+        "close": 49149.63
+      },
+      {
+        "label": "cnbc",
+        "date": "2026-03-06",
+        "close": 47501.55
+      },
+      {
+        "label": "cnbc",
+        "date": "2026-04-27",
+        "close": 49167.79
+      },
+      {
+        "label": "cnbc",
+        "date": "2026-06-16",
+        "close": 51999.67
+      },
+      {
+        "label": "cnbc",
+        "date": "2026-08-06",
+        "close": 53885.1
+      },
+      {
+        "label": "cnbc",
+        "date": "2026-09-25",
+        "close": 51828.62
+      },
+      {
+        "label": "cnbc",
+        "date": "2026-09-30",
+        "close": 50906.05
+      }
+    ],
+    "djia_overlap": [
+      {
+        "label": "fred_ovl",
+        "date": "2023-11-01",
+        "close": 33274.58
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-11-06",
+        "close": 34095.86
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-11-09",
+        "close": 33891.94
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-11-14",
+        "close": 34827.7
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-11-17",
+        "close": 34947.28
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-11-22",
+        "close": 35273.03
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-11-28",
+        "close": 35416.98
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-12-01",
+        "close": 36245.5
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-12-06",
+        "close": 36054.43
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-12-11",
+        "close": 36404.93
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-12-14",
+        "close": 37248.35
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-12-15",
+        "close": 37305.16
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-12-18",
+        "close": 37306.02
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-12-19",
+        "close": 37557.92
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-12-22",
+        "close": 37385.97
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2023-12-28",
+        "close": 37710.1
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2024-01-03",
+        "close": 37430.19
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2024-01-08",
+        "close": 37683.01
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2024-01-11",
+        "close": 37711.02
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2024-01-17",
+        "close": 37266.67
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2024-01-22",
+        "close": 38001.81
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2024-01-25",
+        "close": 38049.13
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2024-01-30",
+        "close": 38467.31
+      },
+      {
+        "label": "fred_ovl",
+        "date": "2024-02-01",
+        "close": 38519.84
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-11-01",
+        "close": 33274.58
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-11-06",
+        "close": 34095.86
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-11-09",
+        "close": 33891.94
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-11-14",
+        "close": 34827.7
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-11-17",
+        "close": 34947.28
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-11-22",
+        "close": 35273.03
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-11-28",
+        "close": 35416.98
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-12-01",
+        "close": 36245.5
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-12-06",
+        "close": 36054.43
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-12-11",
+        "close": 36404.93
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-12-14",
+        "close": 37248.35
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-12-15",
+        "close": 37305.16
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-12-18",
+        "close": 37306.02
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-12-19",
+        "close": 37557.92
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-12-22",
+        "close": 37385.97
+      },
+      {
+        "label": "sqlite",
+        "date": "2023-12-28",
+        "close": 37710.1
+      },
+      {
+        "label": "sqlite",
+        "date": "2024-01-03",
+        "close": 37430.19
+      },
+      {
+        "label": "sqlite",
+        "date": "2024-01-08",
+        "close": 37683.01
+      },
+      {
+        "label": "sqlite",
+        "date": "2024-01-11",
+        "close": 37711.02
+      },
+      {
+        "label": "sqlite",
+        "date": "2024-01-17",
+        "close": 37266.67
+      },
+      {
+        "label": "sqlite",
+        "date": "2024-01-22",
+        "close": 38001.81
+      },
+      {
+        "label": "sqlite",
+        "date": "2024-01-25",
+        "close": 38049.13
+      },
+      {
+        "label": "sqlite",
+        "date": "2024-01-30",
+        "close": 38467.31
+      },
+      {
+        "label": "sqlite",
+        "date": "2024-02-01",
+        "close": 38519.84
+      }
+    ],
+    "dwrtf_gapfill": [
+      {
+        "label": "cnbc",
+        "date": "2017-11-22",
+        "close": 275.66
+      },
+      {
+        "label": "cnbc",
+        "date": "2018-05-14",
+        "close": 258.68
+      },
+      {
+        "label": "cnbc",
+        "date": "2018-10-29",
+        "close": 265.81
+      },
+      {
+        "label": "cnbc",
+        "date": "2019-04-18",
+        "close": 283.24
+      },
+      {
+        "label": "cnbc",
+        "date": "2019-10-04",
+        "close": 305.12
+      },
+      {
+        "label": "cnbc",
+        "date": "2020-03-24",
+        "close": 187.99
+      },
+      {
+        "label": "cnbc",
+        "date": "2020-09-09",
+        "close": 237.17
+      },
+      {
+        "label": "cnbc",
+        "date": "2021-02-26",
+        "close": 266.81
+      },
+      {
+        "label": "cnbc",
+        "date": "2021-08-13",
+        "close": 324.15
+      },
+      {
+        "label": "cnbc",
+        "date": "2022-01-31",
+        "close": 336.83
+      },
+      {
+        "label": "cnbc",
+        "date": "2022-04-25",
+        "close": 347.24
+      },
+      {
+        "label": "cnbc",
+        "date": "2022-04-26",
+        "close": 342.54
+      },
+      {
+        "label": "cnbc",
+        "date": "2022-04-27",
+        "close": 340.11
+      },
+      {
+        "label": "cnbc",
+        "date": "2022-07-20",
+        "close": 286.22
+      },
+      {
+        "label": "cnbc",
+        "date": "2023-01-05",
+        "close": 255.65
+      },
+      {
+        "label": "cnbc",
+        "date": "2023-06-27",
+        "close": 264.11
+      },
+      {
+        "label": "cnbc",
+        "date": "2023-12-12",
+        "close": 266.19
+      },
+      {
+        "label": "cnbc",
+        "date": "2024-05-31",
+        "close": 269.14
+      },
+      {
+        "label": "cnbc",
+        "date": "2024-11-15",
+        "close": 306.04
+      },
+      {
+        "label": "cnbc",
+        "date": "2025-05-07",
+        "close": 287.24
+      },
+      {
+        "label": "cnbc",
+        "date": "2025-10-23",
+        "close": 300.71
+      },
+      {
+        "label": "cnbc",
+        "date": "2026-04-14",
+        "close": 321.84
+      },
+      {
+        "label": "cnbc",
+        "date": "2026-09-30",
+        "close": 315.22
+      },
+      {
+        "label": "tv_prior",
+        "date": "2017-11-22",
+        "close": 275.66
+      },
+      {
+        "label": "tv_prior",
+        "date": "2018-05-14",
+        "close": 258.68
+      },
+      {
+        "label": "tv_prior",
+        "date": "2018-10-29",
+        "close": 265.81
+      },
+      {
+        "label": "tv_prior",
+        "date": "2019-04-18",
+        "close": 283.24
+      },
+      {
+        "label": "tv_prior",
+        "date": "2019-10-04",
+        "close": 305.12
+      },
+      {
+        "label": "tv_prior",
+        "date": "2020-03-24",
+        "close": 187.99
+      },
+      {
+        "label": "tv_prior",
+        "date": "2020-09-09",
+        "close": 237.17
+      },
+      {
+        "label": "tv_prior",
+        "date": "2021-02-26",
+        "close": 266.81
+      },
+      {
+        "label": "tv_prior",
+        "date": "2021-08-13",
+        "close": 324.15
+      },
+      {
+        "label": "tv_prior",
+        "date": "2022-01-31",
+        "close": 336.83
+      },
+      {
+        "label": "tv_prior",
+        "date": "2022-04-25",
+        "close": 347.24
+      },
+      {
+        "label": "tv_prior",
+        "date": "2022-04-26",
+        "close": 342.54
+      },
+      {
+        "label": "tv_prior",
+        "date": "2022-04-27",
+        "close": 340.11
+      },
+      {
+        "label": "tv_prior",
+        "date": "2022-07-20",
+        "close": 286.22
+      },
+      {
+        "label": "tv_prior",
+        "date": "2023-01-05",
+        "close": 255.65
+      },
+      {
+        "label": "tv_prior",
+        "date": "2023-06-26",
+        "close": 260.64
+      },
+      {
+        "label": "tv_prior",
+        "date": "2023-12-11",
+        "close": 266.24
+      },
+      {
+        "label": "tv_prior",
+        "date": "2024-05-30",
+        "close": 264.35
+      },
+      {
+        "label": "tv_prior",
+        "date": "2024-11-14",
+        "close": 305.52
+      },
+      {
+        "label": "tv_prior",
+        "date": "2025-05-07",
+        "close": 287.24
+      },
+      {
+        "label": "tv_prior",
+        "date": "2025-10-23",
+        "close": 300.71
+      },
+      {
+        "label": "tv_prior",
+        "date": "2026-04-14",
+        "close": 321.84
+      },
+      {
+        "label": "tv_prior",
+        "date": "2026-09-30",
+        "close": 315.22
+      }
+    ],
+    "dwrtf_overlap": [
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-08-01",
+        "close": 275.51
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-08-07",
+        "close": 273.19
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-08-11",
+        "close": 267.11
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-08-17",
+        "close": 269.09
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-08-23",
+        "close": 271.01
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-08-29",
+        "close": 268.51
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-09-05",
+        "close": 271.64
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-09-11",
+        "close": 276.81
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-09-15",
+        "close": 275.94
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-09-21",
+        "close": 271.28
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-09-26",
+        "close": 272.05
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-09-27",
+        "close": 269.38
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-09-28",
+        "close": 270.68
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-10-03",
+        "close": 269.76
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-10-09",
+        "close": 272.24
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-10-13",
+        "close": 276.25
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-10-19",
+        "close": 273.37
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-10-25",
+        "close": 268.75
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-10-31",
+        "close": 267.36
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-11-06",
+        "close": 271.19
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-11-10",
+        "close": 276.24
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-11-16",
+        "close": 276.56
+      },
+      {
+        "label": "cnbc_ovl",
+        "date": "2017-11-22",
+        "close": 275.66
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-08-01",
+        "close": 275.51
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-08-07",
+        "close": 273.19
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-08-11",
+        "close": 267.11
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-08-17",
+        "close": 269.09
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-08-23",
+        "close": 271.01
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-08-29",
+        "close": 268.51
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-09-05",
+        "close": 271.64
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-09-11",
+        "close": 276.81
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-09-15",
+        "close": 275.94
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-09-21",
+        "close": 271.28
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-09-26",
+        "close": 272.05
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-09-27",
+        "close": 269.38
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-09-28",
+        "close": 270.68
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-10-03",
+        "close": 269.76
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-10-09",
+        "close": 272.24
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-10-13",
+        "close": 276.25
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-10-19",
+        "close": 273.37
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-10-25",
+        "close": 268.75
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-10-31",
+        "close": 267.36
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-11-06",
+        "close": 271.19
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-11-10",
+        "close": 276.24
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-11-16",
+        "close": 276.56
+      },
+      {
+        "label": "sqlite",
+        "date": "2017-11-22",
+        "close": 275.66
+      }
+    ],
+    "dwrtf_anomaly_day": [
+      {
+        "date": "2019-08-12",
+        "cnbc": 294.58,
+        "tv": 294.46
+      },
+      {
+        "date": "2023-04-06",
+        "cnbc": null,
+        "tv": 259.56
+      },
+      {
+        "date": "2024-12-25",
+        "cnbc": 294.94,
+        "tv": null
+      }
+    ]
+  },
+  "tv_prior_sha256": "1b2e608ee868c15da254503c13a5aa091be0057ef65fac399c3d29af09f6b548",
+  "proposed_verdict_hint": "CANDIDATE_APPROVE_GAPFILL"
+}
