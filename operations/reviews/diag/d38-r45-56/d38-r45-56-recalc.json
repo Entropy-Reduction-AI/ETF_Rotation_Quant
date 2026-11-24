@@ -258,8 +258,8 @@
     "a_decompose_unchanged_vs_row55_main": true
   },
   "method": "independent_reviewer_backtest_v2",
-  "provisional_recommendation": "approve",
-  "formal_coordinator_signoff": "pending_owner_inspection",
+  "computation_recommendation": "approve",
+  "formal_reviewer_decision_record": "operations/reviews/diag/d38-r45-56/d38-r45-56-reviewer-formal-decision.json",
   "decision_inputs": {
     "subject_head_match": true,
     "registration_order_ok": true,

@@ -287,8 +287,8 @@ def main() -> int:
         "criteria_audit": {},
         "definition_continuity_row55": {},
         "method": "independent_reviewer_backtest_v2",
-        "provisional_recommendation": None,
-        "formal_coordinator_signoff": "pending_owner_inspection",
+        "computation_recommendation": None,
+        "formal_reviewer_decision_record": "operations/reviews/diag/d38-r45-56/d38-r45-56-reviewer-formal-decision.json",
         "decision_inputs": {},
         "verify_exit_code": None,
     }
@@ -460,7 +460,7 @@ def main() -> int:
         "c2_closed_independent": fin["结论_C2关闭"] and not fin["换规则"],
     }
     report["decision_inputs"] = {k: bool(v) for k, v in report["decision_inputs"].items()}
-    report["provisional_recommendation"] = (
+    report["computation_recommendation"] = (
         "approve" if all(report["decision_inputs"].values()) else "investigate_discrepancy"
     )
 
