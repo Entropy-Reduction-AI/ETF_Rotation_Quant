@@ -1,0 +1,2654 @@
+{
+  "mapping_window_subject_head": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
+  "scope": "summary_boxes + section_memo + ledger_lg_big + md_blockquote only",
+  "number_token_regex": "(?<![A-Za-z0-9])([−\\-+]?\\d+(?:\\.\\d+)?%?)(?![A-Za-z])",
+  "semantic_groups": [
+    {
+      "claim_id": "bf181a888a991878",
+      "visible_claim": "美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。",
+      "numbers": {
+        "15": {
+          "number": "15",
+          "status": "anchored",
+          "normative_location": "§1.1 / 附表 A",
+          "normative_quote": "「美股名额（15 个）」列举 SPX…DWRTF。"
+        },
+        "40": {
+          "number": "40",
+          "status": "anchored",
+          "normative_location": "§1.1 / 附表 A",
+          "normative_quote": "「A 股约 40 个」= 8 宽基红利 +10 一级行业 +22 主题（附表 A 导语）。"
+        },
+        "3": {
+          "number": "3",
+          "status": "anchored",
+          "normative_location": "§1.4 表",
+          "normative_quote": "「每个名额选几只 | 3 | D40-7…」且 §1 要点「从数据里定的数字正好 3 个」指表中标「计」的三行。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "section_memo",
+          "section": "sec-1-策略定义-每个名额每月选最强的-3-只-只在确认紧张时按把握减仓",
+          "number": "15"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-1-策略定义-每个名额每月选最强的-3-只-只在确认紧张时按把握减仓",
+          "number": "40"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-1-策略定义-每个名额每月选最强的-3-只-只在确认紧张时按把握减仓",
+          "number": "3"
+        }
+      ]
+    },
+    {
+      "claim_id": "641a0840dc0f7cf8",
+      "visible_claim": "只用场内基金；溢价偏离超 5 个点 换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。",
+      "numbers": {
+        "5": {
+          "number": "5",
+          "status": "anchored",
+          "normative_location": "§2 表",
+          "normative_quote": "「溢价比自身过去 60 个交易日溢价中位数高 5 个点以上不买」"
+        },
+        "1": {
+          "number": "1",
+          "status": "anchored",
+          "normative_location": "§2 表",
+          "normative_quote": "「每只最多占名额的 1/3（美股 20 万）」分子 1。"
+        },
+        "3": {
+          "number": "3",
+          "status": "anchored",
+          "normative_location": "§2",
+          "normative_quote": "「每只最多占名额的 1/3」分母 3；执行层不计入 §1.4 三个「计」。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "section_memo",
+          "section": "sec-2-执行层规则-溢价比常态高-5-个点不买-常年溢价品种不另设上限-不计入-3-",
+          "number": "5"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-2-执行层规则-溢价比常态高-5-个点不买-常年溢价品种不另设上限-不计入-3-",
+          "number": "1"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-2-执行层规则-溢价比常态高-5-个点不买-常年溢价品种不另设上限-不计入-3-",
+          "number": "3"
+        }
+      ]
+    },
+    {
+      "claim_id": "5d31b76529cdf51c",
+      "visible_claim": "预测表、合成行情、跑前八问、事前画像、红队都按设计评审第 2.1 版写；全部判据通过的机会约三成。",
+      "numbers": {
+        "2.1": {
+          "number": "2.1",
+          "status": "anchored",
+          "normative_location": "Metadata + §3 导语",
+          "normative_quote": "依据行：「设计评审第 2.1 版（`docs/reference/strategy-design-review.md`）」"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "section_memo",
+          "section": "sec-3-设计评审-预计每年比基准多约-1-2-个点-六种合成行情的中间情况都守住-6",
+          "number": "2.1"
+        }
+      ]
+    },
+    {
+      "claim_id": "dd8dce39577767db",
+      "visible_claim": "检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。",
+      "numbers": {
+        "2016": {
+          "number": "2016",
+          "status": "anchored",
+          "normative_location": "§4 导语 / §5.1",
+          "normative_quote": "§4 要点写「检验段 2016–2026」；§5 规范窗「2016-01-01 → 2026-09-30（已污染段）」。"
+        },
+        "2026": {
+          "number": "2026",
+          "status": "anchored",
+          "normative_location": "§4 导语 / §5.1",
+          "normative_quote": "§4 要点写「检验段 2016–2026」；§5 规范窗「2016-01-01 → 2026-09-30（已污染段）」。"
+        },
+        "1": {
+          "number": "1",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "D9-1 是 AGENTS 合同条款编号，不是数值主张。"
+        },
+        "12": {
+          "number": "12",
+          "status": "anchored",
+          "normative_location": "§4 表 #6",
+          "normative_quote": "「A 股选人的试验次数约 12 种」逐项列举。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "section_memo",
+          "section": "sec-4-已经看过的信息-检验段不干净-美股-60-是在知道美股强之后定的",
+          "number": "2016"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-4-已经看过的信息-检验段不干净-美股-60-是在知道美股强之后定的",
+          "number": "2026"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-4-已经看过的信息-检验段不干净-美股-60-是在知道美股强之后定的",
+          "number": "1"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-4-已经看过的信息-检验段不干净-美股-60-是在知道美股强之后定的",
+          "number": "12"
+        }
+      ]
+    },
+    {
+      "claim_id": "a0975eee20b47ba3",
+      "visible_claim": "12−1 没挑出东西，规则不改",
+      "numbers": {
+        "12": {
+          "number": "12",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "12−1 是回看标签（§1.4 表「回看期」），不是两个独立数量。"
+        },
+        "1": {
+          "number": "1",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "12−1 是回看标签（§1.4 表「回看期」），不是两个独立数量。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "ledger_big",
+          "section": "sec-4-已经看过的信息-检验段不干净-美股-60-是在知道美股强之后定的",
+          "number": "12"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-4-已经看过的信息-检验段不干净-美股-60-是在知道美股强之后定的",
+          "number": "1"
+        }
+      ]
+    },
+    {
+      "claim_id": "bbf5050e8a1e204f",
+      "visible_claim": "检验段 2016-01 → 2026-09；判据是回撤不超过 40% 、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。",
+      "numbers": {
+        "2016": {
+          "number": "2016",
+          "status": "anchored",
+          "normative_location": "§5.1",
+          "normative_quote": "「检验段：2016-01-01 → 2026-09-30（已污染段）」"
+        },
+        "01": {
+          "number": "01",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "检验段日历端点的月日片段（2016-01 / 2026-09），不单独计数。"
+        },
+        "2026": {
+          "number": "2026",
+          "status": "anchored",
+          "normative_location": "§5.1",
+          "normative_quote": "「检验段：2016-01-01 → 2026-09-30（已污染段）」"
+        },
+        "09": {
+          "number": "09",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "检验段日历端点的月日片段（2016-01 / 2026-09），不单独计数。"
+        },
+        "40%": {
+          "number": "40%",
+          "status": "anchored",
+          "normative_location": "§5 判据表 ①",
+          "normative_quote": "「回撤 ≤ 40%…100 万最低不跌破 60 万」"
+        },
+        "4": {
+          "number": "4",
+          "status": "anchored",
+          "normative_location": "§5 判据表",
+          "normative_quote": "「防守保费不超过 4 点」/ ledger「≤ 4 点」"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "section_memo",
+          "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+          "number": "2016"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+          "number": "01"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+          "number": "2026"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+          "number": "09"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+          "number": "40%"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+          "number": "4"
+        }
+      ]
+    },
+    {
+      "claim_id": "738d1c46335db10f",
+      "visible_claim": "回撤 ≤ 40%",
+      "numbers": {
+        "40%": {
+          "number": "40%",
+          "status": "anchored",
+          "normative_location": "§5 判据表 ①",
+          "normative_quote": "「回撤 ≤ 40%…100 万最低不跌破 60 万」"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "ledger_big",
+          "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+          "number": "40%"
+        }
+      ]
+    },
+    {
+      "claim_id": "098f79a2f1295ebe",
+      "visible_claim": "≤ 4 点",
+      "numbers": {
+        "4": {
+          "number": "4",
+          "status": "anchored",
+          "normative_location": "§5 判据表",
+          "normative_quote": "「防守保费不超过 4 点」/ ledger「≤ 4 点」"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "ledger_big",
+          "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+          "number": "4"
+        }
+      ]
+    },
+    {
+      "claim_id": "d75ee0a26740c413",
+      "visible_claim": "≥ 0",
+      "numbers": {
+        "0": {
+          "number": "0",
+          "status": "anchored",
+          "normative_location": "§5 判据表 ④",
+          "normative_quote": "「对同仓位基准不落后」ledger 缩写「≥ 0」"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "ledger_big",
+          "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+          "number": "0"
+        }
+      ]
+    },
+    {
+      "claim_id": "68e8b564c296b3d2",
+      "visible_claim": "8 种情形各有一条警戒线：落在“事先认下的代价”里是正常代价；越过“超出就要查”的线，说明策略性格变了，先查原因（冻结后不改）。",
+      "numbers": {
+        "8": {
+          "number": "8",
+          "status": "anchored",
+          "normative_location": "§6",
+          "normative_quote": "疼痛表列 8 行情形。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "section_memo",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "8"
+        }
+      ]
+    },
+    {
+      "claim_id": "49e01093248439d3",
+      "visible_claim": "2006–2010 每年少约 9 点 （设计期）",
+      "numbers": {
+        "2006": {
+          "number": "2006",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「A 股大牛市…2006–2010 每年少约 9 点」"
+        },
+        "2010": {
+          "number": "2010",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「A 股大牛市…2006–2010 每年少约 9 点」"
+        },
+        "9": {
+          "number": "9",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「A 股大牛市…2006–2010 每年少约 9 点」"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "2006"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "2010"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "9"
+        }
+      ]
+    },
+    {
+      "claim_id": "17855e1d9f4fccdb",
+      "visible_claim": "合成 V 型每年落后约 15 点 （短期年化）",
+      "numbers": {
+        "15": {
+          "number": "15",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「合成 V 型每年落后约 15 点（短期年化）」"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "15"
+        }
+      ]
+    },
+    {
+      "claim_id": "2cd298494ca95686",
+      "visible_claim": "较差的十分之一约剩 58.8 万",
+      "numbers": {
+        "58.8": {
+          "number": "58.8",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「突发急跌…较差的十分之一约剩 58.8 万」"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "58.8"
+        }
+      ]
+    },
+    {
+      "claim_id": "12f56d7201358c0e",
+      "visible_claim": "每年少约 1.6 点",
+      "numbers": {
+        "1.6": {
+          "number": "1.6",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「挑选没有动量的年份…每年少约 1.6 点」"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "1.6"
+        }
+      ]
+    },
+    {
+      "claim_id": "58c536c41b6dc685",
+      "visible_claim": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "numbers": {
+        "16": {
+          "number": "16",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+        },
+        "2011": {
+          "number": "2011",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+        },
+        "13": {
+          "number": "13",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+        },
+        "+16.9": {
+          "number": "+16.9",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+        },
+        "2014": {
+          "number": "2014",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+        },
+        "15": {
+          "number": "15",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+        },
+        "−21.1": {
+          "number": "−21.1",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+        },
+        "40": {
+          "number": "40",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "16"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "2011"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "13"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "+16.9"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "2014"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "15"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "−21.1"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "40"
+        }
+      ]
+    },
+    {
+      "claim_id": "9c2e2addc8bce3e4",
+      "visible_claim": "约 1.8 万 （常态溢价约 9%、单只 20 万，D40-14 不另设上限）",
+      "numbers": {
+        "1.8": {
+          "number": "1.8",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表 + §2",
+          "normative_quote": "「稀缺 QDII 溢价消失…约 1.8 万（常态溢价约 9%、单只 20 万，D40-14）」"
+        },
+        "9%": {
+          "number": "9%",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表 + §2",
+          "normative_quote": "「稀缺 QDII 溢价消失…约 1.8 万（常态溢价约 9%、单只 20 万，D40-14）」"
+        },
+        "20": {
+          "number": "20",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表 + §2",
+          "normative_quote": "「稀缺 QDII 溢价消失…约 1.8 万（常态溢价约 9%、单只 20 万，D40-14）」"
+        },
+        "14": {
+          "number": "14",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "D40-14 决策编号，不是金额 14。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "1.8"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "9%"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "20"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "14"
+        }
+      ]
+    },
+    {
+      "claim_id": "06e71020c528bf90",
+      "visible_claim": "每年约 1.0–1.1 点",
+      "numbers": {
+        "1.0": {
+          "number": "1.0",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「换手和成本…每年约 1.0–1.1 点」"
+        },
+        "1.1": {
+          "number": "1.1",
+          "status": "anchored",
+          "normative_location": "§6 疼痛表",
+          "normative_quote": "「换手和成本…每年约 1.0–1.1 点」"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "1.0"
+        },
+        {
+          "kind": "ledger_big",
+          "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+          "number": "1.1"
+        }
+      ]
+    },
+    {
+      "claim_id": "2a897973c6b0dafb",
+      "visible_claim": "影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。",
+      "numbers": {
+        "60": {
+          "number": "60",
+          "status": "anchored",
+          "normative_location": "§7",
+          "normative_quote": "「模拟盘跌破 60 万…暂停」= D39 底线与同 §5 回撤口径一致。"
+        },
+        "6": {
+          "number": "6",
+          "status": "anchored",
+          "normative_location": "§7",
+          "normative_quote": "「连续 6 个月对同仓位基准累计落后超过 6 点」两处 6 同一暂停规则。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "section_memo",
+          "section": "sec-7-前向模拟盘与影子跟踪-通过后至少-6-个月模拟盘-另外-3-种规则只记录不交",
+          "number": "60"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-7-前向模拟盘与影子跟踪-通过后至少-6-个月模拟盘-另外-3-种规则只记录不交",
+          "number": "6"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-7-前向模拟盘与影子跟踪-通过后至少-6-个月模拟盘-另外-3-种规则只记录不交",
+          "number": "6"
+        }
+      ]
+    },
+    {
+      "claim_id": "061f6c82a91e8659",
+      "visible_claim": "主题指数回填、指数与 ETF 的差异、腾讯减法 qfq、份额折算假跳空，4 项每次报告都要写。",
+      "numbers": {
+        "4": {
+          "number": "4",
+          "status": "anchored",
+          "normative_location": "§8",
+          "normative_quote": "要点：「主题指数回填…4 项每次报告都要写」（另两行表还有美股代理/申万差异）。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "section_memo",
+          "section": "sec-8-数据陷阱声明-结论必须声明四项陷阱-加上美股代理-实盘载体和申万回溯的差异",
+          "number": "4"
+        }
+      ]
+    },
+    {
+      "claim_id": "061c4fa7b9acbbb1",
+      "visible_claim": "6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。",
+      "numbers": {
+        "6": {
+          "number": "6",
+          "status": "anchored",
+          "normative_location": "§9.2",
+          "normative_quote": "「冻结前的 6 件待办」编号表 1–6。"
+        },
+        "2026": {
+          "number": "2026",
+          "status": "anchored",
+          "normative_location": "§9.2#3 / 附表 A·B",
+          "normative_quote": "待办 3/4 完成日「2026-11-24」写入附表。"
+        },
+        "11": {
+          "number": "11",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "完成日「2026-11-24」的月/日片段，不单独计数。"
+        },
+        "24": {
+          "number": "24",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "完成日「2026-11-24」的月/日片段，不单独计数。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "section_memo",
+          "section": "sec-9-运行纪律与冻结前待办-冻结前的-6-件待办全部完成-等-reviewer-r",
+          "number": "6"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-9-运行纪律与冻结前待办-冻结前的-6-件待办全部完成-等-reviewer-r",
+          "number": "2026"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-9-运行纪律与冻结前待办-冻结前的-6-件待办全部完成-等-reviewer-r",
+          "number": "11"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-9-运行纪律与冻结前待办-冻结前的-6-件待办全部完成-等-reviewer-r",
+          "number": "24"
+        }
+      ]
+    },
+    {
+      "claim_id": "74a27ec67c81a4ed",
+      "visible_claim": "美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。",
+      "numbers": {
+        "15": {
+          "number": "15",
+          "status": "anchored",
+          "normative_location": "附表 A 标题",
+          "normative_quote": "「美股 15 个固定」候选枚举。"
+        },
+        "8": {
+          "number": "8",
+          "status": "anchored",
+          "normative_location": "附表 A 导语",
+          "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+        },
+        "10": {
+          "number": "10",
+          "status": "anchored",
+          "normative_location": "附表 A 导语",
+          "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+        },
+        "22": {
+          "number": "22",
+          "status": "anchored",
+          "normative_location": "附表 A 导语",
+          "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+        },
+        "40": {
+          "number": "40",
+          "status": "anchored",
+          "normative_location": "附表 A 导语",
+          "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+        },
+        "2": {
+          "number": "2",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "§2 节交叉引用，不是数量。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "section_memo",
+          "section": "sec-附表-a-候选清单-美股-15-个-a-股-40-个-各自从参选起点算-5-个美",
+          "number": "15"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-附表-a-候选清单-美股-15-个-a-股-40-个-各自从参选起点算-5-个美",
+          "number": "8"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-附表-a-候选清单-美股-15-个-a-股-40-个-各自从参选起点算-5-个美",
+          "number": "10"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-附表-a-候选清单-美股-15-个-a-股-40-个-各自从参选起点算-5-个美",
+          "number": "22"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-附表-a-候选清单-美股-15-个-a-股-40-个-各自从参选起点算-5-个美",
+          "number": "40"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-附表-a-候选清单-美股-15-个-a-股-40-个-各自从参选起点算-5-个美",
+          "number": "2"
+        }
+      ]
+    },
+    {
+      "claim_id": "ae099f76dc244174",
+      "visible_claim": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "numbers": {
+        "2006": {
+          "number": "2006",
+          "status": "anchored",
+          "normative_location": "附表 B 导语",
+          "normative_quote": "设计期窗「2006–2015 只用 ≤2015 的数据」+ JSON END=2015-12-31。"
+        },
+        "2015": {
+          "number": "2015",
+          "status": "anchored",
+          "normative_location": "附表 B 导语",
+          "normative_quote": "设计期窗「2006–2015 只用 ≤2015 的数据」+ JSON END=2015-12-31。"
+        },
+        "15.5%": {
+          "number": "15.5%",
+          "status": "anchored",
+          "normative_location": "§3 + 附表 B JSON",
+          "normative_quote": "附表 B：v6 净年化 2006–15 = 15.54（文四舍五入 15.5%）"
+        },
+        "13.3%": {
+          "number": "13.3%",
+          "status": "anchored",
+          "normative_location": "§3 设计期年化 / 附表 B",
+          "normative_quote": "「设计期 v6 净每年 15.5%；只用当年已发布的指数是 13.3%（第 47 行）」"
+        },
+        "2008": {
+          "number": "2008",
+          "status": "anchored",
+          "normative_location": "附表 B JSON 信号画像",
+          "normative_quote": "2008 年 A 股紧张月数 = 12；导语「紧张集中在 2008 年」。"
+        },
+        "24%": {
+          "number": "24%",
+          "status": "anchored",
+          "normative_location": "附表 B JSON",
+          "normative_quote": "「紧张时平均股票仓位」= 0.24"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "section_memo",
+          "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+          "number": "2006"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+          "number": "2015"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+          "number": "2015"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+          "number": "15.5%"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+          "number": "13.3%"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+          "number": "2008"
+        },
+        {
+          "kind": "section_memo",
+          "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+          "number": "24%"
+        }
+      ]
+    },
+    {
+      "claim_id": "294bc3996b7598b0",
+      "visible_claim": "> **美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。**",
+      "numbers": {
+        "15": {
+          "number": "15",
+          "status": "anchored",
+          "normative_location": "§1.1 / 附表 A",
+          "normative_quote": "「美股名额（15 个）」列举 SPX…DWRTF。"
+        },
+        "40": {
+          "number": "40",
+          "status": "anchored",
+          "normative_location": "§1.1 / 附表 A",
+          "normative_quote": "「A 股约 40 个」= 8 宽基红利 +10 一级行业 +22 主题（附表 A 导语）。"
+        },
+        "3": {
+          "number": "3",
+          "status": "anchored",
+          "normative_location": "§1.4 表",
+          "normative_quote": "「每个名额选几只 | 3 | D40-7…」且 §1 要点「从数据里定的数字正好 3 个」指表中标「计」的三行。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "15"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "40"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "3"
+        }
+      ]
+    },
+    {
+      "claim_id": "48d2194423d0d732",
+      "visible_claim": "> **只用场内基金；溢价偏离超 5 个点换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。**",
+      "numbers": {
+        "5": {
+          "number": "5",
+          "status": "anchored",
+          "normative_location": "§2 表",
+          "normative_quote": "「溢价比自身过去 60 个交易日溢价中位数高 5 个点以上不买」"
+        },
+        "1": {
+          "number": "1",
+          "status": "anchored",
+          "normative_location": "§2 表",
+          "normative_quote": "「每只最多占名额的 1/3（美股 20 万）」分子 1。"
+        },
+        "3": {
+          "number": "3",
+          "status": "anchored",
+          "normative_location": "§2",
+          "normative_quote": "「每只最多占名额的 1/3」分母 3；执行层不计入 §1.4 三个「计」。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "5"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "1"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "3"
+        }
+      ]
+    },
+    {
+      "claim_id": "6f24b558ce18b5d9",
+      "visible_claim": "> **预测表、合成行情、跑前八问、事前画像、红队都按设计评审第 2.1 版写；全部判据通过的机会约三成。**",
+      "numbers": {
+        "2.1": {
+          "number": "2.1",
+          "status": "anchored",
+          "normative_location": "Metadata + §3 导语",
+          "normative_quote": "依据行：「设计评审第 2.1 版（`docs/reference/strategy-design-review.md`）」"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "2.1"
+        }
+      ]
+    },
+    {
+      "claim_id": "9ade215ea942710d",
+      "visible_claim": "> **检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。**",
+      "numbers": {
+        "2016": {
+          "number": "2016",
+          "status": "anchored",
+          "normative_location": "§4 导语 / §5.1",
+          "normative_quote": "§4 要点写「检验段 2016–2026」；§5 规范窗「2016-01-01 → 2026-09-30（已污染段）」。"
+        },
+        "2026": {
+          "number": "2026",
+          "status": "anchored",
+          "normative_location": "§4 导语 / §5.1",
+          "normative_quote": "§4 要点写「检验段 2016–2026」；§5 规范窗「2016-01-01 → 2026-09-30（已污染段）」。"
+        },
+        "1": {
+          "number": "1",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "D9-1 是 AGENTS 合同条款编号，不是数值主张。"
+        },
+        "12": {
+          "number": "12",
+          "status": "anchored",
+          "normative_location": "§4 表 #6",
+          "normative_quote": "「A 股选人的试验次数约 12 种」逐项列举。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "2016"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "2026"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "1"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "12"
+        }
+      ]
+    },
+    {
+      "claim_id": "b95888c406d22ebd",
+      "visible_claim": "> **检验段 2016-01 → 2026-09；判据是回撤不超过 40%、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。**",
+      "numbers": {
+        "2016": {
+          "number": "2016",
+          "status": "anchored",
+          "normative_location": "§5.1",
+          "normative_quote": "「检验段：2016-01-01 → 2026-09-30（已污染段）」"
+        },
+        "01": {
+          "number": "01",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "检验段日历端点的月日片段（2016-01 / 2026-09），不单独计数。"
+        },
+        "2026": {
+          "number": "2026",
+          "status": "anchored",
+          "normative_location": "§5.1",
+          "normative_quote": "「检验段：2016-01-01 → 2026-09-30（已污染段）」"
+        },
+        "09": {
+          "number": "09",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "检验段日历端点的月日片段（2016-01 / 2026-09），不单独计数。"
+        },
+        "40%": {
+          "number": "40%",
+          "status": "anchored",
+          "normative_location": "§5 判据表 ①",
+          "normative_quote": "「回撤 ≤ 40%…100 万最低不跌破 60 万」"
+        },
+        "4": {
+          "number": "4",
+          "status": "anchored",
+          "normative_location": "§5 判据表",
+          "normative_quote": "「防守保费不超过 4 点」/ ledger「≤ 4 点」"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "2016"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "01"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "2026"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "09"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "40%"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "4"
+        }
+      ]
+    },
+    {
+      "claim_id": "b167faa995c9c7c8",
+      "visible_claim": "> **8 种情形各有一条警戒线：落在“事先认下的代价”里是正常代价；越过“超出就要查”的线，说明策略性格变了，先查原因（冻结后不改）。**",
+      "numbers": {
+        "8": {
+          "number": "8",
+          "status": "anchored",
+          "normative_location": "§6",
+          "normative_quote": "疼痛表列 8 行情形。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "8"
+        }
+      ]
+    },
+    {
+      "claim_id": "3108004a40478af1",
+      "visible_claim": "> **影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。**",
+      "numbers": {
+        "60": {
+          "number": "60",
+          "status": "anchored",
+          "normative_location": "§7",
+          "normative_quote": "「模拟盘跌破 60 万…暂停」= D39 底线与同 §5 回撤口径一致。"
+        },
+        "6": {
+          "number": "6",
+          "status": "anchored",
+          "normative_location": "§7",
+          "normative_quote": "「连续 6 个月对同仓位基准累计落后超过 6 点」两处 6 同一暂停规则。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "60"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "6"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "6"
+        }
+      ]
+    },
+    {
+      "claim_id": "c60426622fd3f60d",
+      "visible_claim": "> **主题指数回填、指数与 ETF 的差异、腾讯减法 qfq、份额折算假跳空，4 项每次报告都要写。**",
+      "numbers": {
+        "4": {
+          "number": "4",
+          "status": "anchored",
+          "normative_location": "§8",
+          "normative_quote": "要点：「主题指数回填…4 项每次报告都要写」（另两行表还有美股代理/申万差异）。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "4"
+        }
+      ]
+    },
+    {
+      "claim_id": "58905331bd775f21",
+      "visible_claim": "> **6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。**",
+      "numbers": {
+        "6": {
+          "number": "6",
+          "status": "anchored",
+          "normative_location": "§9.2",
+          "normative_quote": "「冻结前的 6 件待办」编号表 1–6。"
+        },
+        "2026": {
+          "number": "2026",
+          "status": "anchored",
+          "normative_location": "§9.2#3 / 附表 A·B",
+          "normative_quote": "待办 3/4 完成日「2026-11-24」写入附表。"
+        },
+        "11": {
+          "number": "11",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "完成日「2026-11-24」的月/日片段，不单独计数。"
+        },
+        "24": {
+          "number": "24",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "完成日「2026-11-24」的月/日片段，不单独计数。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "6"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "2026"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "11"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "24"
+        }
+      ]
+    },
+    {
+      "claim_id": "77170dd4dae84fd1",
+      "visible_claim": "> **美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。**",
+      "numbers": {
+        "15": {
+          "number": "15",
+          "status": "anchored",
+          "normative_location": "附表 A 标题",
+          "normative_quote": "「美股 15 个固定」候选枚举。"
+        },
+        "8": {
+          "number": "8",
+          "status": "anchored",
+          "normative_location": "附表 A 导语",
+          "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+        },
+        "10": {
+          "number": "10",
+          "status": "anchored",
+          "normative_location": "附表 A 导语",
+          "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+        },
+        "22": {
+          "number": "22",
+          "status": "anchored",
+          "normative_location": "附表 A 导语",
+          "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+        },
+        "40": {
+          "number": "40",
+          "status": "anchored",
+          "normative_location": "附表 A 导语",
+          "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+        },
+        "2": {
+          "number": "2",
+          "status": "excluded_non_content",
+          "normative_location": "—",
+          "normative_quote": "—",
+          "exclusion_rationale": "§2 节交叉引用，不是数量。"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "15"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "8"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "10"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "22"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "40"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "2"
+        }
+      ]
+    },
+    {
+      "claim_id": "c1c3a7d3667f9efe",
+      "visible_claim": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "numbers": {
+        "2006": {
+          "number": "2006",
+          "status": "anchored",
+          "normative_location": "附表 B 导语",
+          "normative_quote": "设计期窗「2006–2015 只用 ≤2015 的数据」+ JSON END=2015-12-31。"
+        },
+        "2015": {
+          "number": "2015",
+          "status": "anchored",
+          "normative_location": "附表 B 导语",
+          "normative_quote": "设计期窗「2006–2015 只用 ≤2015 的数据」+ JSON END=2015-12-31。"
+        },
+        "15.5%": {
+          "number": "15.5%",
+          "status": "anchored",
+          "normative_location": "§3 + 附表 B JSON",
+          "normative_quote": "附表 B：v6 净年化 2006–15 = 15.54（文四舍五入 15.5%）"
+        },
+        "13.3%": {
+          "number": "13.3%",
+          "status": "anchored",
+          "normative_location": "§3 设计期年化 / 附表 B",
+          "normative_quote": "「设计期 v6 净每年 15.5%；只用当年已发布的指数是 13.3%（第 47 行）」"
+        },
+        "2008": {
+          "number": "2008",
+          "status": "anchored",
+          "normative_location": "附表 B JSON 信号画像",
+          "normative_quote": "2008 年 A 股紧张月数 = 12；导语「紧张集中在 2008 年」。"
+        },
+        "24%": {
+          "number": "24%",
+          "status": "anchored",
+          "normative_location": "附表 B JSON",
+          "normative_quote": "「紧张时平均股票仓位」= 0.24"
+        }
+      },
+      "source_occurrences": [
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "2006"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "2015"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "2015"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "15.5%"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "13.3%"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "2008"
+        },
+        {
+          "kind": "md_blockquote_memo",
+          "section": null,
+          "number": "24%"
+        }
+      ]
+    }
+  ],
+  "entries": [
+    {
+      "kind": "section_memo",
+      "section": "sec-1-策略定义-每个名额每月选最强的-3-只-只在确认紧张时按把握减仓",
+      "visible_claim": "美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。",
+      "claim_id": "bf181a888a991878",
+      "text": "美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。",
+      "number": "15",
+      "status": "anchored",
+      "normative_location": "§1.1 / 附表 A",
+      "normative_quote": "「美股名额（15 个）」列举 SPX…DWRTF。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-1-策略定义-每个名额每月选最强的-3-只-只在确认紧张时按把握减仓",
+      "visible_claim": "美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。",
+      "claim_id": "bf181a888a991878",
+      "text": "美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。",
+      "number": "40",
+      "status": "anchored",
+      "normative_location": "§1.1 / 附表 A",
+      "normative_quote": "「A 股约 40 个」= 8 宽基红利 +10 一级行业 +22 主题（附表 A 导语）。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-1-策略定义-每个名额每月选最强的-3-只-只在确认紧张时按把握减仓",
+      "visible_claim": "美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。",
+      "claim_id": "bf181a888a991878",
+      "text": "美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。",
+      "number": "3",
+      "status": "anchored",
+      "normative_location": "§1.4 表",
+      "normative_quote": "「每个名额选几只 | 3 | D40-7…」且 §1 要点「从数据里定的数字正好 3 个」指表中标「计」的三行。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-2-执行层规则-溢价比常态高-5-个点不买-常年溢价品种不另设上限-不计入-3-",
+      "visible_claim": "只用场内基金；溢价偏离超 5 个点 换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。",
+      "claim_id": "641a0840dc0f7cf8",
+      "text": "只用场内基金；溢价偏离超 5 个点 换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。",
+      "number": "5",
+      "status": "anchored",
+      "normative_location": "§2 表",
+      "normative_quote": "「溢价比自身过去 60 个交易日溢价中位数高 5 个点以上不买」"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-2-执行层规则-溢价比常态高-5-个点不买-常年溢价品种不另设上限-不计入-3-",
+      "visible_claim": "只用场内基金；溢价偏离超 5 个点 换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。",
+      "claim_id": "641a0840dc0f7cf8",
+      "text": "只用场内基金；溢价偏离超 5 个点 换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。",
+      "number": "1",
+      "status": "anchored",
+      "normative_location": "§2 表",
+      "normative_quote": "「每只最多占名额的 1/3（美股 20 万）」分子 1。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-2-执行层规则-溢价比常态高-5-个点不买-常年溢价品种不另设上限-不计入-3-",
+      "visible_claim": "只用场内基金；溢价偏离超 5 个点 换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。",
+      "claim_id": "641a0840dc0f7cf8",
+      "text": "只用场内基金；溢价偏离超 5 个点 换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。",
+      "number": "3",
+      "status": "anchored",
+      "normative_location": "§2",
+      "normative_quote": "「每只最多占名额的 1/3」分母 3；执行层不计入 §1.4 三个「计」。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-3-设计评审-预计每年比基准多约-1-2-个点-六种合成行情的中间情况都守住-6",
+      "visible_claim": "预测表、合成行情、跑前八问、事前画像、红队都按设计评审第 2.1 版写；全部判据通过的机会约三成。",
+      "claim_id": "5d31b76529cdf51c",
+      "text": "预测表、合成行情、跑前八问、事前画像、红队都按设计评审第 2.1 版写；全部判据通过的机会约三成。",
+      "number": "2.1",
+      "status": "anchored",
+      "normative_location": "Metadata + §3 导语",
+      "normative_quote": "依据行：「设计评审第 2.1 版（`docs/reference/strategy-design-review.md`）」"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-4-已经看过的信息-检验段不干净-美股-60-是在知道美股强之后定的",
+      "visible_claim": "检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。",
+      "claim_id": "dd8dce39577767db",
+      "text": "检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。",
+      "number": "2016",
+      "status": "anchored",
+      "normative_location": "§4 导语 / §5.1",
+      "normative_quote": "§4 要点写「检验段 2016–2026」；§5 规范窗「2016-01-01 → 2026-09-30（已污染段）」。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-4-已经看过的信息-检验段不干净-美股-60-是在知道美股强之后定的",
+      "visible_claim": "检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。",
+      "claim_id": "dd8dce39577767db",
+      "text": "检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。",
+      "number": "2026",
+      "status": "anchored",
+      "normative_location": "§4 导语 / §5.1",
+      "normative_quote": "§4 要点写「检验段 2016–2026」；§5 规范窗「2016-01-01 → 2026-09-30（已污染段）」。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-4-已经看过的信息-检验段不干净-美股-60-是在知道美股强之后定的",
+      "visible_claim": "检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。",
+      "claim_id": "dd8dce39577767db",
+      "text": "检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。",
+      "number": "1",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "D9-1 是 AGENTS 合同条款编号，不是数值主张。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-4-已经看过的信息-检验段不干净-美股-60-是在知道美股强之后定的",
+      "visible_claim": "检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。",
+      "claim_id": "dd8dce39577767db",
+      "text": "检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。",
+      "number": "12",
+      "status": "anchored",
+      "normative_location": "§4 表 #6",
+      "normative_quote": "「A 股选人的试验次数约 12 种」逐项列举。"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-4-已经看过的信息-检验段不干净-美股-60-是在知道美股强之后定的",
+      "visible_claim": "12−1 没挑出东西，规则不改",
+      "claim_id": "a0975eee20b47ba3",
+      "text": "12−1 没挑出东西，规则不改",
+      "number": "12",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "12−1 是回看标签（§1.4 表「回看期」），不是两个独立数量。"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-4-已经看过的信息-检验段不干净-美股-60-是在知道美股强之后定的",
+      "visible_claim": "12−1 没挑出东西，规则不改",
+      "claim_id": "a0975eee20b47ba3",
+      "text": "12−1 没挑出东西，规则不改",
+      "number": "1",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "12−1 是回看标签（§1.4 表「回看期」），不是两个独立数量。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+      "visible_claim": "检验段 2016-01 → 2026-09；判据是回撤不超过 40% 、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。",
+      "claim_id": "bbf5050e8a1e204f",
+      "text": "检验段 2016-01 → 2026-09；判据是回撤不超过 40% 、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。",
+      "number": "2016",
+      "status": "anchored",
+      "normative_location": "§5.1",
+      "normative_quote": "「检验段：2016-01-01 → 2026-09-30（已污染段）」"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+      "visible_claim": "检验段 2016-01 → 2026-09；判据是回撤不超过 40% 、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。",
+      "claim_id": "bbf5050e8a1e204f",
+      "text": "检验段 2016-01 → 2026-09；判据是回撤不超过 40% 、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。",
+      "number": "01",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "检验段日历端点的月日片段（2016-01 / 2026-09），不单独计数。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+      "visible_claim": "检验段 2016-01 → 2026-09；判据是回撤不超过 40% 、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。",
+      "claim_id": "bbf5050e8a1e204f",
+      "text": "检验段 2016-01 → 2026-09；判据是回撤不超过 40% 、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。",
+      "number": "2026",
+      "status": "anchored",
+      "normative_location": "§5.1",
+      "normative_quote": "「检验段：2016-01-01 → 2026-09-30（已污染段）」"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+      "visible_claim": "检验段 2016-01 → 2026-09；判据是回撤不超过 40% 、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。",
+      "claim_id": "bbf5050e8a1e204f",
+      "text": "检验段 2016-01 → 2026-09；判据是回撤不超过 40% 、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。",
+      "number": "09",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "检验段日历端点的月日片段（2016-01 / 2026-09），不单独计数。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+      "visible_claim": "检验段 2016-01 → 2026-09；判据是回撤不超过 40% 、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。",
+      "claim_id": "bbf5050e8a1e204f",
+      "text": "检验段 2016-01 → 2026-09；判据是回撤不超过 40% 、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。",
+      "number": "40%",
+      "status": "anchored",
+      "normative_location": "§5 判据表 ①",
+      "normative_quote": "「回撤 ≤ 40%…100 万最低不跌破 60 万」"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+      "visible_claim": "检验段 2016-01 → 2026-09；判据是回撤不超过 40% 、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。",
+      "claim_id": "bbf5050e8a1e204f",
+      "text": "检验段 2016-01 → 2026-09；判据是回撤不超过 40% 、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。",
+      "number": "4",
+      "status": "anchored",
+      "normative_location": "§5 判据表",
+      "normative_quote": "「防守保费不超过 4 点」/ ledger「≤ 4 点」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+      "visible_claim": "回撤 ≤ 40%",
+      "claim_id": "738d1c46335db10f",
+      "text": "回撤 ≤ 40%",
+      "number": "40%",
+      "status": "anchored",
+      "normative_location": "§5 判据表 ①",
+      "normative_quote": "「回撤 ≤ 40%…100 万最低不跌破 60 万」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+      "visible_claim": "≤ 4 点",
+      "claim_id": "098f79a2f1295ebe",
+      "text": "≤ 4 点",
+      "number": "4",
+      "status": "anchored",
+      "normative_location": "§5 判据表",
+      "normative_quote": "「防守保费不超过 4 点」/ ledger「≤ 4 点」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-5-一次性检验-和同仓位基准比-四条判据全部满足才通过",
+      "visible_claim": "≥ 0",
+      "claim_id": "d75ee0a26740c413",
+      "text": "≥ 0",
+      "number": "0",
+      "status": "anchored",
+      "normative_location": "§5 判据表 ④",
+      "normative_quote": "「对同仓位基准不落后」ledger 缩写「≥ 0」"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "8 种情形各有一条警戒线：落在“事先认下的代价”里是正常代价；越过“超出就要查”的线，说明策略性格变了，先查原因（冻结后不改）。",
+      "claim_id": "68e8b564c296b3d2",
+      "text": "8 种情形各有一条警戒线：落在“事先认下的代价”里是正常代价；越过“超出就要查”的线，说明策略性格变了，先查原因（冻结后不改）。",
+      "number": "8",
+      "status": "anchored",
+      "normative_location": "§6",
+      "normative_quote": "疼痛表列 8 行情形。"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "2006–2010 每年少约 9 点 （设计期）",
+      "claim_id": "49e01093248439d3",
+      "text": "2006–2010 每年少约 9 点 （设计期）",
+      "number": "2006",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「A 股大牛市…2006–2010 每年少约 9 点」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "2006–2010 每年少约 9 点 （设计期）",
+      "claim_id": "49e01093248439d3",
+      "text": "2006–2010 每年少约 9 点 （设计期）",
+      "number": "2010",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「A 股大牛市…2006–2010 每年少约 9 点」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "2006–2010 每年少约 9 点 （设计期）",
+      "claim_id": "49e01093248439d3",
+      "text": "2006–2010 每年少约 9 点 （设计期）",
+      "number": "9",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「A 股大牛市…2006–2010 每年少约 9 点」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "合成 V 型每年落后约 15 点 （短期年化）",
+      "claim_id": "17855e1d9f4fccdb",
+      "text": "合成 V 型每年落后约 15 点 （短期年化）",
+      "number": "15",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「合成 V 型每年落后约 15 点（短期年化）」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "较差的十分之一约剩 58.8 万",
+      "claim_id": "2cd298494ca95686",
+      "text": "较差的十分之一约剩 58.8 万",
+      "number": "58.8",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「突发急跌…较差的十分之一约剩 58.8 万」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "每年少约 1.6 点",
+      "claim_id": "12f56d7201358c0e",
+      "text": "每年少约 1.6 点",
+      "number": "1.6",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「挑选没有动量的年份…每年少约 1.6 点」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "claim_id": "58c536c41b6dc685",
+      "text": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "number": "16",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "claim_id": "58c536c41b6dc685",
+      "text": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "number": "2011",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "claim_id": "58c536c41b6dc685",
+      "text": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "number": "13",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "claim_id": "58c536c41b6dc685",
+      "text": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "number": "+16.9",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "claim_id": "58c536c41b6dc685",
+      "text": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "number": "2014",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "claim_id": "58c536c41b6dc685",
+      "text": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "number": "15",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "claim_id": "58c536c41b6dc685",
+      "text": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "number": "−21.1",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "claim_id": "58c536c41b6dc685",
+      "text": "两段各约 ±16 万 ：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）",
+      "number": "40",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "约 1.8 万 （常态溢价约 9%、单只 20 万，D40-14 不另设上限）",
+      "claim_id": "9c2e2addc8bce3e4",
+      "text": "约 1.8 万 （常态溢价约 9%、单只 20 万，D40-14 不另设上限）",
+      "number": "1.8",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表 + §2",
+      "normative_quote": "「稀缺 QDII 溢价消失…约 1.8 万（常态溢价约 9%、单只 20 万，D40-14）」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "约 1.8 万 （常态溢价约 9%、单只 20 万，D40-14 不另设上限）",
+      "claim_id": "9c2e2addc8bce3e4",
+      "text": "约 1.8 万 （常态溢价约 9%、单只 20 万，D40-14 不另设上限）",
+      "number": "9%",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表 + §2",
+      "normative_quote": "「稀缺 QDII 溢价消失…约 1.8 万（常态溢价约 9%、单只 20 万，D40-14）」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "约 1.8 万 （常态溢价约 9%、单只 20 万，D40-14 不另设上限）",
+      "claim_id": "9c2e2addc8bce3e4",
+      "text": "约 1.8 万 （常态溢价约 9%、单只 20 万，D40-14 不另设上限）",
+      "number": "20",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表 + §2",
+      "normative_quote": "「稀缺 QDII 溢价消失…约 1.8 万（常态溢价约 9%、单只 20 万，D40-14）」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "约 1.8 万 （常态溢价约 9%、单只 20 万，D40-14 不另设上限）",
+      "claim_id": "9c2e2addc8bce3e4",
+      "text": "约 1.8 万 （常态溢价约 9%、单只 20 万，D40-14 不另设上限）",
+      "number": "14",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "D40-14 决策编号，不是金额 14。"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "每年约 1.0–1.1 点",
+      "claim_id": "06e71020c528bf90",
+      "text": "每年约 1.0–1.1 点",
+      "number": "1.0",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「换手和成本…每年约 1.0–1.1 点」"
+    },
+    {
+      "kind": "ledger_big",
+      "section": "sec-6-疼痛表-a-股大牛市每年少约-9-点-v-型反弹落后约-15-点-事先接受",
+      "visible_claim": "每年约 1.0–1.1 点",
+      "claim_id": "06e71020c528bf90",
+      "text": "每年约 1.0–1.1 点",
+      "number": "1.1",
+      "status": "anchored",
+      "normative_location": "§6 疼痛表",
+      "normative_quote": "「换手和成本…每年约 1.0–1.1 点」"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-7-前向模拟盘与影子跟踪-通过后至少-6-个月模拟盘-另外-3-种规则只记录不交",
+      "visible_claim": "影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。",
+      "claim_id": "2a897973c6b0dafb",
+      "text": "影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。",
+      "number": "60",
+      "status": "anchored",
+      "normative_location": "§7",
+      "normative_quote": "「模拟盘跌破 60 万…暂停」= D39 底线与同 §5 回撤口径一致。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-7-前向模拟盘与影子跟踪-通过后至少-6-个月模拟盘-另外-3-种规则只记录不交",
+      "visible_claim": "影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。",
+      "claim_id": "2a897973c6b0dafb",
+      "text": "影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。",
+      "number": "6",
+      "status": "anchored",
+      "normative_location": "§7",
+      "normative_quote": "「连续 6 个月对同仓位基准累计落后超过 6 点」两处 6 同一暂停规则。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-7-前向模拟盘与影子跟踪-通过后至少-6-个月模拟盘-另外-3-种规则只记录不交",
+      "visible_claim": "影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。",
+      "claim_id": "2a897973c6b0dafb",
+      "text": "影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。",
+      "number": "6",
+      "status": "anchored",
+      "normative_location": "§7",
+      "normative_quote": "「连续 6 个月对同仓位基准累计落后超过 6 点」两处 6 同一暂停规则。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-8-数据陷阱声明-结论必须声明四项陷阱-加上美股代理-实盘载体和申万回溯的差异",
+      "visible_claim": "主题指数回填、指数与 ETF 的差异、腾讯减法 qfq、份额折算假跳空，4 项每次报告都要写。",
+      "claim_id": "061f6c82a91e8659",
+      "text": "主题指数回填、指数与 ETF 的差异、腾讯减法 qfq、份额折算假跳空，4 项每次报告都要写。",
+      "number": "4",
+      "status": "anchored",
+      "normative_location": "§8",
+      "normative_quote": "要点：「主题指数回填…4 项每次报告都要写」（另两行表还有美股代理/申万差异）。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-9-运行纪律与冻结前待办-冻结前的-6-件待办全部完成-等-reviewer-r",
+      "visible_claim": "6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。",
+      "claim_id": "061c4fa7b9acbbb1",
+      "text": "6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。",
+      "number": "6",
+      "status": "anchored",
+      "normative_location": "§9.2",
+      "normative_quote": "「冻结前的 6 件待办」编号表 1–6。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-9-运行纪律与冻结前待办-冻结前的-6-件待办全部完成-等-reviewer-r",
+      "visible_claim": "6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。",
+      "claim_id": "061c4fa7b9acbbb1",
+      "text": "6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。",
+      "number": "2026",
+      "status": "anchored",
+      "normative_location": "§9.2#3 / 附表 A·B",
+      "normative_quote": "待办 3/4 完成日「2026-11-24」写入附表。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-9-运行纪律与冻结前待办-冻结前的-6-件待办全部完成-等-reviewer-r",
+      "visible_claim": "6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。",
+      "claim_id": "061c4fa7b9acbbb1",
+      "text": "6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。",
+      "number": "11",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "完成日「2026-11-24」的月/日片段，不单独计数。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-9-运行纪律与冻结前待办-冻结前的-6-件待办全部完成-等-reviewer-r",
+      "visible_claim": "6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。",
+      "claim_id": "061c4fa7b9acbbb1",
+      "text": "6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。",
+      "number": "24",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "完成日「2026-11-24」的月/日片段，不单独计数。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-附表-a-候选清单-美股-15-个-a-股-40-个-各自从参选起点算-5-个美",
+      "visible_claim": "美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。",
+      "claim_id": "74a27ec67c81a4ed",
+      "text": "美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。",
+      "number": "15",
+      "status": "anchored",
+      "normative_location": "附表 A 标题",
+      "normative_quote": "「美股 15 个固定」候选枚举。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-附表-a-候选清单-美股-15-个-a-股-40-个-各自从参选起点算-5-个美",
+      "visible_claim": "美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。",
+      "claim_id": "74a27ec67c81a4ed",
+      "text": "美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。",
+      "number": "8",
+      "status": "anchored",
+      "normative_location": "附表 A 导语",
+      "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-附表-a-候选清单-美股-15-个-a-股-40-个-各自从参选起点算-5-个美",
+      "visible_claim": "美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。",
+      "claim_id": "74a27ec67c81a4ed",
+      "text": "美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。",
+      "number": "10",
+      "status": "anchored",
+      "normative_location": "附表 A 导语",
+      "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-附表-a-候选清单-美股-15-个-a-股-40-个-各自从参选起点算-5-个美",
+      "visible_claim": "美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。",
+      "claim_id": "74a27ec67c81a4ed",
+      "text": "美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。",
+      "number": "22",
+      "status": "anchored",
+      "normative_location": "附表 A 导语",
+      "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-附表-a-候选清单-美股-15-个-a-股-40-个-各自从参选起点算-5-个美",
+      "visible_claim": "美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。",
+      "claim_id": "74a27ec67c81a4ed",
+      "text": "美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。",
+      "number": "40",
+      "status": "anchored",
+      "normative_location": "附表 A 导语",
+      "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-附表-a-候选清单-美股-15-个-a-股-40-个-各自从参选起点算-5-个美",
+      "visible_claim": "美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。",
+      "claim_id": "74a27ec67c81a4ed",
+      "text": "美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。",
+      "number": "2",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "§2 节交叉引用，不是数量。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+      "visible_claim": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "claim_id": "ae099f76dc244174",
+      "text": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "number": "2006",
+      "status": "anchored",
+      "normative_location": "附表 B 导语",
+      "normative_quote": "设计期窗「2006–2015 只用 ≤2015 的数据」+ JSON END=2015-12-31。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+      "visible_claim": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "claim_id": "ae099f76dc244174",
+      "text": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "number": "2015",
+      "status": "anchored",
+      "normative_location": "附表 B 导语",
+      "normative_quote": "设计期窗「2006–2015 只用 ≤2015 的数据」+ JSON END=2015-12-31。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+      "visible_claim": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "claim_id": "ae099f76dc244174",
+      "text": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "number": "2015",
+      "status": "anchored",
+      "normative_location": "附表 B 导语",
+      "normative_quote": "设计期窗「2006–2015 只用 ≤2015 的数据」+ JSON END=2015-12-31。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+      "visible_claim": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "claim_id": "ae099f76dc244174",
+      "text": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "number": "15.5%",
+      "status": "anchored",
+      "normative_location": "§3 + 附表 B JSON",
+      "normative_quote": "附表 B：v6 净年化 2006–15 = 15.54（文四舍五入 15.5%）"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+      "visible_claim": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "claim_id": "ae099f76dc244174",
+      "text": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "number": "13.3%",
+      "status": "anchored",
+      "normative_location": "§3 设计期年化 / 附表 B",
+      "normative_quote": "「设计期 v6 净每年 15.5%；只用当年已发布的指数是 13.3%（第 47 行）」"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+      "visible_claim": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "claim_id": "ae099f76dc244174",
+      "text": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "number": "2008",
+      "status": "anchored",
+      "normative_location": "附表 B JSON 信号画像",
+      "normative_quote": "2008 年 A 股紧张月数 = 12；导语「紧张集中在 2008 年」。"
+    },
+    {
+      "kind": "section_memo",
+      "section": "sec-附表-b-设计期画像-v6-净每年-15-5-比-bm-主多-0-4-点-挑选-",
+      "visible_claim": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "claim_id": "ae099f76dc244174",
+      "text": "2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5% （只用当年已发布的指数 13.3% ）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。",
+      "number": "24%",
+      "status": "anchored",
+      "normative_location": "附表 B JSON",
+      "normative_quote": "「紧张时平均股票仓位」= 0.24"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。**",
+      "claim_id": "294bc3996b7598b0",
+      "text": "> **美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。**",
+      "number": "15",
+      "status": "anchored",
+      "normative_location": "§1.1 / 附表 A",
+      "normative_quote": "「美股名额（15 个）」列举 SPX…DWRTF。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。**",
+      "claim_id": "294bc3996b7598b0",
+      "text": "> **美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。**",
+      "number": "40",
+      "status": "anchored",
+      "normative_location": "§1.1 / 附表 A",
+      "normative_quote": "「A 股约 40 个」= 8 宽基红利 +10 一级行业 +22 主题（附表 A 导语）。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。**",
+      "claim_id": "294bc3996b7598b0",
+      "text": "> **美股 15 个候选、A 股约 40 个候选；每月末走四步，下一个交易日成交；从数据里定的数字正好 3 个。**",
+      "number": "3",
+      "status": "anchored",
+      "normative_location": "§1.4 表",
+      "normative_quote": "「每个名额选几只 | 3 | D40-7…」且 §1 要点「从数据里定的数字正好 3 个」指表中标「计」的三行。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **只用场内基金；溢价偏离超 5 个点换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。**",
+      "claim_id": "48d2194423d0d732",
+      "text": "> **只用场内基金；溢价偏离超 5 个点换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。**",
+      "number": "5",
+      "status": "anchored",
+      "normative_location": "§2 表",
+      "normative_quote": "「溢价比自身过去 60 个交易日溢价中位数高 5 个点以上不买」"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **只用场内基金；溢价偏离超 5 个点换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。**",
+      "claim_id": "48d2194423d0d732",
+      "text": "> **只用场内基金；溢价偏离超 5 个点换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。**",
+      "number": "1",
+      "status": "anchored",
+      "normative_location": "§2 表",
+      "normative_quote": "「每只最多占名额的 1/3（美股 20 万）」分子 1。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **只用场内基金；溢价偏离超 5 个点换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。**",
+      "claim_id": "48d2194423d0d732",
+      "text": "> **只用场内基金；溢价偏离超 5 个点换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。**",
+      "number": "3",
+      "status": "anchored",
+      "normative_location": "§2",
+      "normative_quote": "「每只最多占名额的 1/3」分母 3；执行层不计入 §1.4 三个「计」。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **预测表、合成行情、跑前八问、事前画像、红队都按设计评审第 2.1 版写；全部判据通过的机会约三成。**",
+      "claim_id": "6f24b558ce18b5d9",
+      "text": "> **预测表、合成行情、跑前八问、事前画像、红队都按设计评审第 2.1 版写；全部判据通过的机会约三成。**",
+      "number": "2.1",
+      "status": "anchored",
+      "normative_location": "Metadata + §3 导语",
+      "normative_quote": "依据行：「设计评审第 2.1 版（`docs/reference/strategy-design-review.md`）」"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。**",
+      "claim_id": "9ade215ea942710d",
+      "text": "> **检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。**",
+      "number": "2016",
+      "status": "anchored",
+      "normative_location": "§4 导语 / §5.1",
+      "normative_quote": "§4 要点写「检验段 2016–2026」；§5 规范窗「2016-01-01 → 2026-09-30（已污染段）」。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。**",
+      "claim_id": "9ade215ea942710d",
+      "text": "> **检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。**",
+      "number": "2026",
+      "status": "anchored",
+      "normative_location": "§4 导语 / §5.1",
+      "normative_quote": "§4 要点写「检验段 2016–2026」；§5 规范窗「2016-01-01 → 2026-09-30（已污染段）」。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。**",
+      "claim_id": "9ade215ea942710d",
+      "text": "> **检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。**",
+      "number": "1",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "D9-1 是 AGENTS 合同条款编号，不是数值主张。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。**",
+      "claim_id": "9ade215ea942710d",
+      "text": "> **检验段 2016–2026 只能作“已污染检验段”用一次（D9-1）；A 股选人已试约 12 种，v6 不再加新变体。**",
+      "number": "12",
+      "status": "anchored",
+      "normative_location": "§4 表 #6",
+      "normative_quote": "「A 股选人的试验次数约 12 种」逐项列举。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **检验段 2016-01 → 2026-09；判据是回撤不超过 40%、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。**",
+      "claim_id": "b95888c406d22ebd",
+      "text": "> **检验段 2016-01 → 2026-09；判据是回撤不超过 40%、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。**",
+      "number": "2016",
+      "status": "anchored",
+      "normative_location": "§5.1",
+      "normative_quote": "「检验段：2016-01-01 → 2026-09-30（已污染段）」"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **检验段 2016-01 → 2026-09；判据是回撤不超过 40%、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。**",
+      "claim_id": "b95888c406d22ebd",
+      "text": "> **检验段 2016-01 → 2026-09；判据是回撤不超过 40%、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。**",
+      "number": "01",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "检验段日历端点的月日片段（2016-01 / 2026-09），不单独计数。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **检验段 2016-01 → 2026-09；判据是回撤不超过 40%、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。**",
+      "claim_id": "b95888c406d22ebd",
+      "text": "> **检验段 2016-01 → 2026-09；判据是回撤不超过 40%、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。**",
+      "number": "2026",
+      "status": "anchored",
+      "normative_location": "§5.1",
+      "normative_quote": "「检验段：2016-01-01 → 2026-09-30（已污染段）」"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **检验段 2016-01 → 2026-09；判据是回撤不超过 40%、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。**",
+      "claim_id": "b95888c406d22ebd",
+      "text": "> **检验段 2016-01 → 2026-09；判据是回撤不超过 40%、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。**",
+      "number": "09",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "检验段日历端点的月日片段（2016-01 / 2026-09），不单独计数。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **检验段 2016-01 → 2026-09；判据是回撤不超过 40%、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。**",
+      "claim_id": "b95888c406d22ebd",
+      "text": "> **检验段 2016-01 → 2026-09；判据是回撤不超过 40%、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。**",
+      "number": "40%",
+      "status": "anchored",
+      "normative_location": "§5 判据表 ①",
+      "normative_quote": "「回撤 ≤ 40%…100 万最低不跌破 60 万」"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **检验段 2016-01 → 2026-09；判据是回撤不超过 40%、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。**",
+      "claim_id": "b95888c406d22ebd",
+      "text": "> **检验段 2016-01 → 2026-09；判据是回撤不超过 40%、防守保费不超过 4 点、风险收益比赢增强基准、对同仓位基准不落后。**",
+      "number": "4",
+      "status": "anchored",
+      "normative_location": "§5 判据表",
+      "normative_quote": "「防守保费不超过 4 点」/ ledger「≤ 4 点」"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **8 种情形各有一条警戒线：落在“事先认下的代价”里是正常代价；越过“超出就要查”的线，说明策略性格变了，先查原因（冻结后不改）。**",
+      "claim_id": "b167faa995c9c7c8",
+      "text": "> **8 种情形各有一条警戒线：落在“事先认下的代价”里是正常代价；越过“超出就要查”的线，说明策略性格变了，先查原因（冻结后不改）。**",
+      "number": "8",
+      "status": "anchored",
+      "normative_location": "§6",
+      "normative_quote": "疼痛表列 8 行情形。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。**",
+      "claim_id": "3108004a40478af1",
+      "text": "> **影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。**",
+      "number": "60",
+      "status": "anchored",
+      "normative_location": "§7",
+      "normative_quote": "「模拟盘跌破 60 万…暂停」= D39 底线与同 §5 回撤口径一致。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。**",
+      "claim_id": "3108004a40478af1",
+      "text": "> **影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。**",
+      "number": "6",
+      "status": "anchored",
+      "normative_location": "§7",
+      "normative_quote": "「连续 6 个月对同仓位基准累计落后超过 6 点」两处 6 同一暂停规则。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。**",
+      "claim_id": "3108004a40478af1",
+      "text": "> **影子跟踪的定义冻结后不改；模拟盘跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点，就暂停报告你。**",
+      "number": "6",
+      "status": "anchored",
+      "normative_location": "§7",
+      "normative_quote": "「连续 6 个月对同仓位基准累计落后超过 6 点」两处 6 同一暂停规则。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **主题指数回填、指数与 ETF 的差异、腾讯减法 qfq、份额折算假跳空，4 项每次报告都要写。**",
+      "claim_id": "c60426622fd3f60d",
+      "text": "> **主题指数回填、指数与 ETF 的差异、腾讯减法 qfq、份额折算假跳空，4 项每次报告都要写。**",
+      "number": "4",
+      "status": "anchored",
+      "normative_location": "§8",
+      "normative_quote": "要点：「主题指数回填…4 项每次报告都要写」（另两行表还有美股代理/申万差异）。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。**",
+      "claim_id": "58905331bd775f21",
+      "text": "> **6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。**",
+      "number": "6",
+      "status": "anchored",
+      "normative_location": "§9.2",
+      "normative_quote": "「冻结前的 6 件待办」编号表 1–6。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。**",
+      "claim_id": "58905331bd775f21",
+      "text": "> **6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。**",
+      "number": "2026",
+      "status": "anchored",
+      "normative_location": "§9.2#3 / 附表 A·B",
+      "normative_quote": "待办 3/4 完成日「2026-11-24」写入附表。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。**",
+      "claim_id": "58905331bd775f21",
+      "text": "> **6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。**",
+      "number": "11",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "完成日「2026-11-24」的月/日片段，不单独计数。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。**",
+      "claim_id": "58905331bd775f21",
+      "text": "> **6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。**",
+      "number": "24",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "完成日「2026-11-24」的月/日片段，不单独计数。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。**",
+      "claim_id": "77170dd4dae84fd1",
+      "text": "> **美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。**",
+      "number": "15",
+      "status": "anchored",
+      "normative_location": "附表 A 标题",
+      "normative_quote": "「美股 15 个固定」候选枚举。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。**",
+      "claim_id": "77170dd4dae84fd1",
+      "text": "> **美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。**",
+      "number": "8",
+      "status": "anchored",
+      "normative_location": "附表 A 导语",
+      "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。**",
+      "claim_id": "77170dd4dae84fd1",
+      "text": "> **美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。**",
+      "number": "10",
+      "status": "anchored",
+      "normative_location": "附表 A 导语",
+      "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。**",
+      "claim_id": "77170dd4dae84fd1",
+      "text": "> **美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。**",
+      "number": "22",
+      "status": "anchored",
+      "normative_location": "附表 A 导语",
+      "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。**",
+      "claim_id": "77170dd4dae84fd1",
+      "text": "> **美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。**",
+      "number": "40",
+      "status": "anchored",
+      "normative_location": "附表 A 导语",
+      "normative_quote": "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。**",
+      "claim_id": "77170dd4dae84fd1",
+      "text": "> **美股 15 个固定；A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题（细分化工不参选），到检验段末 40 个；指数池主判，买不到的候选按 §2 退路处理。**",
+      "number": "2",
+      "status": "excluded_non_content",
+      "normative_location": "—",
+      "normative_quote": "—",
+      "exclusion_rationale": "§2 节交叉引用，不是数量。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "claim_id": "c1c3a7d3667f9efe",
+      "text": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "number": "2006",
+      "status": "anchored",
+      "normative_location": "附表 B 导语",
+      "normative_quote": "设计期窗「2006–2015 只用 ≤2015 的数据」+ JSON END=2015-12-31。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "claim_id": "c1c3a7d3667f9efe",
+      "text": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "number": "2015",
+      "status": "anchored",
+      "normative_location": "附表 B 导语",
+      "normative_quote": "设计期窗「2006–2015 只用 ≤2015 的数据」+ JSON END=2015-12-31。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "claim_id": "c1c3a7d3667f9efe",
+      "text": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "number": "2015",
+      "status": "anchored",
+      "normative_location": "附表 B 导语",
+      "normative_quote": "设计期窗「2006–2015 只用 ≤2015 的数据」+ JSON END=2015-12-31。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "claim_id": "c1c3a7d3667f9efe",
+      "text": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "number": "15.5%",
+      "status": "anchored",
+      "normative_location": "§3 + 附表 B JSON",
+      "normative_quote": "附表 B：v6 净年化 2006–15 = 15.54（文四舍五入 15.5%）"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "claim_id": "c1c3a7d3667f9efe",
+      "text": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "number": "13.3%",
+      "status": "anchored",
+      "normative_location": "§3 设计期年化 / 附表 B",
+      "normative_quote": "「设计期 v6 净每年 15.5%；只用当年已发布的指数是 13.3%（第 47 行）」"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "claim_id": "c1c3a7d3667f9efe",
+      "text": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "number": "2008",
+      "status": "anchored",
+      "normative_location": "附表 B JSON 信号画像",
+      "normative_quote": "2008 年 A 股紧张月数 = 12；导语「紧张集中在 2008 年」。"
+    },
+    {
+      "kind": "md_blockquote_memo",
+      "section": null,
+      "visible_claim": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "claim_id": "c1c3a7d3667f9efe",
+      "text": "> **2006–2015 只用 ≤ 2015 的数据：v6 净每年 15.5%（只用当年已发布的指数 13.3%）；紧张集中在 2008 年，A 股紧张时平均只拿 24% 股票。**",
+      "number": "24%",
+      "status": "anchored",
+      "normative_location": "附表 B JSON",
+      "normative_quote": "「紧张时平均股票仓位」= 0.24"
+    }
+  ],
+  "completion": {
+    "total_tokens": 103,
+    "unfinished_tokens": 0,
+    "by_status": {
+      "anchored": 88,
+      "excluded_non_content": 15
+    },
+    "manual_pass_complete": true
+  },
+  "incremental_653de22": {
+    "compare": "8f7ffbae..653de223",
+    "in_scope_new_tokens": 8,
+    "entries": [
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "ledger_big",
+        "section": "sec-6-疼痛表",
+        "visible_claim": "每年约 1.0–1.1 点（附表 B 按设计期换手重估约 1.5 点，2.2 版补）",
+        "number": "1.0",
+        "status": "anchored",
+        "normative_location": "§6 疼痛表",
+        "normative_quote": "「换手和成本…每年约 1.0–1.1 点」",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "ledger_big",
+        "section": "sec-6-疼痛表",
+        "visible_claim": "每年约 1.0–1.1 点（附表 B 按设计期换手重估约 1.5 点，2.2 版补）",
+        "number": "1.1",
+        "status": "anchored",
+        "normative_location": "§6 疼痛表",
+        "normative_quote": "「换手和成本…每年约 1.0–1.1 点」",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "ledger_big",
+        "section": "sec-6-疼痛表",
+        "visible_claim": "每年约 1.0–1.1 点（附表 B 按设计期换手重估约 1.5 点，2.2 版补）",
+        "number": "1.5",
+        "status": "no_anchor_located",
+        "normative_location": "—",
+        "normative_quote": "—",
+        "exclusion_rationale": "Reviewer 在本轮 prereg/附表文本中未找到与该摘要素对应的独立规范字段（非证伪）。",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "ledger_big",
+        "section": "sec-6-疼痛表",
+        "visible_claim": "每年约 1.0–1.1 点（附表 B 按设计期换手重估约 1.5 点，2.2 版补）",
+        "number": "2.2",
+        "status": "no_anchor_located",
+        "normative_location": "—",
+        "normative_quote": "—",
+        "exclusion_rationale": "Reviewer 在本轮 prereg/附表文本中未找到与该摘要素对应的独立规范字段（非证伪）。",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "story_calcgrid",
+        "section": "sec-6-疼痛表",
+        "visible_claim": "每年约 1.0–1.5 点",
+        "number": "1.0",
+        "status": "no_anchor_located",
+        "normative_location": "—",
+        "normative_quote": "—",
+        "exclusion_rationale": "Reviewer 在本轮 prereg/附表文本中未找到与该摘要素对应的独立规范字段（非证伪）。",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "story_calcgrid",
+        "section": "sec-6-疼痛表",
+        "visible_claim": "每年约 1.0–1.5 点",
+        "number": "1.5",
+        "status": "no_anchor_located",
+        "normative_location": "—",
+        "normative_quote": "—",
+        "exclusion_rationale": "Reviewer 在本轮 prereg/附表文本中未找到与该摘要素对应的独立规范字段（非证伪）。",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "appendix_b_prose",
+        "section": "附表-b",
+        "visible_claim": "按单边 0.2% 每年约 1.5 点成本",
+        "number": "0.2%",
+        "status": "no_anchor_located",
+        "normative_location": "—",
+        "normative_quote": "—",
+        "exclusion_rationale": "Reviewer 在本轮 prereg/附表文本中未找到与该摘要素对应的独立规范字段（非证伪）。",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "appendix_b_prose",
+        "section": "附表-b",
+        "visible_claim": "按单边 0.2% 每年约 1.5 点成本",
+        "number": "1.5",
+        "status": "no_anchor_located",
+        "normative_location": "—",
+        "normative_quote": "—",
+        "exclusion_rationale": "Reviewer 在本轮 prereg/附表文本中未找到与该摘要素对应的独立规范字段（非证伪）。",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      }
+    ]
+  }
+}
