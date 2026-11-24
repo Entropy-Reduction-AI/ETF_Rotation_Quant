@@ -14,7 +14,7 @@ python3 -I scripts/v6_us_gapfill_compare.py
 abs(left - right) / abs(right)
 ```
 
-和库比时，右边是库内收盘。门槛 0.1% = 0.001。超过则脚本退出码 2。退出码 0 只表示对照写完了，不表示要求窗的交易日已经补齐，也不冻结可用日线。原始文件不删、不改。交易日清单和例外在 `evidence/session-coverage.json`，规则在 `COVERAGE.md`。
+和库比时，右边是库内收盘。门槛 0.1% = 0.001。超过则脚本退出码 2。退出码 0 只表示对照写完了。Owner 2026-11-24 21:21（Asia/Taipei）把本包签为来源存档：CNBC 与已存档 TradingView 是缺口窗的两家独立出版方；TradingView 只是不能独立核对库重叠。本轮不要求重下 TradingView。尚未入库。原始文件不删、不改。现状规则在 `COVERAGE.md`。
 
 ## 来源身份
 
@@ -25,7 +25,7 @@ abs(left - right) / abs(right)
 | DJIA | Yahoo `^DJI` | 图接口 `longName` 为 Dow Jones Industrial Average | 与 CNBC 的差别停在浮点末位，不当成另一套算法 |
 | DJIA | 新浪 `.DJI` | 接口没有写上游名称 | 交付窗内的规范化收盘与 FRED 逐字相同，不另算一套 |
 | DWRTF | CNBC `.DWRTF` | `companyName` 为 DJUSslct REIT，`symbol` 585870，`adjusted` 为 UNADJUSTED。FT 页 `DWRTF:DJI` 的 xid 同为 585870，页脚同样是 LSEG | FT 与 CNBC 是同一 LSEG 品种，FT 不另算来源 |
-| DWRTF | 未新下载 | 仓库里已有的 TradingView `DJ:DWRTF` 价格日线。2026-11-24 符号检索写明 `provider_id` 为 ice，名称 Dow Jones U.S. Select REIT Index (USD)。总收益代码是 `DWRTFT`，净总收益是 `DWRTFN`，都没有用 | 免费行情套接字返回 `permission denied` / `dj_indices_dly`，本轮没有重下 |
+| DWRTF | 已存档，本轮不要求重下 | 仓库里已有的 TradingView `DJ:DWRTF` 价格日线。2026-11-24 符号检索写明 `provider_id` 为 ice，名称 Dow Jones U.S. Select REIT Index (USD)。总收益代码是 `DWRTFT`，净总收益是 `DWRTFN`，都没有用 | Owner 21:21：缺口窗的第二出版方。库上游身份只排除库重叠的独立核对 |
 | DWRTF | 未新下载 | 仓库里已有的官方约一年 USD 价格文件，2025-11-17 至 2026-11-16 | 现场打开 spdji 导出为 HTTP 403，盖不住 2017 年 |
 
 价格而不是全收益的核对：CNBC 在 2017-08-01 至 2017-11-22 的 81 天与库内 `DWRTF` / `d37_r6` 逐日相对差为 0（例如 2017-08-01 两边都是 275.51）。同一 CNBC 序列在 2025-11-17 至 2026-09-30 的 218 天与上述官方价格文件相对差为 0（2025-11-17 两边都是 293.19）。没有用 `DWRTFT`、`DJUSRE` 或 ETF。
@@ -72,7 +72,7 @@ DWRTF 要求 2017-11-22 至 2026-09-30。
 | DJIA FRED / Yahoo | 668 | 无 | 无 | 4.958228991333375e-08 | 2024-04-30 | 37815.92 | 37815.921875 | 0 |
 | DWRTF CNBC / TradingView | 2223 | 2024-12-25 | 2023-04-06 | 0.00040752564015487523（0.040752564%） | 2019-08-12 | 294.5800 | 294.46 | 0 |
 
-DWRTF 这一对里，相对差超过 0.01% 的只有 2019-08-12 一天，其余 2222 天在已保存的小数上相同。2023-04-06 只在 TradingView，收盘 259.56；CNBC 没有这一天。没有补。2024-12-25 的 CNBC 收盘 294.9400，与 2024-12-24 的 OHLC 相同。
+DWRTF 这一对里，相对差超过 0.01% 的只有 2019-08-12 一天，其余 2222 天在已保存的小数上相同。2023-04-06 只在 TradingView，收盘 259.56；CNBC 没有这一天。2024-12-25 的 CNBC 收盘 294.9400，与 2024-12-24 的 OHLC 相同。上一句「没有补」已被 Owner 2026-11-24 21:21 取代：原始 CNBC 文件仍不补；未来可用序列采用 TradingView 259.56，标记 single_source。2019-08-12 采用 CNBC 294.58，标记 source_conflict。
 
 官方旧文件对 CNBC，2025-11-17 至 2026-09-30：218 天，无单边日期，最大相对差 0。
 
@@ -159,6 +159,6 @@ CNBC 按段下载，URL 形如 `https://ts-api.cnbc.com/harmony/app/bars/{symbol
 | `1b2e608ee868c15da254503c13a5aa091be0057ef65fac399c3d29af09f6b548` | 125832 | `incoming/grok-d37-index-20261116/theme-道琼斯美国精选REIT指数-tradingview.csv` |
 | `861189a91ca208793d5555150a2ecad15d3fc7f50170eb2b985f43797967cb01` | 4513 | `incoming/grok-d37-index-20261116/theme-道琼斯美国精选REIT指数-official-usd-pr-daily-20251117-20261116.csv` |
 
-规范化收盘在 `normalized/`。FRED 与新浪的规范化文件 SHA256 同为 `7f90b86ea1ca0c7cb922ce447d34423a2a1fef7dd6df8d7fe583399ec4d44410`（730 行）。逐日相对差在 `evidence/`。汇总 `evidence/comparison.json` 的 SHA256 是 `958e4d732abe5fd7d5c0822313a90639a57137bdc830bde69a47e2a03df21d0a`。交易日清单 `evidence/session-coverage.json` 的 SHA256 是 `356e20ff459dccfd3544eff7f65f231d2191b5df2ce0e54ed6c6c294d25efebf`。Yahoo 对 DWRTF 在 2019-08-12 附近没有历史柱：`raw/yahoo-DWRTF-20190812-chart-no-history.json`，SHA256 `c45a2c153fe03c27505c88a76a9aff4604cd014d247803c1dc3f1b116dca317e`。
+规范化收盘在 `normalized/`。FRED 与新浪的规范化文件 SHA256 同为 `7f90b86ea1ca0c7cb922ce447d34423a2a1fef7dd6df8d7fe583399ec4d44410`（730 行）。逐日相对差在 `evidence/`。汇总 `evidence/comparison.json` 的 SHA256 是 `c2e3236812aed8fb8f454a90bf652cc37d7086033eb79378c8f8ff47dbfb53b9`。交易日清单 `evidence/session-coverage.json` 的 SHA256 是 `88a7a45d1f98eebc95892eee24543f2fd21c5aa22ae95dcc73ff9f396bedd047`。Yahoo 对 DWRTF 在 2019-08-12 附近没有历史柱：`raw/yahoo-DWRTF-20190812-chart-no-history.json`，SHA256 `c45a2c153fe03c27505c88a76a9aff4604cd014d247803c1dc3f1b116dca317e`。
 
 Wayback 页原文有 `<label>Bloomberg Ticker:</label> DWRTF`。这是 2025-02-12 的官方指数页快照，用来核对代码，不是日线。

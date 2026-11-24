@@ -15,9 +15,12 @@ Relative difference, right-hand series as the denominator:
     abs(left - right) / abs(right)
 
 A database overlap above 0.1% (0.001) exits 2. Dates are not dropped.
-Exit 0 means the report was written. It does not mean the required windows
-are complete, and it does not freeze a usable daily series. Session coverage
-and the unresolved exceptions are written under incoming/v6-us-gapfill/evidence/.
+Exit 0 means the report was written. It does not ingest anything.
+Owner 2026-11-24 21:21 Asia/Taipei approved this package as a source archive:
+CNBC (LSEG) and the archived TradingView file (ICE) are independent publishers
+in the gap window. TradingView is not an independent check of the database
+overlap, because the database came from that file. A fresh download is not
+required. Session marks are written under incoming/v6-us-gapfill/evidence/.
 """
 
 from __future__ import annotations
@@ -48,8 +51,9 @@ PRIOR_OFFICIAL = (
 NY = ZoneInfo("America/New_York")
 STOP = 0.001  # 0.1%
 # Two prints that both show cents and differ by more than half a cent are not
-# treated as rounding. 2019-08-12 differs by 0.12.
+# rounding. 2019-08-12 differs by 0.12.
 CONFLICT_ABS = 0.005
+OWNER_RULING = "Owner 2026-11-24 21:21 Asia/Taipei"
 # Weekday rows in raw/fred-DJIA.csv from 2017-08-01 through 2026-09-30 whose
 # close is blank. They match the NYSE full closures in that span, including
 # 2018-12-05 and 2025-01-09. 2021-12-31 is not here: FRED prints 36338.30.
@@ -345,6 +349,7 @@ def cnbc_ohlc(directory: Path, day: str) -> dict[str, str] | None:
 
 
 def close_conflicts(left: dict[str, str], right: dict[str, str], start: str, end: str) -> list[dict]:
+    """Record same-session disagreements. left is CNBC, right is TradingView."""
     found = []
     for day in sessions(start, end):
         if day not in left or day not in right:
@@ -353,13 +358,35 @@ def close_conflicts(left: dict[str, str], right: dict[str, str], start: str, end
         if gap > CONFLICT_ABS:
             found.append({
                 "date": day,
-                "left": left[day],
-                "right": right[day],
+                "cnbc": left[day],
+                "tradingview_prior": right[day],
                 "abs_diff": gap,
-                "adopted_close": None,
-                "kind": "unresolved_source_conflict",
+                "flag": "source_conflict",
+                "chosen_close": left[day],
+                "ruling": OWNER_RULING,
             })
     return found
+
+
+def future_usable_mark(day: str, cnbc: str | None, tv: str | None) -> dict:
+    """Owner 21:21 marks for a later usable series. Does not edit the inputs."""
+    if not is_session(day):
+        return {"date": day, "flag": "pseudo_session_excluded", "chosen_close": None, "ruling": OWNER_RULING}
+    if day == "2023-04-06" and cnbc is None and tv is not None:
+        return {"date": day, "flag": "single_source", "chosen_close": tv, "ruling": OWNER_RULING}
+    if day == "2019-08-12" and cnbc is not None and tv is not None:
+        return {
+            "date": day,
+            "flag": "source_conflict",
+            "chosen_close": cnbc,
+            "other_close": tv,
+            "ruling": OWNER_RULING,
+        }
+    if cnbc is not None:
+        return {"date": day, "flag": "", "chosen_close": cnbc, "ruling": OWNER_RULING}
+    if tv is not None:
+        return {"date": day, "flag": "single_source", "chosen_close": tv, "ruling": OWNER_RULING}
+    return {"date": day, "flag": "missing", "chosen_close": None, "ruling": OWNER_RULING}
 
 
 def write_session_table(path: Path, header: tuple[str, ...], rows: list[tuple]) -> None:
@@ -407,12 +434,13 @@ def session_coverage(
     missing = {
         "series": "DWRTF",
         "date": "2023-04-06",
-        "kind": "missing_real_session",
+        "flag": "single_source",
         "is_session": is_session("2023-04-06"),
         "fred_djia_close": fred.get("2023-04-06"),
         "cnbc": cnbc_dw.get("2023-04-06"),
         "tradingview_prior": tv.get("2023-04-06"),
-        "adopted_close": None,
+        "chosen_close": tv.get("2023-04-06"),
+        "ruling": OWNER_RULING,
     }
     yahoo_attempt = RAW / "yahoo-DWRTF-20190812-chart-no-history.json"
     yahoo_has_bars = False
@@ -430,16 +458,9 @@ def session_coverage(
             cnbc_dji.get(day, ""),
         ))
     dw_rows = []
-    conflict_days = {item["date"] for item in conflicts}
     for day in sessions(*DWRTF_REQUIRED):
-        if day not in cnbc_dw:
-            note = "missing_from_fresh_cnbc"
-        elif day in conflict_days:
-            note = "unresolved_source_conflict"
-        elif day not in tv:
-            note = "missing_from_tradingview_prior"
-        else:
-            note = ""
+        mark = future_usable_mark(day, cnbc_dw.get(day), tv.get(day))
+        note = mark["flag"]
         dw_rows.append((day, cnbc_dw.get(day, ""), tv.get(day, ""), note))
     write_session_table(
         EVIDENCE / "djia-sessions.csv",
@@ -452,18 +473,19 @@ def session_coverage(
         dw_rows,
     )
     exception_rows = [
-        ("DJIA", "2024-12-25", "pseudo_session_not_counted", pseudo[0]["close"] or "", ""),
-        ("DWRTF", "2024-12-25", "pseudo_session_not_counted", pseudo[1]["close"] or "", ""),
+        ("DJIA", "2024-12-25", "pseudo_session_excluded", pseudo[0]["close"] or "", ""),
+        ("DWRTF", "2024-12-25", "pseudo_session_excluded", pseudo[1]["close"] or "", ""),
         (
-            "DWRTF", "2023-04-06", "missing_real_session",
-            f"fred_djia={fred.get('2023-04-06', '')}; tradingview_prior={tv.get('2023-04-06', '')}; not_adopted",
-            "",
+            "DWRTF", "2023-04-06", "single_source",
+            f"fred_djia={fred.get('2023-04-06', '')}; cnbc=absent; tradingview_prior={tv.get('2023-04-06', '')}",
+            tv.get("2023-04-06", ""),
         ),
     ]
     for item in conflicts:
         exception_rows.append((
-            "DWRTF", item["date"], item["kind"],
-            f"cnbc={item['left']}; tradingview_prior={item['right']}", "",
+            "DWRTF", item["date"], item["flag"],
+            f"cnbc={item['cnbc']}; tradingview_prior={item['tradingview_prior']}",
+            item["chosen_close"],
         ))
     write_session_table(
         EVIDENCE / "session-exceptions.csv",
@@ -473,7 +495,15 @@ def session_coverage(
     fresh_dw = dw_sources["cnbc"]
     report = {
         "deliverable": "source_archive",
+        "archive_approval": "approved_for_source_archive_under_owner_2026-11-24_2121",
+        "ingested": False,
         "usable_series_frozen": False,
+        "reviewer_approve": False,
+        "owner_ruling": OWNER_RULING,
+        "gap_window_independent_publishers": ["CNBC/LSEG", "archived TradingView/ICE"],
+        "tradingview_disqualified_for": "independent_database_overlap_only",
+        "fresh_download_required": False,
+        "unresolved_blockers": [],
         "common_date_max_rel_below_0_1pct_is_not_completeness": True,
         "calendar_matches_fred_blank_weekdays": calendar_ok,
         "fred_blank_weekdays": len(blanks),
@@ -487,19 +517,21 @@ def session_coverage(
         "dwrtf_fresh_sessions_complete": fresh_dw["sessions_complete"] and not fresh_dw["non_session_rows"],
         "pseudo_sessions": pseudo,
         "missing_real_session": missing,
-        "unresolved_source_conflicts": conflicts,
+        "source_conflicts": conflicts,
         "third_source_for_2019_08_12": {
             "yahoo_chart_file": yahoo_attempt.name,
             "yahoo_chart_has_timestamps": yahoo_has_bars,
-            "close_adopted": None,
+            "status": "not_required_under_owner_ruling",
         },
         "selection_rules": [
-            "Raw downloads stay unchanged, including non-sessions and disagreements.",
-            "A trading day is a weekday that is not in NYSE_FULL_CLOSE.",
-            "2024-12-25 is not a trading day. The CNBC bar copies 2024-12-24 and is not coverage.",
-            "2023-04-06 is a trading day. It is absent from fresh CNBC and is not filled from the prior TradingView file.",
-            "A same-session absolute difference above 0.005 is an unresolved conflict. Neither close is adopted.",
-            "The prior TradingView file is not a fresh download and is the database upstream, so it is not a second independent source.",
+            "Raw downloads stay unchanged.",
+            "Approved scope is the source archive. Nothing in this package is ingested.",
+            "CNBC/LSEG and archived TradingView/ICE are independent publishers in the gap window.",
+            "TradingView being the database upstream disqualifies only the database-overlap check.",
+            "A fresh download of TradingView is not required.",
+            "2024-12-25 is a pseudo-session and is excluded from a future usable series.",
+            "2023-04-06 uses the TradingView close 259.56 and is flagged single_source.",
+            "2019-08-12 uses the CNBC close 294.58 and is flagged source_conflict against TradingView 294.46.",
         ],
     }
     (EVIDENCE / "session-coverage.json").write_text(
@@ -618,7 +650,7 @@ def main() -> int:
         "usable_series_frozen", coverage_report["usable_series_frozen"],
         "djia_fresh_sessions_complete", coverage_report["djia_fresh_sessions_complete"],
         "dwrtf_fresh_sessions_complete", coverage_report["dwrtf_fresh_sessions_complete"],
-        "conflicts", coverage_report["unresolved_source_conflicts"],
+        "conflicts", coverage_report["source_conflicts"],
     )
     if blocked:
         print("STOP database relative difference > 0.1%:", ", ".join(blocked))

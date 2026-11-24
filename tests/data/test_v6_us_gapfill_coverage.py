@@ -45,14 +45,34 @@ class SessionCalendarTest(unittest.TestCase):
         self.assertNotIn("2023-04-07", missing["missing_sessions"])
         self.assertFalse(missing["sessions_complete"])
 
-    def test_close_conflict_is_not_adopted(self):
+    def test_owner_ruling_marks_without_editing_inputs(self):
         left = {"2019-08-12": "294.58", "2019-08-13": "295.10"}
-        right = {"2019-08-12": "294.46", "2019-08-13": "295.10"}
+        right = {"2019-08-12": "294.46", "2019-08-13": "295.10", "2023-04-06": "259.56"}
         found = GAP.close_conflicts(left, right, "2019-08-12", "2019-08-13")
         self.assertEqual([item["date"] for item in found], ["2019-08-12"])
-        self.assertIsNone(found[0]["adopted_close"])
-        self.assertEqual(found[0]["kind"], "unresolved_source_conflict")
+        self.assertEqual(found[0]["flag"], "source_conflict")
+        self.assertEqual(found[0]["chosen_close"], "294.58")
         self.assertGreater(found[0]["abs_diff"], 0.005)
+        marked = GAP.future_usable_mark("2019-08-12", "294.58", "294.46")
+        self.assertEqual(marked["chosen_close"], "294.58")
+        self.assertEqual(marked["other_close"], "294.46")
+        single = GAP.future_usable_mark("2023-04-06", None, "259.56")
+        self.assertEqual(single["flag"], "single_source")
+        self.assertEqual(single["chosen_close"], "259.56")
+        pseudo = GAP.future_usable_mark("2024-12-25", "294.94", None)
+        self.assertEqual(pseudo["flag"], "pseudo_session_excluded")
+        self.assertIsNone(pseudo["chosen_close"])
+        self.assertEqual(left["2019-08-12"], "294.58")
+        self.assertEqual(right["2019-08-12"], "294.46")
+
+    def test_raw_download_hash_unchanged(self):
+        digest = __import__("hashlib").sha256(
+            (ROOT / "incoming/v6-us-gapfill/raw/fred-DJIA.csv").read_bytes()
+        ).hexdigest()
+        self.assertEqual(
+            digest,
+            "256b9f380c3b20aef06cf4e0846d1527897e6cd6c3db1d5b700b22da08577f69",
+        )
 
 
 if __name__ == "__main__":
