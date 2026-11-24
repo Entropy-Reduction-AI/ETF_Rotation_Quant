@@ -106,3 +106,53 @@ f2ab4f527b3081b0b73ebc860f3aedd8ee54523e	refs/tags/milestone/v5-prereg-freeze^{}
 ```
 
 这一步清理没有移动、删除或改写任何标签。`milestone/phase2-archive` 在清理前已经存在（附注标签对象 `48b63a84274b9d8349049630971095f82c9da7b9`，剥开后指向 `8875fe576496e9dacfb0681ac93df4f42cd894ca`）。
+
+### 尾清理（2026-11-24 10:59:50–11:00:02 Asia/Taipei）
+
+Owner 2026-11-24 授权。只删除下面四条已经合并的远程分支。每条在删除前立刻 `git ls-remote`；远程尖端等于授权 SHA，关联 PR 为 MERGED，且 PR head ref、head SHA 与该授权 SHA 一致，才删除。不一致或引用不在则 SKIP。比较并交换被拒则 SKIP，不换 SHA 重试。
+
+```bash
+git push --porcelain -v origin --force-with-lease=refs/heads/<branch>:<expected-sha> :refs/heads/<branch>
+```
+
+| 分支 | PR | 授权 SHA | 删除前观察到的 SHA | 结果 |
+| --- | --- | --- | --- | --- |
+| `claude/d41-cleanup` | #351 MERGED，merge `403ac7afe97ecd823737c0ea5016dd218de25b29` | `16770fa70dd46b2d6a91a20affadcac251479a05` | `16770fa70dd46b2d6a91a20affadcac251479a05` | 已删除 |
+| `claude/v6-prereg-r1-review-files` | #350 MERGED，merge `89f030d5bba53c9fae3194cae807d3ae4e1459ef` | `50f52a9db748a640df29f9a4da89ebfff1a68df0` | `50f52a9db748a640df29f9a4da89ebfff1a68df0` | 已删除 |
+| `cursor/d41-phase2-archive-register-60e1` | #352 MERGED，head 即该 SHA，merge `707237fc40651f35570dd8786433e24cca662ea9` | `ddfee847218bc8ce100c0c8fbd54669182557192` | `ddfee847218bc8ce100c0c8fbd54669182557192` | 已删除 |
+| `cursor/d41-pr352-reviews-1e59` | #353 MERGED，head 即该 SHA，merge `981f466d7acd10211d1aea9e9e3399a7bbc7d0a0` | `f88fccc3883e9cb58281b1d7f7bbeba1b3ff800b` | `f88fccc3883e9cb58281b1d7f7bbeba1b3ff800b` | 已删除 |
+
+合计：删除 4，SKIP 0。四条删除后的 `git ls-remote` 输出都为空。
+
+heads 前后差异只有这四条。同期仍在的分支尖端未变：`claude/d38-r45-r56` `0bff3eda70c64d62944940a4cd94ea702cd95adb`，`claude/v6-prereg-r1` `2a452ae55a69e524dcca2bf6e72096e145777fef`，`grok/d37-r6-partial` `332b88fdb1b1b4272edb154754c3bf2925b5889d`，`claude/owner-page-ledger-score` `462d1d32e2695708cc0c79f1fd814d6148dde4be`，`claude/data-board-1123` `b08f0e49a6743cd0ce4592213bfdfa6c6cb622e0`，`claude/owner-board-v6` `bd62984d988299a9607f0b35643ead999a424b0d`。
+
+标签对象：删除前与删除后 `git ls-remote --tags origin` 经 `LC_ALL=C sort` 后逐字节相同，SHA256 都是 `5c4056ceb6d33fc95475467c38feb199ca02a657919d2a84cb150f665acc8feb`，各 20 行。这一步没有移动、删除或改写任何标签。
+
+`main` 只读。删除前与删除后远程 `refs/heads/main` 都是 `67e249d4e50c4783f59c1deef246bf246be5e8e4`。本次没有推送 `main`。
+
+### 下一批清理（2026-11-24 15:13:46–15:14:00 Asia/Taipei）
+
+Owner 2026-11-24 15:11 Asia/Taipei 授权。删除前 `origin/main` 就是 #354 的合并提交 `78df26d5ad7c50e77c974317073c225735d4d442`。六条 PR 均为 MERGED，head ref 与 head SHA 等于授权 SHA，合并提交都是当时 `origin/main` 的祖先。当场 `git ls-remote` 一致后才删除：
+
+```bash
+git push --porcelain -v origin --force-with-lease=refs/heads/<branch>:<expected-sha> :refs/heads/<branch>
+```
+
+| 分支 | PR | 授权 SHA | 删除前观察到的 SHA | 结果 |
+| --- | --- | --- | --- | --- |
+| `claude/d38-r45-r56` | #346 MERGED，merge `c45a20e9fffd094b320b2bee353272231af12ad3` | `0bff3eda70c64d62944940a4cd94ea702cd95adb` | `0bff3eda70c64d62944940a4cd94ea702cd95adb` | 已删除 |
+| `claude/data-board-1123` | #348 MERGED，merge `3836830f3024aa5fd913a7042b83b00e81417abf` | `b08f0e49a6743cd0ce4592213bfdfa6c6cb622e0` | `b08f0e49a6743cd0ce4592213bfdfa6c6cb622e0` | 已删除 |
+| `claude/owner-board-v6` | #349 MERGED，merge `67e249d4e50c4783f59c1deef246bf246be5e8e4` | `bd62984d988299a9607f0b35643ead999a424b0d` | `bd62984d988299a9607f0b35643ead999a424b0d` | 已删除 |
+| `claude/owner-page-ledger-score` | #347 MERGED，merge `ffdb4b7ab2391ef57e848428dc1bde1df5a1c6c0` | `462d1d32e2695708cc0c79f1fd814d6148dde4be` | `462d1d32e2695708cc0c79f1fd814d6148dde4be` | 已删除 |
+| `claude/rename-owner-board` | #356 MERGED，head 即该 SHA，merge `9c27ec490c8924c0457bd70c742dc15e8446bf83` | `5e56f2cd499d110c3b0f49410a261e178b395f54` | `5e56f2cd499d110c3b0f49410a261e178b395f54` | 已删除 |
+| `cursor/pr346-d38-r45-56-review-27ad` | #355 MERGED，head 即该 SHA，merge `1764f772242110a45cdbbaff8bc0d33259d1902a` | `fe0ae27e3eb2300a1a4a9cf6461cff946c570d1f` | `fe0ae27e3eb2300a1a4a9cf6461cff946c570d1f` | 已删除 |
+
+合计：删除 6，SKIP 0。六条删除后的 `git ls-remote` 输出都为空。
+
+窗口内未动的引用：#339 `claude/v6-prereg-r1` `2370b7b55bc24c3001a9ae02892625c6c676247d`，#312 `grok/d37-r6-partial` `332b88fdb1b1b4272edb154754c3bf2925b5889d`，#354 分支 `cursor/d41-tail-cleanup-log-806b` `7dffce2087d5af6167e6ca83971db0fe4d64d547`。
+
+窗口内另有两处引用变化，删除命令只发出上面六条：`main` 从 `78df26d5ad7c50e77c974317073c225735d4d442` 变为 `56a730629ed4952e936a34a88ff8a7860ba05ef0`（Merge pull request #357，父母 `78df26d5ad7c50e77c974317073c225735d4d442` 与 `656a6cc7d3ae57c5d58234d7979c399efaf9dcba`）；同时出现 `claude/owner-board-v6-roadmap` `656a6cc7d3ae57c5d58234d7979c399efaf9dcba`。本次没有推送 `main`。
+
+标签对象：删除前与删除后 `git ls-remote --tags origin` 经 `LC_ALL=C sort` 后逐字节相同，SHA256 都是 `5c4056ceb6d33fc95475467c38feb199ca02a657919d2a84cb150f665acc8feb`，各 20 行。这一步没有移动、删除或改写任何标签。
+
+#355 verifier 目前仍期望 subject ref 存在：`operations/reviews/diag/d38-r45-56/d38-r45-56_verify.py` 会 `git fetch origin claude/d38-r45-r56` 再 `rev-parse origin/claude/d38-r45-r56`；`operations/reviews/2026-11-24-pr346-d38-r45-56-signoff.md` 写明它对照 remote `origin/claude/d38-r45-r56` 是否仍为 `0bff3eda70c64d62944940a4cd94ea702cd95adb`。该 subject ref 已按本授权删除。verifier 未改。
