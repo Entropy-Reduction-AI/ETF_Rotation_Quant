@@ -1,0 +1,1494 @@
+{
+  "pr361_head": "ce058680fabec19b12982bffce37e891808d4641",
+  "pr361_base": "05e39c5650acb52e0de8632bcaef8e6d05fe5597",
+  "lfs_sha256": {
+    "before": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52",
+    "after": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8"
+  },
+  "backup_file_retrievable": {
+    "gitignored_market_before_sqlite_in_repo": false,
+    "authoritative_preimage": "base commit LFS oid",
+    "backup_txt_cites_same_sha": true
+  },
+  "row_counts": {
+    "before_bars": 1200716,
+    "after_bars": 1203606,
+    "delta": 2890
+  },
+  "overlap_unchanged_rows": 1200716,
+  "overlap_changed_rows": 0,
+  "new_rows": {
+    "total": 2890,
+    "djia_raw": 667,
+    "dwrtf_raw": 2223
+  },
+  "duplicate_code_date_adj": 0,
+  "sqlite_master": {
+    "names_identical": true,
+    "sql_differences": [],
+    "bars_one_source_present_after": true
+  },
+  "boundary_rows": {
+    "DJIA_2024-02-01": {
+      "source": "eastmoney_index",
+      "close": 38519.84
+    },
+    "DWRTF_2017-11-22": {
+      "source": "d37_r6",
+      "close": 275.66
+    }
+  },
+  "pseudo_session_2024_12_25_rows": 0,
+  "source_compare": {
+    "djia_new_mismatches": [],
+    "dwrtf_new_mismatches": [],
+    "month_end_checks": [
+      {
+        "series": "DJIA",
+        "date": "2024-02-29",
+        "db": 38996.39,
+        "fred": 38996.39,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-03-28",
+        "db": 39807.37,
+        "fred": 39807.37,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-04-30",
+        "db": 37815.92,
+        "fred": 37815.92,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-05-31",
+        "db": 38686.32,
+        "fred": 38686.32,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-06-28",
+        "db": 39118.86,
+        "fred": 39118.86,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-07-31",
+        "db": 40842.79,
+        "fred": 40842.79,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-08-30",
+        "db": 41563.08,
+        "fred": 41563.08,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-09-30",
+        "db": 42330.15,
+        "fred": 42330.15,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-10-31",
+        "db": 41763.46,
+        "fred": 41763.46,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-11-29",
+        "db": 44910.65,
+        "fred": 44910.65,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-12-31",
+        "db": 42544.22,
+        "fred": 42544.22,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-01-31",
+        "db": 44544.66,
+        "fred": 44544.66,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-02-28",
+        "db": 43840.91,
+        "fred": 43840.91,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-03-31",
+        "db": 42001.76,
+        "fred": 42001.76,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-04-30",
+        "db": 40669.36,
+        "fred": 40669.36,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-05-30",
+        "db": 42270.07,
+        "fred": 42270.07,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-06-30",
+        "db": 44094.77,
+        "fred": 44094.77,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-07-31",
+        "db": 44130.98,
+        "fred": 44130.98,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-08-29",
+        "db": 45544.88,
+        "fred": 45544.88,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-09-30",
+        "db": 46397.89,
+        "fred": 46397.89,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-10-31",
+        "db": 47562.87,
+        "fred": 47562.87,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-11-28",
+        "db": 47716.42,
+        "fred": 47716.42,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-12-31",
+        "db": 48063.29,
+        "fred": 48063.29,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-01-30",
+        "db": 48892.47,
+        "fred": 48892.47,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-02-27",
+        "db": 48977.92,
+        "fred": 48977.92,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-03-31",
+        "db": 46341.51,
+        "fred": 46341.51,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-04-30",
+        "db": 49652.14,
+        "fred": 49652.14,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-05-29",
+        "db": 51032.46,
+        "fred": 51032.46,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-06-30",
+        "db": 52319.2,
+        "fred": 52319.2,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-07-31",
+        "db": 52485.03,
+        "fred": 52485.03,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-08-31",
+        "db": 53185.9,
+        "fred": 53185.9,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-09-30",
+        "db": 50906.05,
+        "fred": 50906.05,
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2017-11-30",
+        "db": 274.84,
+        "ref": 274.84,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2017-12-29",
+        "db": 273.31,
+        "ref": 273.31,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-01-31",
+        "db": 262.15,
+        "ref": 262.15,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-02-28",
+        "db": 242.59,
+        "ref": 242.59,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-03-29",
+        "db": 250.49,
+        "ref": 250.49,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-04-30",
+        "db": 253.79,
+        "ref": 253.79,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-05-31",
+        "db": 263.09,
+        "ref": 263.09,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-06-29",
+        "db": 272.75,
+        "ref": 272.75,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-07-31",
+        "db": 273.87,
+        "ref": 273.87,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-08-31",
+        "db": 281.23,
+        "ref": 281.23,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-09-28",
+        "db": 272.09,
+        "ref": 272.09,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-10-31",
+        "db": 264.81,
+        "ref": 264.81,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-11-30",
+        "db": 276.82,
+        "ref": 276.82,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-12-31",
+        "db": 251.39,
+        "ref": 251.39,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-01-31",
+        "db": 279.68,
+        "ref": 279.68,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-02-28",
+        "db": 281.67,
+        "ref": 281.67,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-03-29",
+        "db": 288.18,
+        "ref": 288.18,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-04-30",
+        "db": 287.32,
+        "ref": 287.32,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-05-31",
+        "db": 285.52,
+        "ref": 285.52,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-06-28",
+        "db": 287.88,
+        "ref": 287.88,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-07-31",
+        "db": 292.16,
+        "ref": 292.16,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-08-30",
+        "db": 298.23,
+        "ref": 298.23,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-09-30",
+        "db": 304.76,
+        "ref": 304.76,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-10-31",
+        "db": 307.68,
+        "ref": 307.68,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-11-29",
+        "db": 302.67,
+        "ref": 302.67,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-12-31",
+        "db": 298.14,
+        "ref": 298.14,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-01-31",
+        "db": 299.02,
+        "ref": 299.02,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-02-28",
+        "db": 273.23,
+        "ref": 273.23,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-03-31",
+        "db": 210.89,
+        "ref": 210.89,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-04-30",
+        "db": 227.06,
+        "ref": 227.06,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-05-29",
+        "db": 225.13,
+        "ref": 225.13,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-06-30",
+        "db": 227.9,
+        "ref": 227.9,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-07-31",
+        "db": 235.04,
+        "ref": 235.04,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-08-31",
+        "db": 236.25,
+        "ref": 236.25,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-09-30",
+        "db": 227.53,
+        "ref": 227.53,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-10-30",
+        "db": 221.21,
+        "ref": 221.21,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-11-30",
+        "db": 247.95,
+        "ref": 247.95,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-12-31",
+        "db": 254.49,
+        "ref": 254.49,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-01-29",
+        "db": 253.67,
+        "ref": 253.67,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-02-26",
+        "db": 266.81,
+        "ref": 266.81,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-03-31",
+        "db": 277.78,
+        "ref": 277.78,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-04-30",
+        "db": 300.31,
+        "ref": 300.31,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-05-28",
+        "db": 302.61,
+        "ref": 302.61,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-06-30",
+        "db": 308.15,
+        "ref": 308.15,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-07-30",
+        "db": 324.07,
+        "ref": 324.07,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-08-31",
+        "db": 329.34,
+        "ref": 329.34,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-09-30",
+        "db": 309.69,
+        "ref": 309.69,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-10-29",
+        "db": 334.65,
+        "ref": 334.65,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-11-30",
+        "db": 332.16,
+        "ref": 332.16,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-12-31",
+        "db": 360.47,
+        "ref": 360.47,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-01-31",
+        "db": 336.83,
+        "ref": 336.83,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-02-28",
+        "db": 324.52,
+        "ref": 324.52,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-03-31",
+        "db": 344.51,
+        "ref": 344.51,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-04-29",
+        "db": 328.13,
+        "ref": 328.13,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-05-31",
+        "db": 305.1,
+        "ref": 305.1,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-06-30",
+        "db": 279.74,
+        "ref": 279.74,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-07-29",
+        "db": 304.24,
+        "ref": 304.24,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-08-31",
+        "db": 284.92,
+        "ref": 284.92,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-09-30",
+        "db": 248.38,
+        "ref": 248.38,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-10-31",
+        "db": 259.17,
+        "ref": 259.17,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-11-30",
+        "db": 273.7,
+        "ref": 273.7,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-12-30",
+        "db": 257.64,
+        "ref": 257.64,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-01-31",
+        "db": 285.57,
+        "ref": 285.57,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-02-28",
+        "db": 271.15,
+        "ref": 271.15,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-03-31",
+        "db": 262.08,
+        "ref": 262.08,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-04-28",
+        "db": 263.51,
+        "ref": 263.51,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-05-31",
+        "db": 255.79,
+        "ref": 255.79,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-06-30",
+        "db": 266.97,
+        "ref": 266.97,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-07-31",
+        "db": 274.21,
+        "ref": 274.21,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-08-31",
+        "db": 265.0,
+        "ref": 265.0,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-09-29",
+        "db": 244.65,
+        "ref": 244.65,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-10-31",
+        "db": 233.23,
+        "ref": 233.23,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-11-30",
+        "db": 257.82,
+        "ref": 257.82,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-12-29",
+        "db": 281.64,
+        "ref": 281.64,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-01-31",
+        "db": 269.98,
+        "ref": 269.98,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-02-29",
+        "db": 274.51,
+        "ref": 274.51,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-03-28",
+        "db": 277.76,
+        "ref": 277.76,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-04-30",
+        "db": 257.07,
+        "ref": 257.07,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-05-31",
+        "db": 269.14,
+        "ref": 269.14,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-06-28",
+        "db": 274.68,
+        "ref": 274.68,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-07-31",
+        "db": 290.28,
+        "ref": 290.28,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-08-30",
+        "db": 308.2,
+        "ref": 308.2,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-09-30",
+        "db": 314.49,
+        "ref": 314.49,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-10-31",
+        "db": 304.23,
+        "ref": 304.23,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-11-29",
+        "db": 317.62,
+        "ref": 317.62,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-12-31",
+        "db": 293.08,
+        "ref": 293.08,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-01-31",
+        "db": 296.15,
+        "ref": 296.15,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-02-28",
+        "db": 307.08,
+        "ref": 307.08,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-03-31",
+        "db": 293.54,
+        "ref": 293.54,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-04-30",
+        "db": 285.06,
+        "ref": 285.06,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-05-30",
+        "db": 290.47,
+        "ref": 290.47,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-06-30",
+        "db": 285.67,
+        "ref": 285.67,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-07-31",
+        "db": 283.2,
+        "ref": 283.2,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-08-29",
+        "db": 295.9,
+        "ref": 295.9,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-09-30",
+        "db": 297.31,
+        "ref": 297.31,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-10-31",
+        "db": 292.93,
+        "ref": 292.93,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-11-28",
+        "db": 301.46,
+        "ref": 301.46,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-12-31",
+        "db": 292.11,
+        "ref": 292.11,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2026-01-30",
+        "db": 300.43,
+        "ref": 300.43,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2026-02-27",
+        "db": 323.01,
+        "ref": 323.01,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2026-03-31",
+        "db": 302.69,
+        "ref": 302.69,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2026-04-30",
+        "db": 328.56,
+        "ref": 328.56,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2026-05-29",
+        "db": 327.62,
+        "ref": 327.62,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2026-06-30",
+        "db": 337.19,
+        "ref": 337.19,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2026-07-31",
+        "db": 345.39,
+        "ref": 345.39,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2026-08-31",
+        "db": 334.69,
+        "ref": 334.69,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2026-09-30",
+        "db": 315.22,
+        "ref": 315.22,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      }
+    ],
+    "month_end_failures": 0,
+    "sample_checks": [
+      {
+        "series": "DJIA",
+        "date": "2024-02-02",
+        "db": 38654.42,
+        "fred": 38654.42,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-03-13",
+        "db": 39043.32,
+        "fred": 39043.32,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-04-22",
+        "db": 38239.98,
+        "fred": 38239.98,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-05-30",
+        "db": 38111.48,
+        "fred": 38111.48,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-07-10",
+        "db": 39721.36,
+        "fred": 39721.36,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-08-16",
+        "db": 40659.76,
+        "fred": 40659.76,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-09-25",
+        "db": 41914.75,
+        "fred": 41914.75,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-11-01",
+        "db": 42052.19,
+        "fred": 42052.19,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2024-12-11",
+        "db": 44148.56,
+        "fred": 44148.56,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-01-23",
+        "db": 44565.07,
+        "fred": 44565.07,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-03-04",
+        "db": 42520.99,
+        "fred": 42520.99,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-04-10",
+        "db": 39593.66,
+        "fred": 39593.66,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-05-20",
+        "db": 42677.24,
+        "fred": 42677.24,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-06-03",
+        "db": 42519.64,
+        "fred": 42519.64,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-06-30",
+        "db": 44094.77,
+        "fred": 44094.77,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-08-07",
+        "db": 43968.64,
+        "fred": 43968.64,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-09-16",
+        "db": 45757.9,
+        "fred": 45757.9,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-10-23",
+        "db": 46734.61,
+        "fred": 46734.61,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2025-12-02",
+        "db": 47474.46,
+        "fred": 47474.46,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-01-12",
+        "db": 49590.2,
+        "fred": 49590.2,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-02-20",
+        "db": 49625.97,
+        "fred": 49625.97,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-03-31",
+        "db": 46341.51,
+        "fred": 46341.51,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-05-08",
+        "db": 49609.16,
+        "fred": 49609.16,
+        "ok": true
+      },
+      {
+        "series": "DJIA",
+        "date": "2026-06-17",
+        "db": 51492.55,
+        "fred": 51492.55,
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2017-11-24",
+        "db": 276.09,
+        "ref": 276.09,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-04-10",
+        "db": 249.22,
+        "ref": 249.22,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2018-08-20",
+        "db": 281.26,
+        "ref": 281.26,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-01-02",
+        "db": 244.83,
+        "ref": 244.83,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-05-15",
+        "db": 289.9,
+        "ref": 289.9,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2019-09-25",
+        "db": 303.24,
+        "ref": 303.24,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-02-06",
+        "db": 304.15,
+        "ref": 304.15,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-06-18",
+        "db": 236.92,
+        "ref": 236.92,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2020-10-28",
+        "db": 218.81,
+        "ref": 218.81,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-03-12",
+        "db": 280.72,
+        "ref": 280.72,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-07-23",
+        "db": 322.77,
+        "ref": 322.77,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2021-12-02",
+        "db": 336.74,
+        "ref": 336.74,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-04-14",
+        "db": 344.88,
+        "ref": 344.88,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-04-26",
+        "db": 342.54,
+        "ref": 342.54,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2022-08-26",
+        "db": 293.41,
+        "ref": 293.41,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-01-09",
+        "db": 261.9,
+        "ref": 261.9,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-05-22",
+        "db": 256.81,
+        "ref": 256.81,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2023-10-03",
+        "db": 235.6,
+        "ref": 235.6,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-02-14",
+        "db": 268.93,
+        "ref": 268.93,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-06-27",
+        "db": 272.41,
+        "ref": 272.41,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-11-06",
+        "db": 304.69,
+        "ref": 304.69,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-03-24",
+        "db": 294.38,
+        "ref": 294.38,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-08-05",
+        "db": 286.54,
+        "ref": 286.54,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      },
+      {
+        "series": "DWRTF",
+        "date": "2025-12-15",
+        "db": 295.53,
+        "ref": 295.53,
+        "source": "v6_gapfill_cnbc",
+        "ok": true
+      }
+    ],
+    "sample_failures": 0
+  },
+  "blockers": [],
+  "verdict_hint": "APPROVE_INGEST"
+}
