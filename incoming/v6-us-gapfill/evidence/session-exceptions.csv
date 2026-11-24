@@ -1,0 +1,5 @@
+series,date,kind,evidence,adopted_close
+DJIA,2024-12-25,pseudo_session_excluded,43297.0300,
+DWRTF,2024-12-25,pseudo_session_excluded,294.9400,
+DWRTF,2023-04-06,single_source,fred_djia=33485.29; cnbc=absent; tradingview_prior=259.56,259.56
+DWRTF,2019-08-12,source_conflict,cnbc=294.5800; tradingview_prior=294.46,294.5800
