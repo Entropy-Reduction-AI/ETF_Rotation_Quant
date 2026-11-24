@@ -7,7 +7,7 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Orchestrator
-- Last updated: 2026-11-23（新增 v6 预注册初稿；v6 预演预测表第 3.21 版）
+- Last updated: 2026-11-24（v6 预注册初稿第 2.2 版：附表 A、B，讲故事层）
 
 ## Purpose
 
@@ -43,7 +43,8 @@
 不要手改这里的 HTML，下次重建会被覆盖。要改的话分两种情况：
 
 - **内容**：改 `docs/owner/*.md`。
-- **版式**：改 `scripts/owner_pages/` 下的生成器（`build.py` → `polish.py` → `story.py`，样式在 `base.css` 和各模块的 `CSS`）。
+- **版式**：改 `scripts/owner_pages/` 下的生成器（`build.py` → `story_layer.pre` → `polish.py` → `story.py` → `story_layer.post`，样式在 `base.css` 和各模块的 `CSS`）。
+- **焦点**：每节的问、每个元素的看点、节尾接力写在 md 里（标记见 `docs/reference/owner-page-story-patterns.md` 第 2 版），不要写进生成器。
 
 改完以后，在仓库根目录运行下面的命令重建页面，并过发布门：
 
@@ -54,6 +55,7 @@ OWNER_PAGE_REPO=1 python scripts/owner_pages/build.py . docs/artifact scripts/ow
 for f in docs/artifact/*/index.html; do python scripts/owner_page_lint.py "$f"; done   # 0 个 ERROR
 python scripts/owner_pages/check2.py . docs/artifact      # 逐行核对内容
 python scripts/owner_pages/audit.py docs/artifact         # 找没有视觉重点的表、卡片、段落
+python scripts/owner_pages/story_check.py docs/artifact/v6-prereg/index.html --digest /tmp/连读稿.md   # 讲故事层：0 个 ERROR
 PAGES_DIR=docs/artifact python scripts/owner_pages/el.py out.png 'board|.hero|0'   # 元素截图
 ```
 

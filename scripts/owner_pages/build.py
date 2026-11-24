@@ -8,6 +8,7 @@ import markdown
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import polish as P
 import story as S
+import story_layer as L
 
 REPO, OUT, LINKS = sys.argv[1], sys.argv[2], sys.argv[3]
 DOCS = os.path.join(REPO, 'docs', 'owner')
@@ -404,6 +405,8 @@ def build(slug, fname, short, oldid):
     content = re.sub(r'<tr>\s*<td([^>]*)>(.*?)</td>', first_cell, content, flags=re.S)
     content = mark_tables(slug, content)
     content = polish_tables(content)
+    # a story-layer 问 marker sits between the heading and its quote; move it after the quote so the quote stays the lede
+    content = re.sub(r'(</h2>\s*)(<!--\s*问：.*?-->)\s*(<blockquote>.*?</blockquote>)', r'\1\3\n\2', content, flags=re.S)
     # blockquote right after h2/h3 -> lede
     content = re.sub(r'(</h2>\s*)<blockquote>\s*(.*?)\s*</blockquote>', r'\1<div class="lede">\2</div>', content, flags=re.S)
     content = re.sub(r'(</h3>\s*)<blockquote>\s*(.*?)\s*</blockquote>', r'\1<div class="claim-box">\2</div>', content, flags=re.S)
@@ -442,9 +445,11 @@ def build(slug, fname, short, oldid):
         else:
             out.append(f'<section class="intro">{p}</section>' if p.strip() else '')
     content = '\n'.join(out)
+    content = L.pre(content)
     content = P.polish(content, slug)
     content = S.storify(content, slug)
     content = S.ux_pass(content)
+    content = L.post(content)
 
     # header
     if '：' in title_line:
@@ -528,6 +533,7 @@ h2 .num {{ min-width: 1.6em; }}
 {SPEC_CSS}
 {P.CSS}
 {S.CSS}
+{L.CSS}
 </style>
 </head>
 <body>

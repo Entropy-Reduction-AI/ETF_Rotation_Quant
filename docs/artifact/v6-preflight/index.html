@@ -894,6 +894,73 @@ p.kv.kv-warn .kv-k::before { content: '⚠'; width: auto; height: auto; backgrou
 .dx-good .dx-i { background: var(--good); } .dx-good .dx-i::before { content: '✓'; }
 b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color: var(--bad); font-family: var(--font-mono); }
 
+/* ledger cards: one card per case, cost large, tripwire at the foot */
+.ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 14px 0 20px; }
+.ledger .lg { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px 10px; display: flex; flex-direction: column; gap: 6px; }
+.ledger .lg-h { font-size: 13.5px; font-weight: 700; color: var(--accent); line-height: 1.5; }
+.ledger .lg-n { display: inline-grid; place-items: center; min-width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 11.5px; margin-right: 8px; vertical-align: 1px; }
+.ledger .lg-big.t-good { color: var(--good); } .ledger .lg-big.t-warn { color: var(--warn); } .ledger .lg-big.t-bad { color: var(--bad); }
+.ledger .lg-big { font-size: 19px; line-height: 1.35; font-weight: 700; color: var(--ink); }
+.ledger .lg-bl { font-size: 12px; color: var(--muted); margin-top: -4px; }
+.ledger .lg-m { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.ledger .lg-t { color: var(--ink); }
+.ledger .lg-t b, .ledger .lg-t strong { font-weight: 600; }
+.ledger .lg-k { display: inline-block; font-size: 12px; color: var(--muted); background: var(--bg); border-radius: 4px; padding: 0 6px; margin-right: 6px; }
+.ledger .lg-f { margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); font-size: 14px; color: var(--ink); line-height: 1.6; }
+.ledger .lg-f.trip { color: var(--bad); }
+.ledger .lg-f.trip .lg-k { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.ledger .lg-fi { font-weight: 700; margin-right: 4px; }
+.ledger.n4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 700px) { .ledger.n4 { grid-template-columns: minmax(0, 1fr); } }
+.ledger .lg-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+.ledger .lg-c { font-size: 12.5px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; line-height: 1.6; }
+
+
+/* ===== story layer (author focus lines) ===== */
+.sl-q { display: flex; gap: 10px; align-items: baseline; margin: -4px 0 10px; font-size: 15px; }
+.sl-ql { flex: none; font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--muted); border: 1px solid var(--line); border-radius: 99px; padding: 1px 9px; }
+.sl-qt { color: var(--ink); font-weight: 600; }
+.sl-st { flex: none; font-size: 12px; font-weight: 700; border-radius: 99px; padding: 1px 9px; }
+.sl-st.t-ok { background: var(--good-soft); color: var(--good); }
+.sl-st.t-you { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); }
+.sl-st.t-todo { background: color-mix(in srgb, var(--bad) 14%, transparent); color: var(--bad); }
+.sl-look { display: flex; gap: 12px; align-items: baseline; margin: 18px 0 8px; padding: 10px 14px; border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); }
+.sl-ll { flex: none; font-size: 12px; font-weight: 800; color: #fff; background: var(--accent); border-radius: 6px; padding: 2px 8px; letter-spacing: .08em; }
+.sl-lt { font-size: 16px; font-weight: 600; line-height: 1.6; color: var(--ink); }
+.sl-n { color: var(--accent); font-family: var(--font-mono); font-weight: 700; white-space: nowrap; }
+.ledger .lg .lg-big.sl-box, .lg-big.sl-box, .fl-k.sl-box, b.sl-box, strong.sl-box { padding: 1px 8px; margin-left: -8px; display: inline-block; width: auto; }
+.lg-f.sl-box, .lg-h.sl-box { outline-offset: 3px !important; }
+.sl-box { outline: 2.5px solid var(--accent) !important; outline-offset: -3px; border-radius: 6px; background: color-mix(in srgb, var(--accent) 6%, transparent) !important; }
+.fold-b > .sl-look:first-child { margin-top: 6px; }
+a.sl-next { display: flex; gap: 12px; align-items: center; margin: 26px 0 4px; padding: 12px 16px; border-radius: 10px; text-decoration: none;
+  border: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent); color: var(--ink); background: var(--surface); }
+a.sl-next:hover { border-style: solid; }
+.sl-nl { flex: none; font-size: 12px; font-weight: 800; color: var(--accent); letter-spacing: .08em; }
+.sl-nt { flex: 1; font-size: 15px; line-height: 1.6; }
+.sl-ng { flex: none; font-size: 13px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+.sl-defs { display: grid; margin: 8px 0 14px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.sl-dr { display: grid; grid-template-columns: 8.5em minmax(0, 1fr) 11em; gap: 14px; padding: 11px 14px; border-top: 1px solid var(--line); align-items: baseline; }
+.sl-dr:first-child { border-top: 0; }
+.sl-dt { font-weight: 700; color: var(--ink); font-size: 14.5px; }
+.sl-dt::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 2px; background: var(--accent); margin-right: 8px; vertical-align: 2px; }
+.sl-dh { font-size: 15px; color: var(--ink); line-height: 1.6; }
+.sl-dx { font-size: 13.5px; color: var(--muted); line-height: 1.6; margin-top: 3px; }
+.sl-ds { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+.sl-src { font-size: 11.5px; color: var(--muted); border: 1px solid var(--line); border-radius: 5px; padding: 0 6px; white-space: nowrap; }
+nav.sl-spine { margin: 18px 0 4px; }
+.sl-sp-h { font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 8px; letter-spacing: .03em; }
+.sl-sp-r { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+a.sl-sp-i { position: relative; display: grid; gap: 2px; padding: 10px 10px 9px 12px; text-decoration: none; color: var(--ink); border-left: 1px solid var(--line); border-top: 3px solid var(--good); }
+a.sl-sp-i:first-child { border-left: 0; }
+a.sl-sp-i.t-you { border-top-color: var(--accent); } a.sl-sp-i.t-todo { border-top-color: var(--bad); }
+a.sl-sp-i:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.sl-sp-k { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
+.sl-sp-s { font-size: 14px; font-weight: 700; line-height: 1.35; }
+.sl-sp-st { font-size: 11.5px; color: var(--muted); }
+a.sl-sp-i.t-todo .sl-sp-st { color: var(--bad); font-weight: 700; } a.sl-sp-i.t-you .sl-sp-st { color: var(--accent); font-weight: 700; }
+@media (max-width: 760px) { .sl-dr { grid-template-columns: minmax(0, 1fr); gap: 3px; } .sl-ds { justify-content: flex-start; } .sl-look, a.sl-next { flex-direction: column; gap: 4px; align-items: flex-start; } }
+
 </style>
 </head>
 <body>
@@ -920,7 +987,6 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <div class="specgrid"><div class="sg-row sg-hd"><span class="sg-h">步骤</span><span class="sg-h">看什么</span><span class="sg-h">怎么判</span><span class="sg-h">得出</span><span class="sg-h">例：2015 年 8 月 A 股</span></div><div class="sg-row"><div class="sg-step"><span class="sg-n">1</span><span class="sg-name">选人</span><span class="sg-purpose">决定买哪 3 只</span></div><div class="sg-cell sg-see" data-lb="看什么"><span class="sg-chip">过去一年涨幅</span><span class="sg-chip">不算最近 1 个月</span></div><div class="sg-cell sg-rule has-key" data-lb="怎么判"><span class="sg-chip sg-key">取前 3</span><span class="sg-chip">从高到低排</span><span class="sg-chip">母指数也参加排名</span></div><div class="sg-cell sg-out" data-lb="得出"><span class="sg-chip">3 只候选</span></div><div class="sg-cell sg-ex" data-lb="例：2015 年 8 月 A 股"><div class="xv xv-rank"><span class="xv-bn">军工</span><span class="xv-bt"><i style="width:100%"></i></span><span class="xv-bv">106%</span><span class="xv-bn">软件</span><span class="xv-bt"><i style="width:94%"></i></span><span class="xv-bv">100%</span><span class="xv-bn">公用</span><span class="xv-bt"><i style="width:90%"></i></span><span class="xv-bv">95%</span></div><span class="sg-res">这 3 只入选</span></div></div><div class="sg-row"><div class="sg-step"><span class="sg-n">2</span><span class="sg-name">看市场</span><span class="sg-purpose">决定现在紧不紧张</span></div><div class="sg-cell sg-see" data-lb="看什么"><span class="sg-chip">母指数均线</span><span class="sg-chip">宽度</span><span class="sg-chip">TRIN</span></div><div class="sg-cell sg-rule has-key" data-lb="怎么判"><span class="sg-chip sg-key">≥ 2 票 = 紧张</span><span class="sg-chip">每项越过历史门槛 = 1 票</span></div><div class="sg-cell sg-out" data-lb="得出"><span class="sg-chip">紧张 / 不紧张</span></div><div class="sg-cell sg-ex" data-lb="例：2015 年 8 月 A 股"><div class="xv xv-votes"><span class="xv-vote on"><b>✓</b>均线</span><span class="xv-vote on"><b>✓</b>宽度</span><span class="xv-vote on"><b>✓</b>TRIN</span></div><span class="sg-res">3 票，紧张</span></div></div><div class="sg-row"><div class="sg-step"><span class="sg-n">3</span><span class="sg-name">定仓位</span><span class="sg-purpose">决定股票买多少钱</span></div><div class="sg-cell sg-see" data-lb="看什么"><span class="sg-chip">紧不紧张</span><span class="sg-chip">把握 p</span></div><div class="sg-cell sg-rule has-key" data-lb="怎么判"><span class="sg-chip sg-key">紧张：股票 × p</span><span class="sg-chip">不紧张：每只 1/3</span><span class="sg-chip">其余买国债</span></div><div class="sg-cell sg-out" data-lb="得出"><span class="sg-chip">每只的金额</span></div><div class="sg-cell sg-ex" data-lb="例：2015 年 8 月 A 股"><div class="xv xv-split"><div class="xv-in"><span class="sg-chip">40 万</span><span class="sg-chip">p = 0.235</span></div><div class="xv-bar"><span class="s1" style="flex:9.4">股票 9.4 万</span><span class="s2" style="flex:30.6">国债 30.6 万</span></div></div><span class="sg-res">股票 9.4 万，国债 30.6 万</span></div></div><div class="sg-row"><div class="sg-step"><span class="sg-n">4</span><span class="sg-name">下单</span><span class="sg-purpose">决定买哪只基金</span></div><div class="sg-cell sg-see" data-lb="看什么"><span class="sg-chip">同指数的几只基金</span><span class="sg-chip">溢价比 60 天常态高几点</span></div><div class="sg-cell sg-rule has-key" data-lb="怎么判"><span class="sg-chip sg-key">高 5 点以上换一只</span><span class="sg-chip">下一个交易日调仓</span></div><div class="sg-cell sg-out" data-lb="得出"><span class="sg-chip">实际买入的基金</span></div><div class="sg-cell sg-ex" data-lb="例"><span class="sg-exl">纳指科技，假设</span><div class="xv xv-gap over"><div class="xv-track"><span class="xv-seg" style="left:34.8%;width:43.5%"></span><span class="xv-th" style="left:65.8%"><em>常态 +5 点</em></span><span class="xv-pt a" style="left:34.8%"><em>常态 9%</em></span><span class="xv-pt b" style="left:78.3%"><em>今天 16%</em></span></div></div><span class="sg-res">高 7 点，换另一只</span></div></div></div>
 <figure><img alt="一个月怎么定持仓：2015 年 8 月股灾后，A 股 40 万里只拿 9.4 万股票，美股几乎满仓" src="../../assets/v6-preflight/f8-exec.png"/></figure>
 <div class="calcgrid"><div class="cg-title">把握 p 怎么算</div><div class="cg-grid" style="--n:3"><div class="cg-hd cg-lab">2015 年 8 月</div><div class="cg-hd cg-step"><span class="cg-n">①</span><span class="cg-verb">记下</span><span class="cg-body">以往每个紧张月，前 3 名下个月涨了多少</span><span class="cg-sub">只记已知结果的月份</span></div><div class="cg-hd cg-step"><span class="cg-n">②</span><span class="cg-verb">算 t</span><span class="cg-body cg-fm">t = 平均 ÷ 波动 × √月数</span></div><div class="cg-hd cg-step"><span class="cg-n">③</span><span class="cg-verb">换成 p</span><span class="cg-body cg-fm">p = Φ(t)</span></div><div class="cg-hd cg-out"><span class="cg-verb">得出</span><span class="cg-body">股票仓位</span></div><div class="cg-lab cg-row bad">A 股名额</div><div class="cg-c cg-multi" data-lb="记下"><span class="cg-kv"><em>紧张月数</em><b class="num">37</b></span><span class="cg-kv"><em>领头者下月平均</em><b class="num">−1.18%</b></span><span class="cg-kv"><em>波动</em><b class="num">9.93%</b></span></div><div class="cg-c cg-big bad" data-lb="算 t"><em>t =</em><b class="num">−0.72</b></div><div class="cg-c cg-big bad" data-lb="换成 p"><em>把握 p =</em><b class="num">0.235</b><span class="cg-bar"><i style="width:24%"></i></span></div><div class="cg-c cg-res" data-lb="得出"><span>40 万 × 0.235 =</span><b>9.4 万</b></div><div class="cg-lab cg-row good">美股名额</div><div class="cg-c cg-multi" data-lb="记下"><span class="cg-kv"><em>紧张月数</em><b class="num">156</b></span><span class="cg-kv"><em>领头者下月平均</em><b class="num">+1.45%</b></span><span class="cg-kv"><em>波动</em><b class="num">6.68%</b></span></div><div class="cg-c cg-big good" data-lb="算 t"><em>t =</em><b class="num">+2.72</b></div><div class="cg-c cg-big good" data-lb="换成 p"><em>把握 p =</em><b class="num">0.997</b><span class="cg-bar"><i style="width:100%"></i></span></div><div class="cg-c cg-res" data-lb="得出"><span>60 万 × 0.997 =</span><b>59.8 万</b></div></div><div class="cg-foot"><svg aria-label="p = Φ(t) 换算曲线" class="phi" role="img" viewbox="0 0 440 180"><line class="ax" x1="34" x2="428" y1="150.0" y2="150.0"></line><line class="mid" x1="34" x2="428" y1="86.0" y2="86.0"></line><line class="mid" x1="215.8" x2="215.8" y1="22" y2="150.0"></line><text class="tk" text-anchor="end" x="28" y="154.0">0</text><text class="tk" text-anchor="end" x="28" y="90.0">0.5</text><text class="tk" text-anchor="end" x="28" y="26.0">1</text><text class="tk" text-anchor="middle" x="94.6" y="166">-2</text><text class="tk" text-anchor="middle" x="155.2" y="166">-1</text><text class="tk" text-anchor="middle" x="215.8" y="166">t = 0</text><text class="tk" text-anchor="middle" x="276.5" y="166">+1</text><text class="tk" text-anchor="middle" x="337.1" y="166">+2</text><text class="tk" text-anchor="middle" x="397.7" y="166">+3</text><text class="tk" text-anchor="end" x="28" y="17">p</text><path class="crv" d="M34.0,149.8 L37.3,149.8 L40.6,149.8 L43.9,149.7 L47.1,149.7 L50.4,149.6 L53.7,149.5 L57.0,149.4 L60.3,149.3 L63.5,149.2 L66.8,149.1 L70.1,149.0 L73.4,148.8 L76.7,148.6 L80.0,148.4 L83.2,148.2 L86.5,147.9 L89.8,147.6 L93.1,147.3 L96.4,146.9 L99.7,146.5 L102.9,146.0 L106.2,145.5 L109.5,144.9 L112.8,144.3 L116.1,143.6 L119.4,142.9 L122.6,142.1 L125.9,141.2 L129.2,140.2 L132.5,139.2 L135.8,138.1 L139.1,136.9 L142.4,135.6 L145.6,134.2 L148.9,132.8 L152.2,131.2 L155.5,129.6 L158.8,127.8 L162.0,126.0 L165.3,124.1 L168.6,122.1 L171.9,120.0 L175.2,117.9 L178.5,115.6 L181.8,113.3 L185.0,110.9 L188.3,108.4 L191.6,105.9 L194.9,103.3 L198.2,100.7 L201.5,98.0 L204.7,95.3 L208.0,92.6 L211.3,89.8 L214.6,87.1 L217.9,84.3 L221.1,81.5 L224.4,78.8 L227.7,76.1 L231.0,73.4 L234.3,70.7 L237.6,68.1 L240.9,65.5 L244.1,63.0 L247.4,60.6 L250.7,58.2 L254.0,55.9 L257.3,53.6 L260.5,51.5 L263.8,49.4 L267.1,47.4 L270.4,45.6 L273.7,43.8 L277.0,42.1 L280.2,40.4 L283.5,38.9 L286.8,37.5 L290.1,36.1 L293.4,34.9 L296.7,33.7 L300.0,32.6 L303.2,31.6 L306.5,30.6 L309.8,29.8 L313.1,29.0 L316.4,28.2 L319.7,27.6 L322.9,26.9 L326.2,26.4 L329.5,25.9 L332.8,25.4 L336.1,25.0 L339.3,24.7 L342.6,24.3 L345.9,24.0 L349.2,23.8 L352.5,23.5 L355.8,23.3 L359.0,23.2 L362.3,23.0 L365.6,22.9 L368.9,22.7 L372.2,22.6 L375.5,22.5 L378.8,22.5 L382.0,22.4 L385.3,22.3 L388.6,22.3 L391.9,22.2 L395.2,22.2 L398.5,22.2 L401.7,22.1 L405.0,22.1 L408.3,22.1 L411.6,22.1 L414.9,22.1 L418.2,22.1 L421.4,22.0 L424.7,22.0 L428.0,22.0"></path><line class="drop bad" x1="172.2" x2="172.2" y1="119.9" y2="150.0"></line><circle class="pt bad" cx="172.2" cy="119.9" r="6"></circle><text class="lb bad" text-anchor="start" x="182.2" y="137.9">A 股：t -0.72 → p 0.235</text><line class="drop good" x1="380.7" x2="380.7" y1="22.4" y2="150.0"></line><circle class="pt good" cx="380.7" cy="22.4" r="6"></circle><text class="lb good" text-anchor="end" x="370.7" y="14.4">美股：t +2.72 → p 0.997</text></svg><p class="cg-note"><b>怎么读</b>t 越大越有把握：t = 0 时 p = 0.5，t = 1 时 0.84，t = 2 时 0.98；不足 12 个月时 p = 0.5。</p></div></div>
-
 <ul class="points">
 <li><strong>读这张图</strong>：2015 年 8 月股灾后，A 股三票全中，以往紧张时 A 股领头者也跟着跌，把握只有 0.235，40 万里只拿 9.4 万股票；美股也算紧张，但美股领头者以往紧张时照样涨，把握 0.997，几乎满仓。</li>
 <li><strong>一条附加规则</strong>：母指数跌破均线时，只选过去一年是涨的候选，选不满的空位也放国债。</li>
@@ -1816,7 +1882,7 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <li><strong>全文</strong>：<a href="https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/7cb1cab/docs/owner/v6-preflight-forecast.md">2.4 版</a>。</li>
 </ul>
 </div></div></section>
-<footer>内容取自仓库 <a href="https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/main/docs/owner/v6-preflight-forecast.md">docs/owner/v6-preflight-forecast.md</a>（main @ a592981）。图表为原文配图。</footer>
+<footer>内容取自仓库 <a href="https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/main/docs/owner/v6-preflight-forecast.md">docs/owner/v6-preflight-forecast.md</a>。图表为原文配图。</footer>
 </main>
 </div>
 <script>
