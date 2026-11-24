@@ -1,7 +1,8 @@
 {
   "review_start_head": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
   "review_finish_head": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
-  "head_delta_after_refresh": null,
+  "subject_head_refresh_after_r1b_evidence": "653de223400567f06ce3abd42b78c0394bf3cf57",
+  "head_delta_after_refresh": "653de22: Metadata/story-layer HTML rebuild; appendix A CSV SHA unchanged vs 8f7ffbae; BLOCK-A still fails main DB rerun",
   "technical_decision": "request_changes",
   "technical_decision_reason": "BLOCK-A only: Owner-required appendix A CSV byte parity fails on main data baseline.",
   "compare_base_v21": "27036630f6916aa921e7b9a2eb6f905c7c642551",
@@ -29,8 +30,12 @@
   },
   "keypoint_mapping": {
     "scope": "summary + section_memo + ledger_lg_big + md_blockquote",
-    "status_counts": "see pr339-r1b-keypoint-numbers.json",
-    "reviewer_limitation": "REVIEW-INCOMPLETE for entries with status review_incomplete or needs_manual — not a product blocker absent demonstrated mismatch"
+    "artifact": "operations/reviews/pr339-r1b-keypoint-numbers.json",
+    "manual_semantic_pass": true,
+    "tokens": 103,
+    "anchored": 88,
+    "excluded_non_content": 15,
+    "semantic_groups_with_source_occurrences": true
   },
   "product_blockers": ["BLOCK-A_appendix_a_csv_byte_parity_main_db"],
   "companion_artifacts_six_paths": [

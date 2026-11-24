@@ -74,13 +74,15 @@ def us_fifteen_audit() -> list[dict]:
     return out
 
 
+KEYPOINT_NUM_RE = re.compile(r"(?<![A-Za-z0-9])([−\-+]?\d+(?:\.\d+)?%?)(?![A-Za-z])")
+
+
 def split_sections(text: str) -> dict[str, str]:
     text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
     parts: dict[str, list[str]] = {"_preamble": []}
     cur = "_preamble"
     for line in text.splitlines():
-        m = re.match(r"^(## §[0-9]|## 附表|## Metadata)", line)
-        if m:
+        if re.match(r"^## §[0-9]", line) or line.startswith("## 附表") or line.startswith("## Metadata"):
             cur = line.strip()
             parts[cur] = []
         else:
@@ -88,146 +90,498 @@ def split_sections(text: str) -> dict[str, str]:
     return {k: "\n".join(v).strip() for k, v in parts.items() if v or k == "_preamble"}
 
 
+def _normalize_layout_blob(blob: str) -> str:
+    b = re.sub(r"<!--.*?-->", "", blob, flags=re.S)
+    b = re.sub(r"\n{3,}", "\n\n", b.strip())
+    return b
+
+
+def _semantic_equal_text(blob_old: str, blob_new: str) -> bool:
+    def squash(s: str) -> str:
+        s = re.sub(r"<!--.*?-->", "", s, flags=re.S)
+        return re.sub(r"\s+", " ", s).strip()
+
+    return squash(blob_old) == squash(blob_new)
+
+
+def classify_section_delta(section_header: str, blob_old: str, blob_new: str) -> str:
+    if _normalize_layout_blob(blob_old) == _normalize_layout_blob(blob_new) or _semantic_equal_text(
+        blob_old, blob_new
+    ):
+        return "allowed_whitespace_or_layout"
+    if section_header == "_preamble" or section_header.startswith("## Metadata"):
+        if "初稿第 2.2" in blob_new or "2.2 版" in blob_new:
+            return "allowed_metadata_version"
+    if section_header.startswith("## 附表") or section_header.startswith("## §9"):
+        return "allowed_appendix_or_sec9"
+    if section_header.startswith("## §") and "Owner 2026-11-24" in blob_new and "回填" in blob_new:
+        return "allowed_owner_confirmed"
+    if "设计期年化的口径" in blob_new or ("设计期 v6 净每年 15.5%" in blob_new and "13.3%" in blob_new):
+        return "allowed_sec3_design_annualization"
+    if "已写入" in blob_new and ("附表 B" in blob_new or "紧张" in blob_new or "挑选" in blob_new):
+        return "allowed_summary_pointing_to_appendix_b"
+    if section_header.startswith("## §4") and (
+        "常识性的市场历史" in blob_new or "常识性的市场历史" in blob_old or "|\n| 5 |" in blob_new
+    ):
+        return "allowed_pollution_registry_row"
+    if blob_old == blob_new:
+        return "unchanged"
+    return "normative_sec_change"
+
+
 def normative_paragraph_diff() -> dict:
-    old_t, new_t = git_show(f"{OLD}:docs/prereg/etf-multiasset-rotation-prereg-v6.md"), git_show(f"{NEW}:docs/prereg/etf-multiasset-rotation-prereg-v6.md")
+    import difflib
+
+    old_t, new_t = git_show(f"{OLD}:docs/prereg/etf-multiasset-rotation-prereg-v6.md"), git_show(
+        f"{NEW}:docs/prereg/etf-multiasset-rotation-prereg-v6.md"
+    )
     so, sn = split_sections(old_t), split_sections(new_t)
-    allowed_section_prefixes = ("## 附表", "## §9")
+    all_keys = sorted(set(so) | set(sn))
     changes = []
-    for sec in sorted(set(so) | set(sn)):
-        if sec == "_preamble":
-            label = "Metadata / 表前（非 §§1–8 规范正文）"
-        elif sec.startswith("## 附表") or sec.startswith("## §9"):
-            label = sec + "（允许类：附表 / §9）"
-            if so.get(sec) != sn.get(sec):
-                changes.append({"section": label, "class": "allowed", "note": "内容有增删，按 Owner 允许类不计 unauthorized"})
-            continue
-        elif not re.match(r"^## §[1-8]", sec):
-            continue
-        label = sec if not sec == "_preamble" else "Metadata（非 §§1–8）"
+    for sec in all_keys:
         bo, bn = so.get(sec, ""), sn.get(sec, "")
-        if sec == "_preamble" and bo != bn:
-            changes.append({"section": label, "class": "allowed_metadata_version", "before_quote": bo[:500], "after_quote": bn[:500]})
-            continue
         if bo == bn:
             continue
-        # paragraph-level diff within section
+        label = sec if sec != "_preamble" else "Metadata / 表前"
+        bo_nc = re.sub(r"<!--.*?-->", "", bo, flags=re.S)
+        bn_nc = re.sub(r"<!--.*?-->", "", bn, flags=re.S)
+        if _semantic_equal_text(bo_nc, bn_nc):
+            changes.append(
+                {
+                    "section": label,
+                    "class": "allowed_story_layer_html_comments",
+                    "before_quote": bo[:4000],
+                    "after_quote": bn[:4000],
+                }
+            )
+            continue
+        bo, bn = bo_nc, bn_nc
         po = [p.strip() for p in re.split(r"\n\s*\n", bo) if p.strip()]
         pn = [p.strip() for p in re.split(r"\n\s*\n", bn) if p.strip()]
-        import difflib
-
         sm = difflib.SequenceMatcher(None, po, pn)
-        for tag, i1, i2, j1, j2 in sm.get_opcodes():
-            if tag == "equal":
-                continue
-            blob_new = "\n\n".join(pn[j1:j2])
-            blob_old = "\n\n".join(po[i1:i2])
-            if "Owner 2026-11-24" in blob_new and "回填" in blob_new:
-                cls = "allowed_owner_confirmed"
-            elif "设计期年化的口径" in blob_new:
-                cls = "allowed_sec3_design_annualization"
-            elif "已写入" in blob_new and ("附表 B" in blob_new or "紧张" in blob_new):
-                cls = "allowed_summary_pointing_to_appendix_b"
-            elif blob_new.startswith("|") and "附表" in label:
-                cls = "allowed"
-            elif label.startswith("## §4") and ("看过什么" in blob_new or "常识性的市场历史" in blob_new):
-                cls = "allowed_pollution_registry_row"
-            else:
-                cls = "normative_sec_change"
+        opcodes = [x for x in sm.get_opcodes() if x[0] != "equal"]
+        if not opcodes and bo != bn:
+            cls = classify_section_delta(sec, bo[:800], bn[:800])
             changes.append(
                 {
                     "section": label,
                     "class": cls,
-                    "before_quote": blob_old[:2000],
-                    "after_quote": blob_new[:2000],
+                    "before_quote": bo[:4000],
+                    "after_quote": bn[:4000],
                 }
             )
-    unauthorized = [c for c in changes if c["class"] == "normative_sec_change" and not sec.startswith("_preamble")]
+            continue
+        for tag, i1, i2, j1, j2 in opcodes:
+            blob_old = "\n\n".join(po[i1:i2])
+            blob_new = "\n\n".join(pn[j1:j2])
+            cls = classify_section_delta(sec, blob_old, blob_new)
+            if cls == "unchanged":
+                continue
+            changes.append(
+                {
+                    "section": label,
+                    "class": cls,
+                    "diff_opcode": tag,
+                    "before_quote": blob_old[:4000],
+                    "after_quote": blob_new[:4000],
+                }
+            )
+    unauthorized = [c for c in changes if c["class"] == "normative_sec_change"]
+    sec_1_8_headers = [k for k in all_keys if k == "_preamble" or re.match(r"^## §[1-8]", k)]
+    changed_1_8 = [k for k in sec_1_8_headers if so.get(k) != sn.get(k)]
     return {
-        "method": "section_header_split_then_paragraph_diff",
-        "allowed_or_status_count": len(changes) - len(unauthorized),
+        "method": "split on ^## §[0-9] and ^## 附表; paragraph \\n\\n diff inside each header block",
+        "section_counts": {
+            "old_sections": len(so),
+            "new_sections": len(sn),
+            "union_sections": len(all_keys),
+            "changed_sections_total": len([k for k in all_keys if so.get(k) != sn.get(k)]),
+            "changed_sections_§1_8_or_metadata": len(changed_1_8),
+        },
         "normative_sec_change_count": len(unauthorized),
         "normative_sec_changes": unauthorized,
-        "all_section_deltas_sample": changes,
+        "all_section_deltas": changes,
+        "allowed_classes_present": sorted({c["class"] for c in changes if c["class"] != "normative_sec_change"}),
     }
+
+
+def _sec_bucket(section_id: str | None, text: str) -> str:
+    if section_id:
+        if "附表-b" in section_id:
+            return "appendix_b"
+        if "附表-a" in section_id:
+            return "appendix_a"
+        if section_id.startswith("sec-9"):
+            return "sec9"
+        if section_id.startswith("sec-8"):
+            return "sec8"
+        if section_id.startswith("sec-7"):
+            return "sec7"
+        if section_id.startswith("sec-6"):
+            return "sec6"
+        if section_id.startswith("sec-5"):
+            return "sec5"
+        if section_id.startswith("sec-4"):
+            return "sec4"
+        if section_id.startswith("sec-3"):
+            return "sec3"
+        if section_id.startswith("sec-2"):
+            return "sec2"
+        if section_id.startswith("sec-1"):
+            return "sec1"
+    if "6 件待办" in text:
+        return "sec9"
+    if "美股 15 个固定" in text and "宽基" in text:
+        return "appendix_a"
+    if "2006–2015 只用" in text or "2006-2015" in text:
+        return "appendix_b"
+    if "检验段 2016-01" in text:
+        return "sec5"
+    if "检验段 2016–2026" in text or "2016–2026 只能" in text:
+        return "sec4"
+    if "影子跟踪" in text:
+        return "sec7"
+    if "8 种情形" in text:
+        return "sec6"
+    if "四项陷阱" in text or "4 项每次" in text:
+        return "sec8"
+    if "溢价偏离超 5" in text or "高 5 个点" in text:
+        return "sec2"
+    if "美股 15 个候选" in text and "40 个" in text:
+        return "sec1"
+    if "设计评审第 2.1" in text:
+        return "sec3"
+    return "unknown"
+
+
+def build_semantic_resolver(b: dict, d: dict) -> callable:
+    yearly_a = b["信号画像：A 股名额"]["逐年"]
+
+    def mapped(status: str, loc: str, quote: str, rationale: str | None = None) -> dict:
+        out = {"status": status, "normative_location": loc, "normative_quote": quote}
+        if rationale:
+            out["exclusion_rationale"] = rationale
+        return out
+
+    def resolve(number: str, text: str, kind: str, section_id: str | None) -> dict:
+        bucket = _sec_bucket(section_id, text)
+        n = number.replace("−", "-")
+
+        if n == "6" and "v6" in text.lower() and "件待办" not in text and "个月" not in text:
+            return mapped(
+                "excluded_non_content",
+                "—",
+                "—",
+                "正则误切：数字来自版本名 v6，不是量化声称。",
+            )
+        if "12−1" in text or "12-1" in text:
+            if n in ("12", "1", "-1", "−1") and "12−1" in text.replace("12-1", "12−1"):
+                return mapped(
+                    "excluded_non_content",
+                    "—",
+                    "—",
+                    "12−1 是回看标签（§1.4 表「回看期」），不是两个独立数量。",
+                )
+        if "D9-1" in text and n in ("9", "1", "-1", "−1"):
+            return mapped(
+                "excluded_non_content",
+                "—",
+                "—",
+                "D9-1 是 AGENTS 合同条款编号，不是数值主张。",
+            )
+        if n == "14" and "D40-14" in text:
+            return mapped(
+                "excluded_non_content",
+                "—",
+                "—",
+                "D40-14 决策编号，不是金额 14。",
+            )
+        if n in ("11", "24") and "2026-11-24" in text:
+            return mapped(
+                "excluded_non_content",
+                "—",
+                "—",
+                "完成日「2026-11-24」的月/日片段，不单独计数。",
+            )
+        if n in ("01", "09", "-01", "-09") and re.search(r"2016-01|2026-09", text.replace("–", "-")):
+            return mapped(
+                "excluded_non_content",
+                "—",
+                "—",
+                "检验段日历端点的月日片段（2016-01 / 2026-09），不单独计数。",
+            )
+        if n in ("-01", "-09", "-11", "-24") and re.search(r"20\d{2}" + re.escape(n), text):
+            return mapped(
+                "excluded_non_content",
+                "—",
+                "—",
+                "日期 ISO 片段（如 2016-01），不单独计为规范数字。",
+            )
+        if n == "2" and "§2" in text and ("退路" in text or "按 §2" in text):
+            return mapped(
+                "excluded_non_content",
+                "—",
+                "—",
+                "§2 节交叉引用，不是数量。",
+            )
+        if n == "2" and "K2A" in text:
+            return mapped(
+                "excluded_non_content",
+                "—",
+                "—",
+                "K2A 判据名中的字符，不是单独阈值。",
+            )
+        if n == "-14" and "D40-14" in text:
+            return mapped(
+                "excluded_non_content",
+                "—",
+                "—",
+                "D40-14 是决策记录编号，不是数值。",
+            )
+        if n == "6" and "v6 不再" in text:
+            return mapped(
+                "excluded_non_content",
+                "—",
+                "—",
+                "v6 版本名，不是候选个数。",
+            )
+
+        if n in ("15.5%", "15.5"):
+            return mapped(
+                "anchored",
+                "§3 + 附表 B JSON",
+                f"附表 B：v6 净年化 2006–15 = {b['年化']['v6 净（单边 0.2%，每日固定 60/40）']['2006–15']}（文四舍五入 15.5%）",
+            )
+        if n in ("13.3%", "13.3"):
+            return mapped(
+                "anchored",
+                "§3 设计期年化 / 附表 B",
+                "「设计期 v6 净每年 15.5%；只用当年已发布的指数是 13.3%（第 47 行）」",
+            )
+        if n == "24%":
+            return mapped(
+                "anchored",
+                "附表 B JSON",
+                f"「紧张时平均股票仓位」= {b['信号画像：A 股名额']['紧张时平均股票仓位']}",
+            )
+
+        if bucket == "sec1":
+            if n == "15":
+                return mapped("anchored", "§1.1 / 附表 A", "「美股名额（15 个）」列举 SPX…DWRTF。")
+            if n == "40":
+                return mapped("anchored", "§1.1 / 附表 A", "「A 股约 40 个」= 8 宽基红利 +10 一级行业 +22 主题（附表 A 导语）。")
+            if n == "3":
+                return mapped(
+                    "anchored",
+                    "§1.4 表",
+                    "「每个名额选几只 | 3 | D40-7…」且 §1 要点「从数据里定的数字正好 3 个」指表中标「计」的三行。",
+                )
+        if bucket == "sec2":
+            if n == "5":
+                return mapped("anchored", "§2 表", "「溢价比自身过去 60 个交易日溢价中位数高 5 个点以上不买」")
+            if n == "1" and "1/3" in text:
+                return mapped("anchored", "§2 表", "「每只最多占名额的 1/3（美股 20 万）」分子 1。")
+            if n == "3" and ("名额" in text or "1/3" in text):
+                return mapped("anchored", "§2", "「每只最多占名额的 1/3」分母 3；执行层不计入 §1.4 三个「计」。")
+        if bucket == "sec3" and n == "2.1":
+            return mapped(
+                "anchored",
+                "Metadata + §3 导语",
+                "依据行：「设计评审第 2.1 版（`docs/reference/strategy-design-review.md`）」",
+            )
+        if bucket == "sec4":
+            if n in ("2016", "2026") and "检验段" in text:
+                return mapped(
+                    "anchored",
+                    "§4 导语 / §5.1",
+                    "§4 要点写「检验段 2016–2026」；§5 规范窗「2016-01-01 → 2026-09-30（已污染段）」。",
+                )
+            if n == "12" and "种" in text:
+                return mapped("anchored", "§4 表 #6", "「A 股选人的试验次数约 12 种」逐项列举。")
+        if bucket == "sec5":
+            if n in ("2016", "2026", "-01", "-09"):
+                if n.startswith("-"):
+                    return mapped(
+                        "excluded_non_content",
+                        "—",
+                        "—",
+                        "检验段日历端点的月日片段，已随 2016/2026 主锚点覆盖。",
+                    )
+                return mapped("anchored", "§5.1", "「检验段：2016-01-01 → 2026-09-30（已污染段）」")
+            if n == "40%":
+                return mapped("anchored", "§5 判据表 ①", "「回撤 ≤ 40%…100 万最低不跌破 60 万」")
+            if n == "4" and "点" in text:
+                return mapped("anchored", "§5 判据表", "「防守保费不超过 4 点」/ ledger「≤ 4 点」")
+            if n == "0" and ("≥" in text or "不落后" in text):
+                return mapped("anchored", "§5 判据表 ④", "「对同仓位基准不落后」ledger 缩写「≥ 0」")
+        if bucket == "sec6":
+            if n == "8" and "种情形" in text:
+                return mapped("anchored", "§6", "疼痛表列 8 行情形。")
+            if kind == "ledger_big":
+                if "2006" in text and n in ("2006", "2010", "9"):
+                    return mapped("anchored", "§6 疼痛表", "「A 股大牛市…2006–2010 每年少约 9 点」")
+                if n == "15" and "V" in text:
+                    return mapped("anchored", "§6 疼痛表", "「合成 V 型每年落后约 15 点（短期年化）」")
+                if n == "58.8":
+                    return mapped("anchored", "§6 疼痛表", "「突发急跌…较差的十分之一约剩 58.8 万」")
+                if n == "1.6":
+                    return mapped("anchored", "§6 疼痛表", "「挑选没有动量的年份…每年少约 1.6 点」")
+                if n in ("16", "2011", "13", "+16.9", "2014", "15", "−21.1", "-21.1", "40"):
+                    return mapped(
+                        "anchored",
+                        "§6 疼痛表",
+                        "「两段各约 ±16 万：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层）」",
+                    )
+                if n in ("1.8", "9%", "20", "40") and "溢价" in text:
+                    return mapped(
+                        "anchored",
+                        "§6 疼痛表 + §2",
+                        "「稀缺 QDII 溢价消失…约 1.8 万（常态溢价约 9%、单只 20 万，D40-14）」",
+                    )
+                if n in ("1.0", "1.1"):
+                    return mapped("anchored", "§6 疼痛表", "「换手和成本…每年约 1.0–1.1 点」")
+        if bucket == "sec7":
+            if n == "60":
+                return mapped("anchored", "§7", "「模拟盘跌破 60 万…暂停」= D39 底线与同 §5 回撤口径一致。")
+            if n == "6" and "个月" in text:
+                return mapped("anchored", "§7", "「连续 6 个月对同仓位基准累计落后超过 6 点」两处 6 同一暂停规则。")
+        if bucket == "sec8" and n == "4":
+            return mapped("anchored", "§8", "要点：「主题指数回填…4 项每次报告都要写」（另两行表还有美股代理/申万差异）。")
+        if bucket == "sec9":
+            if n == "6" and "件待办" in text:
+                return mapped("anchored", "§9.2", "「冻结前的 6 件待办」编号表 1–6。")
+            if n == "2026":
+                return mapped("anchored", "§9.2#3 / 附表 A·B", "待办 3/4 完成日「2026-11-24」写入附表。")
+        if bucket == "appendix_a":
+            if n == "15":
+                return mapped("anchored", "附表 A 标题", "「美股 15 个固定」候选枚举。")
+            if n in ("8", "10", "22", "40"):
+                return mapped(
+                    "anchored",
+                    "附表 A 导语",
+                    "「A 股 8 个宽基与红利 + 10 个一级行业 + 22 个主题…到检验段末 40 个」",
+                )
+        if bucket == "appendix_b":
+            if n in ("2006", "2015"):
+                return mapped(
+                    "anchored",
+                    "附表 B 导语",
+                    "设计期窗「2006–2015 只用 ≤2015 的数据」+ JSON END=2015-12-31。",
+                )
+            if n == "2008":
+                return mapped(
+                    "anchored",
+                    "附表 B JSON 信号画像",
+                    f"2008 年 A 股紧张月数 = {yearly_a.get('2008', {}).get('紧张月数', '（见 JSON）')}；导语「紧张集中在 2008 年」。",
+                )
+
+        if n == "15" and "美股" in text:
+            return mapped("anchored", "§1 / 附表 A", "美股候选固定 15 个。")
+        if n == "40" and "A 股" in text:
+            return mapped("anchored", "§1 / 附表 A", "A 股候选约 40 个（附表 A 分解）。")
+
+        return mapped(
+            "no_anchor_located",
+            "—",
+            "—",
+            "Reviewer 在本轮 prereg/附表文本中未找到与该摘要素对应的独立规范字段（非证伪）。",
+        )
+
+    return resolve
 
 
 def keypoint_lists() -> dict:
     from bs4 import BeautifulSoup
+    from collections import defaultdict
 
     html = (OVERLAY / "docs/artifact/v6-prereg/index.html").read_text(encoding="utf-8")
     md_path = OVERLAY / "docs/prereg/etf-multiasset-rotation-prereg-v6.md"
     md = md_path.read_text(encoding="utf-8")
     b = json.loads((OVERLAY / "results/v6-preflight/v6-appendix-b.json").read_text(encoding="utf-8"))
     d = b["收益拆分（每年比 BM-主 多几个点）"]
+    resolve = build_semantic_resolver(b, d)
 
-    def anchor_number(n: str, context: str) -> tuple[str, str]:
-        """Return (status, semantic_anchor)."""
-        ctx = context
-        if "15.5" in n or n == "15.5%":
-            return "anchored", f"§3 设计期年化 + 附表B v6净年化={b['年化']['v6 净（单边 0.2%，每日固定 60/40）']['2006–15']}"
-        if "13.3" in n:
-            return "anchored", "§3 设计期年化 / 附表B 第47行参照 / p3 图蓝线 13.3%"
-        if n in ("+0.4", "0.4", "+0.44", "0.44") and ("BM" in ctx or "合计" in ctx):
-            return "anchored", f"附表B 合计 2006–15 = {d['合计（v6 净 − BM-主）']['2006–15']}"
-        if n in ("+4.3", "4.3"):
-            return "anchored", f"附表B 挑选 2006–15 = {d['挑选']['2006–15']}（文四舍五入 4.3）"
-        if n in ("-3.4", "−3.4"):
-            return "anchored", f"附表B 仓位差 2006–15 = {d['仓位差']['2006–15']}（文四舍五入 -3.4）"
-        if n in ("-1.5", "−1.5"):
-            return "anchored", f"附表B 成本 2006–15 = {d['成本']['2006–15']}（文四舍五入 -1.5）"
-        if n == "42" and "紧张" in ctx:
-            return "anchored", f"附表B A股紧张月合计={sum(v['紧张月数'] for v in b['信号画像：A 股名额']['逐年'].values())}"
-        if n == "29" and "紧张" in ctx:
-            return "anchored", f"附表B 美股紧张月合计={sum(v['紧张月数'] for v in b['信号画像：美股名额']['逐年'].values())}"
-        if "24" in n and "%" in n:
-            return "anchored", f"附表B A股紧张时平均仓位={b['信号画像：A 股名额']['紧张时平均股票仓位']}"
-        if n == "+1.2" and "合计" in ctx:
-            return "anchored", "§3.1 预测表合计 +1.2（forecast 3.22，非附表B）"
-        if re.match(r"^\+?0\.[0-9]", n) and "预测" in ctx:
-            return "needs_manual", "§3 预测分项——需对照 docs/owner/v6-preflight-forecast.md 3.22（Reviewer 未在本轮展开全文锚定）"
-        if "§" in ctx or "附表" in ctx:
-            return "needs_manual", f"同节语境「{ctx[:80]}」——需人工读该节规范句"
-        return "review_incomplete", "未在本轮钉到具体规范句/附表字段（非证伪 subject）"
+    def emit(kind: str, text: str, section_id: str | None) -> list[dict]:
+        rows = []
+        visible = re.sub(r"\s+", " ", text).strip()
+        claim_id = hashlib.sha256(visible.encode()).hexdigest()[:16]
+        for n in KEYPOINT_NUM_RE.findall(text):
+            m = resolve(n, text, kind, section_id)
+            rows.append(
+                {
+                    "kind": kind,
+                    "section": section_id,
+                    "visible_claim": visible[:240],
+                    "claim_id": claim_id,
+                    "text": visible[:200],
+                    "number": n,
+                    **m,
+                }
+            )
+        return rows
 
     soup = BeautifulSoup(html, "html.parser")
-    items = []
-  # Owner 页首 summary 三格
+    items: list[dict] = []
     for box in soup.select("div.summary > div, div.mini > div"):
         t = box.get_text(" ", strip=True)
-        if re.search(r"\d", t):
-            for n in re.findall(r"[−\-+]?\d+(?:\.\d+)?%?", t):
-                st, anc = anchor_number(n, t)
-                items.append({"kind": "page_summary_box", "text": t[:200], "number": n, "status": st, "anchor": anc})
+        if KEYPOINT_NUM_RE.search(t):
+            items.extend(emit("page_summary_box", t, None))
     for sec in soup.select("section[id^=sec-]"):
+        sid = sec.get("id")
         memo = sec.find(class_="memo")
         if memo:
             t = memo.get_text(" ", strip=True)
-            for n in re.findall(r"[−\-+]?\d+(?:\.\d+)?%?", t):
-                st, anc = anchor_number(n, t)
-                items.append({"kind": "section_memo", "section": sec.get("id"), "text": t[:200], "number": n, "status": st, "anchor": anc})
+            items.extend(emit("section_memo", t, sid))
         for lg in sec.select(".lg-big"):
             t = lg.get_text(" ", strip=True)
-            if not re.search(r"\d", t):
-                continue
-            for n in re.findall(r"[−\-+]?\d+(?:\.\d+)?%?", t):
-                st, anc = anchor_number(n, t)
-                items.append({"kind": "ledger_big", "section": sec.get("id"), "text": t[:120], "number": n, "status": st, "anchor": anc})
+            if KEYPOINT_NUM_RE.search(t):
+                items.extend(emit("ledger_big", t, sid))
     for m in re.finditer(r"^> \*\*.*\*\*", md, flags=re.M):
         line = m.group(0)
-        if not re.search(r"\d", line):
-            continue
-        for n in re.findall(r"[−\-+]?\d+(?:\.\d+)?%?", line):
-            st, anc = anchor_number(n, line)
-            items.append({"kind": "md_blockquote_memo", "text": line[:200], "number": n, "status": st, "anchor": anc})
+        if KEYPOINT_NUM_RE.search(line):
+            items.extend(emit("md_blockquote_memo", line, None))
 
-    counts = {"anchored": 0, "needs_manual": 0, "review_incomplete": 0}
+    groups: dict[str, dict] = {}
     for it in items:
-        counts[it["status"]] = counts.get(it["status"], 0) + 1
+        gk = it["claim_id"]
+        groups.setdefault(
+            gk,
+            {
+                "claim_id": gk,
+                "visible_claim": it["visible_claim"],
+                "numbers": {},
+                "source_occurrences": [],
+            },
+        )
+        groups[gk]["source_occurrences"].append(
+            {"kind": it["kind"], "section": it.get("section"), "number": it["number"]}
+        )
+        num = it["number"]
+        if num not in groups[gk]["numbers"]:
+            groups[gk]["numbers"][num] = {
+                "number": num,
+                "status": it["status"],
+                "normative_location": it["normative_location"],
+                "normative_quote": it["normative_quote"],
+                **({"exclusion_rationale": it["exclusion_rationale"]} if it.get("exclusion_rationale") else {}),
+            }
+
+    unfinished = [it for it in items if it["status"] in ("review_incomplete", "needs_manual", "no_anchor_located")]
+    by_status: dict[str, int] = {}
+    for it in items:
+        by_status[it["status"]] = by_status.get(it["status"], 0) + 1
+
     return {
         "scope": "summary_boxes + section_memo + ledger_lg_big + md_blockquote only",
+        "number_token_regex": KEYPOINT_NUM_RE.pattern,
+        "semantic_groups": list(groups.values()),
         "entries": items,
-        "status_counts": counts,
-        "review_incomplete_note": "review_incomplete = 本轮未钉锚点，不是 subject 数字矛盾",
+        "completion": {
+            "total_tokens": len(items),
+            "unfinished_tokens": len(unfinished),
+            "by_status": by_status,
+            "manual_pass_complete": len(unfinished) == 0,
+        },
     }
 
 

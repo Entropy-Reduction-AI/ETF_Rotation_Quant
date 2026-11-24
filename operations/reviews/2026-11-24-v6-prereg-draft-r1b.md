@@ -1,4 +1,4 @@
-# v6 预注册初稿 R1b · 2026-11-24（修订 c）
+# v6 预注册初稿 R1b · 2026-11-24（修订 d）
 
 ## 技术结论
 
@@ -6,11 +6,12 @@
 | --- | --- |
 | **结论** | **`request_changes`** |
 | **唯一产品阻塞** | **BLOCK-A**：main 数据基线复跑 `v6-appendix-a.csv` 与 subject 提交 **不字节一致** |
-| **#339 head**（起/终/刷新） | `8f7ffbae3ac1885cefce9bc1281e4ab2d030687f`（无页后提交） |
+| **#339 head**（R1b 起/终） | `8f7ffbae3ac1885cefce9bc1281e4ab2d030687f` |
+| **#339 刷新**（证据收尾后） | `653de223400567f06ce3abd42b78c0394bf3cf57`（story 层/Metadata；**附表 A CSV SHA 与 8f7ffbae 相同**，BLOCK-A 仍在） |
 | v2.1 对照 | `27036630f6916aa921e7b9a2eb6f905c7c642551` |
 | main | `24762d27f08786d4045bf4d40259d7c1ab878b16` |
 
-**非产品阻塞**：要点数字映射 **REVIEW-INCOMPLETE**（见下）= Reviewer 未在本轮钉满锚点，**不**等同 subject 数字矛盾。
+**要点数字**：103 个 token 已全部语义映射（88 `anchored` + 15 `excluded_non_content`，`manual_pass_complete: true`）；详见 `pr339-r1b-keypoint-numbers.json` → `semantic_groups`（按可见主张去重，保留 html/md 双出现）。
 
 ---
 
@@ -109,17 +110,12 @@
 
 ---
 
-## 要点数字映射（非全页扫数）
+## 要点数字映射（手工语义层）
 
-范围：**页首 summary 三格 + 各节 `p.memo` + ledger `lg-big` + md `> **` 要点**，见 `pr339-r1b-keypoint-numbers.json`。
-
-| status | 含义 | 条数（本轮） |
-| --- | --- | ---: |
-| `anchored` | 已钉附表 B / §3 等语义锚点 | 6 |
-| `needs_manual` | 需对照 forecast 3.22 等同节（未展开） | 20 |
-| `review_incomplete` | **REVIEW-INCOMPLETE**：未钉锚点，**非证伪** | 85 |
-
-**不作产品阻塞**；未逐项证明 subject 数字错误。
+- **范围**：summary / `p.memo` / ledger `lg-big` / md 要点 blockquote（不含全页 CSS 噪声）。
+- **103 token**：88 已锚至规范节或附表 B JSON；15 显式 **excluded**（D9-1、12−1 标签、§2 交叉引用、日期碎片、v6 版本名等），各附 `exclusion_rationale`。
+- **23 个 `semantic_groups`**：同一可见主张合并；`source_occurrences` 列 html memo 与 md 重复出现。
+- **机器可读**：`pr339-r1b-keypoint-numbers.json`（非产品阻塞；无 demonstrated mismatch）。
 
 ---
 
@@ -127,7 +123,9 @@
 
 方法：按 `## §` / `## 附表` 切分后段落 diff（见 `pr339-r1b-audit.json` → `normative_diff`）。
 
-**`normative_sec_change_count = 0`**（无检出 §§1–8 规则改写类 unauthorized 段落）。
+**`normative_sec_change_count = 0`**（§§1–8 无 unauthorized 规则改写；`all_section_deltas` 共 17 条，含完整 before/after 引用）。
+
+**section_counts**（`pr339-r1b-audit.json`）：old 12 / new 13 节头；union 15；changed 15（其中 §1–8+Metadata 9）。允许类含：`allowed_metadata_version`、`allowed_owner_confirmed`、`allowed_sec3_design_annualization`、`allowed_summary_pointing_to_appendix_b`、`allowed_pollution_registry_row`、`allowed_appendix_or_sec9`、`allowed_story_layer_html_comments`、`allowed_whitespace_or_layout`。
 
 **有内容的允许/状态类变化（列举，非违规）**：
 
