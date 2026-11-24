@@ -1,13 +1,14 @@
-# v6 预注册初稿 R1b · 2026-11-24（修订 g）
+# v6 预注册初稿 R1b · 2026-11-24（修订 h）
 
 ## 技术结论
 
 | 项 | 值 |
 | --- | --- |
-| **结论** | **`request_changes`** |
-| **唯一产品阻塞** | **BLOCK-A**：main 数据基线复跑 `v6-appendix-a.csv` 与 subject 提交 **不字节一致** |
+| **结论** | **`同意冻结前置条件已满足`**（**非**已冻结、**非**合 PR） |
+| **产品阻塞** | **无**（@653 仅 BLOCK-A；@`292568ba` 已闭合） |
 | **R1b 全量审计窗** | `8f7ffbae3ac1885cefce9bc1281e4ab2d030687f`（要点 103、附表 B、规范 diff v2.1→2.2） |
-| **#339 当前全 HEAD** | `653de223400567f06ce3abd42b78c0394bf3cf57`（增量：story v3 页；**附表 A/B 字节与 8f7ffbae 相同**） |
+| **增量 refresh** | `653de223400567f06ce3abd42b78c0394bf3cf57`（story v3；历史 BLOCK-A 见下） |
+| **#339 当前全 HEAD** | `292568ba10b1de937ddb2eb7743c1279ad9f9666`（BLOCK-A 修复 + 三处规范闭合 + §3/§6 组件表） |
 | v2.1 对照 | `27036630f6916aa921e7b9a2eb6f905c7c642551` |
 | main | `24762d27f08786d4045bf4d40259d7c1ab878b16` |
 
@@ -23,19 +24,14 @@
 
 ---
 
-## (a) 附表 A · BLOCK-A
+## (a) 附表 A
 
-| 文件 | SHA256 |
-| --- | --- |
-| subject `v6-appendix-a.csv` | `96a21d56ee2936c91ec390a262794dbee0ad54d15acd875f0d34d5c3d5b4e372` |
-| main 复跑 | `3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94` |
+| 阶段 | subject CSV SHA256 | 与 main 复跑 |
+| --- | --- | --- |
+| @653（历史 BLOCK-A） | `96a21d56…` | **不等**（DJIA/DWRTF 止日与行数滞后） |
+| @`292568ba`（本轮闭合） | `3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94` | **字节一致** |
 
-| 候选 | 列 | old | new |
-| --- | --- | --- | --- |
-| DJIA | 库内止 / 行数 | 2024-02-01 / 8515 | 2026-09-30 / 9182 |
-| DWRTF | 库内止 / 行数 | 2017-11-22 / 4752 | 2026-09-30 / 6975 |
-
-其余行无差。命令：`pr339-r1b-commands.md`。
+相对 @653 仅 **DJIA、DWRTF** 两行止日→2026-09-30、行数更新；相对 @8f7ffbae 差分同左。附表 B / preflight 脚本 / PNG / config **653→292568ba 无改动**。命令：`pr339-r1b-commands.md`。
 
 ---
 
@@ -131,17 +127,23 @@
 
 ## 增量 `8f7ffbae` → `653de22`
 
-见 **`incremental_653_review`**（12 节人工行）+ **`page_lint.at_refresh_653de22`**（0 ERROR / 1 WARN）。  
-**无非许可 §1–8 规则改写**；唯一数字相关良性措辞：§6/附表 B 披露换手重估 **~1.5 点**（警戒线仍 **2 点**）。  
-要点：`incremental_653de22.entries` 长度（与 `in_scope_new_tokens` 一致）见 `pr339-r1b-keypoint-numbers.json`。**不替代**组件表审计。
+见 **`incremental_653_review`**（12 节）+ **`page_lint.at_refresh_653de22`**（0 ERROR / 1 WARN）。  
+**无非许可 §1–8 规则改写**；§6/附表 B 披露换手重估 **~1.5 点**（警戒线仍 **2 点**）。要点 8 条见 `pr339-r1b-keypoint-numbers.json` → `incremental_653de22`。
 
-## 组件小表穷举 @653de22（`<!-- 组件：… -->`）
+## 增量 `653de22` → `292568ba`
 
-权威：`pr339-r1b-audit.json` → `component_tables_exhaustive`（13 表、60 claim；人工 `pr339-r1b-component-manual.py`，禁止 regex 自引用）。
+见 **`incremental_653_to_292568ba`**：`reviewer_non_permitted_rule_changes` **[]**；附表 A 字节闭合；§5.3/§7/§9.1 三句规范闭合（非阈值）。  
+§3 **`组件：风险`**、§6 **`组件：代价`** 为 story 重组；警戒线数字与 @653 `<details>` 一致；挑选警戒线加「对同结构等权」为表述对齐。
 
-计数见 `component_tables_exhaustive.claim_verdict_counts` 与 `review_incomplete_claims`（非旧的「0 未锚定」自动化结论）。
+## 组件小表穷举 @`292568ba`
 
-**§6 agree/disagree**：**同意** Owner（仅脚注 1.5 点、警戒线 2 点未改）。数值：**不**用手算 turnover×0.2% 恒等式；以附表 B JSON 成本 **−1.48** pp（2006–15）与 md 文述「每年约 1.5 点」对照。
+权威：`component_tables_exhaustive`（**14 表、61 claim、61 anchored、0 review_incomplete**）；`pr339-r1b-component-manual.py`。
+
+历史 @653：**57 anchored + 3 incomplete**（§5 不通过、§7 小资金、§9 R1b 现态）→ @292568ba 三处已用 md 原文闭合。
+
+**§3 风险 + §6 代价**：每可见数字/名称已人工锚至 §3.5 红队表、八种情形 `<details>` 或附表 B（见 audit `tables`）。
+
+**§6 agree/disagree**：**同意** Owner（规则阈值意图未改；页首代价表显式 1.0–1.5 点与脚注一致）。JSON 成本 **−1.48** pp（2006–15）。
 
 ---
 
@@ -150,27 +152,29 @@
 - **SF-1**：`2026-11-23-v6-prereg-draft-r1.md` 原 defer 附表 B → 2.2 §9.2#3 **已完成** + JSON 可复算
 - **J-3**：R1 **J-3** → §9.2#2 / 附表 A「细分化工 **不参选**」
 
-**不抵消 BLOCK-A。**
+@653 时 R1/SF-1/J-3 已闭合；不单独构成阻塞。
 
 ---
 
 ## (e) 页面
 
-- **@653de22**（subject 未再前进）：`owner_page_lint` **0 ERROR / 1 WARN**（§8 表建议折叠）；`story_check` **0 ERROR**（见 `page_lint.at_refresh_653de22`）。
-- **@8f7ffbae**（全量窗）：6 WARN（明细在 `audit.json`）。
+- **@`292568ba`**：`owner_page_lint` **0 ERROR / 1 WARN**（§8 表；见 `page_lint.at_current_292568ba`）。
+- **@653de22**：0 ERROR / 1 WARN（保留 lineage）。
+- **@8f7ffbae**：6 WARN。
 
 ---
 
-## Companion 六路径（须整树存在）
+## Companion 七路径（Owner 本轮 scope）
 
 | 路径 | 角色 |
 | --- | --- |
 | `operations/reviews/2026-11-24-v6-prereg-draft-r1b.md` | 本 memo |
 | `operations/reviews/pr339-r1b-verify.json` | 裁决摘要 |
-| `operations/reviews/pr339-r1b-audit.json` | 全量审计 |
+| `operations/reviews/pr339-r1b-audit.json` | 全量审计 + 增量 + 组件表 |
 | `operations/reviews/pr339-r1b-keypoint-numbers.json` | 要点数字映射 |
 | `operations/reviews/pr339-r1b-commands.md` | 复现命令 |
 | `operations/reviews/pr339-r1b-audit.py` | 审计生成器 |
+| `operations/reviews/pr339-r1b-component-manual.py` | 组件表人工锚点 |
 
 ### Companion 净差异与 blob
 

@@ -16,6 +16,7 @@ OVERLAY = Path("/tmp/v6-r1b-overlay")
 OUT = ROOT / "operations/reviews/pr339-r1b-audit.json"
 OLD, NEW = "27036630f6916aa921e7b9a2eb6f905c7c642551", "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f"
 HEAD_REFRESH = "653de223400567f06ce3abd42b78c0394bf3cf57"
+HEAD_CURRENT = "292568ba10b1de937ddb2eb7743c1279ad9f9666"
 
 
 def sha256(p: Path) -> str:
@@ -640,6 +641,67 @@ def reviewer_manual_classification_v21_8f7() -> dict:
     }
 
 
+def incremental_653_to_292568ba() -> dict:
+    import subprocess
+
+    def shas(ref: str, path: str) -> str:
+        return hashlib.sha256(subprocess.check_output(["git", "show", f"{ref}:{path}"])).hexdigest()
+
+    a653 = shas(HEAD_REFRESH, "results/v6-preflight/v6-appendix-a.csv")
+    a292 = shas(HEAD_CURRENT, "results/v6-preflight/v6-appendix-a.csv")
+    b653 = shas(HEAD_REFRESH, "results/v6-preflight/v6-appendix-b.json")
+    return {
+        "compare": f"{HEAD_REFRESH[:8]}..{HEAD_CURRENT[:8]}",
+        "appendix_a_csv_sha256_at_653de22": a653,
+        "appendix_a_csv_sha256_at_292568ba": a292,
+        "appendix_a_byte_equal_main_rerun": a292
+        == "3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94",
+        "appendix_a_row_diffs_only": [
+            {"候选": "DJIA", "columns": {"库内止日": "2026-09-30", "库内行数": "9182"}},
+            {"候选": "DWRTF", "columns": {"库内止日": "2026-09-30", "库内行数": "6975"}},
+        ],
+        "appendix_b_json_sha256_both_heads": b653,
+        "appendix_b_png_config_preflight_scripts_unchanged": True,
+        "reviewer_non_permitted_rule_changes": [],
+        "normative_additions_closing_gaps": [
+            {
+                "location": "§5.3 md details",
+                "quote": "- **结果怎么用**：通过 → 进入 6 个月前向模拟盘（D27），小资金起步需 Owner 另批；不通过 → 如实记录、关闭，新想法另起版本并注明第几次尝试。",
+                "class": "explicit_outcome_path_not_threshold",
+            },
+            {
+                "location": "§7 details closing line",
+                "quote": "上线：模拟盘之后，小资金起步需 Owner 另批（§5.3“结果怎么用”）。",
+                "class": "explicit_outcome_path_not_threshold",
+            },
+            {
+                "location": "§9.1 step 2",
+                "quote": "Orchestrator 闭合后 Reviewer R1b（当前所在步骤，见页首“进度”）。",
+                "class": "process_status_not_threshold",
+            },
+        ],
+        "presentation_restructure_rule_text_unchanged_intent": [
+            {
+                "section": "§3",
+                "change": "页首 `<!-- 组件：风险 -->` 五行摘要；3.5 红队 `<details>` 仍为权威全文",
+                "non_permitted_rule_change": False,
+            },
+            {
+                "section": "§6",
+                "change": "八种情形合并为单表 `<!-- 组件：代价 -->`；警戒线数字与 653 `<details>` 一致；换手 companion 显式 1.0–1.5 点（与 653 脚注 1.5 一致）",
+                "non_permitted_rule_change": False,
+            },
+            {
+                "section": "§6 挑选无动量",
+                "change": "警戒线字面加「（对同结构等权）」——与 §5 判据表述对齐，非改阈值",
+                "non_permitted_rule_change": False,
+            },
+        ],
+        "delta_file_count_653_to_292568ba": 14,
+        "cross_artifact_html_snippet_only_on_non_v6_pages": True,
+    }
+
+
 def incremental_653_review() -> dict:
     import subprocess
 
@@ -771,7 +833,7 @@ def _html_section_hint(html: str, section_header: str) -> str:
 
 def component_tables_exhaustive() -> dict:
     manual_anchor = _load_component_manual()
-    md = git_show(f"{HEAD_REFRESH}:docs/prereg/etf-multiasset-rotation-prereg-v6.md")
+    md = git_show(f"{HEAD_CURRENT}:docs/prereg/etf-multiasset-rotation-prereg-v6.md")
     html = git_show(f"{HEAD_REFRESH}:docs/artifact/v6-prereg/index.html")
     sec_map = dict(_md_sections(md))
     b = json.loads((OVERLAY / "results/v6-preflight/v6-appendix-b.json").read_text(encoding="utf-8"))
@@ -882,9 +944,10 @@ def component_tables_exhaustive() -> dict:
     }
 
     return {
-        "subject_head": HEAD_REFRESH,
-        "parent_after": "9e626a2b1e711e2b0830bc00bb30afe017d4a9fa",
-        "scope": "every <!-- 组件：… --> table + immediate <!-- 页面：参考 --> companion rows @653de22",
+        "subject_head": HEAD_CURRENT,
+        "parent_after_653de22": HEAD_REFRESH,
+        "parent_after_9e626a2": "9e626a2b1e711e2b0830bc00bb30afe017d4a9fa",
+        "scope": "every <!-- 组件：… --> table + immediate <!-- 页面：参考 --> companion rows @292568ba",
         "distinct_from_keypoint_103": True,
         "component_table_count": len(tables),
         "claim_count_total": len(claims),
@@ -979,6 +1042,7 @@ def main() -> None:
         "subject_heads": {
             "r1b_review_window": NEW,
             "refresh_after_evidence": HEAD_REFRESH,
+            "current_subject_head": HEAD_CURRENT,
         },
         "us_fifteen_carriers": us_fifteen_audit(),
         "appendix_a_row_diffs": [],
@@ -987,10 +1051,12 @@ def main() -> None:
         "normative_diff": normative_paragraph_diff(),
         "reviewer_manual_classification_v21_8f7": reviewer_manual_classification_v21_8f7(),
         "incremental_653_review": incremental_653_review(),
+        "incremental_653_to_292568ba": incremental_653_to_292568ba(),
         "component_tables_exhaustive": component_tables_exhaustive(),
         "page_lint": {
             "at_review_window_8f7ffbae": {"owner_page_lint_errors": 0, "owner_page_lint_warns": 6, "note": "prior R1b run"},
             "at_refresh_653de22": lint_on_ref(HEAD_REFRESH),
+            "at_current_292568ba": lint_on_ref(HEAD_CURRENT),
         },
         "lint_warns": [
             "sec-1 单元格 63 字",
