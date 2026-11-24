@@ -3,7 +3,7 @@
   "review_finish_head": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
   "head_delta_after_refresh": null,
   "technical_decision": "request_changes",
-  "verdict_rationale": "Owner 当前要求附表 A 字节一致；main 库复跑失败 → 不得 approve_with_follow_up；无 Owner 书面豁免。",
+  "technical_decision_reason": "BLOCK-A only: Owner-required appendix A CSV byte parity fails on main data baseline.",
   "compare_base_v21": "27036630f6916aa921e7b9a2eb6f905c7c642551",
   "prerequisites_ok": true,
   "workspace": {
@@ -15,8 +15,7 @@
     "byte_equal_required_by_owner": true,
     "byte_equal": false,
     "subject_csv_sha256": "96a21d56ee2936c91ec390a262794dbee0ad54d15acd875f0d34d5c3d5b4e372",
-    "main_db_rerun_sha256": "3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94",
-    "row_level_diffs": ["DJIA", "DWRTF"]
+    "main_db_rerun_sha256": "3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94"
   },
   "check_b": {
     "byte_equal_subject_json": true,
@@ -28,19 +27,19 @@
     "owner_page_lint_warns": 6,
     "story_check_errors": 0
   },
-  "keypoint_numbers": {
-    "file": "operations/reviews/pr339-r1b-keypoint-numbers.json",
-    "entries": 296,
-    "explicit_appendix_or_section_anchor": 9,
-    "weak_anchor_number_in_md_anywhere": 287
+  "keypoint_mapping": {
+    "scope": "summary + section_memo + ledger_lg_big + md_blockquote",
+    "status_counts": "see pr339-r1b-keypoint-numbers.json",
+    "reviewer_limitation": "REVIEW-INCOMPLETE for entries with status review_incomplete or needs_manual — not a product blocker absent demonstrated mismatch"
   },
-  "exhaustive_detail": "operations/reviews/pr339-r1b-audit.json",
-  "blockers": [
-    "BLOCK-A_appendix_a_csv_not_byte_equal_on_main_data_baseline",
-    "BLOCK-KP_most_keypoint_numbers_only_weak_md_presence_anchor"
+  "product_blockers": ["BLOCK-A_appendix_a_csv_byte_parity_main_db"],
+  "companion_artifacts_six_paths": [
+    "operations/reviews/2026-11-24-v6-prereg-draft-r1b.md",
+    "operations/reviews/pr339-r1b-verify.json",
+    "operations/reviews/pr339-r1b-audit.json",
+    "operations/reviews/pr339-r1b-keypoint-numbers.json",
+    "operations/reviews/pr339-r1b-commands.md",
+    "operations/reviews/pr339-r1b-audit.py"
   ],
-  "r1_items": {
-    "SF-1": "closed_on_evidence_subject_tree",
-    "J-3": "closed_on_evidence_subject_tree"
-  }
+  "r1_sf1_j3_on_subject_tree": "closed_narrative_and_artifacts"
 }

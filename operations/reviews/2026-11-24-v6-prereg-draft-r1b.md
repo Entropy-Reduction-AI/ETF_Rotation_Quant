@@ -1,223 +1,193 @@
-# v6 预注册初稿 R1b 独立复核 · 2026-11-24（修订 b）
+# v6 预注册初稿 R1b · 2026-11-24（修订 c）
 
-## Metadata
+## 技术结论
 
 | 项 | 值 |
 | --- | --- |
-| PR #339 复核起点 / 收尾刷新 | **`8f7ffbae3ac1885cefce9bc1281e4ab2d030687f`**（刷新后 **无** 页后提交） |
+| **结论** | **`request_changes`** |
+| **唯一产品阻塞** | **BLOCK-A**：main 数据基线复跑 `v6-appendix-a.csv` 与 subject 提交 **不字节一致** |
+| **#339 head**（起/终/刷新） | `8f7ffbae3ac1885cefce9bc1281e4ab2d030687f`（无页后提交） |
 | v2.1 对照 | `27036630f6916aa921e7b9a2eb6f905c7c642551` |
-| main（前置） | `24762d27f08786d4045bf4d40259d7c1ab878b16` |
-| **技术结论** | **`request_changes`**（非 `approve_with_follow_up`） |
-| 机器可读 | `pr339-r1b-verify.json`、`pr339-r1b-audit.json`、`pr339-r1b-keypoint-numbers.json` |
-| 命令日志 | `pr339-r1b-commands.md` |
+| main | `24762d27f08786d4045bf4d40259d7c1ab878b16` |
 
-**未执行**：改 #339 树、改 DB、2016+ 项目池 v6 PnL、formal GitHub review/merge。
+**非产品阻塞**：要点数字映射 **REVIEW-INCOMPLETE**（见下）= Reviewer 未在本轮钉满锚点，**不**等同 subject 数字矛盾。
 
 ---
 
-## 技术结论与阻塞
+## 前置与基线
 
-Owner 指令要求 **(a) 附表 A 产出与 subject 提交 CSV 字节一致**（main 数据基线）。独立复跑 **失败** → **不得**签收式 `approve_with_follow_up`；亦非仅靠「旧库故意」口头说明可满足，除非 Owner **书面豁免**。
-
-| ID | 阻塞 |
-| --- | --- |
-| **BLOCK-A** | `v6-appendix-a.csv` subject `96a21d56…` ≠ main 复跑 `3f8407a0…`（仅 **DJIA、DWRTF** 行列差异，与 #361 延伸一致） |
-| **BLOCK-KP** | 要点层 **296** 个数字中 **287** 个仅弱锚定（「正文任意出现」），**9** 个钉附表 B/§3；未达「每一数字精确锚点」理想（见专属 JSON） |
-
-附表 B 字节一致、SF-1/J-3 在 **subject 树内叙事**上闭合，**不能**抵消 BLOCK-A。
+- merge #361/#362 parents ✅；LFS `02458762…`
+- main：`DJIA`/`DWRTF` raw max **2026-09-30**；`2024-12-25` **0**
+- 执行：subject 代码 @8f7ffbae + overlay `/tmp/v6-r1b-overlay` + main 库副本；**无** 2016+ 项目池 PnL
 
 ---
 
-## 前置（已核实）
-
-merge #361/#362 parents；main LFS `02458762…`；DJIA/DWRTF raw `MAX(date)=2026-09-30`；`2024-12-25` 行数 **0**。
-
----
-
-## (a) 附表 A
-
-**命令**（见 `pr339-r1b-commands.md`）：overlay + `python -I scripts/preflight/v6_appendix_a.py`
+## (a) 附表 A · BLOCK-A
 
 | 文件 | SHA256 |
 | --- | --- |
-| subject @8f7ffbae | `96a21d56ee2936c91ec390a262794dbee0ad54d15acd875f0d34d5c3d5b4e372` |
-| main 库复跑 | `3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94` |
-| **cmp** | **1**（不等） |
+| subject `v6-appendix-a.csv` | `96a21d56ee2936c91ec390a262794dbee0ad54d15acd875f0d34d5c3d5b4e372` |
+| main 复跑 | `3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94` |
 
-**行级差异（全部）**：
-
-| 候选 | 列 | old（subject） | new（main 复跑） |
+| 候选 | 列 | old | new |
 | --- | --- | --- | --- |
-| DJIA | 库内止 | 2024-02-01 | 2026-09-30 |
-| DJIA | 行数 | 8515 | 9182 |
-| DWRTF | 库内止 | 2017-11-22 | 2026-09-30 |
-| DWRTF | 行数 | 4752 | 6975 |
+| DJIA | 库内止 / 行数 | 2024-02-01 / 8515 | 2026-09-30 / 9182 |
+| DWRTF | 库内止 / 行数 | 2017-11-22 / 4752 | 2026-09-30 / 6975 |
 
-其余 53 行 **无列差**。
-
-**Owner 三项（规范正文）**：一级行业回填 ✅；931743 参选起点 **2023-07-27**（附表 A 表）；细分化工 **不参选** ✅（CSV 仍列 frozen 登记行）。
+其余行无差。命令：`pr339-r1b-commands.md`。
 
 ---
 
-## (1) 美股 15 候选 · 全量 `maps_to` 与状态
+## (1) 美股 15 候选 · `maps_to` 一致性（非「15 个都必须有 QDII」）
 
-（`config/v4/universe.toml`，脚本 `v6_appendix_a.py` 同序）
+判定：**有 `maps_to` 的** 行在 `config/v4/universe.toml` 中应有对应 CN 基金；**无 maps_to 的 5 个 SPDR** 脚本与附表 A 标「无场内基金」→ **内部一致**。
 
-| # | 候选 | maps_to | 状态 | CN 基金（maps_to 全表） | 附表 A「实盘载体」 |
-| --- | --- | --- | --- | --- | --- |
-| 1 | SPX | spx | 有载体 | 513500, 513650, 159612, 159655, 161125 | 513500；161125；159612 |
-| 2 | NDX | ndx100 | 有载体 | 513100, 513110, 513300, …（13 条） | 513100；159941；513300 |
-| 3 | DJIA | theme-道琼斯工业平均指数 | 有载体 | 513400 | 513400 |
-| 4 | SOX | theme-PHLX… | 有载体 | 501225 | 501225 |
-| 5 | NBI | theme-纳斯达克生物科技指数 | 有载体 | 513290 | 513290 |
-| 6 | XLK | theme-标普500信息科技指数 | 有载体 | 161128 | 161128 |
-| 7 | XLV | theme-标普500医疗保健等权重指数 | 有载体 | 161126 | 161126 |
-| 8 | XLE | theme-S&P 500 Energy… | 有载体 | 163208 | 163208 |
-| 9 | XLY | theme-标普500消费精选指数 | 有载体 | 159529 | 159529 |
-| 10 | XLP | **（无 key）** | **无 maps_to** | — | **无场内基金** |
-| 11 | XLF | **（无 key）** | **无 maps_to** | — | **无场内基金** |
-| 12 | XLI | **（无 key）** | **无 maps_to** | — | **无场内基金** |
-| 13 | XLB | **（无 key）** | **无 maps_to** | — | **无场内基金** |
-| 14 | XLU | **（无 key）** | **无 maps_to** | — | **无场内基金** |
-| 15 | DWRTF | theme-道琼斯美国精选REIT指数 | 有载体 | 160140 | 160140 |
+| 候选 | maps_to | v4 CN 基金数 | 附表 A 载体 | maps_to 一致 |
+| --- | --- | ---: | --- | --- |
+| SPX | spx | 5 | 有三只节选 | ✅ |
+| NDX | ndx100 | **13**（全表见下） | 513100；159941；513300 | ✅ |
+| DJIA | theme-道琼斯… | 1 | 513400 | ✅ |
+| SOX | theme-PHLX… | 1 | 501225 | ✅ |
+| NBI | theme-纳斯达克生物科技 | 1 | 513290 | ✅ |
+| XLK | theme-标普500信息科技 | 1 | 161128 | ✅ |
+| XLV | theme-标普500医疗保健等权重 | 1 | 161126 | ✅ |
+| XLE | theme-S&P 500 Energy… | 1 | 163208 | ✅ |
+| XLY | theme-标普500消费精选 | 1 | 159529 | ✅ |
+| XLP | — | 0 | 无场内基金 | ✅ |
+| XLF | — | 0 | 无场内基金 | ✅ |
+| XLI | — | 0 | 无场内基金 | ✅ |
+| XLB | — | 0 | 无场内基金 | ✅ |
+| XLU | — | 0 | 无场内基金 | ✅ |
+| DWRTF | theme-道琼斯美国精选REIT | 1 | 160140 | ✅ |
 
-**Owner「15 实盘载体」语义判定**：
-
-- 若指 **15 个美股候选各行均有 maps_to QDII**：**不成立**（10 有 key + 基金，5 SPDR **故意无** maps_to，与 v4 一致）。
-- 若指 **附表 A 列出 15 行「实盘载体」字段**：**成立**（5 行写「无场内基金」）。
-
-完整基金列表明见 `pr339-r1b-audit.json` → `us_fifteen_carriers`。
+**NDX 全部 13 个 `maps_to=ndx100` 基金**：513100, 513110, 513300, 513390, 513870, 501312, 159501, 159513, 159632, 159659, 159660, 159696, 159941（上市日见 `pr339-r1b-audit.json`）。
 
 ---
 
-## (b) 附表 B · 全量
+## (b) 附表 B
 
-### ≤2015 数据源过滤（执行前核对）
+- **JSON** `d5dcc888f93211992324e0f63c849325644f2f19607d9b0d34fa6b57dab53f01`：subject = main 复跑 **字节一致**
+- **≤2015 过滤**：`v6_appendix_b.py:21` `END`；`a_official.py:28` `bars date<=2015-12-31`；`topn_dedupe.py:21` `lvl date<=2015-12-31`
 
-| 位置 | 规则 |
-| --- | --- |
-| `v6_appendix_b.py:21` | `END = '2015-12-31'` |
-| `v6_appendix_b.py:118` | 画像 `df.loc['2006-01':'2015-11']` |
-| `a_official.py:28` | `bars … date<='2015-12-31'` |
-| `topn_dedupe.py:21` | `lvl(…) date<='2015-12-31'` |
+### 五分量求和（JSON 精确值）
 
-### 输入 / 输出 SHA256
+**2006–10**：−9.33 + 1.78 + 5.03 + 0.65 + (−1.46) = **−3.33** = 合计 **−3.33** ✅  
 
-| 对象 | SHA256 |
-| --- | --- |
-| French `49_Industry_Portfolios.csv` | `633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609` |
-| `DTB3.csv` | （见 audit JSON `inputs_sha256`） |
-| overlay `market.sqlite` | main LFS 实体 `02458762…` |
-| **subject / 复跑 `v6-appendix-b.json`** | **`d5dcc888f93211992324e0f63c849325644f2f19607d9b0d34fa6b57dab53f01`**（**字节一致**） |
+**2011–15**：2.25 + 0.49 + 3.54 + (−0.88) + (−1.49) = **3.91** = 合计 **3.91** ✅  
 
-### 五分量 + 合计（JSON 精确值，三分段）
+**2006–15**：−3.36 + 1.13 + 4.28 + (−0.13) + (−1.48) = **0.44** = 合计 **+0.44** ✅  
 
-**2006–10**
+附表 B **规范表**（正文 639–644 行）与上表 JSON **逐字段一致**（非四舍五入）。
 
-| 分量 | JSON | 五者之和 | 合计行 | 和=合计 |
-| --- | ---: | --- | ---: | --- |
-| 仓位差 | −9.33 | | | |
-| 等权倾斜 | +1.78 | | | |
-| 挑选 | +5.03 | | | |
-| 防守 | +0.65 | | | |
-| 成本 | −1.46 | **−3.33** | **−3.33** | ✅ |
+### p3 / p4 · PNG 内嵌数字（Reviewer 读图，非仅 alt）
 
-**2011–15**
+**`p3-decompose.png`**（@8f7ffbae）瀑布标签：
 
-| 分量 | JSON | 五者之和 | 合计行 |
-| --- | ---: | --- | ---: |
-| 仓位差 | +2.25 | | |
-| 等权倾斜 | +0.49 | | |
-| 挑选 | +3.54 | | |
-| 防守 | −0.88 | | |
-| 成本 | −1.49 | **+3.91** | **+3.91** ✅ |
+- BM-主 **15.1%** → 仓位差 **−3.4** → 等权 **+1.1** → 挑选 **+4.3** → 防守 **−0.1** → 成本 **−1.5** → v6 净 **15.5%**
+- 蓝线参照 **13.3%**（第 47 行截断口径）
+- 桥：**15.1−3.4+1.1+4.3−0.1−1.5=15.5**（与图标签一致）
 
-**2006–15**
+与 JSON 三分段表：图用 **2006–15 四舍五入叙事**；精确分拆见上「五分量」表（等权 1.13 vs 图 1.1 等）。
 
-| 分量 | JSON | 五者之和 | 合计行 |
-| --- | ---: | --- | ---: |
-| 仓位差 | −3.36 | | |
-| 等权倾斜 | +1.13 | | |
-| 挑选 | +4.28 | | |
-| 防守 | −0.13 | | |
-| 成本 | −1.48 | **+0.44** | **+0.44** ✅ |
+**`p4-signals.png`** 柱顶「确认紧张月数」：
 
-### p3 / p4 数字审计
-
-| 载体 | 声称 | JSON / 表锚点 | 一致 |
-| --- | --- | --- | --- |
-| **p3** 图 alt（叙事四舍五入） | 15.5%；+0.4；+4.3；−3.4；−1.5 | v6净 15.54→15.5；合计 0.44→0.4；挑选 4.28→4.3；仓位差 −3.36→−3.4；成本 −1.48→−1.5 | ✅ 四舍五入 |
-| **p3** 附表 B **表**（规范） | 各行见上 | 与 JSON **逐字段一致**（639–644 行） | ✅ |
-| **p4** memo | 紧张 42/29；A 股紧张约 **24%** | A 紧张月合计 42、美 29；`紧张时平均股票仓位` **0.24** | ✅ |
-
----
-
-## (2) 要点数字清单
-
-- 全量：**296** 条（HTML `.memo/.sl-box/.lg-big/.sl-dh/.sl-dx/.sl-qt`）→ `pr339-r1b-keypoint-numbers.json`
-- **9** 条钉附表 B / §3 设计期年化；**287** 条仅「在全文 md 出现」弱锚定 → **BLOCK-KP**
-
----
-
-## (4) 规范 diff `27036630` → `8f7ffbae`（§§1–8，去 HTML 注释后）
-
-**允许类**（不计入 unauthorized）：附表 A/B 全文、§9.2 状态、§3 设计期年化、Owner 2026-11-24 确认、`<details>`/讲故事 HTML 块。
-
-**Unauthorized / 需 Coordinator 裁定（逐条 old→new）**：
-
-| ID | 节 | old（v2.1） | new（2.2） |
-| --- | --- | --- | --- |
-| U1 | Metadata 表行 ~L18 | `初稿第 2.1 版：…待 Reviewer R1b。` / `冻结前剩附表 A、B` | `初稿第 2.2 版：…附表 A、B 已写入…6 件待办全部完成` |
-| U2 | §3 八问表 ~L219 | `<!-- 页面：卡片 -->`（问 4 未填已写入数） | 问 4 **已写入**：A 紧张 **42**、美 **29** 月 |
-| U3 | §3 八问表 ~L221 | 问 6 行变为 §4 表头 `| # | 看过什么 |…`（v2.1 此处结构不同） | 问 6 **已写入**：挑选 **+4.3**、仓位差 **−3.4**、成本 **−1.5** |
-| U4 | §4 ~L289 | `5.4 稳健性…` summary 占位 | 新污染登记行 **#4** `v2、v3–v5.1 在 2016-01→2026-09…` |
-| U5 | §4 数据陷阱表 ~L457 | （无该行） | 新行 **主题指数回填** + Owner 2026-11-24 一级行业回填确认 |
-| U6 | §9.2 ~L500–501 | 待办 2、3 未完成描述 | **已完成（2026-11-24）** + J-3 / #359 / 附表 B 15.5% |
-
-另：§3.1 **SF-2「低于哪条线不做」**、§3.1 **D40-12 对账两块** — R1 已列 Must/Should **闭合声称为 2.2 写入**；本 R1b **未**再 class 为 unauthorized（属 R1 已授权 follow-up 写入），但 **U2/U3** 把八问从 defer 改为带 **未与附表 B 表逐项链接的数字摘要**。
-
-完整 opcode 列表见 `pr339-r1b-audit.json` → `normative_diff`。
-
----
-
-## (d) R1 SF-1 / J-3 闭合证据（只读 subject + R1 留档）
-
-| ID | R1（`2026-11-23-v6-prereg-draft-r1.md`） | 2.2 subject 证据 | R1b 独立判定 |
-| --- | --- | --- | --- |
-| **SF-1** | 问 4/6/8 defer 附表 B | §9.2#3 **已完成**；`v6-appendix-b.json` **可复算且字节一致**（main DB） | **subject 内闭合** |
-| **J-3** | 细分化工是否参选 | §9.2#2「**不参选**」；附表 A 叙事 + frozen 行 | **subject 内闭合** |
-
-闭合 **不**表示 PR 可签收（BLOCK-A 仍在）。
-
----
-
-## (e) 页面门禁
-
-| 工具 | ERROR | WARN |
+| 年 | A | 美 |
 | --- | ---: | ---: |
-| `owner_page_lint` | **0** | **6**（见下） |
-| `story_check` | **0** | —（**非** Owner 硬门禁） |
+| 2006 | 0 | 0 |
+| 2007 | 0 | 3 |
+| 2008 | 12 | 12 |
+| 2009 | 2 | 4 |
+| 2010 | 6 | 3 |
+| 2011 | 8 | 5 |
+| 2012 | 8 | 0 |
+| 2013 | 0 | 0 |
+| 2014 | 2 | 0 |
+| 2015 | 4 | 2 |
+| **合计** | **42** | **29** |
 
-**6 WARN**：
-
-1. sec-1 策略定义：单元格 63 字  
-2. sec-2 执行层：单元格 68 字  
-3. sec-2 执行层：单元格 72 字  
-4. sec-5 一次性检验：列表项 124 字  
-5. 附表-a：单元格 56 字（513500…）  
-6. 附表-a：单元格 56 字（513100…）
+与 JSON `信号画像` 逐年紧张月数之和 **一致**。副标题：A 把握 p 年末 0.31→0.57；美约 0.997（逐年明细见 JSON `信号画像`）。
 
 ---
 
-## Companion 交付物
+## 要点数字映射（非全页扫数）
 
-| 路径 |
-| --- |
-| `operations/reviews/2026-11-24-v6-prereg-draft-r1b.md` |
-| `operations/reviews/pr339-r1b-verify.json` |
-| `operations/reviews/pr339-r1b-audit.json` |
-| `operations/reviews/pr339-r1b-keypoint-numbers.json` |
-| `operations/reviews/pr339-r1b-commands.md` |
-| `operations/reviews/pr339-r1b-audit.py` |
+范围：**页首 summary 三格 + 各节 `p.memo` + ledger `lg-big` + md `> **` 要点**，见 `pr339-r1b-keypoint-numbers.json`。
 
-**给 Coordinator**：在 subject **刷新附表 A CSV（main 库）或 Owner 豁免 BLOCK-A** 之前，技术结论维持 **`request_changes`**。
+| status | 含义 | 条数（本轮） |
+| --- | --- | ---: |
+| `anchored` | 已钉附表 B / §3 等语义锚点 | 6 |
+| `needs_manual` | 需对照 forecast 3.22 等同节（未展开） | 20 |
+| `review_incomplete` | **REVIEW-INCOMPLETE**：未钉锚点，**非证伪** | 85 |
+
+**不作产品阻塞**；未逐项证明 subject 数字错误。
+
+---
+
+## 规范 diff `27036630` → `8f7ffbae`（§ 分段 + 段内段落）
+
+方法：按 `## §` / `## 附表` 切分后段落 diff（见 `pr339-r1b-audit.json` → `normative_diff`）。
+
+**`normative_sec_change_count = 0`**（无检出 §§1–8 规则改写类 unauthorized 段落）。
+
+**有内容的允许/状态类变化（列举，非违规）**：
+
+| 类 | 位置 | 摘要 |
+| --- | --- | --- |
+| `allowed_metadata_version` | Metadata | 初稿 **2.1→2.2**、日期 11-23→11-24 |
+| `allowed_pollution_registry_row` | §4 | 新增污染登记行 **#5 常识性市场历史** 与「同仓位基准判」 |
+| `allowed` / 附表·§9 | 附表 A/B、§9.2 | 2.2 写入附表、待办完成态、Owner 2026-11-24 确认 |
+| `allowed_summary_pointing_to_appendix_b` | §3 八问表 | 问 4/6 填 **已写入** 42/29 月、拆分 **+4.3/−3.4/−1.5**（指向附表 B，非改 §1.2 规则） |
+| `allowed_sec3_design_annualization` | §3 | **设计期年化口径** 15.5% / 13.3% |
+| `allowed_owner_confirmed` | §4 数据陷阱表 | **主题指数回填** + Owner 一级行业回填确认 |
+
+旧版 **U1–U6 unauthorized** 表已撤：其中 metadata、§9.2、Owner 确认、附表 B 摘要属 **允许类**；不含证实的 §1–8 规则句改写。
+
+---
+
+## R1 · SF-1 / J-3（subject 树内）
+
+- **SF-1**：`2026-11-23-v6-prereg-draft-r1.md` 原 defer 附表 B → 2.2 §9.2#3 **已完成** + JSON 可复算
+- **J-3**：R1 **J-3** → §9.2#2 / 附表 A「细分化工 **不参选**」
+
+**不抵消 BLOCK-A。**
+
+---
+
+## (e) 页面
+
+- `owner_page_lint`：**0 ERROR**，**6 WARN**：
+
+  1. sec-1 单元格 63 字  
+  2. sec-2 单元格 68 字  
+  3. sec-2 单元格 72 字  
+  4. sec-5 列表项 124 字  
+  5. 附表-a 表单元格 56 字（513500…）  
+  6. 附表-a 表单元格 56 字（513100…）
+
+- `story_check`：0 ERROR（诊断门禁，非 Owner 硬约束）
+
+---
+
+## Companion 六路径（须整树存在）
+
+| 路径 | 角色 |
+| --- | --- |
+| `operations/reviews/2026-11-24-v6-prereg-draft-r1b.md` | 本 memo |
+| `operations/reviews/pr339-r1b-verify.json` | 裁决摘要 |
+| `operations/reviews/pr339-r1b-audit.json` | 全量审计 |
+| `operations/reviews/pr339-r1b-keypoint-numbers.json` | 要点数字映射 |
+| `operations/reviews/pr339-r1b-commands.md` | 复现命令 |
+| `operations/reviews/pr339-r1b-audit.py` | 审计生成器 |
+
+### 工作树 SHA256（本 commit 前）
+
+| 文件 | SHA256 |
+| --- | --- |
+| `2026-11-24-v6-prereg-draft-r1b.md` | `1f74d053aef1328178d40c497561627f3768a0a707ba04a8c3e86430d0a0691c` |
+| `pr339-r1b-verify.json` | `7b9d150b1f8eae17c1baebee544a13038a8e7292d8f95a8a6477de43fe05988f` |
+| `pr339-r1b-audit.json` | `0bfec20e28df794d502b8c5a234a7ac7bf49f9d2e69108581c882699f8b49e54` |
+| `pr339-r1b-keypoint-numbers.json` | `e517beb3c068bdf915a7fd3821161331a41227fc913dcd0fbc2a80b37ecdfc7c` |
+| `pr339-r1b-commands.md` | `7668c2eed60383c7644a4b828ac8bc92b3973deb040eb9136baa66965ed9bd63` |
+| `pr339-r1b-audit.py` | `4ca2db2089f6d15493481c5f5df5d37b556351da2b737ca91d0829cc110280d2` |
+
+**push 后** `git ls-tree HEAD` 六路径 blob 应与上表一致（memo 修订会更新首行 hash）。
