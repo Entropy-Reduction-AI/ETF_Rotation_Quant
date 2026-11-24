@@ -9,7 +9,7 @@
 | main（前置） | `24762d27f08786d4045bf4d40259d7c1ab878b16` |
 | **技术结论** | **`request_changes`**（非 `approve_with_follow_up`） |
 | 机器可读 | `pr339-r1b-verify.json`、`pr339-r1b-audit.json`、`pr339-r1b-keypoint-numbers.json` |
-| 命令日志 | `pr339-r1b-commands.log` |
+| 命令日志 | `pr339-r1b-commands.md` |
 
 **未执行**：改 #339 树、改 DB、2016+ 项目池 v6 PnL、formal GitHub review/merge。
 
@@ -36,7 +36,7 @@ merge #361/#362 parents；main LFS `02458762…`；DJIA/DWRTF raw `MAX(date)=202
 
 ## (a) 附表 A
 
-**命令**（见 `pr339-r1b-commands.log`）：overlay + `python -I scripts/preflight/v6_appendix_a.py`
+**命令**（见 `pr339-r1b-commands.md`）：overlay + `python -I scripts/preflight/v6_appendix_a.py`
 
 | 文件 | SHA256 |
 | --- | --- |
@@ -217,7 +217,7 @@ merge #361/#362 parents；main LFS `02458762…`；DJIA/DWRTF raw `MAX(date)=202
 | `operations/reviews/pr339-r1b-verify.json` |
 | `operations/reviews/pr339-r1b-audit.json` |
 | `operations/reviews/pr339-r1b-keypoint-numbers.json` |
-| `operations/reviews/pr339-r1b-commands.log` |
+| `operations/reviews/pr339-r1b-commands.md` |
 | `operations/reviews/pr339-r1b-audit.py` |
 
 **给 Coordinator**：在 subject **刷新附表 A CSV（main 库）或 Owner 豁免 BLOCK-A** 之前，技术结论维持 **`request_changes`**。
