@@ -1,0 +1,1345 @@
+{
+  "owner_ruling_ref": "2026-11-24 21:21 Asia/Taipei SOURCE_ARCHIVES_ONLY",
+  "prior_github_review": {
+    "id": 6035852626,
+    "state_at_submit": "COMMENTED not approved",
+    "commit_id": "74ea30699d184c01971ee55a0abdbcc1e36d5d84",
+    "url": "https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/pull/359#pullrequestreview-6035852626",
+    "supersedes": "Owner-authorized ARCHIVE-ONLY acceptance; not a usable-daily-series approval"
+  },
+  "pr359_heads": {
+    "live_for_approval": "1a633b5059ec6571fd5e0afce775918926525969",
+    "first_evidence_commit": "74ea30699d184c01971ee55a0abdbcc1e36d5d84",
+    "mid_commit_owner_coverage": "e9b12dc6a4b24c6e0f470ddbec0fadaf2082b7bf",
+    "delta_e9b12dc_to_live": "8 files +178/-97 (COVERAGE/MANIFEST/session/evidence/tests; no sqlite/config/roster)",
+    "pr359_vs_main": "3 commits, 54 files, +22554"
+  },
+  "pr360_branch_note": {
+    "ancestry_artifact": "PR360 vs main shows ~50 files because branch includes 359 tree; NET after 359 merged is only operations/reviews/* (3 files at last append)"
+  },
+  "verdict_for_coordinator": {
+    "reviewer_recommendation": "APPROVE_PR359_SOURCE_ARCHIVES_ONLY",
+    "not_claimed": [
+      "frozen_usable_daily_series",
+      "strategy_returns",
+      "db_or_config_or_roster_writes",
+      "ingestion_complete_for_required_trading_days"
+    ]
+  },
+  "owner_ruling_mapping": {
+    "gap_publishers_djia": "FRED(SPDJI re-publish) + CNBC(LSEG) — independent",
+    "gap_publishers_dwrtf": "CNBC(LSEG) + archived TradingView(ICE) — independent for archive gap compare",
+    "tv_sqlite_lineage": "disqualifies only TV↔sqlite as independent DB-overlap; not second gap publisher",
+    "later_usable_excludes": [
+      "2024-12-25"
+    ],
+    "dwrtf_2023_04_06": "TV 259.56 single-source only; not adopted close",
+    "dwrtf_2019_08_12": {
+      "label_future_usable_series": "source_conflict",
+      "cnbc_close": 294.58,
+      "tv_archive_close": 294.46,
+      "cause_inference": "forbidden",
+      "note": "conflict recorded in archive; not a frozen adopted close"
+    },
+    "931743": "roster unchanged; Orchestrator Appendix A eligibility 2023-07-27"
+  },
+  "formula": "abs(left - right) / abs(right)",
+  "sqlite_readonly": {
+    "DJIA_source": "eastmoney_index",
+    "DWRTF_source": "d37_r6",
+    "overlap_n": {
+      "DJIA": 63,
+      "DWRTF": 81
+    }
+  },
+  "pairs_from_delivered_normalized": {
+    "djia_fred_vs_cnbc_req": {
+      "start": "2024-02-01",
+      "end": "2026-09-30",
+      "denominator": "right",
+      "n_overlap": 668,
+      "only_left": [],
+      "only_right": [
+        "2024-12-25"
+      ],
+      "max_rel": 1.3075431785816616e-07,
+      "worst": {
+        "date": "2024-04-26",
+        "left": 38239.66,
+        "right": 38239.655,
+        "rel": 1.3075431785816616e-07
+      },
+      "n_above_0_01pct": 0,
+      "n_above_0_1pct": 0
+    },
+    "djia_fred_vs_db_ovl": {
+      "start": "2023-11-01",
+      "end": "2024-02-01",
+      "denominator": "right",
+      "n_overlap": 63,
+      "only_left": [],
+      "only_right": [],
+      "max_rel": 0.0,
+      "worst": {
+        "date": "2023-11-01",
+        "left": 33274.58,
+        "right": 33274.58,
+        "rel": 0.0
+      },
+      "n_above_0_01pct": 0,
+      "n_above_0_1pct": 0
+    },
+    "djia_cnbc_vs_db_ovl": {
+      "start": "2023-11-01",
+      "end": "2024-02-01",
+      "denominator": "right",
+      "n_overlap": 63,
+      "only_left": [],
+      "only_right": [],
+      "max_rel": 1.4356388729030788e-07,
+      "worst": {
+        "date": "2023-11-14",
+        "left": 34827.695,
+        "right": 34827.7,
+        "rel": 1.4356388729030788e-07
+      },
+      "n_above_0_01pct": 0,
+      "n_above_0_1pct": 0
+    },
+    "djia_yahoo_vs_db_ovl": {
+      "start": "2023-11-01",
+      "end": "2024-02-01",
+      "denominator": "right",
+      "n_overlap": 63,
+      "only_left": [],
+      "only_right": [],
+      "max_rel": 5.634932136622701e-08,
+      "worst": {
+        "date": "2023-11-01",
+        "left": 33274.578125,
+        "right": 33274.58,
+        "rel": 5.634932136622701e-08
+      },
+      "n_above_0_01pct": 0,
+      "n_above_0_1pct": 0
+    },
+    "dw_cnbc_vs_tv_req": {
+      "start": "2017-11-22",
+      "end": "2026-09-30",
+      "denominator": "right",
+      "n_overlap": 2223,
+      "only_left": [
+        "2024-12-25"
+      ],
+      "only_right": [
+        "2023-04-06"
+      ],
+      "max_rel": 0.00040752564015487523,
+      "worst": {
+        "date": "2019-08-12",
+        "left": 294.58,
+        "right": 294.46,
+        "rel": 0.00040752564015487523
+      },
+      "n_above_0_01pct": 1,
+      "n_above_0_1pct": 0
+    },
+    "dw_cnbc_vs_db_ovl": {
+      "start": "2017-08-01",
+      "end": "2017-11-22",
+      "denominator": "right",
+      "n_overlap": 81,
+      "only_left": [],
+      "only_right": [],
+      "max_rel": 0.0,
+      "worst": {
+        "date": "2017-08-01",
+        "left": 275.51,
+        "right": 275.51,
+        "rel": 0.0
+      },
+      "n_above_0_01pct": 0,
+      "n_above_0_1pct": 0
+    }
+  },
+  "database_stop_pairs_gt_0_1pct": [],
+  "fresh_download_audits": {
+    "fred_djia": {
+      "method": "fresh_download_vs_pr_delivered_raw",
+      "independent_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DJIA",
+      "pr_path": "incoming/v6-us-gapfill/raw/fred-DJIA.csv",
+      "independent_path": "/opt/cursor/artifacts/reviewer-pr359/raw/fred-DJIA-independent.csv",
+      "pr_sha256": "256b9f380c3b20aef06cf4e0846d1527897e6cd6c3db1d5b700b22da08577f69",
+      "independent_sha256": "256b9f380c3b20aef06cf4e0846d1527897e6cd6c3db1d5b700b22da08577f69",
+      "retrieved_at": "2026-11-24T13:29:45.030291+00:00",
+      "sha256_match": true,
+      "parsed_close_mismatches": 0,
+      "mismatches_sample": []
+    },
+    "cnbc_dwrtf_overlap_chunk": {
+      "method": "fresh_download_vs_pr_delivered_raw",
+      "url": "https://ts-api.cnbc.com/harmony/app/bars/.DWRTF/1D/20170801000000/20171231235959/adjusted/GMT",
+      "note": "CNBC may require browser User-Agent; 403 without UA",
+      "pr_sha256": "9afe71e0d4cab6b045fe422b8383e5476438278672a66007331829f51ec5a668",
+      "independent_sha256": "9afe71e0d4cab6b045fe422b8383e5476438278672a66007331829f51ec5a668",
+      "retrieved_at": "2026-11-24T13:29:45.035700+00:00",
+      "sha256_match": true
+    }
+  },
+  "flagged_dates": {
+    "2024-12-25": "exclude from later usable series; CNBC raw retained",
+    "2023-04-06": "DWRTF CNBC missing; TV archive 259.56 single_source",
+    "2019-08-12": "source_conflict: CNBC 294.58 vs TV archive 294.46 (no cause inference)"
+  },
+  "tv_prior_sha256": "1b2e608ee868c15da254503c13a5aa091be0057ef65fac399c3d29af09f6b548",
+  "delivered_normalized_samples": {
+    "djia_required": [
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-02-01",
+        "close": 38519.84
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-03-18",
+        "close": 38790.43
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-05-01",
+        "close": 37903.29
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-06-14",
+        "close": 38589.16
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-07-31",
+        "close": 40842.79
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-09-13",
+        "close": 41393.78
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-10-28",
+        "close": 42387.57
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-12-11",
+        "close": 44148.56
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2025-01-29",
+        "close": 44713.52
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2025-03-14",
+        "close": 41488.19
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2025-04-29",
+        "close": 40527.62
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2025-06-03",
+        "close": 42519.64
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2025-06-12",
+        "close": 42967.62
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2025-07-29",
+        "close": 44632.99
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2025-09-11",
+        "close": 46108.0
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2025-10-24",
+        "close": 47207.12
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2025-12-09",
+        "close": 47560.29
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2026-01-26",
+        "close": 49412.4
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2026-03-11",
+        "close": 47417.27
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2026-04-24",
+        "close": 49230.71
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2026-06-09",
+        "close": 50872.11
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2026-07-24",
+        "close": 51947.25
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2026-09-08",
+        "close": 52786.07
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2026-09-30",
+        "close": 50906.05
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2024-02-01",
+        "close": 38519.8398
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2024-03-18",
+        "close": 38790.4283
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2024-05-01",
+        "close": 37903.2916
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2024-06-14",
+        "close": 38589.1576
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2024-07-31",
+        "close": 40842.7922
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2024-09-13",
+        "close": 41393.78
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2024-10-28",
+        "close": 42387.57
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2024-12-11",
+        "close": 44148.56
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2025-01-28",
+        "close": 44850.35
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2025-03-13",
+        "close": 40813.57
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2025-04-28",
+        "close": 40227.59
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2025-06-02",
+        "close": 42305.48
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2025-06-11",
+        "close": 42865.77
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2025-07-28",
+        "close": 44837.56
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2025-09-10",
+        "close": 45490.92
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2025-10-23",
+        "close": 46734.61
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2025-12-08",
+        "close": 47739.32
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2026-01-23",
+        "close": 49098.71
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2026-03-10",
+        "close": 47706.51
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2026-04-23",
+        "close": 49310.32
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2026-06-08",
+        "close": 50786.01
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2026-07-23",
+        "close": 51711.65
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2026-09-04",
+        "close": 53414.25
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2026-09-30",
+        "close": 50906.05
+      }
+    ],
+    "djia_overlap": [
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-11-01",
+        "close": 33274.58
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-11-06",
+        "close": 34095.86
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-11-09",
+        "close": 33891.94
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-11-14",
+        "close": 34827.7
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-11-17",
+        "close": 34947.28
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-11-22",
+        "close": 35273.03
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-11-28",
+        "close": 35416.98
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-12-01",
+        "close": 36245.5
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-12-06",
+        "close": 36054.43
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-12-11",
+        "close": 36404.93
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-12-14",
+        "close": 37248.35
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-12-15",
+        "close": 37305.16
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-12-19",
+        "close": 37557.92
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-12-22",
+        "close": 37385.97
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2023-12-28",
+        "close": 37710.1
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-01-03",
+        "close": 37430.19
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-01-08",
+        "close": 37683.01
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-01-11",
+        "close": 37711.02
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-01-17",
+        "close": 37266.67
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-01-22",
+        "close": 38001.81
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-01-25",
+        "close": 38049.13
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-01-30",
+        "close": 38467.31
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "fred",
+        "date": "2024-02-01",
+        "close": 38519.84
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-11-01",
+        "close": 33274.58
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-11-06",
+        "close": 34095.86
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-11-09",
+        "close": 33891.94
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-11-14",
+        "close": 34827.7
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-11-17",
+        "close": 34947.28
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-11-22",
+        "close": 35273.03
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-11-28",
+        "close": 35416.98
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-12-01",
+        "close": 36245.5
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-12-06",
+        "close": 36054.43
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-12-11",
+        "close": 36404.93
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-12-14",
+        "close": 37248.35
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-12-15",
+        "close": 37305.16
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-12-19",
+        "close": 37557.92
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-12-22",
+        "close": 37385.97
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2023-12-28",
+        "close": 37710.1
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2024-01-03",
+        "close": 37430.19
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2024-01-08",
+        "close": 37683.01
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2024-01-11",
+        "close": 37711.02
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2024-01-17",
+        "close": 37266.67
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2024-01-22",
+        "close": 38001.81
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2024-01-25",
+        "close": 38049.13
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2024-01-30",
+        "close": 38467.31
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2024-02-01",
+        "close": 38519.84
+      }
+    ],
+    "dwrtf_required": [
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-11-22",
+        "close": 275.66
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2018-04-26",
+        "close": 249.34
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2018-09-25",
+        "close": 271.29
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2019-02-27",
+        "close": 281.2
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2019-07-29",
+        "close": 292.9
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2019-12-26",
+        "close": 295.35
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2020-05-28",
+        "close": 229.12
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2020-10-26",
+        "close": 229.4
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2021-03-29",
+        "close": 280.67
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2021-08-26",
+        "close": 321.3
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2022-01-26",
+        "close": 328.83
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2022-04-26",
+        "close": 342.54
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2022-06-28",
+        "close": 283.86
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2022-11-25",
+        "close": 270.65
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2023-05-01",
+        "close": 261.55
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2023-09-29",
+        "close": 244.65
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2024-03-01",
+        "close": 277.33
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2024-08-01",
+        "close": 293.36
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2024-12-30",
+        "close": 290.97
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2025-06-03",
+        "close": 289.51
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2025-10-31",
+        "close": 292.93
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2026-04-06",
+        "close": 307.33
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2026-09-03",
+        "close": 335.14
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2026-09-30",
+        "close": 315.22
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2017-11-22",
+        "close": 275.66
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2018-04-26",
+        "close": 249.34
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2018-09-25",
+        "close": 271.29
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2019-02-27",
+        "close": 281.2
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2019-07-29",
+        "close": 292.9
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2019-12-26",
+        "close": 295.35
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2020-05-28",
+        "close": 229.12
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2020-10-26",
+        "close": 229.4
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2021-03-29",
+        "close": 280.67
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2021-08-26",
+        "close": 321.3
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2022-01-26",
+        "close": 328.83
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2022-04-26",
+        "close": 342.54
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2022-06-28",
+        "close": 283.86
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2022-11-25",
+        "close": 270.65
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2023-04-28",
+        "close": 263.51
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2023-09-28",
+        "close": 244.17
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2024-02-29",
+        "close": 274.51
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2024-07-31",
+        "close": 290.28
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2024-12-30",
+        "close": 290.97
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2025-06-03",
+        "close": 289.51
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2025-10-31",
+        "close": 292.93
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2026-04-06",
+        "close": 307.33
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2026-09-03",
+        "close": 335.14
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "tv_archive",
+        "date": "2026-09-30",
+        "close": 315.22
+      }
+    ],
+    "dwrtf_overlap": [
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-08-01",
+        "close": 275.51
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-08-04",
+        "close": 273.22
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-08-09",
+        "close": 270.93
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-08-14",
+        "close": 271.67
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-08-17",
+        "close": 269.09
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-08-22",
+        "close": 268.32
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-08-25",
+        "close": 271.17
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-08-30",
+        "close": 270.16
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-09-05",
+        "close": 271.64
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-09-08",
+        "close": 274.65
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-09-13",
+        "close": 273.06
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-09-18",
+        "close": 274.41
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-09-21",
+        "close": 271.28
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-09-26",
+        "close": 272.05
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-09-27",
+        "close": 269.38
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-09-29",
+        "close": 270.7
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-10-04",
+        "close": 271.31
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-10-09",
+        "close": 272.24
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-10-12",
+        "close": 275.44
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-10-17",
+        "close": 275.0
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-10-20",
+        "close": 271.83
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-10-25",
+        "close": 268.75
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-10-30",
+        "close": 267.2
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "cnbc",
+        "date": "2017-11-22",
+        "close": 275.66
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-08-01",
+        "close": 275.51
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-08-04",
+        "close": 273.22
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-08-09",
+        "close": 270.93
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-08-14",
+        "close": 271.67
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-08-17",
+        "close": 269.09
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-08-22",
+        "close": 268.32
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-08-25",
+        "close": 271.17
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-08-30",
+        "close": 270.16
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-09-05",
+        "close": 271.64
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-09-08",
+        "close": 274.65
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-09-13",
+        "close": 273.06
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-09-18",
+        "close": 274.41
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-09-21",
+        "close": 271.28
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-09-26",
+        "close": 272.05
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-09-27",
+        "close": 269.38
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-09-29",
+        "close": 270.7
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-10-04",
+        "close": 271.31
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-10-09",
+        "close": 272.24
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-10-12",
+        "close": 275.44
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-10-17",
+        "close": 275.0
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-10-20",
+        "close": 271.83
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-10-25",
+        "close": 268.75
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-10-30",
+        "close": 267.2
+      },
+      {
+        "provenance": "delivered_normalized_csv",
+        "label": "sqlite",
+        "date": "2017-11-22",
+        "close": 275.66
+      }
+    ]
+  }
+}
