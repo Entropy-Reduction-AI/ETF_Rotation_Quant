@@ -1,0 +1,165 @@
+{
+  "subject_pr": 346,
+  "subject_head_expected": "0bff3eda70c64d62944940a4cd94ea702cd95adb",
+  "subject_head_at_run": "0bff3eda70c64d62944940a4cd94ea702cd95adb",
+  "head_drift": false,
+  "inputs": {
+    "french_49_csv": {
+      "path": "/agent/repos/ETF_Rotation_Quant/operations/reviews/diag/d38-r45-56/cache/49_Industry_Portfolios.csv",
+      "sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
+      "matches_signed": true
+    },
+    "dtb3_csv": {
+      "path": "/agent/repos/ETF_Rotation_Quant/results/v5/other-market/raw/DTB3.csv",
+      "sha256": "29fe11e20522b4d293cdbbbfd37f2862264692519a251e712747a8532ee95a00",
+      "matches_signed": true
+    },
+    "market_sqlite": {
+      "path": "/agent/repos/ETF_Rotation_Quant/data/market.sqlite",
+      "sha256": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52",
+      "matches_signed": true
+    }
+  },
+  "commit_order": {
+    "row45_56_reg": {
+      "full": "4de51bc40268380e11be08ec1c71b11026d107a4",
+      "parent": "c78bc45241033ba369cef06c43fc87103d987efe",
+      "author_date": "2026-11-23 09:16:06 +0000",
+      "committer_date": "2026-11-23 09:16:06 +0000",
+      "subject": "D38 第 45 行运行口径、第 56 行跑前登记（C2 正式判据、申万一级参考检验）；未看任何收益",
+      "planning_only": true
+    },
+    "row45_56_res": {
+      "full": "0bff3eda70c64d62944940a4cd94ea702cd95adb",
+      "parent": "4de51bc40268380e11be08ec1c71b11026d107a4",
+      "author_date": "2026-11-23 09:18:45 +0000",
+      "committer_date": "2026-11-23 09:18:45 +0000",
+      "subject": "D38 第 45、56 行结果：上月涨幅不进 v6；C2 关闭；申万一级参考检验（12−1 对等权 −5.9，连续性版比 12−1 好 6.5 但只追平等权）",
+      "planning_only": false
+    }
+  },
+  "registration_order_proof": {
+    "reg_is_ancestor_of_res": true,
+    "reg_planning_only": true,
+    "res_parent_is_reg": true,
+    "reg_before_res_author_time": true,
+    "artifacts_missing_at_reg": {
+      "scripts/preflight/a_memory_csi300.py": true,
+      "scripts/preflight/a_decompose_sw.py": true,
+      "results/v6-preflight/a-memory-csi300.json": true,
+      "results/v6-preflight/a-decompose-sw-step1.json": true,
+      "results/v6-preflight/a-decompose-sw.json": true
+    },
+    "reg_commit_touches_only_planning": true
+  },
+  "independent_recalc": {
+    "row45": {
+      "新段_S1_净_每年点": -3.6,
+      "新段_R0_净_每年点": -2.9,
+      "全段_S1_t": 0.08,
+      "判据_新段S1净>0": false,
+      "判据_新段S1>R0": false,
+      "判据_全段S1_t>=2": false
+    },
+    "row45_vs_committed": {
+      "新段_S1_净": "True",
+      "全段_S1_t": true
+    },
+    "p3_headline": {
+      "B0_对等权_每年点": -5.9,
+      "B0_对等权_t": -1.56,
+      "C1_对等权_每年点": 0.6,
+      "C1_对等权_t": 0.19,
+      "C1_对B0_每年点": 6.5,
+      "C1_对B0_t": 1.73,
+      "engine_note": "P3 收益由 incoming+sqlite 组层 + SHA 锁定 a_decompose 核心引擎复算"
+    },
+    "p3_vs_committed": {
+      "B0_对等权": true,
+      "B0_t": true,
+      "C1_对等权": true,
+      "C1_t": true,
+      "C1_对B0": true,
+      "C1_对B0_t": true
+    },
+    "c2_p1_headline": {
+      "P1_C2_对等权_t": 0.57,
+      "P1_C2_对B0_每年点": 0.4,
+      "P1_C2_阶段赢B0数": 1,
+      "three_formal": {
+        "五段至少四段好于B0": false,
+        "对等权_t>=1": false
+      }
+    },
+    "c2_vs_committed": {
+      "对等权_t": true,
+      "对B0_每年点": true
+    }
+  },
+  "rerun_dev_scripts": {
+    "memory": {
+      "semantic_equal_to_head_commit": true
+    },
+    "sw_s1": {
+      "semantic_equal_to_head_commit": true
+    },
+    "sw": {
+      "semantic_equal_to_head_commit": true
+    }
+  },
+  "criteria_audit": {
+    "row45_preregistered_three": {
+      "def_source": "operations/planning row45 + row45运行口径",
+      "checks": {
+        "新段 S1 净超额 > 0": false,
+        "新段 S1 > R0": false,
+        "全段 S1 净超额 t ≥ 2": false
+      },
+      "all_pass_for_adopt": false,
+      "conclusion": "维持 12−1，A 股名额继续记 0；上月涨幅不进 v6"
+    },
+    "row56_C2_three_formal": {
+      "def_source": "planning row56 + row55 C2判据（P1子池/P2子池）",
+      "checks": {
+        "P1 子池五段至少四段好于 B0": true,
+        "P1 子池对等权 t ≥ 1": false,
+        "P1 子池、P2 子池对 B0 同为正": true,
+        "换规则": false,
+        "报钱（P1 子池对等权 t ≥ 2）": false,
+        "结论": "C2 关闭"
+      },
+      "three_core": {
+        "P1子池五段至少四段好于B0": true,
+        "P1子池对等权 t≥1": false,
+        "P1与P2子池对B0同为正": true
+      },
+      "headline_P1_C2_vs_EW_t": 0.57
+    },
+    "row56_P3_reference_only": {
+      "B0_vs_EW_pts": -5.9,
+      "B0_vs_EW_t": -1.56,
+      "C1_vs_EW_pts": 0.6,
+      "C1_vs_B0_pts": 6.5,
+      "C1_vs_B0_t": 1.73
+    }
+  },
+  "definition_continuity_row55": {
+    "C1_ID_formula": true,
+    "C1_pick_lowest_ID": true,
+    "C2_overnight_sum": true,
+    "MINDAYS_200": true,
+    "cost_0.002": true,
+    "sw_reuses_decompose_core": true,
+    "a_decompose_unchanged_vs_row55_main": true
+  },
+  "decision_inputs": {
+    "head_match": true,
+    "registration_order_ok": true,
+    "inputs_ok": true,
+    "rerun_ok": true,
+    "independent_spot_ok": true,
+    "row55_definitions_unchanged": true,
+    "row45_three_criteria_fail_as_claimed": true,
+    "c2_closed_as_claimed": true
+  }
+}
