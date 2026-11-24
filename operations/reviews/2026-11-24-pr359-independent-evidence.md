@@ -86,11 +86,11 @@
 - 上述为 **说明文字** blocker，非 raw 缺失或 sqlite/config 写入。
 - 入库、可用日线、冲突日选用：Owner 约定 **后续 ingestion PR**，本包不含。
 
-## PR360 head 与 blob SHA（`881819cadcaa2c0d619ce966563d0ea4a6abb248`）
+## PR360 head 与 blob SHA（见分支 tip；下表为工作树 `git hash-object`）
 
 | 路径 | `git hash-object` |
 | --- | --- |
-| `operations/reviews/2026-11-24-pr359-independent-evidence.md` | `85ee1ab3f740451a535faedc3335cbd146d622ec` |
+| `operations/reviews/2026-11-24-pr359-independent-evidence.md` | `c9f2677528b3e0fb8ca34609b6528e6bb2c58807` |
 | `operations/reviews/pr359-independent-evidence.json` | `38245f556840934b62a273247b588c3a98f801d3` |
 | `operations/reviews/pr359-independent-evidence.py` | `23b31b50f8acdd3e005019ed8546d2568e219f94` |
 
