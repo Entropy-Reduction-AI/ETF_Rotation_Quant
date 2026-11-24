@@ -14,7 +14,7 @@ python3 -I scripts/v6_us_gapfill_compare.py
 abs(left - right) / abs(right)
 ```
 
-和库比时，右边是库内收盘。门槛 0.1% = 0.001。超过则脚本退出码 2。本次退出码 0。没有删日期，没有插值。
+和库比时，右边是库内收盘。门槛 0.1% = 0.001。超过则脚本退出码 2。退出码 0 只表示对照写完了，不表示要求窗的交易日已经补齐，也不冻结可用日线。原始文件不删、不改。交易日清单和例外在 `evidence/session-coverage.json`，规则在 `COVERAGE.md`。
 
 ## 来源身份
 
@@ -159,6 +159,6 @@ CNBC 按段下载，URL 形如 `https://ts-api.cnbc.com/harmony/app/bars/{symbol
 | `1b2e608ee868c15da254503c13a5aa091be0057ef65fac399c3d29af09f6b548` | 125832 | `incoming/grok-d37-index-20261116/theme-道琼斯美国精选REIT指数-tradingview.csv` |
 | `861189a91ca208793d5555150a2ecad15d3fc7f50170eb2b985f43797967cb01` | 4513 | `incoming/grok-d37-index-20261116/theme-道琼斯美国精选REIT指数-official-usd-pr-daily-20251117-20261116.csv` |
 
-规范化收盘在 `normalized/`。FRED 与新浪的规范化文件 SHA256 同为 `7f90b86ea1ca0c7cb922ce447d34423a2a1fef7dd6df8d7fe583399ec4d44410`（730 行）。逐日表在 `evidence/`。汇总 `evidence/comparison.json` 的 SHA256 是 `fa65657dc5e3f88bd63275fd75acb76eead659de264d3b570c934574fec2be8d`。
+规范化收盘在 `normalized/`。FRED 与新浪的规范化文件 SHA256 同为 `7f90b86ea1ca0c7cb922ce447d34423a2a1fef7dd6df8d7fe583399ec4d44410`（730 行）。逐日相对差在 `evidence/`。汇总 `evidence/comparison.json` 的 SHA256 是 `958e4d732abe5fd7d5c0822313a90639a57137bdc830bde69a47e2a03df21d0a`。交易日清单 `evidence/session-coverage.json` 的 SHA256 是 `356e20ff459dccfd3544eff7f65f231d2191b5df2ce0e54ed6c6c294d25efebf`。Yahoo 对 DWRTF 在 2019-08-12 附近没有历史柱：`raw/yahoo-DWRTF-20190812-chart-no-history.json`，SHA256 `c45a2c153fe03c27505c88a76a9aff4604cd014d247803c1dc3f1b116dca317e`。
 
 Wayback 页原文有 `<label>Bloomberg Ticker:</label> DWRTF`。这是 2025-02-12 的官方指数页快照，用来核对代码，不是日线。

@@ -1,0 +1,5 @@
+series,date,kind,evidence,adopted_close
+DJIA,2024-12-25,pseudo_session_not_counted,43297.0300,
+DWRTF,2024-12-25,pseudo_session_not_counted,294.9400,
+DWRTF,2023-04-06,missing_real_session,fred_djia=33485.29; tradingview_prior=259.56; not_adopted,
+DWRTF,2019-08-12,unresolved_source_conflict,cnbc=294.5800; tradingview_prior=294.46,

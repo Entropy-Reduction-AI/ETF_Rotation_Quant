@@ -120,6 +120,127 @@
       "official_csv": "incoming/grok-d37-index-20261116/theme-道琼斯美国精选REIT指数-official-usd-pr-daily-20251117-20261116.csv"
     }
   },
+  "session_coverage": {
+    "deliverable": "source_archive",
+    "usable_series_frozen": false,
+    "common_date_max_rel_below_0_1pct_is_not_completeness": true,
+    "calendar_matches_fred_blank_weekdays": true,
+    "fred_blank_weekdays": 88,
+    "named_full_closes": 88,
+    "djia_required": {
+      "fred": {
+        "expected_sessions": 668,
+        "archive_rows": 668,
+        "sessions_present": 668,
+        "missing_sessions": [],
+        "non_session_rows": [],
+        "sessions_complete": true
+      },
+      "yahoo": {
+        "expected_sessions": 668,
+        "archive_rows": 668,
+        "sessions_present": 668,
+        "missing_sessions": [],
+        "non_session_rows": [],
+        "sessions_complete": true
+      },
+      "sina": {
+        "expected_sessions": 668,
+        "archive_rows": 668,
+        "sessions_present": 668,
+        "missing_sessions": [],
+        "non_session_rows": [],
+        "sessions_complete": true
+      },
+      "cnbc": {
+        "expected_sessions": 668,
+        "archive_rows": 669,
+        "sessions_present": 668,
+        "missing_sessions": [],
+        "non_session_rows": [
+          "2024-12-25"
+        ],
+        "sessions_complete": true
+      }
+    },
+    "dwrtf_required": {
+      "cnbc": {
+        "expected_sessions": 2224,
+        "archive_rows": 2224,
+        "sessions_present": 2223,
+        "missing_sessions": [
+          "2023-04-06"
+        ],
+        "non_session_rows": [
+          "2024-12-25"
+        ],
+        "sessions_complete": false
+      },
+      "tradingview_prior": {
+        "expected_sessions": 2224,
+        "archive_rows": 2224,
+        "sessions_present": 2224,
+        "missing_sessions": [],
+        "non_session_rows": [],
+        "sessions_complete": true
+      }
+    },
+    "djia_fresh_sessions_complete": true,
+    "dwrtf_fresh_sessions_complete": false,
+    "pseudo_sessions": [
+      {
+        "series": "DJIA",
+        "date": "2024-12-25",
+        "kind": "pseudo_session_not_counted",
+        "is_session": false,
+        "ohlc_equals_2024_12_24": true,
+        "close": "43297.0300",
+        "adopted_close": null
+      },
+      {
+        "series": "DWRTF",
+        "date": "2024-12-25",
+        "kind": "pseudo_session_not_counted",
+        "is_session": false,
+        "ohlc_equals_2024_12_24": true,
+        "close": "294.9400",
+        "adopted_close": null
+      }
+    ],
+    "missing_real_session": {
+      "series": "DWRTF",
+      "date": "2023-04-06",
+      "kind": "missing_real_session",
+      "is_session": true,
+      "fred_djia_close": "33485.29",
+      "cnbc": null,
+      "tradingview_prior": "259.56",
+      "adopted_close": null
+    },
+    "unresolved_source_conflicts": [
+      {
+        "date": "2019-08-12",
+        "left": "294.5800",
+        "right": "294.46",
+        "abs_diff": 0.12000000000000455,
+        "adopted_close": null,
+        "kind": "unresolved_source_conflict"
+      }
+    ],
+    "third_source_for_2019_08_12": {
+      "yahoo_chart_file": "yahoo-DWRTF-20190812-chart-no-history.json",
+      "yahoo_chart_has_timestamps": false,
+      "close_adopted": null
+    },
+    "selection_rules": [
+      "Raw downloads stay unchanged, including non-sessions and disagreements.",
+      "A trading day is a weekday that is not in NYSE_FULL_CLOSE.",
+      "2024-12-25 is not a trading day. The CNBC bar copies 2024-12-24 and is not coverage.",
+      "2023-04-06 is a trading day. It is absent from fresh CNBC and is not filled from the prior TradingView file.",
+      "A same-session absolute difference above 0.005 is an unresolved conflict. Neither close is adopted.",
+      "The prior TradingView file is not a fresh download and is the database upstream, so it is not a second independent source."
+    ]
+  },
   "normalized_rows": {
     "djia-fred.csv": 730,
     "djia-yahoo.csv": 730,
@@ -249,6 +370,11 @@
       "path": "incoming/v6-us-gapfill/raw/yahoo-DJI-chart.json",
       "bytes": 69371,
       "sha256": "1bff9ba20b048d55e892ca0f9ac1a86b0a3859fa0b7f3b1dd152468f89331017"
+    },
+    {
+      "path": "incoming/v6-us-gapfill/raw/yahoo-DWRTF-20190812-chart-no-history.json",
+      "bytes": 1088,
+      "sha256": "c45a2c153fe03c27505c88a76a9aff4604cd014d247803c1dc3f1b116dca317e"
     },
     {
       "path": "incoming/v6-us-gapfill/normalized/djia-cnbc.csv",
