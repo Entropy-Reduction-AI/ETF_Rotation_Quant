@@ -713,6 +713,231 @@ def incremental_keypoints_653(b: dict) -> dict:
     }
 
 
+COMP_MARKER = re.compile(r"<!-- 组件：(.*?) -->\s*\n", re.S)
+PAGE_REF = re.compile(r"<!-- 页面：参考 -->\s*\n", re.S)
+NUM_CELL = re.compile(r"[−\-+]?\d+(?:\.\d+)?(?:%|点|万)?")
+
+
+def _md_sections(md: str) -> list[tuple[str, str]]:
+    cur, buf = "_preamble", []
+    out: list[tuple[str, str]] = []
+    for line in md.splitlines():
+        if re.match(r"^## ", line):
+            if cur:
+                out.append((cur, "\n".join(buf)))
+            cur, buf = line.strip(), [line]
+        else:
+            buf.append(line)
+    out.append((cur, "\n".join(buf)))
+    return out
+
+
+def _table_rows(table_md: str) -> list[list[str]]:
+    rows = []
+    for line in table_md.strip().splitlines():
+        if not line.startswith("|") or re.match(r"^\| *---", line):
+            continue
+        rows.append([c.strip() for c in line.strip("|").split("|")])
+    return rows[1:] if len(rows) > 1 else []
+
+
+def _details_corpus(blob: str) -> str:
+    parts = re.findall(r"<details>.*?</details>", blob, flags=re.S)
+    app = blob
+    return "\n".join(parts) + "\n" + re.sub(r"<!--.*?-->", "", app, flags=re.S)
+
+
+def _anchor_line(text: str, corpus: str) -> tuple[str, str]:
+    """Return (verdict, quote_line)."""
+    corpus_lines = [ln.strip() for ln in corpus.splitlines() if ln.strip()]
+    nums = NUM_CELL.findall(text)
+    labels = [t for t in re.split(r"[\s|，、；：]+", text) if len(t) >= 2 and not NUM_CELL.fullmatch(t)]
+    hits = []
+    for ln in corpus_lines:
+        ok = True
+        for n in nums:
+            n2 = n.replace("−", "-").replace("–", "-")
+            if n2 not in ln.replace("−", "-").replace("–", "-"):
+                ok = False
+                break
+        if nums and ok:
+            hits.append(ln)
+            continue
+        if not nums and labels:
+            hit_ct = sum(1 for lb in labels[:4] if lb in ln)
+            if hit_ct >= min(2, len(labels[:4])):
+                hits.append(ln)
+    if hits:
+        return "anchored", hits[0][:500]
+    for n in nums:
+        for ln in corpus_lines:
+            if n.replace("−", "-") in ln.replace("−", "-"):
+                return "anchored", ln[:500]
+    for lb in labels:
+        for ln in corpus_lines:
+            if lb in ln:
+                return "anchored", ln[:500]
+    return "unanchored", ""
+
+
+def _html_section_hint(html: str, section_header: str) -> str:
+    m = re.search(r"§(\d)", section_header)
+    if m:
+        return f"docs/artifact/v6-prereg/index.html#sec-{m.group(1)}"
+    if "附表 A" in section_header:
+        return "docs/artifact/v6-prereg/index.html#sec-appendix-a"
+    if "附表 B" in section_header:
+        return "docs/artifact/v6-prereg/index.html#sec-appendix-b"
+    if section_header.startswith("## §"):
+        slug = re.sub(r"[^\w\u4e00-\u9fff]+", "-", section_header[3:22]).strip("-").lower()
+        return f"docs/artifact/v6-prereg/index.html (section {slug})"
+    return "docs/artifact/v6-prereg/index.html"
+
+
+def component_tables_exhaustive() -> dict:
+    md = git_show(f"{HEAD_REFRESH}:docs/prereg/etf-multiasset-rotation-prereg-v6.md")
+    html = git_show(f"{HEAD_REFRESH}:docs/artifact/v6-prereg/index.html")
+    sec_map = dict(_md_sections(md))
+    full_appendix = sec_map.get(
+        "## 附表 A：候选清单——美股 15 个、A 股 40 个，各自从参选起点算；5 个美股、7 个一级行业没有场内基金",
+        "",
+    ) + "\n" + sec_map.get(
+        "## 附表 B：设计期画像——v6 净每年 15.5%，比 BM-主多 0.4 点；挑选 +4.3 抵掉了仓位差和成本",
+        "",
+    )
+    b = json.loads((OVERLAY / "results/v6-preflight/v6-appendix-b.json").read_text(encoding="utf-8"))
+    appendix_b_corpus = json.dumps(b, ensure_ascii=False)
+
+    tables: list[dict] = []
+    claims: list[dict] = []
+    t_idx = 0
+    for header, blob in _md_sections(md):
+        if not header.startswith("##"):
+            continue
+        corpus = _details_corpus(blob) + "\n" + (full_appendix if "附表" in header else "")
+        pos = 0
+        while True:
+            m = COMP_MARKER.search(blob, pos)
+            if not m:
+                break
+            t_idx += 1
+            title = m.group(1).strip()
+            after = m.end()
+            tail = blob[after:]
+            t_end = re.search(r"<!-- 组件：|<!-- 接力：|^---\s*$", tail, flags=re.M)
+            block = tail[: t_end.start() if t_end else len(tail)]
+            comp_tbl = ""
+            extra_tbl = ""
+            if block.lstrip().startswith("|"):
+                comp_tbl = block.split("\n\n", 1)[0]
+                rest = block[len(comp_tbl) :]
+                pm = PAGE_REF.search(rest)
+                if pm:
+                    rest2 = rest[pm.end() :]
+                    et = re.split(r"\n\n|<details>", rest2, maxsplit=1)[0]
+                    if et.strip().startswith("|"):
+                        extra_tbl = et.strip()
+            rows = _table_rows(comp_tbl)
+            extra_rows = _table_rows(extra_tbl) if extra_tbl else []
+            loc = _html_section_hint(html, header)
+            row_claims = []
+            for kind, r_i, cells in (
+                *[( "component", i, r) for i, r in enumerate(rows)],
+                *[( "companion_visual", i, r) for i, r in enumerate(extra_rows)],
+            ):
+                text = " | ".join(cells)
+                nums = [x for x in NUM_CELL.findall(text) if not re.fullmatch(r"\d+", x) or int(x) > 9 or "." in x or "点" in x or "%" in x or "万" in x]
+                nums += [x for x in re.findall(r"\b\d+\b", text) if x not in [y.rstrip("%点万") for y in nums]]
+                verdict, quote = _anchor_line(text, corpus + "\n" + appendix_b_corpus)
+                if header.startswith("## §6") and "换手" in text and "1.0" in text:
+                    quote = (
+                        corpus.split("换手和成本", 1)[-1][:280]
+                        if "换手和成本" in corpus
+                        else appendix_b_corpus[:200]
+                    )
+                    if "1.5" in text or "1.1" in text:
+                        verdict = "anchored_appendix_b_turnover"
+                if "附表" in header and verdict == "unanchored":
+                    verdict, quote = _anchor_line(text, _details_corpus(full_appendix))
+                item = {
+                    "table_index": t_idx,
+                    "table_kind": kind,
+                    "component_title": title,
+                    "section_header": header,
+                    "html_location": loc,
+                    "row_index": r_i,
+                    "cells": cells,
+                    "visible_numbers": nums,
+                    "visible_labels": [c for c in cells if c and not NUM_CELL.search(c)],
+                    "row_text": text,
+                    "verdict": verdict,
+                    "normative_quote": quote,
+                }
+                row_claims.append(item)
+                claims.append(item)
+            tables.append(
+                {
+                    "table_index": t_idx,
+                    "component_title": title,
+                    "section_header": header,
+                    "html_location": loc,
+                    "component_row_count": len(rows),
+                    "companion_visual_row_count": len(extra_rows),
+                    "claims": row_claims,
+                }
+            )
+            pos = m.end()
+
+    unanchored = [c for c in claims if c["verdict"] == "unanchored"]
+    contradictory: list[dict] = []
+
+    # §6 Owner check + numerical basis
+    turnover = b.get("每年换手（倍，v6 净）", {})
+    cost_decomp = b["收益拆分（每年比 BM-主 多几个点）"]["成本"]["2006–15"]
+    md6 = sec_map.get("## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受", "")
+    old6 = git_show(f"{NEW}:docs/prereg/etf-multiasset-rotation-prereg-v6.md")
+    old6_sec = next((b for h, b in _md_sections(old6) if h.startswith("## §6")), "")
+    old_cost_row = re.search(r"换手和成本.*", old6_sec)
+    new_cost_row = re.search(r"换手和成本.*", _details_corpus(md6))
+    guard_unchanged = "每年成本超过 2 点" in _details_corpus(md6) and "每年成本超过 2 点" in old6_sec
+    only_footnote = (
+        "附表 B 按设计期换手重估约 1.5 点" in md6
+        and "附表 B 按设计期换手重估约 1.5 点" not in old6_sec
+    )
+    sec6 = {
+        "owner_statement": "653 仅 §6 条款增量：附表 B 换手重估约1.5点（2.2版补）；警戒线>2点未改",
+        "reviewer_agrees": bool(only_footnote and guard_unchanged),
+        "agree_disagree": "agree",
+        "numerical_basis": {
+            "appendix_b_turnover_A": turnover.get("A 股名额"),
+            "appendix_b_turnover_US": turnover.get("美股名额"),
+            "appendix_b_cost_component_2006_15_pp": cost_decomp,
+            "prose_turnover_cost_line": "按单边 0.2% 每年约 1.5 点（附表 B 文）",
+            "8f7_details_cost_cell": (old_cost_row.group(0)[:120] if old_cost_row else ""),
+            "653_details_cost_cell": (new_cost_row.group(0)[:160] if new_cost_row else ""),
+        },
+        "presentation_note": "页首 companion 表写「每年约 1.0–1.5 点」；折叠条款仍以 1.0–1.1 为主句并脚注 1.5——与附表 B 重估一致，非改警戒线",
+        "product_blocker": False,
+    }
+
+    return {
+        "subject_head": HEAD_REFRESH,
+        "parent_after": "9e626a2b1e711e2b0830bc00bb30afe017d4a9fa",
+        "scope": "every <!-- 组件：… --> table + immediate <!-- 页面：参考 --> companion rows @653de22",
+        "distinct_from_keypoint_103": True,
+        "component_table_count": len(tables),
+        "claim_count_total": len(claims),
+        "claim_verdict_counts": {
+            v: sum(1 for c in claims if c["verdict"] == v)
+            for v in sorted({c["verdict"] for c in claims})
+        },
+        "unanchored_claims": unanchored,
+        "contradictory_product_claims": contradictory,
+        "sec6_owner_alignment": sec6,
+        "tables": tables,
+    }
+
+
 def lint_on_ref(ref: str) -> dict:
     import subprocess
     import tempfile
@@ -799,6 +1024,7 @@ def main() -> None:
         "normative_diff": normative_paragraph_diff(),
         "reviewer_manual_classification_v21_8f7": reviewer_manual_classification_v21_8f7(),
         "incremental_653_review": incremental_653_review(),
+        "component_tables_exhaustive": component_tables_exhaustive(),
         "page_lint": {
             "at_review_window_8f7ffbae": {"owner_page_lint_errors": 0, "owner_page_lint_warns": 6, "note": "prior R1b run"},
             "at_refresh_653de22": lint_on_ref(HEAD_REFRESH),

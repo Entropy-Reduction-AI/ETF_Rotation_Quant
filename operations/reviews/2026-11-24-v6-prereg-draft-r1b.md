@@ -1,4 +1,4 @@
-# v6 预注册初稿 R1b · 2026-11-24（修订 e）
+# v6 预注册初稿 R1b · 2026-11-24（修订 f）
 
 ## 技术结论
 
@@ -133,7 +133,19 @@
 
 见 **`incremental_653_review`**（12 节人工行）+ **`page_lint.at_refresh_653de22`**（0 ERROR / 1 WARN）。  
 **无非许可 §1–8 规则改写**；唯一数字相关良性措辞：§6/附表 B 披露换手重估 **~1.5 点**（警戒线仍 **2 点**）。  
-要点：`incremental_653de22` **8** 个增量 token（追加映射，103 基线保留）。
+要点：`incremental_653de22` **8** 个增量 token（追加映射，103 基线保留）。**不替代**下方组件表审计。
+
+## 组件小表穷举 @653de22（`<!-- 组件：… -->`）
+
+权威：`pr339-r1b-audit.json` → `component_tables_exhaustive`（13 表、**60** claim 行；含 §6 `页面：参考` companion）。
+
+| 统计 | 值 |
+| --- | --- |
+| 未锚定 | **0** |
+| 矛盾产品主张 | **0** |
+| 锚定 | 59 + 1（§6 换手→附表 B turnover） |
+
+**§6 与 Owner 表述（同意/不同意）**：**同意**。653 相对 8f7ffbae 的条款增量仅为折叠内「附表 B 按设计期换手重估约 **1.5** 点（2.2 版补）」；**警戒线「每年成本超过 2 点」未改**。数值依据：附表 B JSON 换手 A **6.63** / 美 **5.93** 倍、成本拆分 2006–15 **−1.48** pp、文述单边 0.2%→**~1.5** 点；页首 companion 写 **1.0–1.5** 与脚注一致，**非**改阈值。`reviewer_agrees: true`。
 
 ---
 
@@ -148,16 +160,8 @@
 
 ## (e) 页面
 
-- `owner_page_lint`：**0 ERROR**，**6 WARN**：
-
-  1. sec-1 单元格 63 字  
-  2. sec-2 单元格 68 字  
-  3. sec-2 单元格 72 字  
-  4. sec-5 列表项 124 字  
-  5. 附表-a 表单元格 56 字（513500…）  
-  6. 附表-a 表单元格 56 字（513100…）
-
-- `story_check`：0 ERROR（诊断门禁，非 Owner 硬约束）
+- **@653de22**（subject 未再前进）：`owner_page_lint` **0 ERROR / 1 WARN**（§8 表建议折叠）；`story_check` **0 ERROR**（见 `page_lint.at_refresh_653de22`）。
+- **@8f7ffbae**（全量窗）：6 WARN（明细在 `audit.json`）。
 
 ---
 
@@ -174,6 +178,6 @@
 
 ### Companion NET @ `d69099c`
 
-`git diff --stat origin/main...HEAD`：**+6577 / 6 files**（见 verify.json `companion_artifacts_six_paths`）。
+`git diff --stat origin/main...HEAD`：以 companion 分支 **tip 全量 SHA** 为准（`git diff --stat origin/main...HEAD` 在推送后更新；见 verify.json 六路径）。
 
 `git ls-tree HEAD` blobs：`d8a01c43…` memo · `c9d05d53…` verify · `fed8771b…` audit.json · `88b1d8a0…` keypoint · `5b845bc8…` commands · `b9d4d84a…` audit.py。

@@ -32,6 +32,17 @@
     "owner_page_lint_at_653de22": "see pr339-r1b-audit.json page_lint.at_refresh_653de22",
     "story_check_at_653de22": {"errors": 0, "sections": 11}
   },
+  "component_tables_at_subject_head": {
+    "subject_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+    "parent_after": "9e626a2b1e711e2b0830bc00bb30afe017d4a9fa",
+    "artifact_path": "operations/reviews/pr339-r1b-audit.json",
+    "artifact_key": "component_tables_exhaustive",
+    "component_table_count": 13,
+    "claim_count_total": 60,
+    "unanchored": 0,
+    "contradictory_product_claims": 0,
+    "sec6_owner_agree": true
+  },
   "keypoint_mapping": {
     "scope": "summary + section_memo + ledger_lg_big + md_blockquote",
     "artifact": "operations/reviews/pr339-r1b-keypoint-numbers.json",

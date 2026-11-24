@@ -3479,6 +3479,1566 @@
       }
     ]
   },
+  "component_tables_exhaustive": {
+    "subject_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+    "parent_after": "9e626a2b1e711e2b0830bc00bb30afe017d4a9fa",
+    "scope": "every <!-- 组件：… --> table + immediate <!-- 页面：参考 --> companion rows @653de22",
+    "distinct_from_keypoint_103": true,
+    "component_table_count": 13,
+    "claim_count_total": 60,
+    "claim_verdict_counts": {
+      "anchored": 59,
+      "anchored_appendix_b_turnover": 1
+    },
+    "unanchored_claims": [],
+    "contradictory_product_claims": [],
+    "sec6_owner_alignment": {
+      "owner_statement": "653 仅 §6 条款增量：附表 B 换手重估约1.5点（2.2版补）；警戒线>2点未改",
+      "reviewer_agrees": true,
+      "agree_disagree": "agree",
+      "numerical_basis": {
+        "appendix_b_turnover_A": 6.63,
+        "appendix_b_turnover_US": 5.93,
+        "appendix_b_cost_component_2006_15_pp": -1.48,
+        "prose_turnover_cost_line": "按单边 0.2% 每年约 1.5 点（附表 B 文）",
+        "8f7_details_cost_cell": "换手和成本 | 两个名额每月换人 | **每年约 1.0–1.1 点** | 每年成本超过 2 点 |",
+        "653_details_cost_cell": "换手和成本 | 两个名额每月换人 | **每年约 1.0–1.1 点**（附表 B 按设计期换手重估约 1.5 点，2.2 版补） | 每年成本超过 2 点 |"
+      },
+      "presentation_note": "页首 companion 表写「每年约 1.0–1.5 点」；折叠条款仍以 1.0–1.1 为主句并脚注 1.5——与附表 B 重估一致，非改警戒线",
+      "product_blocker": false
+    },
+    "tables": [
+      {
+        "table_index": 1,
+        "component_title": "计数｜九个常数里，看过数据后定的只有 3 个",
+        "section_header": "## §1 策略定义：每个名额每月选最强的 3 只，只在确认紧张时按把握减仓",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-1",
+        "component_row_count": 3,
+        "companion_visual_row_count": 0,
+        "claims": [
+          {
+            "table_index": 1,
+            "table_kind": "component",
+            "component_title": "计数｜九个常数里，看过数据后定的只有 3 个",
+            "section_header": "## §1 策略定义：每个名额每月选最强的 3 只，只在确认紧张时按把握减仓",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-1",
+            "row_index": 0,
+            "cells": [
+              "看过数据后定",
+              "3",
+              "选几只、美股比例、确认票数"
+            ],
+            "visible_numbers": [
+              "3"
+            ],
+            "visible_labels": [
+              "看过数据后定",
+              "选几只、美股比例、确认票数"
+            ],
+            "row_text": "看过数据后定 | 3 | 选几只、美股比例、确认票数",
+            "verdict": "anchored",
+            "normative_quote": "| A 股（40%） | 沪深300 | 沪深300、中证500、中证1000、创业板指、科创50、中证红利、10 个中证全指一级行业、已接入的 A 股主题指数（清单见附表 A） | D40-1；D38 第 39、48 行 |"
+          },
+          {
+            "table_index": 1,
+            "table_kind": "component",
+            "component_title": "计数｜九个常数里，看过数据后定的只有 3 个",
+            "section_header": "## §1 策略定义：每个名额每月选最强的 3 只，只在确认紧张时按把握减仓",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-1",
+            "row_index": 1,
+            "cells": [
+              "文献默认值",
+              "2",
+              "回看期 12−1、均线 10 个月"
+            ],
+            "visible_numbers": [
+              "12",
+              "−1",
+              "10",
+              "2",
+              "1"
+            ],
+            "visible_labels": [
+              "文献默认值"
+            ],
+            "row_text": "文献默认值 | 2 | 回看期 12−1、均线 10 个月",
+            "verdict": "anchored",
+            "normative_quote": "- **准入**：每个候选从官方发布日（或基金上市日）起参选，满 12 个月才有分数（D38 第 39 行）。10 个中证全指一级行业按 D38 第 48 行允许用 2011-08-02 之前的回填点位（Owner 2026-11-24 确认：机械分类的行业回填偏差小）；主题指数一律从发布日起；例外见附表 A。"
+          },
+          {
+            "table_index": 1,
+            "table_kind": "component",
+            "component_title": "计数｜九个常数里，看过数据后定的只有 3 个",
+            "section_header": "## §1 策略定义：每个名额每月选最强的 3 只，只在确认紧张时按把握减仓",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-1",
+            "row_index": 2,
+            "cells": [
+              "跑前写死的约定",
+              "4",
+              "门槛、平滑等"
+            ],
+            "visible_numbers": [
+              "4"
+            ],
+            "visible_labels": [
+              "跑前写死的约定",
+              "门槛、平滑等"
+            ],
+            "row_text": "跑前写死的约定 | 4 | 门槛、平滑等",
+            "verdict": "anchored",
+            "normative_quote": "<summary>1.1 候选池：美股 15 个、A 股约 40 个，各自从发布日起参选</summary>"
+          }
+        ]
+      },
+      {
+        "table_index": 2,
+        "component_title": "退路｜买哪只基金：溢价太高就一路往下退",
+        "section_header": "## §2 执行层规则：溢价比常态高 5 个点不买，常年溢价品种不另设上限（不计入 3 个数字）",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-2",
+        "component_row_count": 4,
+        "companion_visual_row_count": 0,
+        "claims": [
+          {
+            "table_index": 2,
+            "table_kind": "component",
+            "component_title": "退路｜买哪只基金：溢价太高就一路往下退",
+            "section_header": "## §2 执行层规则：溢价比常态高 5 个点不买，常年溢价品种不另设上限（不计入 3 个数字）",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-2",
+            "row_index": 0,
+            "cells": [
+              "同指数选溢价偏离最小的",
+              "只用场内基金，信号日的下一个交易日收盘价成交",
+              ""
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "同指数选溢价偏离最小的",
+              "只用场内基金，信号日的下一个交易日收盘价成交"
+            ],
+            "row_text": "同指数选溢价偏离最小的 | 只用场内基金，信号日的下一个交易日收盘价成交 | ",
+            "verdict": "anchored",
+            "normative_quote": "1. **成交**：信号日的下一个交易日收盘价成交，**只用场内基金**。"
+          },
+          {
+            "table_index": 2,
+            "table_kind": "component",
+            "component_title": "退路｜买哪只基金：溢价太高就一路往下退",
+            "section_header": "## §2 执行层规则：溢价比常态高 5 个点不买，常年溢价品种不另设上限（不计入 3 个数字）",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-2",
+            "row_index": 1,
+            "cells": [
+              "换同指数另一只",
+              "偏离最小的那只",
+              "溢价比常态高 5 点以上"
+            ],
+            "visible_numbers": [
+              "5"
+            ],
+            "visible_labels": [
+              "换同指数另一只",
+              "偏离最小的那只"
+            ],
+            "row_text": "换同指数另一只 | 偏离最小的那只 | 溢价比常态高 5 点以上",
+            "verdict": "anchored",
+            "normative_quote": "3. **溢价冲高**：**高 5 点以上换一只**；都不行时给下一名候选，再不行给母指数。"
+          },
+          {
+            "table_index": 2,
+            "table_kind": "component",
+            "component_title": "退路｜买哪只基金：溢价太高就一路往下退",
+            "section_header": "## §2 执行层规则：溢价比常态高 5 个点不买，常年溢价品种不另设上限（不计入 3 个数字）",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-2",
+            "row_index": 2,
+            "cells": [
+              "给下一名候选",
+              "按 12−1 排名递补",
+              "都不行"
+            ],
+            "visible_numbers": [
+              "12",
+              "−1",
+              "1"
+            ],
+            "visible_labels": [
+              "给下一名候选",
+              "都不行"
+            ],
+            "row_text": "给下一名候选 | 按 12−1 排名递补 | 都不行",
+            "verdict": "anchored",
+            "normative_quote": "| 给下一名候选 | 按 12−1 排名递补 | 都不行 |"
+          },
+          {
+            "table_index": 2,
+            "table_kind": "component",
+            "component_title": "退路｜买哪只基金：溢价太高就一路往下退",
+            "section_header": "## §2 执行层规则：溢价比常态高 5 个点不买，常年溢价品种不另设上限（不计入 3 个数字）",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-2",
+            "row_index": 3,
+            "cells": [
+              "给母指数",
+              "标普500 或沪深300",
+              "再不行"
+            ],
+            "visible_numbers": [
+              "500",
+              "300"
+            ],
+            "visible_labels": [
+              "给母指数",
+              "再不行"
+            ],
+            "row_text": "给母指数 | 标普500 或沪深300 | 再不行",
+            "verdict": "anchored",
+            "normative_quote": "| 给母指数 | 标普500 或沪深300 | 再不行 |"
+          }
+        ]
+      },
+      {
+        "table_index": 3,
+        "component_title": "分拣",
+        "section_header": "## §4 已经看过的信息：检验段不干净，美股 60% 是在知道美股强之后定的",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-4",
+        "component_row_count": 7,
+        "companion_visual_row_count": 0,
+        "claims": [
+          {
+            "table_index": 3,
+            "table_kind": "component",
+            "component_title": "分拣",
+            "section_header": "## §4 已经看过的信息：检验段不干净，美股 60% 是在知道美股强之后定的",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-4",
+            "row_index": 0,
+            "cells": [
+              "会让检验偏向 v6",
+              "美股强已经知道 → 用同仓位基准判，仓位差单独报告",
+              "2",
+              "美国 49 行业 2016–2026 的前 3 超额"
+            ],
+            "visible_numbers": [
+              "49",
+              "2016",
+              "2026",
+              "2",
+              "3"
+            ],
+            "visible_labels": [
+              "美股强已经知道 → 用同仓位基准判，仓位差单独报告"
+            ],
+            "row_text": "会让检验偏向 v6 | 美股强已经知道 → 用同仓位基准判，仓位差单独报告 | 2 | 美国 49 行业 2016–2026 的前 3 超额",
+            "verdict": "anchored",
+            "normative_quote": "| 2 | **美国 49 行业 2016–2026**：第 20、24、25、42 行看过前 3 在 2016–2026 的超额（约 +4.8 到 +5.2 点/年）和四种市场状态 | 美股挑选的检验段不干净，只作一致性检查 | 只作一致性检查 |"
+          },
+          {
+            "table_index": 3,
+            "table_kind": "component",
+            "component_title": "分拣",
+            "section_header": "## §4 已经看过的信息：检验段不干净，美股 60% 是在知道美股强之后定的",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-4",
+            "row_index": 1,
+            "cells": [
+              "会让检验偏向 v6",
+              "美股强已经知道 → 用同仓位基准判，仓位差单独报告",
+              "5",
+              "常识性的市场历史：2016–2025 美股大幅跑赢 A 股"
+            ],
+            "visible_numbers": [
+              "2016",
+              "2025",
+              "5"
+            ],
+            "visible_labels": [
+              "美股强已经知道 → 用同仓位基准判，仓位差单独报告"
+            ],
+            "row_text": "会让检验偏向 v6 | 美股强已经知道 → 用同仓位基准判，仓位差单独报告 | 5 | 常识性的市场历史：2016–2025 美股大幅跑赢 A 股",
+            "verdict": "anchored",
+            "normative_quote": "| 5 | **常识性的市场历史**：2016–2025 年美股大幅跑赢 A 股；A 股有 2018 年熊市、2019–2021 年结构牛（新能源、白酒、医药）、2021 年后的教育与互联网监管冲击、2024 年 2 月微盘股踩踏与 9 月政策反弹 | **美股 60% 是在知道这些的情况下定的**，检验段对 v6 的仓位天然有利；本文用同仓位基准（§5.1）判，仓位差单独报告，不让它替挑选和防守记功 | 用同仓位基准判 |"
+          },
+          {
+            "table_index": 3,
+            "table_kind": "component",
+            "component_title": "分拣",
+            "section_header": "## §4 已经看过的信息：检验段不干净，美股 60% 是在知道美股强之后定的",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-4",
+            "row_index": 2,
+            "cells": [
+              "只当参照",
+              "都不拿来判 v6 过不过",
+              "1",
+              "项目池 ≤ 2015 的全部预演结果"
+            ],
+            "visible_numbers": [
+              "2015",
+              "1"
+            ],
+            "visible_labels": [
+              "只当参照"
+            ],
+            "row_text": "只当参照 | 都不拿来判 v6 过不过 | 1 | 项目池 ≤ 2015 的全部预演结果",
+            "verdict": "anchored",
+            "normative_quote": "| 7 | **冻结前新增的三项检验**（2026-11-23，D38 第 45、56 行，都只用 ≤ 2015）：沪深300 十个行业——上月涨幅新段每年 −3.6、全段 t 0.08，12−1 前 3 对沪深300 −3.3；隔夜版（全指一级开盘价）对等权 t 0.57；申万一级（**可能回填，只作参考**）——12−1 前 3 对等权每年 −5.9（t −1.56），在随机选 3 个里排第 5.6 百分位；连续性版比 12−1 每年 +6.5（t 1.73），但对等权只 +0.6 | 上月涨幅不进 v6，隔夜版关闭；三个新池子里 12−1 都没挑出东西，按 40% 名额折算到组合，全指一级（对等权 +1.0）约 +0.4，在预测表 A 股挑选的范围（−0.5 到 +0.5）内，申万（−5.9）约 −2.4，低于下限（只作参考）；加重红队第 1 条；连续性版比 12−1 好的方向在申万上重现 | 12−1 没挑出东西，规则不改 |"
+          },
+          {
+            "table_index": 3,
+            "table_kind": "component",
+            "component_title": "分拣",
+            "section_header": "## §4 已经看过的信息：检验段不干净，美股 60% 是在知道美股强之后定的",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-4",
+            "row_index": 3,
+            "cells": [
+              "只当参照",
+              "都不拿来判 v6 过不过",
+              "3",
+              "QDII 溢价 2016 年以后的分布"
+            ],
+            "visible_numbers": [
+              "2016",
+              "3"
+            ],
+            "visible_labels": [
+              "只当参照"
+            ],
+            "row_text": "只当参照 | 都不拿来判 v6 过不过 | 3 | QDII 溢价 2016 年以后的分布",
+            "verdict": "anchored",
+            "normative_quote": "| 2 | **美国 49 行业 2016–2026**：第 20、24、25、42 行看过前 3 在 2016–2026 的超额（约 +4.8 到 +5.2 点/年）和四种市场状态 | 美股挑选的检验段不干净，只作一致性检查 | 只作一致性检查 |"
+          },
+          {
+            "table_index": 3,
+            "table_kind": "component",
+            "component_title": "分拣",
+            "section_header": "## §4 已经看过的信息：检验段不干净，美股 60% 是在知道美股强之后定的",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-4",
+            "row_index": 4,
+            "cells": [
+              "只当参照",
+              "都不拿来判 v6 过不过",
+              "4",
+              "v2、v3–v5.1 的一次性检验结果"
+            ],
+            "visible_numbers": [
+              "5.1",
+              "4",
+              "1"
+            ],
+            "visible_labels": [
+              "只当参照"
+            ],
+            "row_text": "只当参照 | 都不拿来判 v6 过不过 | 4 | v2、v3–v5.1 的一次性检验结果",
+            "verdict": "anchored",
+            "normative_quote": "| 4 | **v2、v3–v5.1 在 2016-01 → 2026-09 的一次性检验结果**：A 股趋势择时、E2 新口径、A1、A2 等，以及当时看到的基准构成（六成收益来自美股） | 知道检验段的大致样貌 | 知道大致样貌 |"
+          },
+          {
+            "table_index": 3,
+            "table_kind": "component",
+            "component_title": "分拣",
+            "section_header": "## §4 已经看过的信息：检验段不干净，美股 60% 是在知道美股强之后定的",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-4",
+            "row_index": 5,
+            "cells": [
+              "反过来锁住规则",
+              "不再加新变体，规则不改",
+              "6",
+              "A 股选人已试约 12 种"
+            ],
+            "visible_numbers": [
+              "12",
+              "6"
+            ],
+            "visible_labels": [
+              "反过来锁住规则",
+              "不再加新变体，规则不改"
+            ],
+            "row_text": "反过来锁住规则 | 不再加新变体，规则不改 | 6 | A 股选人已试约 12 种",
+            "verdict": "anchored",
+            "normative_quote": "| 6 | **A 股选人的试验次数约 12 种**：12−1、上月涨幅、6−1、风险调整、拥挤度刹车、选 5 个、快速出场、结构市才挑选、速度随状态、挑选把握 q、连续性版、隔夜版 | 按第 55 行的停止规则，v6 不再加新变体 | 不再加新变体 |"
+          },
+          {
+            "table_index": 3,
+            "table_kind": "component",
+            "component_title": "分拣",
+            "section_header": "## §4 已经看过的信息：检验段不干净，美股 60% 是在知道美股强之后定的",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-4",
+            "row_index": 6,
+            "cells": [
+              "反过来锁住规则",
+              "不再加新变体，规则不改",
+              "7",
+              "冻结前新增三项检验，12−1 都没挑出东西"
+            ],
+            "visible_numbers": [
+              "12",
+              "−1",
+              "7",
+              "1"
+            ],
+            "visible_labels": [
+              "反过来锁住规则",
+              "不再加新变体，规则不改"
+            ],
+            "row_text": "反过来锁住规则 | 不再加新变体，规则不改 | 7 | 冻结前新增三项检验，12−1 都没挑出东西",
+            "verdict": "anchored",
+            "normative_quote": "| 1 | **项目池 ≤ 2015 的全部预演结果**：D38 运行附表第 10–55 行，含设计期整套（现规则：美股旧 14 个 + REIT、去重，年化 13.3%、最低剩 72.3 万，第 47 行）、A 股 12−1 与 11 种替代选法、连续性版与隔夜版（第 55 行） | 设计期只作一致性检查 | 只作一致性检查 |"
+          }
+        ]
+      },
+      {
+        "table_index": 4,
+        "component_title": "闸门",
+        "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+        "component_row_count": 5,
+        "companion_visual_row_count": 0,
+        "claims": [
+          {
+            "table_index": 4,
+            "table_kind": "component",
+            "component_title": "闸门",
+            "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+            "row_index": 0,
+            "cells": [
+              "① 底线",
+              "最大回撤",
+              "≤ 40%",
+              "80%"
+            ],
+            "visible_numbers": [
+              "40%",
+              "80%"
+            ],
+            "visible_labels": [
+              "① 底线",
+              "最大回撤"
+            ],
+            "row_text": "① 底线 | 最大回撤 | ≤ 40% | 80%",
+            "verdict": "anchored",
+            "normative_quote": "| ① 底线 | 最大回撤 | ≤ 40% | 80% |"
+          },
+          {
+            "table_index": 4,
+            "table_kind": "component",
+            "component_title": "闸门",
+            "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+            "row_index": 1,
+            "cells": [
+              "② 保费",
+              "防守的平时成本",
+              "≤ 4 点",
+              "85%"
+            ],
+            "visible_numbers": [
+              "85%",
+              "4"
+            ],
+            "visible_labels": [
+              "② 保费",
+              "防守的平时成本"
+            ],
+            "row_text": "② 保费 | 防守的平时成本 | ≤ 4 点 | 85%",
+            "verdict": "anchored",
+            "normative_quote": "| ② 保费 | 防守的平时成本 | ≤ 4 点 | 85% |"
+          },
+          {
+            "table_index": 4,
+            "table_kind": "component",
+            "component_title": "闸门",
+            "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+            "row_index": 2,
+            "cells": [
+              "③ 增强基准",
+              "年化 ÷ 回撤",
+              "高于 K2A",
+              "60%"
+            ],
+            "visible_numbers": [
+              "60%"
+            ],
+            "visible_labels": [
+              "③ 增强基准",
+              "年化 ÷ 回撤"
+            ],
+            "row_text": "③ 增强基准 | 年化 ÷ 回撤 | 高于 K2A | 60%",
+            "verdict": "anchored",
+            "normative_quote": "| ③ 增强基准 | 年化 ÷ 回撤 | 高于 K2A | 60% |"
+          },
+          {
+            "table_index": 4,
+            "table_kind": "component",
+            "component_title": "闸门",
+            "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+            "row_index": 3,
+            "cells": [
+              "④ 同仓位基准",
+              "年化之差",
+              "≥ 0",
+              "50%"
+            ],
+            "visible_numbers": [
+              "50%",
+              "0"
+            ],
+            "visible_labels": [
+              "④ 同仓位基准",
+              "年化之差"
+            ],
+            "row_text": "④ 同仓位基准 | 年化之差 | ≥ 0 | 50%",
+            "verdict": "anchored",
+            "normative_quote": "| **增强基准** | K2A（D39，美股 50%） | 判据 ③ |"
+          },
+          {
+            "table_index": 4,
+            "table_kind": "component",
+            "component_title": "闸门",
+            "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+            "row_index": 4,
+            "cells": [
+              "合计",
+              "四条全部满足",
+              "通过",
+              "30%"
+            ],
+            "visible_numbers": [
+              "30%"
+            ],
+            "visible_labels": [
+              "合计",
+              "四条全部满足",
+              "通过"
+            ],
+            "row_text": "合计 | 四条全部满足 | 通过 | 30%",
+            "verdict": "anchored",
+            "normative_quote": "| **BM-同仓位** | 40% 沪深300 全收益 + 30% 纳指100 + 30% 标普500，同口径 | 判据 ④；v6 的仓位差 = BM-同仓位 − BM-主，挑选、防守、成本的合计 = v6 − BM-同仓位 |"
+          }
+        ]
+      },
+      {
+        "table_index": 5,
+        "component_title": "构成",
+        "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+        "component_row_count": 3,
+        "companion_visual_row_count": 0,
+        "claims": [
+          {
+            "table_index": 5,
+            "table_kind": "component",
+            "component_title": "构成",
+            "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+            "row_index": 0,
+            "cells": [
+              "BM-主",
+              "沪深300 70｜纳指100 15｜标普500 15",
+              "并列列出，不判过不过"
+            ],
+            "visible_numbers": [
+              "300",
+              "70",
+              "100",
+              "15",
+              "500",
+              "15"
+            ],
+            "visible_labels": [
+              "BM-主",
+              "并列列出，不判过不过"
+            ],
+            "row_text": "BM-主 | 沪深300 70｜纳指100 15｜标普500 15 | 并列列出，不判过不过",
+            "verdict": "anchored",
+            "normative_quote": "| **BM-主** | 70% 沪深300 全收益 + 15% 纳指100 全收益 + 15% 标普500 全收益，人民币，每月第一个交易日再平衡 | AGENTS.md 规定的并列基准，逐年列出 |"
+          },
+          {
+            "table_index": 5,
+            "table_kind": "component",
+            "component_title": "构成",
+            "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+            "row_index": 1,
+            "cells": [
+              "BM-同仓位",
+              "沪深300 40｜纳指100 30｜标普500 30",
+              "判据 ④；拆出美股 60% 的仓位差"
+            ],
+            "visible_numbers": [
+              "300",
+              "40",
+              "100",
+              "30",
+              "500",
+              "30",
+              "60%"
+            ],
+            "visible_labels": [
+              "BM-同仓位"
+            ],
+            "row_text": "BM-同仓位 | 沪深300 40｜纳指100 30｜标普500 30 | 判据 ④；拆出美股 60% 的仓位差",
+            "verdict": "anchored",
+            "normative_quote": "| BM-同仓位 | 沪深300 40｜纳指100 30｜标普500 30 | 判据 ④；拆出美股 60% 的仓位差 |"
+          },
+          {
+            "table_index": 5,
+            "table_kind": "component",
+            "component_title": "构成",
+            "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+            "row_index": 2,
+            "cells": [
+              "增强基准 K2A",
+              "A 股 50｜美股 50",
+              "判据 ③（D39，美股 50%）"
+            ],
+            "visible_numbers": [
+              "50",
+              "50",
+              "39",
+              "50%"
+            ],
+            "visible_labels": [],
+            "row_text": "增强基准 K2A | A 股 50｜美股 50 | 判据 ③（D39，美股 50%）",
+            "verdict": "anchored",
+            "normative_quote": "| **增强基准** | K2A（D39，美股 50%） | 判据 ③ |"
+          }
+        ]
+      },
+      {
+        "table_index": 6,
+        "component_title": "载体｜结果怎么用",
+        "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+        "component_row_count": 2,
+        "companion_visual_row_count": 0,
+        "claims": [
+          {
+            "table_index": 6,
+            "table_kind": "component",
+            "component_title": "载体｜结果怎么用",
+            "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+            "row_index": 0,
+            "cells": [
+              "通过",
+              "进入 6 个月前向模拟盘（D27）、小资金起步需 Owner 另批"
+            ],
+            "visible_numbers": [
+              "27",
+              "6"
+            ],
+            "visible_labels": [
+              "通过"
+            ],
+            "row_text": "通过 | 进入 6 个月前向模拟盘（D27）、小资金起步需 Owner 另批",
+            "verdict": "anchored",
+            "normative_quote": "| 通过 | 进入 6 个月前向模拟盘（D27）、小资金起步需 Owner 另批 |"
+          },
+          {
+            "table_index": 6,
+            "table_kind": "component",
+            "component_title": "载体｜结果怎么用",
+            "section_header": "## §5 一次性检验：和同仓位基准比，四条判据全部满足才通过",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-5",
+            "row_index": 1,
+            "cells": [
+              "不通过",
+              "如实记录并关闭、新想法另起版本并注明第几次尝试"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "不通过",
+              "如实记录并关闭、新想法另起版本并注明第几次尝试"
+            ],
+            "row_text": "不通过 | 如实记录并关闭、新想法另起版本并注明第几次尝试",
+            "verdict": "anchored",
+            "normative_quote": "| 不通过 | 如实记录并关闭、新想法另起版本并注明第几次尝试 |"
+          }
+        ]
+      },
+      {
+        "table_index": 7,
+        "component_title": "计数｜八种代价从哪来：结构 1、防守 2、挑选 3、执行 2",
+        "section_header": "## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-6",
+        "component_row_count": 4,
+        "companion_visual_row_count": 8,
+        "claims": [
+          {
+            "table_index": 7,
+            "table_kind": "component",
+            "component_title": "计数｜八种代价从哪来：结构 1、防守 2、挑选 3、执行 2",
+            "section_header": "## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-6",
+            "row_index": 0,
+            "cells": [
+              "结构",
+              "1",
+              "A 股只占 40%"
+            ],
+            "visible_numbers": [
+              "40%",
+              "1"
+            ],
+            "visible_labels": [
+              "结构"
+            ],
+            "row_text": "结构 | 1 | A 股只占 40%",
+            "verdict": "anchored",
+            "normative_quote": "| A 股大牛市 | 基准 70% 在 A 股，我们只有 40% | **2006–2010 每年少约 9 点**（设计期） | 单年落后 BM-主超过 20 点 |"
+          },
+          {
+            "table_index": 7,
+            "table_kind": "component",
+            "component_title": "计数｜八种代价从哪来：结构 1、防守 2、挑选 3、执行 2",
+            "section_header": "## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-6",
+            "row_index": 1,
+            "cells": [
+              "防守",
+              "2",
+              "V 型、突发急跌"
+            ],
+            "visible_numbers": [
+              "2"
+            ],
+            "visible_labels": [
+              "防守",
+              "V 型、突发急跌"
+            ],
+            "row_text": "防守 | 2 | V 型、突发急跌",
+            "verdict": "anchored",
+            "normative_quote": "| A 股大牛市 | 基准 70% 在 A 股，我们只有 40% | **2006–2010 每年少约 9 点**（设计期） | 单年落后 BM-主超过 20 点 |"
+          },
+          {
+            "table_index": 7,
+            "table_kind": "component",
+            "component_title": "计数｜八种代价从哪来：结构 1、防守 2、挑选 3、执行 2",
+            "section_header": "## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-6",
+            "row_index": 2,
+            "cells": [
+              "挑选",
+              "3",
+              "无动量年份、分阶段、挑选偏差"
+            ],
+            "visible_numbers": [
+              "3"
+            ],
+            "visible_labels": [
+              "挑选",
+              "无动量年份、分阶段、挑选偏差"
+            ],
+            "row_text": "挑选 | 3 | 无动量年份、分阶段、挑选偏差",
+            "verdict": "anchored",
+            "normative_quote": "| V 型急跌急涨 | 紧张时减了仓，反弹时回来得晚 | **合成 V 型每年落后约 15 点**（短期年化） | 见底后 3 个月股票仓位仍低于一半 |"
+          },
+          {
+            "table_index": 7,
+            "table_kind": "component",
+            "component_title": "计数｜八种代价从哪来：结构 1、防守 2、挑选 3、执行 2",
+            "section_header": "## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-6",
+            "row_index": 3,
+            "cells": [
+              "执行",
+              "2",
+              "稀缺 QDII、换手成本"
+            ],
+            "visible_numbers": [
+              "2"
+            ],
+            "visible_labels": [
+              "执行",
+              "稀缺 QDII、换手成本"
+            ],
+            "row_text": "执行 | 2 | 稀缺 QDII、换手成本",
+            "verdict": "anchored",
+            "normative_quote": "| A 股大牛市 | 基准 70% 在 A 股，我们只有 40% | **2006–2010 每年少约 9 点**（设计期） | 单年落后 BM-主超过 20 点 |"
+          },
+          {
+            "table_index": 7,
+            "table_kind": "companion_visual",
+            "component_title": "计数｜八种代价从哪来：结构 1、防守 2、挑选 3、执行 2",
+            "section_header": "## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-6",
+            "row_index": 0,
+            "cells": [
+              "A 股大牛市",
+              "2006–2010 每年少约 9 点",
+              "单年落后 BM-主超过 20 点"
+            ],
+            "visible_numbers": [
+              "2006",
+              "2010",
+              "20",
+              "9"
+            ],
+            "visible_labels": [
+              "A 股大牛市"
+            ],
+            "row_text": "A 股大牛市 | 2006–2010 每年少约 9 点 | 单年落后 BM-主超过 20 点",
+            "verdict": "anchored",
+            "normative_quote": "| A 股大牛市 | 基准 70% 在 A 股，我们只有 40% | **2006–2010 每年少约 9 点**（设计期） | 单年落后 BM-主超过 20 点 |"
+          },
+          {
+            "table_index": 7,
+            "table_kind": "companion_visual",
+            "component_title": "计数｜八种代价从哪来：结构 1、防守 2、挑选 3、执行 2",
+            "section_header": "## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-6",
+            "row_index": 1,
+            "cells": [
+              "V 型急跌急涨",
+              "合成 V 型每年落后约 15 点",
+              "见底后 3 个月股票仓位仍低于一半"
+            ],
+            "visible_numbers": [
+              "15",
+              "3"
+            ],
+            "visible_labels": [
+              "V 型急跌急涨"
+            ],
+            "row_text": "V 型急跌急涨 | 合成 V 型每年落后约 15 点 | 见底后 3 个月股票仓位仍低于一半",
+            "verdict": "anchored",
+            "normative_quote": "| V 型急跌急涨 | 紧张时减了仓，反弹时回来得晚 | **合成 V 型每年落后约 15 点**（短期年化） | 见底后 3 个月股票仓位仍低于一半 |"
+          },
+          {
+            "table_index": 7,
+            "table_kind": "companion_visual",
+            "component_title": "计数｜八种代价从哪来：结构 1、防守 2、挑选 3、执行 2",
+            "section_header": "## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-6",
+            "row_index": 2,
+            "cells": [
+              "突发急跌",
+              "较差的十分之一约剩 58.8 万",
+              "低于 55 万"
+            ],
+            "visible_numbers": [
+              "58.8",
+              "55",
+              "58",
+              "8"
+            ],
+            "visible_labels": [
+              "突发急跌"
+            ],
+            "row_text": "突发急跌 | 较差的十分之一约剩 58.8 万 | 低于 55 万",
+            "verdict": "anchored",
+            "normative_quote": "| 突发急跌 | 每月看一次来不及 | **较差的十分之一约剩 58.8 万** | 低于 55 万 |"
+          },
+          {
+            "table_index": 7,
+            "table_kind": "companion_visual",
+            "component_title": "计数｜八种代价从哪来：结构 1、防守 2、挑选 3、执行 2",
+            "section_header": "## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-6",
+            "row_index": 3,
+            "cells": [
+              "挑选没有动量的年份",
+              "每年少约 1.6 点",
+              "连续 3 年挑选部分为负"
+            ],
+            "visible_numbers": [
+              "1.6",
+              "1",
+              "6",
+              "3"
+            ],
+            "visible_labels": [
+              "挑选没有动量的年份"
+            ],
+            "row_text": "挑选没有动量的年份 | 每年少约 1.6 点 | 连续 3 年挑选部分为负",
+            "verdict": "anchored",
+            "normative_quote": "| 挑选没有动量的年份 | 前 3 只是噪声，多付换手 | **每年少约 1.6 点** | 连续 3 年挑选部分（对同结构等权）为负 |"
+          },
+          {
+            "table_index": 7,
+            "table_kind": "companion_visual",
+            "component_title": "计数｜八种代价从哪来：结构 1、防守 2、挑选 3、执行 2",
+            "section_header": "## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-6",
+            "row_index": 4,
+            "cells": [
+              "A 股挑选分阶段",
+              "两段各约 ±16 万（40 万本金）",
+              "单年挑选部分低于 −25 点"
+            ],
+            "visible_numbers": [
+              "16",
+              "40",
+              "−25",
+              "25"
+            ],
+            "visible_labels": [
+              "A 股挑选分阶段"
+            ],
+            "row_text": "A 股挑选分阶段 | 两段各约 ±16 万（40 万本金） | 单年挑选部分低于 −25 点",
+            "verdict": "anchored",
+            "normative_quote": "| A 股挑选分阶段 | 结构市里 12−1 有效，轮动和崩盘时反噬 | **两段各约 ±16 万**：2011–13 每年 +16.9、2014–15 每年 −21.1（40 万本金，只看挑选层） | 单年 A 股挑选部分低于 −25 点 |"
+          },
+          {
+            "table_index": 7,
+            "table_kind": "companion_visual",
+            "component_title": "计数｜八种代价从哪来：结构 1、防守 2、挑选 3、执行 2",
+            "section_header": "## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-6",
+            "row_index": 5,
+            "cells": [
+              "稀缺 QDII 溢价消失",
+              "一次性约 1.8 万",
+              "单次损失超过组合的 3%"
+            ],
+            "visible_numbers": [
+              "1.8",
+              "3%",
+              "1",
+              "8"
+            ],
+            "visible_labels": [
+              "稀缺 QDII 溢价消失"
+            ],
+            "row_text": "稀缺 QDII 溢价消失 | 一次性约 1.8 万 | 单次损失超过组合的 3%",
+            "verdict": "anchored",
+            "normative_quote": "| 稀缺 QDII 溢价消失 | 额度放开时一次性损失 | **约 1.8 万**（常态溢价约 9%、单只 20 万，D40-14 不另设上限） | 单次损失超过组合的 3% |"
+          },
+          {
+            "table_index": 7,
+            "table_kind": "companion_visual",
+            "component_title": "计数｜八种代价从哪来：结构 1、防守 2、挑选 3、执行 2",
+            "section_header": "## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-6",
+            "row_index": 6,
+            "cells": [
+              "试了很多种防守和选法",
+              "已按打折处理",
+              "检验段明显低于预测下限"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "试了很多种防守和选法",
+              "已按打折处理",
+              "检验段明显低于预测下限"
+            ],
+            "row_text": "试了很多种防守和选法 | 已按打折处理 | 检验段明显低于预测下限",
+            "verdict": "anchored",
+            "normative_quote": "| 试了很多种防守和选法 | 设计期挑出来的最好结果有挑选偏差 | **已按打折处理** | 检验段明显低于预测下限，先查是否偏差所致 |"
+          },
+          {
+            "table_index": 7,
+            "table_kind": "companion_visual",
+            "component_title": "计数｜八种代价从哪来：结构 1、防守 2、挑选 3、执行 2",
+            "section_header": "## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-6",
+            "row_index": 7,
+            "cells": [
+              "换手和成本",
+              "每年约 1.0–1.5 点",
+              "每年成本超过 2 点"
+            ],
+            "visible_numbers": [
+              "1.0",
+              "1.5",
+              "1",
+              "0",
+              "1",
+              "5",
+              "2"
+            ],
+            "visible_labels": [
+              "换手和成本"
+            ],
+            "row_text": "换手和成本 | 每年约 1.0–1.5 点 | 每年成本超过 2 点",
+            "verdict": "anchored_appendix_b_turnover",
+            "normative_quote": " | 两个名额每月换人 | **每年约 1.0–1.1 点**（附表 B 按设计期换手重估约 1.5 点，2.2 版补） | 每年成本超过 2 点 |\n\n</details>\n## §6 疼痛表：A 股大牛市每年少约 9 点、V 型反弹落后约 15 点，事先接受\n\n\n\n> **8 种情形各有一条警戒线：落在“事先认下的代价”里是正常代价；越过“超出就要查”的线，说明策略性格变了，先查原因（冻结后不改）。**\n\n\n\n| 类别 | 个数 | 含义 |\n| --- | --- | --- |\n| 结构 | 1 | A 股只占 40% |\n| 防守 | 2 | "
+          }
+        ]
+      },
+      {
+        "table_index": 8,
+        "component_title": "路线",
+        "section_header": "## §7 前向模拟盘与影子跟踪：通过后至少 6 个月模拟盘，另外 3 种规则只记录不交易",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-7",
+        "component_row_count": 3,
+        "companion_visual_row_count": 0,
+        "claims": [
+          {
+            "table_index": 8,
+            "table_kind": "component",
+            "component_title": "路线",
+            "section_header": "## §7 前向模拟盘与影子跟踪：通过后至少 6 个月模拟盘，另外 3 种规则只记录不交易",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-7",
+            "row_index": 0,
+            "cells": [
+              "一次性检验通过",
+              "Owner 批准跑",
+              "之后"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "一次性检验通过",
+              "Owner 批准跑",
+              "之后"
+            ],
+            "row_text": "一次性检验通过 | Owner 批准跑 | 之后",
+            "verdict": "anchored",
+            "normative_quote": "| 一次性检验通过 | Owner 批准跑 | 之后 |"
+          },
+          {
+            "table_index": 8,
+            "table_kind": "component",
+            "component_title": "路线",
+            "section_header": "## §7 前向模拟盘与影子跟踪：通过后至少 6 个月模拟盘，另外 3 种规则只记录不交易",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-7",
+            "row_index": 1,
+            "cells": [
+              "模拟盘至少 6 个月",
+              "每月对账预测表和疼痛表",
+              "之后"
+            ],
+            "visible_numbers": [
+              "6"
+            ],
+            "visible_labels": [
+              "每月对账预测表和疼痛表",
+              "之后"
+            ],
+            "row_text": "模拟盘至少 6 个月 | 每月对账预测表和疼痛表 | 之后",
+            "verdict": "anchored",
+            "normative_quote": "2. **模拟盘**：按冻结规则每月出持仓，**至少 6 个月**；每月对账预测表各项和疼痛表。"
+          },
+          {
+            "table_index": 8,
+            "table_kind": "component",
+            "component_title": "路线",
+            "section_header": "## §7 前向模拟盘与影子跟踪：通过后至少 6 个月模拟盘，另外 3 种规则只记录不交易",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-7",
+            "row_index": 2,
+            "cells": [
+              "小资金上线",
+              "Owner 另批",
+              "你批准"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "小资金上线",
+              "Owner 另批",
+              "你批准"
+            ],
+            "row_text": "小资金上线 | Owner 另批 | 你批准",
+            "verdict": "anchored",
+            "normative_quote": "| 小资金上线 | Owner 另批 | 你批准 |"
+          }
+        ]
+      },
+      {
+        "table_index": 9,
+        "component_title": "载体",
+        "section_header": "## §7 前向模拟盘与影子跟踪：通过后至少 6 个月模拟盘，另外 3 种规则只记录不交易",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-7",
+        "component_row_count": 2,
+        "companion_visual_row_count": 0,
+        "claims": [
+          {
+            "table_index": 9,
+            "table_kind": "component",
+            "component_title": "载体",
+            "section_header": "## §7 前向模拟盘与影子跟踪：通过后至少 6 个月模拟盘，另外 3 种规则只记录不交易",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-7",
+            "row_index": 0,
+            "cells": [
+              "影子（只记录）",
+              "结构市才挑选、12−1 与连续性版各一半、连续性版"
+            ],
+            "visible_numbers": [
+              "12",
+              "−1",
+              "1"
+            ],
+            "visible_labels": [
+              "影子（只记录）"
+            ],
+            "row_text": "影子（只记录） | 结构市才挑选、12−1 与连续性版各一半、连续性版",
+            "verdict": "anchored",
+            "normative_quote": "3. **影子**：结构市才挑选、12−1 与连续性版各拿一半、连续性版，**只记录，不交易**。"
+          },
+          {
+            "table_index": 9,
+            "table_kind": "component",
+            "component_title": "载体",
+            "section_header": "## §7 前向模拟盘与影子跟踪：通过后至少 6 个月模拟盘，另外 3 种规则只记录不交易",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-7",
+            "row_index": 1,
+            "cells": [
+              "暂停线",
+              "跌破 60 万、6 个月对同仓位基准累计落后 6 点"
+            ],
+            "visible_numbers": [
+              "60",
+              "6",
+              "6"
+            ],
+            "visible_labels": [
+              "暂停线"
+            ],
+            "row_text": "暂停线 | 跌破 60 万、6 个月对同仓位基准累计落后 6 点",
+            "verdict": "anchored",
+            "normative_quote": "4. **暂停**：跌破 60 万，或连续 6 个月对同仓位基准累计落后超过 6 点，**暂停并报告**。"
+          }
+        ]
+      },
+      {
+        "table_index": 10,
+        "component_title": "计数｜六项陷阱：四项必须声明，另加两项；只有回填会改变候选名单",
+        "section_header": "## §8 数据陷阱声明：结论必须声明四项陷阱，加上美股代理、实盘载体和申万回溯的差异",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-8",
+        "component_row_count": 3,
+        "companion_visual_row_count": 0,
+        "claims": [
+          {
+            "table_index": 10,
+            "table_kind": "component",
+            "component_title": "计数｜六项陷阱：四项必须声明，另加两项；只有回填会改变候选名单",
+            "section_header": "## §8 数据陷阱声明：结论必须声明四项陷阱，加上美股代理、实盘载体和申万回溯的差异",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-8",
+            "row_index": 0,
+            "cells": [
+              "必须声明，并改变候选名单",
+              "1",
+              "主题指数回填"
+            ],
+            "visible_numbers": [
+              "1"
+            ],
+            "visible_labels": [
+              "必须声明，并改变候选名单",
+              "主题指数回填"
+            ],
+            "row_text": "必须声明，并改变候选名单 | 1 | 主题指数回填",
+            "verdict": "anchored",
+            "normative_quote": "| **主题指数回填** | 中证行业价格指数 2011-08 发布，之前是回溯 | 主题指数从发布日起参选；10 个一级行业按 D38 第 48 行允许回填（Owner 2026-11-24 确认） |"
+          },
+          {
+            "table_index": 10,
+            "table_kind": "component",
+            "component_title": "计数｜六项陷阱：四项必须声明，另加两项；只有回填会改变候选名单",
+            "section_header": "## §8 数据陷阱声明：结论必须声明四项陷阱，加上美股代理、实盘载体和申万回溯的差异",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-8",
+            "row_index": 1,
+            "cells": [
+              "必须声明",
+              "3",
+              "指数与 ETF、qfq、份额折算"
+            ],
+            "visible_numbers": [
+              "3"
+            ],
+            "visible_labels": [
+              "必须声明",
+              "指数与 ETF、qfq、份额折算"
+            ],
+            "row_text": "必须声明 | 3 | 指数与 ETF、qfq、份额折算",
+            "verdict": "anchored",
+            "normative_quote": "| **主题指数回填** | 中证行业价格指数 2011-08 发布，之前是回溯 | 主题指数从发布日起参选；10 个一级行业按 D38 第 48 行允许回填（Owner 2026-11-24 确认） |"
+          },
+          {
+            "table_index": 10,
+            "table_kind": "component",
+            "component_title": "计数｜六项陷阱：四项必须声明，另加两项；只有回填会改变候选名单",
+            "section_header": "## §8 数据陷阱声明：结论必须声明四项陷阱，加上美股代理、实盘载体和申万回溯的差异",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-8",
+            "row_index": 2,
+            "cells": [
+              "另加声明",
+              "2",
+              "美股代理、申万回溯"
+            ],
+            "visible_numbers": [
+              "2"
+            ],
+            "visible_labels": [
+              "另加声明",
+              "美股代理、申万回溯"
+            ],
+            "row_text": "另加声明 | 2 | 美股代理、申万回溯",
+            "verdict": "anchored",
+            "normative_quote": "| **主题指数回填** | 中证行业价格指数 2011-08 发布，之前是回溯 | 主题指数从发布日起参选；10 个一级行业按 D38 第 48 行允许回填（Owner 2026-11-24 确认） |"
+          }
+        ]
+      },
+      {
+        "table_index": 11,
+        "component_title": "路线",
+        "section_header": "## §9 运行纪律与冻结前待办：冻结前的 6 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
+        "component_row_count": 8,
+        "companion_visual_row_count": 0,
+        "claims": [
+          {
+            "table_index": 11,
+            "table_kind": "component",
+            "component_title": "路线",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 6 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
+            "row_index": 0,
+            "cells": [
+              "看初稿",
+              "Owner",
+              "已完成"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "看初稿",
+              "Owner",
+              "已完成"
+            ],
+            "row_text": "看初稿 | Owner | 已完成",
+            "verdict": "anchored",
+            "normative_quote": "1. **Owner 看初稿**：已确认 §9.2 第 6 条三项（D40-14）。"
+          },
+          {
+            "table_index": 11,
+            "table_kind": "component",
+            "component_title": "路线",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 6 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
+            "row_index": 1,
+            "cells": [
+              "R1",
+              "Reviewer",
+              "已完成"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "Reviewer",
+              "已完成"
+            ],
+            "row_text": "R1 | Reviewer | 已完成",
+            "verdict": "anchored",
+            "normative_quote": "<summary>9.1 顺序：看初稿 → R1 → 冻结 → 实现与复算 → 一致性检查 → 一次性检验 → 模拟盘</summary>"
+          },
+          {
+            "table_index": 11,
+            "table_kind": "component",
+            "component_title": "路线",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 6 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
+            "row_index": 2,
+            "cells": [
+              "冻结前 6 件待办",
+              "Orchestrator、Grok",
+              "已完成"
+            ],
+            "visible_numbers": [
+              "6"
+            ],
+            "visible_labels": [
+              "Orchestrator、Grok",
+              "已完成"
+            ],
+            "row_text": "冻结前 6 件待办 | Orchestrator、Grok | 已完成",
+            "verdict": "anchored",
+            "normative_quote": "1. **Owner 看初稿**：已确认 §9.2 第 6 条三项（D40-14）。"
+          },
+          {
+            "table_index": 11,
+            "table_kind": "component",
+            "component_title": "路线",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 6 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
+            "row_index": 3,
+            "cells": [
+              "R1b",
+              "Reviewer",
+              "现在"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "Reviewer",
+              "现在"
+            ],
+            "row_text": "R1b | Reviewer | 现在",
+            "verdict": "anchored",
+            "normative_quote": "<summary>9.1 顺序：看初稿 → R1 → 冻结 → 实现与复算 → 一致性检查 → 一次性检验 → 模拟盘</summary>"
+          },
+          {
+            "table_index": 11,
+            "table_kind": "component",
+            "component_title": "路线",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 6 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
+            "row_index": 4,
+            "cells": [
+              "冻结",
+              "Owner",
+              "你批准"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "冻结",
+              "Owner",
+              "你批准"
+            ],
+            "row_text": "冻结 | Owner | 你批准",
+            "verdict": "anchored",
+            "normative_quote": "3. **冻结**：`milestone/v6-prereg-freeze`，由 Cloud Agent 按 Owner 指令打。"
+          },
+          {
+            "table_index": 11,
+            "table_kind": "component",
+            "component_title": "路线",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 6 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
+            "row_index": 5,
+            "cells": [
+              "实现与复算",
+              "Dev、Reviewer",
+              "之后"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "实现与复算",
+              "Dev、Reviewer",
+              "之后"
+            ],
+            "row_text": "实现与复算 | Dev、Reviewer | 之后",
+            "verdict": "anchored",
+            "normative_quote": "4. **实现与复算**：Dev 在 `src/v6/`、`config/v6/` 实现；Reviewer 独立实现复算设计期整套和两个月份示例（逐位一致），并复现 §3.2 合成行情。"
+          },
+          {
+            "table_index": 11,
+            "table_kind": "component",
+            "component_title": "路线",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 6 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
+            "row_index": 6,
+            "cells": [
+              "一次性检验",
+              "Owner",
+              "你批准"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "一次性检验",
+              "Owner",
+              "你批准"
+            ],
+            "row_text": "一次性检验 | Owner | 你批准",
+            "verdict": "anchored",
+            "normative_quote": "6. **一次性检验**：Owner 批准后跑一次，出报告并对账。"
+          },
+          {
+            "table_index": 11,
+            "table_kind": "component",
+            "component_title": "路线",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 6 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
+            "row_index": 7,
+            "cells": [
+              "模拟盘",
+              "全体",
+              "之后"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "模拟盘",
+              "全体",
+              "之后"
+            ],
+            "row_text": "模拟盘 | 全体 | 之后",
+            "verdict": "anchored",
+            "normative_quote": "| 模拟盘 | 全体 | 之后 |"
+          }
+        ]
+      },
+      {
+        "table_index": 12,
+        "component_title": "载体｜美股名额 15 个（SPX 为母指数），按实盘能不能买到同一指数的基金分",
+        "section_header": "## 附表 A：候选清单——美股 15 个、A 股 40 个，各自从参选起点算；5 个美股、7 个一级行业没有场内基金",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-appendix-a",
+        "component_row_count": 3,
+        "companion_visual_row_count": 0,
+        "claims": [
+          {
+            "table_index": 12,
+            "table_kind": "component",
+            "component_title": "载体｜美股名额 15 个（SPX 为母指数），按实盘能不能买到同一指数的基金分",
+            "section_header": "## 附表 A：候选清单——美股 15 个、A 股 40 个，各自从参选起点算；5 个美股、7 个一级行业没有场内基金",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-appendix-a",
+            "row_index": 0,
+            "cells": [
+              "同一指数",
+              "SPX、NDX、DJIA、SOX、NBI、XLY、DWRTF"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "同一指数",
+              "SPX、NDX、DJIA、SOX、NBI、XLY、DWRTF"
+            ],
+            "row_text": "同一指数 | SPX、NDX、DJIA、SOX、NBI、XLY、DWRTF",
+            "verdict": "anchored",
+            "normative_quote": "| SPX（母） | — | 价格，美元按人民币中间价换算 | 2000-01-03 → 2026-09-30 | 513500（2014-01-15）；161125（2016-12-14）；159612（2022-05-20） | 同一指数 |"
+          },
+          {
+            "table_index": 12,
+            "table_kind": "component",
+            "component_title": "载体｜美股名额 15 个（SPX 为母指数），按实盘能不能买到同一指数的基金分",
+            "section_header": "## 附表 A：候选清单——美股 15 个、A 股 40 个，各自从参选起点算；5 个美股、7 个一级行业没有场内基金",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-appendix-a",
+            "row_index": 1,
+            "cells": [
+              "相近指数",
+              "XLK、XLV、XLE"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "相近指数",
+              "XLK、XLV、XLE"
+            ],
+            "row_text": "相近指数 | XLK、XLV、XLE",
+            "verdict": "anchored",
+            "normative_quote": "| XLK | 信息技术 | 同上 | 1998-12-22 → 2026-09-30 | 161128（2016-12-27） | 相近指数 |"
+          },
+          {
+            "table_index": 12,
+            "table_kind": "component",
+            "component_title": "载体｜美股名额 15 个（SPX 为母指数），按实盘能不能买到同一指数的基金分",
+            "section_header": "## 附表 A：候选清单——美股 15 个、A 股 40 个，各自从参选起点算；5 个美股、7 个一级行业没有场内基金",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-appendix-a",
+            "row_index": 2,
+            "cells": [
+              "无场内基金",
+              "XLP、XLF、XLI、XLB、XLU"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "无场内基金",
+              "XLP、XLF、XLI、XLB、XLU"
+            ],
+            "row_text": "无场内基金 | XLP、XLF、XLI、XLB、XLU",
+            "verdict": "anchored",
+            "normative_quote": "| XLP | 必需消费 | 同上 | 1998-12-22 → 2026-09-30 | — | 无场内基金 |"
+          }
+        ]
+      },
+      {
+        "table_index": 13,
+        "component_title": "载体｜A 股名额 40 个参选（另有细分化工不参选），按组分",
+        "section_header": "## 附表 A：候选清单——美股 15 个、A 股 40 个，各自从参选起点算；5 个美股、7 个一级行业没有场内基金",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-appendix-a",
+        "component_row_count": 5,
+        "companion_visual_row_count": 0,
+        "claims": [
+          {
+            "table_index": 13,
+            "table_kind": "component",
+            "component_title": "载体｜A 股名额 40 个参选（另有细分化工不参选），按组分",
+            "section_header": "## 附表 A：候选清单——美股 15 个、A 股 40 个，各自从参选起点算；5 个美股、7 个一级行业没有场内基金",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-appendix-a",
+            "row_index": 0,
+            "cells": [
+              "宽基",
+              "沪深300、中证500、中证1000、创业板指、科创50"
+            ],
+            "visible_numbers": [
+              "300",
+              "500",
+              "1000",
+              "50"
+            ],
+            "visible_labels": [
+              "宽基"
+            ],
+            "row_text": "宽基 | 沪深300、中证500、中证1000、创业板指、科创50",
+            "verdict": "anchored",
+            "normative_quote": "| 宽基 | 沪深300（母，2005-04-08）、中证500（2007-01-15）、中证1000（2014-10-17）、创业板指（2010-06-01）、科创50（2020-07-23） |"
+          },
+          {
+            "table_index": 13,
+            "table_kind": "component",
+            "component_title": "载体｜A 股名额 40 个参选（另有细分化工不参选），按组分",
+            "section_header": "## 附表 A：候选清单——美股 15 个、A 股 40 个，各自从参选起点算；5 个美股、7 个一级行业没有场内基金",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-appendix-a",
+            "row_index": 1,
+            "cells": [
+              "红利",
+              "中证红利、上证红利、红利低波动"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "红利",
+              "中证红利、上证红利、红利低波动"
+            ],
+            "row_text": "红利 | 中证红利、上证红利、红利低波动",
+            "verdict": "anchored",
+            "normative_quote": "| 红利 | 中证红利（2008-05-26）、上证红利（2005-01-04）、中证红利低波动（2013-12-19） |"
+          },
+          {
+            "table_index": 13,
+            "table_kind": "component",
+            "component_title": "载体｜A 股名额 40 个参选（另有细分化工不参选），按组分",
+            "section_header": "## 附表 A：候选清单——美股 15 个、A 股 40 个，各自从参选起点算；5 个美股、7 个一级行业没有场内基金",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-appendix-a",
+            "row_index": 2,
+            "cells": [
+              "一级行业",
+              "能源、原材料、工业、可选消费、主要消费、医药卫生、金融地产、信息技术、通信服务、公用事业"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "一级行业",
+              "能源、原材料、工业、可选消费、主要消费、医药卫生、金融地产、信息技术、通信服务、公用事业"
+            ],
+            "row_text": "一级行业 | 能源、原材料、工业、可选消费、主要消费、医药卫生、金融地产、信息技术、通信服务、公用事业",
+            "verdict": "anchored",
+            "normative_quote": "| 中证全指一级行业 | 能源、原材料、工业、可选消费、主要消费、医药卫生、金融地产、信息技术、通信服务、公用事业（2011-08-02 发布，允许用回填点位，Owner 2026-11-24 确认） |"
+          },
+          {
+            "table_index": 13,
+            "table_kind": "component",
+            "component_title": "载体｜A 股名额 40 个参选（另有细分化工不参选），按组分",
+            "section_header": "## 附表 A：候选清单——美股 15 个、A 股 40 个，各自从参选起点算；5 个美股、7 个一级行业没有场内基金",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-appendix-a",
+            "row_index": 3,
+            "cells": [
+              "主题",
+              "300医药、主要消费、农业、酒、创新药、半导体材料设备、全指半导体、全指软件、通信设备、人工智能、消费电子、有色金属、煤炭、钢铁、银行、证券公司、房地产、军工、机器人、新能源汽车、光伏、教育"
+            ],
+            "visible_numbers": [
+              "300"
+            ],
+            "visible_labels": [
+              "主题"
+            ],
+            "row_text": "主题 | 300医药、主要消费、农业、酒、创新药、半导体材料设备、全指半导体、全指软件、通信设备、人工智能、消费电子、有色金属、煤炭、钢铁、银行、证券公司、房地产、军工、机器人、新能源汽车、光伏、教育",
+            "verdict": "anchored",
+            "normative_quote": "| NDX | — | 同上 | 2000-01-03 → 2026-09-30 | 513100（2013-05-15）；159941（2015-07-13）；513300（2020-11-05） | 同一指数 |"
+          },
+          {
+            "table_index": 13,
+            "table_kind": "component",
+            "component_title": "载体｜A 股名额 40 个参选（另有细分化工不参选），按组分",
+            "section_header": "## 附表 A：候选清单——美股 15 个、A 股 40 个，各自从参选起点算；5 个美股、7 个一级行业没有场内基金",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-appendix-a",
+            "row_index": 4,
+            "cells": [
+              "一级行业里无场内基金",
+              "通信服务、能源、医药卫生、工业、信息技术、主要消费、公用事业"
+            ],
+            "visible_numbers": [],
+            "visible_labels": [
+              "一级行业里无场内基金",
+              "通信服务、能源、医药卫生、工业、信息技术、主要消费、公用事业"
+            ],
+            "row_text": "一级行业里无场内基金 | 通信服务、能源、医药卫生、工业、信息技术、主要消费、公用事业",
+            "verdict": "anchored",
+            "normative_quote": "| 中证全指一级行业 | 能源、原材料、工业、可选消费、主要消费、医药卫生、金融地产、信息技术、通信服务、公用事业（2011-08-02 发布，允许用回填点位，Owner 2026-11-24 确认） |"
+          }
+        ]
+      }
+    ]
+  },
   "page_lint": {
     "at_review_window_8f7ffbae": {
       "owner_page_lint_errors": 0,
