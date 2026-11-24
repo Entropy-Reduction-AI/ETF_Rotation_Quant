@@ -538,6 +538,147 @@ ol.flow { align-items: stretch; }
 ol.flow .fl-t { font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 2px; }
 ol.flow .fl-d { display: block; }
 ol.flow .fl-k { display: block; font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1.35; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+ol.flow .fl-x { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 10px; padding: 8px 9px; background: var(--accent-soft); border-radius: 8px; font-size: 12.5px; line-height: 1.5; color: var(--ink); }
+ol.flow .fl-xl { width: 100%; font-size: 11.5px; color: var(--muted); }
+ol.flow .fl-c { display: inline-block; padding: 1px 7px; border-radius: 5px; background: var(--surface); border: 1px solid var(--line); font-size: 12.5px; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink); }
+ol.flow .fl-r { width: 100%; font-weight: 700; color: var(--accent); font-size: 13.5px; }
+ol.flow .fl-x .num { all: unset; }
+ol.flow.spec .fl-t { font-size: 19px; font-weight: 800; color: var(--ink); margin: 2px 0 0; }
+ol.flow.spec .fl-k { font-size: 14px; font-weight: 700; color: var(--accent); margin: 2px 0 10px; padding-bottom: 10px; }
+ol.flow.spec .fl-rows { display: grid; gap: 6px; }
+ol.flow.spec .fl-row { display: grid; grid-template-columns: 2.8em minmax(0, 1fr); gap: 6px; font-size: 13.5px; line-height: 1.55; color: var(--ink); }
+ol.flow.spec .fl-lb { font-size: 12px; color: var(--muted); padding-top: 1px; }
+ol.flow.spec .fl-row.out .fl-v { font-weight: 700; }
+ol.flow.spec .fl-v .num { all: unset; }
+.specgrid { display: grid; gap: 10px; margin: 14px 0 22px; }
+.specgrid .sg-row { display: grid; grid-template-columns: 168px minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, .85fr) minmax(0, 1.3fr); gap: 14px; align-items: center; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.specgrid .sg-hd { background: none; border: 0; padding: 0 16px; }
+.specgrid .sg-h { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: .02em; }
+.specgrid .sg-step { display: grid; grid-template-columns: 26px 1fr; column-gap: 8px; align-items: center; }
+.specgrid .sg-n { grid-row: span 2; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 13px; }
+.specgrid .sg-name { font-size: 18px; font-weight: 800; color: var(--ink); line-height: 1.2; }
+.specgrid .sg-purpose { font-size: 12.5px; font-weight: 700; color: var(--accent); line-height: 1.35; }
+.specgrid .sg-cell { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.specgrid .sg-chip { display: inline-block; padding: 3px 9px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); font-size: 13px; line-height: 1.4; color: var(--ink); white-space: nowrap; }
+.specgrid .sg-out .sg-chip { background: var(--accent-soft); border-color: transparent; color: var(--accent); font-weight: 700; }
+.specgrid .sg-ex { background: var(--accent-soft); border-radius: 8px; padding: 8px 10px; }
+.specgrid .sg-ex .sg-chip { background: var(--surface); }
+.specgrid .sg-exl { width: 100%; font-size: 11.5px; color: var(--muted); }
+.specgrid .sg-res { width: 100%; font-size: 13px; font-weight: 700; color: var(--accent); }
+.specgrid .sg-res::before { content: '→ '; }
+.specgrid .sg-see .sg-chip { background: none; border: 0; padding: 0 2px; color: var(--muted); font-size: 13px; }
+.specgrid .sg-see .sg-chip { flex-basis: 100%; }
+.specgrid .sg-see .sg-chip::before, .specgrid .sg-rule.has-key .sg-chip:not(.sg-key)::before { content: ''; display: inline-block; width: 4px; height: 4px; margin: 0 7px 3px 0; border-radius: 50%; background: var(--muted); opacity: .6; }
+.specgrid .sg-rule.has-key .sg-chip:not(.sg-key) { background: none; border: 0; padding: 0 2px; color: var(--muted); font-size: 12.5px; }
+.specgrid .sg-rule.has-key .sg-chip:not(.sg-key) { flex-basis: 100%; }
+.specgrid .sg-chip.sg-key { width: fit-content; max-width: 100%; padding: 5px 12px 5px 10px; border: 2px solid var(--accent); border-radius: 7px; background: var(--surface); color: var(--ink); font-size: 16px; font-weight: 800; white-space: normal; }
+.specgrid .sg-rule.has-key { align-content: center; }
+.specgrid .sg-rule.has-key .sg-key { flex-basis: 100%; }
+.specgrid .sg-out .sg-chip { font-size: 14px; padding: 5px 11px; }
+.specgrid .sg-out .sg-chip::before { content: '⇒ '; opacity: .6; }
+.specgrid .xv { width: 100%; }
+.specgrid .xv-rank { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 8px; align-items: center; font-size: 13px; }
+.specgrid .xv-bn { color: var(--ink); font-weight: 600; }
+.specgrid .xv-bt { height: 8px; border-radius: 4px; background: var(--surface); overflow: hidden; }
+.specgrid .xv-bt i { display: block; height: 100%; border-radius: 0 4px 4px 0; background: var(--accent); }
+.specgrid .xv-bv { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); text-align: right; }
+.specgrid .xv-votes { display: flex; gap: 12px; }
+.specgrid .xv-vote { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 12px; color: var(--muted); }
+.specgrid .xv-vote b { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface); font-size: 13px; color: #fff; }
+.specgrid .xv-vote.on b { background: var(--warn); border-color: var(--warn); }
+.specgrid .xv-vote.on { color: var(--ink); font-weight: 600; }
+.specgrid .xv-split .xv-in { display: flex; gap: 5px; margin-bottom: 6px; }
+.specgrid .xv-bar { display: flex; gap: 2px; height: 24px; border-radius: 5px; overflow: hidden; font-size: 12px; font-weight: 700; }
+.specgrid .xv-bar span { display: grid; place-items: center; white-space: nowrap; }
+.specgrid .xv-bar .s1 { background: var(--accent); color: #fff; }
+.specgrid .xv-bar .s2 { background: var(--surface); color: var(--muted); }
+.specgrid .xv-gap .xv-track { position: relative; height: 8px; margin: 22px 6px 20px; border-radius: 4px; background: var(--surface); }
+.specgrid .xv-seg { position: absolute; top: 0; height: 100%; background: var(--accent); }
+.specgrid .xv-gap.over .xv-seg { background: var(--warn); }
+.specgrid .xv-pt { position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--surface); border: 2px solid var(--muted); }
+.specgrid .xv-pt.b { border-color: var(--warn); background: var(--warn); }
+.specgrid .xv-pt em { position: absolute; top: -23px; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 12px; white-space: nowrap; color: var(--ink); }
+.specgrid .xv-pt.a em { top: auto; bottom: -20px; color: var(--muted); }
+.specgrid .xv-th { position: absolute; top: -3px; bottom: -3px; width: 0; border-left: 2px dashed var(--ink); opacity: .55; }
+.specgrid .xv-th em { position: absolute; bottom: -18px; left: 4px; font-style: normal; font-size: 11px; white-space: nowrap; }
+.tm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin: 10px 0 6px; }
+.tm-card { padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); display: flex; flex-direction: column; gap: 8px; }
+.tm-card.wide { grid-column: span 2; }
+.tm-n { font-size: 17px; font-weight: 800; color: var(--accent); }
+.tm-d { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.6; }
+.tm-fm { width: fit-content; padding: 4px 12px; border: 2px solid var(--accent); border-radius: 7px; font-weight: 800; font-size: 14.5px; color: var(--ink); }
+.tm-r { display: grid; grid-template-columns: auto 1fr; gap: 8px; align-items: baseline; font-size: 13.5px; line-height: 1.65; color: var(--ink); }
+.tm-k { padding: 1px 7px; border-radius: 5px; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+.tm-k.k-ex { background: var(--good-soft); color: var(--good); }
+.tm-k.k-why { background: var(--accent-soft); color: var(--accent); }
+.tm-k.k-note { background: var(--bg); color: var(--muted); }
+@media (max-width: 700px) { .tm-card.wide { grid-column: auto; } }
+.tm-card svg.bell { width: 100%; max-width: 440px; height: auto; display: block; }
+.tm-card svg.bell .ar { fill: var(--accent-soft); } .tm-card svg.bell .cv { fill: none; stroke: var(--accent); stroke-width: 2; }
+.tm-card svg.bell .ax { stroke: var(--line); } .tm-card svg.bell .t0 { stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 3 3; }
+.tm-card svg.bell .tk { fill: var(--muted); font-size: 11px; } .tm-card svg.bell .lb { fill: var(--ink); font-size: 12px; font-weight: 700; }
+.tm-card svg.bell .ar-lb { fill: var(--accent); font-size: 13px; font-weight: 800; }
+.calcgrid { margin: 18px 0 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
+.calcgrid .cg-title { padding: 12px 18px; font-size: 17px; font-weight: 800; color: var(--ink); border-bottom: 1px solid var(--line); background: var(--accent-soft); }
+.calcgrid .cg-grid { display: grid; grid-template-columns: 96px repeat(var(--n), minmax(0, 1fr)) minmax(0, .8fr); }
+.calcgrid .cg-grid > div { padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.calcgrid .cg-hd { background: var(--bg); display: flex; flex-direction: column; gap: 4px; }
+.calcgrid .cg-hd.cg-lab { justify-content: flex-end; font-size: 12.5px; color: var(--muted); }
+.calcgrid .cg-step { position: relative; border-left: 1px solid var(--line); }
+.calcgrid .cg-step + .cg-step::before, .calcgrid .cg-out::before { content: '→'; position: absolute; left: -9px; top: 12px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); color: var(--accent); font-size: 12px; line-height: 16px; text-align: center; font-weight: 800; }
+.calcgrid .cg-out { position: relative; border-left: 1px solid var(--line); }
+.calcgrid .cg-n { color: var(--accent); font-weight: 800; font-size: 15px; }
+.calcgrid .cg-verb { font-size: 15px; font-weight: 800; color: var(--ink); }
+.calcgrid .cg-body { font-size: 13px; color: var(--ink); line-height: 1.5; }
+.calcgrid .cg-body.cg-fm { width: fit-content; max-width: 100%; padding: 4px 10px; border: 2px solid var(--accent); border-radius: 7px; background: var(--surface); font-size: 14px; font-weight: 800; white-space: nowrap; }
+.calcgrid .num { all: unset; }
+.calcgrid .cg-sub { font-size: 12px; color: var(--muted); }
+.calcgrid .cg-lab.cg-row { display: flex; align-items: center; font-weight: 800; font-size: 14px; border-left: 4px solid var(--line); }
+.calcgrid .cg-lab.cg-row.good { border-left-color: var(--good); }
+.calcgrid .cg-lab.cg-row.bad { border-left-color: var(--warn); }
+.calcgrid .cg-c { border-left: 1px solid var(--line); display: flex; flex-direction: column; justify-content: center; gap: 2px; }
+.calcgrid .cg-multi { flex-direction: row; flex-wrap: wrap; gap: 6px 16px; justify-content: flex-start; align-items: center; }
+.calcgrid .cg-kv { display: flex; flex-direction: column; }
+.calcgrid .cg-kv em, .calcgrid .cg-big em { font-style: normal; font-size: 11.5px; color: var(--muted); }
+.calcgrid .cg-kv b { font-family: var(--font-mono); font-size: 15px; color: var(--ink); }
+.calcgrid .cg-big b { font-family: var(--font-mono); font-size: 24px; line-height: 1.1; font-weight: 800; }
+.calcgrid .cg-big.good b { color: var(--good); }
+.calcgrid .cg-big.bad b { color: var(--warn); }
+.calcgrid .cg-bar { display: block; height: 8px; margin-top: 6px; border-radius: 4px; background: var(--bg); overflow: hidden; }
+.calcgrid .cg-bar i { display: block; height: 100%; border-radius: 4px; }
+.calcgrid .cg-big.good .cg-bar i { background: var(--good); }
+.calcgrid .cg-big.bad .cg-bar i { background: var(--warn); }
+.calcgrid .cg-res span { font-size: 12.5px; color: var(--muted); }
+.calcgrid .cg-res b { font-size: 18px; font-weight: 800; color: var(--ink); }
+.calcgrid .cg-foot { display: grid; grid-template-columns: minmax(0, 440px) 1fr; gap: 8px 24px; align-items: center; padding: 14px 18px 16px; }
+.calcgrid svg.phi { width: 100%; height: auto; display: block; }
+.calcgrid svg.phi .ax { stroke: var(--line); stroke-width: 1; }
+.calcgrid svg.phi .mid { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 4; opacity: .6; }
+.calcgrid svg.phi .crv { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+.calcgrid svg.phi .tk { fill: var(--muted); font-size: 11px; }
+.calcgrid svg.phi .pt { stroke: var(--surface); stroke-width: 2; }
+.calcgrid svg.phi .pt.good { fill: var(--good); } .calcgrid svg.phi .pt.bad { fill: var(--warn); }
+.calcgrid svg.phi .drop { stroke-width: 1.5; stroke-dasharray: 2 3; } .calcgrid svg.phi .drop.good { stroke: var(--good); } .calcgrid svg.phi .drop.bad { stroke: var(--warn); }
+.calcgrid svg.phi .lb { font-size: 12px; font-weight: 700; } .calcgrid svg.phi .lb.good { fill: var(--good); } .calcgrid svg.phi .lb.bad { fill: var(--warn); }
+.calcgrid .cg-note { margin: 0; font-size: 13.5px; line-height: 1.7; color: var(--ink); }
+.calcgrid .cg-note b { display: block; font-size: 12.5px; color: var(--muted); margin-bottom: 2px; }
+@media (max-width: 900px) {
+  .calcgrid .cg-grid { grid-template-columns: 1fr; }
+  .calcgrid .cg-hd.cg-lab { display: none; }
+  .calcgrid .cg-step, .calcgrid .cg-out, .calcgrid .cg-c { border-left: 0; }
+  .calcgrid .cg-step + .cg-step::before, .calcgrid .cg-out::before { display: none; }
+  .calcgrid .cg-c::before { content: attr(data-lb); font-size: 11.5px; font-weight: 700; color: var(--accent); }
+  .calcgrid .cg-multi::before { flex-basis: 100%; }
+  .calcgrid .cg-foot { grid-template-columns: 1fr; }
+}
+@media (max-width: 900px) {
+  .specgrid .sg-hd { display: none; }
+  .specgrid .sg-row { grid-template-columns: 1fr; gap: 8px; }
+  .specgrid .sg-cell::before { content: attr(data-lb); width: 100%; font-size: 11.5px; color: var(--muted); }
+}
+ol.flow > li:has(.fl-x) { display: flex; flex-direction: column; }
+ol.flow > li:has(.fl-x) > .fl-d { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+ol.flow > li:has(.fl-x) .fl-x { margin-top: auto; }
 ol.flow > li { color: var(--muted); }
 
 .hero { display: grid; gap: 14px; margin-bottom: 8px; }
@@ -753,6 +894,27 @@ p.kv.kv-warn .kv-k::before { content: '⚠'; width: auto; height: auto; backgrou
 .dx-good .dx-i { background: var(--good); } .dx-good .dx-i::before { content: '✓'; }
 b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color: var(--bad); font-family: var(--font-mono); }
 
+/* ledger cards: one card per case, cost large, tripwire at the foot */
+.ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 14px 0 20px; }
+.ledger .lg { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px 10px; display: flex; flex-direction: column; gap: 6px; }
+.ledger .lg-h { font-size: 13.5px; font-weight: 700; color: var(--accent); line-height: 1.5; }
+.ledger .lg-n { display: inline-grid; place-items: center; min-width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font-family: var(--font-mono); font-size: 11.5px; margin-right: 8px; vertical-align: 1px; }
+.ledger .lg-big.t-good { color: var(--good); } .ledger .lg-big.t-warn { color: var(--warn); } .ledger .lg-big.t-bad { color: var(--bad); }
+.ledger .lg-big { font-size: 19px; line-height: 1.35; font-weight: 700; color: var(--ink); }
+.ledger .lg-bl { font-size: 12px; color: var(--muted); margin-top: -4px; }
+.ledger .lg-m { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.ledger .lg-t { color: var(--ink); }
+.ledger .lg-t b, .ledger .lg-t strong { font-weight: 600; }
+.ledger .lg-k { display: inline-block; font-size: 12px; color: var(--muted); background: var(--bg); border-radius: 4px; padding: 0 6px; margin-right: 6px; }
+.ledger .lg-f { margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); font-size: 14px; color: var(--ink); line-height: 1.6; }
+.ledger .lg-f.trip { color: var(--bad); }
+.ledger .lg-f.trip .lg-k { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.ledger .lg-fi { font-weight: 700; margin-right: 4px; }
+.ledger.n4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 700px) { .ledger.n4 { grid-template-columns: minmax(0, 1fr); } }
+.ledger .lg-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+.ledger .lg-c { font-size: 12.5px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; line-height: 1.6; }
+
 </style>
 </head>
 <body>
@@ -760,7 +922,7 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <nav class="toc" aria-label="目录">
   <a class="back" href="https://claude.ai/artifact/17bW2rKeeBheRFfhnjsrSU">← Owner 看板</a>
   <div class="toc-title">目录</div>
-  <ol><li class="l2"><a href="#1-全市场池-v6-用-115-个容器-61-个已有上市前历史-36-个在-gr">1. 全市场池（v6 用）</a></li><li class="l2"><a href="#2-v5-池子随时代长大-设计期里能买的很少">2. v5 池子随时代长大</a></li><li class="l2"><a href="#3-v5-的七个大类-设计期里主要是-a-股-美股和防守资产">3. v5 的七个大类</a></li><li class="l2"><a href="#4-数据靠不靠得住-没有必须修的">4. 数据靠不靠得住</a></li><li class="l2"><a href="#5-别的市场的数据-免费的够用">5. 别的市场的数据：免费的够用</a></li><li class="l3"><a href="#数据规矩">数据规矩</a></li><li class="l3"><a href="#v4-试过的-15-个容器">v4 试过的 15 个容器</a></li><li class="l3"><a href="#怎么更新">怎么更新</a></li><li class="l2"><a href="#6-免费来源拿不到-不再追">6. 免费来源拿不到，不再追</a></li><li class="l2"><a href="#更新记录">更新记录</a></li></ol>
+  <ol><li class="l2"><a href="#1-全市场池-v6-用-139-个容器-84-个已有上市前历史-36-个在-gr">1. 全市场池（v6 用）</a></li><li class="l2"><a href="#2-v5-池子随时代长大-设计期里能买的很少">2. v5 池子随时代长大</a></li><li class="l2"><a href="#3-v5-的七个大类-设计期里主要是-a-股-美股和防守资产">3. v5 的七个大类</a></li><li class="l2"><a href="#4-数据靠不靠得住-没有必须修的">4. 数据靠不靠得住</a></li><li class="l2"><a href="#5-别的市场的数据-免费的够用">5. 别的市场的数据：免费的够用</a></li><li class="l3"><a href="#数据规矩">数据规矩</a></li><li class="l3"><a href="#v4-试过的-15-个容器">v4 试过的 15 个容器</a></li><li class="l3"><a href="#怎么更新">怎么更新</a></li><li class="l2"><a href="#6-免费来源拿不到-不再追">6. 免费来源拿不到，不再追</a></li><li class="l2"><a href="#更新记录">更新记录</a></li></ol>
 </nav>
 <main>
 <header class="top">
@@ -769,11 +931,11 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
   
 </header>
 <section class="intro status"><p class="kv"><span class="kv-k"><strong>这个看板管什么</strong></span><span class="kv-v">　池子里有什么、每一样从哪年起有数据、哪年起能买到、数据靠不靠得住。策略好不好，看其他页面。</span></p>
-<div class="hero"><div class="hero-g n1"><div class="hz verdict2 t-info"><div class="hz-l">池子</div><div class="hz-hd">v6 改用全市场场内 ETF 和 LOF，共 <strong class="num">115</strong> 个容器；<strong class="num">61</strong> 个已有上市前历史，<strong class="num">36</strong> 个在 Grok 第六轮（2026-11-16 派单，还在做，尚未交付）。</div></div><div class="hz ask calm"><div class="hz-l">需要你</div><div class="hq-h calm">✓ 暂时不需要</div><div class="hq-ref">Grok 交付后由 Dev 入库、Reviewer 签收。</div></div><div class="hz eng"><span class="eng-ok">✓</span><span class="hz-l">数据健康</span><span class="eng-d">行情库 11-06 以后没有变动；v5 池（101 个）后复权和净值 <strong>197/197</strong> 全覆盖，必须修 <strong class="num">0</strong> 条。</span></div></div></div>
+<div class="hero"><div class="hero-g n1"><div class="hz verdict2 t-info"><div class="hz-l">池子</div><div class="hz-hd">v6 预演要的三份行业数据 <strong>已全部交付并签收</strong>（2026-11-23）：沪深300 十个行业、中证全指一级的开盘价、申万一级；都只放在 <code>incoming/</code>，没有入库。</div><div class="hz-rest">全市场池 139 个容器里 <strong class="num">36</strong> 个仍在 Grok 第六轮，11-19 以后没有更新。</div></div><div class="hz ask calm"><div class="hz-l">需要你</div><div class="hq-h calm">✓ 暂时不需要</div><div class="hq-ref">v6 预注册用的是指数池（预注册附表 A），不等第六轮。细分化工未接，见第 1 节。</div></div><div class="hz eng"><span class="eng-ok">✓</span><span class="hz-l">数据健康</span><span class="eng-d">行情库已追加 2 条 A 股主题指数（上证红利、中证钢铁）；v5 池（101 个）后复权和净值 <strong>197/197</strong> 全覆盖，必须修 <strong class="num">0</strong> 条。申万一级 2021-12-13 之前的点位<strong>来历未确认</strong>，按“可能回填”只作参考。</span></div></div></div>
 </section>
-<section id="sec-1-全市场池-v6-用-115-个容器-61-个已有上市前历史-36-个在-gr"><h2 id="1-全市场池-v6-用-115-个容器-61-个已有上市前历史-36-个在-gr"><span class="num">01</span>全市场池（v6 用）：115 个容器，61 个已有上市前历史，36 个在 Grok 手上</h2>
-<p class="memo"><strong>上市前接指数（D36-4）接上了 39 个；卡住的 36 个集中在美股和港股，已派给 Grok 用浏览器取，还在做。</strong></p>
-<figure><img alt="全市场 115 个容器的上市前历史状态，按大类" src="../../assets/data-board/d6-splice-status.png"/></figure>
+<section id="sec-1-全市场池-v6-用-139-个容器-84-个已有上市前历史-36-个在-gr"><h2 id="1-全市场池-v6-用-139-个容器-84-个已有上市前历史-36-个在-gr"><span class="num">01</span>全市场池（v6 用）：139 个容器，84 个已有上市前历史，36 个在 Grok 手上</h2>
+<p class="memo"><strong>上市前接指数（D36-4）接上了 62 个；卡住的 36 个仍集中在美股和港股。这次补进的 24 个 A 股主题里，23 个已接上，1 个没有第二条日线。</strong></p>
+<figure><img alt="全市场 139 个容器的上市前历史状态，按大类" src="../../assets/data-board/d6-splice-status.png"/></figure>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -787,25 +949,31 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <tr>
 <td class="k"><strong>有自己的历史</strong></td>
 <td class="n numcol" style="text-align: right;">22</td>
-<td>基金或指数本身的历史够长，不用接</td>
+<td class="detail">基金或指数本身的历史够长，不用接。科创50 在此列，发布日 2020-07-23 已核对</td>
 <td class="c-take"><span class="pill info">完成</span></td>
 </tr>
 <tr>
 <td class="k"><strong>已接上指数</strong></td>
-<td class="n numcol" style="text-align: right;">39</td>
-<td>上市前用它跟踪的指数历史接上，只用指数正式发布日以后的点位（D37 第三、四轮）</td>
+<td class="n numcol" style="text-align: right;">62</td>
+<td class="detail">上市前用它跟踪的指数历史接上，只用指数正式发布日以后的点位。含这次 23 个 A 股主题</td>
 <td class="c-take"><span class="pill info">完成</span></td>
 </tr>
 <tr class="row-warn">
 <td><strong>在 Grok 第六轮</strong></td>
 <td class="n numcol" style="text-align: right;">36</td>
-<td>恒生 13、标普道琼斯 12、其他指数公司 9、国内 2；要注册官网账号，云端收不到验证邮件</td>
+<td class="detail">恒生 13、标普道琼斯 12、其他指数公司 9、国内 2；要注册官网账号，云端收不到验证邮件</td>
 <td class="c-take"><span class="pill warn">进行中</span></td>
+</tr>
+<tr>
+<td class="k"><strong>未接上</strong></td>
+<td class="n numcol" style="text-align: right;">1</td>
+<td class="detail">细分化工。官网代码 H30187 的全称是中证全指化工，东财和同花顺都没有这条日线。东财「细分化工」是另一条指数 000813，没有拿来顶替</td>
+<td class="c-take"><span class="pill info">未接</span></td>
 </tr>
 <tr>
 <td class="k"><strong>无需接</strong></td>
 <td class="n numcol" style="text-align: right;">18</td>
-<td>15 个不在冻结的池子里；原油、跨境商品、印度 ETP 不是单一指数</td>
+<td class="detail">15 个不在冻结的池子里；原油、跨境商品、印度 ETP 不是单一指数</td>
 <td class="c-take"><span class="pill info">不需要</span></td>
 </tr>
 </tbody>
@@ -815,7 +983,7 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <li><strong>交付以后</strong>：Dev 只追加入库、重跑全市场 S1，Reviewer 抽查 8 条并签收；本节和第 2–4 节的数字随之更新。</li>
 <li><strong>全市场池的一个问题</strong>：按现在的“市场”定义，16 个市场里 13 个只有一只基金（D37 已签收），v6 若用全市场池，要先改“市场”的定义（D38 清点）。</li>
 </ul>
-<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>在途的数据：36 条指数、巴西汇率、美国行业长历史</span></button><div class="fold-b" hidden="">
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>在途与新到的数据：三份行业数据已交付；第六轮 36 条指数仍未交付</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -823,33 +991,58 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <th>用途</th>
 <th>谁在做</th>
 <th class="rh-status">状态</th>
+<th class="h-note">说明</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-warn">
-<td>36 条指数的上市前历史</td>
-<td>v6 让新上市基金当天就能打分</td>
-<td>Grok 第六轮</td>
-<td class="r-status"><span class="pill warn">进行中</span><span class="pill-note"> 尚未交付</span></td>
+<tr>
+<td>沪深300 十个行业 000908–000917（价格、全收益、净收益，发布日 2007-07-02）</td>
+<td>D38 第 45 行：A 股“记忆更短”的检验</td>
+<td>Grok，PR #340，Reviewer #342 签收</td>
+<td class="r-status"><span class="pill info">已交付</span></td>
+<td class="c-note">未入库；第 45 行已跑完，上月涨幅不进 v6</td>
 </tr>
-<tr class="row-warn">
+<tr>
+<td>中证全指一级 000986–000995 价格指数（开盘、最高、最低、收盘、成交额，2005 年起逐日齐全）</td>
+<td>隔夜版的正式判据（D38 第 56 行）</td>
+<td>Grok，PR #340</td>
+<td class="r-status"><span class="pill info">已交付</span></td>
+<td class="c-note">未入库；隔夜版已关闭</td>
+</tr>
+<tr>
+<td>申万一级 2021 版 31 个行业股价指数（16 个自 1999 年、12 个自 2014-02-21、3 个自 2021-12-13）</td>
+<td>申万参考检验（D38 第 56 行）</td>
+<td>Grok，PR #343，Reviewer #345 签收</td>
+<td class="r-status"><span class="pill info">已交付</span></td>
+<td class="c-note">未入库；2021-12-13 之前点位来历未确认，按“可能回填”只作参考；官方缺 8 个交易日，都在 2016 年以后</td>
+</tr>
+<tr>
+<td>36 条指数的上市前历史</td>
+<td>全市场池让新上市基金当天就能打分</td>
+<td>Grok 第六轮，PR #312（部分，未合并）</td>
+<td class="r-status"><span class="pill warn">未交齐</span></td>
+<td class="c-note">11-19 以后没有更新；v6 预注册不等它</td>
+</tr>
+<tr>
 <td>巴西雷亚尔日度汇率</td>
 <td>IBOVESPA 那条已核对，只缺汇率</td>
 <td>Grok 第六轮</td>
-<td class="r-status"><span class="pill warn">进行中</span></td>
+<td class="r-status"><span class="pill warn">未交付</span></td>
+<td class="c-note">同上</td>
 </tr>
 <tr>
 <td>美国行业组合长历史（Kenneth French，免费）</td>
 <td>v6 要不要设挑选层（D38 预演第 3 项）</td>
-<td>待派</td>
-<td class="r-status"><span class="pill warn">待派</span></td>
+<td>Orchestrator 直接下载</td>
+<td class="r-status"><span class="pill info">已用</span></td>
+<td class="c-note">D38 第 20 行起</td>
 </tr>
 </tbody>
 </table></div>
 </div></div>
 </section>
 <section id="sec-2-v5-池子随时代长大-设计期里能买的很少"><h2 id="2-v5-池子随时代长大-设计期里能买的很少"><span class="num">02</span>v5 池子随时代长大：设计期里能买的很少</h2>
-<p class="memo"><strong>2006 年有数据的 17 个，已上市的只有 <strong class="num">1</strong> 个；到今天是 101 个和 96 个。</strong></p>
+<p class="memo"><strong>2006 年有数据的 17 个，已上市的只有 </strong>1<strong> 个；到今天是 101 个和 96 个。</strong></p>
 <figure><img alt="v5 池子每年末有数据、已上市的容器个数，按大类" src="../../assets/data-board/d1-pool-growth.png"/></figure>
 <ul class="points">
 <li><strong>设计期的结论主要靠“有数据的”这一边</strong>：2015 年末有数据 29 个、已上市 22 个，<span class="num">2006–2012 年</span>差得更远。</li>
@@ -1893,8 +2086,8 @@ b.sg-pos { color: var(--good); font-family: var(--font-mono); } b.sg-neg { color
 <div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">窗口和每次尝试的结果见 <a href="https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/main/docs/owner/free-source-gaps.md">《免费来源缺口》</a>。</div><div class="rn-i">证据在 PR #201 的 <code>data/options/raw/r2/SCOPE.txt</code>、<code>blocked-attempts.csv</code>、<code>session-coverage.csv</code>。</div><div class="rn-i"><code>QC.md</code> 只统计日线重复行，不覆盖这三处。</div></div>
 </section>
 <section class="appendix" id="sec-更新记录"><h3 class="appx" id="更新记录">更新记录</h3>
-<div class="log"><div><span class="d">2026-11-17</span><span>新增第 1 节“全市场池”：115 个容器的上市前历史状态（22 有、39 已接、36 在 Grok 第六轮、18 不用接）和在途数据；原第 1–5 节顺延，标题注明是 v5 池；创业板指、豆粕改为第六轮在取。</span></div><div><span class="d">2026-11-03</span><span>登记三处期权免费来源缺口，状态 <code>won't-pursue-free</code>（#201 C1、C2）。见第 6 节。</span></div><div><span class="d">2026-11-01</span><span>改按 v5 的七个大类组织；池子只算 v5 用的 101 个，数字和<a href="https://claude.ai/artifact/DpJNEma9D9uELPsLkWbRBx">《v4 体检报告》</a>对得上；图重画；新增“别的市场的数据”。</span></div><div><span class="d">2026-11-01</span><span>“上市日”改为和回测程序同一份名单（场外联接基金算进来，13 个容器提前）。</span></div><div><span class="d">2026-10-29</span><span>首次发布。</span></div></div></section>
-<footer>内容取自仓库 <a href="https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/main/docs/owner/data-board.md">docs/owner/data-board.md</a>（main @ a592981）。图表为原文配图。</footer>
+<div class="log"><div><span class="d">2026-11-18</span><span>全市场池补入 24 个 A 股主题指数。23 个已接上（只用官网发布日及之后的点位），细分化工未接。科创50 原在池内，补上发布日 2020-07-23。第 1 节改为 139 个容器、84 个已有上市前历史。</span></div><div><span class="d">2026-11-17</span><span>新增第 1 节“全市场池”：115 个容器的上市前历史状态（22 有、39 已接、36 在 Grok 第六轮、18 不用接）和在途数据；原第 1–5 节顺延，标题注明是 v5 池；创业板指、豆粕改为第六轮在取。</span></div><div><span class="d">2026-11-03</span><span>登记三处期权免费来源缺口，状态 <code>won't-pursue-free</code>（#201 C1、C2）。见第 6 节。</span></div><div><span class="d">2026-11-01</span><span>改按 v5 的七个大类组织；池子只算 v5 用的 101 个，数字和<a href="https://claude.ai/artifact/DpJNEma9D9uELPsLkWbRBx">《v4 体检报告》</a>对得上；图重画；新增“别的市场的数据”。</span></div><div><span class="d">2026-11-01</span><span>“上市日”改为和回测程序同一份名单（场外联接基金算进来，13 个容器提前）。</span></div><div><span class="d">2026-10-29</span><span>首次发布。</span></div></div></section>
+<footer>内容取自仓库 <a href="https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/main/docs/owner/data-board.md">docs/owner/data-board.md</a>。图表为原文配图。</footer>
 </main>
 </div>
 <script>
