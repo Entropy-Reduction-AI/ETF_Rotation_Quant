@@ -1,5 +1,5 @@
 """Owner 看板第 2 节的版本进化图。数字全部来自已登记的设计期结果（2006–2015，≤2015-12-31）：
-v3/E1/E2 见 docs/owner/phase2-owner-board.md 留档区与 v3.1 设计期报告；E2 新口径、A1、基准见 results/v4/r5/design；
+v3/E1/E2 见 docs/owner/owner-board.md 留档区与 v3.1 设计期报告；E2 新口径、A1、基准见 results/v4/r5/design；
 v5 最终版见 results/v5/design/P2。用法：python results/v5/diag/board/versions.py docs/assets/owner-board/b8-versions.png
 """
 import sys

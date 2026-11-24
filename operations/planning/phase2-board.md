@@ -17,7 +17,7 @@
 - 设计期简报: `operations/reports/v4-r5-design-period-brief.md`（U-指数仍是 D25；U-可交易已按 D25-8 刷新）
 - Orchestrator 交接: `operations/planning/2026-10-30-v4-r5c-orchestrator-handoff.md`（R5、R5b 那两份仍留着，分工以 R5c 这份为准）
 - 数据看板: `docs/owner/data-board.md`（库指纹 `167d4e39…`）
-- Owner 看板: `docs/owner/phase2-owner-board.md`（五段还没写；体检报告第 3 版的可交易池读数已按 D25-8 刷新）
+- Owner 看板: `docs/owner/owner-board.md`（五段还没写；体检报告第 3 版的可交易池读数已按 D25-8 刷新）
 - 收口主线: `a728a085f1777239751bf85baca545b2dd6304a4`（#137 签收 rebase-merge 之后的 `main`）。`milestone/v4-code-freeze` 仍指向 `476abd7`，`milestone/v4-code-freeze-2` 仍指向 `c9f4e44`。本收尾不移动它们
 - 旧流水: `operations/work_logs/2026-10-28-phase2-board-ledger.md`（main `9fd6f67` 上本文件的原文）
 
