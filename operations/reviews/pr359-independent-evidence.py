@@ -28,7 +28,8 @@ DB = ROOT / "data" / "market.sqlite"
 OUT = ROOT / "operations/reviews/pr359-independent-evidence.json"
 ART = Path("/opt/cursor/artifacts/reviewer-pr359")
 
-LIVE359 = "e9b12dc6a4b24c6e0f470ddbec0fadaf2082b7bf"
+LIVE359 = "1a633b5059ec6571fd5e0afce775918926525969"
+MID359 = "e9b12dc6a4b24c6e0f470ddbec0fadaf2082b7bf"
 FIRST359 = "74ea30699d184c01971ee55a0abdbcc1e36d5d84"
 
 DJIA_REQ = ("2024-02-01", "2026-09-30")
@@ -261,16 +262,6 @@ def main() -> int:
         if k in pairs and pairs[k]["n_above_0_1pct"] > 0
     ]
 
-    live_body_snip = git_show_live("incoming/v6-us-gapfill/COVERAGE.md")
-    dev_doc_blocker = None
-    if live_body_snip and "不能再算作独立于库的第二来源" in live_body_snip:
-        dev_doc_blocker = (
-            "PR359 live COVERAGE.md/BODY still state TradingView is not gap "
-            "independent source; Owner 2026-11-24 21:21 Asia/Taipei allows "
-            "CNBC(LSEG)+archived TV(ICE) as gap publishers (TV/sqlite lineage "
-            "only bars independent DB-overlap). Dev sync pending."
-        )
-
     report = {
         "owner_ruling_ref": "2026-11-24 21:21 Asia/Taipei SOURCE_ARCHIVES_ONLY",
         "prior_github_review": {
@@ -281,9 +272,11 @@ def main() -> int:
             "supersedes": "Owner-authorized ARCHIVE-ONLY acceptance; not a usable-daily-series approval",
         },
         "pr359_heads": {
-            "live": LIVE359,
+            "live_for_approval": LIVE359,
             "first_evidence_commit": FIRST359,
-            "delta_commits": ["e9b12dc6a4b24c6e0f470ddbec0fadaf2082b7bf"],
+            "mid_commit_owner_coverage": MID359,
+            "delta_e9b12dc_to_live": "8 files +178/-97 (COVERAGE/MANIFEST/session/evidence/tests; no sqlite/config/roster)",
+            "pr359_vs_main": "3 commits, 54 files, +22554",
         },
         "pr360_branch_note": {
             "ancestry_artifact": "PR360 vs main shows ~50 files because branch includes 359 tree; "
@@ -297,7 +290,6 @@ def main() -> int:
                 "db_or_config_or_roster_writes",
                 "ingestion_complete_for_required_trading_days",
             ],
-            "dev_doc_sync_blocker": dev_doc_blocker,
         },
         "owner_ruling_mapping": {
             "gap_publishers_djia": "FRED(SPDJI re-publish) + CNBC(LSEG) — independent",
@@ -306,10 +298,11 @@ def main() -> int:
             "later_usable_excludes": ["2024-12-25"],
             "dwrtf_2023_04_06": "TV 259.56 single-source only; not adopted close",
             "dwrtf_2019_08_12": {
-                "cnbc": 294.58,
-                "tv_archive": 294.46,
-                "classification": "source_conflict",
+                "label_future_usable_series": "source_conflict",
+                "cnbc_close": 294.58,
+                "tv_archive_close": 294.46,
                 "cause_inference": "forbidden",
+                "note": "conflict recorded in archive; not a frozen adopted close",
             },
             "931743": "roster unchanged; Orchestrator Appendix A eligibility 2023-07-27",
         },
@@ -328,7 +321,7 @@ def main() -> int:
         "flagged_dates": {
             "2024-12-25": "exclude from later usable series; CNBC raw retained",
             "2023-04-06": "DWRTF CNBC missing; TV archive 259.56 single_source",
-            "2019-08-12": "DWRTF source_conflict CNBC 294.58 vs TV 294.46; no adopted side",
+            "2019-08-12": "source_conflict: CNBC 294.58 vs TV archive 294.46 (no cause inference)",
         },
         "tv_prior_sha256": sha256_file(PRIOR_TV),
     }

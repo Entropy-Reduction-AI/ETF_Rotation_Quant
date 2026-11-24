@@ -8,11 +8,11 @@
     "supersedes": "Owner-authorized ARCHIVE-ONLY acceptance; not a usable-daily-series approval"
   },
   "pr359_heads": {
-    "live": "e9b12dc6a4b24c6e0f470ddbec0fadaf2082b7bf",
+    "live_for_approval": "1a633b5059ec6571fd5e0afce775918926525969",
     "first_evidence_commit": "74ea30699d184c01971ee55a0abdbcc1e36d5d84",
-    "delta_commits": [
-      "e9b12dc6a4b24c6e0f470ddbec0fadaf2082b7bf"
-    ]
+    "mid_commit_owner_coverage": "e9b12dc6a4b24c6e0f470ddbec0fadaf2082b7bf",
+    "delta_e9b12dc_to_live": "8 files +178/-97 (COVERAGE/MANIFEST/session/evidence/tests; no sqlite/config/roster)",
+    "pr359_vs_main": "3 commits, 54 files, +22554"
   },
   "pr360_branch_note": {
     "ancestry_artifact": "PR360 vs main shows ~50 files because branch includes 359 tree; NET after 359 merged is only operations/reviews/* (3 files at last append)"
@@ -24,8 +24,7 @@
       "strategy_returns",
       "db_or_config_or_roster_writes",
       "ingestion_complete_for_required_trading_days"
-    ],
-    "dev_doc_sync_blocker": "PR359 live COVERAGE.md/BODY still state TradingView is not gap independent source; Owner 2026-11-24 21:21 Asia/Taipei allows CNBC(LSEG)+archived TV(ICE) as gap publishers (TV/sqlite lineage only bars independent DB-overlap). Dev sync pending."
+    ]
   },
   "owner_ruling_mapping": {
     "gap_publishers_djia": "FRED(SPDJI re-publish) + CNBC(LSEG) — independent",
@@ -36,10 +35,11 @@
     ],
     "dwrtf_2023_04_06": "TV 259.56 single-source only; not adopted close",
     "dwrtf_2019_08_12": {
-      "cnbc": 294.58,
-      "tv_archive": 294.46,
-      "classification": "source_conflict",
-      "cause_inference": "forbidden"
+      "label_future_usable_series": "source_conflict",
+      "cnbc_close": 294.58,
+      "tv_archive_close": 294.46,
+      "cause_inference": "forbidden",
+      "note": "conflict recorded in archive; not a frozen adopted close"
     },
     "931743": "roster unchanged; Orchestrator Appendix A eligibility 2023-07-27"
   },
@@ -171,7 +171,7 @@
       "independent_path": "/opt/cursor/artifacts/reviewer-pr359/raw/fred-DJIA-independent.csv",
       "pr_sha256": "256b9f380c3b20aef06cf4e0846d1527897e6cd6c3db1d5b700b22da08577f69",
       "independent_sha256": "256b9f380c3b20aef06cf4e0846d1527897e6cd6c3db1d5b700b22da08577f69",
-      "retrieved_at": "2026-11-24T13:27:00.533911+00:00",
+      "retrieved_at": "2026-11-24T13:29:45.030291+00:00",
       "sha256_match": true,
       "parsed_close_mismatches": 0,
       "mismatches_sample": []
@@ -182,14 +182,14 @@
       "note": "CNBC may require browser User-Agent; 403 without UA",
       "pr_sha256": "9afe71e0d4cab6b045fe422b8383e5476438278672a66007331829f51ec5a668",
       "independent_sha256": "9afe71e0d4cab6b045fe422b8383e5476438278672a66007331829f51ec5a668",
-      "retrieved_at": "2026-11-24T13:27:00.537611+00:00",
+      "retrieved_at": "2026-11-24T13:29:45.035700+00:00",
       "sha256_match": true
     }
   },
   "flagged_dates": {
     "2024-12-25": "exclude from later usable series; CNBC raw retained",
     "2023-04-06": "DWRTF CNBC missing; TV archive 259.56 single_source",
-    "2019-08-12": "DWRTF source_conflict CNBC 294.58 vs TV 294.46; no adopted side"
+    "2019-08-12": "source_conflict: CNBC 294.58 vs TV archive 294.46 (no cause inference)"
   },
   "tv_prior_sha256": "1b2e608ee868c15da254503c13a5aa091be0057ef65fac399c3d29af09f6b548",
   "delivered_normalized_samples": {
