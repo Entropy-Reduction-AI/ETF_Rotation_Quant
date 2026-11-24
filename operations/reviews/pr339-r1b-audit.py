@@ -16,7 +16,8 @@ OVERLAY = Path("/tmp/v6-r1b-overlay")
 OUT = ROOT / "operations/reviews/pr339-r1b-audit.json"
 OLD, NEW = "27036630f6916aa921e7b9a2eb6f905c7c642551", "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f"
 HEAD_REFRESH = "653de223400567f06ce3abd42b78c0394bf3cf57"
-HEAD_CURRENT = "292568ba10b1de937ddb2eb7743c1279ad9f9666"
+HEAD_BLOCK_A = "292568ba10b1de937ddb2eb7743c1279ad9f9666"
+HEAD_CURRENT = "59a1b56e5a62b90c2c3b27115af235b67dd48d8e"
 
 
 def sha256(p: Path) -> str:
@@ -648,7 +649,7 @@ def incremental_653_to_292568ba() -> dict:
         return hashlib.sha256(subprocess.check_output(["git", "show", f"{ref}:{path}"])).hexdigest()
 
     a653 = shas(HEAD_REFRESH, "results/v6-preflight/v6-appendix-a.csv")
-    a292 = shas(HEAD_CURRENT, "results/v6-preflight/v6-appendix-a.csv")
+    a292 = shas(HEAD_BLOCK_A, "results/v6-preflight/v6-appendix-a.csv")
     b653 = shas(HEAD_REFRESH, "results/v6-preflight/v6-appendix-b.json")
     return {
         "compare": f"{HEAD_REFRESH[:8]}..{HEAD_CURRENT[:8]}",
@@ -699,6 +700,201 @@ def incremental_653_to_292568ba() -> dict:
         ],
         "delta_file_count_653_to_292568ba": 14,
         "cross_artifact_html_snippet_only_on_non_v6_pages": True,
+    }
+
+
+MERGE_MAIN_INTO_PR = "a1a36f6660d00b8d9b34b1f52892be032a5d5be3"
+MAIN_AT_MERGE = "24762d27f08786d4045bf4d40259d7c1ab878b16"
+D42_EIGHT_PATHS = [
+    "docs/prereg/etf-multiasset-rotation-prereg-v6.md",
+    "operations/planning/2026-11-24-d42-v6-prereg-final-items.md",
+    "docs/owner/owner-board.md",
+    "scripts/owner_pages/roadmap_v6.py",
+    "docs/assets/owner-board/b10-v6-roadmap.png",
+    "docs/artifact/README.md",
+    "docs/artifact/v6-prereg/index.html",
+    "docs/artifact/board/index.html",
+]
+
+
+def incremental_292568ba_to_59a1b56() -> dict:
+    import subprocess
+
+    def shas(ref: str, path: str) -> str:
+        return hashlib.sha256(subprocess.check_output(["git", "show", f"{ref}:{path}"])).hexdigest()
+
+    mid = "2623a2a31695387f68765d87d57b681ca7e281f6"
+    a_old = shas(HEAD_BLOCK_A, "results/v6-preflight/v6-appendix-a.csv")
+    a_new = shas(HEAD_CURRENT, "results/v6-preflight/v6-appendix-a.csv")
+    b_old = shas(HEAD_BLOCK_A, "results/v6-preflight/v6-appendix-b.json")
+    crit = subprocess.check_output(
+        ["git", "diff", f"{HEAD_BLOCK_A}..{HEAD_CURRENT}", "--", "docs/prereg/etf-multiasset-rotation-prereg-v6.md"],
+        cwd=ROOT,
+        text=True,
+    )
+    crit_lines = [
+        ln
+        for ln in crit.splitlines()
+        if ln.startswith(("+", "-")) and not ln.startswith(("+++", "---"))
+    ]
+    crit_threshold_mutations = [
+        ln
+        for ln in crit_lines
+        if any(
+            tok in ln
+            for tok in (
+                "回撤 ≤ 40%",
+                "| ② 保费 | ≤ 4 点",
+                "③ 不输增强基准",
+                "④ 对同仓位",
+                "四条判据全部满足",
+            )
+        )
+        and "别的市场检验" not in ln
+        and "D42-7" not in ln
+    ]
+    crit_hit = len(crit_threshold_mutations) > 0
+    merge_tree = subprocess.check_output(
+        ["git", "merge-tree", "--write-tree", HEAD_BLOCK_A, MAIN_AT_MERGE],
+        cwd=ROOT,
+        text=True,
+    ).strip()
+    merge_tree_match_a1a36f6 = merge_tree == subprocess.check_output(
+        ["git", "rev-parse", f"{MERGE_MAIN_INTO_PR}^{{tree}}"],
+        cwd=ROOT,
+        text=True,
+    ).strip()
+    delta_paths = subprocess.check_output(
+        ["git", "diff", "--name-only", MERGE_MAIN_INTO_PR, HEAD_CURRENT],
+        cwd=ROOT,
+        text=True,
+    ).strip().splitlines()
+    eight_path_scope_ok = sorted(delta_paths) == sorted(D42_EIGHT_PATHS)
+    planning_exists_at_mid = (
+        subprocess.call(
+            ["git", "cat-file", "-e", f"{mid}:operations/planning/2026-11-24-d42-v6-prereg-final-items.md"],
+            cwd=ROOT,
+        )
+        != 0
+    )
+    d42_5_prereg_snippet_at_59 = "市场在冻结后、看任何结果之前由 Owner 选定"
+    d42_5_in_59 = d42_5_prereg_snippet_at_59 in git_show(
+        f"{HEAD_CURRENT}:docs/prereg/etf-multiasset-rotation-prereg-v6.md"
+    )
+    d42_5_in_mid = d42_5_prereg_snippet_at_59 in git_show(f"{mid}:docs/prereg/etf-multiasset-rotation-prereg-v6.md")
+    merge_path_count = int(
+        subprocess.check_output(
+            ["git", "diff", "--name-only", HEAD_BLOCK_A, MERGE_MAIN_INTO_PR],
+            cwd=ROOT,
+            text=True,
+        ).count("\n")
+        or 0
+    )
+    return {
+        "compare_full": f"{HEAD_BLOCK_A[:8]}..{HEAD_CURRENT[:8]}",
+        "merge_main_into_pr": {
+            "commit_full": MERGE_MAIN_INTO_PR,
+            "main_parent_full": MAIN_AT_MERGE,
+            "git_merge_tree_write_tree_full": merge_tree,
+            "a1a36f6_tree_equals_merge_tree": merge_tree_match_a1a36f6,
+            "v6_product_paths_touched_in_merge": False,
+            "merge_only_path_count": merge_path_count,
+            "note": "359/361 ingest+reviewer 随 main 合入；本条不重复 closed companion 断言",
+        },
+        "a1a36f6_to_59a1b56e_eight_paths": {
+            "expected": D42_EIGHT_PATHS,
+            "actual": delta_paths,
+            "exact_match": eight_path_scope_ok,
+            "hard_stop_if_mismatch": not eight_path_scope_ok,
+        },
+        "intervening_commits": [
+            MERGE_MAIN_INTO_PR,
+            mid,
+            HEAD_CURRENT,
+        ],
+        "mid_commit_message": "v6 预注册去掉初稿→待冻结；Owner 看板同步",
+        "d42_planning": "operations/planning/2026-11-24-d42-v6-prereg-final-items.md",
+        "d42_owner_authorization": "Owner 2026-11-24 对话：确认回填选 A；1A2A；同意 D42-3/4/5",
+        "appendix_a_sha256_292568ba": a_old,
+        "appendix_a_sha256_59a1b56": a_new,
+        "appendix_a_unchanged": a_old == a_new,
+        "appendix_b_sha256": b_old,
+        "appendix_b_unchanged_across_delta": b_old == shas(HEAD_CURRENT, "results/v6-preflight/v6-appendix-b.json"),
+        "criteria_1234_threshold_diff_in_prereg_md": crit_hit,
+        "criteria_1234_unchanged_assertion": not crit_hit,
+        "owner_authorized_amendments": {
+            "D42-1": "一级行业保留回填点位（选项 A）",
+            "D42-4": "现行配置对照 + 豁免 D27-5「6 个月并行模拟不差于现行配置」上线门槛；模拟盘暂停线仍用同仓位基准",
+            "D42-5": "别的市场检验（冻结后 Owner 选市场；TRIN 缺席时两票 unanimous；p 从 0.5 起；计 1 次试验）",
+            "D42-6": "A1/A2 写回 §5.2 只报告",
+            "D42-7": "报告四张图",
+        },
+        "not_equated_to_unchanged_rules": [
+            "D42-4 明确豁免 D27-5 子门槛，属 Owner 授权进程/上线裁决变更，非一次性检验判据 ①–④ 不变"
+        ],
+        "segment_2623a2a3_five_check_summary": {
+            "criteria_1234": "§5 四闸阈值字面未改；仅元数据/页首「待冻结」",
+            "d42_clauses": "无（planning 文稿尚未入库）",
+            "appendix_ab": "与 292568ba 同 SHA",
+            "presentation_paths_seven": [
+                p
+                for p in D42_EIGHT_PATHS
+                if p != "operations/planning/2026-11-24-d42-v6-prereg-final-items.md"
+            ],
+        },
+        "d42_5_temporal_evidence": {
+            "planning_file_absent_at_2623a2a3": planning_exists_at_mid,
+            "planning_first_commit_full": HEAD_CURRENT,
+            "d42_5_text_in_prereg_at_59a1b56": d42_5_in_59,
+            "d42_5_text_in_prereg_at_2623a2a3": d42_5_in_mid,
+            "v6_other_market_backtest_artifact_found": False,
+            "reviewer_did_not_read_other_market_data": True,
+            "assurance_status": "partial_repo_evidence_only",
+            "proven": [
+                "别市检验定义与 planning 同日进入 subject（59a1b56）；2623 无 D42-5 正文",
+                "仓库内无 v6 别市回测产物路径（Reviewer 未跑数、未读行情）",
+            ],
+            "not_proven": [
+                "Owner 选市场前零信息暴露（对话/公网页面不在 git 可审计范围）",
+            ],
+        },
+        "d42_5_reviewer_limitations": {
+            "definitions_before_data_exposure": "预注册与 D42-5 正文要求「市场在冻结后、看任何结果之前由 Owner 选定」；本 Reviewer 未检出冻结后别市跑数产物，亦未读 2016+ 池或别市行情跑数。无法从仓库时间戳证明零泄露——仅核对 D42 文稿先于 PR #339 59a1b56 合入顺序。",
+            "no_other_market_data_read_or_run": True,
+        },
+        "d42_4_semantic_old_new": {
+            "old_§7_closing": "上线：模拟盘之后，小资金起步需 Owner 另批（§5.3“结果怎么用”）。",
+            "new_§7_closing": "上线：模拟盘之后，小资金起步需 Owner 另批（§5.3“结果怎么用”）；Owner 看着 v6 和现行配置在模拟盘、检验段、设计期的逐项比较拍板，不设“6 个月不差于现行配置”的门槛（D42-4）。",
+            "decision_authority": "operations/planning/2026-11-24-d42-v6-prereg-final-items.md D42-4；Owner 2026-11-24",
+        },
+        "current_config_vs_portfolio_toml": {
+            "prereg_现行配置": "A 股 70%（16 容器等权）、海外 30%（纳指100、标普500 各半），每月再平衡",
+            "portfolio_toml": "a_share.weight=0.70; overseas.weight=0.30; overseas.containers 纳指100+标普500",
+            "match": True,
+        },
+        "a1_a2_definitions": {
+            "A1_prereg": "每月末标普500 跑赢现金，就在标普500 和沪深300 里拿更强的一个全仓，否则拿 10 年国债",
+            "A2_prereg": "沪深300、标普500、恒生、10 年国债、黄金各 1/5，跌破 10 个月均线的那一腿换成现金",
+            "scope": "§5.2 只报告，不参与 §5.3 判定",
+        },
+        "presentation_only_§5_2_rows": [
+            "现行配置",
+            "A1",
+            "A2",
+            "报告四张图（D42-7）",
+        ],
+        "§9_component_delta": "6→7 件待办；§9.2 增 #7 D42",
+        "§7_component_delta": "路线 +1 行「别的市场检验」；载体 +「对照：现行配置」",
+        "prereg_md_diff_stat": subprocess.check_output(
+            ["git", "diff", "--stat", f"{HEAD_BLOCK_A}..{HEAD_CURRENT}", "--", "docs/prereg/etf-multiasset-rotation-prereg-v6.md"],
+            cwd=ROOT,
+            text=True,
+        ).strip(),
+        "2623_only_presentation": subprocess.check_output(
+            ["git", "diff", "--stat", f"{HEAD_BLOCK_A}..{mid}", "--", "docs/prereg/etf-multiasset-rotation-prereg-v6.md"],
+            cwd=ROOT,
+            text=True,
+        ).strip(),
     }
 
 
@@ -947,7 +1143,7 @@ def component_tables_exhaustive() -> dict:
         "subject_head": HEAD_CURRENT,
         "parent_after_653de22": HEAD_REFRESH,
         "parent_after_9e626a2": "9e626a2b1e711e2b0830bc00bb30afe017d4a9fa",
-        "scope": "every <!-- 组件：… --> table + immediate <!-- 页面：参考 --> companion rows @292568ba",
+        "scope": "every <!-- 组件：… --> table + immediate <!-- 页面：参考 --> companion rows @HEAD_CURRENT",
         "distinct_from_keypoint_103": True,
         "component_table_count": len(tables),
         "claim_count_total": len(claims),
@@ -1052,11 +1248,14 @@ def main() -> None:
         "reviewer_manual_classification_v21_8f7": reviewer_manual_classification_v21_8f7(),
         "incremental_653_review": incremental_653_review(),
         "incremental_653_to_292568ba": incremental_653_to_292568ba(),
+        "incremental_292568ba_to_59a1b56": incremental_292568ba_to_59a1b56(),
         "component_tables_exhaustive": component_tables_exhaustive(),
         "page_lint": {
             "at_review_window_8f7ffbae": {"owner_page_lint_errors": 0, "owner_page_lint_warns": 6, "note": "prior R1b run"},
             "at_refresh_653de22": lint_on_ref(HEAD_REFRESH),
-            "at_current_292568ba": lint_on_ref(HEAD_CURRENT),
+            "at_block_a_292568ba": lint_on_ref(HEAD_BLOCK_A),
+            "at_presentation_2623a2a3": lint_on_ref("2623a2a31695387f68765d87d57b681ca7e281f6"),
+            "at_audited_d42_59a1b56": lint_on_ref(HEAD_CURRENT),
         },
         "lint_warns": [
             "sec-1 单元格 63 字",

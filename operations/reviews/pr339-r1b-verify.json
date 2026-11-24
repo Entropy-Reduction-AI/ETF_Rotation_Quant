@@ -1,71 +1,48 @@
 {
-  "review_start_head": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
-  "review_finish_head": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
-  "subject_head_current_full": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
-  "subject_head_live_pr339_fetched": "2623a2a31695387f68765d87d57b681ca7e281f6",
-  "component_manual_audited_head": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
-  "audit_coverage": {
-    "full_r1b_window": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
-    "incremental_refresh": "653de223400567f06ce3abd42b78c0394bf3cf57",
-    "incremental_block_a_fix": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
-    "appendix_a_csv_sha_at_subject_head": "3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94"
+  "companion_pr363_status": "merged",
+  "companion_pr363_merge_commit": "b4a93bc17671586827d864c17aba35bc9162c8fc",
+  "owner_destination_2026_11_24_2327": "结论写在 PR#339；证据另开 PR，不合并 #339",
+  "evidence_branch": "cursor/pr339-r1b-d42-evidence-d912",
+  "companion_prior_pr363_merge_commit": "b4a93bc17671586827d864c17aba35bc9162c8fc",
+  "review_increment_window": {
+    "start_full": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
+    "intervening_mid_full": "2623a2a31695387f68765d87d57b681ca7e281f6",
+    "end_audited_full": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
+    "pr339_live_fetched_full": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e"
   },
   "technical_decision": "同意冻结前置条件已满足",
-  "technical_decision_note": "非已冻结、非合 PR；仅 R1b 前置条件",
-  "technical_decision_prior_at_653de22": "request_changes",
-  "technical_decision_reason_prior": "BLOCK-A only: appendix A CSV byte parity",
-  "compare_base_v21": "27036630f6916aa921e7b9a2eb6f905c7c642551",
-  "prerequisites_ok": true,
-  "workspace": {
-    "code_commit": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
-    "data_market_sqlite_sha256": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8",
-    "overlay": "/tmp/v6-r1b-overlay"
-  },
+  "technical_decision_scoped_head": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
+  "technical_decision_note": "含 Owner 授权 D42 进程/对照/别市检验增补；一次性检验判据①–④阈值未改；D42-4 上线门槛豁免≠规则不变",
+  "d42_planning_path": "operations/planning/2026-11-24-d42-v6-prereg-final-items.md",
+  "criteria_1234_unchanged_at_d42_head": true,
+  "owner_authorized_amendments_d42": ["D42-1", "D42-2", "D42-3", "D42-4", "D42-5", "D42-6", "D42-7"],
+  "d42_4_d27_5_waiver_documented": true,
+  "d42_5_pre_exposure_proof_limitation": true,
+  "d42_5_temporal_assurance": "partial_repo_evidence_only",
+  "a1a36f6_to_59a1b56e_eight_paths_exact_match": true,
   "check_a": {
-    "byte_equal_required_by_owner": true,
-    "byte_equal": true,
-    "subject_csv_sha256": "3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94",
-    "main_db_rerun_sha256": "3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94",
-    "delta_vs_653de22_rows": ["DJIA", "DWRTF"]
+    "appendix_a_sha256_at_59a1b56": "3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94",
+    "unchanged_since_292568ba": true
   },
   "check_b": {
-    "byte_equal_subject_json": true,
     "json_sha256": "d5dcc888f93211992324e0f63c849325644f2f19607d9b0d34fa6b57dab53f01",
-    "decomposition_sum_exact_all_periods": true,
-    "unchanged_653_to_292568ba": true
+    "unchanged_since_292568ba": true
   },
   "check_e": {
-    "owner_page_lint_at_8f7ffbae": {"errors": 0, "warns": 6},
-    "owner_page_lint_at_653de22": "see pr339-r1b-audit.json page_lint.at_refresh_653de22",
-    "owner_page_lint_at_292568ba": {"errors": 0, "warns": 1},
-    "story_check_at_653de22": {"errors": 0, "sections": 11}
+    "owner_page_lint_at_59a1b56": "see pr339-r1b-audit.json page_lint.at_audited_d42_59a1b56"
   },
-  "component_tables_at_subject_head": {
-    "subject_head": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
-    "parent_after_653": "653de223400567f06ce3abd42b78c0394bf3cf57",
-    "artifact_path": "operations/reviews/pr339-r1b-audit.json",
-    "artifact_key": "component_tables_exhaustive",
-    "manual_specs": "operations/reviews/pr339-r1b-component-manual.py",
+  "component_tables_at_audited_head": {
+    "subject_head": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
     "component_table_count": 14,
-    "claim_count_total": 61,
-    "claim_verdict_counts": {"anchored": 61},
-    "review_incomplete_expected_closed": ["§5.3·结果怎么用", "§7·小资金上线", "§9.1·R1b 当前步骤"],
-    "contradictory_product_claims": 0,
-    "sec6_owner_agree": true,
-    "incremental_keypoint_entries": 8
+    "claim_count_total": 63,
+    "claim_verdict_counts": {"anchored": 63},
+    "review_incomplete": 0
   },
-  "keypoint_mapping": {
-    "scope": "summary + section_memo + ledger_lg_big + md_blockquote",
-    "artifact": "operations/reviews/pr339-r1b-keypoint-numbers.json",
-    "manual_semantic_pass": true,
-    "tokens": 103,
-    "anchored": 88,
-    "excluded_non_content": 15,
-    "semantic_groups_with_source_occurrences": true
-  },
-  "incremental_653_to_292568ba": {
-    "reviewer_non_permitted_rule_changes": [],
-    "appendix_b_png_config_scripts_unchanged": true
+  "lineage_preserved": {
+    "full_r1b_window": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
+    "incremental_653de22": "653de223400567f06ce3abd42b78c0394bf3cf57",
+    "block_a_close_292568ba": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
+    "artifact": "operations/reviews/pr339-r1b-audit.json"
   },
   "product_blockers": [],
   "companion_artifacts_seven_paths_owner_scope": [
@@ -76,6 +53,5 @@
     "operations/reviews/pr339-r1b-commands.md",
     "operations/reviews/pr339-r1b-audit.py",
     "operations/reviews/pr339-r1b-component-manual.py"
-  ],
-  "r1_sf1_j3_on_subject_tree": "closed_narrative_and_artifacts"
+  ]
 }
