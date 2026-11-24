@@ -179,15 +179,13 @@
 | `operations/reviews/pr339-r1b-commands.md` | 复现命令 |
 | `operations/reviews/pr339-r1b-audit.py` | 审计生成器 |
 
-### 工作树 SHA256（本 commit 前）
+### `git ls-tree` @ `3c25dc5`（六路径均在树）
 
-| 文件 | SHA256 |
+| 路径 | git blob |
 | --- | --- |
-| `2026-11-24-v6-prereg-draft-r1b.md` | `1f74d053aef1328178d40c497561627f3768a0a707ba04a8c3e86430d0a0691c` |
-| `pr339-r1b-verify.json` | `7b9d150b1f8eae17c1baebee544a13038a8e7292d8f95a8a6477de43fe05988f` |
-| `pr339-r1b-audit.json` | `0bfec20e28df794d502b8c5a234a7ac7bf49f9d2e69108581c882699f8b49e54` |
-| `pr339-r1b-keypoint-numbers.json` | `e517beb3c068bdf915a7fd3821161331a41227fc913dcd0fbc2a80b37ecdfc7c` |
-| `pr339-r1b-commands.md` | `7668c2eed60383c7644a4b828ac8bc92b3973deb040eb9136baa66965ed9bd63` |
-| `pr339-r1b-audit.py` | `4ca2db2089f6d15493481c5f5df5d37b556351da2b737ca91d0829cc110280d2` |
-
-**push 后** `git ls-tree HEAD` 六路径 blob 应与上表一致（memo 修订会更新首行 hash）。
+| `2026-11-24-v6-prereg-draft-r1b.md` | `91fb3b6498570ff2671940a8b40b60eabe034994` |
+| `pr339-r1b-verify.json` | `275a393beead68fd8c39d3c4051d963c720aee60` |
+| `pr339-r1b-audit.json` | `6f67e816ee4d735329b9f0611813fadd20885a23` |
+| `pr339-r1b-keypoint-numbers.json` | `e5c0fa5237382e43d635731e064bf5a72eb5ab85` |
+| `pr339-r1b-commands.md` | `5b845bc8e32da097c0ed6424a6153bb89aeeb168` |
+| `pr339-r1b-audit.py` | `9ef67e8aa1d745d1053bb9c7adcb27c316696e54` |
