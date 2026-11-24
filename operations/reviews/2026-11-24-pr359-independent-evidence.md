@@ -86,6 +86,12 @@
 - 上述为 **说明文字** blocker，非 raw 缺失或 sqlite/config 写入。
 - 入库、可用日线、冲突日选用：Owner 约定 **后续 ingestion PR**，本包不含。
 
-## 产物与 blob（本 commit 后由 git 填写）
+## PR360 head 与 blob SHA（`881819cadcaa2c0d619ce966563d0ea4a6abb248`）
 
-见 `operations/reviews/pr359-independent-evidence.json` 内 `fresh_download_audits`；独立 raw 仍在 `/opt/cursor/artifacts/reviewer-pr359/raw/`（不进仓库）。
+| 路径 | `git hash-object` |
+| --- | --- |
+| `operations/reviews/2026-11-24-pr359-independent-evidence.md` | `85ee1ab3f740451a535faedc3335cbd146d622ec` |
+| `operations/reviews/pr359-independent-evidence.json` | `38245f556840934b62a273247b588c3a98f801d3` |
+| `operations/reviews/pr359-independent-evidence.py` | `23b31b50f8acdd3e005019ed8546d2568e219f94` |
+
+见 JSON 内 `fresh_download_audits`；独立 raw 在 `/opt/cursor/artifacts/reviewer-pr359/raw/`（不进仓库）。
