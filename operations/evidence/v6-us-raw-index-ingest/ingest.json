@@ -1,0 +1,117 @@
+{
+  "label": "v6-us-raw-index",
+  "authorization": "Owner 2026-11-24 21:21 Asia/Taipei",
+  "base_commit": "05e39c5650acb52e0de8632bcaef8e6d05fe5597",
+  "fetched_at": "2026-11-24T21:45:53+08:00",
+  "sha256_before": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52",
+  "sha256_after": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8",
+  "bars_before": 1200716,
+  "bars_after": 1203606,
+  "inserted": 2890,
+  "preexisting_row_sha256": "7cc298d9e8ed2f17ca565ac0b6f38710eeb85d3b4ae4e7f53ea228a422b2849c",
+  "preexisting_row_count": 1200716,
+  "other_series_count_sha256": "d0e0ab6ad834c9834091b662f7cf06683a39f138f6fb422faa5f644995391901",
+  "other_series_rows": 1187449,
+  "journal_mode": "delete",
+  "trigger": "bars_one_source was dropped and recreated with the same SQL inside the write transaction so the authorized source labels could be appended. sqlite_master after the recreate matches the pre-insert snapshot.",
+  "series": {
+    "DJIA": {
+      "before_rows": 8515,
+      "after_rows": 9182,
+      "inserted": 667,
+      "before_first": "1990-04-25",
+      "before_last": "2024-02-01",
+      "after_first": "1990-04-25",
+      "after_last": "2026-09-30"
+    },
+    "DWRTF": {
+      "before_rows": 4752,
+      "after_rows": 6975,
+      "inserted": 2223,
+      "before_first": "1998-12-31",
+      "before_last": "2017-11-22",
+      "after_first": "1998-12-31",
+      "after_last": "2026-09-30"
+    }
+  },
+  "inserted_by_source": [
+    {
+      "code": "DJIA",
+      "source": "v6_gapfill_fred",
+      "rows": 667,
+      "first": "2024-02-02",
+      "last": "2026-09-30"
+    },
+    {
+      "code": "DWRTF",
+      "source": "v6_gapfill_cnbc",
+      "rows": 2222,
+      "first": "2017-11-24",
+      "last": "2026-09-30"
+    },
+    {
+      "code": "DWRTF",
+      "source": "v6_gapfill_tv",
+      "rows": 1,
+      "first": "2023-04-06",
+      "last": "2023-04-06"
+    }
+  ],
+  "flags": [
+    {
+      "series": "DWRTF",
+      "date": "2023-04-06",
+      "flag": "single_source",
+      "adopted_source": "v6_gapfill_tv",
+      "adopted_close": "259.56",
+      "reference_publisher": "archived TradingView/ICE",
+      "reference_close": "259.56",
+      "level_gap_over_reference": "",
+      "cause": "",
+      "ruling": "Owner 2026-11-24 21:21 Asia/Taipei"
+    },
+    {
+      "series": "DWRTF",
+      "date": "2019-08-12",
+      "flag": "source_conflict",
+      "adopted_source": "v6_gapfill_cnbc",
+      "adopted_close": "294.58",
+      "source_token": "294.5800",
+      "reference_publisher": "archived TradingView/ICE",
+      "reference_close": "294.46",
+      "level_gap_over_reference": "4.075256401549e-04",
+      "cause": "",
+      "ruling": "Owner 2026-11-24 21:21 Asia/Taipei"
+    }
+  ],
+  "counts": {
+    "djia_full_sessions": 668,
+    "djia_new": 667,
+    "dwrtf_full_sessions": 2224,
+    "dwrtf_new": 2223,
+    "djia_full_first": "2024-02-01",
+    "djia_full_last": "2026-09-30",
+    "djia_new_first": "2024-02-02",
+    "djia_new_last": "2026-09-30",
+    "dwrtf_full_first": "2017-11-22",
+    "dwrtf_full_last": "2026-09-30",
+    "dwrtf_new_first": "2017-11-24",
+    "dwrtf_new_last": "2026-09-30"
+  },
+  "owner_counts": {
+    "djia_full_sessions": 668,
+    "djia_new": 667,
+    "dwrtf_full_sessions": 2224,
+    "dwrtf_new": 2223,
+    "djia_overlap": 63,
+    "dwrtf_overlap": 81
+  },
+  "backup": {
+    "path": "operations/evidence/v6-us-raw-index-ingest/market-before.sqlite",
+    "sha256": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52",
+    "bytes": 348901376,
+    "method": "byte copy of the quiescent database before the write",
+    "gitignored": true,
+    "lfs_oid_at_base": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52"
+  }
+}

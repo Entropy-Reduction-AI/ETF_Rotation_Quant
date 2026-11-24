@@ -1,0 +1,3 @@
+series,date,flag,adopted_source,adopted_close,reference_publisher,reference_close,level_gap_over_reference,cause
+DWRTF,2023-04-06,single_source,v6_gapfill_tv,259.56,archived TradingView/ICE,259.56,,
+DWRTF,2019-08-12,source_conflict,v6_gapfill_cnbc,294.58,archived TradingView/ICE,294.46,4.075256401549e-04,
