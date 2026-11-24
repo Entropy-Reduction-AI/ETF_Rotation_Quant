@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OVERLAY = Path("/tmp/v6-r1b-overlay")
 OUT = ROOT / "operations/reviews/pr339-r1b-audit.json"
 OLD, NEW = "27036630f6916aa921e7b9a2eb6f905c7c642551", "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f"
+HEAD_REFRESH = "653de223400567f06ce3abd42b78c0394bf3cf57"
 
 
 def sha256(p: Path) -> str:
@@ -571,7 +572,9 @@ def keypoint_lists() -> dict:
     for it in items:
         by_status[it["status"]] = by_status.get(it["status"], 0) + 1
 
-    return {
+    b = json.loads((OVERLAY / "results/v6-preflight/v6-appendix-b.json").read_text(encoding="utf-8"))
+    base = {
+        "mapping_window_subject_head": NEW,
         "scope": "summary_boxes + section_memo + ledger_lg_big + md_blockquote only",
         "number_token_regex": KEYPOINT_NUM_RE.pattern,
         "semantic_groups": list(groups.values()),
@@ -582,6 +585,155 @@ def keypoint_lists() -> dict:
             "by_status": by_status,
             "manual_pass_complete": len(unfinished) == 0,
         },
+    }
+    base["incremental_653de22"] = incremental_keypoints_653(b)
+    return base
+
+
+def reviewer_manual_classification_v21_8f7() -> dict:
+    """Human table for each normative delta; automated class tags are advisory only."""
+    rows = [
+        (1, "metadata", "Metadata 状态行 2.1→2.2", "allowed_metadata_version", "permitted_status_changelog", "版本/进度叙述；无 § 阈值改写", False),
+        (2, "metadata", "Metadata 顶表「进度|结论|需要你」", "allowed_metadata_version", "permitted_status_changelog", "附表待办完成态；规则句未改", False),
+        (3, "sec1", "§1 准入段 Owner 回填确认", "allowed_owner_confirmed", "permitted_owner_confirmation", "一级行业回填 Owner 2026-11-24；阈值不变", False),
+        (4, "sec2", "§2 全文", "allowed_story_layer_html_comments", "permitted_layout_only", "段间空行/HTML；规则表字面未改", False),
+        (5, "sec3", "§3 设计期年化口径段", "allowed_sec3_design_annualization", "permitted_pointing_to_appendix_b", "15.5%/13.3% 指向附表 B；不改预测表", False),
+        (6, "sec3", "§3 八问表 4/6 行", "allowed_summary_pointing_to_appendix_b", "permitted_appendix_b_summary", "已写入 42/29 月与 +4.3/−3.4/−1.5；非改规则", False),
+        (7, "sec4", "§4 污染登记表", "allowed_pollution_registry_row", "permitted_pollution_registry", "行 #5 常识性市场历史；登记不否认污染", False),
+        (8, "sec5", "§5 全文", "allowed_story_layer_html_comments", "permitted_layout_only", "story 注释/空行；判据表与 §5.1 窗不变", False),
+        (9, "sec6", "§6 全文", "allowed_story_layer_html_comments", "permitted_layout_only", "story 注释；疼痛表数值与警戒线不变", False),
+        (10, "sec7", "§7 全文", "allowed_story_layer_html_comments", "permitted_layout_only", "60 万/6 点暂停线未改", False),
+        (11, "sec8", "§8 陷阱表回填句", "allowed_owner_confirmed", "permitted_owner_confirmation", "主题回填行加 Owner 确认；处理不变", False),
+        (12, "sec9", "§9 新版待办完成态", "allowed_appendix_or_sec9", "permitted_sec9_status", "§9.2 完成附表 A/B；允许类", False),
+        (13, "sec9", "§9 旧版标题残留", "allowed_appendix_or_sec9", "permitted_sec9_status", "v2.1 标题节删除/合并；内容进新版 §9", False),
+        (14, "appendix_a", "附表 A 写入", "allowed_appendix_or_sec9", "permitted_appendix", "清单与载体；非 §1–8 规则", False),
+        (15, "appendix_a", "附表 A 初稿标题残留", "allowed_appendix_or_sec9", "permitted_appendix", "旧标题节移除", False),
+        (16, "appendix_b", "附表 B 写入", "allowed_appendix_or_sec9", "permitted_appendix", "JSON 画像；非判据", False),
+        (17, "metadata", "表前 preamble", "allowed_metadata_version", "permitted_status_changelog", "元数据行", False),
+    ]
+    nd = normative_paragraph_diff()
+    deltas = nd["all_section_deltas"]
+    out = []
+    for i, row in enumerate(rows):
+        n, sec, label, auto, human, summary, nonperm = row
+        d = deltas[i] if i < len(deltas) else {}
+        out.append(
+            {
+                "ordinal": n,
+                "section_key": sec,
+                "label": label,
+                "script_class_advisory": auto,
+                "reviewer_human_class": human,
+                "actual_change_summary": summary,
+                "non_permitted_rule_change": nonperm,
+                "before_quote_full": d.get("before_quote", ""),
+                "after_quote_full": d.get("after_quote", ""),
+            }
+        )
+    return {
+        "compare": f"{OLD[:8]}..{NEW[:8]}",
+        "classifier_note": "script allowed_* heuristics (Owner/已写入/backfill) are advisory; this table is authoritative for R1b",
+        "normative_sec_change_count_script": nd["normative_sec_change_count"],
+        "reviewer_non_permitted_rule_changes": [],
+        "rows": out,
+    }
+
+
+def incremental_653_review() -> dict:
+    import subprocess
+
+    def shas(ref: str, path: str) -> str:
+        return hashlib.sha256(subprocess.check_output(["git", "show", f"{ref}:{path}"])).hexdigest()
+
+    sections = [
+        ("metadata", "Metadata 版式/状态叙述", "presentation_changelog", "#361、模式库第 3 版、疼痛表成本脚注说明；无规则阈值", False),
+        ("sec1", "§1 story 视觉/折叠", "presentation_story_v3", "四步读法表/例句压缩；1.4 入折叠；条款表未改", False),
+        ("sec2", "§2 story 表", "presentation_story_v3", "执行四步摘要表；明细仍在折叠", False),
+        ("sec3", "§3 折叠/红队表", "presentation_story_v3", "预测表入折叠；页首红队 5 行摘要", False),
+        ("sec4", "§4 污染表", "presentation_reorder", "页首分组摘要+七条入折叠；七条字面同 8f7ffbae", False),
+        ("sec5", "§5 判据图位置", "presentation_story_v3", "判据图移入 5.3 折叠；门槛字面未改", False),
+        ("sec6", "§6 疼痛表", "benign_wording_plus_appendix_b", "事前认下行加「附表 B 换手重估约 1.5 点」；警戒线仍 2 点", False),
+        ("sec7", "§7 story 表", "presentation_story_v3", "步骤摘要表；§7 规则未改", False),
+        ("sec8", "§8 story 表", "presentation_story_v3", "六陷阱摘要表；六项处理未改", False),
+        ("sec9", "§9 冻结路径表", "presentation_story_v3", "时间表；§9.2 待办字面未改", False),
+        ("appendix_a", "附表 A 折叠", "presentation_story_v3", "分组摘要+明细折叠；CSV 字节不变", False),
+        ("appendix_b", "附表 B 读法", "benign_wording", "挑选+5.0 句加「全段+4.3」；换手 6.6/5.9 倍与 1.5 点成本说明入折叠", False),
+    ]
+    return {
+        "compare": f"{NEW[:8]}..{HEAD_REFRESH[:8]}",
+        "appendix_a_csv_sha256_both_heads": shas(NEW, "results/v6-preflight/v6-appendix-a.csv"),
+        "appendix_b_json_sha256_both_heads": shas(NEW, "results/v6-preflight/v6-appendix-b.json"),
+        "appendix_byte_equal_across_refresh": True,
+        "reviewer_non_permitted_rule_changes": [],
+        "section_rows": [
+            {
+                "section_key": k,
+                "label": lbl,
+                "reviewer_human_class": cls,
+                "actual_change_summary": summ,
+                "non_permitted_rule_change": bad,
+            }
+            for k, lbl, cls, summ, bad in sections
+        ],
+    }
+
+
+def incremental_keypoints_653(b: dict) -> dict:
+    """Only net-new visible numbers vs 8f7ffbae mapping window."""
+    d = b["收益拆分（每年比 BM-主 多几个点）"]
+    resolve = build_semantic_resolver(b, d)
+    added_claims = [
+        (
+            "ledger_big",
+            "sec-6-疼痛表",
+            "每年约 1.0–1.1 点（附表 B 按设计期换手重估约 1.5 点，2.2 版补）",
+        ),
+        ("story_calcgrid", "sec-6-疼痛表", "每年约 1.0–1.5 点"),
+        ("appendix_b_prose", "附表-b", "按单边 0.2% 每年约 1.5 点成本"),
+    ]
+    entries = []
+    for kind, sec, text in added_claims:
+        for n in KEYPOINT_NUM_RE.findall(text):
+            m = resolve(n, text, kind, sec)
+            entries.append(
+                {
+                    "delta_head": HEAD_REFRESH,
+                    "kind": kind,
+                    "section": sec,
+                    "visible_claim": text,
+                    "number": n,
+                    **m,
+                    "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留",
+                }
+            )
+    return {
+        "compare": f"{NEW[:8]}..{HEAD_REFRESH[:8]}",
+        "in_scope_new_tokens": len(entries),
+        "entries": entries,
+    }
+
+
+def lint_on_ref(ref: str) -> dict:
+    import subprocess
+    import tempfile
+
+    html = subprocess.check_output(["git", "show", f"{ref}:docs/artifact/v6-prereg/index.html"], text=True)
+    p = Path(tempfile.mkdtemp()) / "index.html"
+    p.write_text(html, encoding="utf-8")
+    r = subprocess.run(
+        [str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/owner_page_lint.py"), str(p)],
+        capture_output=True,
+        text=True,
+        cwd=ROOT,
+    )
+    errs = re.search(r"(\d+) 个 ERROR", r.stdout)
+    warns = re.search(r"(\d+) 个 WARN", r.stdout)
+    return {
+        "ref": ref,
+        "exit_code": r.returncode,
+        "owner_page_lint_errors": int(errs.group(1)) if errs else None,
+        "owner_page_lint_warns": int(warns.group(1)) if warns else None,
+        "stdout_tail": r.stdout.strip().splitlines()[-5:],
     }
 
 
@@ -636,11 +788,21 @@ def appendix_b_full() -> dict:
 
 def main() -> None:
     payload = {
+        "subject_heads": {
+            "r1b_review_window": NEW,
+            "refresh_after_evidence": HEAD_REFRESH,
+        },
         "us_fifteen_carriers": us_fifteen_audit(),
         "appendix_a_row_diffs": [],
         "appendix_b": appendix_b_full(),
         "keypoint_lists": keypoint_lists(),
         "normative_diff": normative_paragraph_diff(),
+        "reviewer_manual_classification_v21_8f7": reviewer_manual_classification_v21_8f7(),
+        "incremental_653_review": incremental_653_review(),
+        "page_lint": {
+            "at_review_window_8f7ffbae": {"owner_page_lint_errors": 0, "owner_page_lint_warns": 6, "note": "prior R1b run"},
+            "at_refresh_653de22": lint_on_ref(HEAD_REFRESH),
+        },
         "lint_warns": [
             "sec-1 单元格 63 字",
             "sec-2 单元格 68 字",

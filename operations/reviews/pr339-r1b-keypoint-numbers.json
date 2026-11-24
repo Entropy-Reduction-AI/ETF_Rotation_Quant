@@ -1,4 +1,5 @@
 {
+  "mapping_window_subject_head": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
   "scope": "summary_boxes + section_memo + ledger_lg_big + md_blockquote only",
   "number_token_regex": "(?<![A-Za-z0-9])([−\\-+]?\\d+(?:\\.\\d+)?%?)(?![A-Za-z])",
   "semantic_groups": [
@@ -2549,5 +2550,105 @@
       "excluded_non_content": 15
     },
     "manual_pass_complete": true
+  },
+  "incremental_653de22": {
+    "compare": "8f7ffbae..653de223",
+    "in_scope_new_tokens": 8,
+    "entries": [
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "ledger_big",
+        "section": "sec-6-疼痛表",
+        "visible_claim": "每年约 1.0–1.1 点（附表 B 按设计期换手重估约 1.5 点，2.2 版补）",
+        "number": "1.0",
+        "status": "anchored",
+        "normative_location": "§6 疼痛表",
+        "normative_quote": "「换手和成本…每年约 1.0–1.1 点」",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "ledger_big",
+        "section": "sec-6-疼痛表",
+        "visible_claim": "每年约 1.0–1.1 点（附表 B 按设计期换手重估约 1.5 点，2.2 版补）",
+        "number": "1.1",
+        "status": "anchored",
+        "normative_location": "§6 疼痛表",
+        "normative_quote": "「换手和成本…每年约 1.0–1.1 点」",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "ledger_big",
+        "section": "sec-6-疼痛表",
+        "visible_claim": "每年约 1.0–1.1 点（附表 B 按设计期换手重估约 1.5 点，2.2 版补）",
+        "number": "1.5",
+        "status": "no_anchor_located",
+        "normative_location": "—",
+        "normative_quote": "—",
+        "exclusion_rationale": "Reviewer 在本轮 prereg/附表文本中未找到与该摘要素对应的独立规范字段（非证伪）。",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "ledger_big",
+        "section": "sec-6-疼痛表",
+        "visible_claim": "每年约 1.0–1.1 点（附表 B 按设计期换手重估约 1.5 点，2.2 版补）",
+        "number": "2.2",
+        "status": "no_anchor_located",
+        "normative_location": "—",
+        "normative_quote": "—",
+        "exclusion_rationale": "Reviewer 在本轮 prereg/附表文本中未找到与该摘要素对应的独立规范字段（非证伪）。",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "story_calcgrid",
+        "section": "sec-6-疼痛表",
+        "visible_claim": "每年约 1.0–1.5 点",
+        "number": "1.0",
+        "status": "no_anchor_located",
+        "normative_location": "—",
+        "normative_quote": "—",
+        "exclusion_rationale": "Reviewer 在本轮 prereg/附表文本中未找到与该摘要素对应的独立规范字段（非证伪）。",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "story_calcgrid",
+        "section": "sec-6-疼痛表",
+        "visible_claim": "每年约 1.0–1.5 点",
+        "number": "1.5",
+        "status": "no_anchor_located",
+        "normative_location": "—",
+        "normative_quote": "—",
+        "exclusion_rationale": "Reviewer 在本轮 prereg/附表文本中未找到与该摘要素对应的独立规范字段（非证伪）。",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "appendix_b_prose",
+        "section": "附表-b",
+        "visible_claim": "按单边 0.2% 每年约 1.5 点成本",
+        "number": "0.2%",
+        "status": "no_anchor_located",
+        "normative_location": "—",
+        "normative_quote": "—",
+        "exclusion_rationale": "Reviewer 在本轮 prereg/附表文本中未找到与该摘要素对应的独立规范字段（非证伪）。",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      },
+      {
+        "delta_head": "653de223400567f06ce3abd42b78c0394bf3cf57",
+        "kind": "appendix_b_prose",
+        "section": "附表-b",
+        "visible_claim": "按单边 0.2% 每年约 1.5 点成本",
+        "number": "1.5",
+        "status": "no_anchor_located",
+        "normative_location": "—",
+        "normative_quote": "—",
+        "exclusion_rationale": "Reviewer 在本轮 prereg/附表文本中未找到与该摘要素对应的独立规范字段（非证伪）。",
+        "note": "增量于 653de22；原 103 映射 @8f7ffbae 保留"
+      }
+    ]
   }
 }

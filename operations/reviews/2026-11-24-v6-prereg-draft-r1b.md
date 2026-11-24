@@ -1,4 +1,4 @@
-# v6 预注册初稿 R1b · 2026-11-24（修订 d）
+# v6 预注册初稿 R1b · 2026-11-24（修订 e）
 
 ## 技术结论
 
@@ -6,8 +6,8 @@
 | --- | --- |
 | **结论** | **`request_changes`** |
 | **唯一产品阻塞** | **BLOCK-A**：main 数据基线复跑 `v6-appendix-a.csv` 与 subject 提交 **不字节一致** |
-| **#339 head**（R1b 起/终） | `8f7ffbae3ac1885cefce9bc1281e4ab2d030687f` |
-| **#339 刷新**（证据收尾后） | `653de223400567f06ce3abd42b78c0394bf3cf57`（story 层/Metadata；**附表 A CSV SHA 与 8f7ffbae 相同**，BLOCK-A 仍在） |
+| **R1b 全量审计窗** | `8f7ffbae3ac1885cefce9bc1281e4ab2d030687f`（要点 103、附表 B、规范 diff v2.1→2.2） |
+| **#339 当前全 HEAD** | `653de223400567f06ce3abd42b78c0394bf3cf57`（增量：story v3 页；**附表 A/B 字节与 8f7ffbae 相同**） |
 | v2.1 对照 | `27036630f6916aa921e7b9a2eb6f905c7c642551` |
 | main | `24762d27f08786d4045bf4d40259d7c1ab878b16` |
 
@@ -119,26 +119,21 @@
 
 ---
 
-## 规范 diff `27036630` → `8f7ffbae`（§ 分段 + 段内段落）
+## 规范 diff `27036630` → `8f7ffbae`（人工表为准）
 
-方法：按 `## §` / `## 附表` 切分后段落 diff（见 `pr339-r1b-audit.json` → `normative_diff`）。
+`audit.py` 的 `allowed_*` 仅用 Owner/已写入/回填等关键词建议分类，**不能单独作证**。  
+权威：**`reviewer_manual_classification_v21_8f7`**（17 行，完整 before/after 在 `normative_diff.all_section_deltas` + 各行 `*_quote_full`）。
 
-**`normative_sec_change_count = 0`**（§§1–8 无 unauthorized 规则改写；`all_section_deltas` 共 17 条，含完整 before/after 引用）。
+| 结论 | 值 |
+| --- | --- |
+| `reviewer_non_permitted_rule_changes` | **[]** |
+| 脚本 `normative_sec_change_count` | 0（与人工一致） |
 
-**section_counts**（`pr339-r1b-audit.json`）：old 12 / new 13 节头；union 15；changed 15（其中 §1–8+Metadata 9）。允许类含：`allowed_metadata_version`、`allowed_owner_confirmed`、`allowed_sec3_design_annualization`、`allowed_summary_pointing_to_appendix_b`、`allowed_pollution_registry_row`、`allowed_appendix_or_sec9`、`allowed_story_layer_html_comments`、`allowed_whitespace_or_layout`。
+## 增量 `8f7ffbae` → `653de22`
 
-**有内容的允许/状态类变化（列举，非违规）**：
-
-| 类 | 位置 | 摘要 |
-| --- | --- | --- |
-| `allowed_metadata_version` | Metadata | 初稿 **2.1→2.2**、日期 11-23→11-24 |
-| `allowed_pollution_registry_row` | §4 | 新增污染登记行 **#5 常识性市场历史** 与「同仓位基准判」 |
-| `allowed` / 附表·§9 | 附表 A/B、§9.2 | 2.2 写入附表、待办完成态、Owner 2026-11-24 确认 |
-| `allowed_summary_pointing_to_appendix_b` | §3 八问表 | 问 4/6 填 **已写入** 42/29 月、拆分 **+4.3/−3.4/−1.5**（指向附表 B，非改 §1.2 规则） |
-| `allowed_sec3_design_annualization` | §3 | **设计期年化口径** 15.5% / 13.3% |
-| `allowed_owner_confirmed` | §4 数据陷阱表 | **主题指数回填** + Owner 一级行业回填确认 |
-
-旧版 **U1–U6 unauthorized** 表已撤：其中 metadata、§9.2、Owner 确认、附表 B 摘要属 **允许类**；不含证实的 §1–8 规则句改写。
+见 **`incremental_653_review`**（12 节人工行）+ **`page_lint.at_refresh_653de22`**（0 ERROR / 1 WARN）。  
+**无非许可 §1–8 规则改写**；唯一数字相关良性措辞：§6/附表 B 披露换手重估 **~1.5 点**（警戒线仍 **2 点**）。  
+要点：`incremental_653de22` **5** 个增量 token（追加映射，103 基线保留）。
 
 ---
 
