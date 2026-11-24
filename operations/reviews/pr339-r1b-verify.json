@@ -2,6 +2,8 @@
   "review_start_head": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
   "review_finish_head": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
   "subject_head_current_full": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
+  "subject_head_live_pr339_fetched": "2623a2a31695387f68765d87d57b681ca7e281f6",
+  "component_manual_audited_head": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
   "audit_coverage": {
     "full_r1b_window": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
     "incremental_refresh": "653de223400567f06ce3abd42b78c0394bf3cf57",
