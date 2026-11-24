@@ -41,7 +41,8 @@
     "component_table_count": 13,
     "claim_count_total": 60,
     "claim_verdict_counts": "see audit JSON claim_verdict_counts",
-    "review_incomplete_expected": ["§5 结果怎么用·不通过", "§9 路线·R1b现态"],
+    "claim_verdict_counts_anchor_revision_g": {"anchored": 57, "review_incomplete": 3},
+    "review_incomplete_expected": ["§5·不通过", "§7·小资金上线", "§9·R1b现态"],
     "contradictory_product_claims": 0,
     "sec6_owner_agree": true,
     "incremental_keypoint_entries": 8
