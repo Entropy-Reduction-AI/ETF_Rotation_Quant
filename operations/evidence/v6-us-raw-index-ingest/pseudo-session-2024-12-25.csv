@@ -1,0 +1,7 @@
+series,date,is_session,cnbc_close,authorized_insert,db_close,db_source
+DJIA,2024-12-24,yes,43297.0300,yes,43297.03,v6_gapfill_fred
+DJIA,2024-12-25,no,43297.0300,no,,
+DJIA,2024-12-26,yes,43325.8000,yes,43325.8,v6_gapfill_fred
+DWRTF,2024-12-24,yes,294.9400,yes,294.94,v6_gapfill_cnbc
+DWRTF,2024-12-25,no,294.9400,no,,
+DWRTF,2024-12-26,yes,295.5700,yes,295.57,v6_gapfill_cnbc

@@ -1,0 +1,10 @@
+path: operations/evidence/v6-us-raw-index-ingest/market-before.sqlite
+method: byte copy of the quiescent database before any write
+bytes: 348901376
+sha256: 79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52
+matches_live_preimage: yes
+base_commit: 05e39c5650acb52e0de8632bcaef8e6d05fe5597
+base_lfs_oid: 79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52
+gitignored: yes (*.sqlite, except data/market.sqlite)
+reproduction: the preimage is the Git LFS object of data/market.sqlite at the base commit
+post_sha256: 0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8
