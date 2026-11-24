@@ -177,13 +177,8 @@
 | `operations/reviews/pr339-r1b-commands.md` | 复现命令 |
 | `operations/reviews/pr339-r1b-audit.py` | 审计生成器 |
 
-### `git ls-tree` @ `3c25dc5`（六路径均在树）
+### Companion NET @ `d69099c`
 
-| 路径 | git blob |
-| --- | --- |
-| `2026-11-24-v6-prereg-draft-r1b.md` | `91fb3b6498570ff2671940a8b40b60eabe034994` |
-| `pr339-r1b-verify.json` | `275a393beead68fd8c39d3c4051d963c720aee60` |
-| `pr339-r1b-audit.json` | `6f67e816ee4d735329b9f0611813fadd20885a23` |
-| `pr339-r1b-keypoint-numbers.json` | `e5c0fa5237382e43d635731e064bf5a72eb5ab85` |
-| `pr339-r1b-commands.md` | `5b845bc8e32da097c0ed6424a6153bb89aeeb168` |
-| `pr339-r1b-audit.py` | `9ef67e8aa1d745d1053bb9c7adcb27c316696e54` |
+`git diff --stat origin/main...HEAD`：**+6577 / 6 files**（见 verify.json `companion_artifacts_six_paths`）。
+
+`git ls-tree HEAD` blobs：`d8a01c43…` memo · `c9d05d53…` verify · `fed8771b…` audit.json · `88b1d8a0…` keypoint · `5b845bc8…` commands · `b9d4d84a…` audit.py。
