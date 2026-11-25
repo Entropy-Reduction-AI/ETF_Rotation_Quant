@@ -1444,6 +1444,23 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 .f-ru-s { flex-direction: column; align-items: flex-end; }
 @media (max-width: 760px) { .f-ru.f-ru-hd { display: none; } .f-ru-s { flex-direction: row; align-items: flex-start; } }
 
+.f-simboard-wrap { display: grid; gap: 10px; }
+.f-sb-row { display: grid; gap: 10px; } .f-sb-row.two { grid-template-columns: repeat(2, minmax(0, 1fr)); } .f-sb-row.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.f-sb { display: flex; flex-direction: column; gap: 6px; padding: 11px 13px; border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 10px; background: var(--surface); }
+.f-sb.main { border-top-color: var(--good); } .f-sb.stop { border-top-color: var(--bad); background: var(--bad-soft); }
+.f-sb.shadow { border-style: dashed; border-top: 1px dashed var(--line); background: var(--bg); }
+.f-sb.other { border-style: dashed; border-top: 4px solid var(--accent); }
+.f-sb-h { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.f-sb-k { font-size: 11.5px; font-weight: 700; color: var(--muted); letter-spacing: .02em; }
+.f-sb.main .f-sb-k { color: var(--good); } .f-sb.stop .f-sb-k { color: var(--bad); } .f-sb.other .f-sb-k { color: var(--accent); }
+.f-sb-t { font-size: 15px; color: var(--ink); line-height: 1.35; }
+.f-sb-r { font-size: 13px; color: var(--ink); line-height: 1.55; }
+.f-sb.shadow .f-sb-r { color: var(--muted); font-size: 12.5px; }
+.f-sb-u { margin-top: auto; padding-top: 6px; border-top: 1px dashed var(--line); font-size: 12.5px; color: var(--ink); line-height: 1.5; }
+.f-sb-u em { font-style: normal; font-weight: 700; font-size: 11px; color: var(--muted); margin-right: 6px; }
+.f-sb-gh { font-size: 12.5px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+@media (max-width: 760px) { .f-sb-row.two, .f-sb-row.three { grid-template-columns: minmax(0, 1fr); } }
+
 </style>
 </head>
 <body>
@@ -1705,52 +1722,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <p>上线：模拟盘之后，小资金起步需 Owner 另批（§5.3“结果怎么用”）；Owner 看着 v6 和现行配置在模拟盘、检验段、设计期的逐项比较拍板，不设“6 个月不差于现行配置”的门槛（D42-4）。</p>
 </div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>模拟盘、三个影子和暂停线（条款原文）</span></button><div class="fold-b" hidden="">
-<div class="table-wrap"><table data-lint="ref">
-<thead>
-<tr>
-<th>项目</th>
-<th>规则</th>
-<th>用途</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="k"><strong>前向模拟盘</strong></td>
-<td class="detail">一次性检验通过后，按冻结规则每月出持仓，至少 6 个月（D27）；每月对账预测表各项和疼痛表</td>
-<td>上线前的干净证据</td>
-</tr>
-<tr>
-<td><strong>影子：结构市才挑选</strong>（D38 第 54 行 B2）</td>
-<td class="detail">A 股名额候选里站上 10 个月均线的比例处在到当时为止最低三分之一时用 12−1 前 3，否则按标签等权持有全部候选</td>
-<td>只记录，不交易</td>
-</tr>
-<tr>
-<td><strong>影子：12−1 与连续性版各拿一半</strong></td>
-<td class="detail">A 股名额一半资金按 12−1 选 3 只，一半按连续性版选 3 只；两边选中同一只的占双份</td>
-<td>只记录，不交易</td>
-</tr>
-<tr>
-<td><strong>影子：连续性版</strong></td>
-<td class="detail">一次性检验后若未换上，继续按 §1.3 记录</td>
-<td>只记录，不交易</td>
-</tr>
-<tr>
-<td class="k"><strong>暂停</strong></td>
-<td class="detail">任一时点跌破 60 万底线，或连续 6 个月对同仓位基准累计落后超过 6 点</td>
-<td>暂停并报告 Owner</td>
-</tr>
-<tr>
-<td><strong>对照：现行配置</strong>（D42-4）</td>
-<td class="detail">模拟盘每月同次记录现行配置（<code>config/portfolio.toml</code>）的持仓与净值</td>
-<td>只报告；上线时 Owner 看逐项比较拍板</td>
-</tr>
-<tr>
-<td><strong>别的市场检验</strong>（D42-5）</td>
-<td class="detail">一次性检验通过后、上线前，把一个名额的规则原样搬到一个没看过的市场，用该市场能取到的全部历史跑一次；市场在冻结后、看任何结果之前由 Owner 选定（候选：欧洲 STOXX 600 超级行业，母指数 STOXX 600；日本 TOPIX-17 行业，母指数 TOPIX）；选定前只允许做数据普查（起止日期、口径、缺口、有没有场内基金），不算任何收益或信号，普查结果和选择一起登记（D42-9）。没有行业成交额时 TRIN 一票缺席，只用均线、宽度两票，两票都中才算紧张；把握 p 从 0.5 起。计 1 次试验</td>
-<td>挑选（前 3 对同结构等权）为正且防守保费不超过 4 点，记为“支持”；否则结论降一级，上线前需 Owner 另批</td>
-</tr>
-</tbody>
-</table></div>
+<div class="table-wrap"><div class="comp f-simboard-wrap" data-lint="ref"><div class="f-sb-row two"><div class="f-sb main"><div class="f-sb-h"><span class="f-sb-k">主线</span></div><b class="f-sb-t">前向模拟盘</b><div class="f-sb-r">一次性检验通过后，按冻结规则每月出持仓，至少 6 个月（D27）；每月对账预测表各项和疼痛表</div><div class="f-sb-u"><em>用途</em>上线前的干净证据</div></div><div class="f-sb stop"><div class="f-sb-h"><span class="f-sb-k">暂停线</span></div><b class="f-sb-t">暂停</b><div class="f-sb-r">任一时点跌破 60 万底线，或连续 6 个月对同仓位基准累计落后超过 6 点</div><div class="f-sb-u"><em>用途</em>暂停并报告 Owner</div></div></div><div class="f-sb-g"><div class="f-sb-gh">三个影子：只记录，不交易</div><div class="f-sb-row three"><div class="f-sb shadow"><div class="f-sb-h"><span class="f-sb-k">影子</span><span class="sl-src">D38 第 54 行 B2</span></div><b class="f-sb-t">结构市才挑选</b><div class="f-sb-r">A 股名额候选里站上 10 个月均线的比例处在到当时为止最低三分之一时用 12−1 前 3，否则按标签等权持有全部候选</div></div><div class="f-sb shadow"><div class="f-sb-h"><span class="f-sb-k">影子</span></div><b class="f-sb-t">12−1 与连续性版各拿一半</b><div class="f-sb-r">A 股名额一半资金按 12−1 选 3 只，一半按连续性版选 3 只；两边选中同一只的占双份</div></div><div class="f-sb shadow"><div class="f-sb-h"><span class="f-sb-k">影子</span></div><b class="f-sb-t">连续性版</b><div class="f-sb-r">一次性检验后若未换上，继续按 §1.3 记录</div></div></div></div><div class="f-sb-row two"><div class="f-sb other"><div class="f-sb-h"><span class="f-sb-k">对照</span><span class="sl-src">D42-4</span></div><b class="f-sb-t">现行配置</b><div class="f-sb-r">模拟盘每月同次记录现行配置（<code>config/portfolio.toml</code>）的持仓与净值</div><div class="f-sb-u"><em>用途</em>只报告；上线时 Owner 看逐项比较拍板</div></div><div class="f-sb other"><div class="f-sb-h"><span class="f-sb-k">别的市场检验</span><span class="sl-src">D42-5</span></div><b class="f-sb-t">别的市场检验</b><div class="f-sb-r">一次性检验通过后、上线前，把一个名额的规则原样搬到一个没看过的市场，用该市场能取到的全部历史跑一次；市场在冻结后、看任何结果之前由 Owner 选定（候选：欧洲 STOXX 600 超级行业，母指数 STOXX 600；日本 TOPIX-17 行业，母指数 TOPIX）；选定前只允许做数据普查（起止日期、口径、缺口、有没有场内基金），不算任何收益或信号，普查结果和选择一起登记（D42-9）。没有行业成交额时 TRIN 一票缺席，只用均线、宽度两票，两票都中才算紧张；把握 p 从 0.5 起。计 1 次试验</div><div class="f-sb-u"><em>用途</em>挑选（前 3 对同结构等权）为正且防守保费不超过 4 点，记为“支持”；否则结论降一级，上线前需 Owner 另批</div></div></div></div></div>
 </div></div>
 <a class="sl-next" href="#sec-8-数据陷阱声明-结论必须声明四项陷阱-加上美股代理-实盘载体和申万回溯的差异"><span class="sl-nl">所以</span><span class="sl-nt">上线前要过的关都在这里；下一节说任何结论都必须先声明的数据陷阱</span><span class="sl-ng">§8 数据陷阱声明 →</span></a>
 </section>

@@ -1083,3 +1083,57 @@ def apply(html):
             st_ = li.find(class_='rt-st')
             st_.insert_after(_frag(f'<span class="rt-gate {tone}"><em>{lab}</em>{text}</span>'))
     return str(soup)
+
+
+def sim_board(rows):
+    """| 项目 | 规则 | 用途 | in §7 → main line + stop line, three shadows, then the two report-only items."""
+    cards = {'main': [], 'stop': [], 'shadow': [], 'other': []}
+    for r in rows:
+        name_html = _inner(r[0])
+        name = _txt(r[0])
+        m = re.match(r'^(.+?)（([^）]+)）$', name)
+        title, src = (m.group(1), m.group(2)) if m else (name, '')
+        rule, use = _inner(r[1]), _inner(r[2])
+        if title.startswith('影子'):
+            k = 'shadow'
+        elif title.startswith('暂停'):
+            k = 'stop'
+        elif title.startswith('前向模拟盘'):
+            k = 'main'
+        else:
+            k = 'other'
+        tag = '只记录，不交易' if k == 'shadow' else ''
+        title = re.sub(r'^影子[：:]\s*', '', title)
+        kind = {'shadow': '影子', 'stop': '暂停线', 'main': '主线'}.get(k, title.split('：')[0])
+        if k == 'other' and '：' in title:
+            title = title.split('：', 1)[1]
+        cards[k].append(
+            f'<div class="f-sb {k}"><div class="f-sb-h"><span class="f-sb-k">{kind}</span>'
+            + (f'<span class="sl-src">{src}</span>' if src else '') + f'</div><b class="f-sb-t">{title}</b>'
+            f'<div class="f-sb-r">{rule}</div>'
+            + (f'<div class="f-sb-u"><em>用途</em>{use}</div>' if not tag else '') + '</div>')
+    return (f'<div class="f-sb-row two">{"".join(cards["main"] + cards["stop"])}</div>'
+            f'<div class="f-sb-g"><div class="f-sb-gh">三个影子：只记录，不交易</div><div class="f-sb-row three">{"".join(cards["shadow"])}</div></div>'
+            f'<div class="f-sb-row two">{"".join(cards["other"])}</div>')
+
+
+TABLES += [(lambda h: h == ['项目', '规则', '用途'], lambda h, r: sim_board(r), 'simboard')]
+
+CSS += r"""
+.f-simboard-wrap { display: grid; gap: 10px; }
+.f-sb-row { display: grid; gap: 10px; } .f-sb-row.two { grid-template-columns: repeat(2, minmax(0, 1fr)); } .f-sb-row.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.f-sb { display: flex; flex-direction: column; gap: 6px; padding: 11px 13px; border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 10px; background: var(--surface); }
+.f-sb.main { border-top-color: var(--good); } .f-sb.stop { border-top-color: var(--bad); background: var(--bad-soft); }
+.f-sb.shadow { border-style: dashed; border-top: 1px dashed var(--line); background: var(--bg); }
+.f-sb.other { border-style: dashed; border-top: 4px solid var(--accent); }
+.f-sb-h { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.f-sb-k { font-size: 11.5px; font-weight: 700; color: var(--muted); letter-spacing: .02em; }
+.f-sb.main .f-sb-k { color: var(--good); } .f-sb.stop .f-sb-k { color: var(--bad); } .f-sb.other .f-sb-k { color: var(--accent); }
+.f-sb-t { font-size: 15px; color: var(--ink); line-height: 1.35; }
+.f-sb-r { font-size: 13px; color: var(--ink); line-height: 1.55; }
+.f-sb.shadow .f-sb-r { color: var(--muted); font-size: 12.5px; }
+.f-sb-u { margin-top: auto; padding-top: 6px; border-top: 1px dashed var(--line); font-size: 12.5px; color: var(--ink); line-height: 1.5; }
+.f-sb-u em { font-style: normal; font-weight: 700; font-size: 11px; color: var(--muted); margin-right: 6px; }
+.f-sb-gh { font-size: 12.5px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+@media (max-width: 760px) { .f-sb-row.two, .f-sb-row.three { grid-template-columns: minmax(0, 1fr); } }
+"""
