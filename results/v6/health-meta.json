@@ -2,6 +2,8 @@
  "freeze": "f066da8e46f202e105a65c7abf43e4d4cf82eff9",
  "d45": "2fbcecfaeda83d4529b54789208986787acc77af",
  "d46_merge": "7f2f1a16c529ab3c10eed87c617b4442cf3946c7",
+ "d47": "8333f2749bbd88654d41ac6ec366267d8ac595c2",
+ "d47_status": "PR #380 打开、未合入。Owner 已裁定 D47-3。",
  "primary_trin": "expanding99",
  "old_trin_retained": true,
  "vote_diff_2006_2015": "0个月",
@@ -11,7 +13,10 @@
   "max_drawdown": "src/report/metrics.py max_drawdown",
   "yearly_returns": "src/report/metrics.py yearly_returns",
   "v6": "src/v6/engine.py slot mode=v6；mix_monthly 单边 0.002",
-  "continuity": "src/v6/engine.py slot mode=id；美股仍是 mode=v6 且用 French 起点",
+  "continuity": "src/v6/engine.py slot mode=id（D47-3 先限为正）。参照是 mode=id_open。美股仍是 mode=v6",
+  "continuity_premium": "不设防守是 mode=id_full 与美股 mode=top，都扣单边 0.002。判据符号是不设防守 − 连续性版",
+  "forecast_contribution": "src/v6/health.py contribution。美股×0.6，A 股两块×0.4",
+  "current_portfolio": "src/v6/portfolio_design.py design_book",
   "k2a": "src/v6/k2a.py k2a_returns；sim.py run kind=K2A s_us=0.50 cost=0.001",
   "bm": "src/v4/r5/design.py reference_frame + src/report/blend.py monthly_rebalance",
   "a1_a2": "results/v4/r5/design/A1/index 与 A2/index，不重跑"
@@ -23,14 +28,14 @@
   "保费": "闸门按 §5：BM-主全年收益 > 0 的完整自然年，算术平均(不设防守年收益 − v6 年收益)，再乘 100。预测表这一项用相反符号（v6 − 不设防守），因为表里中间值是 −0.4。两边用同一组年份。不设防守与 v6 都是每月 60/40 再平衡、单边 0.2%。",
   "判据③": "年化 ÷ 最大回撤的绝对值。v6 与 K2A 分开报，不写高低。",
   "判据④": "v6 年化百分点 − BM-同仓位年化百分点。",
-  "美股挑选": "美股名额 mode=top 成本 0 的年化 − mode=ew 成本 0 的年化，百分点。",
-  "A股挑选": "A 股名额 mode=top 成本 0 − mode=ew 成本 0。ew 是 §5.2 按行业标签等权。",
-  "A股等权倾斜": "A 股 mode=ew 成本 0 − 沪深300 自身。",
+  "美股挑选": "名额内：mode=top 成本 0 − mode=ew 成本 0。组合贡献再乘 0.6。",
+  "A股挑选": "名额内：mode=top 成本 0 − mode=ew 成本 0。组合贡献再乘 0.4。",
+  "A股等权倾斜": "名额内：mode=ew 成本 0 − 沪深300。组合贡献再乘 0.4。",
   "仓位差": "BM-同仓位年化 − BM-主年化，百分点。§5.1，不是预测表中点。"
  },
  "readings": {
-  "连续性正收益过滤": "正收益过滤写在第①步。§1.3 用连续性版替换第①步，其余三步不动，所以不套这道过滤。空位仍按第③步留到国债或现金。",
-  "连续性领头者": "紧张月记入把握 p 的是连续性版自己选出的名字，hist 与主规则分开。",
+  "连续性正收益过滤": "D47-3：母指数跌破均线时，先把范围限到 12−1 为正，再去重、取前一半、按 ID 取 3 个。不过滤的 id_open 只作参照。",
+  "连续性领头者": "把握 p 记的是不过滤的连续性选法。持仓才用过滤。hist 与主规则 v6 分开，不抄它的 p。",
   "基准": "§5.1 的全收益、每月第一个交易日再平衡。附表 B 的价格指数基准只用于那张表的对账，不进体检。",
   "D40-12": "挑选是 12−1 相对同名额等权，等权倾斜是同名额等权相对沪深300。同名额等权按 §5.2 是行业标签等权，不是把附录 B 的组合分解再拆一次。"
  },
@@ -54,23 +59,48 @@
    "status": "ok"
   }
  },
- "gaps": {
-  "现行配置": "仓库没有设计期 panel.sqlite。§5.2 要求走 src/portfolio/replicate.py 的 daily_book，阀门关闭。不从可能含 2016 的研究包重建面板，也不另写一套权重。"
- },
+ "gaps": {},
  "series_sha256": {
   "v6": "0002b6f34f305c3a41a58a217ece7961e35084b401adffb17b3290e0296ff229",
-  "连续性版": "a688ef7942e0edbe6f77a9ea1eaf8558356b9f20bd2a2fa0530be8799395a3d1",
+  "连续性版": "ee90845c5fbc7dae2c71425bec83ae9a8892e791eaa6acd07b8fc7db65f15733",
   "A1": "3c371162360d276d6418b5d57a17b037abd5a99ac17e5b1933fd66854478634e",
   "A2": "cf3091d5dfdae739a0f175c1d96c7910bd5ee1bbdb22c1f9fce7eecaa1b7685a",
   "K2A": "b4e6963deb153ae647cfa81af547a431e7c4034ebefbf296c073ebf11eab6056",
+  "现行配置": "afa165ee8d520b12689a7011e05a34635e5c6b02562e7468440c546049c6af2a",
   "BM-主": "6cdcb7c6ed7981b8848d0f856c1a7ec555c51c354bbbe44344e19c230f8f3c4b",
   "BM-同仓位": "eaf48b9af29a4d737acac72ad2e07e9ca01f946a2dfec3c21c0711aa35b1a55e",
+  "连续性版-参照": "a688ef7942e0edbe6f77a9ea1eaf8558356b9f20bd2a2fa0530be8799395a3d1",
   "不设防守": "7881b535b583042f28dd4309a72feb8ad7a6f0fafe4ca2a6c54936cc23424152"
  },
  "continuity_p_months": 132,
  "continuity_last_p": 0.537,
- "continuity_held_diff_months": 118,
+ "continuity_held_diff_months": 98,
  "continuity_p_equals_main_a_p": false,
+ "continuity_leaders_are_unfiltered": true,
+ "portfolio": {
+  "status": "ok",
+  "end": "2015-12-31",
+  "commands": [
+   "python -m src.data package --end 2015-12-31",
+   "python -m src.indicators build --package research-package-2015-12-31.sqlite",
+   "src.portfolio.replicate.daily_book，状态恒为 1（阀门关闭）"
+  ],
+  "code_sha256": {
+   "src/data/runner.py": "d538d12d8ff5efcf6d1a5b1c2eb9e13afea7adc7a4d985e9a69d426d24a33556",
+   "src/indicators/build.py": "5ebe933e5ecdf08fc8fa9942d5f8562cbc872583ae52e70ffa83a5fc4cb96c7e",
+   "src/portfolio/replicate.py": "c2e0d5876cd022140ba74efbaeb7da11cd96ad163f28674be17cfe2ecc8eccde"
+  },
+  "market_sqlite_sha256": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8",
+  "package_sha256": "554eda5314e7f633ed27dc380c203aa3050ea491848a2418cc1709700c78eced",
+  "package_bars_last": "2015-12-31",
+  "panel_sha256": "5b8600f60dcf7a4cbbec097587ce405288fb222c9582f46c917a49fcc774e220",
+  "panel_last": "2015-12-31",
+  "book_first": "2005-02-01",
+  "book_last": "2015-12-31",
+  "valve": "关闭。replicate() 会跑慢阀，这里不调用它，只把 daily_book 的状态设为在场。",
+  "absent": "7.5% 偏离带、溢价上限、主备基金、净值滞后 2 天、一手 100 份不在这套日频回测里。",
+  "calendar_note": "package() 复制整张 calendar。bars 与 build 的窗口停在 2015-12-31，上面已核对两张表的最大日期。"
+ },
  "inputs": {
   "market_sqlite": "data/market.sqlite",
   "french_sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",

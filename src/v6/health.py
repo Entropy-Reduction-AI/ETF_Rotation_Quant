@@ -20,8 +20,10 @@ from src.report.metrics import cagr, max_drawdown, yearly_returns
 from src.v4.r5.design import reference_frame, series_sha256
 from src.v6.engine import mix_monthly, slot
 from src.v6.guard import IsolationError, assert_not_after
+from src.indicators.build import BuildError
 from src.v6.k2a import k2a_returns
 from src.v6.load import load_panels
+from src.v6.portfolio_design import design_book
 from src.v6.prior import us_prior
 from src.v6.run_design import FRENCH_SHA, PANEL, TAGS, _a_daily, _sha_file, _us_daily
 from src.v6.trin import clip_expanding, month_end_mean
@@ -117,6 +119,19 @@ def _ratio(stats: dict) -> float | None:
     if depth == 0.0 or depth != depth:
         return None
     return stats["cagr"] / abs(depth)
+
+
+SLEEVE_WEIGHT = {"美股挑选": 0.6, "A股挑选": 0.4, "A股等权倾斜": 0.4}
+
+
+def contribution(item: str, sleeve: float | None) -> tuple[float | None, float | None]:
+    """名额内的值乘名额权重。防守保费和仓位差已经是组合数，不乘。"""
+    if sleeve is None:
+        return None, SLEEVE_WEIGHT.get(item)
+    weight = SLEEVE_WEIGHT.get(item)
+    if weight is None:
+        return sleeve, None
+    return sleeve * weight, weight
 
 
 def _hash_series(series: pd.Series) -> str:
@@ -226,8 +241,12 @@ def run() -> dict:
     a_top_gross, _ = _sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "top", 0.0)
     a_ew, _ = _sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "ew", 0.0)
     a_id, log_id = _sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "id", COST)
+    a_id_open, log_open = _sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "id_open", COST)
+    a_id_full, _ = _sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "id_full", COST)
+    a_open_full, _ = _sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "id_open_full", COST)
     u_v6, _log_u = _sleeve(panels["US"], "SPX", prior, TAGS["us"], votes, bond, cash, "v6", COST)
     u_top, _ = _sleeve(panels["US"], "SPX", prior, TAGS["us"], votes, bond, cash, "top", 0.0)
+    u_top_net, _ = _sleeve(panels["US"], "SPX", prior, TAGS["us"], votes, bond, cash, "top", COST)
     u_ew, _ = _sleeve(panels["US"], "SPX", prior, TAGS["us"], votes, bond, cash, "ew", 0.0)
     panels["trin"]["csi300"] = saved["csi300"]
     panels["trin"]["SPX"] = saved["SPX"]
@@ -235,25 +254,32 @@ def run() -> dict:
     v6 = mix_monthly(a_v6, u_v6, COST)
     plain = mix_monthly(a_top, u_top, COST)
     continuity = mix_monthly(a_id, u_v6, COST)
+    continuity_open = mix_monthly(a_id_open, u_v6, COST)
+    continuity_plain = mix_monthly(a_id_full, u_top_net, COST)
+    continuity_open_plain = mix_monthly(a_open_full, u_top_net, COST)
     csi = panels["A"]["csi300"].pct_change().fillna(0.0)
     bm_main, bm_same = _benchmarks()
     k2a = _k2a(panels)
     a1, a1_note = _read_peer("A1", A1_SHA)
     a2, a2_note = _read_peer("A2", A2_SHA)
 
+    try:
+        current, current_evidence = design_book()
+    except (IsolationError, BuildError, SystemExit, ValueError) as exc:
+        current, current_evidence = None, {"status": "未完成", "reason": str(exc)}
     series = {
         "v6": v6,
         "连续性版": continuity,
         "A1": a1,
         "A2": a2,
         "K2A": k2a,
-        "现行配置": None,
+        "现行配置": current,
         "BM-主": bm_main,
         "BM-同仓位": bm_same,
     }
-    gaps = {
-        "现行配置": "仓库没有设计期 panel.sqlite。§5.2 要求走 src/portfolio/replicate.py 的 daily_book，阀门关闭。不从可能含 2016 的研究包重建面板，也不另写一套权重。",
-    }
+    gaps = {}
+    if current is None:
+        gaps["现行配置"] = current_evidence.get("reason", "设计期面板没有建成")
     if a1 is None:
         gaps["A1"] = a1_note["reason"]
     if a2 is None:
@@ -293,29 +319,71 @@ def run() -> dict:
         a_parent = _pair(csi, start, end)
         u_pick = _pair(u_top, start, end)
         u_eq = _pair(u_ew, start, end)
-        forecast_rows.extend([
-            {"segment": name, "item": "美股挑选", "value": u_pick["cagr_pct"] - u_eq["cagr_pct"], "unit": "百分点"},
-            {"segment": name, "item": "A股挑选", "value": a_pick["cagr_pct"] - a_eq["cagr_pct"], "unit": "百分点"},
-            {"segment": name, "item": "A股等权倾斜", "value": a_eq["cagr_pct"] - a_parent["cagr_pct"], "unit": "百分点"},
-            {"segment": name, "item": "防守保费", "value": None if premium["premium_pp"] is None else -premium["premium_pp"], "unit": "百分点"},
-            {"segment": name, "item": "美股60%仓位差", "value": same_stats["cagr_pct"] - main_stats["cagr_pct"], "unit": "百分点"},
-        ])
+        sleeve_items = {
+            "美股挑选": u_pick["cagr_pct"] - u_eq["cagr_pct"],
+            "A股挑选": a_pick["cagr_pct"] - a_eq["cagr_pct"],
+            "A股等权倾斜": a_eq["cagr_pct"] - a_parent["cagr_pct"],
+            "防守保费": None if premium["premium_pp"] is None else -premium["premium_pp"],
+            "美股60%仓位差": same_stats["cagr_pct"] - main_stats["cagr_pct"],
+        }
+        for item, sleeve in sleeve_items.items():
+            contrib, weight = contribution(item, sleeve)
+            forecast_rows.append({
+                "segment": name,
+                "item": item,
+                "sleeve_pp": sleeve,
+                "weight": "" if weight is None else weight,
+                "contribution_pp": contrib,
+                "unit": "百分点",
+                "note": "名额内×权重" if weight is not None else "已是组合数，不乘",
+            })
 
+    continuity_rows = []
+    for role, book, plain_book, log in (
+        ("主", continuity, continuity_plain, log_id),
+        ("参照", continuity_open, continuity_open_plain, log_open),
+    ):
+        for name, start, end in SEGMENTS:
+            stats = _pair(book, start, end)
+            kstats = _pair(k2a, start, end)
+            same = _pair(bm_same, start, end)
+            prem = _premium(book, plain_book, bm_main, start, end)
+            last_p = next((rec.get("p") for day, rec in reversed(log.items()) if rec.get("p") is not None), None)
+            continuity_rows.append({
+                "role": role,
+                "segment": name,
+                "cagr_pct": stats["cagr_pct"],
+                "max_drawdown": stats["max_drawdown"],
+                "premium_pp": prem["premium_pp"],
+                "ratio": _ratio(stats),
+                "k2a_ratio": _ratio(kstats),
+                "excess_vs_bm_same_pp": stats["cagr_pct"] - same["cagr_pct"],
+                "years": ",".join(str(year) for year in prem["years"]),
+                "last_p": last_p,
+                "filter": "母指数跌破均线时只选12-1为正" if role == "主" else "不过滤",
+            })
     kept = {name: book for name, book in series.items() if book is not None}
+    kept["连续性版-参照"] = continuity_open
     kept["不设防守"] = plain
     frame = pd.concat([book.rename(name) for name, book in kept.items()], axis=1).sort_index()
+    frame.index.name = "date"
     frame = frame.loc[:DESIGN_END]
     assert_not_after(frame.index, "体检收益")
     frame.to_csv(OUT / "health-returns.csv", float_format="%.12g")
     pd.DataFrame(gate_rows).to_csv(OUT / "health-gates.csv", index=False)
     pd.DataFrame(scatter_rows).to_csv(OUT / "health-scatter.csv", index=False)
     pd.DataFrame(forecast_rows).to_csv(OUT / "health-forecast.csv", index=False)
+    pd.DataFrame(continuity_rows).to_csv(OUT / "health-continuity.csv", index=False)
+    (OUT / "portfolio-panel-evidence.json").write_text(
+        json.dumps(current_evidence, ensure_ascii=False, indent=1), encoding="utf-8")
 
     id_months = [day for day, rec in log_id.items() if rec.get("p") is not None]
     meta = {
         "freeze": "f066da8e46f202e105a65c7abf43e4d4cf82eff9",
         "d45": "2fbcecfaeda83d4529b54789208986787acc77af",
         "d46_merge": D46_MERGE,
+        "d47": "8333f2749bbd88654d41ac6ec366267d8ac595c2",
+        "d47_status": "PR #380 打开、未合入。Owner 已裁定 D47-3。",
         "primary_trin": "expanding99",
         "old_trin_retained": identical,
         "vote_diff_2006_2015": "0个月" if identical else "有差异，闸门只用扩展分位",
@@ -325,7 +393,10 @@ def run() -> dict:
             "max_drawdown": "src/report/metrics.py max_drawdown",
             "yearly_returns": "src/report/metrics.py yearly_returns",
             "v6": "src/v6/engine.py slot mode=v6；mix_monthly 单边 0.002",
-            "continuity": "src/v6/engine.py slot mode=id；美股仍是 mode=v6 且用 French 起点",
+            "continuity": "src/v6/engine.py slot mode=id（D47-3 先限为正）。参照是 mode=id_open。美股仍是 mode=v6",
+            "continuity_premium": "不设防守是 mode=id_full 与美股 mode=top，都扣单边 0.002。判据符号是不设防守 − 连续性版",
+            "forecast_contribution": "src/v6/health.py contribution。美股×0.6，A 股两块×0.4",
+            "current_portfolio": "src/v6/portfolio_design.py design_book",
             "k2a": "src/v6/k2a.py k2a_returns；sim.py run kind=K2A s_us=0.50 cost=0.001",
             "bm": "src/v4/r5/design.py reference_frame + src/report/blend.py monthly_rebalance",
             "a1_a2": "results/v4/r5/design/A1/index 与 A2/index，不重跑",
@@ -337,14 +408,14 @@ def run() -> dict:
             "保费": "闸门按 §5：BM-主全年收益 > 0 的完整自然年，算术平均(不设防守年收益 − v6 年收益)，再乘 100。预测表这一项用相反符号（v6 − 不设防守），因为表里中间值是 −0.4。两边用同一组年份。不设防守与 v6 都是每月 60/40 再平衡、单边 0.2%。",
             "判据③": "年化 ÷ 最大回撤的绝对值。v6 与 K2A 分开报，不写高低。",
             "判据④": "v6 年化百分点 − BM-同仓位年化百分点。",
-            "美股挑选": "美股名额 mode=top 成本 0 的年化 − mode=ew 成本 0 的年化，百分点。",
-            "A股挑选": "A 股名额 mode=top 成本 0 − mode=ew 成本 0。ew 是 §5.2 按行业标签等权。",
-            "A股等权倾斜": "A 股 mode=ew 成本 0 − 沪深300 自身。",
+            "美股挑选": "名额内：mode=top 成本 0 − mode=ew 成本 0。组合贡献再乘 0.6。",
+            "A股挑选": "名额内：mode=top 成本 0 − mode=ew 成本 0。组合贡献再乘 0.4。",
+            "A股等权倾斜": "名额内：mode=ew 成本 0 − 沪深300。组合贡献再乘 0.4。",
             "仓位差": "BM-同仓位年化 − BM-主年化，百分点。§5.1，不是预测表中点。",
         },
         "readings": {
-            "连续性正收益过滤": "正收益过滤写在第①步。§1.3 用连续性版替换第①步，其余三步不动，所以不套这道过滤。空位仍按第③步留到国债或现金。",
-            "连续性领头者": "紧张月记入把握 p 的是连续性版自己选出的名字，hist 与主规则分开。",
+            "连续性正收益过滤": "D47-3：母指数跌破均线时，先把范围限到 12−1 为正，再去重、取前一半、按 ID 取 3 个。不过滤的 id_open 只作参照。",
+            "连续性领头者": "把握 p 记的是不过滤的连续性选法。持仓才用过滤。hist 与主规则 v6 分开，不抄它的 p。",
             "基准": "§5.1 的全收益、每月第一个交易日再平衡。附表 B 的价格指数基准只用于那张表的对账，不进体检。",
             "D40-12": "挑选是 12−1 相对同名额等权，等权倾斜是同名额等权相对沪深300。同名额等权按 §5.2 是行业标签等权，不是把附录 B 的组合分解再拆一次。",
         },
@@ -360,6 +431,11 @@ def run() -> dict:
         "continuity_p_equals_main_a_p": all(
             log_id[day].get("p") == log_a.get(day, {}).get("p") for day in log_id
         ),
+        "continuity_leaders_are_unfiltered": all(
+            rec.get("领头者") == log_open.get(day, {}).get("领头者")
+            for day, rec in log_id.items() if rec.get("领头者") is not None
+        ),
+        "portfolio": current_evidence,
         "inputs": {
             "market_sqlite": "data/market.sqlite",
             "french_sha256": csv_sha,
@@ -378,7 +454,7 @@ def run() -> dict:
         "input_sha256": json.dumps(meta["inputs"], ensure_ascii=False),
         "period": "2006-01-01至2015-12-31",
         "params": "segments=2006-2010,2011-2015,2006-2015; cost=0.002; trin=expanding99; continuity=id",
-        "purpose": "设计期体检输入：闸门、8序列、预测表实际值。不跑一次性检验。",
+        "purpose": "D47：连续性版先限为正；预测表加组合贡献；现行配置用≤2015面板。不跑一次性检验。",
         "result": json.dumps({"gates": len(gate_rows), "scatter": len(scatter_rows), "forecast": len(forecast_rows), "gaps": sorted(gaps)}, ensure_ascii=False),
     })
     return {"gates": len(gate_rows), "scatter": len(scatter_rows), "forecast": len(forecast_rows), "gaps": sorted(gaps)}

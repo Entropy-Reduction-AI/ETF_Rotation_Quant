@@ -7,9 +7,9 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from src.v6.engine import continuity_state, slot
+from src.v6.engine import continuity_pick, continuity_state, slot
 from src.v6.guard import IsolationError
-from src.v6.health import _clip, _premium
+from src.v6.health import _clip, _premium, contribution
 
 
 class WindowTests(unittest.TestCase):
@@ -64,5 +64,42 @@ class ContinuityTests(unittest.TestCase):
             votes, bond, cash)
         last = log[months[-1]]
         self.assertIsNotNone(last["p"])
-        self.assertFalse(last["正收益过滤"])
+        self.assertTrue(last["过滤规则"])
         self.assertIn("csi300", last["持有"] + last["可参选名单"])
+        _open, _turn_open, open_log = slot(
+            level, "csi300", 3, None, {"slow": "x", "choppy": "y"}, "id_open", 0.0,
+            votes, bond, cash)
+        self.assertFalse(open_log[months[-1]]["过滤规则"])
+        self.assertNotEqual(last["p"], None)
+
+    def test_filter_removes_a_negative_name_before_the_half(self):
+        scores = np.array([0.05, -0.01, -0.02, -0.50])
+        ident = np.array([0.5, -0.9, 0.2, 0.1])
+        eligible = np.ones(4, dtype=bool)
+        tags = np.array(["a", "b", "c", "d"], dtype=object)
+        opened = continuity_pick(scores, ident, eligible, tags, 3)
+        held = continuity_pick(scores, ident, eligible & (scores > 0), tags, 3)
+        self.assertEqual(opened[0], 1)
+        self.assertEqual(held, [0])
+
+
+class CapTests(unittest.TestCase):
+    def test_panel_chain_sql_is_date_capped(self):
+        from pathlib import Path
+        runner = Path("src/data/runner.py").read_text(encoding="utf-8")
+        quality = Path("src/data/quality.py").read_text(encoding="utf-8")
+        self.assertIn("AND date <= ?", runner)
+        self.assertIn("date<=?", quality)
+
+
+class ContributionTests(unittest.TestCase):
+    def test_sleeve_weight_does_not_touch_portfolio_items(self):
+        value, weight = contribution("美股挑选", 4.86)
+        self.assertAlmostEqual(value, 4.86 * 0.6)
+        self.assertEqual(weight, 0.6)
+        same, plain_weight = contribution("防守保费", -1.61)
+        self.assertEqual(same, -1.61)
+        self.assertIsNone(plain_weight)
+        tilt, tilt_weight = contribution("A股等权倾斜", 5.69)
+        self.assertAlmostEqual(tilt, 5.69 * 0.4)
+        self.assertEqual(tilt_weight, 0.4)
