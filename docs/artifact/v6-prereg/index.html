@@ -1469,6 +1469,19 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 .f-sb-gh { font-size: 12.5px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
 @media (max-width: 760px) { .f-sb-row.two, .f-sb-row.three { grid-template-columns: minmax(0, 1fr); } }
 
+.f-tps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.f-tp { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-tp.must { border-left-color: var(--warn); }
+.f-tp-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; } .f-tp-h b { font-size: 15px; color: var(--ink); }
+.f-tp-tag { display: inline-block; margin-left: 4px; font-size: 11px; font-weight: 700; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.f-tp-tag.must { color: var(--warn); border-color: var(--warn); background: var(--warn-soft); } .f-tp-tag.chg { color: var(--bad); border-color: var(--bad); background: var(--bad-soft); }
+.f-tp-l { display: grid; grid-template-columns: 4.6em minmax(0, 1fr); gap: 8px; align-items: baseline; font-size: 13px; line-height: 1.55; }
+.f-tp-l em { font-style: normal; font-size: 11.5px; font-weight: 700; }
+.f-tp-l.risk em { color: var(--warn); } .f-tp-l.risk span { color: var(--muted); }
+.f-tp-l.fix em { color: var(--good); } .f-tp-l.fix span { color: var(--ink); }
+.f-tp-l.fix { padding-top: 7px; border-top: 1px dashed var(--line); }
+@media (max-width: 760px) { .f-tps { grid-template-columns: minmax(0, 1fr); } }
+
 </style>
 </head>
 <body>
@@ -1787,47 +1800,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 </tbody>
 </table></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>六项陷阱原文：会怎样、怎么处理</span></button><div class="fold-b" hidden="">
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>陷阱</th>
-<th>会怎样</th>
-<th>怎么处理</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="k"><strong>主题指数回填</strong></td>
-<td>中证行业价格指数 2011-08 发布，之前是回溯</td>
-<td class="detail">主题指数从发布日起参选；10 个一级行业按 D38 第 48 行允许回填（Owner 2026-11-24 确认）</td>
-</tr>
-<tr>
-<td><strong>指数与 ETF 的差异</strong></td>
-<td>费用、跟踪误差、溢价</td>
-<td class="detail"><b>指数池主判，可交易池只报告</b></td>
-</tr>
-<tr>
-<td><strong>腾讯减法 qfq</strong></td>
-<td>前复权用减法，长期收益失真</td>
-<td class="detail"><b>按 <code>docs/manual/data-principles.md</code> 的口径</b></td>
-</tr>
-<tr>
-<td><strong>份额折算假跳空</strong></td>
-<td>折算日价格跳变</td>
-<td class="detail"><b>按 <code>docs/manual/data-principles.md</code> 处理</b></td>
-</tr>
-<tr>
-<td><strong>美股代理与 QDII</strong></td>
-<td>设计期用美国本土行业 ETF 与指数代替，实盘用对应 QDII</td>
-<td class="detail"><b>两者之间有溢价和跟踪误差；清单见附表 A</b></td>
-</tr>
-<tr>
-<td><strong>申万一级的历史点位</strong></td>
-<td>2021-12-13 之前的点位可能按 2021 版成分回溯，官方没有写明（Grok、Reviewer 都记“未找到”）</td>
-<td class="detail">只作 §4 的参考检验，不改主规则、不给 A 股挑选报钱（Owner 2026-11-23）；官方缺的 8 个交易日都在 2016 年以后，不补</td>
-</tr>
-</tbody>
-</table></div>
+<div class="table-wrap"><div class="comp f-traps-wrap" data-lint="ref"><div class="f-tps"><div class="f-tp must"><div class="f-tp-h"><b>主题指数回填</b><span><span class="f-tp-tag must">必须声明</span><span class="f-tp-tag chg">改变候选名单</span></span></div><div class="f-tp-l risk"><em>会怎样</em><span>中证行业价格指数 2011-08 发布，之前是回溯</span></div><div class="f-tp-l fix"><em>怎么处理</em><span>主题指数从发布日起参选；10 个一级行业按 D38 第 48 行允许回填（Owner 2026-11-24 确认）</span></div></div><div class="f-tp must"><div class="f-tp-h"><b>指数与 ETF 的差异</b><span><span class="f-tp-tag must">必须声明</span></span></div><div class="f-tp-l risk"><em>会怎样</em><span>费用、跟踪误差、溢价</span></div><div class="f-tp-l fix"><em>怎么处理</em><span>指数池主判，可交易池只报告</span></div></div><div class="f-tp must"><div class="f-tp-h"><b>腾讯减法 qfq</b><span><span class="f-tp-tag must">必须声明</span></span></div><div class="f-tp-l risk"><em>会怎样</em><span>前复权用减法，长期收益失真</span></div><div class="f-tp-l fix"><em>怎么处理</em><span>按 <code>docs/manual/data-principles.md</code> 的口径</span></div></div><div class="f-tp must"><div class="f-tp-h"><b>份额折算假跳空</b><span><span class="f-tp-tag must">必须声明</span></span></div><div class="f-tp-l risk"><em>会怎样</em><span>折算日价格跳变</span></div><div class="f-tp-l fix"><em>怎么处理</em><span>按 <code>docs/manual/data-principles.md</code> 处理</span></div></div><div class="f-tp"><div class="f-tp-h"><b>美股代理与 QDII</b><span><span class="f-tp-tag">另加声明</span></span></div><div class="f-tp-l risk"><em>会怎样</em><span>设计期用美国本土行业 ETF 与指数代替，实盘用对应 QDII</span></div><div class="f-tp-l fix"><em>怎么处理</em><span>两者之间有溢价和跟踪误差；清单见附表 A</span></div></div><div class="f-tp"><div class="f-tp-h"><b>申万一级的历史点位</b><span><span class="f-tp-tag">另加声明</span></span></div><div class="f-tp-l risk"><em>会怎样</em><span>2021-12-13 之前的点位可能按 2021 版成分回溯，官方没有写明（Grok、Reviewer 都记“未找到”）</span></div><div class="f-tp-l fix"><em>怎么处理</em><span>只作 §4 的参考检验，不改主规则、不给 A 股挑选报钱（Owner 2026-11-23）；官方缺的 8 个交易日都在 2016 年以后，不补</span></div></div></div></div></div>
 </div></div>
 <a class="sl-next" href="#sec-9-运行纪律与冻结前待办-冻结前的-8-件待办全部完成-你已批准冻结-等-r1b"><span class="sl-nl">所以</span><span class="sl-nt">陷阱都声明了；最后一节看冻结前的事是不是都做完了</span><span class="sl-ng">§9 运行纪律与冻结前待办 →</span></a>
 </section>

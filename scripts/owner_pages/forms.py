@@ -1137,3 +1137,55 @@ CSS += r"""
 .f-sb-gh { font-size: 12.5px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
 @media (max-width: 760px) { .f-sb-row.two, .f-sb-row.three { grid-template-columns: minmax(0, 1fr); } }
 """
+
+
+def traps(rows, meta):
+    out = ''
+    for r in rows:
+        name = _txt(r[0])
+        what, how = _inner(r[1]), _inner(r[2])
+        cat, chg = meta.get(name, ('', False))
+        tags = (f'<span class="f-tp-tag {"must" if cat == "必须" else ""}">{"必须声明" if cat == "必须" else "另加声明"}</span>' if cat else '')
+        tags += '<span class="f-tp-tag chg">改变候选名单</span>' if chg else ''
+        out += (f'<div class="f-tp{" must" if cat == "必须" else ""}"><div class="f-tp-h"><b>{name}</b><span>{tags}</span></div>'
+                f'<div class="f-tp-l risk"><em>会怎样</em><span>{what}</span></div>'
+                f'<div class="f-tp-l fix"><em>怎么处理</em><span>{how}</span></div></div>')
+    return f'<div class="f-tps">{out}</div>'
+
+
+_apply4 = apply
+
+
+def apply(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    for t in list(soup.find_all('table')):
+        head, rows = _rows(t)
+        if head == ['陷阱', '会怎样', '怎么处理'] and rows:
+            sec = t.find_parent('section')
+            meta = {}
+            for t2 in (sec.find_all('table') if sec else []):
+                h2, r2 = _rows(t2)
+                if h2[:3] == ['数据陷阱', '类别', '改变候选名单']:
+                    for x in r2:
+                        meta[_txt(x[0])] = (_txt(x[1]), '✓' in _txt(x[2]))
+            def key(n):
+                return next((k for k in meta if k and (k in n or n.startswith(k[:4]))), None)
+            meta2 = {_txt(x[0]): meta.get(key(_txt(x[0])), ('', False)) for x in rows}
+            t.replace_with(_frag(f'<div class="comp f-traps-wrap" data-lint="ref">{traps(rows, meta2)}</div>'))
+    return _apply4(str(soup))
+
+
+CSS += r"""
+.f-tps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.f-tp { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-tp.must { border-left-color: var(--warn); }
+.f-tp-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; } .f-tp-h b { font-size: 15px; color: var(--ink); }
+.f-tp-tag { display: inline-block; margin-left: 4px; font-size: 11px; font-weight: 700; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.f-tp-tag.must { color: var(--warn); border-color: var(--warn); background: var(--warn-soft); } .f-tp-tag.chg { color: var(--bad); border-color: var(--bad); background: var(--bad-soft); }
+.f-tp-l { display: grid; grid-template-columns: 4.6em minmax(0, 1fr); gap: 8px; align-items: baseline; font-size: 13px; line-height: 1.55; }
+.f-tp-l em { font-style: normal; font-size: 11.5px; font-weight: 700; }
+.f-tp-l.risk em { color: var(--warn); } .f-tp-l.risk span { color: var(--muted); }
+.f-tp-l.fix em { color: var(--good); } .f-tp-l.fix span { color: var(--ink); }
+.f-tp-l.fix { padding-top: 7px; border-top: 1px dashed var(--line); }
+@media (max-width: 760px) { .f-tps { grid-template-columns: minmax(0, 1fr); } }
+"""
