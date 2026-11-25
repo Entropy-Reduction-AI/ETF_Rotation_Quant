@@ -103,18 +103,18 @@ def route(rows):
 
 
 def chain(rows):
-    """Fallback ladder, read top-down: the default first; each drop down is gated by its condition."""
+    """Fallback staircase: each step sits a little lower than the one before; the riser says when you drop to it."""
     out = ''
     last = len(rows) - 1
     for i, r in enumerate(rows):
         cond = _inner(r.get('条件')) if r.get('条件') is not None else ''
-        if i:
-            out += f'<div class="ld-c"><span>{cond}</span></div>'
-        tag = '默认' if i == 0 else ('兜底' if i == last else '')
-        out += (f'<div class="ld-s{" first" if i == 0 else ""}"><span class="ld-n">{i + 1}</span>'
-                f'<div class="ld-b"><b>{_inner(r["步"])}</b><span>{_inner(r["说明"])}</span></div>'
-                + (f'<em class="ld-tag">{tag}</em>' if tag else '') + '</div>')
-    return f'<div class="ladder">{out}</div>'
+        head = '默认' if i == 0 else f'<span class="st-ar">↘</span>{cond}'
+        tag = '' if i == 0 else ('兜底' if i == last else '')
+        out += (f'<div class="st-s{" first" if i == 0 else ""}{" last" if i == last else ""}" style="--i:{i}">'
+                f'<div class="st-if">{head}</div><div class="st-c"><span class="st-n">{i + 1}</span>'
+                f'<b>{_inner(r["步"])}</b><span class="st-d">{_inner(r["说明"])}</span>'
+                + (f'<em class="st-tag">{tag}</em>' if tag else '') + '</div></div>')
+    return f'<div class="stair">{out}</div>'
 
 
 def pain(rows):
@@ -251,6 +251,21 @@ def apply(soup):
 
 
 CSS = r"""
+.stair { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; align-items: start; padding-bottom: 6px; }
+.st-s { margin-top: calc(var(--i) * 22px); display: flex; flex-direction: column; gap: 6px; }
+.st-if { min-height: 2.6em; display: flex; align-items: flex-end; gap: 4px; font-size: 12.5px; font-weight: 700; color: var(--warn); line-height: 1.35; }
+.st-s.first .st-if { color: var(--accent); }
+.st-ar { font-size: 15px; }
+.st-c { position: relative; display: flex; flex-direction: column; gap: 4px; padding: 12px 14px 14px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--line); min-height: 112px; }
+.st-s.first .st-c { border-color: var(--accent); border-top-color: var(--accent); background: var(--accent-soft); }
+.st-s.last .st-c { border-top-color: var(--muted); }
+.st-n { font-family: var(--font-mono); font-size: 22px; font-weight: 800; line-height: 1; color: var(--muted); opacity: .55; }
+.st-s.first .st-n { color: var(--accent); }
+.st-c b { font-size: 15px; color: var(--ink); line-height: 1.35; }
+.st-d { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.st-tag { position: absolute; top: 10px; right: 10px; font-style: normal; font-size: 11px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+@media (max-width: 760px) { .stair { grid-template-columns: minmax(0, 1fr); } .st-s { margin-top: 0; margin-left: calc(var(--i) * 12px); } .st-if { min-height: 0; } }
+
 .cbx { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
 .cbx-c { min-width: 150px; display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .cbx-c.on { border-color: var(--accent); background: var(--accent-soft); }

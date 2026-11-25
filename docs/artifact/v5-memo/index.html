@@ -975,6 +975,21 @@ a.sl-sp-i.t-todo .sl-sp-st { color: var(--bad); font-weight: 700; } a.sl-sp-i.t-
 @media (max-width: 760px) { .sl-dr { grid-template-columns: minmax(0, 1fr); gap: 3px; } .sl-ds { justify-content: flex-start; } .sl-look, a.sl-next { flex-direction: column; gap: 4px; align-items: flex-start; } }
 
 
+.stair { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; align-items: start; padding-bottom: 6px; }
+.st-s { margin-top: calc(var(--i) * 22px); display: flex; flex-direction: column; gap: 6px; }
+.st-if { min-height: 2.6em; display: flex; align-items: flex-end; gap: 4px; font-size: 12.5px; font-weight: 700; color: var(--warn); line-height: 1.35; }
+.st-s.first .st-if { color: var(--accent); }
+.st-ar { font-size: 15px; }
+.st-c { position: relative; display: flex; flex-direction: column; gap: 4px; padding: 12px 14px 14px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--line); min-height: 112px; }
+.st-s.first .st-c { border-color: var(--accent); border-top-color: var(--accent); background: var(--accent-soft); }
+.st-s.last .st-c { border-top-color: var(--muted); }
+.st-n { font-family: var(--font-mono); font-size: 22px; font-weight: 800; line-height: 1; color: var(--muted); opacity: .55; }
+.st-s.first .st-n { color: var(--accent); }
+.st-c b { font-size: 15px; color: var(--ink); line-height: 1.35; }
+.st-d { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.st-tag { position: absolute; top: 10px; right: 10px; font-style: normal; font-size: 11px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+@media (max-width: 760px) { .stair { grid-template-columns: minmax(0, 1fr); } .st-s { margin-top: 0; margin-left: calc(var(--i) * 12px); } .st-if { min-height: 0; } }
+
 .cbx { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
 .cbx-c { min-width: 150px; display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .cbx-c.on { border-color: var(--accent); background: var(--accent-soft); }
