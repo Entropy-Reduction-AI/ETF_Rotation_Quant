@@ -40,8 +40,28 @@ def _pick(scores: np.ndarray, ok: np.ndarray, tags: np.ndarray, n: int, dedupe: 
     return chosen
 
 
+def continuity_state(levels, day, month_index, scores, min_days: int = 200):
+    """§1.3。窗口是 T−12 月末之后到 T−1 月末。不足 min_days 个有效日的不参选。"""
+    width = len(scores)
+    blank = np.full(width, np.nan)
+    none = np.zeros(width, dtype=bool)
+    loc = month_index.get_loc(day)
+    if not isinstance(loc, (int, np.integer)) or int(loc) < 12:
+        return blank, none
+    t12 = month_index[int(loc) - 12]
+    t1 = month_index[int(loc) - 1]
+    window = levels.pct_change().loc[lambda s: (s.index > t12) & (s.index <= t1)]
+    valid = window.notna().sum().to_numpy()
+    up = (window > 0).sum().to_numpy()
+    down = (window < 0).sum().to_numpy()
+    share = np.divide(down - up, valid, out=np.full(width, np.nan), where=valid > 0)
+    ident = np.sign(scores) * share
+    eligible = np.isfinite(scores) & np.isfinite(ident) & (valid >= min_days)
+    return ident, eligible
+
+
 def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash, dedupe: bool = True):
-    """一个名额。mode：v6 四步全开；top 前 n 不设防守；ew 按标签等权、不设防守。
+    """一个名额。mode：v6 四步全开；id 只换 A 股第①步；top 前 n 不设防守；ew 按标签等权、不设防守。
 
     prior 为 None 表示没有起点经验（A 股）。美股必须传入 French 列表；
     调用方在文件缺失时不要用空列表冒充。
@@ -54,7 +74,8 @@ def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash, dedup
     tag_of = np.array([tags.get(c, "") for c in columns], dtype=object)
     parent_at = columns.index(parent)
     mask = np.r_[calendar.month[1:] != calendar.month[:-1], True]
-    month = levels.loc[calendar[mask]]
+    month_index = pd.DatetimeIndex(calendar[mask])
+    month = levels.loc[month_index]
     score_frame = month.shift(1) / month.shift(12) - 1
     above = month > month.rolling(10).mean()
     forward = month.pct_change().shift(-1)
@@ -105,7 +126,7 @@ def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash, dedup
         record = {
             "票数": votes,
             "紧张": stress,
-            "p": None if mode != "v6" else round(p_value, 3),
+            "p": None if mode not in ("v6", "id") else round(p_value, 3),
             "可参选": int(ok.sum()),
             "可参选名单": [columns[i] for i in range(width) if ok[i]],
         }
@@ -128,6 +149,22 @@ def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash, dedup
                     for i in members:
                         target[i] = 1.0 / len(groups) / len(members)
                 pick = list(np.where(ok)[0])
+            elif mode == "id":
+                # 第①步整段换掉，不套用“母指数跌破均线才要求 12−1 为正”。
+                # 把握 p 的领头者就是这次选出的名字，不用 12−1 前 3。
+                ident, eligible = continuity_state(levels, day, month_index, scores)
+                ranked = _pick(scores, eligible, tag_of, int(eligible.sum()), dedupe)
+                half = math.ceil(len(ranked) / 2) if ranked else 0
+                pool = ranked[:half]
+                pool = sorted(pool, key=lambda i: (float(ident[i]), -float(scores[i])))
+                pick = pool[:n]
+                raw = list(pick)
+                frac = p_value if stress else 1.0
+                if pick:
+                    target[pick] = frac / n
+                record["母指数跌破均线"] = not bool(above.loc[day].to_numpy()[parent_at])
+                record["股票仓位"] = round(float(target.sum()), 3)
+                record["正收益过滤"] = False
             else:
                 gate = not bool(above.loc[day].to_numpy()[parent_at])
                 allowed = ok & (scores > 0) if gate else ok
