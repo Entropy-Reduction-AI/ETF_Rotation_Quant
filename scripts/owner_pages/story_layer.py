@@ -227,7 +227,12 @@ def post(html):
                         f'<span class="sl-sp-s">{_esc(short)}</span>'
                         + (f'<span class="sl-sp-st">{_esc(st)}</span>' if st else '') + '</a>'
                         for sid, short, q, st, tone, k in spine)
-        sp = BeautifulSoup('<nav class="sl-spine" aria-label="故事主线"><div class="sl-sp-h">这份预注册的故事主线：从“怎么做”读到“冻结前还差什么”</div>'
+        head = '这份预注册的故事主线：从“怎么做”读到“冻结前还差什么”'
+        from bs4 import Comment as _C
+        for c in soup.find_all(string=lambda x: isinstance(x, _C) and str(x).strip().startswith('主线：')):
+            head = str(c).strip()[3:].strip()
+            c.extract()
+        sp = BeautifulSoup(f'<nav class="sl-spine" aria-label="故事主线"><div class="sl-sp-h">{_esc(head)}</div>'
                            f'<div class="sl-sp-r">{nodes}</div></nav>', 'html.parser')
         intro = soup.find('section', class_='intro')
         if intro is not None:
@@ -256,7 +261,7 @@ details.lg-more[open] { padding-top: 4px; }
 .sl-st { flex: none; font-size: 12px; font-weight: 700; border-radius: 99px; padding: 1px 9px; }
 .sl-st.t-ok { background: var(--good-soft); color: var(--good); }
 .sl-st.t-you { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); }
-.sl-st.t-todo { background: color-mix(in srgb, var(--bad) 14%, transparent); color: var(--bad); }
+.sl-st.t-todo { background: none; border: 1px dashed var(--muted); color: var(--muted); }
 .sl-look { display: flex; gap: 12px; align-items: baseline; margin: 18px 0 8px; padding: 10px 14px; border-radius: 10px;
   background: color-mix(in srgb, var(--accent) 7%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); }
 .sl-ll { flex: none; font-size: 12px; font-weight: 800; color: #fff; background: var(--accent); border-radius: 6px; padding: 2px 8px; letter-spacing: .08em; }
@@ -286,11 +291,11 @@ nav.sl-spine { margin: 18px 0 4px; }
 .sl-sp-r { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
 a.sl-sp-i { position: relative; display: grid; gap: 2px; padding: 10px 10px 9px 12px; text-decoration: none; color: var(--ink); border-left: 1px solid var(--line); border-top: 3px solid var(--good); }
 a.sl-sp-i:first-child { border-left: 0; }
-a.sl-sp-i.t-you { border-top-color: var(--accent); } a.sl-sp-i.t-todo { border-top-color: var(--bad); }
+a.sl-sp-i.t-you { border-top-color: var(--accent); } a.sl-sp-i.t-todo { border-top: 3px dashed var(--muted); }
 a.sl-sp-i:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
 .sl-sp-k { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
 .sl-sp-s { font-size: 14px; font-weight: 700; line-height: 1.35; }
 .sl-sp-st { font-size: 11.5px; color: var(--muted); }
-a.sl-sp-i.t-todo .sl-sp-st { color: var(--bad); font-weight: 700; } a.sl-sp-i.t-you .sl-sp-st { color: var(--accent); font-weight: 700; }
+a.sl-sp-i.t-todo .sl-sp-st { color: var(--muted); font-weight: 700; } a.sl-sp-i.t-you .sl-sp-st { color: var(--accent); font-weight: 700; }
 @media (max-width: 760px) { .sl-dr { grid-template-columns: minmax(0, 1fr); gap: 3px; } .sl-ds { justify-content: flex-start; } .sl-look, a.sl-next { flex-direction: column; gap: 4px; align-items: flex-start; } }
 """

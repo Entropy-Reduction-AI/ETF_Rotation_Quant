@@ -11,7 +11,7 @@
 
 ## Purpose
 
-这里存放面向 Owner 的 10 个 Claude artifact 页面的原始 HTML，每个页面一个文件夹，入口是 `index.html`。这些页面由 `docs/owner/*.md` 生成（v6 预注册由 `docs/prereg/etf-multiasset-rotation-prereg-v6.md` 生成）：内容以 md 为准，页面只负责版式。
+这里存放面向 Owner 的 11 个 Claude artifact 页面的原始 HTML，每个页面一个文件夹，入口是 `index.html`。这些页面由 `docs/owner/*.md` 生成（v6 预注册由 `docs/prereg/etf-multiasset-rotation-prereg-v6.md` 生成）：内容以 md 为准，页面只负责版式。
 
 本地直接用浏览器打开 `index.html` 就能看。图片引用的是仓库里的 `docs/assets/**`，没有另存副本。页面之间的跳转链接指向线上 artifact。
 
@@ -20,6 +20,7 @@
 | 页面 | 文件夹 | 源文档 | 线上 artifact |
 | --- | --- | --- | --- |
 | v6 预注册（已冻结） | `v6-prereg/` | `docs/prereg/etf-multiasset-rotation-prereg-v6.md` | https://claude.ai/artifact/VASWvP9wCzDvXmsQqzLFBh |
+| v6 体检报告（设计期，骨架） | `v6-health/` | `docs/owner/v6-health-check.md` | https://claude.ai/artifact/NRgYVyimeFrzdhRetr48Fq |
 | v6 预演预测表 | `v6-preflight/` | `docs/owner/v6-preflight-forecast.md` | https://claude.ai/artifact/4uzHh1NzeLVAEovbyLqqby |
 | Owner 看板 | `board/` | `docs/owner/owner-board.md` | https://claude.ai/artifact/17bW2rKeeBheRFfhnjsrSU |
 | 第二阶段复盘 | `retro/` | `docs/owner/phase2-retrospective.md` | https://claude.ai/artifact/B7ZyN3R4t8eic353W6ZV2t |

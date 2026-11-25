@@ -1267,6 +1267,9 @@ def todos(rows):
                 f'<div class="f-td-r">{rest}</div></div></div>')
     nd = sum(1 for r in rows if _txt(r[3]) == '已完成')
     bar = ''.join(f'<i class="{"on" if _txt(r[3]) == "已完成" else ""}"></i>' for r in rows)
+    if nd == 0:
+        return (f'<div class="f-td-pg"><b class="pend">{len(rows)}</b><span>项待补</span></div>'
+                f'<div class="f-tds">{out}</div>')
     return (f'<div class="f-td-pg"><b>{nd} / {len(rows)}</b><span>已完成</span><span class="f-td-bar">{bar}</span></div>'
             f'<div class="f-tds">{out}</div>')
 
@@ -1276,7 +1279,7 @@ TABLES += [(lambda h: h == ['#', '事项', '谁', '状态', '说明'], lambda h,
 CSS += r"""
 .f-tds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .f-td-pg { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12.5px; color: var(--muted); }
-.f-td-pg b { font-family: var(--font-mono); font-size: 18px; color: var(--good); }
+.f-td-pg b { font-family: var(--font-mono); font-size: 18px; color: var(--good); } .f-td-pg b.pend { color: var(--accent); }
 .f-td-bar { display: flex; gap: 3px; flex: 1; max-width: 320px; } .f-td-bar i { flex: 1; height: 8px; border-radius: 3px; background: var(--line); } .f-td-bar i.on { background: var(--good); }
 .f-td { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .f-td-n { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #fff; background: var(--muted); }
@@ -1346,4 +1349,46 @@ CSS += r"""
 .f-us-c b { font-family: var(--font-mono); color: var(--ink); } .f-us-c em { font-style: normal; font-size: 11px; color: var(--muted); }
 .f-us-none { color: var(--muted); }
 @media (max-width: 760px) { .f-us-hd { display: none; } .f-us-r { grid-template-columns: 1fr 1fr; } }
+"""
+
+
+# ---------- v6 体检报告：分段的收益来源（每格一根正负条） ----------
+def periods(head, rows):
+    """| 收益来源 | 2006–10 | 2011–15 | 2006–15 | → rows of sources, one diverging bar per period; 合计 row closes the sum."""
+    def f(x):
+        try:
+            return float(_txt(x).replace('−', '-').replace('+', ''))
+        except ValueError:
+            return 0.0
+    vals = [[f(c) for c in r[1:]] for r in rows]
+    mx = max(abs(v) for row in vals for v in row) or 1
+    hd = '<div class="f-pd-r hd"><span>收益来源</span>' + ''.join(f'<span>{h}</span>' for h in head[1:]) + '</div>'
+    body = ''
+    for r, row in zip(rows, vals):
+        tot = _txt(r[0]).startswith('合计')
+        cells = ''
+        for c, v in zip(r[1:], row):
+            w = abs(v) / mx * 50
+            side = 'pos' if v >= 0 else 'neg'
+            cells += (f'<span class="f-pd-c {side}"><span class="f-pd-t"><i style="width:{w:.1f}%"></i></span>'
+                      f'<b>{_txt(c)}</b></span>')
+        body += f'<div class="f-pd-r{" tot" if tot else ""}"><span class="f-pd-k">{_inner(r[0])}</span>{cells}</div>'
+    return f'<div class="f-pd">{hd}{body}</div>'
+
+
+TABLES += [(lambda h: len(h) == 4 and h[0] == '收益来源' and h[1] == '2006–10', periods, 'periods')]
+
+CSS += r"""
+.f-pd { display: grid; gap: 4px; }
+.f-pd-r { display: grid; grid-template-columns: 120px repeat(3, minmax(0, 1fr)); gap: 12px; align-items: center; padding: 7px 10px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); }
+.f-pd-r.hd { background: none; border: 0; padding: 0 10px; } .f-pd-r.hd span { font-size: 11.5px; font-weight: 700; color: var(--muted); text-align: center; } .f-pd-r.hd span:first-child { text-align: left; }
+.f-pd-r.tot { border-color: var(--ink); background: var(--bg); } .f-pd-r.tot .f-pd-k { font-weight: 800; }
+.f-pd-k { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.f-pd-c { display: grid; grid-template-columns: minmax(0, 1fr) 52px; align-items: center; gap: 6px; }
+.f-pd-t { position: relative; height: 12px; background: linear-gradient(90deg, transparent calc(50% - .5px), var(--line) calc(50% - .5px), var(--line) calc(50% + .5px), transparent calc(50% + .5px)); }
+.f-pd-t i { position: absolute; top: 0; height: 12px; border-radius: 3px; }
+.f-pd-c.pos .f-pd-t i { left: 50%; background: var(--good); } .f-pd-c.neg .f-pd-t i { right: 50%; background: var(--bad); }
+.f-pd-c b { font-family: var(--font-mono); font-size: 13px; font-weight: 700; text-align: right; color: var(--ink); }
+.f-pd-c.neg b { color: var(--bad); } .f-pd-c.pos b { color: var(--good); }
+@media (max-width: 760px) { .f-pd-r { grid-template-columns: 1fr; } }
 """
