@@ -2,7 +2,7 @@
   "subject_heads": {
     "r1b_review_window": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
     "refresh_after_evidence": "653de223400567f06ce3abd42b78c0394bf3cf57",
-    "current_subject_head": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e"
+    "current_subject_head": "7a338ef4b0ca589e9e50e14970fd8b5be60bbada"
   },
   "us_fifteen_carriers": [
     {
@@ -3481,7 +3481,7 @@
     ]
   },
   "incremental_653_to_292568ba": {
-    "compare": "653de223..59a1b56e",
+    "compare": "653de223..7a338ef4",
     "appendix_a_csv_sha256_at_653de22": "96a21d56ee2936c91ec390a262794dbee0ad54d15acd875f0d34d5c3d5b4e372",
     "appendix_a_csv_sha256_at_292568ba": "3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94",
     "appendix_a_byte_equal_main_rerun": true,
@@ -3542,7 +3542,7 @@
     "cross_artifact_html_snippet_only_on_non_v6_pages": true
   },
   "incremental_292568ba_to_59a1b56": {
-    "compare_full": "292568ba..59a1b56e",
+    "compare_full": "292568ba..7a338ef4",
     "merge_main_into_pr": {
       "commit_full": "a1a36f6660d00b8d9b34b1f52892be032a5d5be3",
       "main_parent_full": "24762d27f08786d4045bf4d40259d7c1ab878b16",
@@ -3571,15 +3571,16 @@
         "docs/owner/owner-board.md",
         "docs/prereg/etf-multiasset-rotation-prereg-v6.md",
         "operations/planning/2026-11-24-d42-v6-prereg-final-items.md",
-        "scripts/owner_pages/roadmap_v6.py"
+        "scripts/owner_pages/roadmap_v6.py",
+        "shots/el-0.png"
       ],
-      "exact_match": true,
-      "hard_stop_if_mismatch": false
+      "exact_match": false,
+      "hard_stop_if_mismatch": true
     },
     "intervening_commits": [
       "a1a36f6660d00b8d9b34b1f52892be032a5d5be3",
       "2623a2a31695387f68765d87d57b681ca7e281f6",
-      "59a1b56e5a62b90c2c3b27115af235b67dd48d8e"
+      "7a338ef4b0ca589e9e50e14970fd8b5be60bbada"
     ],
     "mid_commit_message": "v6 预注册去掉初稿→待冻结；Owner 看板同步",
     "d42_planning": "operations/planning/2026-11-24-d42-v6-prereg-final-items.md",
@@ -3619,7 +3620,7 @@
       "check_3_not_full_fulfillment": true,
       "required_owner_cutoff": "定义写死必须先于任何别市数据读取（非广义的「选市前零暴露」）",
       "planning_file_absent_at_2623a2a3": true,
-      "planning_first_commit_full": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
+      "planning_first_commit_full": "7a338ef4b0ca589e9e50e14970fd8b5be60bbada",
       "d42_5_text_in_prereg_at_59a1b56": true,
       "d42_5_text_in_prereg_at_2623a2a3": false,
       "reviewer_did_not_read_other_market_data": true,
@@ -3655,122 +3656,470 @@
     ],
     "§9_component_delta": "6→7 件待办；§9.2 增 #7 D42",
     "§7_component_delta": "路线 +1 行「别的市场检验」；载体 +「对照：现行配置」",
-    "prereg_md_diff_stat": "docs/prereg/etf-multiasset-rotation-prereg-v6.md | 32 ++++++++++++++++--------\n 1 file changed, 21 insertions(+), 11 deletions(-)",
+    "prereg_md_diff_stat": "docs/prereg/etf-multiasset-rotation-prereg-v6.md | 48 +++++++++++++++---------\n 1 file changed, 31 insertions(+), 17 deletions(-)",
     "2623_only_presentation": "docs/prereg/etf-multiasset-rotation-prereg-v6.md | 6 +++---\n 1 file changed, 3 insertions(+), 3 deletions(-)"
   },
-  "r1b_accuracy_completion": {
-    "coordinator_accuracy_pass_2026_11_24": false,
-    "technical_decision_for_coordinator": "尚不能确认全部冻结前置条件",
-    "pending_until": [
-      "Owner 书面佐证：在任何人读取别市行情/收益之前，D42-5 定义（TRIN 两票 unanimous、p 从 0.5 起、支持判法、计 1 次试验）已固定",
-      "Orchestrator 澄清 v6 §5.2 A1/A2 是否绑定 v4 §7.4 附表 A 全文（含信号时点、现金、载体）及一次性检验是否重跑或引用 v4 账本"
+  "incremental_59a1b56_to_7a338ef4": {
+    "compare_full": "59a1b56e..7a338ef4",
+    "commits": [
+      "46728ecd5230308b3e86d2d0e49d6f7cb54d0df1",
+      "7a338ef4b0ca589e9e50e14970fd8b5be60bbada"
     ],
-    "check_3_d42_5_definition_before_exposure": {
-      "owner_required_cutoff": "TRIN 缺席→两票 unanimous；把握 p 从 0.5 起；支持=挑选（前 3 对同结构等权）为正且防守保费不超过 4 点；计 1 次试验；且在读取任何别市数据之前定义已写死",
-      "exact_prereg_carrier_quote_at_59a1b56": "别的市场检验（D42-5） | 一次性检验通过后、上线前，把一个名额的规则原样搬到一个没看过的市场，用该市场能取到的全部历史跑一次；市场在冻结后、看任何结果之前由 Owner 选定（候选：欧洲 STOXX 600 超级行业，母指数 STOXX 600；日本 TOPIX-17 行业，母指数 TOPIX）。没有行业成交额时 TRIN 一票缺席，只用均线、宽度两票，两票都中才算紧张；把握 p 从 0.5 起。计 1 次试验 | 挑选（前 3 对同结构等权）为正且防守保费不超过 4 点，记为“支持”；否则结论降一级，上线前需 Owner 另批",
-      "exact_planning_d42_5_row": "挑选（前 3 对同结构等权）为正且防守保费不超过 4 点，记为“支持”；否则结论降一级，上线前需 Owner 另批。计 1 次试验",
-      "git_proves_only": {
-        "subject_commit_full": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
-        "committer_date_iso8601": "2026-11-24T15:22:34+00:00",
-        "committer_date_asia_taipei_note": "2026-11-24 23:22:34+08:00 when UTC is 15:22:34+00:00",
-        "planning_file_first_appears_in_commit_full": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
-        "d42_5_text_absent_at_2623a2a3": true,
-        "reviewer_ran_no_other_market_backtest_search": "repo path scan only; not evidentiary pass"
-      },
-      "missing_not_in_git": [
-        "Owner/团队是否在别市数据读取前已固定上述定义（对话/流程不在仓库）",
-        "别市数据是否曾被任何人读取的时序（git 不能自证）"
-      ],
-      "do_not_infer_from_absence": "未找到别市回测产物 ≠ 证明零暴露；亦 ≠ 证明定义先于暴露",
-      "fulfillment_status": "pending_owner_corroboration"
+    "commit_messages": {
+      "46728ecd5230308b3e86d2d0e49d6f7cb54d0df1": "v6 预注册第 2.4 版：Owner 批准冻结；闭合 R1b D42-8、D42-9",
+      "7a338ef4b0ca589e9e50e14970fd8b5be60bbada": "v6 预注册第 2.4 版：页首与接力同步为已批准冻结"
     },
-    "check_4_a1_a2_current_config": {
-      "v6_prereg_§5_2_rows_at_59a1b56": {
-        "A1": "每月末标普500 跑赢现金，就在标普500 和沪深300 里拿更强的一个全仓，否则拿 10 年国债",
-        "A2": "沪深300、标普500、恒生、10 年国债、黄金各 1/5，跌破 10 个月均线的那一腿换成现金",
-        "scope": "只报告，不参与 §5.3"
-      },
-      "prior_normative_v4": {
-        "path": "docs/prereg/etf-multiasset-rotation-prereg-v4.md",
-        "A1_rule_quote": "每个月末：若标普500 过去 12 个月收益高于现金，则持有标普500 和沪深300 中过去 12 个月收益更高的那一个，全仓；否则全仓 10 年国债",
-        "signal_timing_quote": "两条都只用月末收盘做决定（月末 = 每个自然月最后一个上交所交易日，SF-6），下一个上交所交易日按收盘成交；成本、成交限制（§4.5）、收盘时点和汇率（§3.1）、现金序列与 v4 相同",
-        "A2_rule_quote": "每个月末，五份各自判断：月末收盘高于过去 10 个月末收盘的简单平均，就持有这一份；否则这一份拿现金",
-        "legs_quote": "美股 = 标普500 全收益（^SP500TR）；…沪深300 全收益（H00300）；债券 = 10 年国债财富指数（CBA04501）；现金 = §3 的现金序列 … 五份各 20% … U-可交易各腿按 §3.2 选载体"
-      },
-      "prior_once_only_reference_v5": {
-        "path": "docs/prereg/etf-multiasset-rotation-prereg-v5.md",
-        "quote": "附表 A 的 A1、A2 照原样在两个池各跑一次（v4 已跑，不重跑，直接引用 v4 账本）。",
-        "design_evidence_path_cited_in_v5": "results/v4/diag/health/（v4 设计期 A1/A2 已跑）"
-      },
-      "v6_cross_reference_gap": "subject @59a1b56 §5.2 未引用 v4 §7.4 附表 A；未说明 v6 一次性检验对 A1/A2 是重跑还是引用 v4 账本",
-      "algorithm_wording_gaps": [
-        "v6 A1 写「跑赢现金」未写明 v4 的「过去 12 个月收益高于现金」",
-        "v6 A2 写「跌破 10 个月均线」≠ v4「高于过去 10 个月末收盘的简单平均」",
-        "v6 未写 v4 的月末/次交易日成交、§3 现金序列、§4.5 成交限制、U-可交易载体"
-      ],
-      "current_config_vs_portfolio_toml": {
-        "prereg_summary_quote": "A 股 70%（16 个容器等权）、海外 30%（纳指100、标普500 各半），每月再平衡（D5、D7 portfolio.toml）",
-        "portfolio_toml_facts_on_main": {
-          "a_share_weight": 0.7,
-          "overseas_weight": 0.3,
-          "a_share_container_count": 16,
-          "a_share_containers": [
-            "沪深300",
-            "中证500",
-            "中证1000",
-            "创业板",
-            "AI/算力",
-            "有色",
-            "煤炭",
-            "军工",
-            "医药",
-            "消费",
-            "白酒",
-            "农业",
-            "银行",
-            "券商",
-            "地产",
-            "红利"
+    "paths_changed": [
+      "docs/artifact/board/index.html",
+      "docs/artifact/v6-prereg/index.html",
+      "docs/assets/owner-board/b10-v6-roadmap.png",
+      "docs/owner/owner-board.md",
+      "docs/prereg/etf-multiasset-rotation-prereg-v6.md",
+      "operations/planning/2026-11-24-d42-v6-prereg-final-items.md",
+      "scripts/owner_pages/roadmap_v6.py",
+      "shots/el-0.png"
+    ],
+    "expected_product_paths": [
+      "docs/artifact/board/index.html",
+      "docs/artifact/v6-prereg/index.html",
+      "docs/assets/owner-board/b10-v6-roadmap.png",
+      "docs/owner/owner-board.md",
+      "docs/prereg/etf-multiasset-rotation-prereg-v6.md",
+      "operations/planning/2026-11-24-d42-v6-prereg-final-items.md",
+      "scripts/owner_pages/roadmap_v6.py"
+    ],
+    "extra_paths_retained": [
+      "shots/el-0.png"
+    ],
+    "prereg_version": "2.4",
+    "closure_review": {
+      "github_review_thread": "6042330027",
+      "item_1_d42_9_exposure_disclosure": {
+        "scan_scope": [
+          "data/research/long-history",
+          "results/v6-preflight",
+          "results/v5.1/other-market",
+          "incoming/grok-d37-index-20261116"
+        ],
+        "scan_path_file_count": 797,
+        "scan_limitation": "仅限仓库已跟踪路径；不声称仓库外或本地未提交数据不存在",
+        "owner_personal_attestation_2026_11_25_verbatim": "Owner 2026-11-25 在对话中书面确认本人没看过两地行业层的走势或回测",
+        "not_team_zero_exposure": true,
+        "stoxx600_supersector_dataset_in_repo": false,
+        "topix17_sector_dataset_in_repo": false,
+        "filename_hits": {
+          "stoxx600_supersector_filename": [],
+          "topix17_sector_filename": [],
+          "stoxx_any_in_scan_roots": [
+            "incoming/grok-d37-index-20261116/theme-法兰克福DAX指数-official-stoxx-daxk-delayed-series.json"
           ],
-          "overseas_containers": [
-            "纳指100",
-            "标普500"
-          ],
-          "rebalance": "monthly",
-          "band": 0.075,
-          "valve_enabled": false,
-          "cost_one_way": 0.0005,
-          "a_share_book_count": 16
+          "topix_any_in_scan_roots": [
+            "incoming/grok-d37-index-20261116/theme-东证指数-factsheet-001_fac2_TOPIX.pdf",
+            "incoming/grok-d37-index-20261116/theme-东证指数-guidebook-cal2_30_topix.pdf"
+          ]
         },
-        "match_assessment": "partial",
-        "prereg_omits_on_main": [
-          "execution.band=0.075",
-          "[[a_share.book]] 主/备选基金与 list_date",
-          "overseas.pool 代码列表",
-          "valve.enabled=false（D7）",
-          "cost_one_way=0.0005"
-        ]
+        "n225_price_series": {
+          "path": "data/research/long-history/raw/^N225.csv",
+          "header": "date,open,high,low,close,volume",
+          "first_row_date_col": "1965-01-05",
+          "last_row_date_col": "2026-11-02",
+          "line_count": 15199,
+          "kind": "broad_index_nikkei225_price_ohlcv_not_sector"
+        },
+        "longhist_summary_table": {
+          "path": "results/v6-preflight/longhist.csv",
+          "header": "市场,区间,结构,年化,比K0年化,最大回撤,牛市段每年比K0,熊市段每年比K0,平均仓位,双边换手_每年,成本_每年_百分点,一月内翻回_每年,熊市段数,熊市占时间",
+          "sample_rows_metadata_only": [
+            "标普500,1956-01-04→2003-06-30,K0,6.69,0.0,-49.1,0.0,0.0,1.0,0.0,0.0,0.0,9,0.203",
+            "标普500,1956-01-04→2003-06-30,K1,7.39,0.7,-33.2,-6.7,29.56,0.659,3.12,0.312,0.38,9,0.203",
+            "标普500,1956-01-04→2003-06-30,K2,7.22,0.53,-24.3,-7.23,30.84,0.624,3.86,0.386,0.38,9,0.203",
+            "恒生,1988-01-03→2015-12-31,K0,8.41,0.0,-65.2,0.0,0.0,1.0,0.0,0.0,0.0,17,0.237",
+            "恒生,1988-01-03→2015-12-31,K1,6.8,-1.61,-45.7,-22.39,65.76,0.642,3.64,0.364,0.43,17,0.237",
+            "恒生,1988-01-03→2015-12-31,K2,7.39,-1.02,-37.2,-24.5,74.93,0.594,4.58,0.458,0.43,17,0.237",
+            "日经,1988-01-06→2015-12-30,K0,-0.64,0.0,-81.9,0.0,0.0,1.0,0.0,0.0,0.0,14,0.394",
+            "日经,1988-01-06→2015-12-30,K1,2.88,3.52,-43.7,-20.39,40.46,0.503,3.5,0.35,0.36,14,0.394",
+            "日经,1988-01-06→2015-12-30,K2,2.21,2.85,-41.4,-22.22,41.58,0.475,4.08,0.408,0.36,14,0.394"
+          ],
+          "kind": "preflight_aggregated_longhist_K0_K2_table_not_raw_ledger"
+        },
+        "v51_other_market_manifest_excerpt": {
+          "path": "results/v5.1/other-market/manifest.json",
+          "pool": "G",
+          "calendar": "SPY 有收盘的日子",
+          "prices_note": "Yahoo adjclose。分红调整后的价格，不是官方全收益指数。",
+          "raw_sha256_keys_europe_japan_etfs": [
+            "EWG",
+            "EWH",
+            "EWJ",
+            "EWQ",
+            "EWU",
+            "FEZ",
+            "VGK"
+          ]
+        },
+        "d37_dax_broad_not_sector": "incoming/grok-d37-index-20261116/ 含 DAX 大盘拼接资料，非 STOXX600 超级行业"
       },
-      "fulfillment_status": "gaps_documented_pending_orchestrator_clarification"
+      "item_2_d42_8_a1_a2_current_config": {
+        "prereg_§5_2_inherit_v4_quote_anchor": "原样继承 v4 §7.4 附表 A 和该节执行段落（D42-8）",
+        "prereg_ledger_cite_quote": "设计期引用 v4 账本 U-指数行（results/v4/r5/design/A1/index/、A2/index/…）；检验段引用 v5 一次性检验已签收的 U-指数净值（results/v5/oneshot/index/A1/、A2/…）；不计试验",
+        "ledger_manifest": [
+          {
+            "label": "v4_design_A1_U_index",
+            "net_path": "results/v4/r5/design/A1/index/net.csv",
+            "summary_path": "results/v4/r5/design/A1/index/summary.json",
+            "summary_net_sha256": "3c371162360d276d6418b5d57a17b037abd5a99ac17e5b1933fd66854478634e",
+            "recomputed_series_sha256": "3c371162360d276d6418b5d57a17b037abd5a99ac17e5b1933fd66854478634e",
+            "byte_hash_match": true,
+            "interval_start": "2005-01-04",
+            "interval_end": "2015-12-31",
+            "n_days": 2671,
+            "summary_start_end": {
+              "start": "2005-01-04",
+              "end": "2015-12-31"
+            },
+            "raw_net_csv_sha256": "2e56a59595a6c9bb4de18b31e3bbd1d5f62127022b92e3b0f63b522fbeb94ba7"
+          },
+          {
+            "label": "v4_design_A2_U_index",
+            "net_path": "results/v4/r5/design/A2/index/net.csv",
+            "summary_path": "results/v4/r5/design/A2/index/summary.json",
+            "summary_net_sha256": "cf3091d5dfdae739a0f175c1d96c7910bd5ee1bbdb22c1f9fce7eecaa1b7685a",
+            "recomputed_series_sha256": "cf3091d5dfdae739a0f175c1d96c7910bd5ee1bbdb22c1f9fce7eecaa1b7685a",
+            "byte_hash_match": true,
+            "interval_start": "2005-01-04",
+            "interval_end": "2015-12-31",
+            "n_days": 2671,
+            "summary_start_end": {
+              "start": "2005-01-04",
+              "end": "2015-12-31"
+            },
+            "raw_net_csv_sha256": "cdff94aafe64637f4ba06b3f6e6490b8ea244d6ca981a959c647cd10dd5556d4"
+          },
+          {
+            "label": "v5_oneshot_A1_U_index",
+            "net_path": "results/v5/oneshot/index/A1/net.csv",
+            "summary_path": "results/v5/oneshot/index/A1/summary.json",
+            "summary_net_sha256": "c9c883c518f441b13e05d6002baef3eff1646d64eea9c1e05612100bd6066932",
+            "recomputed_series_sha256": "c9c883c518f441b13e05d6002baef3eff1646d64eea9c1e05612100bd6066932",
+            "byte_hash_match": true,
+            "interval_start": "2016-01-04",
+            "interval_end": "2026-09-30",
+            "n_days": 2611,
+            "summary_start_end": {
+              "start": "2016-01-04",
+              "end": "2026-09-30"
+            },
+            "raw_net_csv_sha256": "183f6dd5c07e3d5b97bc86422f08b9db94fa65f3e0115657ee383de41601c29f"
+          },
+          {
+            "label": "v5_oneshot_A2_U_index",
+            "net_path": "results/v5/oneshot/index/A2/net.csv",
+            "summary_path": "results/v5/oneshot/index/A2/summary.json",
+            "summary_net_sha256": "713d9816f43caed231a74dc2b1cba865f1a4640728db38f94495050bbb922711",
+            "recomputed_series_sha256": "713d9816f43caed231a74dc2b1cba865f1a4640728db38f94495050bbb922711",
+            "byte_hash_match": true,
+            "interval_start": "2016-01-04",
+            "interval_end": "2026-09-30",
+            "n_days": 2611,
+            "summary_start_end": {
+              "start": "2016-01-04",
+              "end": "2026-09-30"
+            },
+            "raw_net_csv_sha256": "e529ab25ea0f566997f338168b16762b673d692dff46d791c9c8576c2b3b1cb4"
+          }
+        ],
+        "all_summary_net_sha256_match_recomputed": true,
+        "v4_v5_period_split": "design 2005-01-04→2015-12-31；oneshot 2016-01-04→2026-09-30",
+        "current_config_code_split": {
+          "replicate_daily_book": {
+            "path": "src/portfolio/replicate.py",
+            "signed_scope": "D5 daily_book：容器指数日收益、月末信号次日收盘成交、单边 cost_one_way、design_end 硬闸",
+            "docstring_quote": "日频持有：月末信号在下一交易日收盘才成交，成交金额乘单边成本。",
+            "explicit_not_in_daily_book": [
+              "7.5% band（偏离带）",
+              "premium_cap 10%",
+              "nav_lag 2 交易日",
+              "lot_size 100 整手",
+              "主备基金切换"
+            ],
+            "design_end_guard_quote": "replicate 拒绝结束日 … 晚于 cfg.design_end"
+          },
+          "target_plan_targets": {
+            "path": "src/portfolio/target.py",
+            "module_quote": "目标股数和权重快照。不含区间收益。",
+            "uses_band_premium_nav_lag": true,
+            "valve_d7_quote": "valve.enabled 为假时 A 股腿永远在场",
+            "config_loads_portfolio_toml": true
+          },
+          "matches_prereg_d42_8_split": true
+        },
+        "provenance_v4_appendix_a_path": "docs/prereg/etf-multiasset-rotation-prereg-v4.md §7.4 附表 A",
+        "provenance_v4_runner": "src/v4/r5/design.py series_sha256(net)"
+      }
+    }
+  },
+  "r1b_accuracy_completion": {
+    "subject_head_audited": "7a338ef4b0ca589e9e50e14970fd8b5be60bbada",
+    "technical_decision_for_coordinator": "同意冻结前置条件已满足",
+    "technical_decision_scoped_note": "scoped @7a338ef4 2.4 版；D42-8/D42-9 已写入；Owner 行业层个人陈述 + 仓库普查；不等同团队零暴露；freeze tag 待 Manager 合 #339 后另回合",
+    "prior_pending_at_59a1b56_resolved_by_2_4": true,
+    "closure_review_6042330027": {
+      "github_review_thread": "6042330027",
+      "item_1_d42_9_exposure_disclosure": {
+        "scan_scope": [
+          "data/research/long-history",
+          "results/v6-preflight",
+          "results/v5.1/other-market",
+          "incoming/grok-d37-index-20261116"
+        ],
+        "scan_path_file_count": 797,
+        "scan_limitation": "仅限仓库已跟踪路径；不声称仓库外或本地未提交数据不存在",
+        "owner_personal_attestation_2026_11_25_verbatim": "Owner 2026-11-25 在对话中书面确认本人没看过两地行业层的走势或回测",
+        "not_team_zero_exposure": true,
+        "stoxx600_supersector_dataset_in_repo": false,
+        "topix17_sector_dataset_in_repo": false,
+        "filename_hits": {
+          "stoxx600_supersector_filename": [],
+          "topix17_sector_filename": [],
+          "stoxx_any_in_scan_roots": [
+            "incoming/grok-d37-index-20261116/theme-法兰克福DAX指数-official-stoxx-daxk-delayed-series.json"
+          ],
+          "topix_any_in_scan_roots": [
+            "incoming/grok-d37-index-20261116/theme-东证指数-factsheet-001_fac2_TOPIX.pdf",
+            "incoming/grok-d37-index-20261116/theme-东证指数-guidebook-cal2_30_topix.pdf"
+          ]
+        },
+        "n225_price_series": {
+          "path": "data/research/long-history/raw/^N225.csv",
+          "header": "date,open,high,low,close,volume",
+          "first_row_date_col": "1965-01-05",
+          "last_row_date_col": "2026-11-02",
+          "line_count": 15199,
+          "kind": "broad_index_nikkei225_price_ohlcv_not_sector"
+        },
+        "longhist_summary_table": {
+          "path": "results/v6-preflight/longhist.csv",
+          "header": "市场,区间,结构,年化,比K0年化,最大回撤,牛市段每年比K0,熊市段每年比K0,平均仓位,双边换手_每年,成本_每年_百分点,一月内翻回_每年,熊市段数,熊市占时间",
+          "sample_rows_metadata_only": [
+            "标普500,1956-01-04→2003-06-30,K0,6.69,0.0,-49.1,0.0,0.0,1.0,0.0,0.0,0.0,9,0.203",
+            "标普500,1956-01-04→2003-06-30,K1,7.39,0.7,-33.2,-6.7,29.56,0.659,3.12,0.312,0.38,9,0.203",
+            "标普500,1956-01-04→2003-06-30,K2,7.22,0.53,-24.3,-7.23,30.84,0.624,3.86,0.386,0.38,9,0.203",
+            "恒生,1988-01-03→2015-12-31,K0,8.41,0.0,-65.2,0.0,0.0,1.0,0.0,0.0,0.0,17,0.237",
+            "恒生,1988-01-03→2015-12-31,K1,6.8,-1.61,-45.7,-22.39,65.76,0.642,3.64,0.364,0.43,17,0.237",
+            "恒生,1988-01-03→2015-12-31,K2,7.39,-1.02,-37.2,-24.5,74.93,0.594,4.58,0.458,0.43,17,0.237",
+            "日经,1988-01-06→2015-12-30,K0,-0.64,0.0,-81.9,0.0,0.0,1.0,0.0,0.0,0.0,14,0.394",
+            "日经,1988-01-06→2015-12-30,K1,2.88,3.52,-43.7,-20.39,40.46,0.503,3.5,0.35,0.36,14,0.394",
+            "日经,1988-01-06→2015-12-30,K2,2.21,2.85,-41.4,-22.22,41.58,0.475,4.08,0.408,0.36,14,0.394"
+          ],
+          "kind": "preflight_aggregated_longhist_K0_K2_table_not_raw_ledger"
+        },
+        "v51_other_market_manifest_excerpt": {
+          "path": "results/v5.1/other-market/manifest.json",
+          "pool": "G",
+          "calendar": "SPY 有收盘的日子",
+          "prices_note": "Yahoo adjclose。分红调整后的价格，不是官方全收益指数。",
+          "raw_sha256_keys_europe_japan_etfs": [
+            "EWG",
+            "EWH",
+            "EWJ",
+            "EWQ",
+            "EWU",
+            "FEZ",
+            "VGK"
+          ]
+        },
+        "d37_dax_broad_not_sector": "incoming/grok-d37-index-20261116/ 含 DAX 大盘拼接资料，非 STOXX600 超级行业"
+      },
+      "item_2_d42_8_a1_a2_current_config": {
+        "prereg_§5_2_inherit_v4_quote_anchor": "原样继承 v4 §7.4 附表 A 和该节执行段落（D42-8）",
+        "prereg_ledger_cite_quote": "设计期引用 v4 账本 U-指数行（results/v4/r5/design/A1/index/、A2/index/…）；检验段引用 v5 一次性检验已签收的 U-指数净值（results/v5/oneshot/index/A1/、A2/…）；不计试验",
+        "ledger_manifest": [
+          {
+            "label": "v4_design_A1_U_index",
+            "net_path": "results/v4/r5/design/A1/index/net.csv",
+            "summary_path": "results/v4/r5/design/A1/index/summary.json",
+            "summary_net_sha256": "3c371162360d276d6418b5d57a17b037abd5a99ac17e5b1933fd66854478634e",
+            "recomputed_series_sha256": "3c371162360d276d6418b5d57a17b037abd5a99ac17e5b1933fd66854478634e",
+            "byte_hash_match": true,
+            "interval_start": "2005-01-04",
+            "interval_end": "2015-12-31",
+            "n_days": 2671,
+            "summary_start_end": {
+              "start": "2005-01-04",
+              "end": "2015-12-31"
+            },
+            "raw_net_csv_sha256": "2e56a59595a6c9bb4de18b31e3bbd1d5f62127022b92e3b0f63b522fbeb94ba7"
+          },
+          {
+            "label": "v4_design_A2_U_index",
+            "net_path": "results/v4/r5/design/A2/index/net.csv",
+            "summary_path": "results/v4/r5/design/A2/index/summary.json",
+            "summary_net_sha256": "cf3091d5dfdae739a0f175c1d96c7910bd5ee1bbdb22c1f9fce7eecaa1b7685a",
+            "recomputed_series_sha256": "cf3091d5dfdae739a0f175c1d96c7910bd5ee1bbdb22c1f9fce7eecaa1b7685a",
+            "byte_hash_match": true,
+            "interval_start": "2005-01-04",
+            "interval_end": "2015-12-31",
+            "n_days": 2671,
+            "summary_start_end": {
+              "start": "2005-01-04",
+              "end": "2015-12-31"
+            },
+            "raw_net_csv_sha256": "cdff94aafe64637f4ba06b3f6e6490b8ea244d6ca981a959c647cd10dd5556d4"
+          },
+          {
+            "label": "v5_oneshot_A1_U_index",
+            "net_path": "results/v5/oneshot/index/A1/net.csv",
+            "summary_path": "results/v5/oneshot/index/A1/summary.json",
+            "summary_net_sha256": "c9c883c518f441b13e05d6002baef3eff1646d64eea9c1e05612100bd6066932",
+            "recomputed_series_sha256": "c9c883c518f441b13e05d6002baef3eff1646d64eea9c1e05612100bd6066932",
+            "byte_hash_match": true,
+            "interval_start": "2016-01-04",
+            "interval_end": "2026-09-30",
+            "n_days": 2611,
+            "summary_start_end": {
+              "start": "2016-01-04",
+              "end": "2026-09-30"
+            },
+            "raw_net_csv_sha256": "183f6dd5c07e3d5b97bc86422f08b9db94fa65f3e0115657ee383de41601c29f"
+          },
+          {
+            "label": "v5_oneshot_A2_U_index",
+            "net_path": "results/v5/oneshot/index/A2/net.csv",
+            "summary_path": "results/v5/oneshot/index/A2/summary.json",
+            "summary_net_sha256": "713d9816f43caed231a74dc2b1cba865f1a4640728db38f94495050bbb922711",
+            "recomputed_series_sha256": "713d9816f43caed231a74dc2b1cba865f1a4640728db38f94495050bbb922711",
+            "byte_hash_match": true,
+            "interval_start": "2016-01-04",
+            "interval_end": "2026-09-30",
+            "n_days": 2611,
+            "summary_start_end": {
+              "start": "2016-01-04",
+              "end": "2026-09-30"
+            },
+            "raw_net_csv_sha256": "e529ab25ea0f566997f338168b16762b673d692dff46d791c9c8576c2b3b1cb4"
+          }
+        ],
+        "all_summary_net_sha256_match_recomputed": true,
+        "v4_v5_period_split": "design 2005-01-04→2015-12-31；oneshot 2016-01-04→2026-09-30",
+        "current_config_code_split": {
+          "replicate_daily_book": {
+            "path": "src/portfolio/replicate.py",
+            "signed_scope": "D5 daily_book：容器指数日收益、月末信号次日收盘成交、单边 cost_one_way、design_end 硬闸",
+            "docstring_quote": "日频持有：月末信号在下一交易日收盘才成交，成交金额乘单边成本。",
+            "explicit_not_in_daily_book": [
+              "7.5% band（偏离带）",
+              "premium_cap 10%",
+              "nav_lag 2 交易日",
+              "lot_size 100 整手",
+              "主备基金切换"
+            ],
+            "design_end_guard_quote": "replicate 拒绝结束日 … 晚于 cfg.design_end"
+          },
+          "target_plan_targets": {
+            "path": "src/portfolio/target.py",
+            "module_quote": "目标股数和权重快照。不含区间收益。",
+            "uses_band_premium_nav_lag": true,
+            "valve_d7_quote": "valve.enabled 为假时 A 股腿永远在场",
+            "config_loads_portfolio_toml": true
+          },
+          "matches_prereg_d42_8_split": true
+        },
+        "provenance_v4_appendix_a_path": "docs/prereg/etf-multiasset-rotation-prereg-v4.md §7.4 附表 A",
+        "provenance_v4_runner": "src/v4/r5/design.py series_sha256(net)"
+      }
+    },
+    "check_3_d42_5_and_d42_9_exposure": {
+      "definitions_in_prereg_at_7a338": "§7 载体行 + §7 选定前只做数据普查（D42-9）",
+      "exact_support_criterion_quote": "挑选（前 3 对同结构等权）为正且防守保费不超过 4 点，记为“支持”；否则结论降一级，上线前需 Owner 另批",
+      "owner_personal_attestation_only": "Owner 2026-11-25 在对话中书面确认本人没看过两地行业层的走势或回测",
+      "not_team_zero_exposure": true,
+      "repo_scan_no_stoxx600_topix17_sector_datasets": true,
+      "disclosed_prior_broad_exposures_in_§4_8": true,
+      "fulfillment_status": "substantiated_for_coordinator_at_7a338ef4"
+    },
+    "check_4_d42_8_a1_a2_current_config": {
+      "v4_appendix_a_inherited_at_7a338": true,
+      "ledger_hashes_verified_series_sha256": true,
+      "no_rerun_claimed": "引用 v4 design + v5 oneshot 已签收账本",
+      "replicate_vs_target_split_documented": {
+        "replicate_daily_book": {
+          "path": "src/portfolio/replicate.py",
+          "signed_scope": "D5 daily_book：容器指数日收益、月末信号次日收盘成交、单边 cost_one_way、design_end 硬闸",
+          "docstring_quote": "日频持有：月末信号在下一交易日收盘才成交，成交金额乘单边成本。",
+          "explicit_not_in_daily_book": [
+            "7.5% band（偏离带）",
+            "premium_cap 10%",
+            "nav_lag 2 交易日",
+            "lot_size 100 整手",
+            "主备基金切换"
+          ],
+          "design_end_guard_quote": "replicate 拒绝结束日 … 晚于 cfg.design_end"
+        },
+        "target_plan_targets": {
+          "path": "src/portfolio/target.py",
+          "module_quote": "目标股数和权重快照。不含区间收益。",
+          "uses_band_premium_nav_lag": true,
+          "valve_d7_quote": "valve.enabled 为假时 A 股腿永远在场",
+          "config_loads_portfolio_toml": true
+        },
+        "matches_prereg_d42_8_split": true
+      },
+      "fulfillment_status": "substantiated_at_7a338ef4"
+    },
+    "historical_gap_at_59a1b56_archived": {
+      "was_pending_before_2_4": true,
+      "v6_a1_a2_one_line_rows_at_59": {
+        "A1": "每月末标普500 跑赢现金，就在标普500 和沪深300 里拿更强的一个全仓，否则拿 10 年国债",
+        "A2": "沪深300、标普500、恒生、10 年国债、黄金各 1/5，跌破 10 个月均线的那一腿换成现金"
+      }
     },
     "check_5_appendix_ab_unchanged": {
-      "appendix_a_unchanged_since_292568ba": true,
-      "appendix_b_unchanged_since_292568ba": true
+      "appendix_a_unchanged_59_to_7a338": true,
+      "appendix_b_unchanged_59_to_7a338": true
     }
   },
   "component_tables_exhaustive": {
-    "subject_head": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
+    "subject_head": "7a338ef4b0ca589e9e50e14970fd8b5be60bbada",
     "parent_after_653de22": "653de223400567f06ce3abd42b78c0394bf3cf57",
     "parent_after_9e626a2": "9e626a2b1e711e2b0830bc00bb30afe017d4a9fa",
     "scope": "every <!-- 组件：… --> table + immediate <!-- 页面：参考 --> companion rows @HEAD_CURRENT",
     "distinct_from_keypoint_103": true,
     "component_table_count": 14,
-    "claim_count_total": 63,
+    "claim_count_total": 64,
     "claim_verdict_counts": {
-      "anchored": 63
+      "anchored": 63,
+      "review_incomplete": 1
     },
     "anchored_claim_count": 63,
-    "review_incomplete_claims": [],
+    "review_incomplete_claims": [
+      {
+        "table_index": 4,
+        "table_kind": "component",
+        "component_title": "分拣",
+        "section_header": "## §4 已经看过的信息：检验段不干净，美股 60% 是在知道美股强之后定的",
+        "html_location": "docs/artifact/v6-prereg/index.html#sec-4",
+        "row_index": 7,
+        "cells": [
+          "别的市场只算半干净",
+          "大盘见过、行业层没看过 → 称“别的市场检验”，不称样本外",
+          "8",
+          "欧洲、日本以前只接触过大盘层"
+        ],
+        "visible_numbers": [
+          "8"
+        ],
+        "visible_labels": [
+          "别的市场只算半干净",
+          "大盘见过、行业层没看过 → 称“别的市场检验”，不称样本外",
+          "欧洲、日本以前只接触过大盘层"
+        ],
+        "row_text": "别的市场只算半干净 | 大盘见过、行业层没看过 → 称“别的市场检验”，不称样本外 | 8 | 欧洲、日本以前只接触过大盘层",
+        "verdict": "review_incomplete",
+        "normative_sources": [],
+        "reviewer_notes": "Missing 4/component/7",
+        "automated_regex_anchor_disallowed": true
+      }
+    ],
     "contradictory_product_claims": [],
     "methodology": "manual row specs in pr339-r1b-component-manual.py; no regex self-quote",
     "sec6_owner_alignment": {
@@ -4223,7 +4572,7 @@
         "component_title": "分拣",
         "section_header": "## §4 已经看过的信息：检验段不干净，美股 60% 是在知道美股强之后定的",
         "html_location": "docs/artifact/v6-prereg/index.html#sec-4",
-        "component_row_count": 7,
+        "component_row_count": 8,
         "companion_visual_row_count": 0,
         "claims": [
           {
@@ -4450,6 +4799,33 @@
               }
             ],
             "reviewer_notes": "",
+            "automated_regex_anchor_disallowed": true
+          },
+          {
+            "table_index": 4,
+            "table_kind": "component",
+            "component_title": "分拣",
+            "section_header": "## §4 已经看过的信息：检验段不干净，美股 60% 是在知道美股强之后定的",
+            "html_location": "docs/artifact/v6-prereg/index.html#sec-4",
+            "row_index": 7,
+            "cells": [
+              "别的市场只算半干净",
+              "大盘见过、行业层没看过 → 称“别的市场检验”，不称样本外",
+              "8",
+              "欧洲、日本以前只接触过大盘层"
+            ],
+            "visible_numbers": [
+              "8"
+            ],
+            "visible_labels": [
+              "别的市场只算半干净",
+              "大盘见过、行业层没看过 → 称“别的市场检验”，不称样本外",
+              "欧洲、日本以前只接触过大盘层"
+            ],
+            "row_text": "别的市场只算半干净 | 大盘见过、行业层没看过 → 称“别的市场检验”，不称样本外 | 8 | 欧洲、日本以前只接触过大盘层",
+            "verdict": "review_incomplete",
+            "normative_sources": [],
+            "reviewer_notes": "Missing 4/component/7",
             "automated_regex_anchor_disallowed": true
           }
         ]
@@ -5363,8 +5739,28 @@
                 "quote": "| **对照：现行配置**（D42-4） | 模拟盘每月同次记录现行配置（`config/portfolio.toml`）的持仓与净值 | 只报告；上线时 Owner 看逐项比较拍板 |"
               },
               {
-                "location": "§5.2 D42-4",
-                "quote": "| 现行配置 | `config/portfolio.toml`（D5、D7）：A 股 70%（16 个容器等权）、海外 30%（纳指100、标普500 各半），每月再平衡 | 和在跑的策略逐项比：赢在哪、输在哪（D27-5、D42-4）；只报告 |"
+                "location": "§5.2 D42-8 现行配置",
+                "quote": "| 现行配置 | `config/portfolio.toml`（D5、D7）全部字段，用 `src/portfolio` 现有代码跑，不另写简化版：A 股 70%（16 个容器等权）、海外 30%（纳指100、标普500 各半），阀门关闭（D7），月末出信号、下一交易日收盘成交，单边成本 0.05%。回测走 `replicate.py` 的 `daily_book`（D5 签收的复现口径，用容器指数）；7.5% 偏离带、溢价上限 10%、主备基金、净值滞后 2 天、一手 100 份要用基金行情和净值，只在模拟盘按 `target.py` 执行，回测报告写明这几项缺席（D42-8） | 和在跑的策略逐项比：赢在哪、输在哪（D27-5、D42-4）；只报告 |"
+              },
+              {
+                "location": "§5.2 D42-8 A1",
+                "quote": "| A1 | 原样继承 v4 §7.4 附表 A 和该节执行段落（D42-8）：每个月末（每个自然月最后一个上交所交易日），标普500 全收益过去 12 个月收益高于现金，就在标普500 全收益和沪深300 全收益里拿过去 12 个月收益更高的一个全仓，否则全仓 10 年国债财富指数；下一个上交所交易日收盘成交；数据不足时、成本、收盘时点、汇率、现金都同 v4；U-指数口径 | 同行（D42-6）；只报告 |"
+              },
+              {
+                "location": "§5.2 D42-8 A2",
+                "quote": "| A2 | 同上原样继承（D42-8）：沪深300 全收益、标普500 全收益、恒生、10 年国债财富指数、黄金 Au99.99 各 1/5；每个月末，这一份的月末收盘**严格高于**过去 10 个月末收盘的简单平均才持有，等于或低于就这一份拿现金；不足 10 个月末收盘的那一份拿现金；U-指数口径 | 同行（D42-6）；只报告 |"
+              },
+              {
+                "location": "§5.2 D42-8 ledgers",
+                "quote": "设计期引用 v4 账本 U-指数行（`results/v4/r5/design/A1/index/`、`A2/index/`，summary 记的 net_sha256 为 3c371162…、cf3091d5…）；检验段引用 v5 一次性检验已签收的 U-指数净值（`results/v5/oneshot/index/A1/`、`A2/`，2016-01-04 → 2026-09-30，net_sha256 为 c9c883c5…、713d9816…）；不计试验。"
+              },
+              {
+                "location": "§4.1 #8 D42-9",
+                "quote": "| 8 | **欧洲、日本以前的接触**（D42-5 写定之前；Owner 2026-11-25 书面确认本人没看过两地行业层的走势或回测，D42-9）：日经225 价格指数 1988–2015 用在 v5.1 长历史复核和 D38 预演长历史回放（大盘层的 K0–K2 防守）；EWJ、VGK、FEZ、EWG、EWU、EWQ 是 v5.1 别的市场池 G 的容器（2003-07 → 2026-09，跑的是 v5.1、E2 式、A1）；东证指数、DAX 的 QDII 在 A 股项目池里，D37 为拼接取过 DAX 日线（1999 起）和东证资料页。STOXX 600 超级行业、TOPIX-17 行业的数据从未下载，也没有在欧洲、日本数据上跑过任何 v6 规则 | 两地大盘走势都见过，日本的大盘均线防守 1988–2015 已看过，欧洲没有；行业层两地都没看过 | 称“别的市场检验”，不称样本外 |"
+              },
+              {
+                "location": "§9.2 #8 D42-8 D42-9",
+                "quote": "| 8 | R1b 对 D42 增量的两项：别的市场写定前的接触；A1、A2、现行配置的执行口径 | Owner、Orchestrator | 已完成 | **已完成（2026-11-25，D42-8、D42-9）**：§4 第 8 条照实写明、Owner 书面确认；§5.2 写死口径并引用已签收账本 |"
               }
             ],
             "reviewer_notes": "",
@@ -5517,7 +5913,7 @@
       {
         "table_index": 12,
         "component_title": "路线",
-        "section_header": "## §9 运行纪律与冻结前待办：冻结前的 7 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+        "section_header": "## §9 运行纪律与冻结前待办：冻结前的 8 件待办全部完成，你已批准冻结，等 R1b 签收后打标签",
         "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
         "component_row_count": 8,
         "companion_visual_row_count": 0,
@@ -5526,7 +5922,7 @@
             "table_index": 12,
             "table_kind": "component",
             "component_title": "路线",
-            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 7 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 8 件待办全部完成，你已批准冻结，等 R1b 签收后打标签",
             "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
             "row_index": 0,
             "cells": [
@@ -5555,7 +5951,7 @@
             "table_index": 12,
             "table_kind": "component",
             "component_title": "路线",
-            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 7 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 8 件待办全部完成，你已批准冻结，等 R1b 签收后打标签",
             "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
             "row_index": 1,
             "cells": [
@@ -5587,22 +5983,22 @@
             "table_index": 12,
             "table_kind": "component",
             "component_title": "路线",
-            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 7 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 8 件待办全部完成，你已批准冻结，等 R1b 签收后打标签",
             "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
             "row_index": 2,
             "cells": [
-              "冻结前 7 件待办",
+              "冻结前 8 件待办",
               "Orchestrator、Grok",
               "已完成"
             ],
             "visible_numbers": [
-              "7"
+              "8"
             ],
             "visible_labels": [
               "Orchestrator、Grok",
               "已完成"
             ],
-            "row_text": "冻结前 7 件待办 | Orchestrator、Grok | 已完成",
+            "row_text": "冻结前 8 件待办 | Orchestrator、Grok | 已完成",
             "verdict": "anchored",
             "normative_sources": [
               {
@@ -5621,20 +6017,21 @@
             "table_index": 12,
             "table_kind": "component",
             "component_title": "路线",
-            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 7 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 8 件待办全部完成，你已批准冻结，等 R1b 签收后打标签",
             "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
             "row_index": 3,
             "cells": [
-              "R1b",
-              "Reviewer",
-              "现在"
+              "你批准冻结",
+              "Owner",
+              "已完成"
             ],
             "visible_numbers": [],
             "visible_labels": [
-              "Reviewer",
-              "现在"
+              "你批准冻结",
+              "Owner",
+              "已完成"
             ],
-            "row_text": "R1b | Reviewer | 现在",
+            "row_text": "你批准冻结 | Owner | 已完成",
             "verdict": "anchored",
             "normative_sources": [
               {
@@ -5653,21 +6050,20 @@
             "table_index": 12,
             "table_kind": "component",
             "component_title": "路线",
-            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 7 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 8 件待办全部完成，你已批准冻结，等 R1b 签收后打标签",
             "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
             "row_index": 4,
             "cells": [
-              "冻结",
-              "Owner",
-              "你批准"
+              "R1b 签收后打标签",
+              "Reviewer 等",
+              "现在"
             ],
             "visible_numbers": [],
             "visible_labels": [
-              "冻结",
-              "Owner",
-              "你批准"
+              "Reviewer 等",
+              "现在"
             ],
-            "row_text": "冻结 | Owner | 你批准",
+            "row_text": "R1b 签收后打标签 | Reviewer 等 | 现在",
             "verdict": "anchored",
             "normative_sources": [
               {
@@ -5686,7 +6082,7 @@
             "table_index": 12,
             "table_kind": "component",
             "component_title": "路线",
-            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 7 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 8 件待办全部完成，你已批准冻结，等 R1b 签收后打标签",
             "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
             "row_index": 5,
             "cells": [
@@ -5715,7 +6111,7 @@
             "table_index": 12,
             "table_kind": "component",
             "component_title": "路线",
-            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 7 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 8 件待办全部完成，你已批准冻结，等 R1b 签收后打标签",
             "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
             "row_index": 6,
             "cells": [
@@ -5744,7 +6140,7 @@
             "table_index": 12,
             "table_kind": "component",
             "component_title": "路线",
-            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 7 件待办全部完成，等 Reviewer R1b 后请你批准冻结",
+            "section_header": "## §9 运行纪律与冻结前待办：冻结前的 8 件待办全部完成，你已批准冻结，等 R1b 签收后打标签",
             "html_location": "docs/artifact/v6-prereg/index.html#sec-9",
             "row_index": 7,
             "cells": [
@@ -6132,6 +6528,16 @@
     },
     "at_audited_d42_59a1b56": {
       "ref": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
+      "exit_code": 0,
+      "owner_page_lint_errors": 0,
+      "owner_page_lint_warns": 1,
+      "stdout_tail": [
+        "WARN  [sec-8-数据陷阱声明-结论必须声明四项陷阱-加上美股代理-实盘载体和申万回溯的差异] 一张 7 行的表、没有图：考虑用图讲重点、表放折叠",
+        "0 个 ERROR，1 个 WARN"
+      ]
+    },
+    "at_audited_2_4_7a338ef4": {
+      "ref": "7a338ef4b0ca589e9e50e14970fd8b5be60bbada",
       "exit_code": 0,
       "owner_page_lint_errors": 0,
       "owner_page_lint_warns": 1,

@@ -1,57 +1,27 @@
 {
   "companion_pr363_status": "merged",
-  "companion_pr363_merge_commit": "b4a93bc17671586827d864c17aba35bc9162c8fc",
-  "owner_destination_2026_11_24_2327": "结论写在 PR#339；证据另开 PR，不合并 #339",
+  "companion_pr364_status": "open",
   "evidence_branch": "cursor/pr339-r1b-d42-evidence-d912",
-  "companion_prior_pr363_merge_commit": "b4a93bc17671586827d864c17aba35bc9162c8fc",
+  "owner_destination": "结论写在 PR#339；证据 PR#364",
   "review_increment_window": {
-    "start_full": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
-    "intervening_mid_full": "2623a2a31695387f68765d87d57b681ca7e281f6",
-    "end_audited_full": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
-    "pr339_live_fetched_full": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e"
+    "block_a_292568ba": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
+    "d42_23_59a1b56e": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
+    "audited_subject_2_4_7a338ef4": "7a338ef4b0ca589e9e50e14970fd8b5be60bbada",
+    "pr339_live_fetched_full": "7a338ef4b0ca589e9e50e14970fd8b5be60bbada",
+    "delta_59_to_7a_commits": [
+      "46728ecd5230308b3e86d2d0e49d6f7cb54d0df1",
+      "7a338ef4b0ca589e9e50e14970fd8b5be60bbada"
+    ]
   },
-  "technical_decision": "尚不能确认全部冻结前置条件",
-  "technical_decision_status": "pending_coordinator_and_owner_confirmation",
-  "technical_decision_scoped_head_audited": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
-  "pr339_live_fetched_at_verify_time": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
-  "technical_decision_note": "merge/八路径/附表/①–④阈值与 63 组件锚定已记录；③ D42-5 定义先于别市数据暴露须 Owner 佐证（不得以缺产物推定通过）；④ v6 §5.2 A1/A2/现行配置与 v4 附表 A、portfolio.toml 执行层存在待澄清缺口",
-  "d42_planning_path": "operations/planning/2026-11-24-d42-v6-prereg-final-items.md",
-  "criteria_1234_unchanged_at_d42_head": true,
-  "owner_authorized_amendments_d42": ["D42-1", "D42-2", "D42-3", "D42-4", "D42-5", "D42-6", "D42-7"],
-  "d42_4_d27_5_waiver_documented": true,
-  "d42_5_pre_exposure_proof_limitation": true,
-  "d42_5_check_3_fulfillment": "pending_owner_corroboration_before_other_market_data_read",
-  "a1a36f6_to_59a1b56e_eight_paths_exact_match": true,
-  "check_a": {
-    "appendix_a_sha256_at_59a1b56": "3f8407a0d760ab0ce9dcd3b519d28f2e8b276548ea4c0a2123230f735e266d94",
-    "unchanged_since_292568ba": true
-  },
-  "check_b": {
-    "json_sha256": "d5dcc888f93211992324e0f63c849325644f2f19607d9b0d34fa6b57dab53f01",
-    "unchanged_since_292568ba": true
-  },
-  "check_e": {
-    "owner_page_lint_at_59a1b56": "see pr339-r1b-audit.json page_lint.at_audited_d42_59a1b56"
-  },
-  "component_tables_at_audited_head": {
-    "subject_head": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
-    "component_table_count": 14,
-    "claim_count_total": 63,
-    "claim_verdict_counts": {"anchored": 63},
-    "review_incomplete": 0
-  },
-  "lineage_preserved": {
-    "full_r1b_window": "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f",
-    "incremental_653de22": "653de223400567f06ce3abd42b78c0394bf3cf57",
-    "block_a_close_292568ba": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
-    "artifact": "operations/reviews/pr339-r1b-audit.json"
-  },
-  "product_blockers": [],
-  "unresolved_for_freeze_prerequisites": [
-    "check_3: Owner corroborate D42-5 definitions fixed before any other-market data read",
-    "check_4: v6 A1/A2 linkage to v4 §7.4 appendix A + once-only run vs v4 ledger cite",
-    "check_4: current-config row partial vs portfolio.toml execution.band/books/valve/cost"
-  ],
+  "technical_decision": "同意冻结前置条件已满足",
+  "technical_decision_scoped_head": "7a338ef4b0ca589e9e50e14970fd8b5be60bbada",
+  "technical_decision_note": "2.4 版闭合 review 6042330027：D42-9 §4#8 披露 + Owner 个人陈述（非团队零暴露）+ 仓库普查；D42-8 A1/A2 继承 v4 + ledger series_sha256 四路核验；现行配置 replicate/target 分工；①–④ 未改；freeze tag 不在本回合",
+  "closure_review_github_thread": "6042330027",
+  "criteria_1234_unchanged_59_to_7a338": true,
+  "appendix_ab_unchanged_59_to_7a338": true,
+  "owner_personal_attestation_d42_9": "Owner 2026-11-25 在对话中书面确认本人没看过两地行业层的走势或回测",
+  "ledger_all_net_sha256_verified": true,
+  "unresolved_for_freeze_prerequisites": [],
   "companion_artifacts_seven_paths_owner_scope": [
     "operations/reviews/2026-11-24-v6-prereg-draft-r1b.md",
     "operations/reviews/pr339-r1b-verify.json",
