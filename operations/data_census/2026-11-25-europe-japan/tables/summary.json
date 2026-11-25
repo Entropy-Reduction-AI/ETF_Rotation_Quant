@@ -1,0 +1,160 @@
+{
+  "built_at_utc": "2026-11-25T03:47:05Z",
+  "vendor_sha256": "54bd39122c489604aa3016d6981cc6960654d3b3dd28f7cb825b8a8633a02310",
+  "vendor_bytes": 6554775,
+  "n_europe_index_rows": 72,
+  "icb20_names_found": [
+    "STOXX Europe 600 Automobiles & Parts",
+    "STOXX Europe 600 Banks",
+    "STOXX Europe 600 Basic Resources",
+    "STOXX Europe 600 Chemicals",
+    "STOXX Europe 600 Construction & Materials",
+    "STOXX Europe 600 Consumer Products and Services",
+    "STOXX Europe 600 Energy",
+    "STOXX Europe 600 Financial Services",
+    "STOXX Europe 600 Food Beverage and Tobacco",
+    "STOXX Europe 600 Health Care",
+    "STOXX Europe 600 Industrial Goods & Services",
+    "STOXX Europe 600 Insurance",
+    "STOXX Europe 600 Media",
+    "STOXX Europe 600 Personal Care Drug and Grocery Stores",
+    "STOXX Europe 600 Real Estate",
+    "STOXX Europe 600 Retail",
+    "STOXX Europe 600 Technology",
+    "STOXX Europe 600 Telecommunications",
+    "STOXX Europe 600 Travel & Leisure",
+    "STOXX Europe 600 Utilities"
+  ],
+  "icb20_missing": [],
+  "n_europe_etf_shareclasses": 27,
+  "n_nomura_pages": 19,
+  "n_jpx_topix_rows": 37,
+  "rates": {
+    "estr": {
+      "series": "ECB €STR volume-weighted trimmed mean",
+      "file": "raw/ecb/estr-wt.csv",
+      "sha256": "6d948d22a80a08a072e34a52813045cc938a1770c615db647ee06498aede665d",
+      "bytes": 568475,
+      "n_rows": 1831,
+      "n_distinct_keys": 1,
+      "key": "EST.B.EU000A2X2A25.WT",
+      "title_prefix": "Euro short-term rate",
+      "freq_token": "B",
+      "first_date": "2019-10-01",
+      "last_date": "2026-11-23",
+      "n_dated_rows": 1831,
+      "obs_status_counts": {
+        "A": 1831
+      },
+      "missing_sessions_vs_calendar": "未核实"
+    },
+    "pre_estr": {
+      "series": "ECB pre-€STR volume-weighted trimmed mean",
+      "file": "raw/ecb/preestr-wt.csv",
+      "sha256": "c2b6d258fc43ba729f684b478843bddc484d0af7c7f8dd948b39b613ebbe2cc1",
+      "bytes": 364439,
+      "n_rows": 649,
+      "n_distinct_keys": 1,
+      "key": "MMSR.B.U2._X._Z.S12._Z.U.BO.WT.D76.MA._Z._Z.EUR._Z",
+      "title_prefix": "Pre-Euro Short-Term Rate - Volume-weighted trimmed mean rate",
+      "freq_token": "B",
+      "first_date": "2017-03-15",
+      "last_date": "2019-09-30",
+      "n_dated_rows": 649,
+      "obs_status_counts": {
+        "A": 649
+      },
+      "missing_sessions_vs_calendar": "未核实"
+    },
+    "eonia": {
+      "series": "EONIA rate EON.D.EONIA_TO.RATE",
+      "file": "raw/ecb/eonia-rate.csv",
+      "sha256": "e3dab718d57b468346ac7639480d47800fc73215cc6575fb840308dc14481cd8",
+      "bytes": 2543761,
+      "n_rows": 5890,
+      "n_distinct_keys": 1,
+      "key": "EON.D.EONIA_TO.RATE",
+      "title_prefix": "Rate for the overnight maturity calculated as the euro short-term rate plus a spread of 8.5 basis points",
+      "freq_token": "D",
+      "first_date": "1999-01-04",
+      "last_date": "2021-12-31",
+      "n_dated_rows": 5890,
+      "obs_status_counts": {
+        "A": 5890
+      },
+      "missing_sessions_vs_calendar": "未核实"
+    },
+    "yc_aaa_10y": {
+      "series": "ECB yield curve AAA spot 10Y",
+      "file": "raw/ecb/yc-aaa-10y.csv",
+      "sha256": "0413399fc8fb4f5a2e4414eb6d1b64f910d994abe76f69696cbf48bc35b94300",
+      "bytes": 3187080,
+      "n_rows": 5680,
+      "n_distinct_keys": 1,
+      "key": "YC.B.U2.EUR.4F.G_N_A.SV_C_YM.SR_10Y",
+      "title_prefix": "AAA yield curve - 10-year spot rate",
+      "freq_token": "B",
+      "first_date": "2004-09-06",
+      "last_date": "2026-11-23",
+      "n_dated_rows": 5680,
+      "obs_status_counts": {
+        "A": 5680
+      },
+      "missing_sessions_vs_calendar": "未核实"
+    },
+    "yc_all_10y": {
+      "series": "ECB yield curve all-bonds spot 10Y",
+      "file": "raw/ecb/yc-all-10y.csv",
+      "sha256": "e8844aee3391b8d72d098dec3559af98c64da0d858d205b6c785d538e60893a2",
+      "bytes": 3219905,
+      "n_rows": 5680,
+      "n_distinct_keys": 1,
+      "key": "YC.B.U2.EUR.4F.G_N_C.SV_C_YM.SR_10Y",
+      "title_prefix": "All euro area yield curve - 10-year spot rate",
+      "freq_token": "B",
+      "first_date": "2004-09-06",
+      "last_date": "2026-11-23",
+      "n_dated_rows": 5680,
+      "obs_status_counts": {
+        "A": 5680
+      },
+      "missing_sessions_vs_calendar": "未核实"
+    },
+    "bund": {
+      "series": "Bundesbank daily yield of the current 10 year federal bond",
+      "series_id": "BBSSY.D.REN.EUR.A630.000000WT1010.A",
+      "file": "raw/bbk/de10y.csv",
+      "sha256": "793cb4218b3d651e9571a7f39a26623eb4918380c9aef77ecdc07cd76f582f1e",
+      "bytes": 200225,
+      "unit": "PROZENT,",
+      "provider_last_update": "2026-11-24 12:26:29,",
+      "first_date": "2001-10-01",
+      "last_date": "2026-11-24",
+      "n_dated_rows": 9186,
+      "n_present": 6388,
+      "n_provider_marked_missing": 2798,
+      "missing_flag_text": "No value available",
+      "missing_sessions_vs_calendar": "未核实",
+      "source_url": "https://api.statistiken.bundesbank.de/rest/data/BBSSY/D.REN.EUR.A630.000000WT1010.A?format=csv&lang=en",
+      "page_label": "Daily yield of the current 10 year federal bond"
+    },
+    "jgb": {
+      "series": "MOF JGB interest rate, constant maturity, 10Y column",
+      "definition": "semiannual compound yield, constant maturity, from JSDA reference prices at 15:00, released 09:30 next business day",
+      "definition_url": "https://www.mof.go.jp/english/policy/jgbs/reference/interest_rate/qa.htm",
+      "file": "raw/mof/jgbcme_all.csv",
+      "sha256": "56e7dcc459fd46d94de920ecbb76a3df3c9832f157c5fac5c61410e2eec06548",
+      "bytes": 1197657,
+      "source_url": "https://www.mof.go.jp/english/policy/jgbs/reference/interest_rate/historical/jgbcme_all.csv",
+      "first_date_any_column": "1974/9/24",
+      "last_date_any_column": "2026/10/30",
+      "n_rows": 13330,
+      "first_date_10y_populated": "1986/7/5",
+      "last_date_10y_populated": "2026/10/30",
+      "n_10y_populated": 9969,
+      "n_10y_dash_or_blank": 3361,
+      "missing_sessions_vs_calendar": "未核实",
+      "sibling_ja_file_rowcount_note": "Japanese jgbcm_all.csv has the same line count; dates there are era labels and were not used for the count"
+    }
+  }
+}
