@@ -122,6 +122,13 @@ _SPECS = {
             {"location": '§4 details 七条', "quote": "| 7 | **冻结前新增的三项检验**"},
         ],
     },
+    (4, 'component', 7): {
+        "verdict": 'anchored',
+        "normative_sources": [
+            {"location": '§4 details 第八条 D42-9', "quote": "| 8 | **欧洲、日本以前的接触**（D42-5 写定之前；Owner 2026-11-25 书面确认本人没看过两地行业层的走势或回测，D42-9）：…STOXX 600 超级行业、TOPIX-17 行业的数据从未下载，也没有在欧洲、日本数据上跑过任何 v6 规则 | 两地大盘走势都见过，日本的大盘均线防守 1988–2015 已看过，欧洲没有；行业层两地都没看过 | 称“别的市场检验”，不称样本外 |"},
+            {"location": '§4 组件分拣同行', "quote": "别的市场只算半干净 | 大盘见过、行业层没看过 → 称“别的市场检验”，不称样本外"},
+        ],
+    },
     (5, 'component', 0): {
         "verdict": 'anchored',
         "normative_sources": [

@@ -4087,39 +4087,10 @@
     "component_table_count": 14,
     "claim_count_total": 64,
     "claim_verdict_counts": {
-      "anchored": 63,
-      "review_incomplete": 1
+      "anchored": 64
     },
-    "anchored_claim_count": 63,
-    "review_incomplete_claims": [
-      {
-        "table_index": 4,
-        "table_kind": "component",
-        "component_title": "分拣",
-        "section_header": "## §4 已经看过的信息：检验段不干净，美股 60% 是在知道美股强之后定的",
-        "html_location": "docs/artifact/v6-prereg/index.html#sec-4",
-        "row_index": 7,
-        "cells": [
-          "别的市场只算半干净",
-          "大盘见过、行业层没看过 → 称“别的市场检验”，不称样本外",
-          "8",
-          "欧洲、日本以前只接触过大盘层"
-        ],
-        "visible_numbers": [
-          "8"
-        ],
-        "visible_labels": [
-          "别的市场只算半干净",
-          "大盘见过、行业层没看过 → 称“别的市场检验”，不称样本外",
-          "欧洲、日本以前只接触过大盘层"
-        ],
-        "row_text": "别的市场只算半干净 | 大盘见过、行业层没看过 → 称“别的市场检验”，不称样本外 | 8 | 欧洲、日本以前只接触过大盘层",
-        "verdict": "review_incomplete",
-        "normative_sources": [],
-        "reviewer_notes": "Missing 4/component/7",
-        "automated_regex_anchor_disallowed": true
-      }
-    ],
+    "anchored_claim_count": 64,
+    "review_incomplete_claims": [],
     "contradictory_product_claims": [],
     "methodology": "manual row specs in pr339-r1b-component-manual.py; no regex self-quote",
     "sec6_owner_alignment": {
@@ -4823,9 +4794,18 @@
               "欧洲、日本以前只接触过大盘层"
             ],
             "row_text": "别的市场只算半干净 | 大盘见过、行业层没看过 → 称“别的市场检验”，不称样本外 | 8 | 欧洲、日本以前只接触过大盘层",
-            "verdict": "review_incomplete",
-            "normative_sources": [],
-            "reviewer_notes": "Missing 4/component/7",
+            "verdict": "anchored",
+            "normative_sources": [
+              {
+                "location": "§4 details 第八条 D42-9",
+                "quote": "| 8 | **欧洲、日本以前的接触**（D42-5 写定之前；Owner 2026-11-25 书面确认本人没看过两地行业层的走势或回测，D42-9）：…STOXX 600 超级行业、TOPIX-17 行业的数据从未下载，也没有在欧洲、日本数据上跑过任何 v6 规则 | 两地大盘走势都见过，日本的大盘均线防守 1988–2015 已看过，欧洲没有；行业层两地都没看过 | 称“别的市场检验”，不称样本外 |"
+              },
+              {
+                "location": "§4 组件分拣同行",
+                "quote": "别的市场只算半干净 | 大盘见过、行业层没看过 → 称“别的市场检验”，不称样本外"
+              }
+            ],
+            "reviewer_notes": "",
             "automated_regex_anchor_disallowed": true
           }
         ]
