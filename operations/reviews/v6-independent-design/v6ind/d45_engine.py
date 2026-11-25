@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import math
+
 import numpy as np
 import pandas as pd
 
@@ -77,6 +79,58 @@ def votes(levels: pd.DataFrame, parent: str, trin: pd.Series) -> pd.Series:
     return ma_vote.fillna(0.0) + breadth_vote.astype(float) + trin_vote.astype(float)
 
 
+def continuity_balance(levels: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """ID 的方向以外部分，以及窗口内有效交易日。窗口是 12 个月前月末之后到上月末。"""
+    change = levels.pct_change()
+    up = change > 0
+    down = change < 0
+    known = change.notna()
+    ends = list(levels.index[month_end_mask(levels.index)])
+    balance_rows = []
+    day_rows = []
+    for pos, _stamp in enumerate(ends):
+        if pos < 12:
+            balance_rows.append(np.full(levels.shape[1], np.nan))
+            day_rows.append(np.zeros(levels.shape[1]))
+            continue
+        start, stop = ends[pos - 12], ends[pos - 1]
+        window = known.loc[(known.index > start) & (known.index <= stop)]
+        days = window.sum(axis=0).to_numpy(dtype=float)
+        down_n = down.loc[window.index].sum(axis=0).to_numpy(dtype=float)
+        up_n = up.loc[window.index].sum(axis=0).to_numpy(dtype=float)
+        balance = np.full(levels.shape[1], np.nan)
+        enough = days >= 200
+        balance[enough] = (down_n[enough] - up_n[enough]) / days[enough]
+        balance_rows.append(balance)
+        day_rows.append(days)
+    index = pd.DatetimeIndex(ends)
+    return (
+        pd.DataFrame(balance_rows, index=index, columns=levels.columns),
+        pd.DataFrame(day_rows, index=index, columns=levels.columns),
+    )
+
+
+def continuity_pick(score: np.ndarray, ok: np.ndarray, identity: np.ndarray, tag: np.ndarray,
+                    names: int = 3) -> list[int]:
+    """先在给定池子里按 12−1 去重排名，取前一半（向上取整），再取 ID 最低的 3 个。"""
+    ranked: list[int] = []
+    used: set[str] = set()
+    order = np.argsort(-np.where(ok, score, -np.inf))
+    for pos in order:
+        if not ok[pos]:
+            break
+        label = tag[pos]
+        if label and label in used:
+            continue
+        ranked.append(int(pos))
+        if label:
+            used.add(str(label))
+    half = math.ceil(len(ranked) / 2)
+    pool = ranked[:half]
+    pool.sort(key=lambda pos: (float(identity[pos]), -float(score[pos])))
+    return pool[:names]
+
+
 def run_slot(levels: pd.DataFrame, parent: str, vote: pd.Series, bond: pd.Series, cash: pd.Series,
              tags: dict[str, str], prior: list[float] | None, *, mode: str, cost: float, names: int = 3,
              dedupe: bool = True):
@@ -105,6 +159,8 @@ def run_slot(levels: pd.DataFrame, parent: str, vote: pd.Series, bond: pd.Series
     asset = returns.to_numpy(dtype=float)
     bond_ret = bond.fillna(0.0).to_numpy(dtype=float)
     cash_ret = cash.to_numpy(dtype=float)
+    continuity = mode in ("cont", "cont_ref")
+    balance_at, days_at = continuity_balance(levels) if continuity else (None, None)
 
     def choose(score: np.ndarray, ok: np.ndarray) -> list[int]:
         picked: list[int] = []
@@ -167,15 +223,26 @@ def run_slot(levels: pd.DataFrame, parent: str, vote: pd.Series, bond: pd.Series
             picked = list(np.where(ok)[0])
             raw = []
         else:
-            raw = choose(score, ok)
-            no_dedupe = [int(pos) for pos in np.argsort(-np.where(ok, score, -np.inf))[:names] if ok[pos]]
-            record["去重改了名单"] = sorted(raw) != sorted(no_dedupe)
             gate = not bool(above.loc[stamp].iloc[parent_at])
-            tradable = ok & (score > 0) if gate else ok
-            fraction = belief if (stressed and mode == "v6") else 1.0
-            picked = choose(score, tradable)
-            target[picked] = fraction / names
             record["母指数跌破均线"] = gate
+            if continuity:
+                sign = np.sign(score)
+                ident = sign * balance_at.loc[stamp].to_numpy(dtype=float)
+                eligible = ok & (days_at.loc[stamp].to_numpy(dtype=float) >= 200) & np.isfinite(ident)
+                raw = continuity_pick(score, eligible, ident, tag, names)
+                tradable = eligible & (score > 0) if (mode == "cont" and gate) else eligible
+                picked = continuity_pick(score, tradable, ident, tag, names)
+                record["去重改了名单"] = False
+                record["领头者"] = [columns[pos] for pos in raw]
+            else:
+                raw = choose(score, ok)
+                no_dedupe = [int(pos) for pos in np.argsort(-np.where(ok, score, -np.inf))[:names] if ok[pos]]
+                record["去重改了名单"] = sorted(raw) != sorted(no_dedupe)
+                tradable = ok & (score > 0) if gate else ok
+                picked = choose(score, tradable)
+            fraction = belief if (stressed and mode in ("v6", "cont", "cont_ref")) else 1.0
+            if picked:
+                target[picked] = fraction / names
             record["股票仓位"] = round(float(target.sum()), 3)
             nxt = forward.loc[stamp].to_numpy(dtype=float)
             if stressed and raw and np.isfinite(nxt[raw]).all():
