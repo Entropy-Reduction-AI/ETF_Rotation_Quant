@@ -85,10 +85,15 @@ def count_bar(rows):
     out = ''
     for i, r in enumerate(rows):
         n = int(re.sub(r'\D', '', _txt(r['个数'])) or 0)
-        dots = '<i></i>' * n
+        names = [x.strip() for x in re.split(r'[、，,]', _txt(r['含义'])) if x.strip()]
+        chips = ''
+        for x in names:
+            more = x.endswith('等') and len(x) > 1
+            core = x[:-1] if more else x
+            chips += f'<span class="cbx-i"><i></i>{core}</span>' + ('<span class="cbx-i etc">等</span>' if more else '')
         out += (f'<div class="cbx-c{" on" if i == 0 else ""}" style="flex:{max(n, 1)} 1 0">'
                 f'<div class="cbx-top"><b>{n}</b><span>{_inner(r["类别"])}</span></div>'
-                f'<div class="cbx-d">{dots}</div><em>{_inner(r["含义"])}</em></div>')
+                f'<div class="cbx-is">{chips}</div></div>')
     return f'<div class="cbx">{out}<div class="cbx-t">共 <b>{tot}</b></div></div>'
 
 
@@ -283,6 +288,14 @@ def apply(soup):
 
 
 CSS = r"""
+.cbx-c { gap: 10px; padding: 12px 14px; min-width: 210px; }
+.cbx-top span { font-size: 13px; }
+.cbx-is { display: flex; flex-wrap: wrap; gap: 6px; }
+.cbx-i { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--ink); padding: 4px 9px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); }
+.cbx-i i { width: 8px; height: 8px; border-radius: 2px; background: var(--muted); }
+.cbx-c.on .cbx-i { background: var(--surface); border-color: var(--accent); } .cbx-c.on .cbx-i i { background: var(--accent); }
+.cbx-i.etc { font-weight: 400; color: var(--muted); border-style: dashed; }
+
 .rt-dot { font-family: var(--font-mono); font-size: 11.5px; font-weight: 700; color: var(--muted); }
 ol.route li.rt-now .rt-dot, ol.route li.rt-done .rt-dot { color: #fff; } ol.route li.rt-you .rt-dot { color: var(--accent); }
 ol.route li.rt-todo .rt-dot { color: var(--muted) !important; }
