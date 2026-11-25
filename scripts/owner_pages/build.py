@@ -16,6 +16,15 @@ REPO, OUT, LINKS = sys.argv[1], sys.argv[2], sys.argv[3]
 DOCS = os.path.join(REPO, 'docs', 'owner')
 CSS = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'base.css'), encoding='utf-8').read()
 # the spec's component sheet (docs/reference/owner-page-story.css), with its variable names mapped onto ours
+# Pages whose source document is frozen by a tag: the page says so; the source stays byte-identical.
+FROZEN = {
+    'v6-prereg': {'from': '（待冻结）', 'to': '（已冻结）', 'badge': '已冻结',
+                  'note': '冻结标签 milestone/v6-prereg-freeze 打在 f066da8e（合并 PR #339 的 main 提交，2026-11-25）。'
+                          '下面的条款就是冻结版本，一字不改；页面版式之后仍可调整。条款里“待冻结”“R1b 签收后打标签”是冻结时的原话。'},
+}
+CSS_FROZEN = ('.frozen-banner { display: flex; gap: 10px; align-items: baseline; margin: 0 0 14px; padding: 9px 14px; border-radius: 10px; '
+              'background: var(--good-soft); border: 1px solid var(--good); font-size: 13px; color: var(--ink); line-height: 1.55; } '
+              '.frozen-banner b { color: var(--good); white-space: nowrap; }')
 SPEC_CSS = (':root { --fg: var(--ink); --rule: var(--line); --mono: var(--font-mono); --body: var(--font-body); '
             '--ok: var(--good); --ok-soft: var(--good-soft); }\n'
             + open(os.path.join(REPO, 'docs', 'reference', 'owner-page-story.css'), encoding='utf-8').read())
@@ -332,6 +341,9 @@ def build(slug, fname, short, oldid):
     date = re.split(r'[（(]', date)[0].strip()
     lines = raw.split('\n')
     title_line = lines[0].lstrip('# ').strip()
+    frozen = FROZEN.get(slug)
+    if frozen:
+        title_line = title_line.replace(frozen['from'], frozen['to'])
     body = '\n'.join(lines[1:])
     body = strip_metadata(body)
     body = preprocess(body)
@@ -453,6 +465,8 @@ def build(slug, fname, short, oldid):
     content = S.storify(content, slug)
     content = S.ux_pass(content)
     content = L.post(content)
+    if frozen:
+        content = (f'<div class="frozen-banner" data-lint="ref"><b>{frozen["badge"]}</b><span>{frozen["note"]}</span></div>') + content
 
     # header
     if '：' in title_line:
@@ -538,6 +552,7 @@ h2 .num {{ min-width: 1.6em; }}
 {S.CSS}
 {L.CSS}
 {C.CSS}
+{CSS_FROZEN}
 {F.CSS}
 </style>
 </head>
