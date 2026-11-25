@@ -10,7 +10,7 @@
   "sha_matches_registered": true,
   "cell_comparison": "未做。历史原件字节没有第二份，不能逐格比较",
   "used_for_numbers": true,
-  "acceptance": "不记验收通过",
+  "acceptance": "D46-2：下载 CSV 的 SHA256 与登记值相同。Owner 裁定按字节一致验收。本方没有另写两份文件的逐格比较日志。",
   "prior_months": 129
  },
  "dtb3": {
@@ -26,7 +26,8 @@
  },
  "a_turnover_full_sample_over_10": 6.63,
  "us_turnover": 5.93,
- "us_turnover_acceptance": "哈希与登记值相同，但没有第二份原件逐格比较，不记验收通过",
+ "us_turnover_basis": "D46-2：下载 CSV 的 SHA256 与登记值相同。Owner 裁定按字节一致验收。本方没有另写两份文件的逐格比较日志。",
+ "d46": "036748908c16050159d83b0bd251a541e4a50cda",
  "publish_date_truncation_a_net_cagr_pct": {
   "2006–10": 32.79,
   "2011–15": 8.42,

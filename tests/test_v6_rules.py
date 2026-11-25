@@ -61,6 +61,13 @@ class TrinTests(unittest.TestCase):
         self.assertLess(float(clipped.iloc[19]), 20.0)
 
 
+class D46Tests(unittest.TestCase):
+    def test_french_basis_is_the_owner_ruling_not_a_withheld_pass(self):
+        from src.v6.run_design import FRENCH_BASIS
+        self.assertIn("D46-2", FRENCH_BASIS)
+        self.assertNotIn("不记验收", FRENCH_BASIS)
+
+
 class RuleTests(unittest.TestCase):
     def test_dedupe_keeps_one_per_tag_and_skips_blank(self):
         scores = pd.Series([0.3, 0.2, 0.1]).to_numpy()

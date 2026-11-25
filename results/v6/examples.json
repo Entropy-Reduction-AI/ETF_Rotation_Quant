@@ -59,7 +59,10 @@
   "stock_yuan": 201200.0,
   "each_yuan": 67066.7,
   "rest_yuan": 198800.0,
-  "bond_above_ma": true
+  "bond_above_ma": true,
+  "role": "主结果",
+  "panel": "A_BF",
+  "spec": "v6_appendix_b.py 在 A = A_BF 之后跑 slot。这是规则口径。"
  },
  "US-2013-04": {
   "signal_date": "2013-04-26",
@@ -91,7 +94,7 @@
   "each_yuan": 200000.0,
   "rest_yuan": 0.0,
   "bond_above_ma": true,
-  "p_status": "哈希与登记值相同，但没有第二份原件逐格比较，不记验收通过"
+  "basis": "D46-2：下载 CSV 的 SHA256 与登记值相同。Owner 裁定按字节一致验收。本方没有另写两份文件的逐格比较日志。"
  },
  "US-2015-08": {
   "signal_date": "2015-08-31",
@@ -123,9 +126,9 @@
   "each_yuan": 199400.0,
   "rest_yuan": 1800.0,
   "bond_above_ma": true,
-  "p_status": "哈希与登记值相同，但没有第二份原件逐格比较，不记验收通过"
+  "basis": "D46-2：下载 CSV 的 SHA256 与登记值相同。Owner 裁定按字节一致验收。本方没有另写两份文件的逐格比较日志。"
  },
- "A-pub-2015-08": {
+ "A-2015-08-对照-发布日截断": {
   "signal_date": "2015-08-31",
   "votes": 3,
   "stress": true,
@@ -155,6 +158,8 @@
   "each_yuan": 31333.3,
   "rest_yuan": 306000.0,
   "bond_above_ma": true,
-  "panel": "发布日截断。冻结 exec-example 的 p=0.235 来自这一面板，不是回填面板。"
+  "role": "对照",
+  "panel": "A",
+  "spec": "exec_example.py 使用 a_official 的发布日截断 A，不是附表 B 的 A_BF。冻结稿里的 0.235 和 9.4 万来自这一面板。D46-1 把这组数字标为勘误，规则不改。"
  }
 }

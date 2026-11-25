@@ -25,7 +25,7 @@ from src.v6.trin import clip_expanding, clip_full_sample, month_end_mean, raw_ra
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "v6"
 FRENCH_SHA = "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609"
-PRIOR_NOTE = "哈希与登记值相同，但没有第二份原件逐格比较，不记验收通过"
+FRENCH_BASIS = "D46-2：下载 CSV 的 SHA256 与登记值相同。Owner 裁定按字节一致验收。本方没有另写两份文件的逐格比较日志。"
 PANEL = ROOT / "results/v6/french-49-192607-199812"
 DTB3_PATH = ROOT / "results/v5/other-market/raw/DTB3.csv"
 TAGS = tomllib.load(open(ROOT / "config/v6-preflight/sector-tags.toml", "rb"))
@@ -317,7 +317,7 @@ def run() -> dict:
         "sha_matches_registered": csv_sha == FRENCH_SHA,
         "cell_comparison": "未做。历史原件字节没有第二份，不能逐格比较",
         "used_for_numbers": prior is not None,
-        "acceptance": "不记验收通过" if prior is not None else "未计算",
+        "acceptance": FRENCH_BASIS if prior is not None else "未计算",
         "prior_months": None if prior is None else len(prior),
     }
     u_modes = [("ew", 0.0), ("top", 0.0)]
@@ -356,7 +356,8 @@ def run() -> dict:
                 rows.append({
                     "item": name, "segment": seg, "published": published[seg],
                     "got": got[seg], "diff": round(got[seg] - published[seg], 2),
-                    "status": (PRIOR_NOTE if match else "差异；" + PRIOR_NOTE) if name in prior_names else ("ok" if match else "diff"),
+                    "status": "ok" if match else "diff",
+                    "basis": FRENCH_BASIS if name in prior_names else "",
                 })
         else:
             rows.append({
@@ -391,7 +392,8 @@ def run() -> dict:
                 rows.append({
                     "item": name, "segment": seg, "published": published[seg],
                     "got": got[seg], "diff": round(got[seg] - published[seg], 2),
-                    "status": PRIOR_NOTE if match else "差异；" + PRIOR_NOTE,
+                    "status": "ok" if match else "diff",
+                    "basis": FRENCH_BASIS,
                 })
             continue
         for seg in SEGMENTS:
@@ -435,7 +437,8 @@ def run() -> dict:
                     "item": f"US {year} {key}", "segment": "2006-01至2015-11画像",
                     "published": published[label], "got": u_v6[key],
                     "diff": None if u_v6[key] is None else round(float(u_v6[key]) - published[label], 3),
-                    "status": PRIOR_NOTE if match else "差异；" + PRIOR_NOTE,
+                    "status": "ok" if match else "diff",
+                    "basis": FRENCH_BASIS,
                 })
     recon = pd.DataFrame(rows)
     recon.to_csv(OUT / "appendix-b-reconcile.csv", index=False)
@@ -449,11 +452,18 @@ def run() -> dict:
     ):
         day = signal_month(pd.DatetimeIndex(log.keys()), year, month)
         item = _examples(log, day, notional)
-        if sleeve == "US":
-            item["p_status"] = PRIOR_NOTE if prior is not None else "未完成：没有两份原件可逐格比较"
+        if sleeve == "A" and (year, month) == (2015, 8):
+            item["role"] = "主结果"
+            item["panel"] = "A_BF"
+            item["spec"] = "v6_appendix_b.py 在 A = A_BF 之后跑 slot。这是规则口径。"
         if sleeve == "A-pub":
-            item["panel"] = "发布日截断。冻结 exec-example 的 p=0.235 来自这一面板，不是回填面板。"
-        examples[f"{sleeve}-{year}-{month:02d}"] = item
+            item["role"] = "对照"
+            item["panel"] = "A"
+            item["spec"] = "exec_example.py 使用 a_official 的发布日截断 A，不是附表 B 的 A_BF。冻结稿里的 0.235 和 9.4 万来自这一面板。D46-1 把这组数字标为勘误，规则不改。"
+        if sleeve == "US":
+            item["basis"] = FRENCH_BASIS if prior is not None else "未计算"
+        key = "A-2015-08-对照-发布日截断" if sleeve == "A-pub" else f"{sleeve}-{year}-{month:02d}"
+        examples[key] = item
     (OUT / "examples.json").write_text(json.dumps(examples, ensure_ascii=False, indent=1), encoding="utf-8")
     if prior is None:
         pd.DataFrame([{
@@ -465,7 +475,7 @@ def run() -> dict:
             no_help(panels, prior, new_trin=False),
             no_help(panels, prior, new_trin=True),
         ], ignore_index=True)
-        synthetic["acceptance"] = PRIOR_NOTE
+        synthetic["note"] = "当前行情库版本的重跑，不是 4b2d75c4。与冻结表的差不调参。"
         synthetic.to_csv(OUT / "synthetic-no-help.csv", index=False)
     dtb3_sha = _sha_file(DTB3_PATH) if DTB3_PATH.exists() else None
     manifest = {
@@ -483,7 +493,8 @@ def run() -> dict:
         "a_sleeve_net_cagr_pct": a_net_ann,
         "a_turnover_full_sample_over_10": round(a["v6-net"][1] / 10, 2),
         "us_turnover": None if prior is None else round(u["v6-net"][1] / 10, 2),
-        "us_turnover_acceptance": None if prior is None else PRIOR_NOTE,
+        "us_turnover_basis": None if prior is None else FRENCH_BASIS,
+        "d46": "036748908c16050159d83b0bd251a541e4a50cda",
         "publish_date_truncation_a_net_cagr_pct": _annual(a_pub[0]),
         "trin_vote_changed_rows": 0 if set(diff["note"].astype(str)) == {"0个月"} else int((diff["note"].astype(str) == "").sum()),
         "blocked": sorted(prior_names),
@@ -517,7 +528,7 @@ def _ledger(manifest, recon: pd.DataFrame) -> None:
         }, ensure_ascii=False),
         "period": "2006-01-01至2015-12-31",
         "params": "N=3,us=0.60,stress>=2,cost=0.002,mom=T-1/T-12-1,ma=10,q=1/3,2/3,trin_old=full99_on_le_2015,trin_new=expanding99",
-        "purpose": "设计期名单、示例、附表B对账、D45-10投票差；不跑一次性检验",
+        "purpose": "D46：A_BF 为 2015-08 主示例；French 按 D46-2 字节一致验收；合成行情另用 4b2d75c4 重跑",
         "result": json.dumps(result, ensure_ascii=False),
     }
     frame = pd.DataFrame([row])
