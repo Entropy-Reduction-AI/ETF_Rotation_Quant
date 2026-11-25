@@ -15,7 +15,9 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 
-from src.v6.engine import benchmark, cagr_pct, confidence, mix_daily, mix_monthly, signal_month, slot
+from src.v6.engine import benchmark, cagr_pct, mix_daily, mix_monthly, signal_month, slot
+from src.v6.prior import us_prior
+from src.v6.synthetic import no_help
 from src.v6.guard import DESIGN_END_TEXT, IsolationError, assert_not_after, install_readers, restore_readers
 from src.v6.load import FREEZE, eligible_on, load_panels, momentum
 from src.v6.trin import clip_expanding, clip_full_sample, month_end_mean, raw_ratio
@@ -23,6 +25,8 @@ from src.v6.trin import clip_expanding, clip_full_sample, month_end_mean, raw_ra
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results" / "v6"
 FRENCH_SHA = "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609"
+PRIOR_NOTE = "哈希与登记值相同，但没有第二份原件逐格比较，不记验收通过"
+PANEL = ROOT / "results/v6/french-49-192607-199812"
 DTB3_PATH = ROOT / "results/v5/other-market/raw/DTB3.csv"
 TAGS = tomllib.load(open(ROOT / "config/v6-preflight/sector-tags.toml", "rb"))
 PROFILE_END = pd.Timestamp("2015-11-30")
@@ -196,7 +200,21 @@ def vote_diff(panels) -> pd.DataFrame:
                 "new_total": int(row["new_total"]),
             })
         rebuilt[sleeve]["changed_months"] = int(len(changed))
-    frame = pd.DataFrame(rows)
+        rebuilt[sleeve]["statement"] = "0个月" if not changed.shape[0] else f"{int(changed.shape[0])}个月"
+    columns = ["sleeve", "month", "old_trin_vote", "new_trin_vote", "old_total", "new_total"]
+    frame = pd.DataFrame(rows, columns=columns)
+    if frame.empty:
+        frame = pd.DataFrame([{
+            "sleeve": "A+US",
+            "month": "",
+            "old_trin_vote": "",
+            "new_trin_vote": "",
+            "old_total": "",
+            "new_total": "",
+            "note": "0个月",
+        }])
+    else:
+        frame["note"] = ""
     frame.to_csv(OUT / "trin-vote-diff-monthly.csv", index=False)
     (OUT / "trin-rebuild.json").write_text(
         json.dumps(rebuilt, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -289,31 +307,42 @@ def run() -> dict:
     a_modes = (("ew", 0.0), ("top", 0.0), ("v6", 0.0), ("v6", 0.002))
     a = _run_sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, a_modes)
     a_pub = slot(panels["A_pub"], "csi300", 3, None, TAGS["a"], "v6", 0.002, votes, bond, cash)
-    u_modes = (("ew", 0.0), ("top", 0.0))
-    french = find_french()
-    french_note = {"path": None, "sha256": None, "expected": FRENCH_SHA, "used": False,
-                   "status": "仓库里没有 49_Industry_Portfolios.csv，美股起点经验暂停"}
-    if french is not None:
-        french_note["path"] = str(french.relative_to(ROOT))
-        french_note["sha256"] = _sha_file(french)
-        french_note["status"] = "文件在，但 SHA 不符，不用" if french_note["sha256"] != FRENCH_SHA else "SHA 相符，但本轮读取器只接受逐行停在 199812 的解析；尚未接入，暂停"
-        if french_note["sha256"] != FRENCH_SHA:
-            raise IsolationError(french_note["status"] + f"：{french_note['sha256']}")
-        raise IsolationError("French SHA 相符。为避免整文件解析带入 2016 以后的月份，本轮不把起点经验算进结果")
-    u = _run_sleeve(panels["US"], "SPX", None, TAGS["us"], votes, bond, cash, u_modes)
+    opaque = Path("/opt/cursor/artifacts/french-49/49_Industry_Portfolios.csv")
+    csv_sha = _sha_file(opaque) if opaque.exists() else None
+    prior = us_prior(PANEL) if csv_sha == FRENCH_SHA and PANEL.exists() else None
+    french_note = {
+        "opaque_csv": str(opaque),
+        "sha256": csv_sha,
+        "expected": FRENCH_SHA,
+        "sha_matches_registered": csv_sha == FRENCH_SHA,
+        "cell_comparison": "未做。历史原件字节没有第二份，不能逐格比较",
+        "used_for_numbers": prior is not None,
+        "acceptance": "不记验收通过" if prior is not None else "未计算",
+        "prior_months": None if prior is None else len(prior),
+    }
+    u_modes = [("ew", 0.0), ("top", 0.0)]
+    if prior is not None:
+        u_modes.extend([("v6", 0.0), ("v6", 0.002)])
+    u = _run_sleeve(panels["US"], "SPX", prior, TAGS["us"], votes, bond, cash, u_modes)
     # 上面 US 的 ew/top 不使用把握 p。不要把 prior=None 当成美股起点经验。
     bm_main = benchmark(panels["A"], panels["US"], (0.70, 0.15, 0.15))
     bm_same = benchmark(panels["A"], panels["US"], (0.40, 0.30, 0.30))
-    us_v6 = None
     books = {
         "BM-主（70/15/15）": bm_main,
         "BM-同仓位（40/30/30）": bm_same,
         "同结构等权、不设防守": mix_daily(a["ew"][0], u["ew"][0]),
         "前 3、不设防守": mix_daily(a["top"][0], u["top"][0]),
     }
-    blocked = ["v6 毛（不计成本）", "v6 净（单边 0.2%，每日固定 60/40）", "v6 净（每月再平衡 60/40）"]
-    if us_v6 is not None:
-        pass
+    prior_names = set()
+    if prior is not None:
+        books["v6 毛（不计成本）"] = mix_daily(a["v6"][0], u["v6"][0])
+        books["v6 净（单边 0.2%，每日固定 60/40）"] = mix_daily(a["v6-net"][0], u["v6-net"][0])
+        books["v6 净（每月再平衡 60/40）"] = mix_monthly(a["v6-net"][0], u["v6-net"][0], 0.002)
+        books["参照：一级行业按发布日截断"] = mix_daily(a_pub[0], u["v6-net"][0])
+        prior_names.update(books.keys())
+        prior_names.difference_update({
+            "BM-主（70/15/15）", "BM-同仓位（40/30/30）", "同结构等权、不设防守", "前 3、不设防守",
+        })
     annual = {name: _annual(series) for name, series in books.items()}
     # 发布日截断参照需要美股 v6 净。没有 French 时只报 A 股名额自己的净年化，不冒充组合数。
     a_net_ann = _annual(a["v6-net"][0])
@@ -323,22 +352,17 @@ def run() -> dict:
         if name in annual:
             got = annual[name]
             for seg in SEGMENTS:
+                match = got[seg] == published[seg]
                 rows.append({
                     "item": name, "segment": seg, "published": published[seg],
                     "got": got[seg], "diff": round(got[seg] - published[seg], 2),
-                    "status": "ok" if got[seg] == published[seg] else "diff",
+                    "status": (PRIOR_NOTE if match else "差异；" + PRIOR_NOTE) if name in prior_names else ("ok" if match else "diff"),
                 })
-        elif name == "参照：一级行业按发布日截断":
-            rows.append({
-                "item": name, "segment": "2006–15", "published": published["2006–15"],
-                "got": None, "diff": None,
-                "status": "暂停：组合净收益要用美股把握 p，French 49 行业文件不在仓库",
-            })
         else:
             rows.append({
                 "item": name, "segment": "2006–15", "published": published["2006–15"],
                 "got": None, "diff": None,
-                "status": "暂停：要用美股起点经验，French 49 行业文件不在仓库",
+                "status": "未完成：美股起点经验没有两份原件可逐格比较",
             })
     for name, published in PUBLISHED_SPLIT.items():
         if name == "仓位差":
@@ -348,11 +372,26 @@ def run() -> dict:
         elif name == "挑选":
             got = {seg: round(annual["前 3、不设防守"][seg] - annual["同结构等权、不设防守"][seg], 2) for seg in SEGMENTS}
         else:
-            for seg, value in published.items():
+            if "v6 毛（不计成本）" not in annual:
+                for seg, value in published.items():
+                    rows.append({
+                        "item": name, "segment": seg, "published": value,
+                        "got": None, "diff": None,
+                        "status": "未完成：美股起点经验没有两份原件可逐格比较",
+                    })
+                continue
+            source = {
+                "防守": ("v6 毛（不计成本）", "前 3、不设防守"),
+                "成本": ("v6 净（单边 0.2%，每日固定 60/40）", "v6 毛（不计成本）"),
+                "合计（v6 净 − BM-主）": ("v6 净（单边 0.2%，每日固定 60/40）", "BM-主（70/15/15）"),
+            }[name]
+            got = {seg: round(annual[source[0]][seg] - annual[source[1]][seg], 2) for seg in SEGMENTS}
+            for seg in SEGMENTS:
+                match = got[seg] == published[seg]
                 rows.append({
-                    "item": name, "segment": seg, "published": value,
-                    "got": None, "diff": None,
-                    "status": "暂停：要用美股 v6 仓位，French 49 行业文件不在仓库",
+                    "item": name, "segment": seg, "published": published[seg],
+                    "got": got[seg], "diff": round(got[seg] - published[seg], 2),
+                    "status": PRIOR_NOTE if match else "差异；" + PRIOR_NOTE,
                 })
             continue
         for seg in SEGMENTS:
@@ -381,38 +420,59 @@ def run() -> dict:
                 "diff": None if u_got[key] is None else round(float(u_got[key]) - published_value, 3),
                 "status": "ok" if u_got[key] == published_value else "diff",
             })
-        for key, label in (("p", "u_p"), ("stock", "u_w")):
-            rows.append({
-                "item": f"US {year} {key}", "segment": "2006-01至2015-11画像",
-                "published": published[label], "got": None, "diff": None,
-                "status": "暂停：美股把握 p 需要 French 1999 年以前的紧张月",
-            })
+        if "v6-net" not in u:
+            for key, label in (("p", "u_p"), ("stock", "u_w")):
+                rows.append({
+                    "item": f"US {year} {key}", "segment": "2006-01至2015-11画像",
+                    "published": published[label], "got": None, "diff": None,
+                    "status": "未完成：美股起点经验没有两份原件可逐格比较",
+                })
+        else:
+            u_v6 = _profile(u["v6-net"][2]).loc[year]
+            for key, label in (("p", "u_p"), ("stock", "u_w")):
+                match = u_v6[key] == published[label]
+                rows.append({
+                    "item": f"US {year} {key}", "segment": "2006-01至2015-11画像",
+                    "published": published[label], "got": u_v6[key],
+                    "diff": None if u_v6[key] is None else round(float(u_v6[key]) - published[label], 3),
+                    "status": PRIOR_NOTE if match else "差异；" + PRIOR_NOTE,
+                })
     recon = pd.DataFrame(rows)
     recon.to_csv(OUT / "appendix-b-reconcile.csv", index=False)
     examples = {}
     for year, month, sleeve, log, notional in (
         (2013, 4, "A", a["v6-net"][2], 400_000),
         (2015, 8, "A", a["v6-net"][2], 400_000),
-        (2013, 4, "US", u["top"][2], 600_000),
-        (2015, 8, "US", u["top"][2], 600_000),
+        (2013, 4, "US", u.get("v6-net", u["top"])[2], 600_000),
+        (2015, 8, "US", u.get("v6-net", u["top"])[2], 600_000),
+        (2015, 8, "A-pub", a_pub[2], 400_000),
     ):
         day = signal_month(pd.DatetimeIndex(log.keys()), year, month)
         item = _examples(log, day, notional)
         if sleeve == "US":
-            item["p"] = None
-            item["p_status"] = "暂停：没有 French 起点经验，仓位金额在紧张月不能报"
-            if item["stress"]:
-                item["each_yuan"] = None
-                item["stock_yuan"] = None
-                item["rest_yuan"] = None
-                item["each_share_of_sleeve"] = None
+            item["p_status"] = PRIOR_NOTE if prior is not None else "未完成：没有两份原件可逐格比较"
+        if sleeve == "A-pub":
+            item["panel"] = "发布日截断。冻结 exec-example 的 p=0.235 来自这一面板，不是回填面板。"
         examples[f"{sleeve}-{year}-{month:02d}"] = item
     (OUT / "examples.json").write_text(json.dumps(examples, ensure_ascii=False, indent=1), encoding="utf-8")
+    if prior is None:
+        pd.DataFrame([{
+            "行情": "", "口径": "", "最低剩_中位": "", "最低剩_p10": "", "比基准年化_中位": "",
+            "note": "未完成：美股起点经验没有两份原件可逐格比较",
+        }]).to_csv(OUT / "synthetic-no-help.csv", index=False)
+    else:
+        synthetic = pd.concat([
+            no_help(panels, prior, new_trin=False),
+            no_help(panels, prior, new_trin=True),
+        ], ignore_index=True)
+        synthetic["acceptance"] = PRIOR_NOTE
+        synthetic.to_csv(OUT / "synthetic-no-help.csv", index=False)
     dtb3_sha = _sha_file(DTB3_PATH) if DTB3_PATH.exists() else None
     manifest = {
         "freeze": FREEZE,
-        "d45": "4851ff157be5ced92338833aa66af903072c2ca4",
-        "pr376_merged": False,
+        "d45": "2fbcecfaeda83d4529b54789208986787acc77af",
+        "d45_merge": "a1b2374354fcf5885cd297a6f736f1e7f13b0f5c",
+        "pr376_merged": True,
         "french": french_note,
         "dtb3": {
             "path": "results/v5/other-market/raw/DTB3.csv",
@@ -422,10 +482,11 @@ def run() -> dict:
         "loader_sha256": panels["loader_sha256"],
         "a_sleeve_net_cagr_pct": a_net_ann,
         "a_turnover_full_sample_over_10": round(a["v6-net"][1] / 10, 2),
-        "us_turnover": "暂停",
+        "us_turnover": None if prior is None else round(u["v6-net"][1] / 10, 2),
+        "us_turnover_acceptance": None if prior is None else PRIOR_NOTE,
         "publish_date_truncation_a_net_cagr_pct": _annual(a_pub[0]),
-        "trin_vote_changed_rows": int(len(diff)),
-        "blocked": blocked,
+        "trin_vote_changed_rows": 0 if set(diff["note"].astype(str)) == {"0个月"} else int((diff["note"].astype(str) == "").sum()),
+        "blocked": sorted(prior_names),
         "db_lfs_oid": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8",
     }
     (OUT / "run-manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")

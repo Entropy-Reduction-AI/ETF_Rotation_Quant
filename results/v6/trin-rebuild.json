@@ -2,11 +2,13 @@
  "A": {
   "old_matches_frozen_max_abs": 0.0,
   "months": 55,
-  "changed_months": 0
+  "changed_months": 0,
+  "statement": "0个月"
  },
  "US": {
   "old_matches_frozen_max_abs": 0.0,
   "months": 189,
-  "changed_months": 0
+  "changed_months": 0,
+  "statement": "0个月"
  }
 }

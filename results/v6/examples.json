@@ -65,7 +65,7 @@
   "signal_date": "2013-04-26",
   "votes": 0,
   "stress": false,
-  "p": null,
+  "p": 0.997,
   "parent_below_ma": false,
   "eligible": 15,
   "held": [
@@ -91,13 +91,13 @@
   "each_yuan": 200000.0,
   "rest_yuan": 0.0,
   "bond_above_ma": true,
-  "p_status": "暂停：没有 French 起点经验，仓位金额在紧张月不能报"
+  "p_status": "哈希与登记值相同，但没有第二份原件逐格比较，不记验收通过"
  },
  "US-2015-08": {
   "signal_date": "2015-08-31",
   "votes": 2,
   "stress": true,
-  "p": null,
+  "p": 0.997,
   "parent_below_ma": true,
   "eligible": 15,
   "held": [
@@ -118,11 +118,43 @@
    "XLP": 10.6,
    "XLF": 7.1
   },
-  "each_share_of_sleeve": null,
-  "stock_yuan": null,
-  "each_yuan": null,
-  "rest_yuan": null,
+  "each_share_of_sleeve": 0.332,
+  "stock_yuan": 598200.0,
+  "each_yuan": 199400.0,
+  "rest_yuan": 1800.0,
   "bond_above_ma": true,
-  "p_status": "暂停：没有 French 起点经验，仓位金额在紧张月不能报"
+  "p_status": "哈希与登记值相同，但没有第二份原件逐格比较，不记验收通过"
+ },
+ "A-pub-2015-08": {
+  "signal_date": "2015-08-31",
+  "votes": 3,
+  "stress": true,
+  "p": 0.235,
+  "parent_below_ma": true,
+  "eligible": 26,
+  "held": [
+   "theme-中证军工",
+   "theme-中证全指软件",
+   "allshare-utilities"
+  ],
+  "held_m12_pct": {
+   "theme-中证军工": 106.1,
+   "theme-中证全指软件": 100.2,
+   "allshare-utilities": 95.3
+  },
+  "top6_m12_pct": {
+   "theme-中证军工": 106.1,
+   "theme-中证全指软件": 100.2,
+   "allshare-utilities": 95.3,
+   "allshare-industrials": 91.7,
+   "theme-中证全指房地产": 88.6,
+   "theme-中证全指证券公司": 85.2
+  },
+  "each_share_of_sleeve": 0.078,
+  "stock_yuan": 94000.0,
+  "each_yuan": 31333.3,
+  "rest_yuan": 306000.0,
+  "bond_above_ma": true,
+  "panel": "发布日截断。冻结 exec-example 的 p=0.235 来自这一面板，不是回填面板。"
  }
 }

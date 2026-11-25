@@ -12,10 +12,12 @@ def raw_ratio(prices: pd.DataFrame, amount: pd.DataFrame, *, min_movers: int | N
     assert_not_after(prices.index, "TRIN价格")
     change = prices.pct_change()
     up, down = change > 0, change < 0
-    ratio = (
-        (up.sum(axis=1) / down.sum(axis=1).replace(0, float("nan")))
-        / ((amount * up).sum(axis=1) / (amount * down).sum(axis=1).replace(0, float("nan")))
-    )
+
+    def _div(num, den):
+        den = den.astype(float)
+        return num.astype(float) / den.where(den != 0)
+
+    ratio = _div(up.sum(axis=1), down.sum(axis=1)) / _div((amount * up).sum(axis=1), (amount * down).sum(axis=1))
     ratio = ratio.replace([float("inf"), float("-inf")], float("nan"))
     if min_movers is not None:
         ratio = ratio.where(up.sum(axis=1) + down.sum(axis=1) >= min_movers)

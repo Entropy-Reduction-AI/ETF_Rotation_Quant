@@ -26,21 +26,21 @@ def confidence(hist, prior=None, min_n: int = 12) -> float:
     return phi(float(values.mean()) / scale * math.sqrt(len(values)))
 
 
-def _pick(scores: np.ndarray, ok: np.ndarray, tags: np.ndarray, n: int) -> list[int]:
+def _pick(scores: np.ndarray, ok: np.ndarray, tags: np.ndarray, n: int, dedupe: bool = True) -> list[int]:
     chosen, used = [], set()
     order = np.argsort(-np.where(ok, scores, -np.inf))
     for pos in order:
         if not ok[pos] or len(chosen) == n:
             break
         tag = tags[pos]
-        if tag and tag in used:
+        if dedupe and tag and tag in used:
             continue
         chosen.append(int(pos))
         used.add(tag)
     return chosen
 
 
-def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash):
+def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash, dedupe: bool = True):
     """一个名额。mode：v6 四步全开；top 前 n 不设防守；ew 按标签等权、不设防守。
 
     prior 为 None 表示没有起点经验（A 股）。美股必须传入 French 列表；
@@ -114,7 +114,7 @@ def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash):
             pick = [parent_at]
             raw = []
         else:
-            raw = _pick(scores, ok, tag_of, n)
+            raw = _pick(scores, ok, tag_of, n, dedupe)
             no_dedupe = [i for i in np.argsort(-np.where(ok, scores, -np.inf))[:n] if ok[i]]
             record["去重改了名单"] = sorted(raw) != sorted(no_dedupe)
             if mode == "ew":
@@ -132,7 +132,7 @@ def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash):
                 gate = not bool(above.loc[day].to_numpy()[parent_at])
                 allowed = ok & (scores > 0) if gate else ok
                 frac = p_value if (stress and mode == "v6") else 1.0
-                pick = _pick(scores, allowed, tag_of, n)
+                pick = _pick(scores, allowed, tag_of, n, dedupe)
                 target[pick] = frac / n
                 record["母指数跌破均线"] = gate
                 record["股票仓位"] = round(float(target.sum()), 3)

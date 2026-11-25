@@ -1,13 +1,17 @@
 {
  "freeze": "f066da8e46f202e105a65c7abf43e4d4cf82eff9",
- "d45": "4851ff157be5ced92338833aa66af903072c2ca4",
- "pr376_merged": false,
+ "d45": "2fbcecfaeda83d4529b54789208986787acc77af",
+ "d45_merge": "a1b2374354fcf5885cd297a6f736f1e7f13b0f5c",
+ "pr376_merged": true,
  "french": {
-  "path": null,
-  "sha256": null,
+  "opaque_csv": "/opt/cursor/artifacts/french-49/49_Industry_Portfolios.csv",
+  "sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
   "expected": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
-  "used": false,
-  "status": "仓库里没有 49_Industry_Portfolios.csv，美股起点经验暂停"
+  "sha_matches_registered": true,
+  "cell_comparison": "未做。历史原件字节没有第二份，不能逐格比较",
+  "used_for_numbers": true,
+  "acceptance": "不记验收通过",
+  "prior_months": 129
  },
  "dtb3": {
   "path": "results/v5/other-market/raw/DTB3.csv",
@@ -21,7 +25,8 @@
   "2006–15": 25.49
  },
  "a_turnover_full_sample_over_10": 6.63,
- "us_turnover": "暂停",
+ "us_turnover": 5.93,
+ "us_turnover_acceptance": "哈希与登记值相同，但没有第二份原件逐格比较，不记验收通过",
  "publish_date_truncation_a_net_cagr_pct": {
   "2006–10": 32.79,
   "2011–15": 8.42,
@@ -29,9 +34,10 @@
  },
  "trin_vote_changed_rows": 0,
  "blocked": [
-  "v6 毛（不计成本）",
   "v6 净（单边 0.2%，每日固定 60/40）",
-  "v6 净（每月再平衡 60/40）"
+  "v6 净（每月再平衡 60/40）",
+  "v6 毛（不计成本）",
+  "参照：一级行业按发布日截断"
  ],
  "db_lfs_oid": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8"
 }

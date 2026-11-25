@@ -5,7 +5,10 @@ from __future__ import annotations
 import io
 import unittest
 
+import pandas as pd
+
 from src.v6.french_panel import extract_panels
+from src.v6.prior import breadth_ex_parent, french_ma_vote
 
 SAMPLE = """
 Average Value Weighted Returns -- Monthly
@@ -50,6 +53,16 @@ class FrenchPanelTests(unittest.TestCase):
         size = panels["Average Firm Size"]
         self.assertEqual(size[-1]["yyyymm"], "199812")
         self.assertNotIn("24.5", [row["Agric"] for row in size])
+
+
+class FrenchVoteTests(unittest.TestCase):
+    def test_equal_to_average_is_a_vote(self):
+        self.assertTrue(french_ma_vote(10.0, 10.0))
+        self.assertFalse(french_ma_vote(10.1, 10.0))
+
+    def test_breadth_drops_the_market(self):
+        above = pd.Series({"MKT": False, "Agric": True, "Food": True})
+        self.assertEqual(breadth_ex_parent(above, "MKT"), 1.0)
 
 
 if __name__ == "__main__":
