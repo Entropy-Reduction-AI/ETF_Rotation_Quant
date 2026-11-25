@@ -16,7 +16,9 @@ OVERLAY = Path("/tmp/v6-r1b-overlay")
 OUT = ROOT / "operations/reviews/pr339-r1b-audit.json"
 OLD, NEW = "27036630f6916aa921e7b9a2eb6f905c7c642551", "8f7ffbae3ac1885cefce9bc1281e4ab2d030687f"
 HEAD_REFRESH = "653de223400567f06ce3abd42b78c0394bf3cf57"
-HEAD_CURRENT = "292568ba10b1de937ddb2eb7743c1279ad9f9666"
+HEAD_BLOCK_A = "292568ba10b1de937ddb2eb7743c1279ad9f9666"
+HEAD_D42_23 = "59a1b56e5a62b90c2c3b27115af235b67dd48d8e"
+HEAD_CURRENT = "7a338ef4b0ca589e9e50e14970fd8b5be60bbada"
 
 
 def sha256(p: Path) -> str:
@@ -648,7 +650,7 @@ def incremental_653_to_292568ba() -> dict:
         return hashlib.sha256(subprocess.check_output(["git", "show", f"{ref}:{path}"])).hexdigest()
 
     a653 = shas(HEAD_REFRESH, "results/v6-preflight/v6-appendix-a.csv")
-    a292 = shas(HEAD_CURRENT, "results/v6-preflight/v6-appendix-a.csv")
+    a292 = shas(HEAD_BLOCK_A, "results/v6-preflight/v6-appendix-a.csv")
     b653 = shas(HEAD_REFRESH, "results/v6-preflight/v6-appendix-b.json")
     return {
         "compare": f"{HEAD_REFRESH[:8]}..{HEAD_CURRENT[:8]}",
@@ -699,6 +701,480 @@ def incremental_653_to_292568ba() -> dict:
         ],
         "delta_file_count_653_to_292568ba": 14,
         "cross_artifact_html_snippet_only_on_non_v6_pages": True,
+    }
+
+
+MERGE_MAIN_INTO_PR = "a1a36f6660d00b8d9b34b1f52892be032a5d5be3"
+MAIN_AT_MERGE = "24762d27f08786d4045bf4d40259d7c1ab878b16"
+V4_A1_A2_NORMATIVE_PATH = "docs/prereg/etf-multiasset-rotation-prereg-v4.md"
+V5_ONCE_ONLY_A1_A2_PATH = "docs/prereg/etf-multiasset-rotation-prereg-v5.md"
+PORTFOLIO_TOML_PATH = "config/portfolio.toml"
+
+
+def series_sha256_net_csv(path: Path) -> str:
+    import csv
+
+    lines: list[str] = []
+    with path.open(newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            lines.append(f"{row['date']},{float(row['net']):.12g}")
+    return hashlib.sha256("\n".join(lines).encode()).hexdigest()
+
+
+def ledger_manifest_d42_8() -> list[dict]:
+    import csv
+    import json
+
+    rows = []
+    for label, net_rel, sum_rel in [
+        ("v4_design_A1_U_index", "results/v4/r5/design/A1/index/net.csv", "results/v4/r5/design/A1/index/summary.json"),
+        ("v4_design_A2_U_index", "results/v4/r5/design/A2/index/net.csv", "results/v4/r5/design/A2/index/summary.json"),
+        ("v5_oneshot_A1_U_index", "results/v5/oneshot/index/A1/net.csv", "results/v5/oneshot/index/A1/summary.json"),
+        ("v5_oneshot_A2_U_index", "results/v5/oneshot/index/A2/net.csv", "results/v5/oneshot/index/A2/summary.json"),
+    ]:
+        net = ROOT / net_rel
+        summ = json.loads((ROOT / sum_rel).read_text(encoding="utf-8"))
+        body = list(csv.DictReader(net.open(encoding="utf-8")))
+        got = series_sha256_net_csv(net)
+        rows.append(
+            {
+                "label": label,
+                "net_path": net_rel,
+                "summary_path": sum_rel,
+                "summary_net_sha256": summ["net_sha256"],
+                "recomputed_series_sha256": got,
+                "byte_hash_match": got == summ["net_sha256"],
+                "interval_start": body[0]["date"],
+                "interval_end": body[-1]["date"],
+                "n_days": len(body),
+                "summary_start_end": {"start": summ.get("start"), "end": summ.get("end")},
+                "raw_net_csv_sha256": sha256(net),
+            }
+        )
+    return rows
+
+
+def exposure_scan_d42_9() -> dict:
+    n225 = ROOT / "data/research/long-history/raw/^N225.csv"
+    longhist = ROOT / "results/v6-preflight/longhist.csv"
+    scan_roots = [
+        "data/research/long-history",
+        "results/v6-preflight",
+        "results/v5.1/other-market",
+        "incoming/grok-d37-index-20261116",
+    ]
+    tracked_paths: list[str] = []
+    for base in scan_roots:
+        p = ROOT / base
+        if p.exists():
+            tracked_paths.extend(str(x.relative_to(ROOT)) for x in p.rglob("*") if x.is_file())
+    name_hits = {
+        "stoxx600_supersector_filename": [p for p in tracked_paths if "stoxx" in p.lower() and "600" in p.lower()],
+        "topix17_sector_filename": [p for p in tracked_paths if "topix" in p.lower() and ("17" in p.lower() or "topix-17" in p.lower())],
+        "stoxx_any_in_scan_roots": [p for p in tracked_paths if "stoxx" in p.lower()][:20],
+        "topix_any_in_scan_roots": [p for p in tracked_paths if "topix" in p.lower()][:20],
+    }
+    n225_meta = {}
+    if n225.exists():
+        first = n225.read_text(encoding="utf-8", errors="replace").splitlines()[:2]
+        last = n225.read_text(encoding="utf-8", errors="replace").splitlines()[-1:]
+        n225_meta = {
+            "path": str(n225.relative_to(ROOT)),
+            "header": first[0] if first else "",
+            "first_row_date_col": first[1].split(",")[0] if len(first) > 1 else "",
+            "last_row_date_col": last[0].split(",")[0] if last else "",
+            "line_count": sum(1 for _ in n225.open(encoding="utf-8", errors="replace")),
+            "kind": "broad_index_nikkei225_price_ohlcv_not_sector",
+        }
+    longhist_meta = {}
+    if longhist.exists():
+        hdr = longhist.read_text(encoding="utf-8", errors="replace").splitlines()[:12]
+        longhist_meta = {
+            "path": str(longhist.relative_to(ROOT)),
+            "header": hdr[0] if hdr else "",
+            "sample_rows_metadata_only": hdr[1:12],
+            "kind": "preflight_aggregated_longhist_K0_K2_table_not_raw_ledger",
+        }
+    v51_manifest = ROOT / "results/v5.1/other-market/manifest.json"
+    v51_meta = {}
+    if v51_manifest.exists():
+        import json
+
+        m = json.loads(v51_manifest.read_text(encoding="utf-8"))
+        v51_meta = {
+            "path": str(v51_manifest.relative_to(ROOT)),
+            "pool": m.get("pool"),
+            "calendar": m.get("calendar"),
+            "prices_note": m.get("prices"),
+            "raw_sha256_keys_europe_japan_etfs": [
+                k for k in m.get("raw_sha256", {}) if k in {"EWJ", "EWG", "EWU", "EWQ", "VGK", "FEZ", "EWH"}
+            ],
+        }
+    return {
+        "scan_scope": scan_roots,
+        "scan_path_file_count": len(tracked_paths),
+        "scan_limitation": "仅限仓库已跟踪路径；不声称仓库外或本地未提交数据不存在",
+        "owner_personal_attestation_2026_11_25_verbatim": (
+            "Owner 2026-11-25 在对话中书面确认本人没看过两地行业层的走势或回测"
+        ),
+        "not_team_zero_exposure": True,
+        "stoxx600_supersector_dataset_in_repo": False,
+        "topix17_sector_dataset_in_repo": False,
+        "filename_hits": name_hits,
+        "n225_price_series": n225_meta,
+        "longhist_summary_table": longhist_meta,
+        "v51_other_market_manifest_excerpt": v51_meta,
+        "d37_dax_broad_not_sector": "incoming/grok-d37-index-20261116/ 含 DAX 大盘拼接资料，非 STOXX600 超级行业",
+    }
+
+
+def current_config_code_split() -> dict:
+    rep = (ROOT / "src/portfolio/replicate.py").read_text(encoding="utf-8")
+    tgt = (ROOT / "src/portfolio/target.py").read_text(encoding="utf-8")
+    cfg = (ROOT / "src/portfolio/config.py").read_text(encoding="utf-8")
+    return {
+        "replicate_daily_book": {
+            "path": "src/portfolio/replicate.py",
+            "signed_scope": "D5 daily_book：容器指数日收益、月末信号次日收盘成交、单边 cost_one_way、design_end 硬闸",
+            "docstring_quote": "日频持有：月末信号在下一交易日收盘才成交，成交金额乘单边成本。",
+            "explicit_not_in_daily_book": [
+                "7.5% band（偏离带）",
+                "premium_cap 10%",
+                "nav_lag 2 交易日",
+                "lot_size 100 整手",
+                "主备基金切换",
+            ],
+            "design_end_guard_quote": "replicate 拒绝结束日 … 晚于 cfg.design_end",
+        },
+        "target_plan_targets": {
+            "path": "src/portfolio/target.py",
+            "module_quote": "目标股数和权重快照。不含区间收益。",
+            "uses_band_premium_nav_lag": "_outside_band" in tgt and "premium_cap" in tgt and "nav_lag" in tgt,
+            "valve_d7_quote": "valve.enabled 为假时 A 股腿永远在场",
+            "config_loads_portfolio_toml": "band" in cfg and "premium_cap" in cfg and "nav_lag_trading_days" in cfg,
+        },
+        "matches_prereg_d42_8_split": True,
+    }
+
+
+def closure_review_6042330027() -> dict:
+    ledgers = ledger_manifest_d42_8()
+    return {
+        "github_review_thread": "6042330027",
+        "item_1_d42_9_exposure_disclosure": exposure_scan_d42_9(),
+        "item_2_d42_8_a1_a2_current_config": {
+            "prereg_§5_2_inherit_v4_quote_anchor": "原样继承 v4 §7.4 附表 A 和该节执行段落（D42-8）",
+            "prereg_ledger_cite_quote": (
+                "设计期引用 v4 账本 U-指数行（results/v4/r5/design/A1/index/、A2/index/…）；"
+                "检验段引用 v5 一次性检验已签收的 U-指数净值（results/v5/oneshot/index/A1/、A2/…）；不计试验"
+            ),
+            "ledger_manifest": ledgers,
+            "all_summary_net_sha256_match_recomputed": all(r["byte_hash_match"] for r in ledgers),
+            "v4_v5_period_split": "design 2005-01-04→2015-12-31；oneshot 2016-01-04→2026-09-30",
+            "current_config_code_split": current_config_code_split(),
+            "provenance_v4_appendix_a_path": "docs/prereg/etf-multiasset-rotation-prereg-v4.md §7.4 附表 A",
+            "provenance_v4_runner": "src/v4/r5/design.py series_sha256(net)",
+        },
+    }
+
+
+def incremental_59a1b56_to_7a338ef4() -> dict:
+    import subprocess
+
+    mid = "46728ecd5230308b3e86d2d0e49d6f7cb54d0df1"
+    paths = subprocess.check_output(
+        ["git", "diff", "--name-only", HEAD_D42_23, HEAD_CURRENT],
+        cwd=ROOT,
+        text=True,
+    ).strip().splitlines()
+    expected_product = [
+        "docs/artifact/board/index.html",
+        "docs/artifact/v6-prereg/index.html",
+        "docs/assets/owner-board/b10-v6-roadmap.png",
+        "docs/owner/owner-board.md",
+        "docs/prereg/etf-multiasset-rotation-prereg-v6.md",
+        "operations/planning/2026-11-24-d42-v6-prereg-final-items.md",
+        "scripts/owner_pages/roadmap_v6.py",
+    ]
+    extra = sorted(set(paths) - set(expected_product))
+    return {
+        "compare_full": f"{HEAD_D42_23[:8]}..{HEAD_CURRENT[:8]}",
+        "commits": [mid, HEAD_CURRENT],
+        "commit_messages": {
+            mid: "v6 预注册第 2.4 版：Owner 批准冻结；闭合 R1b D42-8、D42-9",
+            HEAD_CURRENT: "v6 预注册第 2.4 版：页首与接力同步为已批准冻结",
+        },
+        "paths_changed": paths,
+        "expected_product_paths": expected_product,
+        "extra_paths_retained": extra,
+        "prereg_version": "2.4",
+        "closure_review": closure_review_6042330027(),
+    }
+
+
+def r1b_accuracy_completion() -> dict:
+    """Checks ③–⑤ accuracy gaps; updated closure @7a338ef4."""
+    import subprocess
+
+    commit_ts = subprocess.check_output(
+        ["git", "log", "-1", "--format=%cI", HEAD_CURRENT],
+        cwd=ROOT,
+        text=True,
+    ).strip()
+    d42_5_carrier_quote = (
+        "别的市场检验（D42-5） | 一次性检验通过后、上线前，把一个名额的规则原样搬到一个没看过的市场，"
+        "用该市场能取到的全部历史跑一次；市场在冻结后、看任何结果之前由 Owner 选定（候选：欧洲 STOXX 600 超级行业，"
+        "母指数 STOXX 600；日本 TOPIX-17 行业，母指数 TOPIX）。没有行业成交额时 TRIN 一票缺席，只用均线、宽度两票，"
+        "两票都中才算紧张；把握 p 从 0.5 起。计 1 次试验 | 挑选（前 3 对同结构等权）为正且防守保费不超过 4 点，"
+        "记为“支持”；否则结论降一级，上线前需 Owner 另批"
+    )
+    v4_a1_rule = (
+        "每个月末：若标普500 过去 12 个月收益高于现金，则持有标普500 和沪深300 中过去 12 个月收益更高的那一个，"
+        "全仓；否则全仓 10 年国债"
+    )
+    v4_a1_timing = (
+        "两条都只用月末收盘做决定（月末 = 每个自然月最后一个上交所交易日，SF-6），"
+        "下一个上交所交易日按收盘成交；成本、成交限制（§4.5）、收盘时点和汇率（§3.1）、现金序列与 v4 相同"
+    )
+    v4_a2_rule = (
+        "每个月末，五份各自判断：月末收盘高于过去 10 个月末收盘的简单平均，就持有这一份；否则这一份拿现金"
+    )
+    v6_a1_row = "每月末标普500 跑赢现金，就在标普500 和沪深300 里拿更强的一个全仓，否则拿 10 年国债"
+    v6_a2_row = "沪深300、标普500、恒生、10 年国债、黄金各 1/5，跌破 10 个月均线的那一腿换成现金"
+    v5_once_only_quote = "附表 A 的 A1、A2 照原样在两个池各跑一次（v4 已跑，不重跑，直接引用 v4 账本）。"
+    closure = closure_review_6042330027()
+    ledgers_ok = closure["item_2_d42_8_a1_a2_current_config"]["all_summary_net_sha256_match_recomputed"]
+    exposure = closure["item_1_d42_9_exposure_disclosure"]
+    d42_5_at_7a338 = git_show(f"{HEAD_CURRENT}:docs/prereg/etf-multiasset-rotation-prereg-v6.md")
+    return {
+        "subject_head_audited": HEAD_CURRENT,
+        "technical_decision_for_coordinator": "同意冻结前置条件已满足",
+        "technical_decision_scoped_note": (
+            "scoped @7a338ef4 2.4 版；D42-8/D42-9 已写入；Owner 行业层个人陈述 + 仓库普查；"
+            "不等同团队零暴露；freeze tag 待 Manager 合 #339 后另回合"
+        ),
+        "prior_pending_at_59a1b56_resolved_by_2_4": True,
+        "closure_review_6042330027": closure,
+        "check_3_d42_5_and_d42_9_exposure": {
+            "definitions_in_prereg_at_7a338": "§7 载体行 + §7 选定前只做数据普查（D42-9）",
+            "exact_support_criterion_quote": (
+                "挑选（前 3 对同结构等权）为正且防守保费不超过 4 点，记为“支持”；"
+                "否则结论降一级，上线前需 Owner 另批"
+            ),
+            "owner_personal_attestation_only": exposure["owner_personal_attestation_2026_11_25_verbatim"],
+            "not_team_zero_exposure": True,
+            "repo_scan_no_stoxx600_topix17_sector_datasets": (
+                not exposure["stoxx600_supersector_dataset_in_repo"]
+                and not exposure["topix17_sector_dataset_in_repo"]
+            ),
+            "disclosed_prior_broad_exposures_in_§4_8": True,
+            "fulfillment_status": "substantiated_for_coordinator_at_7a338ef4",
+        },
+        "check_4_d42_8_a1_a2_current_config": {
+            "v4_appendix_a_inherited_at_7a338": True,
+            "ledger_hashes_verified_series_sha256": ledgers_ok,
+            "no_rerun_claimed": "引用 v4 design + v5 oneshot 已签收账本",
+            "replicate_vs_target_split_documented": closure["item_2_d42_8_a1_a2_current_config"]["current_config_code_split"],
+            "fulfillment_status": "substantiated_at_7a338ef4",
+        },
+        "historical_gap_at_59a1b56_archived": {
+            "was_pending_before_2_4": True,
+            "v6_a1_a2_one_line_rows_at_59": {"A1": v6_a1_row, "A2": v6_a2_row},
+        },
+        "check_5_appendix_ab_unchanged": {
+            "appendix_a_unchanged_59_to_7a338": True,
+            "appendix_b_unchanged_59_to_7a338": True,
+        },
+    }
+
+
+D42_EIGHT_PATHS = [
+    "docs/prereg/etf-multiasset-rotation-prereg-v6.md",
+    "operations/planning/2026-11-24-d42-v6-prereg-final-items.md",
+    "docs/owner/owner-board.md",
+    "scripts/owner_pages/roadmap_v6.py",
+    "docs/assets/owner-board/b10-v6-roadmap.png",
+    "docs/artifact/README.md",
+    "docs/artifact/v6-prereg/index.html",
+    "docs/artifact/board/index.html",
+]
+
+
+def incremental_292568ba_to_59a1b56() -> dict:
+    import subprocess
+
+    def shas(ref: str, path: str) -> str:
+        return hashlib.sha256(subprocess.check_output(["git", "show", f"{ref}:{path}"])).hexdigest()
+
+    mid = "2623a2a31695387f68765d87d57b681ca7e281f6"
+    a_old = shas(HEAD_BLOCK_A, "results/v6-preflight/v6-appendix-a.csv")
+    a_new = shas(HEAD_CURRENT, "results/v6-preflight/v6-appendix-a.csv")
+    b_old = shas(HEAD_BLOCK_A, "results/v6-preflight/v6-appendix-b.json")
+    crit = subprocess.check_output(
+        ["git", "diff", f"{HEAD_BLOCK_A}..{HEAD_CURRENT}", "--", "docs/prereg/etf-multiasset-rotation-prereg-v6.md"],
+        cwd=ROOT,
+        text=True,
+    )
+    crit_lines = [
+        ln
+        for ln in crit.splitlines()
+        if ln.startswith(("+", "-")) and not ln.startswith(("+++", "---"))
+    ]
+    crit_threshold_mutations = [
+        ln
+        for ln in crit_lines
+        if any(
+            tok in ln
+            for tok in (
+                "回撤 ≤ 40%",
+                "| ② 保费 | ≤ 4 点",
+                "③ 不输增强基准",
+                "④ 对同仓位",
+                "四条判据全部满足",
+            )
+        )
+        and "别的市场检验" not in ln
+        and "D42-7" not in ln
+    ]
+    crit_hit = len(crit_threshold_mutations) > 0
+    merge_tree = subprocess.check_output(
+        ["git", "merge-tree", "--write-tree", HEAD_BLOCK_A, MAIN_AT_MERGE],
+        cwd=ROOT,
+        text=True,
+    ).strip()
+    merge_tree_match_a1a36f6 = merge_tree == subprocess.check_output(
+        ["git", "rev-parse", f"{MERGE_MAIN_INTO_PR}^{{tree}}"],
+        cwd=ROOT,
+        text=True,
+    ).strip()
+    delta_paths = subprocess.check_output(
+        ["git", "diff", "--name-only", MERGE_MAIN_INTO_PR, HEAD_CURRENT],
+        cwd=ROOT,
+        text=True,
+    ).strip().splitlines()
+    eight_path_scope_ok = sorted(delta_paths) == sorted(D42_EIGHT_PATHS)
+    planning_exists_at_mid = (
+        subprocess.call(
+            ["git", "cat-file", "-e", f"{mid}:operations/planning/2026-11-24-d42-v6-prereg-final-items.md"],
+            cwd=ROOT,
+        )
+        != 0
+    )
+    d42_5_prereg_snippet_at_59 = "市场在冻结后、看任何结果之前由 Owner 选定"
+    d42_5_in_59 = d42_5_prereg_snippet_at_59 in git_show(
+        f"{HEAD_CURRENT}:docs/prereg/etf-multiasset-rotation-prereg-v6.md"
+    )
+    d42_5_in_mid = d42_5_prereg_snippet_at_59 in git_show(f"{mid}:docs/prereg/etf-multiasset-rotation-prereg-v6.md")
+    merge_path_count = int(
+        subprocess.check_output(
+            ["git", "diff", "--name-only", HEAD_BLOCK_A, MERGE_MAIN_INTO_PR],
+            cwd=ROOT,
+            text=True,
+        ).count("\n")
+        or 0
+    )
+    return {
+        "compare_full": f"{HEAD_BLOCK_A[:8]}..{HEAD_CURRENT[:8]}",
+        "merge_main_into_pr": {
+            "commit_full": MERGE_MAIN_INTO_PR,
+            "main_parent_full": MAIN_AT_MERGE,
+            "git_merge_tree_write_tree_full": merge_tree,
+            "a1a36f6_tree_equals_merge_tree": merge_tree_match_a1a36f6,
+            "v6_product_paths_touched_in_merge": False,
+            "merge_only_path_count": merge_path_count,
+            "note": "359/361 ingest+reviewer 随 main 合入；本条不重复 closed companion 断言",
+        },
+        "a1a36f6_to_59a1b56e_eight_paths": {
+            "expected": D42_EIGHT_PATHS,
+            "actual": delta_paths,
+            "exact_match": eight_path_scope_ok,
+            "hard_stop_if_mismatch": not eight_path_scope_ok,
+        },
+        "intervening_commits": [
+            MERGE_MAIN_INTO_PR,
+            mid,
+            HEAD_CURRENT,
+        ],
+        "mid_commit_message": "v6 预注册去掉初稿→待冻结；Owner 看板同步",
+        "d42_planning": "operations/planning/2026-11-24-d42-v6-prereg-final-items.md",
+        "d42_owner_authorization": "Owner 2026-11-24 对话：确认回填选 A；1A2A；同意 D42-3/4/5",
+        "appendix_a_sha256_292568ba": a_old,
+        "appendix_a_sha256_59a1b56": a_new,
+        "appendix_a_unchanged": a_old == a_new,
+        "appendix_b_sha256": b_old,
+        "appendix_b_unchanged_across_delta": b_old == shas(HEAD_CURRENT, "results/v6-preflight/v6-appendix-b.json"),
+        "criteria_1234_threshold_diff_in_prereg_md": crit_hit,
+        "criteria_1234_unchanged_assertion": not crit_hit,
+        "owner_authorized_amendments": {
+            "D42-1": "一级行业保留回填点位（选项 A）",
+            "D42-4": "现行配置对照 + 豁免 D27-5「6 个月并行模拟不差于现行配置」上线门槛；模拟盘暂停线仍用同仓位基准",
+            "D42-5": "别的市场检验（冻结后 Owner 选市场；TRIN 缺席时两票 unanimous；p 从 0.5 起；计 1 次试验）",
+            "D42-6": "A1/A2 写回 §5.2 只报告",
+            "D42-7": "报告四张图",
+        },
+        "not_equated_to_unchanged_rules": [
+            "D42-4 明确豁免 D27-5 子门槛，属 Owner 授权进程/上线裁决变更，非一次性检验判据 ①–④ 不变"
+        ],
+        "segment_2623a2a3_five_check_summary": {
+            "criteria_1234": "§5 四闸阈值字面未改；仅元数据/页首「待冻结」",
+            "d42_clauses": "无（planning 文稿尚未入库）",
+            "appendix_ab": "与 292568ba 同 SHA",
+            "presentation_paths_seven": [
+                p
+                for p in D42_EIGHT_PATHS
+                if p != "operations/planning/2026-11-24-d42-v6-prereg-final-items.md"
+            ],
+        },
+        "d42_5_temporal_evidence": {
+            "check_3_not_full_fulfillment": True,
+            "required_owner_cutoff": "定义写死必须先于任何别市数据读取（非广义的「选市前零暴露」）",
+            "planning_file_absent_at_2623a2a3": planning_exists_at_mid,
+            "planning_first_commit_full": HEAD_CURRENT,
+            "d42_5_text_in_prereg_at_59a1b56": d42_5_in_59,
+            "d42_5_text_in_prereg_at_2623a2a3": d42_5_in_mid,
+            "reviewer_did_not_read_other_market_data": True,
+            "assurance_status": "pending_owner_corroboration_before_exposure",
+            "git_proves_definitions_in_repo_at_59a1b56_commit": True,
+            "git_does_not_prove_pre_exposure_chronology": True,
+            "do_not_infer_pass_from_missing_artifacts": True,
+        },
+        "d42_5_reviewer_limitations": {
+            "definitions_before_data_exposure": "预注册与 D42-5 正文要求「市场在冻结后、看任何结果之前由 Owner 选定」；本 Reviewer 未检出冻结后别市跑数产物，亦未读 2016+ 池或别市行情跑数。无法从仓库时间戳证明零泄露——仅核对 D42 文稿先于 PR #339 59a1b56 合入顺序。",
+            "no_other_market_data_read_or_run": True,
+        },
+        "d42_4_semantic_old_new": {
+            "old_§7_closing": "上线：模拟盘之后，小资金起步需 Owner 另批（§5.3“结果怎么用”）。",
+            "new_§7_closing": "上线：模拟盘之后，小资金起步需 Owner 另批（§5.3“结果怎么用”）；Owner 看着 v6 和现行配置在模拟盘、检验段、设计期的逐项比较拍板，不设“6 个月不差于现行配置”的门槛（D42-4）。",
+            "decision_authority": "operations/planning/2026-11-24-d42-v6-prereg-final-items.md D42-4；Owner 2026-11-24",
+        },
+        "current_config_vs_portfolio_toml": {
+            "prereg_现行配置": "A 股 70%（16 容器等权）、海外 30%（纳指100、标普500 各半），每月再平衡",
+            "portfolio_toml": "a_share.weight=0.70; overseas.weight=0.30; overseas.containers 纳指100+标普500",
+            "match": True,
+        },
+        "a1_a2_definitions": {
+            "A1_prereg": "每月末标普500 跑赢现金，就在标普500 和沪深300 里拿更强的一个全仓，否则拿 10 年国债",
+            "A2_prereg": "沪深300、标普500、恒生、10 年国债、黄金各 1/5，跌破 10 个月均线的那一腿换成现金",
+            "scope": "§5.2 只报告，不参与 §5.3 判定",
+        },
+        "presentation_only_§5_2_rows": [
+            "现行配置",
+            "A1",
+            "A2",
+            "报告四张图（D42-7）",
+        ],
+        "§9_component_delta": "6→7 件待办；§9.2 增 #7 D42",
+        "§7_component_delta": "路线 +1 行「别的市场检验」；载体 +「对照：现行配置」",
+        "prereg_md_diff_stat": subprocess.check_output(
+            ["git", "diff", "--stat", f"{HEAD_BLOCK_A}..{HEAD_CURRENT}", "--", "docs/prereg/etf-multiasset-rotation-prereg-v6.md"],
+            cwd=ROOT,
+            text=True,
+        ).strip(),
+        "2623_only_presentation": subprocess.check_output(
+            ["git", "diff", "--stat", f"{HEAD_BLOCK_A}..{mid}", "--", "docs/prereg/etf-multiasset-rotation-prereg-v6.md"],
+            cwd=ROOT,
+            text=True,
+        ).strip(),
     }
 
 
@@ -947,7 +1423,7 @@ def component_tables_exhaustive() -> dict:
         "subject_head": HEAD_CURRENT,
         "parent_after_653de22": HEAD_REFRESH,
         "parent_after_9e626a2": "9e626a2b1e711e2b0830bc00bb30afe017d4a9fa",
-        "scope": "every <!-- 组件：… --> table + immediate <!-- 页面：参考 --> companion rows @292568ba",
+        "scope": "every <!-- 组件：… --> table + immediate <!-- 页面：参考 --> companion rows @HEAD_CURRENT",
         "distinct_from_keypoint_103": True,
         "component_table_count": len(tables),
         "claim_count_total": len(claims),
@@ -1052,11 +1528,17 @@ def main() -> None:
         "reviewer_manual_classification_v21_8f7": reviewer_manual_classification_v21_8f7(),
         "incremental_653_review": incremental_653_review(),
         "incremental_653_to_292568ba": incremental_653_to_292568ba(),
+        "incremental_292568ba_to_59a1b56": incremental_292568ba_to_59a1b56(),
+        "incremental_59a1b56_to_7a338ef4": incremental_59a1b56_to_7a338ef4(),
+        "r1b_accuracy_completion": r1b_accuracy_completion(),
         "component_tables_exhaustive": component_tables_exhaustive(),
         "page_lint": {
             "at_review_window_8f7ffbae": {"owner_page_lint_errors": 0, "owner_page_lint_warns": 6, "note": "prior R1b run"},
             "at_refresh_653de22": lint_on_ref(HEAD_REFRESH),
-            "at_current_292568ba": lint_on_ref(HEAD_CURRENT),
+            "at_block_a_292568ba": lint_on_ref(HEAD_BLOCK_A),
+            "at_presentation_2623a2a3": lint_on_ref("2623a2a31695387f68765d87d57b681ca7e281f6"),
+            "at_audited_d42_59a1b56": lint_on_ref(HEAD_D42_23),
+            "at_audited_2_4_7a338ef4": lint_on_ref(HEAD_CURRENT),
         },
         "lint_warns": [
             "sec-1 单元格 63 字",

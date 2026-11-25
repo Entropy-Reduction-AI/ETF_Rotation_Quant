@@ -1,4 +1,4 @@
-"""Manual component anchors @292568ba (rev i: §9 route row map + K2A / §6 discount)."""
+"""Manual component anchors @59a1b56 (D42 rev j)."""
 from __future__ import annotations
 
 _SPECS = {
@@ -120,6 +120,13 @@ _SPECS = {
         "verdict": 'anchored',
         "normative_sources": [
             {"location": '§4 details 七条', "quote": "| 7 | **冻结前新增的三项检验**"},
+        ],
+    },
+    (4, 'component', 7): {
+        "verdict": 'anchored',
+        "normative_sources": [
+            {"location": '§4 details 第八条 D42-9', "quote": "| 8 | **欧洲、日本以前的接触**（D42-5 写定之前；Owner 2026-11-25 书面确认本人没看过两地行业层的走势或回测，D42-9）：…STOXX 600 超级行业、TOPIX-17 行业的数据从未下载，也没有在欧洲、日本数据上跑过任何 v6 规则 | 两地大盘走势都见过，日本的大盘均线防守 1988–2015 已看过，欧洲没有；行业层两地都没看过 | 称“别的市场检验”，不称样本外 |"},
+            {"location": '§4 组件分拣同行', "quote": "别的市场只算半干净 | 大盘见过、行业层没看过 → 称“别的市场检验”，不称样本外"},
         ],
     },
     (5, 'component', 0): {
@@ -255,27 +262,39 @@ _SPECS = {
     (9, 'component', 2): {
         "verdict": 'anchored',
         "normative_sources": [
-            {"location": '§7 details 四步', "quote": "小资金起步需 Owner 另批"},
-            {"location": '§7 details 四步 closing', "quote": "上线：模拟盘之后，小资金起步需 Owner 另批（§5.3“结果怎么用”）。"},
+            {"location": '§7 details 条款表 D42-5', "quote": "| **别的市场检验**（D42-5） | 一次性检验通过后、上线前，把一个名额的规则原样搬到一个没看过的市场，用该市场能取到的全部历史跑一次；市场在冻结后、看任何结果之前由 Owner 选定（候选：欧洲 STOXX 600 超级行业，母指数 STOXX 600；日本 TOPIX-17 行业，母指数 TOPIX）。没有行业成交额时 TRIN 一票缺席，只用均线、宽度两票，两票都中才算紧张；把握 p 从 0.5 起。计 1 次试验 | 挑选（前 3 对同结构等权）为正且防守保费不超过 4 点，记为“支持”；否则结论降一级，上线前需 Owner 另批 |"},
+            {"location": 'D42-5 planning', "quote": "D42-5 | **上线前在别的市场检验一次**（选项 2A）：把一个名额的规则原样搬到一个没看过的市场，只报告。市场在冻结后、看任何结果之前由 Owner 选定"},
+        ],
+    },
+    (9, 'component', 3): {
+        "verdict": 'anchored',
+        "normative_sources": [
+            {"location": '§7 details 四步 closing D42-4', "quote": "上线：模拟盘之后，小资金起步需 Owner 另批（§5.3“结果怎么用”）；Owner 看着 v6 和现行配置在模拟盘、检验段、设计期的逐项比较拍板，不设“6 个月不差于现行配置”的门槛（D42-4）。"},
+            {"location": 'D42-4 planning', "quote": "豁免 D27-5 的“6 个月并行模拟不差于它”这一上线门槛"},
         ],
     },
     (10, 'component', 0): {
         "verdict": 'anchored',
         "normative_sources": [
-            {"location": '§7 details 条款表', "quote": "影子：结构市才挑选"},
+            {"location": '§7 details 条款表', "quote": "| **影子：结构市才挑选**（D38 第 54 行 B2） | A 股名额候选里站上 10 个月均线的比例处在到当时为止最低三分之一时用 12−1 前 3，否则按标签等权持有全部候选 | 只记录，不交易 |"},
         ],
     },
     (10, 'component', 1): {
         "verdict": 'anchored',
         "normative_sources": [
-            {"location": '§7 details 四步', "quote": "暂停**：跌破 60 万"},
+            {"location": '§7 details D42-4', "quote": "| **对照：现行配置**（D42-4） | 模拟盘每月同次记录现行配置（`config/portfolio.toml`）的持仓与净值 | 只报告；上线时 Owner 看逐项比较拍板 |"},
+            {"location": '§5.2 D42-8 现行配置', "quote": "| 现行配置 | `config/portfolio.toml`（D5、D7）全部字段，用 `src/portfolio` 现有代码跑，不另写简化版：A 股 70%（16 个容器等权）、海外 30%（纳指100、标普500 各半），阀门关闭（D7），月末出信号、下一交易日收盘成交，单边成本 0.05%。回测走 `replicate.py` 的 `daily_book`（D5 签收的复现口径，用容器指数）；7.5% 偏离带、溢价上限 10%、主备基金、净值滞后 2 天、一手 100 份要用基金行情和净值，只在模拟盘按 `target.py` 执行，回测报告写明这几项缺席（D42-8） | 和在跑的策略逐项比：赢在哪、输在哪（D27-5、D42-4）；只报告 |"},
+            {"location": '§5.2 D42-8 A1', "quote": "| A1 | 原样继承 v4 §7.4 附表 A 和该节执行段落（D42-8）：每个月末（每个自然月最后一个上交所交易日），标普500 全收益过去 12 个月收益高于现金，就在标普500 全收益和沪深300 全收益里拿过去 12 个月收益更高的一个全仓，否则全仓 10 年国债财富指数；下一个上交所交易日收盘成交；数据不足时、成本、收盘时点、汇率、现金都同 v4；U-指数口径 | 同行（D42-6）；只报告 |"},
+            {"location": '§5.2 D42-8 A2', "quote": "| A2 | 同上原样继承（D42-8）：沪深300 全收益、标普500 全收益、恒生、10 年国债财富指数、黄金 Au99.99 各 1/5；每个月末，这一份的月末收盘**严格高于**过去 10 个月末收盘的简单平均才持有，等于或低于就这一份拿现金；不足 10 个月末收盘的那一份拿现金；U-指数口径 | 同行（D42-6）；只报告 |"},
+            {"location": '§5.2 D42-8 ledgers', "quote": "设计期引用 v4 账本 U-指数行（`results/v4/r5/design/A1/index/`、`A2/index/`，summary 记的 net_sha256 为 3c371162…、cf3091d5…）；检验段引用 v5 一次性检验已签收的 U-指数净值（`results/v5/oneshot/index/A1/`、`A2/`，2016-01-04 → 2026-09-30，net_sha256 为 c9c883c5…、713d9816…）；不计试验。"},
+            {"location": '§4.1 #8 D42-9', "quote": "| 8 | **欧洲、日本以前的接触**（D42-5 写定之前；Owner 2026-11-25 书面确认本人没看过两地行业层的走势或回测，D42-9）：日经225 价格指数 1988–2015 用在 v5.1 长历史复核和 D38 预演长历史回放（大盘层的 K0–K2 防守）；EWJ、VGK、FEZ、EWG、EWU、EWQ 是 v5.1 别的市场池 G 的容器（2003-07 → 2026-09，跑的是 v5.1、E2 式、A1）；东证指数、DAX 的 QDII 在 A 股项目池里，D37 为拼接取过 DAX 日线（1999 起）和东证资料页。STOXX 600 超级行业、TOPIX-17 行业的数据从未下载，也没有在欧洲、日本数据上跑过任何 v6 规则 | 两地大盘走势都见过，日本的大盘均线防守 1988–2015 已看过，欧洲没有；行业层两地都没看过 | 称“别的市场检验”，不称样本外 |"},
+            {"location": '§9.2 #8 D42-8 D42-9', "quote": "| 8 | R1b 对 D42 增量的两项：别的市场写定前的接触；A1、A2、现行配置的执行口径 | Owner、Orchestrator | 已完成 | **已完成（2026-11-25，D42-8、D42-9）**：§4 第 8 条照实写明、Owner 书面确认；§5.2 写死口径并引用已签收账本 |"},
         ],
     },
     (10, 'component', 2): {
         "verdict": 'anchored',
         "normative_sources": [
-            {"location": '§7 details 四步 closing', "quote": "上线：模拟盘之后，小资金起步需 Owner 另批（§5.3“结果怎么用”）。"},
-            {"location": '§5.3', "quote": "小资金起步需 Owner 另批"},
+            {"location": '§7 details 暂停', "quote": "| **暂停** | 任一时点跌破 60 万底线，或连续 6 个月对同仓位基准累计落后超过 6 点 | 暂停并报告 Owner |"},
         ],
     },
     (11, 'component', 0): {
@@ -309,22 +328,22 @@ _SPECS = {
         "verdict": 'anchored',
         "normative_sources": [
             {"location": '§9.1', "quote": "2. **Reviewer R1**：逐条核对设计评审、§1.4 计数、§4 已看信息；Orchestrator 闭合后 Reviewer R1b（当前所在步骤，见页首“进度”）。"},
-            {"location": '§9 节标题', "quote": "## §9 运行纪律与冻结前待办：冻结前的 6 件待办全部完成，等 Reviewer R1b 后请你批准冻结"},
+            {"location": '§9 节标题', "quote": "## §9 运行纪律与冻结前待办：冻结前的 7 件待办全部完成，等 Reviewer R1b 后请你批准冻结"},
         ],
-        "reviewer_notes": "路线表「R1｜Reviewer｜已完成」：R1 动作见 §9.1#2；「已完成」由 §9 标题「6 件待办全部完成，等 R1b」与 R1b 为当前步共同推出",
+        "reviewer_notes": "路线表「R1｜Reviewer｜已完成」：R1 动作见 §9.1#2；「已完成」由 §9 标题与 R1b 为当前步共同推出",
     },
     (12, 'component', 2): {
         "verdict": 'anchored',
         "normative_sources": [
-            {"location": '§9 段首 blockquote', "quote": "> **6 件待办全部完成（附表 A、B 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。**"},
-            {"location": '§9.2 details', "quote": "| 2 | 附表 A：每条候选序列的代码、来源、价格 / 全收益口径、发布日、实盘载体 | Orchestrator、Dev | 已完成 | **已完成（2026-11-24）**：美股 QDII 清单按 Grok 第六轮入库结果定；细分化工（数据状态 frozen）是否参选在此核实（R1 J-3）：不参选；DJIA、DWRTF 检验段补数（#359） |"},
+            {"location": '§9 段首 blockquote', "quote": "> **7 件待办全部完成（附表 A、B 与 D42 于 2026-11-24 写入）；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。**"},
+            {"location": '§9.2 #7 D42', "quote": "| 7 | Owner 确认：D27-5 两项怎么写进预注册；补回 A1、A2 | Owner | 已完成 | **已完成（2026-11-24，D42-4 至 D42-7）**：现行配置作为对照、豁免 6 个月“不差于”门槛；上线前别的市场检验；A1、A2 写回 §5.2；报告四张图 |"},
         ],
     },
     (12, 'component', 3): {
         "verdict": 'anchored',
         "normative_sources": [
             {"location": '§9.1', "quote": "2. **Reviewer R1**：逐条核对设计评审、§1.4 计数、§4 已看信息；Orchestrator 闭合后 Reviewer R1b（当前所在步骤，见页首“进度”）。"},
-            {"location": 'Metadata 进度表', "quote": "| 初稿第 2.2 版：冻结前待办全部完成；待 Reviewer R1b。 | 100 万分成 A 股 40 万、美股 60 万两个名额。每月各选最强 3 只等分；只在确认紧张时按把握 p 减仓。超额主要靠美股挑选，v6 的主要价值是控制回撤。 | 现在不用操作。Reviewer R1b 通过后，请你批准冻结（§9.1 第 3 步）。 |"},
+            {"location": 'Metadata 进度表', "quote": "| 第 2.3 版（待冻结）：冻结前待办全部完成；D42 已写入；待 Reviewer R1b。 | 100 万分成 A 股 40 万、美股 60 万两个名额。每月各选最强 3 只等分；只在确认紧张时按把握 p 减仓。超额主要靠美股挑选，v6 的主要价值是控制回撤。 | 现在不用操作。Reviewer R1b 通过后，请你批准冻结（§9.1 第 3 步）。 |"},
         ],
     },
     (12, 'component', 4): {
