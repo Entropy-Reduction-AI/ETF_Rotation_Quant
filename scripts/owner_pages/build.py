@@ -10,6 +10,7 @@ import polish as P
 import story as S
 import story_layer as L
 import components as C
+import forms as F
 
 REPO, OUT, LINKS = sys.argv[1], sys.argv[2], sys.argv[3]
 DOCS = os.path.join(REPO, 'docs', 'owner')
@@ -447,6 +448,7 @@ def build(slug, fname, short, oldid):
             out.append(f'<section class="intro">{p}</section>' if p.strip() else '')
     content = '\n'.join(out)
     content = L.pre(content)
+    content = F.apply(content)
     content = P.polish(content, slug)
     content = S.storify(content, slug)
     content = S.ux_pass(content)
@@ -536,6 +538,7 @@ h2 .num {{ min-width: 1.6em; }}
 {S.CSS}
 {L.CSS}
 {C.CSS}
+{F.CSS}
 </style>
 </head>
 <body>

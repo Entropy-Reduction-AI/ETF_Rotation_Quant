@@ -975,6 +975,27 @@ a.sl-sp-i.t-todo .sl-sp-st { color: var(--bad); font-weight: 700; } a.sl-sp-i.t-
 @media (max-width: 760px) { .sl-dr { grid-template-columns: minmax(0, 1fr); gap: 3px; } .sl-ds { justify-content: flex-start; } .sl-look, a.sl-next { flex-direction: column; gap: 4px; align-items: flex-start; } }
 
 
+.cbx { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
+.cbx-c { min-width: 150px; display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.cbx-c.on { border-color: var(--accent); background: var(--accent-soft); }
+.cbx-top { display: flex; align-items: baseline; gap: 6px; } .cbx-top b { font-family: var(--font-mono); font-size: 26px; line-height: 1; color: var(--ink); }
+.cbx-top span { font-size: 13.5px; font-weight: 700; color: var(--ink); }
+.cbx-d { display: flex; gap: 4px; } .cbx-d i { width: 12px; height: 12px; border-radius: 3px; background: var(--line); }
+.cbx-c.on .cbx-d i { background: var(--accent); }
+.cbx-c em { font-style: normal; font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+.cbx-t { align-self: center; font-size: 12.5px; color: var(--muted); padding: 0 4px; } .cbx-t b { font-family: var(--font-mono); color: var(--ink); }
+.ladder { display: flex; flex-direction: column; max-width: 640px; }
+.ld-s { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.ld-s.first { border-color: var(--accent); }
+.ld-n { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--bg); border: 1px solid var(--line); font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.ld-s.first .ld-n { background: var(--accent); border-color: var(--accent); color: #fff; }
+.ld-b { display: flex; flex-direction: column; gap: 2px; } .ld-b b { font-size: 14.5px; color: var(--ink); } .ld-b span { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.ld-tag { font-style: normal; font-size: 11.5px; padding: 1px 7px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.ld-s.first .ld-tag { color: var(--accent); border-color: var(--accent); }
+.ld-c { position: relative; padding: 6px 0 6px 25px; margin-left: 12px; border-left: 2px dashed var(--line); }
+.ld-c span { display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--warn); background: var(--warn-soft); border-radius: 999px; padding: 1px 10px; }
+.ld-c span::before { content: '↓ '; }
+
 .pool { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .pl-card { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 9px; }
 .pl-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; }
@@ -1078,6 +1099,119 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 .rk-c { font-size: 12.5px; padding: 1px 7px; border-radius: 5px; background: var(--bg); border: 1px solid var(--line); }
 @media (max-width: 760px) { .pn-g, .pn-r, .risks > .rk { grid-template-columns: minmax(0, 1fr); } .pn-gk { border-right: 0; border-bottom: 1px solid var(--line); } }
 @media (max-width: 760px) { .cp-r, .cr-r { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
+
+
+/* ===== forms.py: content-specific forms ===== */
+.f-steps { display: grid; gap: 10px; }
+.f-st { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.f-st-k { display: flex; flex-direction: column; gap: 2px; }
+.f-st-k { flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: 4px; }
+.f-st-n, .f-st-s { font-size: 13px; color: var(--muted); } .f-st-q { flex-basis: 100%; }
+.f-st-k { align-content: flex-start; }
+.f-two-c .num, .f-eq-t .num, .f-eq-p .num, .pl-n .num, .cbx-top .num, .f-k-v .num, .f-k-h .num { background: none !important; padding: 0 !important; box-shadow: none !important; }
+.f-st-q { font-size: 18px; line-height: 1.3; color: var(--ink); }
+.f-st-k::before { content: none; }
+.f-st-b { display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.6; color: var(--ink); }
+.f-st-main { font-size: 14px; }
+.f-votes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.f-vt { display: flex; flex-direction: column; gap: 3px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); font-size: 13px; line-height: 1.5; }
+.f-vt-n { font-size: 11.5px; font-weight: 700; color: var(--accent); letter-spacing: .02em; }
+.f-pill { align-self: flex-start; padding: 4px 12px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 14px; }
+.f-pill strong { color: #fff; }
+.f-states { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.f-state { display: flex; flex-direction: column; gap: 3px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); border-top: 3px solid var(--good); background: var(--bg); font-size: 13.5px; }
+.f-state.warn { border-top-color: var(--warn); }
+.f-state-k { font-size: 12px; font-weight: 700; color: var(--muted); }
+.f-if { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: baseline; padding: 6px 10px; border-left: 3px solid var(--warn); background: var(--bg); border-radius: 0 6px 6px 0; font-size: 13.5px; }
+.f-if-k { font-weight: 700; color: var(--ink); } .f-if-k::before { content: '例外 · '; color: var(--warn); font-weight: 700; }
+.f-note { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+.f-vs { display: grid; grid-template-columns: 7em minmax(0, 1fr) minmax(0, 1.5fr); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.f-vs > div { padding: 9px 12px; border-top: 1px solid var(--line); font-size: 13.5px; line-height: 1.55; }
+.f-vs-h { border-top: 0 !important; display: flex; flex-direction: column; gap: 1px; }
+.f-vs-h span { font-size: 11.5px; color: var(--muted); } .f-vs-h b { font-size: 16px; color: var(--ink); }
+.f-vs-h.main { border-top: 3px solid var(--ink) !important; } .f-vs-h.chal { border-top: 3px solid var(--accent) !important; }
+.f-vs-l { display: flex; flex-direction: column; gap: 2px; font-weight: 700; color: var(--ink); }
+.f-vs-l em { font-style: normal; font-weight: 600; font-size: 11px; width: max-content; padding: 0 6px; border-radius: 4px; background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+.f-vs-l.diff em { color: var(--accent); border-color: var(--accent); }
+.f-vs-c.muted { color: var(--muted); }
+.f-vs-c.chal.diff { background: var(--accent-soft); }
+.f-vs-c.verdict, .f-vs-l.verdict { font-weight: 700; }
+.f-vs-sub { display: block; color: var(--muted); font-size: 12.5px; margin-top: 3px; }
+code.f-fm { display: inline-block; font-size: 13px; padding: 2px 6px; }
+
+.f-k { display: grid; gap: 10px; }
+.f-k-g { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.f-k-h { padding: 7px 12px; font-size: 13px; color: var(--muted); background: var(--bg); border-bottom: 1px solid var(--line); }
+.f-k-h b { font-family: var(--font-mono); font-size: 16px; color: var(--ink); margin-right: 2px; }
+.f-k-g.acc { border-color: var(--accent); } .f-k-g.acc .f-k-h { background: var(--accent); color: #fff; } .f-k-g.acc .f-k-h b { color: #fff; }
+.f-k-r { display: grid; grid-template-columns: 1.6em 8.5em 9em minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 12px; border-top: 1px solid var(--line); font-size: 13.5px; }
+.f-k-r:first-of-type { border-top: 0; }
+.f-k-i { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 700; }
+.f-k-name { font-weight: 700; color: var(--ink); }
+.f-k-v { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--ink); }
+.f-k-o { color: var(--muted); font-size: 13px; line-height: 1.55; }
+.f-k-x { font-style: normal; margin-left: 6px; font-size: 11.5px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+
+.f-rules { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.f-ru { display: grid; grid-template-columns: 8.5em minmax(0, 1fr) 11em; gap: 14px; padding: 10px 14px; border-top: 1px solid var(--line); align-items: baseline; }
+.f-ru:first-child { border-top: 0; }
+.f-ru-k { font-weight: 700; color: var(--ink); font-size: 14px; }
+.f-ru-lead { font-size: 14px; color: var(--ink); line-height: 1.55; }
+.f-ru-rest { font-size: 12.5px; color: var(--muted); line-height: 1.55; margin-top: 2px; }
+.f-ru-cost { font-size: 12.5px; color: var(--warn); line-height: 1.55; margin-top: 4px; }
+.f-ru-s { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+
+.sl-dr.f-def { align-items: start; }
+.f-calc { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 6px; align-items: stretch; }
+.f-calc-s { display: flex; flex-direction: column; gap: 4px; padding: 9px 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; line-height: 1.5; color: var(--ink); }
+.f-calc-a { align-self: center; color: var(--accent); font-weight: 700; }
+.f-calc-n { font-size: 12px; color: var(--accent); font-weight: 700; }
+.f-calc-b.fm { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--ink); }
+.f-calc-s em { font-style: normal; font-size: 12px; color: var(--muted); }
+.f-calc-st { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: 8px; align-items: stretch; margin-top: 8px; font-size: 13px; color: var(--ink); }
+.f-calc-k { align-self: center; font-size: 12px; color: var(--muted); }
+.f-calc-m { display: flex; gap: 8px; align-items: baseline; padding: 6px 10px; border-radius: 8px; border: 1px dashed var(--line); }
+.f-calc-m b { white-space: nowrap; }
+.f-gate-h { font-size: 14px; color: var(--ink); margin-bottom: 6px; }
+.f-gates { display: grid; gap: 4px; }
+.f-gt { display: grid; grid-template-columns: 1.4em minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 5px 10px; border-radius: 6px; background: var(--good-soft); font-size: 13.5px; }
+.f-gt-ok { color: var(--good); font-weight: 800; } .f-gt b { color: var(--good); font-family: var(--font-mono); }
+.f-two-h { font-size: 14px; color: var(--ink); margin-bottom: 6px; }
+.f-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 6px; }
+.f-two-c { display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+.f-two-c b { font-family: var(--font-mono); font-size: 22px; line-height: 1.1; color: var(--muted); }
+.f-two-c.on { border-color: var(--accent); } .f-two-c.on b { color: var(--ink); }
+.f-two-c span { font-size: 13px; color: var(--ink); } .f-two-c em { font-style: normal; font-size: 12px; color: var(--muted); }
+.f-eq { display: flex; align-items: stretch; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+.f-eq-t, .f-eq-p { display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+.f-eq-t { border-color: var(--accent); } .f-eq-t b { font-family: var(--font-mono); font-size: 24px; line-height: 1.1; color: var(--ink); }
+.f-eq-t span, .f-eq-p > span { font-size: 12px; color: var(--muted); }
+.f-eq-p { flex: 1 1 180px; } .f-eq-p b { font-family: var(--font-mono); font-size: 17px; color: var(--ink); }
+.f-eq-p em { font-style: normal; font-size: 12px; color: var(--muted); } .f-eq-p small { font-size: 12px; color: var(--muted); line-height: 1.45; }
+.f-eq-op { align-self: center; font-size: 20px; font-weight: 700; color: var(--muted); }
+.f-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.f-pair-c { display: flex; flex-direction: column; gap: 2px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); font-size: 13.5px; }
+.f-pair-c b { font-size: 12px; color: var(--muted); }
+
+ol.flow.f-compact { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: 0 !important; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+ol.flow.f-compact > li { border: 0 !important; border-top: 1px solid var(--line) !important; border-radius: 0 !important; padding: 9px 14px 9px 46px !important; position: relative; }
+ol.flow.f-compact > li:first-child { border-top: 0 !important; }
+ol.flow.f-compact > li::before, ol.flow.f-compact .fl-n { position: absolute !important; left: 12px; top: 10px; margin: 0 !important; width: 22px !important; height: 22px !important; font-size: 12px !important; }
+ol.flow.f-compact > li::after { content: none !important; }
+ol.flow.f-compact > li { display: grid !important; grid-template-columns: 6em 11em minmax(0, 1fr); gap: 12px; align-items: baseline; }
+ol.flow.f-compact .fl-t { font-size: 12.5px; color: var(--muted); font-weight: 600; border: 0 !important; padding: 0 !important; margin: 0 !important; }
+ol.flow.f-compact .fl-k { font-size: 14px !important; font-weight: 700; color: var(--ink) !important; border: 0 !important; padding: 0 !important; margin: 0 !important; }
+ol.flow.f-compact .fl-d { font-size: 13px; color: var(--muted); border: 0 !important; padding: 0 !important; margin: 0 !important; }
+ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
+
+@media (max-width: 760px) {
+  ol.flow.f-compact > li { grid-template-columns: minmax(0, 1fr) !important; gap: 2px; }
+  .f-st, .f-ru, .f-k-r { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .f-votes, .f-states, .f-calc, .f-two, .f-pair { grid-template-columns: minmax(0, 1fr); }
+  .f-vs { grid-template-columns: minmax(0, 1fr); } .f-vs-h:first-child { display: none; }
+  .f-calc, .f-calc-st { grid-template-columns: minmax(0, 1fr); } .f-calc-a { transform: rotate(90deg); justify-self: center; } .f-ru-s { justify-content: flex-start; }
+}
 
 </style>
 </head>
@@ -1294,11 +1428,11 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </ul>
 </div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>v5 原版是怎么设计的、同一天怎么分仓（已淘汰，留档）</span></button><div class="fold-b" hidden="">
-<div class="cases"><div class="case t-info"><div class="case-h"><span class="case-who">E2 新口径</span><span class="case-c">一张排名表</span></div><div class="case-b"><ol class="steps-n">
+<div class="cases"><div class="case t-info"><div class="case-h"><span class="case-who">E2 新口径</span><span class="case-c">一张排名表</span></div><div class="case-b"><ol class="f-compact steps-n">
 <li>所有容器（股票、国债、黄金）一起排名</li>
 <li>跑赢现金的才有资格，取前 N 名，每名 1/N</li>
 <li>不够 N 名，空位拿现金</li>
-</ol><p>防守是自然发生的：股票一弱，国债就排进前几名。</p></div></div><div class="case t-info"><div class="case-h"><span class="case-who">v5 原版</span><span class="case-c">两层 + 防守位</span></div><div class="case-b"><ol class="steps-n">
+</ol><p>防守是自然发生的：股票一弱，国债就排进前几名。</p></div></div><div class="case t-info"><div class="case-h"><span class="case-who">v5 原版</span><span class="case-c">两层 + 防守位</span></div><div class="case-b"><ol class="f-compact steps-n">
 <li>五个风险大类各自判断：有没有跑赢现金的成员</li>
 <li>跑赢的大类<strong>平分</strong>仓位，每类买最强的一只</li>
 <li><strong>五类都不跑赢</strong>时，才放国债、黄金，再不行拿现金</li>
@@ -1916,7 +2050,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 <p class="table-note note">为什么第二行不行：大跌之后，“过去一年的平常波动”里装满了暴跌，噪音被算得很大，信号很难超过它，进场就被拖住了。换市场是在两个市场之间比，不受这个影响。第三行是看到第二行的结果后改的，两次都登记了。</p>
 <h3 id="③-规则-草案">③ 规则（草案）</h3>
 <p>每周最后一个交易日决定，下一个交易日收盘成交</p>
-<ol class="steps-n">
+<ol class="f-compact steps-n">
 <li><strong>动态周期</strong>：每个市场各自算“最近 1 个月的波动 ÷ 过去一年的平常水平”，看它在自己历史上排第几。越剧烈，看的周期越短，最短 1 个月；越平静越长，最长 12 个月。</li>
 <li><strong>第一层·选市场</strong>：A 股（沪深300）、港股（恒生）、美股（标普500）各算“动态周期里的涨幅 − 同期现金”，大于零才有资格，持有最强的一个。</li>
 <li><strong>防守</strong>：三个市场都没资格，国债、黄金按同样的办法比，取跑赢现金的那个；都不行拿现金。</li>
@@ -2847,7 +2981,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 <p>账本 33 行（上限 45）。只用 2015 年以前的数据，没有算 2016 年以后的中国组合收益。标橙的一条如果没修，v5 和 E2 不在同一套交易条件下，所有比较都不成立。</p>
 <h3 id="原版-过关-两个部件各试一次-只有-10-离场-留下-最终版没能入围">原版 · 过关：两个部件各试一次，只有“10% 离场”留下；最终版没能入围</h3>
 <div class="claim-box"><strong>规则事先写死：先跑没有任何部件的 v5 基础版，再把部件一个个加上去试，过关才留下；最后拿最终版和 E2 新口径比。</strong></div>
-<ol class="steps-n flow" style="counter-reset: fl 0">
+<ol class="f-compact steps-n flow" style="counter-reset: fl 0">
 <li><b class="fl-t">v5 基础版</b><span class="fl-d">只有“两层 + 防守位”，不加任何部件。</span></li>
 <li><b class="fl-t">加按波动调仓</b><span class="fl-d">和基础版比，没过，丢掉。</span></li>
 <li><b class="fl-t">加 <span class="num">10%</span> 离场</b><span class="fl-d">还是和基础版比，过关，成为最终版。</span></li>
@@ -2992,7 +3126,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 <h3 id="比四条规则更根本的-研究流程上的三处错">比四条规则更根本的：研究流程上的三处错</h3>
 <div class="cards from-table plain"><div class="card tone-0 tone-bad"><div class="ct">病因和处方没对上</div><div class="cb">v4 暴露的是“可交易池太小，空位拿现金代价大”，这是池子和执行的问题。v5 开的方子却改了整个组合结构，把本来没问题的指数池一起改坏了。</div></div><div class="card tone-1 tone-info"><div class="ct">反面证据被我解释掉了</div><div class="cb">探索期“填满空位更差”已经说明强制持有伤收益。我当时用“v5 只在跑赢现金的大类之间集中”解释掉它；硬伤 ② 说明这层保护太松，等于没有。</div></div><div class="card tone-2 tone-bad"><div class="ct">只设了结果门，没做愿景检查</div><div class="cb">预注册把过关条件写得很严，但跑之前没人问一句：这条规则会不会把钱给不够强的东西？四处硬伤都能在纸面上看出来，不需要跑回测。</div></div></div>
 <p>以后每个版本跑之前，先过这五问（建议成为预注册的固定一节）</p>
-<ol class="steps-n flow" style="counter-reset: fl 0">
+<ol class="f-compact steps-n flow" style="counter-reset: fl 0">
 <li><b class="fl-t">钱是否跟着强弱走？</b><span class="fl-d">有没有可能让一个弱品种拿到和最强一样多的钱？</span></li>
 <li><b class="fl-t">挑选发生在哪一层？</b><span class="fl-d">那一层的品种之间差别大不大，独立选择有几个？</span></li>
 <li><b class="fl-t">防守是一直在竞争，还是到极端才打开？</b><span class="fl-d"></span></li>
@@ -3172,7 +3306,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 <p>这些都是封板后 v6 的线索，按 D27 走“设计证据 <span class="arr">→</span> 别的市场 <span class="arr">→</span> 并行模拟”的路径，不改 v5。</p>
 <h3 id="原版-接下来-先把-v5-策略讨论清楚-再写预注册">原版 · 接下来：先把 v5 策略讨论清楚，再写预注册</h3>
 <div class="claim-box"><strong>“跑前五问”已写进项目规矩（D30-1）；v5 允许一次设计修正（D30-2）。新的 v5 入围与否，跑完都封板。</strong></div>
-<ol class="steps-n flow" style="counter-reset: fl 0">
+<ol class="f-compact steps-n flow" style="counter-reset: fl 0">
 <li><b class="fl-t">讨论策略</b><span class="fl-d">排名怎么比、持几只、空位放什么、同类挤占怎么办；逐条过“跑前五问”，写事前画像。</span></li>
 <li><b class="fl-t">预注册</b><span class="fl-d">设计定下来再写定稿；Reviewer 复核、你批准后冻结。</span></li>
 <li><b class="fl-t">设计期和别的市场</b><span class="fl-d">各跑一次，逐条对照事前画像。</span></li>

@@ -975,6 +975,27 @@ a.sl-sp-i.t-todo .sl-sp-st { color: var(--bad); font-weight: 700; } a.sl-sp-i.t-
 @media (max-width: 760px) { .sl-dr { grid-template-columns: minmax(0, 1fr); gap: 3px; } .sl-ds { justify-content: flex-start; } .sl-look, a.sl-next { flex-direction: column; gap: 4px; align-items: flex-start; } }
 
 
+.cbx { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
+.cbx-c { min-width: 150px; display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.cbx-c.on { border-color: var(--accent); background: var(--accent-soft); }
+.cbx-top { display: flex; align-items: baseline; gap: 6px; } .cbx-top b { font-family: var(--font-mono); font-size: 26px; line-height: 1; color: var(--ink); }
+.cbx-top span { font-size: 13.5px; font-weight: 700; color: var(--ink); }
+.cbx-d { display: flex; gap: 4px; } .cbx-d i { width: 12px; height: 12px; border-radius: 3px; background: var(--line); }
+.cbx-c.on .cbx-d i { background: var(--accent); }
+.cbx-c em { font-style: normal; font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+.cbx-t { align-self: center; font-size: 12.5px; color: var(--muted); padding: 0 4px; } .cbx-t b { font-family: var(--font-mono); color: var(--ink); }
+.ladder { display: flex; flex-direction: column; max-width: 640px; }
+.ld-s { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.ld-s.first { border-color: var(--accent); }
+.ld-n { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--bg); border: 1px solid var(--line); font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.ld-s.first .ld-n { background: var(--accent); border-color: var(--accent); color: #fff; }
+.ld-b { display: flex; flex-direction: column; gap: 2px; } .ld-b b { font-size: 14.5px; color: var(--ink); } .ld-b span { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.ld-tag { font-style: normal; font-size: 11.5px; padding: 1px 7px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.ld-s.first .ld-tag { color: var(--accent); border-color: var(--accent); }
+.ld-c { position: relative; padding: 6px 0 6px 25px; margin-left: 12px; border-left: 2px dashed var(--line); }
+.ld-c span { display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--warn); background: var(--warn-soft); border-radius: 999px; padding: 1px 10px; }
+.ld-c span::before { content: '↓ '; }
+
 .pool { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .pl-card { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 9px; }
 .pl-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; }
@@ -1079,6 +1100,119 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 @media (max-width: 760px) { .pn-g, .pn-r, .risks > .rk { grid-template-columns: minmax(0, 1fr); } .pn-gk { border-right: 0; border-bottom: 1px solid var(--line); } }
 @media (max-width: 760px) { .cp-r, .cr-r { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
 
+
+/* ===== forms.py: content-specific forms ===== */
+.f-steps { display: grid; gap: 10px; }
+.f-st { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.f-st-k { display: flex; flex-direction: column; gap: 2px; }
+.f-st-k { flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: 4px; }
+.f-st-n, .f-st-s { font-size: 13px; color: var(--muted); } .f-st-q { flex-basis: 100%; }
+.f-st-k { align-content: flex-start; }
+.f-two-c .num, .f-eq-t .num, .f-eq-p .num, .pl-n .num, .cbx-top .num, .f-k-v .num, .f-k-h .num { background: none !important; padding: 0 !important; box-shadow: none !important; }
+.f-st-q { font-size: 18px; line-height: 1.3; color: var(--ink); }
+.f-st-k::before { content: none; }
+.f-st-b { display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.6; color: var(--ink); }
+.f-st-main { font-size: 14px; }
+.f-votes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.f-vt { display: flex; flex-direction: column; gap: 3px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); font-size: 13px; line-height: 1.5; }
+.f-vt-n { font-size: 11.5px; font-weight: 700; color: var(--accent); letter-spacing: .02em; }
+.f-pill { align-self: flex-start; padding: 4px 12px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 14px; }
+.f-pill strong { color: #fff; }
+.f-states { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.f-state { display: flex; flex-direction: column; gap: 3px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); border-top: 3px solid var(--good); background: var(--bg); font-size: 13.5px; }
+.f-state.warn { border-top-color: var(--warn); }
+.f-state-k { font-size: 12px; font-weight: 700; color: var(--muted); }
+.f-if { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: baseline; padding: 6px 10px; border-left: 3px solid var(--warn); background: var(--bg); border-radius: 0 6px 6px 0; font-size: 13.5px; }
+.f-if-k { font-weight: 700; color: var(--ink); } .f-if-k::before { content: '例外 · '; color: var(--warn); font-weight: 700; }
+.f-note { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+.f-vs { display: grid; grid-template-columns: 7em minmax(0, 1fr) minmax(0, 1.5fr); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.f-vs > div { padding: 9px 12px; border-top: 1px solid var(--line); font-size: 13.5px; line-height: 1.55; }
+.f-vs-h { border-top: 0 !important; display: flex; flex-direction: column; gap: 1px; }
+.f-vs-h span { font-size: 11.5px; color: var(--muted); } .f-vs-h b { font-size: 16px; color: var(--ink); }
+.f-vs-h.main { border-top: 3px solid var(--ink) !important; } .f-vs-h.chal { border-top: 3px solid var(--accent) !important; }
+.f-vs-l { display: flex; flex-direction: column; gap: 2px; font-weight: 700; color: var(--ink); }
+.f-vs-l em { font-style: normal; font-weight: 600; font-size: 11px; width: max-content; padding: 0 6px; border-radius: 4px; background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+.f-vs-l.diff em { color: var(--accent); border-color: var(--accent); }
+.f-vs-c.muted { color: var(--muted); }
+.f-vs-c.chal.diff { background: var(--accent-soft); }
+.f-vs-c.verdict, .f-vs-l.verdict { font-weight: 700; }
+.f-vs-sub { display: block; color: var(--muted); font-size: 12.5px; margin-top: 3px; }
+code.f-fm { display: inline-block; font-size: 13px; padding: 2px 6px; }
+
+.f-k { display: grid; gap: 10px; }
+.f-k-g { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.f-k-h { padding: 7px 12px; font-size: 13px; color: var(--muted); background: var(--bg); border-bottom: 1px solid var(--line); }
+.f-k-h b { font-family: var(--font-mono); font-size: 16px; color: var(--ink); margin-right: 2px; }
+.f-k-g.acc { border-color: var(--accent); } .f-k-g.acc .f-k-h { background: var(--accent); color: #fff; } .f-k-g.acc .f-k-h b { color: #fff; }
+.f-k-r { display: grid; grid-template-columns: 1.6em 8.5em 9em minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 12px; border-top: 1px solid var(--line); font-size: 13.5px; }
+.f-k-r:first-of-type { border-top: 0; }
+.f-k-i { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 700; }
+.f-k-name { font-weight: 700; color: var(--ink); }
+.f-k-v { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--ink); }
+.f-k-o { color: var(--muted); font-size: 13px; line-height: 1.55; }
+.f-k-x { font-style: normal; margin-left: 6px; font-size: 11.5px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+
+.f-rules { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.f-ru { display: grid; grid-template-columns: 8.5em minmax(0, 1fr) 11em; gap: 14px; padding: 10px 14px; border-top: 1px solid var(--line); align-items: baseline; }
+.f-ru:first-child { border-top: 0; }
+.f-ru-k { font-weight: 700; color: var(--ink); font-size: 14px; }
+.f-ru-lead { font-size: 14px; color: var(--ink); line-height: 1.55; }
+.f-ru-rest { font-size: 12.5px; color: var(--muted); line-height: 1.55; margin-top: 2px; }
+.f-ru-cost { font-size: 12.5px; color: var(--warn); line-height: 1.55; margin-top: 4px; }
+.f-ru-s { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+
+.sl-dr.f-def { align-items: start; }
+.f-calc { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 6px; align-items: stretch; }
+.f-calc-s { display: flex; flex-direction: column; gap: 4px; padding: 9px 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; line-height: 1.5; color: var(--ink); }
+.f-calc-a { align-self: center; color: var(--accent); font-weight: 700; }
+.f-calc-n { font-size: 12px; color: var(--accent); font-weight: 700; }
+.f-calc-b.fm { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--ink); }
+.f-calc-s em { font-style: normal; font-size: 12px; color: var(--muted); }
+.f-calc-st { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: 8px; align-items: stretch; margin-top: 8px; font-size: 13px; color: var(--ink); }
+.f-calc-k { align-self: center; font-size: 12px; color: var(--muted); }
+.f-calc-m { display: flex; gap: 8px; align-items: baseline; padding: 6px 10px; border-radius: 8px; border: 1px dashed var(--line); }
+.f-calc-m b { white-space: nowrap; }
+.f-gate-h { font-size: 14px; color: var(--ink); margin-bottom: 6px; }
+.f-gates { display: grid; gap: 4px; }
+.f-gt { display: grid; grid-template-columns: 1.4em minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 5px 10px; border-radius: 6px; background: var(--good-soft); font-size: 13.5px; }
+.f-gt-ok { color: var(--good); font-weight: 800; } .f-gt b { color: var(--good); font-family: var(--font-mono); }
+.f-two-h { font-size: 14px; color: var(--ink); margin-bottom: 6px; }
+.f-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 6px; }
+.f-two-c { display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+.f-two-c b { font-family: var(--font-mono); font-size: 22px; line-height: 1.1; color: var(--muted); }
+.f-two-c.on { border-color: var(--accent); } .f-two-c.on b { color: var(--ink); }
+.f-two-c span { font-size: 13px; color: var(--ink); } .f-two-c em { font-style: normal; font-size: 12px; color: var(--muted); }
+.f-eq { display: flex; align-items: stretch; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+.f-eq-t, .f-eq-p { display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+.f-eq-t { border-color: var(--accent); } .f-eq-t b { font-family: var(--font-mono); font-size: 24px; line-height: 1.1; color: var(--ink); }
+.f-eq-t span, .f-eq-p > span { font-size: 12px; color: var(--muted); }
+.f-eq-p { flex: 1 1 180px; } .f-eq-p b { font-family: var(--font-mono); font-size: 17px; color: var(--ink); }
+.f-eq-p em { font-style: normal; font-size: 12px; color: var(--muted); } .f-eq-p small { font-size: 12px; color: var(--muted); line-height: 1.45; }
+.f-eq-op { align-self: center; font-size: 20px; font-weight: 700; color: var(--muted); }
+.f-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.f-pair-c { display: flex; flex-direction: column; gap: 2px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); font-size: 13.5px; }
+.f-pair-c b { font-size: 12px; color: var(--muted); }
+
+ol.flow.f-compact { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: 0 !important; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+ol.flow.f-compact > li { border: 0 !important; border-top: 1px solid var(--line) !important; border-radius: 0 !important; padding: 9px 14px 9px 46px !important; position: relative; }
+ol.flow.f-compact > li:first-child { border-top: 0 !important; }
+ol.flow.f-compact > li::before, ol.flow.f-compact .fl-n { position: absolute !important; left: 12px; top: 10px; margin: 0 !important; width: 22px !important; height: 22px !important; font-size: 12px !important; }
+ol.flow.f-compact > li::after { content: none !important; }
+ol.flow.f-compact > li { display: grid !important; grid-template-columns: 6em 11em minmax(0, 1fr); gap: 12px; align-items: baseline; }
+ol.flow.f-compact .fl-t { font-size: 12.5px; color: var(--muted); font-weight: 600; border: 0 !important; padding: 0 !important; margin: 0 !important; }
+ol.flow.f-compact .fl-k { font-size: 14px !important; font-weight: 700; color: var(--ink) !important; border: 0 !important; padding: 0 !important; margin: 0 !important; }
+ol.flow.f-compact .fl-d { font-size: 13px; color: var(--muted); border: 0 !important; padding: 0 !important; margin: 0 !important; }
+ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
+
+@media (max-width: 760px) {
+  ol.flow.f-compact > li { grid-template-columns: minmax(0, 1fr) !important; gap: 2px; }
+  .f-st, .f-ru, .f-k-r { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .f-votes, .f-states, .f-calc, .f-two, .f-pair { grid-template-columns: minmax(0, 1fr); }
+  .f-vs { grid-template-columns: minmax(0, 1fr); } .f-vs-h:first-child { display: none; }
+  .f-calc, .f-calc-st { grid-template-columns: minmax(0, 1fr); } .f-calc-a { transform: rotate(90deg); justify-self: center; } .f-ru-s { justify-content: flex-start; }
+}
+
 </style>
 </head>
 <body>
@@ -1109,141 +1243,16 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 <div class="sl-defs" data-lint="ref"><div class="sl-dr"><div class="sl-dt">准入</div><div class="sl-dd"><div class="sl-dh">每个候选从官方发布日（或基金上市日）起参选，满 12 个月才有分数。</div><div class="sl-dx">10 个中证全指一级行业按 D38 第 48 行允许用 2011-08-02 之前的回填点位（Owner 2026-11-24 确认：机械分类的行业回填偏差小）；主题指数一律从发布日起；例外见附表 A。</div></div><div class="sl-ds"><span class="sl-src">D38 第 39 行</span></div></div><div class="sl-dr"><div class="sl-dt">母指数也是候选</div><div class="sl-dd"><div class="sl-dh">规则自己决定拿母指数还是细分。</div></div><div class="sl-ds"></div></div><div class="sl-dr"><div class="sl-dt">去重</div><div class="sl-dd"><div class="sl-dh">每个候选事先标好行业标签（美股按 GICS，A 股按中证一级，红利类单列“红利”；宽基、母指数不标），同一标签只留分数最高的一个，空位由下一名递补。</div><div class="sl-dx">标签表 <code>config/v6-preflight/sector-tags.toml</code> 冻结前补齐检验段全部候选。</div></div><div class="sl-ds"><span class="sl-src">D38 第 46 行</span><span class="sl-src">§9 待办 1</span></div></div><div class="sl-dr"><div class="sl-dt">港股不单设名额</div><div class="sl-dd"><div class="sl-dh">只有 4 个分类指数，挑选失效。</div></div><div class="sl-ds"><span class="sl-src">D38 第 38 行，D40-4</span></div></div></div>
 </div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>1.2 每月四步（条款原文：每月最后一个交易日算，下一个交易日成交）</span></button><div class="fold-b" hidden="">
-<div class="table-wrap"><table data-lint="ref">
-<thead>
-<tr>
-<th>步</th>
-<th>决定什么</th>
-<th>规则</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="k">① 选人</td>
-<td>买哪 3 只</td>
-<td class="detail">按 12−1 涨幅（上月末点位 ÷ 12 个月前月末点位 − 1）从高到低排，去重后取前 3。母指数跌破自己的 10 个月均线时，只选 12−1 为正的候选，选不满的空位放国债</td>
-</tr>
-<tr>
-<td class="k">② 看市场</td>
-<td>紧不紧张</td>
-<td class="detail">三票：母指数跌破 10 个月均线；宽度（站上自己 10 个月均线的候选占比）不高于它到当时为止全部月份的 1/3 分位；TRIN（每日：涨的候选数 ÷ 跌的候选数，再除以涨的成交额 ÷ 跌的成交额；取 10 日均值）不低于到当时为止的 2/3 分位。分位至少要 24 个月历史，不足时该票记 0。<strong>≥ 2 票 = 确认紧张</strong></td>
-</tr>
-<tr>
-<td class="k">③ 定仓位</td>
-<td>股票买多少</td>
-<td class="detail">不紧张：3 只各 1/3。确认紧张：股票总仓位 = 把握 p，3 只等分；其余放国债，国债也跌破 10 个月均线时放现金</td>
-</tr>
-<tr>
-<td class="k">④ 下单</td>
-<td>买哪只基金</td>
-<td class="detail">见 §2 执行层</td>
-</tr>
-</tbody>
-</table></div>
-<div class="sl-defs" data-lint="ref"><div class="sl-dr"><div class="sl-dt">把握 p</div><div class="sl-dd"><div class="sl-dh">p = Φ(t)，t = 以往每个紧张月“前 3 名下个月的平均绝对收益”的平均 ÷ 标准差 × √月数，只用当时已经知道结果的月份；少于 12 个紧张月时 p = 0.5。</div><div class="sl-dx">美股名额以美国 49 行业长历史（French，1999 年以前的紧张月）为起点；A 股名额从 0.5 起。Φ 是标准正态分布函数。</div></div><div class="sl-ds"><span class="sl-src">D40-3</span></div></div><div class="sl-dr"><div class="sl-dt">领头者（把握 p 用）</div><div class="sl-dd"><div class="sl-dh">去重后按 12−1 排名的前 3，不做“12−1 须为正”的过滤；只在确认紧张的月份记录，三只下月收益都已知时才记入。</div><div class="sl-dx">与设计期数字的来源 <code>scripts/preflight/topn_dedupe.py</code> 一致。</div></div><div class="sl-ds"><span class="sl-src">R1 SC-2</span></div></div><div class="sl-dr"><div class="sl-dt">TRIN 的成交额</div><div class="sl-dd"><div class="sl-dh">美股 = 9 个行业 SPDR（收盘 × 成交量）；A 股 = 有成交额的候选指数，按发布日截断。</div></div><div class="sl-ds"><span class="sl-src">与 D38 第 39 行相同</span></div></div><div class="sl-dr"><div class="sl-dt">国债与现金</div><div class="sl-dd"><div class="sl-dh">与预演脚本相同（<code>scripts/preflight/topn_system.py</code> 的 <code>cgb-10y</code> 与 <code>cash</code>）；两个名额的防守资产相同。</div></div><div class="sl-ds"></div></div><div class="sl-dr"><div class="sl-dt">名额之间不挪钱</div><div class="sl-dd"><div class="sl-dh">美股名额的钱只在美股候选、国债、现金之间分，A 股同理。</div><div class="sl-dx">每月末两个名额按 60/40 再平衡，调拨的金额按单边 0.2% 计成本。设计期数字（<code>topn_dedupe.py</code>，含去重）用每日固定 60/40 加权近似，与按月再平衡的差异在附表 B 报告。</div></div><div class="sl-ds"><span class="sl-src">R1 SC-3、SC-4</span></div></div></div>
+<div class="table-wrap"><div class="comp f-steps-wrap" data-lint="ref"><div class="f-steps"><div class="f-st"><div class="f-st-k"><span class="f-st-n">①</span><span class="f-st-s">选人</span><b class="f-st-q">买哪 3 只</b></div><div class="f-st-b"><div class="f-st-main">按 12−1 涨幅（上月末点位 ÷ 12 个月前月末点位 − 1）从高到低排，去重后取前 3</div><div class="f-if"><span class="f-if-k">母指数跌破自己的 10 个月均线时</span><span class="f-if-v">只选 12−1 为正的候选，选不满的空位放国债</span></div></div></div><div class="f-st"><div class="f-st-k"><span class="f-st-n">②</span><span class="f-st-s">看市场</span><b class="f-st-q">紧不紧张</b></div><div class="f-st-b"><div class="f-votes"><div class="f-vt"><span class="f-vt-n">第 1 票</span><span>母指数跌破 10 个月均线</span></div><div class="f-vt"><span class="f-vt-n">第 2 票</span><span>宽度（站上自己 10 个月均线的候选占比）不高于它到当时为止全部月份的 1/3 分位</span></div><div class="f-vt"><span class="f-vt-n">第 3 票</span><span>TRIN（每日：涨的候选数 ÷ 跌的候选数，再除以涨的成交额 ÷ 跌的成交额；取 10 日均值）不低于到当时为止的 2/3 分位</span></div></div><div class="f-pill"><strong>≥ 2 票 = 确认紧张</strong></div><div class="f-note">分位至少要 24 个月历史，不足时该票记 0</div></div></div><div class="f-st"><div class="f-st-k"><span class="f-st-n">③</span><span class="f-st-s">定仓位</span><b class="f-st-q">股票买多少</b></div><div class="f-st-b"><div class="f-states"><div class="f-state good"><span class="f-state-k">不紧张</span><span>3 只各 1/3</span></div><div class="f-state warn"><span class="f-state-k">确认紧张</span><span>股票总仓位 = 把握 p，3 只等分；其余放国债，国债也跌破 10 个月均线时放现金</span></div></div></div></div><div class="f-st"><div class="f-st-k"><span class="f-st-n">④</span><span class="f-st-s">下单</span><b class="f-st-q">买哪只基金</b></div><div class="f-st-b"><div class="f-st-main">见 §2 执行层</div></div></div></div></div></div>
+<div class="sl-defs" data-lint="ref"><div class="sl-dr f-def"><div class="sl-dt">把握 p</div><div class="sl-dd"><div class="f-calc"><div class="f-calc-s"><span class="f-calc-n">① 记下</span><span class="f-calc-b">以往每个紧张月“前 3 名下个月的平均绝对收益”</span><em>只用当时已经知道结果的月份</em></div><span class="f-calc-a">→</span><div class="f-calc-s"><span class="f-calc-n">② 算 t</span><span class="f-calc-b fm">t = 平均 ÷ 标准差 × √月数</span></div><span class="f-calc-a">→</span><div class="f-calc-s"><span class="f-calc-n">③ 换成 p</span><span class="f-calc-b fm">p = Φ(t)</span><em>Φ 是标准正态分布函数；少于 12 个紧张月时 p = 0.5</em></div></div><div class="f-calc-st"><span class="f-calc-k">从哪里起学</span><div class="f-calc-m"><b>美股</b><span>以美国 49 行业长历史（French，1999 年以前的紧张月）为起点</span></div><div class="f-calc-m"><b>A 股</b><span>从 0.5 起</span></div></div></div><div class="sl-ds"><span class="sl-src">D40-3</span></div></div><div class="sl-dr"><div class="sl-dt">领头者（把握 p 用）</div><div class="sl-dd"><div class="sl-dh">去重后按 12−1 排名的前 3，不做“12−1 须为正”的过滤；只在确认紧张的月份记录，三只下月收益都已知时才记入。</div><div class="sl-dx">与设计期数字的来源 <code>scripts/preflight/topn_dedupe.py</code> 一致。</div></div><div class="sl-ds"><span class="sl-src">R1 SC-2</span></div></div><div class="sl-dr f-def"><div class="sl-dt">TRIN 的成交额</div><div class="sl-dd"><div class="f-pair"><div class="f-pair-c"><b>美股</b><span>9 个行业 SPDR（收盘 × 成交量）</span></div><div class="f-pair-c"><b>A 股</b><span>有成交额的候选指数，按发布日截断</span></div></div></div><div class="sl-ds"><span class="sl-src">与 D38 第 39 行相同</span></div></div><div class="sl-dr"><div class="sl-dt">国债与现金</div><div class="sl-dd"><div class="sl-dh">与预演脚本相同（<code>scripts/preflight/topn_system.py</code> 的 <code>cgb-10y</code> 与 <code>cash</code>）；两个名额的防守资产相同。</div></div><div class="sl-ds"></div></div><div class="sl-dr"><div class="sl-dt">名额之间不挪钱</div><div class="sl-dd"><div class="sl-dh">美股名额的钱只在美股候选、国债、现金之间分，A 股同理。</div><div class="sl-dx">每月末两个名额按 60/40 再平衡，调拨的金额按单边 0.2% 计成本。设计期数字（<code>topn_dedupe.py</code>，含去重）用每日固定 60/40 加权近似，与按月再平衡的差异在附表 B 报告。</div></div><div class="sl-ds"><span class="sl-src">R1 SC-3、SC-4</span></div></div></div>
 </div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>1.3 A 股名额的两条规则（D40-13）：12−1 定过不过，连续性版是挑战者</span></button><div class="fold-b" hidden="">
-<div class="table-wrap"><table data-lint="ref">
-<thead>
-<tr>
-<th></th>
-<th>主规则：12−1</th>
-<th>挑战者：连续性版</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="k">怎么选</td>
-<td>第 ① 步原样</td>
-<td class="detail">先按 12−1 去重排名，取前一半（向上取整）；其中按信息离散度 ID 取最低的 3 个，同分按 12−1 高者优先</td>
-</tr>
-<tr>
-<td class="k">ID</td>
-<td>—</td>
-<td class="detail">ID = sign(12−1 涨幅) ×（窗口内下跌日占比 − 上涨日占比），窗口与 12−1 相同（12 个月前月末之后到上月末）；有效交易日不足 200 天的候选不参选。公式照抄 Da、Gurun、Warachka（2014，RFS）</td>
-</tr>
-<tr>
-<td class="k">其余三步</td>
-<td>相同</td>
-<td class="detail">相同；紧张时的把握 p 用连续性版自己的领头者计算</td>
-</tr>
-<tr>
-<td class="k">地位</td>
-<td>v6 过不过以它为准</td>
-<td class="detail">同一套判据单独报告；满足 §5.3 才在前向模拟盘换上</td>
-</tr>
-</tbody>
-</table></div>
+<div class="table-wrap"><div class="comp f-versus-wrap" data-lint="ref"><div class="f-vs"><div class="f-vs-h"></div><div class="f-vs-h main"><span>主规则</span><b>12−1</b></div><div class="f-vs-h chal"><span>挑战者</span><b>连续性版</b></div><div class="f-vs-l diff"><span>怎么选</span><em>不同</em></div><div class="f-vs-c main diff muted">第 ① 步原样</div><div class="f-vs-c chal diff">先按 12−1 去重排名，取前一半（向上取整）；其中按信息离散度 ID 取最低的 3 个，同分按 12−1 高者优先</div><div class="f-vs-l diff"><span>ID</span><em>不同</em></div><div class="f-vs-c main diff muted">—</div><div class="f-vs-c chal diff"><code class="f-fm">ID = sign(12−1 涨幅) ×（窗口内下跌日占比 − 上涨日占比）</code><span class="f-vs-sub">窗口与 12−1 相同（12 个月前月末之后到上月末）；有效交易日不足 200 天的候选不参选。公式照抄 Da、Gurun、Warachka（2014，RFS）</span></div><div class="f-vs-l same"><span>其余三步</span><em>相同</em></div><div class="f-vs-c main same muted">相同</div><div class="f-vs-c chal same">相同；紧张时的把握 p 用连续性版自己的领头者计算</div><div class="f-vs-l verdict"><span>地位</span><em>地位</em></div><div class="f-vs-c main verdict">v6 过不过以它为准</div><div class="f-vs-c chal verdict">同一套判据单独报告；满足 §5.3 才在前向模拟盘换上</div></div></div></div>
 <p class="table-note note">美股名额只用 12−1。第 55 行的 <code>a_decompose.py</code> 只有挑选层、不去重、不加防守，不能当连续性版的完整实现（R1 SC-5）。</p>
 </div></div>
-<div class="table-wrap"><div class="comp comp-计数" data-lint="ref"><div class="comp-h">九个常数里，看过数据后定的只有 3 个</div><div class="countbar"><div class="cb-bar"><span style="flex:3;background:var(--accent)"></span><span style="flex:2;background:color-mix(in srgb, var(--accent) 50%, white)"></span><span style="flex:4;background:var(--good)"></span></div><div class="cb-l"><span class="cb-i"><i style="background:var(--accent)"></i><b class="num">3</b> 看过数据后定<em>选几只、美股比例、确认票数</em></span><span class="cb-i"><i style="background:color-mix(in srgb, var(--accent) 50%, white)"></i><b class="num">2</b> 文献默认值<em>回看期 12−1、均线 10 个月</em></span><span class="cb-i"><i style="background:var(--good)"></i><b class="num">4</b> 跑前写死的约定<em>门槛、平滑等</em></span><span class="cb-t">共 9</span></div></div></div></div>
+<div class="table-wrap"><div class="comp comp-计数" data-lint="ref"><div class="comp-h">九个常数里，看过数据后定的只有 3 个</div><div class="cbx"><div class="cbx-c on" style="flex:3 1 0"><div class="cbx-top"><b class="num">3</b><span>看过数据后定</span></div><div class="cbx-d"><i></i><i></i><i></i></div><em>选几只、美股比例、确认票数</em></div><div class="cbx-c" style="flex:2 1 0"><div class="cbx-top"><b class="num">2</b><span>文献默认值</span></div><div class="cbx-d"><i></i><i></i></div><em>回看期 12−1、均线 10 个月</em></div><div class="cbx-c" style="flex:4 1 0"><div class="cbx-top"><b class="num">4</b><span>跑前写死的约定</span></div><div class="cbx-d"><i></i><i></i><i></i><i></i></div><em>门槛、平滑等</em></div><div class="cbx-t">共 <b class="num">9</b></div></div></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>1.4 九个数字的来历（D38-2）</span></button><div class="fold-b" hidden="">
-<div class="table-wrap"><table data-lint="ref">
-<thead>
-<tr>
-<th>数字</th>
-<th>取值</th>
-<th>怎么来的</th>
-<th>计不计</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>每个名额选几只</td>
-<td>3</td>
-<td>D40-7：设计期与合成行情比较前 2 / 前 3，Owner 取舍</td>
-<td><span class="cat c0">计 1</span></td>
-</tr>
-<tr>
-<td class="k">美股比例</td>
-<td>60%</td>
-<td>D40-4：Owner 判断 + D38 第 39 行（美股跌时 A 股多半也跌）；<strong>定的时候已知 2016–2025 年美股强于 A 股</strong>，见 §4 第 5 条</td>
-<td><span class="cat c0">计 2</span></td>
-</tr>
-<tr>
-<td>确认紧张的票数</td>
-<td>≥ 2</td>
-<td>D38 第 34 行：看过第 33 行（按票线性减仓）结果后改为“确认后才减仓”</td>
-<td><span class="cat c0">计 3</span></td>
-</tr>
-<tr>
-<td class="k">回看期</td>
-<td>12−1</td>
-<td>Jegadeesh、Titman（1993）及此后文献的默认值</td>
-<td><span class="cat c1">文献</span></td>
-</tr>
-<tr>
-<td class="k">均线</td>
-<td>10 个月</td>
-<td>Faber（2007）的默认值</td>
-<td><span class="cat c1">文献</span></td>
-</tr>
-<tr>
-<td>宽度、TRIN 门槛</td>
-<td>1/3、2/3 分位</td>
-<td>D38 第 33 行跑前写死，三等分的约定，没有搜索过别的值</td>
-<td><span class="cat c2">约定，Reviewer 核</span></td>
-</tr>
-<tr>
-<td>TRIN 平滑</td>
-<td>10 日均值</td>
-<td>业内常用平滑（D38 第 32 行登记）</td>
-<td><span class="cat c2">约定，Reviewer 核</span></td>
-</tr>
-<tr>
-<td class="k">最少历史</td>
-<td>分位 24 个月；把握 12 个紧张月</td>
-<td>统计上够算的最低要求，没有搜索过</td>
-<td><span class="cat c2">约定</span></td>
-</tr>
-<tr>
-<td class="k">连续性版</td>
-<td>前一半、200 天</td>
-<td>D38 第 55 行跑前写死</td>
-<td><span class="cat c2">约定</span></td>
-</tr>
-</tbody>
-</table></div>
+<div class="table-wrap"><div class="comp f-consts-wrap" data-lint="ref"><div class="f-k"><div class="f-k-g acc"><div class="f-k-h"><b class="num">3</b> 看过数据后定 · 计入复杂度预算</div><div class="f-k-r"><span class="f-k-i">1</span><span class="f-k-name">每个名额选几只</span><span class="f-k-v">3</span><span class="f-k-o">D40-7：设计期与合成行情比较前 2 / 前 3，Owner 取舍</span></div><div class="f-k-r"><span class="f-k-i">2</span><span class="f-k-name">美股比例</span><span class="f-k-v">60%</span><span class="f-k-o">D40-4：Owner 判断 + D38 第 39 行（美股跌时 A 股多半也跌）；<strong>定的时候已知 2016–2025 年美股强于 A 股</strong>，见 §4 第 5 条</span></div><div class="f-k-r"><span class="f-k-i">3</span><span class="f-k-name">确认紧张的票数</span><span class="f-k-v">≥ 2</span><span class="f-k-o">D38 第 34 行：看过第 33 行（按票线性减仓）结果后改为“确认后才减仓”</span></div></div><div class="f-k-g mid"><div class="f-k-h"><b class="num">2</b> 文献默认值</div><div class="f-k-r"><span class="f-k-i"></span><span class="f-k-name">回看期</span><span class="f-k-v">12−1</span><span class="f-k-o">Jegadeesh、Titman（1993）及此后文献的默认值</span></div><div class="f-k-r"><span class="f-k-i"></span><span class="f-k-name">均线</span><span class="f-k-v">10 个月</span><span class="f-k-o">Faber（2007）的默认值</span></div></div><div class="f-k-g low"><div class="f-k-h"><b class="num">4</b> 跑前写死的约定</div><div class="f-k-r"><span class="f-k-i"></span><span class="f-k-name">宽度、TRIN 门槛</span><span class="f-k-v">1/3、2/3 分位</span><span class="f-k-o">D38 第 33 行跑前写死，三等分的约定，没有搜索过别的值<em class="f-k-x">Reviewer 核</em></span></div><div class="f-k-r"><span class="f-k-i"></span><span class="f-k-name">TRIN 平滑</span><span class="f-k-v">10 日均值</span><span class="f-k-o">业内常用平滑（D38 第 32 行登记）<em class="f-k-x">Reviewer 核</em></span></div><div class="f-k-r"><span class="f-k-i"></span><span class="f-k-name">最少历史</span><span class="f-k-v">分位 24 个月；把握 12 个紧张月</span><span class="f-k-o">统计上够算的最低要求，没有搜索过</span></div><div class="f-k-r"><span class="f-k-i"></span><span class="f-k-name">连续性版</span><span class="f-k-v">前一半、200 天</span><span class="f-k-o">D38 第 55 行跑前写死</span></div></div></div></div></div>
 <p class="table-note note">复杂度预算（设计评审第 5 节）只计上表标“计”的 3 行；标“文献”“约定”的是跑前写死、没有对历史搜索过的结构常数，不计入（R1 同意此划分，J-2）。</p>
 <ul class="points">
 <li><strong>复杂度正好用满</strong>：标“计”的只有选几只、美股比例、确认票数三个；回看期、均线来自文献，门槛和平滑是跑前写死的约定。</li>
@@ -1254,9 +1263,9 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </section>
 <section id="sec-2-执行层规则-溢价比常态高-5-个点不买-常年溢价品种不另设上限-不计入-3-"><h2 id="2-执行层规则-溢价比常态高-5-个点不买-常年溢价品种不另设上限-不计入-3-">§2 执行层规则：溢价比常态高 5 个点不买，常年溢价品种不另设上限（不计入 3 个数字）</h2>
 <p class="memo"><strong>只用场内基金；溢价偏离超 <span class="num">5 个点</span>换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。</strong></p>
-<div class="table-wrap"><div class="comp comp-退路" data-lint="ref"><div class="comp-h">买哪只基金：溢价太高就一路往下退</div><div class="chain"><div class="ch-s"><div class="ch-n">同指数选溢价偏离最小的</div><div class="ch-d">只用场内基金，信号日的下一个交易日收盘价成交</div></div><div class="ch-a"><span>溢价比常态高 5 点以上</span></div><div class="ch-s"><div class="ch-n">换同指数另一只</div><div class="ch-d">偏离最小的那只</div></div><div class="ch-a"><span>都不行</span></div><div class="ch-s"><div class="ch-n">给下一名候选</div><div class="ch-d">按 12−1 排名递补</div></div><div class="ch-a"><span>再不行</span></div><div class="ch-s"><div class="ch-n">给母指数</div><div class="ch-d">标普500 或沪深300</div></div></div></div></div>
+<div class="table-wrap"><div class="comp comp-退路" data-lint="ref"><div class="comp-h">买哪只基金：溢价太高就一路往下退</div><div class="ladder"><div class="ld-s first"><span class="ld-n">1</span><div class="ld-b"><b>同指数选溢价偏离最小的</b><span>只用场内基金，信号日的下一个交易日收盘价成交</span></div><em class="ld-tag">默认</em></div><div class="ld-c"><span>溢价比常态高 5 点以上</span></div><div class="ld-s"><span class="ld-n">2</span><div class="ld-b"><b>换同指数另一只</b><span>偏离最小的那只</span></div></div><div class="ld-c"><span>都不行</span></div><div class="ld-s"><span class="ld-n">3</span><div class="ld-b"><b>给下一名候选</b><span>按 12−1 排名递补</span></div></div><div class="ld-c"><span>再不行</span></div><div class="ld-s"><span class="ld-n">4</span><div class="ld-b"><b>给母指数</b><span>标普500 或沪深300</span></div><em class="ld-tag">兜底</em></div></div></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>执行四步（条款读法）：成交、挑基金、溢价冲高、仓位上限</span></button><div class="fold-b" hidden="">
-<ol class="steps-n flow" style="counter-reset: fl 0">
+<ol class="f-compact steps-n flow" style="counter-reset: fl 0">
 <li><b class="fl-t">成交</b><span class="fl-k">只用场内基金</span><span class="fl-d">信号日的下一个交易日收盘价成交，<strong>只用场内基金</strong>。</span></li>
 <li><b class="fl-t">挑基金</b><span class="fl-k">选溢价偏离最小的</span><span class="fl-d">同一指数多只基金时，<strong>选溢价偏离最小的</strong>。</span></li>
 <li><b class="fl-t">溢价冲高</b><span class="fl-k">高 5 点以上换一只</span><span class="fl-d"><strong>高 5 点以上换一只</strong>；都不行时给下一名候选，再不行给母指数。</span></li>
@@ -1264,42 +1273,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </ol>
 </div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>执行规则明细（条款原文）</span></button><div class="fold-b" hidden="">
-<div class="table-wrap"><table data-lint="ref">
-<thead>
-<tr>
-<th>规则</th>
-<th>取值</th>
-<th>来历</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="k">成交</td>
-<td>信号日的下一个交易日收盘价成交</td>
-<td>与预演一致</td>
-</tr>
-<tr>
-<td class="k">载体</td>
-<td>只用场内基金（ETF、LOF）；同一指数多只基金时，选溢价偏离最小的</td>
-<td>D35；D40-5</td>
-</tr>
-<tr>
-<td class="k">溢价偏离</td>
-<td>当日溢价比自身过去 60 个交易日溢价中位数高 5 个点以上不买，换同指数偏离最小的一只；都不行时给下一名候选，再不行给母指数；已持有的不受影响</td>
-<td>D40-5；D38 第 30 行</td>
-</tr>
-<tr>
-<td>常年溢价品种的单只上限</td>
-<td><strong>不另设上限</strong>：和其他品种一样，每只最多占名额的 1/3（美股 20 万）</td>
-<td>Owner 2026-11-23（D40-14）。代价：按纳指科技常态溢价约 9% 估，额度放开时一次性损失约 1.8 万，约为组合的 1.8%，写进疼痛表</td>
-</tr>
-<tr>
-<td class="k">成本</td>
-<td>单边 0.2%（上限口径），按换手计</td>
-<td>预测表打折规则</td>
-</tr>
-</tbody>
-</table></div>
+<div class="table-wrap"><div class="comp f-rules-wrap" data-lint="ref"><div class="f-rules"><div class="f-ru"><div class="f-ru-k">成交</div><div class="f-ru-v"><div class="f-ru-lead">信号日的下一个交易日收盘价成交</div></div><div class="f-ru-s"><span class="sl-src">与预演一致</span></div></div><div class="f-ru"><div class="f-ru-k">载体</div><div class="f-ru-v"><div class="f-ru-lead">只用场内基金（ETF、LOF）</div><div class="f-ru-rest">同一指数多只基金时，选溢价偏离最小的</div></div><div class="f-ru-s"><span class="sl-src">D35</span><span class="sl-src">D40-5</span></div></div><div class="f-ru"><div class="f-ru-k">溢价偏离</div><div class="f-ru-v"><div class="f-ru-lead">当日溢价比自身过去 60 个交易日溢价中位数高 5 个点以上不买，换同指数偏离最小的一只</div><div class="f-ru-rest">都不行时给下一名候选，再不行给母指数；已持有的不受影响</div></div><div class="f-ru-s"><span class="sl-src">D40-5</span><span class="sl-src">D38 第 30 行</span></div></div><div class="f-ru"><div class="f-ru-k">常年溢价品种的单只上限</div><div class="f-ru-v"><div class="f-ru-lead"><strong>不另设上限</strong>：和其他品种一样，每只最多占名额的 1/3（美股 20 万）</div><div class="f-ru-cost">代价：按纳指科技常态溢价约 9% 估，额度放开时一次性损失约 1.8 万，约为组合的 1.8%，写进疼痛表</div></div><div class="f-ru-s"><span class="sl-src">Owner 2026-11-23（D40-14）</span></div></div><div class="f-ru"><div class="f-ru-k">成本</div><div class="f-ru-v"><div class="f-ru-lead">单边 0.2%（上限口径），按换手计</div></div><div class="f-ru-s"><span class="sl-src">预测表打折规则</span></div></div></div></div></div>
 <ul>
 <li><strong>这些规则不计入 3 个数字</strong>：执行层单列，来历都写在表里（D38-2 的边界）。</li>
 </ul>
@@ -1357,7 +1331,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </tbody>
 </table></div>
 <p class="table-note note">单位：每年比基准多几个百分点。来自历史数据的超额已打五折，再按候选个数打六折；成本按单边 <span class="num">0.2%</span>。</p>
-<div class="sl-defs" data-lint="ref"><div class="sl-dr"><div class="sl-dt">低于哪条线不做</div><div class="sl-dd"><div class="sl-dh">预测合计的中间值低于 0，或 D39 两条线（合成行情中间情况最低剩 60 万、合成慢牛每年落后不超过 4 点）任一不满足，就不起草。</div><div class="sl-dx">当前合计 +1.2，两条线都满足。</div></div><div class="sl-ds"><span class="sl-src">设计评审第 1 节，R1 SF-2</span><span class="sl-src">§3.2</span></div></div><div class="sl-dr"><div class="sl-dt">设计期年化的口径</div><div class="sl-dd"><div class="sl-dh">（2.2 版补）预测表各项不直接取设计期年化。</div><div class="sl-dx">按本预注册的口径（一级行业用回填点位），设计期 v6 净每年 15.5%；只用当年已发布的指数是 13.3%；差别在 2006–10 年 A 股挑选，见附表 B。预测表冻结不改。</div></div><div class="sl-ds"><span class="sl-src">第 47 行</span></div></div><div class="sl-dr"><div class="sl-dt">A 股一项的对账口径</div><div class="sl-dd"><div class="sl-dh">预测值 +0.6 不变；事后按两块分别核对——挑选（12−1 比“等权持有全部候选”，约 +0.1，范围 −0.5 到 +0.5）、等权倾斜（等权持有全部候选比沪深300，约 +0.5，范围 −1.0 到 +1.0，主要是少配金融、偏中小盘）。</div></div><div class="sl-ds"><span class="sl-src">D40-12</span></div></div></div>
+<div class="sl-defs" data-lint="ref"><div class="sl-dr f-def"><div class="sl-dt">低于哪条线不做</div><div class="sl-dd"><div class="f-gate-h">预测合计的中间值低于 0，或 D39 两条线任一不满足，就不起草</div><div class="f-gates"><div class="f-gt"><span class="f-gt-ok">✓</span><span>预测合计的中间值不低于 0</span><b>当前 +1.2</b></div><div class="f-gt"><span class="f-gt-ok">✓</span><span>D39 两条线：合成行情中间情况最低剩 60 万</span><b>满足</b></div><div class="f-gt"><span class="f-gt-ok">✓</span><span>D39 两条线：合成慢牛每年落后不超过 4 点</span><b>满足</b></div></div><div class="f-note">当前合计 +1.2，两条线都满足。</div></div><div class="sl-ds"><span class="sl-src">设计评审第 1 节，R1 SF-2</span><span class="sl-src">§3.2</span></div></div><div class="sl-dr f-def"><div class="sl-dt">设计期年化的口径</div><div class="sl-dd"><div class="f-two-h">预测表各项不直接取设计期年化（2.2 版补）</div><div class="f-two"><div class="f-two-c on"><b class="num">15.5%</b><span>本预注册的口径</span><em>一级行业用回填点位</em></div><div class="f-two-c"><b class="num">13.3%</b><span>只用当年已发布的指数</span></div></div><div class="f-note">差别在 2006–10 年 A 股挑选，见附表 B；预测表冻结不改。</div></div><div class="sl-ds"><span class="sl-src">第 47 行</span></div></div><div class="sl-dr f-def"><div class="sl-dt">A 股一项的对账口径</div><div class="sl-dd"><div class="f-eq"><div class="f-eq-t"><b class="num">+0.6</b><span>预测值不变</span></div><span class="f-eq-op">=</span><div class="f-eq-p"><span>挑选</span><b>约 +0.1</b><em>范围 −0.5 到 +0.5</em><small>12−1 比“等权持有全部候选”</small></div><span class="f-eq-op">+</span><div class="f-eq-p"><span>等权倾斜</span><b>约 +0.5</b><em>范围 −1.0 到 +1.0</em><small>等权持有全部候选比沪深300；主要是少配金融、偏中小盘</small></div></div><div class="f-note">事后按两块分别核对。</div></div><div class="sl-ds"><span class="sl-src">D40-12</span></div></div></div>
 </div></div>
 <h3 id="3-2-合成行情-d38-第-40-41-行-前-3-美股-60-200-条路径">3.2 合成行情（D38 第 40、41 行，前 3、美股 60%，200 条路径，没有动量）</h3>
 <figure><img alt="六种合成行情：新系统的中间情况都守住 60 万" src="../../assets/v6-preflight/f6-synthetic.png"/></figure>
@@ -1877,7 +1851,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 <div class="table-wrap"><div class="comp comp-路线" data-lint="ref"><ol class="route steps-n flow" style="counter-reset: fl 0"><li class="rt-todo"><b class="fl-t"><span class="rt-s">一次性检验通过</span><span class="rt-w">Owner 批准跑</span><span class="rt-st">之后</span></b><span class="fl-d"></span></li><li class="rt-todo"><b class="fl-t"><span class="rt-s">模拟盘至少 6 个月</span><span class="rt-w">每月对账预测表和疼痛表</span><span class="rt-st">之后</span></b><span class="fl-d"></span></li><li class="rt-todo"><b class="fl-t"><span class="rt-s">别的市场检验</span><span class="rt-w">一个没看过的市场，只报告</span><span class="rt-st">之后</span></b><span class="fl-d"></span></li><li class="rt-you"><b class="fl-t"><span class="rt-s">小资金上线</span><span class="rt-w">Owner 看着和现行配置的比较拍板</span><span class="rt-st">你批准</span></b><span class="fl-d"></span></li></ol></div></div>
 <div class="table-wrap"><div class="comp comp-载体" data-lint="ref"><div class="carriers"><div class="cr-r t-mute"><div class="cr-k"><b class="num">3</b> 影子（只记录）</div><div class="cr-cs"><span class="cr-c">结构市才挑选</span><span class="cr-c">12−1 与连续性版各一半</span><span class="cr-c">连续性版</span></div></div><div class="cr-r t-mute"><div class="cr-k"><b class="num">1</b> 对照（只报告）</div><div class="cr-cs"><span class="cr-c">现行配置</span></div></div><div class="cr-r t-bad"><div class="cr-k"><b class="num">2</b> 暂停线</div><div class="cr-cs"><span class="cr-c">跌破 60 万</span><span class="cr-c">6 个月对同仓位基准累计落后 6 点</span></div></div></div></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>四步（条款读法）：检验、模拟盘、影子、暂停</span></button><div class="fold-b" hidden="">
-<ol class="steps-n flow" style="counter-reset: fl 0">
+<ol class="f-compact steps-n flow" style="counter-reset: fl 0">
 <li><b class="fl-t">检验</b><span class="fl-k">通过后才进入模拟盘</span><span class="fl-d">一次性检验<strong>通过后才进入模拟盘</strong>。</span></li>
 <li><b class="fl-t">模拟盘</b><span class="fl-k">至少 6 个月</span><span class="fl-d">按冻结规则每月出持仓，<strong>至少 6 个月</strong>；每月对账预测表各项和疼痛表。</span></li>
 <li><b class="fl-t">影子</b><span class="fl-k">只记录，不交易</span><span class="fl-d">结构市才挑选、12−1 与连续性版各拿一半、连续性版，<strong>只记录，不交易</strong>。</span></li>
@@ -1937,7 +1911,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </section>
 <section id="sec-8-数据陷阱声明-结论必须声明四项陷阱-加上美股代理-实盘载体和申万回溯的差异"><h2 id="8-数据陷阱声明-结论必须声明四项陷阱-加上美股代理-实盘载体和申万回溯的差异">§8 数据陷阱声明：结论必须声明四项陷阱，加上美股代理、实盘载体和申万回溯的差异</h2>
 <p class="memo"><strong>主题指数回填、指数与 ETF 的差异、腾讯减法 qfq、份额折算假跳空，4 项每次报告都要写。</strong></p>
-<div class="table-wrap"><div class="comp comp-计数" data-lint="ref"><div class="comp-h">六项陷阱：四项必须声明，另加两项；只有回填会改变候选名单</div><div class="countbar"><div class="cb-bar"><span style="flex:1;background:var(--accent)"></span><span style="flex:3;background:color-mix(in srgb, var(--accent) 50%, white)"></span><span style="flex:2;background:var(--good)"></span></div><div class="cb-l"><span class="cb-i"><i style="background:var(--accent)"></i><b class="num">1</b> 必须声明，并改变候选名单<em>主题指数回填</em></span><span class="cb-i"><i style="background:color-mix(in srgb, var(--accent) 50%, white)"></i><b class="num">3</b> 必须声明<em>指数与 ETF、qfq、份额折算</em></span><span class="cb-i"><i style="background:var(--good)"></i><b class="num">2</b> 另加声明<em>美股代理、申万回溯</em></span><span class="cb-t">共 6</span></div></div></div></div>
+<div class="table-wrap"><div class="comp comp-计数" data-lint="ref"><div class="comp-h">六项陷阱：四项必须声明，另加两项；只有回填会改变候选名单</div><div class="cbx"><div class="cbx-c on" style="flex:1 1 0"><div class="cbx-top"><b class="num">1</b><span>必须声明，并改变候选名单</span></div><div class="cbx-d"><i></i></div><em>主题指数回填</em></div><div class="cbx-c" style="flex:3 1 0"><div class="cbx-top"><b class="num">3</b><span>必须声明</span></div><div class="cbx-d"><i></i><i></i><i></i></div><em>指数与 ETF、qfq、份额折算</em></div><div class="cbx-c" style="flex:2 1 0"><div class="cbx-top"><b class="num">2</b><span>另加声明</span></div><div class="cbx-d"><i></i><i></i></div><em>美股代理、申万回溯</em></div><div class="cbx-t">共 <b class="num">6</b></div></div></div></div>
 
 <div class="table-wrap"><table>
 <thead>
@@ -2036,7 +2010,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 <p class="memo"><strong>8 件待办全部完成（附表 A、B 与 D42 于 2026-11-24、25 写入）；Owner 2026-11-25 批准冻结；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。</strong></p>
 <div class="table-wrap"><div class="comp comp-路线" data-lint="ref"><ol class="route steps-n"><li class="rt-done"><b><span class="rt-s">看初稿</span><span class="rt-w">Owner</span><span class="rt-st">已完成</span></b></li><li class="rt-done"><b><span class="rt-s">R1</span><span class="rt-w">Reviewer</span><span class="rt-st">已完成</span></b></li><li class="rt-done"><b><span class="rt-s">冻结前 8 件待办</span><span class="rt-w">Orchestrator、Grok</span><span class="rt-st">已完成</span></b></li><li class="rt-done"><b><span class="rt-s">你批准冻结</span><span class="rt-w">Owner</span><span class="rt-st">已完成</span></b></li><li class="rt-now"><b><span class="rt-s">R1b 签收后打标签</span><span class="rt-w">Reviewer 等</span><span class="rt-st">现在</span></b></li><li class="rt-todo"><b><span class="rt-s">实现与复算</span><span class="rt-w">Dev、Reviewer</span><span class="rt-st">之后</span></b></li><li class="rt-you"><b><span class="rt-s">一次性检验</span><span class="rt-w">Owner</span><span class="rt-st">你批准</span></b></li><li class="rt-todo"><b><span class="rt-s">模拟盘</span><span class="rt-w">全体</span><span class="rt-st">之后</span></b></li></ol></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>9.1 顺序：看初稿 → R1 → 冻结 → 实现与复算 → 一致性检查 → 一次性检验 → 模拟盘</span></button><div class="fold-b" hidden="">
-<ol class="steps-n">
+<ol class="f-compact steps-n">
 <li><strong>Owner 看初稿</strong>：已确认 §9.2 第 6 条三项（D40-14）。</li>
 <li><strong>Reviewer R1</strong>：逐条核对设计评审、§1.4 计数、§4 已看信息；Orchestrator 闭合后 Reviewer R1b（当前所在步骤，见页首“进度”）。</li>
 <li><strong>冻结</strong>：Owner 2026-11-25 已批准（D42-9）；R1b 对第 2.4 版签收、Manager 以合并提交合入 main 后，由 Cloud Agent 在该合并提交上打 <code>milestone/v6-prereg-freeze</code>。</li>

@@ -80,13 +80,16 @@ def composition(rows):
 
 
 def count_bar(rows):
+    """Proportional cards: width = count; the first category is the one the title is about."""
     tot = sum(int(re.sub(r'\D', '', _txt(r['个数'])) or 0) for r in rows)
-    seg = leg = ''
+    out = ''
     for i, r in enumerate(rows):
         n = int(re.sub(r'\D', '', _txt(r['个数'])) or 0)
-        seg += f'<span style="flex:{n};background:{PAL[i % len(PAL)]}"></span>'
-        leg += f'<span class="cb-i"><i style="background:{PAL[i % len(PAL)]}"></i><b>{n}</b> {_inner(r["类别"])}<em>{_inner(r["含义"])}</em></span>'
-    return f'<div class="countbar"><div class="cb-bar">{seg}</div><div class="cb-l">{leg}<span class="cb-t">共 {tot}</span></div></div>'
+        dots = '<i></i>' * n
+        out += (f'<div class="cbx-c{" on" if i == 0 else ""}" style="flex:{max(n, 1)} 1 0">'
+                f'<div class="cbx-top"><b>{n}</b><span>{_inner(r["类别"])}</span></div>'
+                f'<div class="cbx-d">{dots}</div><em>{_inner(r["含义"])}</em></div>')
+    return f'<div class="cbx">{out}<div class="cbx-t">共 <b>{tot}</b></div></div>'
 
 
 def route(rows):
@@ -100,13 +103,18 @@ def route(rows):
 
 
 def chain(rows):
+    """Fallback ladder, read top-down: the default first; each drop down is gated by its condition."""
     out = ''
+    last = len(rows) - 1
     for i, r in enumerate(rows):
         cond = _inner(r.get('条件')) if r.get('条件') is not None else ''
         if i:
-            out += f'<div class="ch-a"><span>{cond}</span></div>'
-        out += f'<div class="ch-s"><div class="ch-n">{_inner(r["步"])}</div><div class="ch-d">{_inner(r["说明"])}</div></div>'
-    return f'<div class="chain">{out}</div>'
+            out += f'<div class="ld-c"><span>{cond}</span></div>'
+        tag = '默认' if i == 0 else ('兜底' if i == last else '')
+        out += (f'<div class="ld-s{" first" if i == 0 else ""}"><span class="ld-n">{i + 1}</span>'
+                f'<div class="ld-b"><b>{_inner(r["步"])}</b><span>{_inner(r["说明"])}</span></div>'
+                + (f'<em class="ld-tag">{tag}</em>' if tag else '') + '</div>')
+    return f'<div class="ladder">{out}</div>'
 
 
 def pain(rows):
@@ -242,6 +250,27 @@ def apply(soup):
 
 
 CSS = r"""
+.cbx { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
+.cbx-c { min-width: 150px; display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.cbx-c.on { border-color: var(--accent); background: var(--accent-soft); }
+.cbx-top { display: flex; align-items: baseline; gap: 6px; } .cbx-top b { font-family: var(--font-mono); font-size: 26px; line-height: 1; color: var(--ink); }
+.cbx-top span { font-size: 13.5px; font-weight: 700; color: var(--ink); }
+.cbx-d { display: flex; gap: 4px; } .cbx-d i { width: 12px; height: 12px; border-radius: 3px; background: var(--line); }
+.cbx-c.on .cbx-d i { background: var(--accent); }
+.cbx-c em { font-style: normal; font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+.cbx-t { align-self: center; font-size: 12.5px; color: var(--muted); padding: 0 4px; } .cbx-t b { font-family: var(--font-mono); color: var(--ink); }
+.ladder { display: flex; flex-direction: column; max-width: 640px; }
+.ld-s { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.ld-s.first { border-color: var(--accent); }
+.ld-n { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--bg); border: 1px solid var(--line); font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.ld-s.first .ld-n { background: var(--accent); border-color: var(--accent); color: #fff; }
+.ld-b { display: flex; flex-direction: column; gap: 2px; } .ld-b b { font-size: 14.5px; color: var(--ink); } .ld-b span { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.ld-tag { font-style: normal; font-size: 11.5px; padding: 1px 7px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.ld-s.first .ld-tag { color: var(--accent); border-color: var(--accent); }
+.ld-c { position: relative; padding: 6px 0 6px 25px; margin-left: 12px; border-left: 2px dashed var(--line); }
+.ld-c span { display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--warn); background: var(--warn-soft); border-radius: 999px; padding: 1px 10px; }
+.ld-c span::before { content: '↓ '; }
+
 .pool { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .pl-card { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 9px; }
 .pl-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; }
