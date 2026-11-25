@@ -184,11 +184,12 @@ def rules(rows):
             else:
                 srcs += [x.strip() for x in re.split(r'[；](?![^<]*>)', p) if x.strip()]
         chips = ''.join(f'<span class="sl-src">{x}</span>' for x in srcs)
-        out += (f'<div class="f-ru"><div class="f-ru-k">{name}</div><div class="f-ru-v"><div class="f-ru-lead">{lead}</div>'
+        lead = re.sub(r'((?<![\d.])\d+(?:\.\d+)?\s*(?:%|个点|个交易日)(?:以上)?|下一个交易日收盘价|ETF、LOF|1/3)', r'<em class="f-ru-hl">\1</em>', lead)
+        out += (f'<div class="f-ru"><div class="f-ru-k"><span>{name}</span></div><div class="f-ru-v"><div class="f-ru-lead">{lead}</div>'
                 + (f'<div class="f-ru-rest">{rest}</div>' if rest else '')
                 + (f'<div class="f-ru-cost">{cost}</div>' if cost else '')
                 + f'</div><div class="f-ru-s">{chips}</div></div>')
-    return f'<div class="f-rules">{out}</div>'
+    return f'<div class="f-rules"><div class="f-ru f-ru-hd"><span>规则</span><span>定了什么</span><span>来历</span></div>{out}</div>'
 
 
 TABLES = [
@@ -1047,4 +1048,17 @@ CSS += r"""
 .f-rt-f { font-size: 16px; line-height: 1.35; color: var(--ink); }
 .f-rt-b { padding-top: 8px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); line-height: 1.55; }
 @media (max-width: 760px) { .f-rts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+"""
+
+CSS += r"""
+.f-rules { border-radius: 12px; }
+.f-ru { grid-template-columns: 10em minmax(0, 1fr) 12em; padding: 12px 16px; align-items: start; }
+.f-ru.f-ru-hd { padding: 7px 16px; background: var(--bg); font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.f-ru-k span { display: inline-block; padding: 3px 10px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-size: 13.5px; font-weight: 700; line-height: 1.4; }
+.f-ru-lead { font-size: 14.5px; line-height: 1.6; }
+.f-ru-hl { font-style: normal; font-weight: 700; color: var(--ink); background: linear-gradient(transparent 60%, color-mix(in srgb, var(--accent) 22%, transparent) 60%); padding: 0 1px; }
+.f-ru-cost { display: block; margin-top: 6px; padding: 6px 10px; border-radius: 6px; background: var(--warn-soft); color: var(--ink) !important; }
+.f-ru-cost::before { content: '⚠ '; color: var(--warn); font-weight: 700; }
+.f-ru-s { flex-direction: column; align-items: flex-end; }
+@media (max-width: 760px) { .f-ru.f-ru-hd { display: none; } .f-ru-s { flex-direction: row; align-items: flex-start; } }
 """
