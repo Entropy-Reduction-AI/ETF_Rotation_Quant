@@ -45,3 +45,4 @@ __pycache__/
 !/data/options/**
 !/data/research/
 !/data/research/**
+shots/

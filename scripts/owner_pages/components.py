@@ -151,6 +151,70 @@ def carriers(rows):
     return f'<div class="carriers">{out}</div>'
 
 
+def _split_top(s):
+    """Split on 、 outside （） so '9 个行业 SPDR（XLK、XLV）' stays one item."""
+    out, buf, depth = [], '', 0
+    for ch in s:
+        if ch in '（(':
+            depth += 1
+        elif ch in '）)':
+            depth -= 1
+        if ch == '、' and depth == 0:
+            out.append(buf.strip()); buf = ''
+        else:
+            buf += ch
+    if buf.strip():
+        out.append(buf.strip())
+    return out
+
+
+def pool(rows, summary=''):
+    """| 名额 | 母指数 | 候选 | 依据 | → one card per slot: weight, candidate count, mother index, grouped chips, source."""
+    cards = ''
+    for r in rows:
+        slot = _txt(r['名额'])
+        m = re.match(r'^(.+?)（(\d+%)）$', slot)
+        name, wt = (m.group(1), m.group(2)) if m else (slot, '')
+        mother = _txt(r['母指数'])
+        mcode = re.search(r'（(.+?)）', mother)
+        mkeys = {mother, mcode.group(1) if mcode else mother, re.sub(r'（.*', '', mother)}
+        raw = _txt(r['候选'])
+        total = ''
+        mt = re.search(r'[，,]\s*共\s*(\d+)\s*个\s*$', raw)
+        if mt:
+            total, raw = mt.group(1), raw[:mt.start()]
+        if not total and summary:
+            ms = re.search(re.escape(name.replace('股', '')) + r'\s*股?\s*(约\s*\d+)\s*个', summary)
+            total = ms.group(1).replace(' ', '') if ms else ''
+        singles, groups = [], []
+        for it in _split_top(raw):
+            g = re.match(r'^(\d+)\s*个\s*(.+?)(?:（(.+)）)?$', it)
+            ref = re.match(r'^(.+?)（(清单见.+)）$', it)
+            if it in mkeys:
+                continue
+            if ref:
+                groups.append((None, ref.group(1), [], ref.group(2)))
+            elif g:
+                inner = [x.strip() for x in g.group(3).split('、')] if g.group(3) else []
+                groups.append((g.group(1), g.group(2), inner, ''))
+            else:
+                singles.append(it)
+        chips = ''.join(f'<span class="pl-c">{x}</span>' for x in singles)
+        grp = ''
+        for n, lab, inner, note in groups:
+            sub = ''.join(f'<span class="pl-s">{x}</span>' for x in inner)
+            head = f'<b>{n}</b> 个{lab}' if n else f'{lab}'
+            tail = f'<span class="pl-note">{note}</span>' if note else ''
+            grp += f'<div class="pl-g{" pl-open" if note else ""}"><div class="pl-gh">{head}{tail}</div>{f"<div class=pl-ss>{sub}</div>" if sub else ""}</div>'
+        num = re.sub(r'(\d+)', r'<b>\1</b>', total) if total else ''
+        cards += (f'<div class="pl-card"><div class="pl-top"><div><span class="pl-name">{name}名额</span>'
+                  f'{f"<span class=pl-w>{wt}</span>" if wt else ""}</div><div class="pl-n">{num}<span>个候选</span></div></div>'
+                  f'<div class="pl-m"><span class="pl-mk">母指数</span><span class="pl-mv">{mother}</span><span class="pl-mx">也参与排名</span></div>'
+                  f'<div class="pl-cs">{chips}</div>{grp}'
+                  f'<div class="pl-src">{_inner(r["依据"])}</div></div>')
+    return f'<div class="pool">{cards}</div>'
+
+
 RENDER = {'代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers}
 
 
@@ -167,9 +231,34 @@ def apply(soup):
         head = f'<div class="comp-h">{title}</div>' if title else ''
         node = BeautifulSoup(f'<div class="comp comp-{kind}" data-lint="ref">{head}{html}</div>', 'html.parser')
         t.replace_with(node)
+    # signature tables that carry no marker (frozen documents): | 名额 | 母指数 | 候选 | 依据 |
+    for t in list(soup.find_all('table')):
+        head, rows = _rows(t)
+        if head == ['名额', '母指数', '候选', '依据']:
+            d = t.find_parent('details')
+            summ = d.summary.get_text(' ', strip=True) if d is not None and d.summary is not None else ''
+            node = BeautifulSoup(f'<div class="comp comp-候选池" data-lint="ref">{pool(rows, summ)}</div>', 'html.parser')
+            t.replace_with(node)
 
 
 CSS = r"""
+.pool { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.pl-card { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 9px; }
+.pl-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; }
+.pl-name { font-size: 15px; font-weight: 700; color: var(--ink); }
+.pl-w { margin-left: 8px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--accent); background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; }
+.pl-n { font-size: 13px; color: var(--muted); white-space: nowrap; } .pl-n b { font-size: 30px; line-height: 1; font-weight: 800; color: var(--ink); font-family: var(--font-mono); margin: 0 3px; }
+.pl-m { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; padding: 6px 9px; border-radius: 7px; background: var(--bg); border: 1px solid var(--line); }
+.pl-mk { font-size: 12px; color: var(--muted); } .pl-mv { font-size: 14px; font-weight: 700; color: var(--ink); } .pl-mx { font-size: 12px; color: var(--muted); margin-left: auto; }
+.pl-cs, .pl-ss { display: flex; flex-wrap: wrap; gap: 5px; }
+.pl-c { font-size: 13px; padding: 2px 8px; border-radius: 5px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); }
+.pl-g { border-left: 3px solid var(--line); padding-left: 9px; } .pl-g.pl-open { border-left-style: dashed; }
+.pl-gh { font-size: 13px; color: var(--ink); margin-bottom: 4px; } .pl-gh b { font-family: var(--font-mono); font-size: 15px; }
+.pl-note { margin-left: 6px; font-size: 12px; color: var(--muted); }
+.pl-s { font-size: 12px; font-family: var(--font-mono); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.pl-src { margin-top: auto; padding-top: 7px; border-top: 1px dashed var(--line); font-size: 12px; color: var(--muted); line-height: 1.45; }
+@media (max-width: 760px) { .pool { grid-template-columns: minmax(0, 1fr); } }
+
 /* ===== content-specific components (components.py) ===== */
 .comp { margin: 10px 0 20px; }
 .comp-h { font-size: 13.5px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }

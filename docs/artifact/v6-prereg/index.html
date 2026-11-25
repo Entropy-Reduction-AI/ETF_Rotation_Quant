@@ -975,6 +975,23 @@ a.sl-sp-i.t-todo .sl-sp-st { color: var(--bad); font-weight: 700; } a.sl-sp-i.t-
 @media (max-width: 760px) { .sl-dr { grid-template-columns: minmax(0, 1fr); gap: 3px; } .sl-ds { justify-content: flex-start; } .sl-look, a.sl-next { flex-direction: column; gap: 4px; align-items: flex-start; } }
 
 
+.pool { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.pl-card { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 9px; }
+.pl-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; }
+.pl-name { font-size: 15px; font-weight: 700; color: var(--ink); }
+.pl-w { margin-left: 8px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--accent); background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; }
+.pl-n { font-size: 13px; color: var(--muted); white-space: nowrap; } .pl-n b { font-size: 30px; line-height: 1; font-weight: 800; color: var(--ink); font-family: var(--font-mono); margin: 0 3px; }
+.pl-m { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; padding: 6px 9px; border-radius: 7px; background: var(--bg); border: 1px solid var(--line); }
+.pl-mk { font-size: 12px; color: var(--muted); } .pl-mv { font-size: 14px; font-weight: 700; color: var(--ink); } .pl-mx { font-size: 12px; color: var(--muted); margin-left: auto; }
+.pl-cs, .pl-ss { display: flex; flex-wrap: wrap; gap: 5px; }
+.pl-c { font-size: 13px; padding: 2px 8px; border-radius: 5px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); }
+.pl-g { border-left: 3px solid var(--line); padding-left: 9px; } .pl-g.pl-open { border-left-style: dashed; }
+.pl-gh { font-size: 13px; color: var(--ink); margin-bottom: 4px; } .pl-gh b { font-family: var(--font-mono); font-size: 15px; }
+.pl-note { margin-left: 6px; font-size: 12px; color: var(--muted); }
+.pl-s { font-size: 12px; font-family: var(--font-mono); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.pl-src { margin-top: auto; padding-top: 7px; border-top: 1px dashed var(--line); font-size: 12px; color: var(--muted); line-height: 1.45; }
+@media (max-width: 760px) { .pool { grid-template-columns: minmax(0, 1fr); } }
+
 /* ===== content-specific components (components.py) ===== */
 .comp { margin: 10px 0 20px; }
 .comp-h { font-size: 13.5px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
@@ -1088,30 +1105,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 <li><strong>读这张图</strong>：A 股领头者以往紧张时也跟着跌，把握只有 0.235；美股领头者照样涨，把握 0.997（预测表 3.22 版，已去重）。</li>
 </ul>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>1.1 候选池：美股 15 个、A 股约 40 个，各自从发布日起参选</span></button><div class="fold-b" hidden="">
-<div class="table-wrap"><table data-lint="ref">
-<thead>
-<tr>
-<th>名额</th>
-<th>母指数</th>
-<th>候选</th>
-<th class="rh-why">依据</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>美股（60%）</td>
-<td>标普500（SPX）</td>
-<td class="detail">SPX、纳指100（NDX）、道指（DJIA）、费城半导体（SOX）、纳斯达克生物科技（NBI）、9 个行业 SPDR（XLK、XLV、XLE、XLY、XLP、XLF、XLI、XLB、XLU）、REIT（DWRTF），共 15 个</td>
-<td class="r-why">D40-11：原 14 个 + REIT；新候选须带来池子里没有的行业</td>
-</tr>
-<tr>
-<td>A 股（40%）</td>
-<td>沪深300</td>
-<td class="detail">沪深300、中证500、中证1000、创业板指、科创50、中证红利、10 个中证全指一级行业、已接入的 A 股主题指数（清单见附表 A）</td>
-<td class="r-why">D40-1；D38 第 39、48 行</td>
-</tr>
-</tbody>
-</table></div>
+<div class="table-wrap"><div class="comp comp-候选池" data-lint="ref"><div class="pool"><div class="pl-card"><div class="pl-top"><div><span class="pl-name">美股名额</span><span class="pl-w">60%</span></div><div class="pl-n"><b class="num">15</b><span>个候选</span></div></div><div class="pl-m"><span class="pl-mk">母指数</span><span class="pl-mv">标普500（SPX）</span><span class="pl-mx">也参与排名</span></div><div class="pl-cs"><span class="pl-c">纳指100（NDX）</span><span class="pl-c">道指（DJIA）</span><span class="pl-c">费城半导体（SOX）</span><span class="pl-c">纳斯达克生物科技（NBI）</span><span class="pl-c">REIT（DWRTF）</span></div><div class="pl-g"><div class="pl-gh"><b class="num">9</b> 个行业 SPDR</div><div class="pl-ss"><span class="pl-s">XLK</span><span class="pl-s">XLV</span><span class="pl-s">XLE</span><span class="pl-s">XLY</span><span class="pl-s">XLP</span><span class="pl-s">XLF</span><span class="pl-s">XLI</span><span class="pl-s">XLB</span><span class="pl-s">XLU</span></div></div><div class="pl-src">D40-11：原 14 个 + REIT；新候选须带来池子里没有的行业</div></div><div class="pl-card"><div class="pl-top"><div><span class="pl-name">A 股名额</span><span class="pl-w">40%</span></div><div class="pl-n">约<b class="num">40</b><span>个候选</span></div></div><div class="pl-m"><span class="pl-mk">母指数</span><span class="pl-mv">沪深300</span><span class="pl-mx">也参与排名</span></div><div class="pl-cs"><span class="pl-c">中证500</span><span class="pl-c">中证1000</span><span class="pl-c">创业板指</span><span class="pl-c">科创50</span><span class="pl-c">中证红利</span></div><div class="pl-g"><div class="pl-gh"><b class="num">10</b> 个中证全指一级行业</div></div><div class="pl-g pl-open"><div class="pl-gh">已接入的 A 股主题指数<span class="pl-note">清单见附表 A</span></div></div><div class="pl-src">D40-1；D38 第 39、48 行</div></div></div></div></div>
 <div class="sl-defs" data-lint="ref"><div class="sl-dr"><div class="sl-dt">准入</div><div class="sl-dd"><div class="sl-dh">每个候选从官方发布日（或基金上市日）起参选，满 12 个月才有分数。</div><div class="sl-dx">10 个中证全指一级行业按 D38 第 48 行允许用 2011-08-02 之前的回填点位（Owner 2026-11-24 确认：机械分类的行业回填偏差小）；主题指数一律从发布日起；例外见附表 A。</div></div><div class="sl-ds"><span class="sl-src">D38 第 39 行</span></div></div><div class="sl-dr"><div class="sl-dt">母指数也是候选</div><div class="sl-dd"><div class="sl-dh">规则自己决定拿母指数还是细分。</div></div><div class="sl-ds"></div></div><div class="sl-dr"><div class="sl-dt">去重</div><div class="sl-dd"><div class="sl-dh">每个候选事先标好行业标签（美股按 GICS，A 股按中证一级，红利类单列“红利”；宽基、母指数不标），同一标签只留分数最高的一个，空位由下一名递补。</div><div class="sl-dx">标签表 <code>config/v6-preflight/sector-tags.toml</code> 冻结前补齐检验段全部候选。</div></div><div class="sl-ds"><span class="sl-src">D38 第 46 行</span><span class="sl-src">§9 待办 1</span></div></div><div class="sl-dr"><div class="sl-dt">港股不单设名额</div><div class="sl-dd"><div class="sl-dh">只有 4 个分类指数，挑选失效。</div></div><div class="sl-ds"><span class="sl-src">D38 第 38 行，D40-4</span></div></div></div>
 </div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>1.2 每月四步（条款原文：每月最后一个交易日算，下一个交易日成交）</span></button><div class="fold-b" hidden="">
