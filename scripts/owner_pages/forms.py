@@ -914,3 +914,104 @@ CSS += r"""
   .f-sn, .f-pn { grid-template-columns: minmax(0, 1fr); gap: 4px; } .f-pn.f-pn-hd { display: none; } .f-pb { grid-template-columns: minmax(0, 1fr) 4em; } .f-pb-b { grid-column: 1 / -1; }
 }
 """
+
+
+# ================================================================ round 3
+def year_signals(rows):
+    """| 年 | A … | 美 … | → two side-by-side slot panels; months as 12 squares, stock share as a bar."""
+    def f(x):
+        try:
+            return float(_txt(x))
+        except ValueError:
+            return 0.0
+    def panel(title, cols):
+        hd = '<div class="f-ys-r hd"><span>年</span><span>紧张月（每格 1 个月）</span><span>平均股票仓位</span><span>年末把握 p</span><span>去重改名单</span>' + \
+             ('<span>可参选</span>' if 'n' in cols else '') + '</div>'
+        body = ''
+        for r in rows:
+            m = int(f(r[cols['m']]))
+            sq = ''.join(f'<i class="{"on" if k < m else ""}"></i>' for k in range(12))
+            pos = f(r[cols['pos']])
+            body += (f'<div class="f-ys-r"><span class="y">{_txt(r[0])}</span><span class="sq">{sq}<b>{m}</b></span>'
+                     f'<span class="bar"><i style="width:{pos * 100:.0f}%"></i><b>{_txt(r[cols["pos"]])}</b></span>'
+                     f'<span class="v">{_txt(r[cols["p"]])}</span><span class="v">{_txt(r[cols["d"]])}</span>'
+                     + (f'<span class="v">{_txt(r[cols["n"]])}</span>' if 'n' in cols else '') + '</div>')
+        return f'<div class="f-ys-p"><div class="f-ys-h">{title}</div><div class="f-ys-t{" n6" if "n" in cols else ""}">{hd}{body}</div></div>'
+    return (panel('A 股名额', {'m': 1, 'd': 2, 'n': 3, 'p': 4, 'pos': 5})
+            + panel('美股名额', {'m': 6, 'd': 7, 'p': 8, 'pos': 9}))
+
+
+def picks(rows):
+    out = ''
+    for r in rows:
+        name = _txt(r[0])
+        items = re.findall(r'([^、\d][^、]*?)\s*(\d+)(?=、|$)', _txt(r[1]))
+        mx = max((int(n) for _, n in items), default=1)
+        chips = ''.join(f'<span class="f-pk-c" style="--w:{int(n) / mx * 100:.0f}%"><span>{nm.strip()}</span><b>{n}</b></span>' for nm, n in items)
+        never = [x for x in _txt(r[2]).split('、') if x.strip()]
+        nv = ''.join(f'<span class="f-pk-n">{x}</span>' for x in never)
+        out += (f'<div class="f-pk"><div class="f-pk-h">{name}<em>入选月数（条长 = 月数）</em></div><div class="f-pk-cs">{chips}</div>'
+                f'<div class="f-pk-nh">从未入选{"：" + nv if never and nv else ""}</div></div>')
+    return f'<div class="f-pks">{out}</div>'
+
+
+TABLES += [
+    (lambda h: len(h) == 10 and h[0] == '年' and h[1] == 'A 紧张月', lambda h, r: year_signals(r), 'years'),
+    (lambda h: h == ['名额', '入选月数最多的候选', '从未入选'], lambda h, r: picks(r), 'picks'),
+]
+
+_apply2 = apply
+
+
+def apply(html):
+    html = _apply2(html)
+    soup = BeautifulSoup(html, 'html.parser')
+    qs = {}
+    for h in soup.find_all('h2'):
+        t = h.get_text('', strip=True)
+        m = re.match(r'^(附表 [A-Z])', t)
+        if m:
+            nm = re.match(r'^附表 [A-Z][：:]\s*([^—，,]+)', t)
+            qs[m.group(1)] = ((nm.group(1).strip() if nm else ''), (h.get('data-sl-q') or '').split('｜')[0].strip())
+    for ul in soup.find_all('ul'):
+        lis = ul.find_all('li', recursive=False)
+        keys = [li.find('strong').get_text('', strip=True) if li.find('strong') else '' for li in lis]
+        if lis and all(re.fullmatch(r'附表 [A-Z]', k) for k in keys):
+            cards = ''
+            for li, k in zip(lis, keys):
+                li.find('strong').extract()
+                body = re.sub(r'^[：:]\s*', '', li.decode_contents().strip())
+                nm, q = qs.get(k, ('', ''))
+                cards += (f'<div class="f-ap"><div class="f-ap-h"><b>{k}{" · " + nm if nm else ""}</b><span>{q}</span></div>'
+                          f'<div class="f-ap-b">{body}</div></div>')
+            ul.replace_with(_frag(f'<div class="f-aps">{cards}</div>'))
+    return str(soup)
+
+
+CSS += r"""
+.f-years-wrap { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.f-ys-p { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.f-ys-h { padding: 7px 12px; font-size: 13.5px; font-weight: 700; color: var(--ink); background: var(--bg); border-bottom: 1px solid var(--line); }
+.f-ys-r { display: grid; grid-template-columns: 3em minmax(0, 1.7fr) minmax(0, 1.2fr) 4em 3.6em; gap: 8px; align-items: center; padding: 4px 12px; font-size: 12.5px; color: var(--ink); }
+.f-ys-t.n6 .f-ys-r { grid-template-columns: 3em minmax(0, 1.7fr) minmax(0, 1.2fr) 4em 3.6em 3.4em; }
+.f-ys-r.hd { font-size: 11px; font-weight: 700; color: var(--muted); padding-top: 7px; }
+.f-ys-r .y { font-family: var(--font-mono); color: var(--muted); }
+.f-ys-r .sq { display: flex; gap: 2px; align-items: center; } .f-ys-r .sq i { width: 7px; height: 12px; border-radius: 2px; background: var(--bg); border: 1px solid var(--line); }
+.f-ys-r .sq i.on { background: var(--bad); border-color: var(--bad); } .f-ys-r .sq b { margin-left: 5px; font-family: var(--font-mono); font-size: 12px; }
+.f-ys-r .bar { position: relative; display: flex; align-items: center; gap: 5px; } .f-ys-r .bar i { display: block; height: 8px; border-radius: 3px; background: var(--accent); max-width: 70%; }
+.f-ys-r .bar b { font-family: var(--font-mono); font-size: 12px; font-weight: 600; }
+.f-ys-r .v { font-family: var(--font-mono); text-align: right; color: var(--muted); }
+.f-pks { display: grid; gap: 10px; margin-top: 10px; }
+.f-pk { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-pk-h { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; } .f-pk-h em { font-style: normal; font-weight: 400; font-size: 12px; color: var(--muted); margin-left: 8px; }
+.f-pk-cs { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 4px 12px; }
+.f-pk-c { position: relative; display: flex; justify-content: space-between; gap: 6px; padding: 2px 6px; font-size: 12.5px; color: var(--ink); border-radius: 4px; overflow: hidden; }
+.f-pk-c::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: var(--w); background: var(--accent-soft); z-index: 0; }
+.f-pk-c > * { position: relative; } .f-pk-c b { font-family: var(--font-mono); }
+.f-pk-nh { margin-top: 6px; font-size: 12px; color: var(--muted); } .f-pk-n { display: inline-block; margin: 2px 4px 0 0; padding: 0 6px; border: 1px dashed var(--line); border-radius: 4px; }
+.f-aps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.f-ap { display: flex; flex-direction: column; gap: 6px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-ap-h b { display: block; font-size: 15px; color: var(--ink); } .f-ap-h span { font-size: 13.5px; color: var(--ink); line-height: 1.5; }
+.f-ap-b { font-size: 12.5px; color: var(--muted); line-height: 1.6; } .f-ap-b code { font-size: 11.5px; }
+@media (max-width: 760px) { .f-years-wrap, .f-aps { grid-template-columns: minmax(0, 1fr); } }
+"""
