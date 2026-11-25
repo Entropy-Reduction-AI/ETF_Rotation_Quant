@@ -1,0 +1,55 @@
+{
+ "source_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/49_Industry_Portfolios_CSV.zip",
+ "final_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/49_Industry_Portfolios_CSV.zip",
+ "http_status": 200,
+ "downloaded_at_asia_taipei": "2026-11-25T21:55:14+08:00",
+ "download_finished_at_asia_taipei": "2026-11-25T21:55:15+08:00",
+ "zip_sha256": "d1a3b0b9896e1e633ed2aa85e24ca144d7998f8ab2ff344e2379383ebeb7b836",
+ "csv_sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
+ "csv_sha256_matches_previously_registered": true,
+ "previously_registered_csv_sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
+ "opaque_original_outside_repo": "/opt/cursor/artifacts/french-49/49_Industry_Portfolios_CSV.zip",
+ "opaque_csv_outside_repo": "/opt/cursor/artifacts/french-49/49_Industry_Portfolios.csv",
+ "zip_member_timestamp": "2026-10-26 13:57",
+ "parsed_panels": [
+  "Average Value Weighted Returns -- Monthly",
+  "Number of Firms in Portfolios",
+  "Average Firm Size"
+ ],
+ "parsed_window": "192607-199812",
+ "parsed_summary": {
+  "Average Value Weighted Returns -- Monthly": {
+   "rows": 870,
+   "min": "192607",
+   "max": "199812",
+   "ncols": 49
+  },
+  "Number of Firms in Portfolios": {
+   "rows": 870,
+   "min": "192607",
+   "max": "199812",
+   "ncols": 49
+  },
+  "Average Firm Size": {
+   "rows": 870,
+   "min": "192607",
+   "max": "199812",
+   "ncols": 49
+  }
+ },
+ "historical_copy_found": false,
+ "searched": [
+  "operations/reviews/diag/*/cache",
+  "data/research",
+  "incoming",
+  "/tmp",
+  "/opt",
+  "/home/ubuntu",
+  "/cursor/stores",
+  "git objects"
+ ],
+ "cell_comparison": "无法完成数值比对",
+ "reason": "登记过的历史原件不在上述位置，没有第二份字节可以逐格对照。新文件的 SHA256 与登记值相同，但按授权不能用哈希代替逐格相等，因此这份下载不能当作已核对的起点数据使用。",
+ "used_for_us_prior": false,
+ "d45_v2_gate": "PR376 head 2fbcecfaeda83d4529b54789208986787acc77af 未合入，origin/main 仍是 299e8ecb601c41677ad254748827646f069e1395"
+}
