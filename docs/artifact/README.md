@@ -7,11 +7,11 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Orchestrator
-- Last updated: 2026-11-19（v6 预演预测表第 3.20 版）
+- Last updated: 2026-11-24（v6 预注册初稿第 2.2 版：附表 A、B，讲故事层）
 
 ## Purpose
 
-这里存放面向 Owner 的 9 个 Claude artifact 页面的原始 HTML，每个页面一个文件夹，入口是 `index.html`。这些页面由 `docs/owner/*.md` 生成：内容以 md 为准，页面只负责版式。
+这里存放面向 Owner 的 10 个 Claude artifact 页面的原始 HTML，每个页面一个文件夹，入口是 `index.html`。这些页面由 `docs/owner/*.md` 生成（v6 预注册由 `docs/prereg/etf-multiasset-rotation-prereg-v6.md` 生成）：内容以 md 为准，页面只负责版式。
 
 本地直接用浏览器打开 `index.html` 就能看。图片引用的是仓库里的 `docs/assets/**`，没有另存副本。页面之间的跳转链接指向线上 artifact。
 
@@ -19,6 +19,7 @@
 
 | 页面 | 文件夹 | 源文档 | 线上 artifact |
 | --- | --- | --- | --- |
+| v6 预注册（待冻结） | `v6-prereg/` | `docs/prereg/etf-multiasset-rotation-prereg-v6.md` | https://claude.ai/artifact/VASWvP9wCzDvXmsQqzLFBh |
 | v6 预演预测表 | `v6-preflight/` | `docs/owner/v6-preflight-forecast.md` | https://claude.ai/artifact/4uzHh1NzeLVAEovbyLqqby |
 | Owner 看板 | `board/` | `docs/owner/owner-board.md` | https://claude.ai/artifact/17bW2rKeeBheRFfhnjsrSU |
 | 第二阶段复盘 | `retro/` | `docs/owner/phase2-retrospective.md` | https://claude.ai/artifact/B7ZyN3R4t8eic353W6ZV2t |
@@ -42,7 +43,8 @@
 不要手改这里的 HTML，下次重建会被覆盖。要改的话分两种情况：
 
 - **内容**：改 `docs/owner/*.md`。
-- **版式**：改 `scripts/owner_pages/` 下的生成器（`build.py` → `polish.py` → `story.py`，样式在 `base.css` 和各模块的 `CSS`）。
+- **版式**：改 `scripts/owner_pages/` 下的生成器（`build.py` → `story_layer.pre` → `polish.py` → `story.py` → `story_layer.post`，样式在 `base.css` 和各模块的 `CSS`）。
+- **焦点**：每节的问、每个元素的看点、节尾接力写在 md 里（标记见 `docs/reference/owner-page-story-patterns.md` 第 2 版），不要写进生成器。
 
 改完以后，在仓库根目录运行下面的命令重建页面，并过发布门：
 
@@ -53,6 +55,7 @@ OWNER_PAGE_REPO=1 python scripts/owner_pages/build.py . docs/artifact scripts/ow
 for f in docs/artifact/*/index.html; do python scripts/owner_page_lint.py "$f"; done   # 0 个 ERROR
 python scripts/owner_pages/check2.py . docs/artifact      # 逐行核对内容
 python scripts/owner_pages/audit.py docs/artifact         # 找没有视觉重点的表、卡片、段落
+python scripts/owner_pages/story_check.py docs/artifact/v6-prereg/index.html --digest /tmp/连读稿.md   # 讲故事层：0 个 ERROR
 PAGES_DIR=docs/artifact python scripts/owner_pages/el.py out.png 'board|.hero|0'   # 元素截图
 ```
 

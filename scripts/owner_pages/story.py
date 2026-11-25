@@ -102,7 +102,18 @@ def fold_extra_tables(soup):
     for sec in soup.find_all('section'):
         if 'status' in (sec.get('class') or []) or not sec.find('h2'):
             continue
-        tables = [t for t in sec.find_all('table') if not in_fold(t) and t.get('data-lint') != 'ref']
+        def carded(t):
+            # a table the md marks to become cards is a ledger, not a detail table
+            from bs4 import Comment
+            sib = table_wrap(t).previous_sibling
+            while sib is not None and isinstance(sib, NavigableString):
+                if isinstance(sib, Comment) and '页面：卡片' in sib:
+                    return True
+                if sib.strip() and not isinstance(sib, Comment):
+                    return False
+                sib = sib.previous_sibling
+            return False
+        tables = [t for t in sec.find_all('table') if not in_fold(t) and t.get('data-lint') != 'ref' and not carded(t)]
         if not tables:
             continue
         has_img = sec.find('img') is not None and not all(in_fold(i) for i in sec.find_all('img'))
@@ -1334,7 +1345,7 @@ def table_focus(soup):
             td = r[0]
             first = td.contents[0] if td.contents else None
             if isinstance(first, str):
-                m = re.match(r'^\s*([a-z]|[①-⑳])(?=\S)', first)
+                m = re.match(r'^\s*([a-z]|[①-⑳])(?=[^\sA-Za-z0-9])', first)
                 if m and not re.match(r'^[a-z]{2}', first.strip()):
                     first.replace_with(first[m.end():])
                     td.insert(0, BeautifulSoup(f'<span class="rid">{m.group(1)}</span>', 'html.parser'))
@@ -1506,6 +1517,18 @@ def ledger_cards(soup):
                   f'<span class="lg-k">{H[foot]}</span>{chips(tds[foot])}</div>')
             if len(tds[ti].get_text('', strip=True)) > 26 and bl and H[big] != '状态':
                 # a long title reads as the card's body; the short verdict leads
+                lead = tds[ti].find(['strong', 'b'])
+                body_td = tds[ti]
+                if lead is not None and body_td.get_text('', strip=True).startswith(lead.get_text('', strip=True)):
+                    # a bold lead names the case: it becomes the title, the rest stays as the body
+                    title = lead.get_text('', strip=True)
+                    lead.extract()
+                    rest = re.sub(r'^\s*[：:]\s*', '', body_td.decode_contents())
+                    pm = re.match(r'^\s*(（[^（）<]*）)\s*[：:]\s*', rest)
+                    if pm:                     # a leading citation reads after the fact, not before it
+                        rest = rest[pm.end():].rstrip() + pm.group(1)
+                    cards.append(f'<div class="lg"><div class="lg-h">{badge}{title}</div>{bl}<div class="lg-m lg-t">{rest}</div>{md}{ft}</div>')
+                    continue
                 head = f'<div class="lg-h">{badge}</div>' if badge else ''
                 cards.append(f'<div class="lg">{head}{bl}<div class="lg-m lg-t">{tds[ti].decode_contents()}</div>{md}{ft}</div>')
             else:

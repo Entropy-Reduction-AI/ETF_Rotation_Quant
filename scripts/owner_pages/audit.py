@@ -9,7 +9,7 @@ PAGES = [p for p in re.findall(r"^\s*\('([\w-]+)',\s*'", _b.split('PAGES = [', 1
 if len(sys.argv) > 2:
     PAGES = [p for p in PAGES if p in sys.argv[2:]]
 # a section's evidence visual: the element that shows its conclusion before any table
-EVID = 'figure, svg, .specgrid, .calcgrid, .score, .hero, .cards, ol.flow, .dl, .actboard, .critgrid, .probbars, .ovw, .rrmap, .dxgrid, .ledger, .cases'
+EVID = '.comp, figure, svg, .specgrid, .calcgrid, .score, .hero, .cards, ol.flow, .dl, .actboard, .critgrid, .probbars, .ovw, .rrmap, .dxgrid, .ledger, .cases'
 VIS='pill|ib|mg|big|boxed|stk|verdict|tag|risk-hit|win|best|good|bad|c-take'
 for p in PAGES:
     s=BeautifulSoup(open(f'{PAGES_DIR}/{p}/index.html').read(),'html.parser')
@@ -17,6 +17,7 @@ for p in PAGES:
     out=[]
     for t in main.find_all('table'):
         if t.get('data-lint')=='ref': continue
+        if t.find_parent(class_='fold-b') is not None: continue   # detail tables in folds stay plain (Owner 2026-11-24)
         rows=t.select('tbody tr')
         hl=t.find_all(class_=re.compile(VIS))
         if len(hl)<max(1,len(rows)//2):
