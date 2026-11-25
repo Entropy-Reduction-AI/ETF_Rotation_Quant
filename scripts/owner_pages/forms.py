@@ -1189,3 +1189,58 @@ CSS += r"""
 .f-tp-l.fix { padding-top: 7px; border-top: 1px dashed var(--line); }
 @media (max-width: 760px) { .f-tps { grid-template-columns: minmax(0, 1fr); } }
 """
+
+
+ORDER_STATUS = [('看初稿', 'done'), ('Reviewer R1', 'done'), ('冻结', 'now'), ('一次性检验', 'you')]
+ST_LABEL = {'done': '已完成', 'now': '现在', 'you': '你批准', 'todo': '之后'}
+
+
+def order_steps(ol):
+    items = []
+    for li in ol.find_all('li', recursive=False):
+        s_ = li.find('strong')
+        if s_ is None:
+            return None
+        t = s_.get_text('', strip=True)
+        s_.extract()
+        body = re.sub(r'^[：:]\s*', '', li.decode_contents().strip())
+        st = next((v for k, v in ORDER_STATUS if t.endswith(k) or t == k), 'todo')
+        items.append((t, body, st))
+    rows = ''.join(f'<div class="f-od {st}"><span class="f-od-n">{"✓" if st == "done" else i}</span>'
+                   f'<div class="f-od-b"><div class="f-od-h"><b>{t}</b><span class="f-od-st">{ST_LABEL[st]}</span></div>'
+                   f'<div class="f-od-d">{b}</div></div></div>' for i, (t, b, st) in enumerate(items, 1))
+    return f'<div class="comp f-ods" data-lint="ref">{rows}</div>'
+
+
+_apply5 = apply
+
+
+def apply(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    for d in soup.find_all('details'):
+        sm = d.find('summary')
+        if sm and sm.get_text('', strip=True).startswith('9.1 顺序'):
+            ol = d.find('ol')
+            if ol is not None:
+                new = order_steps(ol)
+                if new:
+                    ol.replace_with(_frag(new))
+    return _apply5(str(soup))
+
+
+CSS += r"""
+.f-ods { position: relative; display: grid; gap: 0; padding-left: 2px; }
+.f-od { position: relative; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; padding-bottom: 12px; }
+.f-od:not(:last-child)::before { content: ''; position: absolute; left: 13px; top: 26px; bottom: 0; width: 2px; background: var(--line); }
+.f-od.done:not(:last-child)::before { background: var(--good); }
+.f-od-n { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: 12px; font-weight: 700; border: 2px solid var(--line); background: var(--surface); color: var(--muted); }
+.f-od.done .f-od-n { background: var(--good); border-color: var(--good); color: #fff; }
+.f-od.now .f-od-n { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 0 0 4px var(--accent-soft); }
+.f-od.you .f-od-n { border: 2px dashed var(--accent); color: var(--accent); }
+.f-od-b { padding: 2px 0 0; } .f-od-h { display: flex; align-items: baseline; gap: 8px; } .f-od-h b { font-size: 14.5px; color: var(--ink); }
+.f-od.todo .f-od-h b { color: var(--muted); }
+.f-od-st { font-size: 11px; font-weight: 700; padding: 0 7px; border-radius: 999px; color: var(--muted); }
+.f-od.done .f-od-st { color: var(--good); background: var(--good-soft); } .f-od.now .f-od-st { color: #fff; background: var(--accent); } .f-od.you .f-od-st { color: var(--accent); border: 1px dashed var(--accent); }
+.f-od-d { font-size: 13px; color: var(--muted); line-height: 1.55; margin-top: 2px; }
+.f-od.now .f-od-d { color: var(--ink); }
+"""

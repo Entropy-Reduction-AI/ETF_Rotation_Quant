@@ -1482,6 +1482,21 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 .f-tp-l.fix { padding-top: 7px; border-top: 1px dashed var(--line); }
 @media (max-width: 760px) { .f-tps { grid-template-columns: minmax(0, 1fr); } }
 
+.f-ods { position: relative; display: grid; gap: 0; padding-left: 2px; }
+.f-od { position: relative; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; padding-bottom: 12px; }
+.f-od:not(:last-child)::before { content: ''; position: absolute; left: 13px; top: 26px; bottom: 0; width: 2px; background: var(--line); }
+.f-od.done:not(:last-child)::before { background: var(--good); }
+.f-od-n { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: 12px; font-weight: 700; border: 2px solid var(--line); background: var(--surface); color: var(--muted); }
+.f-od.done .f-od-n { background: var(--good); border-color: var(--good); color: #fff; }
+.f-od.now .f-od-n { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 0 0 4px var(--accent-soft); }
+.f-od.you .f-od-n { border: 2px dashed var(--accent); color: var(--accent); }
+.f-od-b { padding: 2px 0 0; } .f-od-h { display: flex; align-items: baseline; gap: 8px; } .f-od-h b { font-size: 14.5px; color: var(--ink); }
+.f-od.todo .f-od-h b { color: var(--muted); }
+.f-od-st { font-size: 11px; font-weight: 700; padding: 0 7px; border-radius: 999px; color: var(--muted); }
+.f-od.done .f-od-st { color: var(--good); background: var(--good-soft); } .f-od.now .f-od-st { color: #fff; background: var(--accent); } .f-od.you .f-od-st { color: var(--accent); border: 1px dashed var(--accent); }
+.f-od-d { font-size: 13px; color: var(--muted); line-height: 1.55; margin-top: 2px; }
+.f-od.now .f-od-d { color: var(--ink); }
+
 </style>
 </head>
 <body>

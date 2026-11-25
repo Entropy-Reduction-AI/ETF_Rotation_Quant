@@ -1482,6 +1482,21 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 .f-tp-l.fix { padding-top: 7px; border-top: 1px dashed var(--line); }
 @media (max-width: 760px) { .f-tps { grid-template-columns: minmax(0, 1fr); } }
 
+.f-ods { position: relative; display: grid; gap: 0; padding-left: 2px; }
+.f-od { position: relative; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; padding-bottom: 12px; }
+.f-od:not(:last-child)::before { content: ''; position: absolute; left: 13px; top: 26px; bottom: 0; width: 2px; background: var(--line); }
+.f-od.done:not(:last-child)::before { background: var(--good); }
+.f-od-n { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: 12px; font-weight: 700; border: 2px solid var(--line); background: var(--surface); color: var(--muted); }
+.f-od.done .f-od-n { background: var(--good); border-color: var(--good); color: #fff; }
+.f-od.now .f-od-n { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 0 0 4px var(--accent-soft); }
+.f-od.you .f-od-n { border: 2px dashed var(--accent); color: var(--accent); }
+.f-od-b { padding: 2px 0 0; } .f-od-h { display: flex; align-items: baseline; gap: 8px; } .f-od-h b { font-size: 14.5px; color: var(--ink); }
+.f-od.todo .f-od-h b { color: var(--muted); }
+.f-od-st { font-size: 11px; font-weight: 700; padding: 0 7px; border-radius: 999px; color: var(--muted); }
+.f-od.done .f-od-st { color: var(--good); background: var(--good-soft); } .f-od.now .f-od-st { color: #fff; background: var(--accent); } .f-od.you .f-od-st { color: var(--accent); border: 1px dashed var(--accent); }
+.f-od-d { font-size: 13px; color: var(--muted); line-height: 1.55; margin-top: 2px; }
+.f-od.now .f-od-d { color: var(--ink); }
+
 </style>
 </head>
 <body>
@@ -1808,15 +1823,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <p class="memo"><strong>8 件待办全部完成（附表 A、B 与 D42 于 2026-11-24、25 写入）；Owner 2026-11-25 批准冻结；行业标签在看任何检验段收益之前已补齐；冻结后不改任何规则（程序错误除外）。</strong></p>
 <div class="table-wrap"><div class="comp comp-路线" data-lint="ref"><ol class="route steps-n"><li class="rt-done"><b class="rt-b"><span class="rt-dot">✓</span><span class="rt-s">看初稿</span><span class="rt-w">Owner</span><span class="rt-st">已完成</span></b></li><li class="rt-done"><b class="rt-b"><span class="rt-dot">✓</span><span class="rt-s">R1</span><span class="rt-w">Reviewer</span><span class="rt-st">已完成</span></b></li><li class="rt-done"><b class="rt-b"><span class="rt-dot">✓</span><span class="rt-s">冻结前 8 件待办</span><span class="rt-w">Orchestrator、Grok</span><span class="rt-st">已完成</span></b></li><li class="rt-done"><b class="rt-b"><span class="rt-dot">✓</span><span class="rt-s">你批准冻结</span><span class="rt-w">Owner</span><span class="rt-st">已完成</span></b></li><li class="rt-now"><b class="rt-b"><span class="rt-dot">5</span><span class="rt-s">R1b 签收后打标签</span><span class="rt-w">Reviewer 等</span><span class="rt-st">现在</span></b></li><li class="rt-todo"><b class="rt-b"><span class="rt-dot">6</span><span class="rt-s">实现与复算</span><span class="rt-w">Dev、Reviewer</span><span class="rt-st">之后</span></b></li><li class="rt-you"><b class="rt-b"><span class="rt-dot">7</span><span class="rt-s">一次性检验</span><span class="rt-w">Owner</span><span class="rt-st">你批准</span></b></li><li class="rt-todo"><b class="rt-b"><span class="rt-dot">8</span><span class="rt-s">模拟盘</span><span class="rt-w">全体</span><span class="rt-st">之后</span></b></li></ol></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>9.1 顺序：看初稿 → R1 → 冻结 → 实现与复算 → 一致性检查 → 一次性检验 → 模拟盘</span></button><div class="fold-b" hidden="">
-<ol class="f-compact steps-n">
-<li><strong>Owner 看初稿</strong>：已确认 §9.2 第 6 条三项（D40-14）。</li>
-<li><strong>Reviewer R1</strong>：逐条核对设计评审、§1.4 计数、§4 已看信息；Orchestrator 闭合后 Reviewer R1b（当前所在步骤，见页首“进度”）。</li>
-<li><strong>冻结</strong>：Owner 2026-11-25 已批准（D42-9）；R1b 对第 2.4 版签收、Manager 以合并提交合入 main 后，由 Cloud Agent 在该合并提交上打 <code>milestone/v6-prereg-freeze</code>。</li>
-<li><strong>实现与复算</strong>：Dev 在 <code>src/v6/</code>、<code>config/v6/</code> 实现；Reviewer 独立实现复算设计期整套和两个月份示例（逐位一致），并复现 §3.2 合成行情。</li>
-<li><strong>设计期一致性检查</strong>：只报告。</li>
-<li><strong>一次性检验</strong>：Owner 批准后跑一次，出报告并对账。</li>
-<li><strong>前向模拟盘</strong>：见 §7。</li>
-</ol>
+<div class="comp f-ods" data-lint="ref"><div class="f-od done"><span class="f-od-n">✓</span><div class="f-od-b"><div class="f-od-h"><b>Owner 看初稿</b><span class="f-od-st">已完成</span></div><div class="f-od-d">已确认 §9.2 第 6 条三项（D40-14）。</div></div></div><div class="f-od done"><span class="f-od-n">✓</span><div class="f-od-b"><div class="f-od-h"><b>Reviewer R1</b><span class="f-od-st">已完成</span></div><div class="f-od-d">逐条核对设计评审、§1.4 计数、§4 已看信息；Orchestrator 闭合后 Reviewer R1b（当前所在步骤，见页首“进度”）。</div></div></div><div class="f-od now"><span class="f-od-n">3</span><div class="f-od-b"><div class="f-od-h"><b>冻结</b><span class="f-od-st">现在</span></div><div class="f-od-d">Owner 2026-11-25 已批准（D42-9）；R1b 对第 2.4 版签收、Manager 以合并提交合入 main 后，由 Cloud Agent 在该合并提交上打 <code>milestone/v6-prereg-freeze</code>。</div></div></div><div class="f-od todo"><span class="f-od-n">4</span><div class="f-od-b"><div class="f-od-h"><b>实现与复算</b><span class="f-od-st">之后</span></div><div class="f-od-d">Dev 在 <code>src/v6/</code>、<code>config/v6/</code> 实现；Reviewer 独立实现复算设计期整套和两个月份示例（逐位一致），并复现 §3.2 合成行情。</div></div></div><div class="f-od todo"><span class="f-od-n">5</span><div class="f-od-b"><div class="f-od-h"><b>设计期一致性检查</b><span class="f-od-st">之后</span></div><div class="f-od-d">只报告。</div></div></div><div class="f-od you"><span class="f-od-n">6</span><div class="f-od-b"><div class="f-od-h"><b>一次性检验</b><span class="f-od-st">你批准</span></div><div class="f-od-d">Owner 批准后跑一次，出报告并对账。</div></div></div><div class="f-od todo"><span class="f-od-n">7</span><div class="f-od-b"><div class="f-od-h"><b>前向模拟盘</b><span class="f-od-st">之后</span></div><div class="f-od-d">见 §7。</div></div></div></div>
 <p class="kv"><span class="kv-k"><strong>目录</strong></span><span class="kv-v"><code>src/v6/</code>、<code>config/v6/</code>、<code>results/v6/</code>，账本 <code>results/v6/trial-ledger.csv</code>。冻结后不改任何规则（程序错误除外）。</span></p>
 </div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>9.2 冻结前待办：8 件全部完成</span></button><div class="fold-b" hidden="">
