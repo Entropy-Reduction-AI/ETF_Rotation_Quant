@@ -47,7 +47,7 @@ def sort_board(rows):
     tones = ['bad', 'mute', 'good']
     cols = ''
     for i, (g, v, items) in enumerate(groups):
-        chips = ''.join(f'<li><span class="sb-n">{n}</span>{x}</li>' for n, x in items)
+        chips = ''.join(f'<li><span class="sb-n">{n}</span><span class="sb-x">{x}</span></li>' for n, x in items)
         cols += (f'<div class="sb-col t-{tones[i % 3]}"><div class="sb-h"><span class="sb-k">{len(items)}</span>'
                  f'<span class="sb-g">{g}</span></div><div class="sb-v">{v}</div><ul class="sb-l">{chips}</ul></div>')
     return f'<div class="sortboard n{len(groups)}">{cols}</div>'
@@ -97,8 +97,8 @@ def route(rows):
     for r in rows:
         st = _txt(r['状态'])
         k = {'已完成': 'done', '现在': 'now', '你批准': 'you'}.get(st, 'todo')
-        out += (f'<li class="rt-{k}"><span class="rt-s">{_inner(r["步"])}</span><span class="rt-w">{_inner(r["谁"])}</span>'
-                f'<span class="rt-st">{st}</span></li>')
+        out += (f'<li class="rt-{k}"><span class="rt-dot">{"✓" if k == "done" else ""}</span><span class="rt-s">{_inner(r["步"])}</span>'
+                f'<span class="rt-w">{_inner(r["谁"])}</span><span class="rt-st">{st}</span></li>')
     return f'<ol class="route">{out}</ol>'
 
 
@@ -138,11 +138,12 @@ def pain(rows):
 
 
 def risks(rows):
-    out = ''
-    for r in rows:
+    out = ('<div class="rk rk-hd"><span></span><span>原因</span><span>会怎样</span><span>在哪里盯</span></div>')
+    for i, r in enumerate(rows):
         watch = ''.join(f'<span class="rk-c">{x.strip()}</span>' for x in re.split(r'[；;]', _txt(r['在哪里盯'])) if x.strip())
-        out += (f'<div class="rk"><span class="rk-n">{_txt(r["排名"])}</span><div class="rk-b"><b>{_inner(r["原因"])}</b>'
-                f'<span>{_inner(r["会怎样"])}</span></div><div class="rk-w"><em>盯</em>{watch}</div></div>')
+        sev = 'sev1' if i == 0 else ('sev2' if i == 1 else 'sev3')
+        out += (f'<div class="rk {sev}"><span class="rk-n">{_txt(r["排名"])}</span><b class="rk-why">{_inner(r["原因"])}</b>'
+                f'<span class="rk-then">{_inner(r["会怎样"])}</span><div class="rk-w">{watch}</div></div>')
     return f'<div class="risks">{out}</div>'
 
 
@@ -307,9 +308,11 @@ CSS = r"""
 .sb-g { font-size: 15px; font-weight: 700; color: var(--ink); }
 .sb-v { font-size: 13.5px; color: var(--ink); margin: 6px 0 8px; padding: 5px 8px; background: var(--bg); border-radius: 6px; line-height: 1.5; }
 .sb-l { list-style: none; padding: 0; margin: 0; display: grid; gap: 5px; }
-.sb-l li { font-size: 13.5px; color: var(--muted); line-height: 1.45; margin: 0; padding: 0; }
+.sb-l li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: start; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.45; margin: 0; padding: 8px 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+.sb-col { background: var(--bg) !important; }
+.sb-col.t-bad .sb-n { background: var(--bad); color: #fff; } .sb-col.t-good .sb-n { background: var(--good); color: #fff; } .sb-col.t-mute .sb-n { background: var(--muted); color: #fff; }
 .sb-l li::before { display: none; }
-.sb-n { display: inline-grid; place-items: center; min-width: 18px; height: 18px; border-radius: 50%; background: var(--line); color: var(--ink); font-size: 11px; font-family: var(--font-mono); margin-right: 6px; }
+.sb-n { display: inline-grid; place-items: center; min-width: 20px; height: 20px; border-radius: 50%; background: var(--line); color: var(--ink); font-size: 11.5px; font-family: var(--font-mono); margin: 1px 6px 0 0; }
 .gaterow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
 .gt { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px 10px; display: grid; gap: 4px; align-content: start; }
 .gt-c { font-size: 13px; color: var(--accent); font-weight: 700; min-height: 1em; }
@@ -333,16 +336,30 @@ CSS = r"""
 .cb-i b { font-family: var(--font-mono); margin-right: 3px; }
 .cb-i em { font-style: normal; color: var(--muted); margin-left: 6px; font-size: 12.5px; }
 .cb-t { color: var(--muted); font-size: 12.5px; margin-left: auto; padding-right: 4px; white-space: nowrap; }
-ol.route { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 4px; counter-reset: none; }
-ol.route li { position: relative; margin: 0; padding: 10px 10px 9px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; display: grid; gap: 2px; }
-ol.route li::before { display: none; }
+ol.route, ol.route.flow, ol.route.steps-n { list-style: none; padding: 0; margin: 0; display: grid !important; grid-template-columns: none !important; grid-auto-flow: column !important; grid-auto-columns: minmax(0, 1fr) !important; gap: 0 !important; counter-reset: none; }
+ol.route li { position: relative; margin: 0; padding: 30px 8px 0 0; display: flex; flex-direction: column; gap: 2px; background: none; border: 0; }
+ol.route li::before { content: ''; display: block; position: absolute; top: 10px; left: 22px; right: 0; height: 2px; background: var(--line); }
+ol.route li:last-child::before { display: none; }
+ol.route > li { padding: 30px 8px 0 0 !important; background: none !important; border: 0 !important; border-radius: 0 !important; color: inherit; }
+ol.route > li::before { content: none !important; display: none !important; }
+ol.route > li:not(:last-child) { background: linear-gradient(var(--line), var(--line)) no-repeat 22px 10px / calc(100% - 22px) 2px !important; }
+ol.route > li.rt-done:not(:last-child) { background: linear-gradient(var(--good), var(--good)) no-repeat 22px 10px / calc(100% - 22px) 2px !important; }
+ol.route > li::after, ol.route > li:not(:last-child)::after { content: none !important; }
+ol.route .fl-t { display: flex; flex-direction: column; gap: 2px; font-weight: inherit; } ol.route .fl-d:empty { display: none; }
+ol.route li.rt-done::before { background: var(--good); }
 ol.route li .rt-s, ol.route li .rt-w, ol.route li .rt-st { display: block !important; } ol.route li > b { font-weight: inherit; }
+.rt-dot { position: absolute; top: 0; left: 0; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface); display: grid; place-items: center; font-size: 12px; color: #fff; z-index: 1; }
+ol.route li.rt-done .rt-dot { background: var(--good); border-color: var(--good); }
+ol.route li.rt-now .rt-dot { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); background: var(--accent); }
+ol.route li.rt-you .rt-dot { border: 2px dashed var(--accent); }
 .rt-s { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.35; }
-.rt-w { font-size: 12px; color: var(--muted); }
-.rt-st { font-size: 12px; font-weight: 700; color: var(--muted); }
-ol.route li.rt-done { background: var(--good-soft); border-color: transparent; } ol.route li.rt-done .rt-st { color: var(--good); }
-ol.route li.rt-now { border: 2px solid var(--accent); } ol.route li.rt-now .rt-st { color: var(--accent); }
-ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-st { color: var(--accent); }
+.rt-w { font-size: 12px; color: var(--muted); line-height: 1.4; }
+.rt-st { width: max-content; margin-top: 3px; font-size: 11.5px; font-weight: 700; padding: 0 7px; border-radius: 999px; color: var(--muted); background: var(--bg); border: 1px solid var(--line); }
+ol.route li.rt-done .rt-st { color: var(--good); border-color: var(--good); background: var(--good-soft); }
+ol.route li.rt-now .rt-st { color: #fff; background: var(--accent); border-color: var(--accent); }
+ol.route li.rt-you .rt-st { color: var(--accent); border: 1px dashed var(--accent); background: var(--accent-soft); }
+ol.route li.rt-todo .rt-s { color: var(--muted); }
+@media (max-width: 760px) { ol.route, ol.route.flow, ol.route.steps-n { grid-auto-flow: row !important; } ol.route > li { padding: 0 0 12px 32px !important; } ol.route > li:not(:last-child), ol.route > li.rt-done:not(:last-child) { background-position: 10px 22px !important; background-size: 2px calc(100% - 22px) !important; } }
 .carriers { display: grid; gap: 6px; }
 .cr-r { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 12px; align-items: center; padding: 8px 12px; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 8px; }
 .cr-r.t-good { border-left-color: var(--good); } .cr-r.t-warn { border-left-color: var(--warn); } .cr-r.t-bad { border-left-color: var(--bad); }
@@ -363,15 +380,17 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 .pn-t { font-size: 13.5px; color: var(--bad); line-height: 1.45; }
 .pn-tl { display: block; font-size: 11.5px; color: var(--muted); font-weight: 700; letter-spacing: .04em; }
 .risks { display: grid; gap: 6px; }
-.risks > .rk { display: grid; grid-template-columns: 2.4em minmax(0, 1fr) minmax(0, 15em); gap: 12px; align-items: center; padding: 10px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
-.risks > .rk:first-child { border: 2px solid var(--bad); }
+.risks { display: grid; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.risks > .rk { display: grid; grid-template-columns: 2.6em 11em minmax(0, 1fr) 14em; gap: 14px; align-items: center; padding: 11px 14px; border-top: 1px solid var(--line); border-left: 4px solid var(--line); }
+.risks > .rk.rk-hd { border-top: 0; border-left-color: transparent; padding: 6px 14px; font-size: 11.5px; font-weight: 700; color: var(--muted); background: var(--bg); }
+.risks > .rk.sev1 { border-left-color: var(--bad); background: var(--bad-soft); } .risks > .rk.sev2 { border-left-color: var(--warn); }
 .rk-n { font-size: 24px; font-weight: 800; color: var(--muted); font-family: var(--font-mono); text-align: center; }
-  .risks > .rk:first-child .rk-n { color: var(--bad); }
-.rk-b b { display: block; font-size: 15px; color: var(--ink); }
-.rk-b span { display: block; font-size: 13px; color: var(--muted); line-height: 1.45; margin-top: 2px; }
+.rk.sev1 .rk-n { color: var(--bad); } .rk.sev2 .rk-n { color: var(--warn); }
+.rk-why { font-size: 15px; color: var(--ink); line-height: 1.35; }
+.rk-then { font-size: 13.5px; color: var(--ink); line-height: 1.5; }
 .rk-w { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
-.rk-w em { font-style: normal; font-size: 11.5px; color: var(--muted); font-weight: 700; margin-right: 2px; }
-.rk-c { font-size: 12.5px; padding: 1px 7px; border-radius: 5px; background: var(--bg); border: 1px solid var(--line); }
+.rk-c { font-size: 12.5px; padding: 1px 7px; border-radius: 5px; background: var(--surface); border: 1px solid var(--line); }
+@media (max-width: 760px) { .risks > .rk { grid-template-columns: 2.2em minmax(0, 1fr); } .risks > .rk.rk-hd { display: none; } .rk-then, .rk-w { grid-column: 2; } }
 @media (max-width: 760px) { .pn-g, .pn-r, .risks > .rk { grid-template-columns: minmax(0, 1fr); } .pn-gk { border-right: 0; border-bottom: 1px solid var(--line); } }
 @media (max-width: 760px) { .cp-r, .cr-r { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
 """
