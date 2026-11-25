@@ -1,0 +1,34 @@
+{
+  "companion_pr363_status": "merged",
+  "companion_pr364_status": "open",
+  "evidence_branch": "cursor/pr339-r1b-d42-evidence-d912",
+  "owner_destination": "结论写在 PR#339；证据 PR#364",
+  "review_increment_window": {
+    "block_a_292568ba": "292568ba10b1de937ddb2eb7743c1279ad9f9666",
+    "d42_23_59a1b56e": "59a1b56e5a62b90c2c3b27115af235b67dd48d8e",
+    "audited_subject_2_4_7a338ef4": "7a338ef4b0ca589e9e50e14970fd8b5be60bbada",
+    "pr339_live_fetched_full": "7a338ef4b0ca589e9e50e14970fd8b5be60bbada",
+    "delta_59_to_7a_commits": [
+      "46728ecd5230308b3e86d2d0e49d6f7cb54d0df1",
+      "7a338ef4b0ca589e9e50e14970fd8b5be60bbada"
+    ]
+  },
+  "technical_decision": "同意冻结前置条件已满足",
+  "technical_decision_scoped_head": "7a338ef4b0ca589e9e50e14970fd8b5be60bbada",
+  "technical_decision_note": "2.4 版闭合 review 6042330027：D42-9 §4#8 披露 + Owner 个人陈述（非团队零暴露）+ 仓库普查；D42-8 A1/A2 继承 v4 + ledger series_sha256 四路核验；现行配置 replicate/target 分工；①–④ 未改；freeze tag 不在本回合",
+  "closure_review_github_thread": "6042330027",
+  "criteria_1234_unchanged_59_to_7a338": true,
+  "appendix_ab_unchanged_59_to_7a338": true,
+  "owner_personal_attestation_d42_9": "Owner 2026-11-25 在对话中书面确认本人没看过两地行业层的走势或回测",
+  "ledger_all_net_sha256_verified": true,
+  "unresolved_for_freeze_prerequisites": [],
+  "companion_artifacts_seven_paths_owner_scope": [
+    "operations/reviews/2026-11-24-v6-prereg-draft-r1b.md",
+    "operations/reviews/pr339-r1b-verify.json",
+    "operations/reviews/pr339-r1b-audit.json",
+    "operations/reviews/pr339-r1b-keypoint-numbers.json",
+    "operations/reviews/pr339-r1b-commands.md",
+    "operations/reviews/pr339-r1b-audit.py",
+    "operations/reviews/pr339-r1b-component-manual.py"
+  ]
+}
