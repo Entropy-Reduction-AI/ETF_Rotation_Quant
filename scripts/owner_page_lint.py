@@ -58,7 +58,7 @@ def lint(path: str) -> tuple[list[str], list[str]]:
         elif not NUM.search(text(memo)):
             warns.append(f'[{sid}] 记忆句里没有数字：{text(memo)[:30]}…')
         # S2 每节至少一个可视元素（图、表、卡片），不能只有文字
-        VIS = {'verdicts', 'why3', 'cards', 'decision', 'grid3', 'cols', 'cols2', 'cols3', 'steps', 'ledger', 'cases'}
+        VIS = {'verdicts', 'why3', 'cards', 'decision', 'grid3', 'cols', 'cols2', 'cols3', 'steps', 'ledger', 'cases', 'comp'}
         visual = sec.find(['figure', 'table']) or sec.find(lambda tag: bool(VIS & set(tag.get('class') or [])))
         if not visual and not re.search(r'\{\{img:', str(sec)):
             errors.append(f'[{sid}] 整节只有文字，没有图、表或卡片')

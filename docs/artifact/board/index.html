@@ -975,6 +975,102 @@ a.sl-sp-i.t-todo .sl-sp-st { color: var(--bad); font-weight: 700; } a.sl-sp-i.t-
 @media (max-width: 760px) { .sl-dr { grid-template-columns: minmax(0, 1fr); gap: 3px; } .sl-ds { justify-content: flex-start; } .sl-look, a.sl-next { flex-direction: column; gap: 4px; align-items: flex-start; } }
 
 
+.cbx-c { gap: 10px; padding: 12px 14px; min-width: 210px; }
+.cbx-top span { font-size: 13px; }
+.cbx-is { display: flex; flex-wrap: wrap; gap: 6px; }
+.cbx-i { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--ink); padding: 4px 9px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); }
+.cbx-i i { width: 8px; height: 8px; border-radius: 2px; background: var(--muted); }
+.cbx-c.on .cbx-i { background: var(--surface); border-color: var(--accent); } .cbx-c.on .cbx-i i { background: var(--accent); }
+.cbx-i.etc { font-weight: 400; color: var(--muted); border-style: dashed; }
+
+.rt-dot { font-family: var(--font-mono); font-size: 11.5px; font-weight: 700; color: var(--muted); }
+ol.route li.rt-now .rt-dot, ol.route li.rt-done .rt-dot { color: #fff; } ol.route li.rt-you .rt-dot { color: var(--accent); }
+ol.route li.rt-todo .rt-dot { color: var(--muted) !important; }
+ol.route li.rt-todo .rt-st { border: 0; background: none; padding: 0; font-weight: 600; }
+.rt-b { display: flex; flex-direction: column; gap: 2px; font-weight: inherit; }
+.rt-gate { display: block; margin-top: 6px; padding: 6px 8px; border-radius: 6px; background: var(--bg); font-size: 12px; line-height: 1.5; color: var(--ink); margin-right: 10px; }
+.rt-gate em { display: block; font-style: normal; font-size: 11px; font-weight: 700; color: var(--muted); }
+.rt-gate.stop em { color: var(--bad); } .rt-gate.pass em { color: var(--good); }
+ol.route li .rt-gate { display: block !important; }
+
+.pain2 { display: grid; gap: 8px; }
+.pain2 .pn-hd { display: grid; grid-template-columns: 108px minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1fr); gap: 14px; padding: 0 14px 0 4px; } .pain2 .pn-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.pain2 .pn-g { display: grid !important; grid-template-columns: 104px minmax(0, 1fr) !important; border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.pain2 .pn-g.t-accent { border-left-color: var(--accent); } .pain2 .pn-g.t-warn { border-left-color: var(--warn); } .pain2 .pn-g.t-good { border-left-color: var(--good); }
+.pain2 .pn-gk { display: flex !important; flex-direction: column; gap: 2px; padding: 12px; background: var(--bg); border-right: 1px solid var(--line); }
+.pain2 .pn-gk span { font-size: 13.5px; font-weight: 700; color: var(--ink); } .pain2 .pn-gk em { font-style: normal; font-size: 11.5px; color: var(--muted); }
+.pain2 .pn-r { display: grid !important; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1fr) !important; gap: 14px; padding: 11px 14px; border-top: 1px solid var(--line); align-items: start; }
+.pain2 .pn-r:first-child { border-top: 0; }
+.pn-name { display: block; font-size: 14px; font-weight: 600; color: var(--ink); } .pn-what { display: block; font-size: 12.5px; color: var(--muted); line-height: 1.5; margin-top: 2px; }
+.pn-cost { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px; }
+.pain2 .pn-v .pn-pre { display: inline; font-size: 12.5px; color: var(--muted); }
+.pain2 .pn-v .pn-big { display: inline; font-family: var(--font-mono); font-size: 19px; font-weight: 800; color: var(--ink); line-height: 1.2; }
+.pain2 .pn-g.t-warn .pn-big { color: var(--warn); } .pain2 .pn-g.t-accent .pn-big { color: var(--accent); }
+.pain2 .pn-v .pn-note { display: block; font-size: 12px; color: var(--muted); line-height: 1.45; margin-top: 2px; }
+.pn-trip { display: inline-block; font-size: 12.5px; font-weight: 600; color: var(--bad); background: var(--bad-soft); border-radius: 6px; padding: 4px 9px; line-height: 1.45; }
+.pg { margin-top: 8px; max-width: 260px; }
+.pg-t { position: relative; height: 8px; border-radius: 4px; background: var(--bg); border: 1px solid var(--line); }
+.pg-t i { position: absolute; top: -1px; bottom: -1px; }
+.pg-zone { background: var(--bad-soft); } .pg-band { background: var(--accent); border-radius: 3px; }
+.pg-pt { width: 10px; margin-left: -5px; border-radius: 3px; background: var(--accent); top: -3px !important; bottom: -3px !important; }
+.pn-g.t-warn .pg-pt, .pn-g.t-warn .pg-band { background: var(--warn); }
+.pg-lim { width: 2px; background: var(--bad); top: -5px !important; bottom: -5px !important; }
+.pg-l { position: relative; height: 15px; font-size: 11px; color: var(--muted); } .pg-l span { position: absolute; top: 2px; transform: translateX(-50%); white-space: nowrap; } .pg-l span.r { color: var(--bad); }
+@media (max-width: 760px) { .pain2 .pn-hd { display: none; } .pain2 .pn-g { grid-template-columns: minmax(0, 1fr) !important; } .pain2 .pn-r { grid-template-columns: minmax(0, 1fr) !important; gap: 6px; } }
+
+.stair { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; align-items: start; padding-bottom: 6px; }
+.st-s { margin-top: calc(var(--i) * 22px); display: flex; flex-direction: column; gap: 6px; }
+.st-if { min-height: 2.6em; display: flex; align-items: flex-end; gap: 4px; font-size: 12.5px; font-weight: 700; color: var(--warn); line-height: 1.35; }
+.st-s.first .st-if { color: var(--accent); }
+.st-ar { font-size: 15px; }
+.st-c { position: relative; display: flex; flex-direction: column; gap: 4px; padding: 12px 14px 14px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--line); min-height: 112px; }
+.st-s.first .st-c { border-color: var(--accent); border-top-color: var(--accent); background: var(--accent-soft); }
+.st-s.last .st-c { border-top-color: var(--muted); }
+.st-n { font-family: var(--font-mono); font-size: 22px; font-weight: 800; line-height: 1; color: var(--muted); opacity: .55; }
+.st-s.first .st-n { color: var(--accent); }
+.st-c b { font-size: 15px; color: var(--ink); line-height: 1.35; }
+.st-d { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.st-tag { position: absolute; top: 10px; right: 10px; font-style: normal; font-size: 11px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+@media (max-width: 760px) { .stair { grid-template-columns: minmax(0, 1fr); } .st-s { margin-top: 0; margin-left: calc(var(--i) * 12px); } .st-if { min-height: 0; } }
+
+.cbx { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
+.cbx-c { min-width: 150px; display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.cbx-c.on { border-color: var(--accent); background: var(--accent-soft); }
+.cbx-top { display: flex; align-items: baseline; gap: 6px; } .cbx-top b { font-family: var(--font-mono); font-size: 26px; line-height: 1; color: var(--ink); }
+.cbx-top span { font-size: 13.5px; font-weight: 700; color: var(--ink); }
+.cbx-d { display: flex; gap: 4px; } .cbx-d i { width: 12px; height: 12px; border-radius: 3px; background: var(--line); }
+.cbx-c.on .cbx-d i { background: var(--accent); }
+.cbx-c em { font-style: normal; font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+.cbx-t { align-self: center; font-size: 12.5px; color: var(--muted); padding: 0 4px; } .cbx-t b { font-family: var(--font-mono); color: var(--ink); }
+.ladder { display: flex; flex-direction: column; max-width: 640px; }
+.ld-s { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.ld-s.first { border-color: var(--accent); }
+.ld-n { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--bg); border: 1px solid var(--line); font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.ld-s.first .ld-n { background: var(--accent); border-color: var(--accent); color: #fff; }
+.ld-b { display: flex; flex-direction: column; gap: 2px; } .ld-b b { font-size: 14.5px; color: var(--ink); } .ld-b span { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.ld-tag { font-style: normal; font-size: 11.5px; padding: 1px 7px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.ld-s.first .ld-tag { color: var(--accent); border-color: var(--accent); }
+.ld-c { position: relative; padding: 6px 0 6px 25px; margin-left: 12px; border-left: 2px dashed var(--line); }
+.ld-c span { display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--warn); background: var(--warn-soft); border-radius: 999px; padding: 1px 10px; }
+.ld-c span::before { content: '↓ '; }
+
+.pool { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.pl-card { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 9px; }
+.pl-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; }
+.pl-name { font-size: 15px; font-weight: 700; color: var(--ink); }
+.pl-w { margin-left: 8px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--accent); background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; }
+.pl-n { font-size: 13px; color: var(--muted); white-space: nowrap; } .pl-n b { font-size: 30px; line-height: 1; font-weight: 800; color: var(--ink); font-family: var(--font-mono); margin: 0 3px; }
+.pl-m { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; padding: 6px 9px; border-radius: 7px; background: var(--bg); border: 1px solid var(--line); }
+.pl-mk { font-size: 12px; color: var(--muted); } .pl-mv { font-size: 14px; font-weight: 700; color: var(--ink); } .pl-mx { font-size: 12px; color: var(--muted); margin-left: auto; }
+.pl-cs, .pl-ss { display: flex; flex-wrap: wrap; gap: 5px; }
+.pl-c { font-size: 13px; padding: 2px 8px; border-radius: 5px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); }
+.pl-g { border-left: 3px solid var(--line); padding-left: 9px; } .pl-g.pl-open { border-left-style: dashed; }
+.pl-gh { font-size: 13px; color: var(--ink); margin-bottom: 4px; } .pl-gh b { font-family: var(--font-mono); font-size: 15px; }
+.pl-note { margin-left: 6px; font-size: 12px; color: var(--muted); }
+.pl-s { font-size: 12px; font-family: var(--font-mono); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.pl-src { margin-top: auto; padding-top: 7px; border-top: 1px dashed var(--line); font-size: 12px; color: var(--muted); line-height: 1.45; }
+@media (max-width: 760px) { .pool { grid-template-columns: minmax(0, 1fr); } }
+
 /* ===== content-specific components (components.py) ===== */
 .comp { margin: 10px 0 20px; }
 .comp-h { font-size: 13.5px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
@@ -994,9 +1090,11 @@ a.sl-sp-i.t-todo .sl-sp-st { color: var(--bad); font-weight: 700; } a.sl-sp-i.t-
 .sb-g { font-size: 15px; font-weight: 700; color: var(--ink); }
 .sb-v { font-size: 13.5px; color: var(--ink); margin: 6px 0 8px; padding: 5px 8px; background: var(--bg); border-radius: 6px; line-height: 1.5; }
 .sb-l { list-style: none; padding: 0; margin: 0; display: grid; gap: 5px; }
-.sb-l li { font-size: 13.5px; color: var(--muted); line-height: 1.45; margin: 0; padding: 0; }
+.sb-l li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: start; font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.45; margin: 0; padding: 8px 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+.sb-col { background: var(--bg) !important; }
+.sb-col.t-bad .sb-n { background: var(--bad); color: #fff; } .sb-col.t-good .sb-n { background: var(--good); color: #fff; } .sb-col.t-mute .sb-n { background: var(--muted); color: #fff; }
 .sb-l li::before { display: none; }
-.sb-n { display: inline-grid; place-items: center; min-width: 18px; height: 18px; border-radius: 50%; background: var(--line); color: var(--ink); font-size: 11px; font-family: var(--font-mono); margin-right: 6px; }
+.sb-n { display: inline-grid; place-items: center; min-width: 20px; height: 20px; border-radius: 50%; background: var(--line); color: var(--ink); font-size: 11.5px; font-family: var(--font-mono); margin: 1px 6px 0 0; }
 .gaterow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
 .gt { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px 10px; display: grid; gap: 4px; align-content: start; }
 .gt-c { font-size: 13px; color: var(--accent); font-weight: 700; min-height: 1em; }
@@ -1020,16 +1118,30 @@ a.sl-sp-i.t-todo .sl-sp-st { color: var(--bad); font-weight: 700; } a.sl-sp-i.t-
 .cb-i b { font-family: var(--font-mono); margin-right: 3px; }
 .cb-i em { font-style: normal; color: var(--muted); margin-left: 6px; font-size: 12.5px; }
 .cb-t { color: var(--muted); font-size: 12.5px; margin-left: auto; padding-right: 4px; white-space: nowrap; }
-ol.route { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 4px; counter-reset: none; }
-ol.route li { position: relative; margin: 0; padding: 10px 10px 9px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; display: grid; gap: 2px; }
-ol.route li::before { display: none; }
+ol.route, ol.route.flow, ol.route.steps-n { list-style: none; padding: 0; margin: 0; display: grid !important; grid-template-columns: none !important; grid-auto-flow: column !important; grid-auto-columns: minmax(0, 1fr) !important; gap: 0 !important; counter-reset: none; }
+ol.route li { position: relative; margin: 0; padding: 30px 8px 0 0; display: flex; flex-direction: column; gap: 2px; background: none; border: 0; }
+ol.route li::before { content: ''; display: block; position: absolute; top: 10px; left: 22px; right: 0; height: 2px; background: var(--line); }
+ol.route li:last-child::before { display: none; }
+ol.route > li { padding: 30px 8px 0 0 !important; background: none !important; border: 0 !important; border-radius: 0 !important; color: inherit; }
+ol.route > li::before { content: none !important; display: none !important; }
+ol.route > li:not(:last-child) { background: linear-gradient(var(--line), var(--line)) no-repeat 22px 10px / calc(100% - 22px) 2px !important; }
+ol.route > li.rt-done:not(:last-child) { background: linear-gradient(var(--good), var(--good)) no-repeat 22px 10px / calc(100% - 22px) 2px !important; }
+ol.route > li::after, ol.route > li:not(:last-child)::after { content: none !important; }
+ol.route .fl-t { display: flex; flex-direction: column; gap: 2px; font-weight: inherit; } ol.route .fl-d:empty { display: none; }
+ol.route li.rt-done::before { background: var(--good); }
 ol.route li .rt-s, ol.route li .rt-w, ol.route li .rt-st { display: block !important; } ol.route li > b { font-weight: inherit; }
+.rt-dot { position: absolute; top: 0; left: 0; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface); display: grid; place-items: center; font-size: 12px; color: #fff; z-index: 1; }
+ol.route li.rt-done .rt-dot { background: var(--good); border-color: var(--good); }
+ol.route li.rt-now .rt-dot { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); background: var(--accent); }
+ol.route li.rt-you .rt-dot { border: 2px dashed var(--accent); }
 .rt-s { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.35; }
-.rt-w { font-size: 12px; color: var(--muted); }
-.rt-st { font-size: 12px; font-weight: 700; color: var(--muted); }
-ol.route li.rt-done { background: var(--good-soft); border-color: transparent; } ol.route li.rt-done .rt-st { color: var(--good); }
-ol.route li.rt-now { border: 2px solid var(--accent); } ol.route li.rt-now .rt-st { color: var(--accent); }
-ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-st { color: var(--accent); }
+.rt-w { font-size: 12px; color: var(--muted); line-height: 1.4; }
+.rt-st { width: max-content; margin-top: 3px; font-size: 11.5px; font-weight: 700; padding: 0 7px; border-radius: 999px; color: var(--muted); background: var(--bg); border: 1px solid var(--line); }
+ol.route li.rt-done .rt-st { color: var(--good); border-color: var(--good); background: var(--good-soft); }
+ol.route li.rt-now .rt-st { color: #fff; background: var(--accent); border-color: var(--accent); }
+ol.route li.rt-you .rt-st { color: var(--accent); border: 1px dashed var(--accent); background: var(--accent-soft); }
+ol.route li.rt-todo .rt-s { color: var(--muted); }
+@media (max-width: 760px) { ol.route, ol.route.flow, ol.route.steps-n { grid-auto-flow: row !important; } ol.route > li { padding: 0 0 12px 32px !important; } ol.route > li:not(:last-child), ol.route > li.rt-done:not(:last-child) { background-position: 10px 22px !important; background-size: 2px calc(100% - 22px) !important; } }
 .carriers { display: grid; gap: 6px; }
 .cr-r { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 12px; align-items: center; padding: 8px 12px; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 8px; }
 .cr-r.t-good { border-left-color: var(--good); } .cr-r.t-warn { border-left-color: var(--warn); } .cr-r.t-bad { border-left-color: var(--bad); }
@@ -1050,17 +1162,377 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 .pn-t { font-size: 13.5px; color: var(--bad); line-height: 1.45; }
 .pn-tl { display: block; font-size: 11.5px; color: var(--muted); font-weight: 700; letter-spacing: .04em; }
 .risks { display: grid; gap: 6px; }
-.risks > .rk { display: grid; grid-template-columns: 2.4em minmax(0, 1fr) minmax(0, 15em); gap: 12px; align-items: center; padding: 10px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
-.risks > .rk:first-child { border: 2px solid var(--bad); }
+.risks { display: grid; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.risks > .rk { display: grid; grid-template-columns: 2.6em 11em minmax(0, 1fr) 14em; gap: 14px; align-items: center; padding: 11px 14px; border-top: 1px solid var(--line); border-left: 4px solid var(--line); }
+.risks > .rk.rk-hd { border-top: 0; border-left-color: transparent; padding: 6px 14px; background: var(--bg); }
+.risks > .rk.rk-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.risks > .rk.sev1 { border-left-color: var(--bad); background: var(--bad-soft); } .risks > .rk.sev2 { border-left-color: var(--warn); }
 .rk-n { font-size: 24px; font-weight: 800; color: var(--muted); font-family: var(--font-mono); text-align: center; }
-  .risks > .rk:first-child .rk-n { color: var(--bad); }
-.rk-b b { display: block; font-size: 15px; color: var(--ink); }
-.rk-b span { display: block; font-size: 13px; color: var(--muted); line-height: 1.45; margin-top: 2px; }
+.rk.sev1 .rk-n { color: var(--bad); } .rk.sev2 .rk-n { color: var(--warn); }
+.rk-why { font-size: 15px; color: var(--ink); line-height: 1.35; }
+.rk-then { font-size: 13.5px; color: var(--ink); line-height: 1.5; }
 .rk-w { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
-.rk-w em { font-style: normal; font-size: 11.5px; color: var(--muted); font-weight: 700; margin-right: 2px; }
-.rk-c { font-size: 12.5px; padding: 1px 7px; border-radius: 5px; background: var(--bg); border: 1px solid var(--line); }
+.rk-c { font-size: 12.5px; padding: 1px 7px; border-radius: 5px; background: var(--surface); border: 1px solid var(--line); }
+@media (max-width: 760px) { .risks > .rk { grid-template-columns: 2.2em minmax(0, 1fr); } .risks > .rk.rk-hd { display: none; } .rk-then, .rk-w { grid-column: 2; } }
 @media (max-width: 760px) { .pn-g, .pn-r, .risks > .rk { grid-template-columns: minmax(0, 1fr); } .pn-gk { border-right: 0; border-bottom: 1px solid var(--line); } }
 @media (max-width: 760px) { .cp-r, .cr-r { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
+
+.frozen-banner { display: flex; gap: 10px; align-items: baseline; margin: 0 0 14px; padding: 9px 14px; border-radius: 10px; background: var(--good-soft); border: 1px solid var(--good); font-size: 13px; color: var(--ink); line-height: 1.55; } .frozen-banner b { color: var(--good); white-space: nowrap; }
+
+/* ===== forms.py: content-specific forms ===== */
+.f-steps { display: grid; gap: 10px; }
+.f-st { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.f-st-k { display: flex; flex-direction: column; gap: 2px; }
+.f-st-k { flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: 4px; }
+.f-st-n, .f-st-s { font-size: 13px; color: var(--muted); } .f-st-q { flex-basis: 100%; }
+.f-st-k { align-content: flex-start; }
+.f-two-c .num, .f-eq-t .num, .f-eq-p .num, .pl-n .num, .cbx-top .num, .f-k-v .num, .f-k-h .num { background: none !important; padding: 0 !important; box-shadow: none !important; }
+.f-st-q { font-size: 18px; line-height: 1.3; color: var(--ink); }
+.f-st-k::before { content: none; }
+.f-st-b { display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.6; color: var(--ink); }
+.f-st-main { font-size: 14px; }
+.f-votes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.f-vt { display: flex; flex-direction: column; gap: 3px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); font-size: 13px; line-height: 1.5; }
+.f-vt-n { font-size: 11.5px; font-weight: 700; color: var(--accent); letter-spacing: .02em; }
+.f-pill { align-self: flex-start; padding: 4px 12px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 14px; }
+.f-pill strong { color: #fff; }
+.f-states { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.f-state { display: flex; flex-direction: column; gap: 3px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); border-top: 3px solid var(--good); background: var(--bg); font-size: 13.5px; }
+.f-state.warn { border-top-color: var(--warn); }
+.f-state-k { font-size: 12px; font-weight: 700; color: var(--muted); }
+.f-if { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: baseline; padding: 6px 10px; border-left: 3px solid var(--warn); background: var(--bg); border-radius: 0 6px 6px 0; font-size: 13.5px; }
+.f-if-k { font-weight: 700; color: var(--ink); } .f-if-k::before { content: '例外 · '; color: var(--warn); font-weight: 700; }
+.f-note { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+.f-vs { display: grid; grid-template-columns: 7em minmax(0, 1fr) minmax(0, 1.5fr); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.f-vs > div { padding: 9px 12px; border-top: 1px solid var(--line); font-size: 13.5px; line-height: 1.55; }
+.f-vs-h { border-top: 0 !important; display: flex; flex-direction: column; gap: 1px; }
+.f-vs-h span { font-size: 11.5px; color: var(--muted); } .f-vs-h b { font-size: 16px; color: var(--ink); }
+.f-vs-h.main { border-top: 3px solid var(--ink) !important; } .f-vs-h.chal { border-top: 3px solid var(--accent) !important; }
+.f-vs-l { display: flex; flex-direction: column; gap: 2px; font-weight: 700; color: var(--ink); }
+.f-vs-l em { font-style: normal; font-weight: 600; font-size: 11px; width: max-content; padding: 0 6px; border-radius: 4px; background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+.f-vs-l.diff em { color: var(--accent); border-color: var(--accent); }
+.f-vs-c.muted { color: var(--muted); }
+.f-vs-c.chal.diff { background: var(--accent-soft); }
+.f-vs-c.verdict, .f-vs-l.verdict { font-weight: 700; }
+.f-vs-sub { display: block; color: var(--muted); font-size: 12.5px; margin-top: 3px; }
+code.f-fm { display: inline-block; font-size: 13px; padding: 2px 6px; }
+
+.f-k { display: grid; gap: 10px; }
+.f-k-g { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.f-k-h { padding: 7px 12px; font-size: 13px; color: var(--muted); background: var(--bg); border-bottom: 1px solid var(--line); }
+.f-k-h b { font-family: var(--font-mono); font-size: 16px; color: var(--ink); margin-right: 2px; }
+.f-k-g.acc { border-color: var(--accent); } .f-k-g.acc .f-k-h { background: var(--accent); color: #fff; } .f-k-g.acc .f-k-h b { color: #fff; }
+.f-k-r { display: grid; grid-template-columns: 1.6em 8.5em 9em minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 12px; border-top: 1px solid var(--line); font-size: 13.5px; }
+.f-k-r:first-of-type { border-top: 0; }
+.f-k-i { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 700; }
+.f-k-name { font-weight: 700; color: var(--ink); }
+.f-k-v { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--ink); }
+.f-k-o { color: var(--muted); font-size: 13px; line-height: 1.55; }
+.f-k-x { font-style: normal; margin-left: 6px; font-size: 11.5px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+
+.f-rules { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.f-ru { display: grid; grid-template-columns: 8.5em minmax(0, 1fr) 11em; gap: 14px; padding: 10px 14px; border-top: 1px solid var(--line); align-items: baseline; }
+.f-ru:first-child { border-top: 0; }
+.f-ru-k { font-weight: 700; color: var(--ink); font-size: 14px; }
+.f-ru-lead { font-size: 14px; color: var(--ink); line-height: 1.55; }
+.f-ru-rest { font-size: 12.5px; color: var(--muted); line-height: 1.55; margin-top: 2px; }
+.f-ru-cost { font-size: 12.5px; color: var(--warn); line-height: 1.55; margin-top: 4px; }
+.f-ru-s { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+
+.sl-dr.f-def { align-items: start; }
+.f-calc { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 6px; align-items: stretch; }
+.f-calc-s { display: flex; flex-direction: column; gap: 4px; padding: 9px 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; font-size: 13px; line-height: 1.5; color: var(--ink); }
+.f-calc-a { align-self: center; color: var(--accent); font-weight: 700; }
+.f-calc-n { font-size: 12px; color: var(--accent); font-weight: 700; }
+.f-calc-b.fm { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--ink); }
+.f-calc-s em { font-style: normal; font-size: 12px; color: var(--muted); }
+.f-calc-st { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: 8px; align-items: stretch; margin-top: 8px; font-size: 13px; color: var(--ink); }
+.f-calc-k { align-self: center; font-size: 12px; color: var(--muted); }
+.f-calc-m { display: flex; gap: 8px; align-items: baseline; padding: 6px 10px; border-radius: 8px; border: 1px dashed var(--line); }
+.f-calc-m b { white-space: nowrap; }
+.f-gate-h { font-size: 14px; color: var(--ink); margin-bottom: 6px; }
+.f-gates { display: grid; gap: 4px; }
+.f-gt { display: grid; grid-template-columns: 1.4em minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 5px 10px; border-radius: 6px; background: var(--good-soft); font-size: 13.5px; }
+.f-gt-ok { color: var(--good); font-weight: 800; } .f-gt b { color: var(--good); font-family: var(--font-mono); }
+.f-two-h { font-size: 14px; color: var(--ink); margin-bottom: 6px; }
+.f-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 6px; }
+.f-two-c { display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+.f-two-c b { font-family: var(--font-mono); font-size: 22px; line-height: 1.1; color: var(--muted); }
+.f-two-c.on { border-color: var(--accent); } .f-two-c.on b { color: var(--ink); }
+.f-two-c span { font-size: 13px; color: var(--ink); } .f-two-c em { font-style: normal; font-size: 12px; color: var(--muted); }
+.f-eq { display: flex; align-items: stretch; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+.f-eq-t, .f-eq-p { display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+.f-eq-t { border-color: var(--accent); } .f-eq-t b { font-family: var(--font-mono); font-size: 24px; line-height: 1.1; color: var(--ink); }
+.f-eq-t span, .f-eq-p > span { font-size: 12px; color: var(--muted); }
+.f-eq-p { flex: 1 1 180px; } .f-eq-p b { font-family: var(--font-mono); font-size: 17px; color: var(--ink); }
+.f-eq-p em { font-style: normal; font-size: 12px; color: var(--muted); } .f-eq-p small { font-size: 12px; color: var(--muted); line-height: 1.45; }
+.f-eq-op { align-self: center; font-size: 20px; font-weight: 700; color: var(--muted); }
+.f-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.f-pair-c { display: flex; flex-direction: column; gap: 2px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); font-size: 13.5px; }
+.f-pair-c b { font-size: 12px; color: var(--muted); }
+
+ol.flow.f-compact { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: 0 !important; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+ol.flow.f-compact > li { border: 0 !important; border-top: 1px solid var(--line) !important; border-radius: 0 !important; padding: 9px 14px 9px 46px !important; position: relative; }
+ol.flow.f-compact > li:first-child { border-top: 0 !important; }
+ol.flow.f-compact > li::before, ol.flow.f-compact .fl-n { position: absolute !important; left: 12px; top: 10px; margin: 0 !important; width: 22px !important; height: 22px !important; font-size: 12px !important; }
+ol.flow.f-compact > li::after { content: none !important; }
+ol.flow.f-compact > li { display: grid !important; grid-template-columns: 6em 11em minmax(0, 1fr); gap: 12px; align-items: baseline; }
+ol.flow.f-compact .fl-t { font-size: 12.5px; color: var(--muted); font-weight: 600; border: 0 !important; padding: 0 !important; margin: 0 !important; }
+ol.flow.f-compact .fl-k { font-size: 14px !important; font-weight: 700; color: var(--ink) !important; border: 0 !important; padding: 0 !important; margin: 0 !important; }
+ol.flow.f-compact .fl-d { font-size: 13px; color: var(--muted); border: 0 !important; padding: 0 !important; margin: 0 !important; }
+ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
+
+@media (max-width: 760px) {
+  ol.flow.f-compact > li { grid-template-columns: minmax(0, 1fr) !important; gap: 2px; }
+  .f-st, .f-ru, .f-k-r { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .f-votes, .f-states, .f-calc, .f-two, .f-pair { grid-template-columns: minmax(0, 1fr); }
+  .f-vs { grid-template-columns: minmax(0, 1fr); } .f-vs-h:first-child { display: none; }
+  .f-calc, .f-calc-st { grid-template-columns: minmax(0, 1fr); } .f-calc-a { transform: rotate(90deg); justify-self: center; } .f-ru-s { justify-content: flex-start; }
+}
+
+.f-code { margin-left: 4px; font-size: 11px; color: var(--muted); font-family: var(--font-mono); opacity: .8; }
+.f-more { margin-top: 4px; border: 0 !important; padding: 0 !important; background: none !important; box-shadow: none !important; } .f-more > summary { cursor: pointer; font-size: 12px; color: var(--accent); list-style: none; }
+.f-more > summary::before { content: '▸ '; } .f-more[open] > summary::before { content: '▾ '; }
+.f-more > div { margin-top: 4px; font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+.f-qas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.f-qa { display: flex; flex-direction: column; gap: 6px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-qa-q { display: flex; gap: 8px; align-items: baseline; } .f-qa-q span { font-family: var(--font-mono); font-size: 12px; color: #fff; background: var(--accent); border-radius: 50%; min-width: 20px; height: 20px; display: inline-grid; place-items: center; }
+.f-qa-q b { font-size: 13px; color: var(--muted); font-weight: 600; }
+.f-qa-a { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.45; }
+.f-qa-x { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+.f-qa-k { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px; align-items: baseline; font-size: 12.5px; color: var(--ink); line-height: 1.5; }
+.f-qa-k em { font-style: normal; font-size: 11px; font-weight: 700; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+.f-qa-k.done em { color: var(--good); border-color: var(--good); background: var(--good-soft); }
+
+.f-pts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.f-pt { display: flex; flex-direction: column; gap: 6px; padding: 11px 13px; border: 1px solid var(--line); border-top: 4px solid var(--good); border-radius: 10px; background: var(--surface); }
+.f-pt.t-bad { border-top-color: var(--bad); } .f-pt.t-warn { border-top-color: var(--warn); }
+.f-pt-k { font-size: 15px; font-weight: 800; color: var(--ink); }
+.f-pt-a { font-size: 13.5px; color: var(--ink); line-height: 1.55; }
+.f-pt-e { margin-top: auto; padding: 7px 9px; border-radius: 7px; background: var(--bg); font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.f-pt-e em { display: block; font-style: normal; font-weight: 700; color: var(--ink); font-family: var(--font-mono); font-size: 12px; }
+.f-pbs { margin-top: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); display: grid; gap: 6px; }
+.f-pbs-h b { font-size: 14px; color: var(--ink); } .f-pbs-h span { margin-left: 8px; font-size: 12px; color: var(--muted); }
+.f-pb { display: grid; grid-template-columns: 15em minmax(0, 1fr) 4.5em; gap: 10px; align-items: center; font-size: 13px; color: var(--ink); }
+.f-pb-b { height: 10px; border-radius: 5px; background: var(--bg); border: 1px solid var(--line); overflow: hidden; } .f-pb-b i { display: block; height: 100%; background: var(--accent); }
+.f-pb b { font-size: 13px; text-align: right; } .f-pb.all { font-weight: 700; } .f-pb.all .f-pb-b i { background: var(--ink); }
+.f-pb.ch .f-pb-b i { background: color-mix(in srgb, var(--accent) 45%, white); } .f-pb.ch { color: var(--muted); }
+
+.risks.f-full .rk-then { font-size: 13px; }
+.f-sns { display: grid; gap: 8px; }
+.f-sn { display: grid; grid-template-columns: 8em minmax(0, 1fr); gap: 14px; padding: 10px 13px; border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; background: var(--surface); }
+.f-sn.t-warn { border-left-color: var(--warn); } .f-sn.t-acc { border-left-color: var(--accent); }
+.f-sn-l { display: flex; flex-direction: column; gap: 4px; } .f-sn-n { font-family: var(--font-mono); font-size: 20px; font-weight: 800; color: var(--ink); line-height: 1; }
+.f-sn-c { font-size: 12px; font-weight: 700; color: var(--muted); line-height: 1.4; } .f-sn.t-warn .f-sn-c { color: var(--warn); } .f-sn.t-acc .f-sn-c { color: var(--accent); }
+.f-sn-h { display: block; font-size: 15px; color: var(--ink); line-height: 1.4; }
+.f-sn-e { margin-top: 4px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px; font-size: 13.5px; color: var(--ink); line-height: 1.55; }
+.f-sn-e em { font-style: normal; font-size: 11px; font-weight: 700; color: var(--muted); padding-top: 2px; }
+
+.f-kvs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px; }
+.f-kv { display: flex; flex-direction: column; gap: 2px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-kv-k { font-size: 12px; color: var(--muted); } .f-kv b { font-size: 15px; color: var(--ink); } .f-kv-x { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.f-bss { display: grid; gap: 10px; }
+.f-bs { padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); display: grid; gap: 7px; }
+.f-bs-h { display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline; } .f-bs-h b { font-size: 16px; color: var(--ink); }
+.f-bs-u { font-size: 13px; color: var(--accent); font-weight: 700; }
+.f-bs-bar { display: flex; height: 26px; border-radius: 6px; overflow: hidden; gap: 2px; }
+.f-bs-bar span { display: flex; align-items: center; padding: 0 8px; font-size: 12px; color: #fff; background: var(--accent); white-space: nowrap; overflow: hidden; }
+.f-bs-bar span:first-child { background: var(--bad); } .f-bs-bar span:nth-child(3) { background: color-mix(in srgb, var(--accent) 60%, white); }
+.f-bs-bar .num, .f-bs-bar b { background: none !important; padding: 0 !important; color: #fff !important; font-weight: 800; margin-right: 4px; }
+.f-bs-c { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.f-bs-k2a { font-size: 13px; color: var(--ink); line-height: 1.6; padding: 8px 10px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 6px 6px 0; }
+
+.f-ctg { margin-bottom: 12px; } .f-ctg-h { font-size: 12.5px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+.f-cts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
+.f-ct { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-ctg.out .f-ct { border-style: dashed; }
+.f-ct-n { font-size: 12.5px; font-weight: 700; color: var(--accent); } .f-ctg.out .f-ct-n { color: var(--muted); }
+.f-ct-q { font-size: 15px; color: var(--ink); line-height: 1.4; }
+.f-ct-w { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.f-ct-e { font-size: 13px; color: var(--ink); line-height: 1.55; }
+.f-more > div { border: 0 !important; padding: 0 !important; background: none !important; }
+.comp[class*="f-"] .num, .f-def .num, .f-pbs .num { background: none !important; padding: 0 !important; box-shadow: none !important; }
+
+.f-crs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.f-cr { display: flex; flex-direction: column; gap: 6px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-cr-h { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+.f-cr-c { font-size: 13px; font-weight: 700; color: var(--accent); } .f-cr-h b { font-size: 17px; color: var(--ink); }
+.f-cr-p { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--muted); padding: 0 7px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); }
+.f-cr-r { font-size: 13.5px; color: var(--ink); line-height: 1.55; }
+.f-cr-s { margin-top: auto; padding-top: 6px; border-top: 1px dashed var(--line); font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+.f-cr-s em { font-style: normal; font-weight: 700; margin-right: 6px; }
+
+.f-rbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.f-rb { display: flex; flex-direction: column; gap: 4px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-size: 13px; color: var(--ink); line-height: 1.45; }
+.f-rb-c { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--accent); } .f-rb b { color: var(--ink); }
+
+.f-pns { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.f-pn { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.3fr) minmax(0, 1fr); gap: 14px; padding: 10px 14px; border-top: 1px solid var(--line); align-items: start; }
+.f-pn.f-pn-hd { border-top: 0; padding: 6px 14px; background: var(--bg); } .f-pn.f-pn-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.f-pn > div { display: flex; flex-direction: column; gap: 2px; } .f-pn b { font-size: 14px; color: var(--ink); }
+.f-pn-w { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.f-pn-big { font-size: 15px !important; }
+.f-pn-trip { display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--bad); background: var(--bad-soft); border-radius: 6px; padding: 3px 8px; line-height: 1.45; }
+
+.f-sgs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.f-sg { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 10px; background: var(--surface); }
+.f-sg.run { border-top-color: var(--good); } .f-sg.shadow { border-style: dashed; border-top-color: var(--muted); } .f-sg.stop { border-top-color: var(--bad); }
+.f-sg-k { font-size: 12px; font-weight: 700; color: var(--muted); } .f-sg-f { font-size: 15px; color: var(--ink); line-height: 1.35; }
+.f-sg.stop .f-sg-f { color: var(--bad); } .f-sg-b { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+.f-vd { margin-bottom: 4px; } .f-vd-p { display: inline-block; font-size: 13px; font-weight: 700; color: var(--accent); border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 0 9px; }
+.f-pair.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.f-three { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 8px; margin-bottom: 6px; }
+.f-gauge { display: grid; gap: 4px; }
+.f-gauge-t { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; } .f-gauge-t span { font-size: 12px; color: var(--muted); }
+.f-gauge-t b { font-size: 18px; color: var(--ink); font-family: var(--font-mono); } .f-gauge-t em { font-style: normal; font-size: 12.5px; color: var(--muted); }
+.f-gauge-b { position: relative; height: 12px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); margin-top: 4px; }
+.f-gauge-b .band { position: absolute; top: 0; bottom: 0; background: var(--line); }
+.f-gauge-b .pt { position: absolute; top: -4px; width: 12px; height: 18px; margin-left: -6px; border-radius: 4px; background: var(--accent); }
+.f-gauge-b .lim { position: absolute; top: -6px; bottom: -6px; width: 2px; background: var(--bad); }
+.f-gauge-l { position: relative; height: 18px; font-size: 11.5px; color: var(--muted); }
+.f-gauge-l span { position: absolute; transform: translateX(-50%); white-space: nowrap; } .f-gauge-l span.lim { color: var(--bad); font-weight: 700; }
+
+.f-nvs { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.f-nv { display: grid; grid-template-columns: minmax(0, 1.6fr) 5em 5em minmax(0, 1.6fr); gap: 10px; padding: 7px 12px; border-top: 1px solid var(--line); align-items: center; font-size: 13px; font-family: var(--font-mono); color: var(--ink); }
+.f-nv-k { font-family: var(--font-body); }
+.f-nv.f-nv-hd { border-top: 0; background: var(--bg); font-family: var(--font-body); } .f-nv.f-nv-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.f-nv.bm { color: var(--muted); } .f-nv.v6 { font-weight: 700; background: var(--accent-soft); } .f-nv.ref { color: var(--muted); font-style: italic; }
+.f-nv-b { position: relative; display: flex; align-items: center; gap: 6px; }
+.f-nv-b i { display: block; height: 10px; border-radius: 3px; background: var(--accent); flex: 0 0 auto; max-width: 60%; }
+.f-nv.bm .f-nv-b i { background: var(--muted); } .f-nv.ref .f-nv-b i { background: var(--line); }
+.f-nv-b em { font-style: normal; font-size: 11.5px; } .f-nv-b em.up { color: var(--good); } .f-nv-b em.dn { color: var(--warn); }
+@media (max-width: 760px) {
+  .f-qas, .f-crs, .f-kvs, .f-sgs, .f-three { grid-template-columns: minmax(0, 1fr); } .f-rbs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .f-sn, .f-pn { grid-template-columns: minmax(0, 1fr); gap: 4px; } .f-pn.f-pn-hd { display: none; } .f-pb { grid-template-columns: minmax(0, 1fr) 4em; } .f-pb-b { grid-column: 1 / -1; }
+}
+
+.f-years-wrap { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.f-ys-p { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.f-ys-h { padding: 7px 12px; font-size: 13.5px; font-weight: 700; color: var(--ink); background: var(--bg); border-bottom: 1px solid var(--line); }
+.f-ys-r { display: grid; grid-template-columns: 3em minmax(0, 1.7fr) minmax(0, 1.2fr) 4em 3.6em; gap: 8px; align-items: center; padding: 4px 12px; font-size: 12.5px; color: var(--ink); }
+.f-ys-t.n6 .f-ys-r { grid-template-columns: 3em minmax(0, 1.7fr) minmax(0, 1.2fr) 4em 3.6em 3.4em; }
+.f-ys-r.hd { padding-top: 7px; } .f-ys-r.hd > span { font-size: 11px; font-weight: 700; color: var(--muted); font-family: var(--font-body); }
+.f-ys-r .y { font-family: var(--font-mono); color: var(--muted); }
+.f-ys-r .sq { display: flex; gap: 2px; align-items: center; } .f-ys-r .sq i { width: 7px; height: 12px; border-radius: 2px; background: var(--bg); border: 1px solid var(--line); }
+.f-ys-r .sq i.on { background: var(--bad); border-color: var(--bad); } .f-ys-r .sq b { margin-left: 5px; font-family: var(--font-mono); font-size: 12px; }
+.f-ys-r .bar { position: relative; display: flex; align-items: center; gap: 5px; } .f-ys-r .bar i { display: block; height: 8px; border-radius: 3px; background: var(--accent); max-width: 70%; }
+.f-ys-r .bar b { font-family: var(--font-mono); font-size: 12px; font-weight: 600; }
+.f-ys-r .v { font-family: var(--font-mono); text-align: right; color: var(--muted); }
+.f-pks { display: grid; gap: 10px; margin-top: 10px; }
+.f-pk { padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-pk-h { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px; } .f-pk-h em { font-style: normal; font-weight: 400; font-size: 12px; color: var(--muted); margin-left: 8px; }
+.f-pk-cs { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 4px 12px; }
+.f-pk-c { position: relative; display: flex; justify-content: space-between; gap: 6px; padding: 2px 6px; font-size: 12.5px; color: var(--ink); border-radius: 4px; overflow: hidden; }
+.f-pk-c::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: var(--w); background: var(--accent-soft); z-index: 0; }
+.f-pk-c > * { position: relative; } .f-pk-c b { font-family: var(--font-mono); }
+.f-pk-nh { margin-top: 6px; font-size: 12px; color: var(--muted); } .f-pk-n { display: inline-block; margin: 2px 4px 0 0; padding: 0 6px; border: 1px dashed var(--line); border-radius: 4px; }
+.f-aps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.f-ap { display: flex; flex-direction: column; gap: 6px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-ap-h b { display: block; font-size: 15px; color: var(--ink); } .f-ap-h span { font-size: 13.5px; color: var(--ink); line-height: 1.5; }
+.f-ap-b { font-size: 12.5px; color: var(--muted); line-height: 1.6; } .f-ap-b code { font-size: 11.5px; }
+@media (max-width: 760px) { .f-years-wrap, .f-aps { grid-template-columns: minmax(0, 1fr); } }
+
+.f-rts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.f-rt { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px 14px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); }
+.f-rt-k { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; color: var(--muted); letter-spacing: .02em; }
+.f-rt-k span { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); font-size: 11.5px; }
+.f-rt-f { font-size: 16px; line-height: 1.35; color: var(--ink); }
+.f-rt-b { padding-top: 8px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+@media (max-width: 760px) { .f-rts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.f-rules { border-radius: 12px; }
+.f-ru { grid-template-columns: 10em minmax(0, 1fr) 12em; padding: 12px 16px; align-items: start; }
+.f-ru.f-ru-hd { padding: 7px 16px; background: var(--bg); } .f-ru.f-ru-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.f-ru-k span { display: inline-block; padding: 3px 10px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-size: 13.5px; font-weight: 700; line-height: 1.4; }
+.f-ru-lead { font-size: 14.5px; line-height: 1.6; }
+.f-ru-hl { font-style: normal; font-weight: 700; color: var(--ink); background: linear-gradient(transparent 60%, color-mix(in srgb, var(--accent) 22%, transparent) 60%); padding: 0 1px; }
+.f-ru-cost { display: block; margin-top: 6px; padding: 6px 10px; border-radius: 6px; background: var(--warn-soft); color: var(--ink) !important; }
+.f-ru-cost::before { content: '⚠ '; color: var(--warn); font-weight: 700; }
+.f-ru-s { flex-direction: column; align-items: flex-end; }
+@media (max-width: 760px) { .f-ru.f-ru-hd { display: none; } .f-ru-s { flex-direction: row; align-items: flex-start; } }
+
+.f-simboard-wrap { display: grid; gap: 10px; }
+.f-sb-row { display: grid; gap: 10px; } .f-sb-row.two { grid-template-columns: repeat(2, minmax(0, 1fr)); } .f-sb-row.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.f-sb { display: flex; flex-direction: column; gap: 6px; padding: 11px 13px; border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 10px; background: var(--surface); }
+.f-sb.main { border-top-color: var(--good); } .f-sb.stop { border-top-color: var(--bad); background: var(--bad-soft); }
+.f-sb.shadow { border-style: dashed; border-top: 1px dashed var(--line); background: var(--bg); }
+.f-sb.other { border-style: dashed; border-top: 4px solid var(--accent); }
+.f-sb-h { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.f-sb-k { font-size: 11.5px; font-weight: 700; color: var(--muted); letter-spacing: .02em; }
+.f-sb.main .f-sb-k { color: var(--good); } .f-sb.stop .f-sb-k { color: var(--bad); } .f-sb.other .f-sb-k { color: var(--accent); }
+.f-sb-t { font-size: 15px; color: var(--ink); line-height: 1.35; }
+.f-sb-r { font-size: 13px; color: var(--ink); line-height: 1.55; }
+.f-sb.shadow .f-sb-r { color: var(--muted); font-size: 12.5px; }
+.f-sb-u { margin-top: auto; padding-top: 6px; border-top: 1px dashed var(--line); font-size: 12.5px; color: var(--ink); line-height: 1.5; }
+.f-sb-u em { font-style: normal; font-weight: 700; font-size: 11px; color: var(--muted); margin-right: 6px; }
+.f-sb-gh { font-size: 12.5px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+@media (max-width: 760px) { .f-sb-row.two, .f-sb-row.three { grid-template-columns: minmax(0, 1fr); } }
+
+.f-tps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.f-tp { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-tp.must { border-left-color: var(--warn); }
+.f-tp-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; } .f-tp-h b { font-size: 15px; color: var(--ink); }
+.f-tp-tag { display: inline-block; margin-left: 4px; font-size: 11px; font-weight: 700; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.f-tp-tag.must { color: var(--warn); border-color: var(--warn); background: var(--warn-soft); } .f-tp-tag.chg { color: var(--bad); border-color: var(--bad); background: var(--bad-soft); }
+.f-tp-l { display: grid; grid-template-columns: 4.6em minmax(0, 1fr); gap: 8px; align-items: baseline; font-size: 13px; line-height: 1.55; }
+.f-tp-l em { font-style: normal; font-size: 11.5px; font-weight: 700; }
+.f-tp-l.risk em { color: var(--warn); } .f-tp-l.risk span { color: var(--muted); }
+.f-tp-l.fix em { color: var(--good); } .f-tp-l.fix span { color: var(--ink); }
+.f-tp-l.fix { padding-top: 7px; border-top: 1px dashed var(--line); }
+@media (max-width: 760px) { .f-tps { grid-template-columns: minmax(0, 1fr); } }
+
+.f-ods { position: relative; display: grid; gap: 0; padding-left: 2px; }
+.f-od { position: relative; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; padding-bottom: 12px; }
+.f-od:not(:last-child)::before { content: ''; position: absolute; left: 13px; top: 26px; bottom: 0; width: 2px; background: var(--line); }
+.f-od.done:not(:last-child)::before { background: var(--good); }
+.f-od-n { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: 12px; font-weight: 700; border: 2px solid var(--line); background: var(--surface); color: var(--muted); }
+.f-od.done .f-od-n { background: var(--good); border-color: var(--good); color: #fff; }
+.f-od.now .f-od-n { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 0 0 4px var(--accent-soft); }
+.f-od.you .f-od-n { border: 2px dashed var(--accent); color: var(--accent); }
+.f-od-b { padding: 2px 0 0; } .f-od-h { display: flex; align-items: baseline; gap: 8px; } .f-od-h b { font-size: 14.5px; color: var(--ink); }
+.f-od.todo .f-od-h b { color: var(--muted); }
+.f-od-st { font-size: 11px; font-weight: 700; padding: 0 7px; border-radius: 999px; color: var(--muted); }
+.f-od.done .f-od-st { color: var(--good); background: var(--good-soft); } .f-od.now .f-od-st { color: #fff; background: var(--accent); } .f-od.you .f-od-st { color: var(--accent); border: 1px dashed var(--accent); }
+.f-od-d { font-size: 13px; color: var(--muted); line-height: 1.55; margin-top: 2px; }
+.f-od.now .f-od-d { color: var(--ink); }
+
+.f-tds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.f-td-pg { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12.5px; color: var(--muted); }
+.f-td-pg b { font-family: var(--font-mono); font-size: 18px; color: var(--good); }
+.f-td-bar { display: flex; gap: 3px; flex: 1; max-width: 320px; } .f-td-bar i { flex: 1; height: 8px; border-radius: 3px; background: var(--line); } .f-td-bar i.on { background: var(--good); }
+.f-td { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-td-n { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #fff; background: var(--muted); }
+.f-td.done .f-td-n { background: var(--good); }
+.f-td-h b { font-size: 14px; color: var(--ink); line-height: 1.4; }
+.f-td-m { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; margin: 5px 0 6px; }
+.f-td-no { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.f-td-w { font-size: 11px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.f-td-when { font-size: 11px; font-weight: 700; padding: 0 7px; border-radius: 999px; color: var(--good); background: var(--good-soft); }
+.f-td-r { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+@media (max-width: 760px) { .f-tds { grid-template-columns: minmax(0, 1fr); } }
+
+.f-uspool-wrap { display: grid; gap: 10px; }
+.f-us-note { font-size: 12.5px; color: var(--muted); }
+.f-us-g { border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.f-us-g.t-good { border-left-color: var(--good); } .f-us-g.t-warn { border-left-color: var(--warn); } .f-us-g.t-bad { border-left-color: var(--bad); }
+.f-us-gh { display: flex; gap: 8px; align-items: baseline; padding: 8px 14px; background: var(--bg); border-bottom: 1px solid var(--line); }
+.f-us-gh b { font-size: 14px; color: var(--ink); } .f-us-gh span { font-size: 12px; color: var(--muted); }
+.f-us-g.t-good .f-us-gh b { color: var(--good); } .f-us-g.t-warn .f-us-gh b { color: var(--warn); } .f-us-g.t-bad .f-us-gh b { color: var(--bad); }
+.f-us-hd, .f-us-r { display: grid; grid-template-columns: 92px 86px 170px minmax(0, 1fr); gap: 10px; padding: 6px 14px; align-items: center; }
+.f-us-hd { font-size: 11px; font-weight: 700; color: var(--muted); }
+.f-us-r { border-top: 1px solid var(--line); font-size: 13px; }
+.f-us-r > span, .f-us-hd > span { margin: 0 !important; padding: 0 !important; text-indent: 0 !important; }
+.f-us-n { font-family: var(--font-mono); font-weight: 700; color: var(--ink); }
+.f-us-t { font-size: 12px; color: var(--muted); }
+.f-us-d { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); } .f-us-d em { display: block; font-style: normal; font-family: var(--font-body); font-size: 11px; color: var(--accent); }
+.f-us-cs { display: flex; flex-wrap: wrap; gap: 5px; }
+.f-us-c { display: inline-flex; gap: 5px; align-items: baseline; padding: 2px 7px; border-radius: 5px; border: 1px solid var(--line); background: var(--bg); font-size: 12px; }
+.f-us-c b { font-family: var(--font-mono); color: var(--ink); } .f-us-c em { font-style: normal; font-size: 11px; color: var(--muted); }
+.f-us-none { color: var(--muted); }
+@media (max-width: 760px) { .f-us-hd { display: none; } .f-us-r { grid-template-columns: 1fr 1fr; } }
 
 </style>
 </head>
@@ -1069,7 +1541,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 <nav class="toc" aria-label="目录">
   
   <div class="toc-title">目录</div>
-  <ol><li class="l2"><a href="#1-现在在哪-v6-预注册待冻结-冻结后先跑设计期和体检报告-再跑一次性检验">1. 现在在哪</a></li><li class="l2"><a href="#2-第二阶段每一版的结论-留档-选强势-跑赢现金才买-2016-年以后没站住">2. 第二阶段每一版的结论（留档）</a></li><li class="l3"><a href="#每一版的摘要-留档-最新的在上">每一版的摘要（留档，最新的在上）</a></li><li class="l3"><a href="#e2-的规则-4-步">E2 的规则（4 步）</a></li><li class="l3"><a href="#当时的体检-已被-v4-体检报告-取代-留档">当时的体检（已被《v4 体检报告》取代，留档）</a></li><li class="l3"><a href="#3-1病根-能选的太少-牛市里拿着现金">3.1病根</a></li><li class="l3"><a href="#3-2补池子-加离场-从跑输变成跑赢">3.2补池子、加离场</a></li><li class="l3"><a href="#3-3为什么是-10">3.3为什么是 10%</a></li><li class="l3"><a href="#3-4正式引擎复现了-e2-超额集中在前三年">3.4正式引擎复现了 E2，超额集中在前三年</a></li><li class="l3"><a href="#3-52009-年的失手-钱回来得太慢">3.52009 年的失手</a></li><li class="l3"><a href="#3-6可交易池-同一套规则-只能买当年真有的-etf">3.6可交易池</a></li><li class="l3"><a href="#3-7换两个角度再看-e2-是顺应了市场-还是被市场选中">3.7换两个角度再看</a></li><li class="l2"><a href="#3-已定的大事">3. 已定的大事</a></li><li class="l2"><a href="#4-风险-v6-的超额只有一个来源">4. 风险</a></li><li class="l2"><a href="#5-接下来">5. 接下来</a></li><li class="l2"><a href="#更新记录">更新记录</a></li></ol>
+  <ol><li class="l2"><a href="#1-现在在哪-v6-预注册已冻结-先跑设计期和体检报告-再跑一次性检验">1. 现在在哪</a></li><li class="l2"><a href="#2-第二阶段每一版的结论-留档-选强势-跑赢现金才买-2016-年以后没站住">2. 第二阶段每一版的结论（留档）</a></li><li class="l3"><a href="#每一版的摘要-留档-最新的在上">每一版的摘要（留档，最新的在上）</a></li><li class="l3"><a href="#e2-的规则-4-步">E2 的规则（4 步）</a></li><li class="l3"><a href="#当时的体检-已被-v4-体检报告-取代-留档">当时的体检（已被《v4 体检报告》取代，留档）</a></li><li class="l3"><a href="#3-1病根-能选的太少-牛市里拿着现金">3.1病根</a></li><li class="l3"><a href="#3-2补池子-加离场-从跑输变成跑赢">3.2补池子、加离场</a></li><li class="l3"><a href="#3-3为什么是-10">3.3为什么是 10%</a></li><li class="l3"><a href="#3-4正式引擎复现了-e2-超额集中在前三年">3.4正式引擎复现了 E2，超额集中在前三年</a></li><li class="l3"><a href="#3-52009-年的失手-钱回来得太慢">3.52009 年的失手</a></li><li class="l3"><a href="#3-6可交易池-同一套规则-只能买当年真有的-etf">3.6可交易池</a></li><li class="l3"><a href="#3-7换两个角度再看-e2-是顺应了市场-还是被市场选中">3.7换两个角度再看</a></li><li class="l2"><a href="#3-已定的大事">3. 已定的大事</a></li><li class="l2"><a href="#4-风险-v6-的超额只有一个来源">4. 风险</a></li><li class="l2"><a href="#5-接下来">5. 接下来</a></li><li class="l2"><a href="#更新记录">更新记录</a></li></ol>
 </nav>
 <main>
 <header class="top">
@@ -1078,14 +1550,14 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
   
 </header>
 <section class="intro status"><p class="kv"><span class="kv-k"><strong>项目愿景</strong></span><span class="kv-v">　在动态周期内，从多类资产里选出 Top N 强势 ETF 轮动持有，获得超额收益、稳定跑赢被动基准，同时把回撤控制住。</span></p>
-<div class="cards from-table status"><div class="card tone-0"><div class="ct">工程进度</div><div class="cb"><strong>你已批准冻结 v6 预注册。</strong>第 2.4 版闭合 R1b 对 D42 的两项；Reviewer 签收、合入 main 后由 Cloud Agent 打冻结标签。</div></div><div class="card tone-1"><div class="ct">业务结论</div><div class="cb">v6 = 美股 60 万 + A 股 40 万两个名额，每月按 12−1 选最强 3 只，只在确认紧张时按把握 p 减仓。预计每年比基准多约 <strong class="num">1.2</strong> 个点（范围 −1.3 到 +2.4），全部判据通过的机会约<strong>三成</strong>；超额主要靠美股挑选。</div></div><div class="card tone-2"><div class="ct">需要你</div><div class="cb"><strong>现在不用操作。</strong>冻结后、看任何结果之前，请你在欧洲和日本里选定别的市场检验用哪个（先看数据普查）。</div></div></div>
+<div class="cards from-table status"><div class="card tone-0"><div class="ct">工程进度</div><div class="cb"><strong>v6 预注册已冻结</strong>（11-25，<code>milestone/v6-prereg-freeze</code>）。下一步：Dev 实现、Reviewer 复算，然后出设计期结果和体检报告。</div></div><div class="card tone-1"><div class="ct">业务结论</div><div class="cb">v6 = 美股 60 万 + A 股 40 万两个名额，每月按 12−1 选最强 3 只，只在确认紧张时按把握 p 减仓。预计每年比基准多约 <strong class="num">1.2</strong> 个点（范围 −1.3 到 +2.4），全部判据通过的机会约<strong>三成</strong>；超额主要靠美股挑选。</div></div><div class="card tone-2"><div class="ct">需要你</div><div class="cb"><strong>现在不用操作。</strong>冻结后、看任何结果之前，请你在欧洲和日本里选定别的市场检验用哪个（先看数据普查）。</div></div></div>
 </section>
-<section id="sec-1-现在在哪-v6-预注册待冻结-冻结后先跑设计期和体检报告-再跑一次性检验"><h2 id="1-现在在哪-v6-预注册待冻结-冻结后先跑设计期和体检报告-再跑一次性检验"><span class="num">01</span>现在在哪：v6 预注册待冻结，冻结后先跑设计期和体检报告，再跑一次性检验</h2>
+<section id="sec-1-现在在哪-v6-预注册已冻结-先跑设计期和体检报告-再跑一次性检验"><h2 id="1-现在在哪-v6-预注册已冻结-先跑设计期和体检报告-再跑一次性检验"><span class="num">01</span>现在在哪：v6 预注册已冻结，先跑设计期和体检报告，再跑一次性检验</h2>
 <p class="memo"><strong>冻结前待办全部完成：设计期（≤ 2015）v6 净每年 <span class="num">15.5%</span>，比 BM-主多 0.4 点；检验段预计每年比基准多约 <span class="num">1.2 个点</span>，主要靠美股挑选。</strong></p>
-<figure><img alt="进度总览：① 规则定稿你已批准冻结、等 R1b 签收后打标签，② 标的池已定；③ 以后等冻结" src="../../assets/owner-board/b10-v6-roadmap.png"/></figure>
+<figure><img alt="进度总览：① 规则定稿已冻结，② 标的池已定；③ 交易引擎下一步" src="../../assets/owner-board/b10-v6-roadmap.png"/></figure>
 <figure><img alt="预计每年比基准多约 1.2 个点，美股挑选为主、A 股挑选为辅" src="../../assets/v6-preflight/f7-forecast.png"/></figure>
 <ul class="points">
-<li><strong>读进度总览</strong>：① 你已批准冻结，R1b 签收、合入 main 后打标签；② 标的池已定（附表 A）；③ 交易引擎在冻结后实现，Reviewer 独立复算；⑥ 业务体检 = 设计期结果和体检报告，只报告；⑧ 一次性检验要你单独批准，只跑一次。</li>
+<li><strong>读进度总览</strong>：① 已冻结（11-25，标签在 f066da8e）；② 标的池已定（附表 A）；③ 交易引擎在冻结后实现，Reviewer 独立复算；⑥ 业务体检 = 设计期结果和体检报告，只报告；⑧ 一次性检验要你单独批准，只跑一次。</li>
 <li><strong>冻结后的顺序</strong>：③ 实现与复算 <span class="arr">→</span> ⑥ 设计期结果与体检报告 <span class="arr">→</span> ⑦ 代码冻结 <span class="arr">→</span> ⑧ 一次性检验（你批准） <span class="arr">→</span> ⑨ 结论 <span class="arr">→</span> ⑩ 至少 6 个月模拟盘（通过才进）。</li>
 <li><strong>读预测图</strong>：来自历史的超额先打五折、再按候选个数打六折，成本按上限；合计低于 0 就不起草，现在 +1.2。</li>
 <li><strong>最新的三项检验</strong>（11-23）：沪深300 十个行业里“上月涨幅”没赢 12−1，不进 v6；隔夜版关闭；申万一级上 12−1 比等权每年少 <span class="num">5.9 个点</span>（数据可能回填，只作参考）。</li>
@@ -1100,7 +1572,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </thead>
 <tbody>
 <tr>
-<td><a href="https://claude.ai/artifact/VASWvP9wCzDvXmsQqzLFBh"><strong>v6 预注册（待冻结）</strong></a></td>
+<td><a href="https://claude.ai/artifact/VASWvP9wCzDvXmsQqzLFBh"><strong>v6 预注册（已冻结）</strong></a></td>
 <td>v6 的规则、判据、疼痛表、候选清单（附表 A）和设计期画像（附表 B）；冻结后一次性检验照它跑</td>
 </tr>
 <tr>
@@ -1206,7 +1678,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>v3 → E2 · 多资产强势轮动（10-25～10-28）：E2 的规则和当时的体检</span></button><div class="fold-b" hidden="">
 <div class="overview"><div class="ov-h">这一段讲了什么 <span>· 9 节，按顺序读就是一条线；点卡片跳到对应小节</span></div><div class="ov-grid"><a class="ov-card t-info" href="#e2-的规则-4-步"><div class="ov-top"><span class="ov-n">1</span><span class="ov-tag">背景</span></div><div class="ov-m">10%</div><div class="ov-t">E2 的规则（4 步）</div><div class="ov-c">表里 v3、E1、E2 三行用的是同一套四步；E1 补全了池子，E2 再加 <span class="num">10%</span> 离场。v4、v5 都从这里出发。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-mixed" href="#当时的体检-已被-v4-体检报告-取代-留档"><div class="ov-top"><span class="ov-n">2</span><span class="ov-tag">成立，但有代价</span></div><div class="ov-m">12.6%<i>→</i>25%</div><div class="ov-t">当时的体检（已被《v4 体检报告》取代，留档）</div><div class="ov-c">v3 跑输，病根是可选的太少，<span class="ov-q">选强势</span>这个想法没错。补全池子再加 <span class="num">10%</span> 离场（E2），年化从<span class="num">12.6%</span>提高到<span class="num">25%</span>，基准是<span class="num">15%</span>。要看清的是：超额集中在 2006–08 年；2009 年回场太慢，少赚 <span class="num">39 个百分点</span>。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-bad" href="#3-1病根-能选的太少-牛市里拿着现金"><div class="ov-top"><span class="ov-n">3.1</span><span class="ov-tag">问题</span></div><div class="ov-m">125%</div><div class="ov-t">病根</div><div class="ov-c">2006 年沪深300 涨了<span class="num">125%</span>，v3 有<span class="num">60%</span>的钱拿着现金。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-good" href="#3-2补池子-加离场-从跑输变成跑赢"><div class="ov-top"><span class="ov-n">3.2</span><span class="ov-tag">有效</span></div><div class="ov-m">3.1元<i>→</i>9.3元</div><div class="ov-t">补池子、加离场</div><div class="ov-c">十年 <span class="num">1 元</span>：v3 原规则<span class="num">3.1元</span> <span class="arr">→</span> E1 补全池子<span class="num">7.1元</span> <span class="arr">→</span> E2 加离场<span class="num">9.3元</span>。基准<span class="num">4.0元</span>。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-good" href="#3-3为什么是-10"><div class="ov-top"><span class="ov-n">3.3</span><span class="ov-tag">有效</span></div><div class="ov-m">8%<i>…</i>15%</div><div class="ov-t">为什么是 10%</div><div class="ov-c"><span class="num">8%</span>、<span class="num">10%</span>、<span class="num">12%</span>、<span class="num">15%</span> 都比不离场好。<span class="num">10%</span> 不是挑出来的。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-mixed" href="#3-4正式引擎复现了-e2-超额集中在前三年"><div class="ov-top"><span class="ov-n">3.4</span><span class="ov-tag">成立，但有代价</span></div><div class="ov-m">25.1%<i>vs</i>15.4%</div><div class="ov-t">正式引擎复现了 E2，超额集中在前三年</div><div class="ov-c">正式版<span class="num">25.1%</span>对基准<span class="num">15.4%</span>。但 2011–15 年只多<span class="num">0.8个百分点</span>。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-bad" href="#3-52009-年的失手-钱回来得太慢"><div class="ov-top"><span class="ov-n">3.5</span><span class="ov-tag">问题</span></div><div class="ov-m">39个百分点</div><div class="ov-t">2009 年的失手</div><div class="ov-c">2009 年少赚的<span class="num">39个百分点</span>全在上半年：见底之后半年，平均还有<span class="num">43%</span>的钱放在现金、国债和黄金里。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-bad" href="#3-6可交易池-同一套规则-只能买当年真有的-etf"><div class="ov-top"><span class="ov-n">3.6</span><span class="ov-tag">问题</span></div><div class="ov-m">0–1 只</div><div class="ov-t">可交易池</div><div class="ov-c">E2 补全的是指数数据，不是 ETF。2012 年以前，跟踪这些指数的 ETF 每年只有 <span class="num">0–1 只</span>，所以可交易池只能拿现金。</div><span class="ov-go">读这一节 ↓</span></a><a class="ov-card t-good" href="#3-7换两个角度再看-e2-是顺应了市场-还是被市场选中"><div class="ov-top"><span class="ov-n">3.7</span><span class="ov-tag">有效</span></div><div class="ov-m">86%<i>/</i>52%</div><div class="ov-t">换两个角度再看</div><div class="ov-c">E2 靠少跌赢，不靠多涨赢：涨的月份只跟上基准的<span class="num">86%</span>，跌的月份只跟跌<span class="num">52%</span>。</div><span class="ov-go">读这一节 ↓</span></a></div></div><h3 id="e2-的规则-4-步">E2 的规则（4 步）</h3>
 <div class="claim-box"><strong>表里 v3、E1、E2 三行用的是同一套四步；E1 补全了池子，E2 再加 10% 离场。v4、v5 都从这里出发。</strong></div>
-<ol class="steps-n flow" style="counter-reset: fl 0">
+<ol class="f-compact steps-n flow" style="counter-reset: fl 0">
 <li><b class="fl-t">看 4 种时间长度</b><span class="fl-k">1/4</span><span class="fl-d">分别看过去 1、3、6、12 个月（20、60、120、250 个交易日）的表现，每种管 <strong>1/4</strong> 的钱。</span></li>
 <li><b class="fl-t">先过门槛</b><span class="fl-k">跑赢现金</span><span class="fl-d">在这段时间里<strong>跑赢现金</strong>的，才有资格入选。</span></li>
 <li><b class="fl-t">再挑最强的</b><span class="fl-k">空位拿现金</span><span class="fl-d">按“涨幅 ÷ 波动”排名，取前 N 名，每只占 1/N。合格的不够 N 只，<strong>空位拿现金</strong>。</span></li>
@@ -1396,9 +1868,9 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </div></div>
 </section>
 <section class="status actions" id="sec-5-接下来"><h2 id="5-接下来"><span class="num">05</span>接下来</h2>
-<div class="actboard"><div class="ab-strip"><span class="ab-s s-me"><b class="num">2</b>待你拍板</span><span class="ab-s s-todo"><b class="num">6</b>待做</span><span class="ab-s s-ongoing"><b class="num">1</b>持续</span></div><div class="ab-mine"><div class="ab-mh"><span class="ab-av">你</span><b>需要你拍板</b></div><div class="ab-decs"><div class="ab-dec"><div class="ab-dn">1</div><div class="ab-obj">冻结已批准</div></div><div class="ab-dec"><div class="ab-dn">2</div><div class="ab-obj">冻结后、看任何结果之前，看完数据普查，选定别的市场检验用欧洲还是日本（<span class="ab-id">D42</span>-5、<span class="ab-id">D42</span>-9）</div></div></div></div><div class="ab-grid"><div class="ab-card"><div class="ab-who"><span class="ab-av">O</span><b>Orchestrator</b><span class="ab-n">1</span></div><ul class="ab-items"><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">冻结后写设计期体检报告，按四张图出：过不过、钱从哪来、和别人比（含连续性版、A1、A2、现行配置）、预测准不准（<span class="ab-id">D42</span>-7）</span></li></ul></div><div class="ab-card"><div class="ab-who"><span class="ab-av">团</span><b>团队</b><span class="ab-n">5</span></div><ul class="ab-items"><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">Reviewer 对第 2.4 版完成 R1b，Manager 合并，Cloud Agent 打 <code>milestone/v6-prereg-freeze</code></span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">Grok 对欧洲、日本行业数据做普查（只看起止日期、口径、缺口，不算收益）</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">冻结后 Dev 在 <code>src/v6/</code> 实现，Reviewer 独立复算设计期整套和两个月份示例（逐位一致）</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">你选定后 Grok 取该市场的数据（<span class="ab-id">D42</span>-5）</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">DWRTF 以后的更新来源在模拟盘前定</span></li></ul></div><div class="ab-card"><div class="ab-who"><span class="ab-av">核</span><b>核心配置</b><span class="ab-n">1</span></div><ul class="ab-items"><li class="st-ongoing"><span class="ab-st">持续</span><span class="ab-tx">照常执行（<span class="ab-id">D8</span>），不受 v6 影响</span></li></ul></div></div></div>
+<div class="actboard"><div class="ab-strip"><span class="ab-s s-me"><b class="num">2</b>待你拍板</span><span class="ab-s s-todo"><b class="num">5</b>待做</span><span class="ab-s s-done"><b class="num">1</b>已完成</span><span class="ab-s s-ongoing"><b class="num">1</b>持续</span></div><div class="ab-mine"><div class="ab-mh"><span class="ab-av">你</span><b>需要你拍板</b></div><div class="ab-decs"><div class="ab-dec"><div class="ab-dn">1</div><div class="ab-obj">冻结已批准</div></div><div class="ab-dec"><div class="ab-dn">2</div><div class="ab-obj">冻结后、看任何结果之前，看完数据普查，选定别的市场检验用欧洲还是日本（<span class="ab-id">D42</span>-5、<span class="ab-id">D42</span>-9）</div></div></div></div><div class="ab-grid"><div class="ab-card"><div class="ab-who"><span class="ab-av">O</span><b>Orchestrator</b><span class="ab-n">1</span></div><ul class="ab-items"><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">冻结后写设计期体检报告，按四张图出：过不过、钱从哪来、和别人比（含连续性版、A1、A2、现行配置）、预测准不准（<span class="ab-id">D42</span>-7）</span></li></ul></div><div class="ab-card"><div class="ab-who"><span class="ab-av">团</span><b>团队</b><span class="ab-n">5</span></div><ul class="ab-items"><li class="st-done"><span class="ab-st">已完成</span><span class="ab-tx">冻结已完成（R1b 签收、#339 合并、<code>milestone/v6-prereg-freeze</code> 打在 f066da8e）</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">欧洲、日本数据普查两步完成（#365、#367）</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">冻结后 Dev 在 <code>src/v6/</code> 实现，Reviewer 独立复算设计期整套和两个月份示例（逐位一致）</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">你选定后 Grok 取该市场的数据（<span class="ab-id">D42</span>-5）</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">DWRTF 以后的更新来源在模拟盘前定</span></li></ul></div><div class="ab-card"><div class="ab-who"><span class="ab-av">核</span><b>核心配置</b><span class="ab-n">1</span></div><ul class="ab-items"><li class="st-ongoing"><span class="ab-st">持续</span><span class="ab-tx">照常执行（<span class="ab-id">D8</span>），不受 v6 影响</span></li></ul></div></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>第二阶段收尾时的接下来（留档）</span></button><div class="fold-b" hidden="">
-<ol class="steps-n flow" style="counter-reset: fl 0">
+<ol class="f-compact steps-n flow" style="counter-reset: fl 0">
 <li><b class="fl-t">你</b><span class="fl-k">或先做期权）</span><span class="fl-d">确认第二阶段轮动研究按“不成立”关闭（第 3 次尝试）；批准补齐 57 只场外基金 2016 年以后的净值；定下一步（复盘后再决定 v6，或先做期权）。</span></li>
 <li><b class="fl-t">Orchestrator</b><span class="fl-k">按第 9 节改过的流程起草 v6</span><span class="fl-d">复盘已写完；你定了靶子和方向后，按第 9 节改过的流程起草 v6。</span></li>
 <li><b class="fl-t">团队</b><span class="fl-k">只报告不改判</span><span class="fl-d">场外净值已补齐（PR #259）；按 D35 写 LOCK 附录，能买到的池子只用场内基金重算四个策略，只报告不改判。</span></li>
@@ -1408,7 +1880,7 @@ ol.route li.rt-you { border: 2px dashed var(--accent); } ol.route li.rt-you .rt-
 </div></div>
 </section>
 <section class="appendix" id="sec-更新记录"><h3 class="appx" id="更新记录">更新记录</h3>
-<div class="log"><div><span class="d">11-25</span><span>你批准冻结 v6 预注册。R1b 在 D42 增量上提了两项：别的市场写定前看过什么（你书面确认没看过两地行业层）；A1、A2、现行配置怎么跑（原样继承 v4 附表 A、引用已签收账本；现行配置走 D5 签收的复现）。第 2.4 版写入 D42-8、D42-9，送 R1b 签收。</span></div><div><span class="d">11-24</span><span>你定了 D42：现行配置作为对照、豁免 6 个月“不差于”门槛（1A）；上线前在一个没看过的市场检验一次（2A）；A1、A2 写回对照；体检报告和一次性检验报告按四张图出。预注册第 2.3 版。设计期 v6 每年比现行配置少约 4 点（2006–10 年 A 股大牛市），2011–15 年多约 2 点。</span></div><div><span class="d">11-24</span><span>v6 预注册第 2.2 版（待冻结）：附表 A（美股 15 个、A 股 40 个参选，5 个美股、7 个一级行业没有场内基金）、附表 B（设计期 v6 净每年 15.5%，挑选 +4.3 抵掉仓位差 −3.4 和成本 −1.5）；你确认一级行业保留回填、931743 从 2023-07-27 起、细分化工不参选；DJIA、DWRTF 检验段补数入库（#359、#361）。预注册页面改成每节一个按内容选的视觉。R1b 复核中。</span></div><div><span class="d">11-23</span><span>v6 预注册初稿第 2.1 版：三份行业数据的检验写进 §4——沪深300 十个行业里上月涨幅不进 v6，隔夜版关闭，申万一级上 12−1 比等权每年少 5.9 个点（可能回填，只作参考）；规则不变。预注册页面按讲故事模式重排；数据看板同步。看板改为 v6 现状，第二阶段内容收进留档。</span></div><div><span class="d">11-23</span><span>你确认预注册三项（D40-14）：不另设单只上限；保费只量防守成本；判据 ③ 比年化 ÷ 最大回撤；判据 ④ 不低于同仓位基准。</span></div><div><span class="d">11-22</span><span>v6 预注册初稿第 1 版；A 股 12−1 主规则、连续性版挑战者（D40-13）；D38 第 55 行触发停止规则，A 股不再加新选法。</span></div><div><span class="d">11-19～11-20</span><span>你定了 v6 结构（D40）：美股 60%、A 股 40%，每个名额选前 3，按把握 p 防守；美股候选只加 REIT。</span></div><div><span class="d">11-17</span><span>底线 60 万、保费上限 4 点（D39）；发布《v6 预演预测表》。</span></div><div><span class="d">11-16</span><span>项目整体诊断（D38）：起草前先算预测表；合同加“先算后做”。</span></div><div><span class="d">11-05</span><span>第二阶段按“不成立”关闭（D36）；v6 方向：只用场内基金，新基金上市当天就能打分，提高每一笔交易的期望。</span></div><div><span class="d">11-05</span><span>发布《第二阶段复盘》：设计期 E2 新口径“挑哪一只”每年只比等权多 1.1 个点，超额几乎全来自 2006–10 年 A 股和 2008 年躲开下跌；检验段池子从 26 个变成 102 个、七成海外主题，基准六成收益来自美股。场外净值补齐 63 只；你定了能买到的池子只用场内基金（D35）。两份报告的任意起点改用逐月柱状图。</span></div><div><span class="d">11-04</span><span>一次性检验跑完，Reviewer 签收：E2 新口径年化 3.0%，基准 8.7%，持有 5 年 70 个起点 0 个跑赢，判据 ① ⑥ 不通过。A1 8.6%、A2 7.2%（回撤 −10%）、v5.1 −3.3%。复查发现 57 只场外基金净值只到 2015 年底，能买到的池子的结果不可用，过关结论不受影响。发布《一次性检验报告》。</span></div><div><span class="d">11-04</span><span>你批准封板（D34）；一次性检验同次跑 E2 新口径、A1、基准、v5.1，v5.1 只作对照。发布《v5.1 体检报告》；《v5 研究备忘》第 23 版新增第 7 节“任意时点买入”：能排名的池子持有 5 年每个起点都赢基准，能买到的池子只有 34%。</span></div><div><span class="d">11-04</span><span>v5.1 设计期跑完，不入围：中国十年年化 30.1%、回撤 −26%，四个对照都赢；美国 ETF 上只有 1.3%，栽在换手和成本。入围只有 E2 新口径。</span></div><div><span class="d">11-04</span><span>v5.1 定稿（设计稿第 3.2 版），预注册送审，进入设计期检验（D33）。离场改为按前沿和回撤面、空仓默认国债；预期疼痛表写进预注册；进度总览加 v5.1 一行。</span></div><div><span class="d">11-01</span><span>主看板不再列 v5：原版有结构硬伤，不够格上设计期数据。v5 策略先讨论清楚，再写预注册。</span></div><div><span class="d">11-01</span><span>你选了 A：v5 做一次设计缺陷修正（D30-2）。v5.1 = E2 + 每类上限，预注册含设计评审和事前画像；《v5 研究备忘》第 11 版第 1 节改写为 v5.1 的策略核心、事前评估、为什么能跟随市场。</span></div><div><span class="d">11-01</span><span>v5 归因：四处结构硬伤，根子是按类别分钱、不按强弱分钱；扣掉“押得少”和随机挑选没有区别。第 2 节版本表加“策略详情”，行与图一一对应；v4 摘要换成能看出四个微调没过的图。</span></div><div><span class="d">11-01</span><span>《v5 研究备忘》第 10 版重写成完整故事（结论、过程、过关、哪里赢输、为什么输、学到什么），五张图；看板新增版本进化图和每一版的摘要。</span></div><div><span class="d">11-01</span><span>v5 设计期跑完：按波动调仓没过关，10% 离场过关；最终版指数池 12.7%，没有入围。</span></div><div><span class="d">11-01</span><span>你批准了 v5 预注册的 4 处选择（D29）；核心价值写进 AGENTS.md（D28）。</span></div><div><span class="d">11-01</span><span>看板改成索引：只留现状、每一版的结论、已定的大事、风险和接下来；v3 阶段的体检收进折叠区。</span></div><div><span class="d">10-31</span><span>v5 预注册草案第 1 版：起点 = 跑赢现金的大类等分、都不跑赢时放国债或黄金；之后逐个加按波动调仓、10% 离场；小仓试错不进 v5。</span></div><div><span class="d">10-31（六）</span><span>你同意封板条件（D27）：v5 是最后一个研究版本，做完就封板，不论结果；一次性检验只跑一次；封板后的新想法记作 v6，可用全部历史设计、和在跑的策略逐项比，上线前过别的市场和 6 个月并行模拟，小资金起步。见《v5 研究备忘》第 8 节。</span></div><div><span class="d">10-31</span><span>你同意 v5 换架构（D26）：先判断该不该持有，再在少数大类里挑，空位放防守资产；部件逐个加。依据见《v5 研究备忘》第 5 版。红利 ETF 错价已修，可交易池 8.7%。</span></div><div><span class="d">10-31</span><span>R5c 完成：U-指数池能买国债、黄金、创业板后，E2 新口径年化 24.9%，过关结果不变；代码第二次冻结。发布《v4 体检报告》第 3 版（含两个池子的介绍、2008 与 2015 两次大跌的拆解）。</span></div></div>
+<div class="log"><div><span class="d">11-25</span><span>v6 预注册冻结：R1b 签收第 2.4 版，#339 合并，<code>milestone/v6-prereg-freeze</code> 打在 f066da8e，冻结文本和签收版本逐字节相同。别的市场普查：两地都没有免费的交易所日行情；能免费拿到的是每日净值（欧洲 iShares 行业基金 2001–02 年起，要用分红记录还原；日本 TOPIX-17 基金 2008-03 起，自带分红再投资净值）。</span></div><div><span class="d">11-25</span><span>你批准冻结 v6 预注册。R1b 在 D42 增量上提了两项：别的市场写定前看过什么（你书面确认没看过两地行业层）；A1、A2、现行配置怎么跑（原样继承 v4 附表 A、引用已签收账本；现行配置走 D5 签收的复现）。第 2.4 版写入 D42-8、D42-9，送 R1b 签收。</span></div><div><span class="d">11-24</span><span>你定了 D42：现行配置作为对照、豁免 6 个月“不差于”门槛（1A）；上线前在一个没看过的市场检验一次（2A）；A1、A2 写回对照；体检报告和一次性检验报告按四张图出。预注册第 2.3 版。设计期 v6 每年比现行配置少约 4 点（2006–10 年 A 股大牛市），2011–15 年多约 2 点。</span></div><div><span class="d">11-24</span><span>v6 预注册第 2.2 版（待冻结）：附表 A（美股 15 个、A 股 40 个参选，5 个美股、7 个一级行业没有场内基金）、附表 B（设计期 v6 净每年 15.5%，挑选 +4.3 抵掉仓位差 −3.4 和成本 −1.5）；你确认一级行业保留回填、931743 从 2023-07-27 起、细分化工不参选；DJIA、DWRTF 检验段补数入库（#359、#361）。预注册页面改成每节一个按内容选的视觉。R1b 复核中。</span></div><div><span class="d">11-23</span><span>v6 预注册初稿第 2.1 版：三份行业数据的检验写进 §4——沪深300 十个行业里上月涨幅不进 v6，隔夜版关闭，申万一级上 12−1 比等权每年少 5.9 个点（可能回填，只作参考）；规则不变。预注册页面按讲故事模式重排；数据看板同步。看板改为 v6 现状，第二阶段内容收进留档。</span></div><div><span class="d">11-23</span><span>你确认预注册三项（D40-14）：不另设单只上限；保费只量防守成本；判据 ③ 比年化 ÷ 最大回撤；判据 ④ 不低于同仓位基准。</span></div><div><span class="d">11-22</span><span>v6 预注册初稿第 1 版；A 股 12−1 主规则、连续性版挑战者（D40-13）；D38 第 55 行触发停止规则，A 股不再加新选法。</span></div><div><span class="d">11-19～11-20</span><span>你定了 v6 结构（D40）：美股 60%、A 股 40%，每个名额选前 3，按把握 p 防守；美股候选只加 REIT。</span></div><div><span class="d">11-17</span><span>底线 60 万、保费上限 4 点（D39）；发布《v6 预演预测表》。</span></div><div><span class="d">11-16</span><span>项目整体诊断（D38）：起草前先算预测表；合同加“先算后做”。</span></div><div><span class="d">11-05</span><span>第二阶段按“不成立”关闭（D36）；v6 方向：只用场内基金，新基金上市当天就能打分，提高每一笔交易的期望。</span></div><div><span class="d">11-05</span><span>发布《第二阶段复盘》：设计期 E2 新口径“挑哪一只”每年只比等权多 1.1 个点，超额几乎全来自 2006–10 年 A 股和 2008 年躲开下跌；检验段池子从 26 个变成 102 个、七成海外主题，基准六成收益来自美股。场外净值补齐 63 只；你定了能买到的池子只用场内基金（D35）。两份报告的任意起点改用逐月柱状图。</span></div><div><span class="d">11-04</span><span>一次性检验跑完，Reviewer 签收：E2 新口径年化 3.0%，基准 8.7%，持有 5 年 70 个起点 0 个跑赢，判据 ① ⑥ 不通过。A1 8.6%、A2 7.2%（回撤 −10%）、v5.1 −3.3%。复查发现 57 只场外基金净值只到 2015 年底，能买到的池子的结果不可用，过关结论不受影响。发布《一次性检验报告》。</span></div><div><span class="d">11-04</span><span>你批准封板（D34）；一次性检验同次跑 E2 新口径、A1、基准、v5.1，v5.1 只作对照。发布《v5.1 体检报告》；《v5 研究备忘》第 23 版新增第 7 节“任意时点买入”：能排名的池子持有 5 年每个起点都赢基准，能买到的池子只有 34%。</span></div><div><span class="d">11-04</span><span>v5.1 设计期跑完，不入围：中国十年年化 30.1%、回撤 −26%，四个对照都赢；美国 ETF 上只有 1.3%，栽在换手和成本。入围只有 E2 新口径。</span></div><div><span class="d">11-04</span><span>v5.1 定稿（设计稿第 3.2 版），预注册送审，进入设计期检验（D33）。离场改为按前沿和回撤面、空仓默认国债；预期疼痛表写进预注册；进度总览加 v5.1 一行。</span></div><div><span class="d">11-01</span><span>主看板不再列 v5：原版有结构硬伤，不够格上设计期数据。v5 策略先讨论清楚，再写预注册。</span></div><div><span class="d">11-01</span><span>你选了 A：v5 做一次设计缺陷修正（D30-2）。v5.1 = E2 + 每类上限，预注册含设计评审和事前画像；《v5 研究备忘》第 11 版第 1 节改写为 v5.1 的策略核心、事前评估、为什么能跟随市场。</span></div><div><span class="d">11-01</span><span>v5 归因：四处结构硬伤，根子是按类别分钱、不按强弱分钱；扣掉“押得少”和随机挑选没有区别。第 2 节版本表加“策略详情”，行与图一一对应；v4 摘要换成能看出四个微调没过的图。</span></div><div><span class="d">11-01</span><span>《v5 研究备忘》第 10 版重写成完整故事（结论、过程、过关、哪里赢输、为什么输、学到什么），五张图；看板新增版本进化图和每一版的摘要。</span></div><div><span class="d">11-01</span><span>v5 设计期跑完：按波动调仓没过关，10% 离场过关；最终版指数池 12.7%，没有入围。</span></div><div><span class="d">11-01</span><span>你批准了 v5 预注册的 4 处选择（D29）；核心价值写进 AGENTS.md（D28）。</span></div><div><span class="d">11-01</span><span>看板改成索引：只留现状、每一版的结论、已定的大事、风险和接下来；v3 阶段的体检收进折叠区。</span></div><div><span class="d">10-31</span><span>v5 预注册草案第 1 版：起点 = 跑赢现金的大类等分、都不跑赢时放国债或黄金；之后逐个加按波动调仓、10% 离场；小仓试错不进 v5。</span></div><div><span class="d">10-31（六）</span><span>你同意封板条件（D27）：v5 是最后一个研究版本，做完就封板，不论结果；一次性检验只跑一次；封板后的新想法记作 v6，可用全部历史设计、和在跑的策略逐项比，上线前过别的市场和 6 个月并行模拟，小资金起步。见《v5 研究备忘》第 8 节。</span></div><div><span class="d">10-31</span><span>你同意 v5 换架构（D26）：先判断该不该持有，再在少数大类里挑，空位放防守资产；部件逐个加。依据见《v5 研究备忘》第 5 版。红利 ETF 错价已修，可交易池 8.7%。</span></div><div><span class="d">10-31</span><span>R5c 完成：U-指数池能买国债、黄金、创业板后，E2 新口径年化 24.9%，过关结果不变；代码第二次冻结。发布《v4 体检报告》第 3 版（含两个池子的介绍、2008 与 2015 两次大跌的拆解）。</span></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>更早的记录</span></button><div class="fold-b" hidden="">
 <div class="log"><div><span class="d">10-30</span><span>可交易池修好（10.5%，十年没跑过基准）；v4 代码冻结。复查又发现 U-指数池买不进国债、黄金、创业板，同行的可交易池判断口径不对，安排 R5c（D25）。《v4 体检报告》第 2 版改了版式、加上可交易池。</span></div><div><span class="d">10-29（四）</span><span>v4 设计期跑完。T1–T4 都没过关，最终版 = E2 新口径；公开的 A1 双动量跑得更好；可交易池发现程序问题，修复重跑（D24）。发布《v4 体检报告》第 1 版。</span></div><div><span class="d">10-29（三）</span><span>你批准了 v4 预注册；新建《数据与容器看板》（docs/owner/data-board.md），池子、数据来源和缺口都在那里。</span></div><div><span class="d">10-29（二）</span><span>准备全部完成：198 只场内 QDII、LOF 收录，8 只缺的后复权按分红记录还原（D21）；预注册第 2.3 版签收，待你批准；一次性检验推迟到研究封板（D20）。</span></div><div><span class="d">10-29</span><span>场内 QDII、LOF 一律纳入（含全球芯片这类主动基金），同一指数只取一个、同类商品选流动性最好的（D19）；对照基线命名为“E2 新口径”。</span></div><div><span class="d">10-28（六）</span><span>预注册第 1 版有条件通过，第 2 版已改完交复审；引擎和 2016 年以后的数据检查完成；载体和数据的 9 个口径定了（D16）。</span></div><div><span class="d">10-28（五）</span><span>v4-R1b 完成；8 个口径问题定了（D15）；v4 预注册草案已写，交 Reviewer 复核；新增 2016 年以后的数据完整性检查。</span></div><div><span class="d">10-28（四）</span><span>3 条数据口径按你的选择定了，加上你的数据原则；第 4 节说明怎么只用当时的数据判断市场状态（备忘 4.5c）。</span></div><div><span class="d">10-28（三）</span><span>v4-R1–R3 完成；新增“需要你：3 条数据口径”；第 4 节说明 IC 检验和 T1、T2 怎么组合（详见备忘 4.2、4.6）。</span></div><div><span class="d">10-28（二）</span><span>3.5、3.6 重写；《v4 研究备忘》的结论并入看板：新增 3.7（任意起点、四种市场状态）和第 4 节（v4 四个候选各补哪一块）。证据和文献仍在备忘里。</span></div><div><span class="d">10-28</span><span>v3.1 已代码冻结；v4 进入开发，按轮次推进；进度总览改成“版本 × 阶段”，和开发轮次一一对应（D13）。</span></div><div><span class="d">10-27（四）</span><span>你的 3 个选择都按建议定了（D11）；v3.1 进入代码冻结，一次性检验暂不跑；v4 研究方向见《v4 研究备忘》。</span></div><div><span class="d">10-27（三）</span><span>第 1 节每件事讲清来龙去脉，休市日卖法列为你的选择；第 2 节先讲选法、再讲版本，每个版本标明改了哪一处和好坏；关键数字按好坏上色。</span></div><div><span class="d">10-27（二）</span><span>查明 2009 年跑输的原因，测试了两个改进方案；决定点改为先定失手怎么处理，再定冻结。</span></div><div><span class="d">10-27</span><span>看板重写，改在仓库维护；正式引擎复现了 E2；查明可交易池的 5% 是因为当年没有 ETF 可买。</span></div><div><span class="d">10-25</span><span>你批准 v3.1 = E2，规则冻结；查明病根是可选池太小；E3 不采用。</span></div></div>
 </div></div></section>

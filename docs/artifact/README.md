@@ -19,7 +19,7 @@
 
 | 页面 | 文件夹 | 源文档 | 线上 artifact |
 | --- | --- | --- | --- |
-| v6 预注册（待冻结） | `v6-prereg/` | `docs/prereg/etf-multiasset-rotation-prereg-v6.md` | https://claude.ai/artifact/VASWvP9wCzDvXmsQqzLFBh |
+| v6 预注册（已冻结） | `v6-prereg/` | `docs/prereg/etf-multiasset-rotation-prereg-v6.md` | https://claude.ai/artifact/VASWvP9wCzDvXmsQqzLFBh |
 | v6 预演预测表 | `v6-preflight/` | `docs/owner/v6-preflight-forecast.md` | https://claude.ai/artifact/4uzHh1NzeLVAEovbyLqqby |
 | Owner 看板 | `board/` | `docs/owner/owner-board.md` | https://claude.ai/artifact/17bW2rKeeBheRFfhnjsrSU |
 | 第二阶段复盘 | `retro/` | `docs/owner/phase2-retrospective.md` | https://claude.ai/artifact/B7ZyN3R4t8eic353W6ZV2t |
