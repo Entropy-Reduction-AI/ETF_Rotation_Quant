@@ -1390,6 +1390,14 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 .f-ap-b { font-size: 12.5px; color: var(--muted); line-height: 1.6; } .f-ap-b code { font-size: 11.5px; }
 @media (max-width: 760px) { .f-years-wrap, .f-aps { grid-template-columns: minmax(0, 1fr); } }
 
+.f-rts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.f-rt { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px 14px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); }
+.f-rt-k { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; color: var(--muted); letter-spacing: .02em; }
+.f-rt-k span { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); font-size: 11.5px; }
+.f-rt-f { font-size: 16px; line-height: 1.35; color: var(--ink); }
+.f-rt-b { padding-top: 8px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+@media (max-width: 760px) { .f-rts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 </style>
 </head>
 <body>
@@ -1442,12 +1450,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <p class="memo"><strong>只用场内基金；溢价偏离超 <span class="num">5 个点</span>换同指数另一只；常年溢价品种和其他品种一样，每只最多占名额的 1/3。</strong></p>
 <div class="table-wrap"><div class="comp comp-退路" data-lint="ref"><div class="comp-h">买哪只基金：溢价太高就一路往下退</div><div class="stair"><div class="st-s first" style="--i:0"><div class="st-if">默认</div><div class="st-c"><span class="st-n">1</span><b>同指数选溢价偏离最小的</b><span class="st-d">只用场内基金，信号日的下一个交易日收盘价成交</span></div></div><div class="st-s" style="--i:1"><div class="st-if"><span class="st-ar">↘</span>溢价比常态高 5 点以上</div><div class="st-c"><span class="st-n">2</span><b>换同指数另一只</b><span class="st-d">偏离最小的那只</span></div></div><div class="st-s" style="--i:2"><div class="st-if"><span class="st-ar">↘</span>都不行</div><div class="st-c"><span class="st-n">3</span><b>给下一名候选</b><span class="st-d">按 12−1 排名递补</span></div></div><div class="st-s last" style="--i:3"><div class="st-if"><span class="st-ar">↘</span>再不行</div><div class="st-c"><span class="st-n">4</span><b>给母指数</b><span class="st-d">标普500 或沪深300</span><em class="st-tag">兜底</em></div></div></div></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>执行四步（条款读法）：成交、挑基金、溢价冲高、仓位上限</span></button><div class="fold-b" hidden="">
-<ol class="f-compact steps-n flow" style="counter-reset: fl 0">
-<li><b class="fl-t">成交</b><span class="fl-k">只用场内基金</span><span class="fl-d">信号日的下一个交易日收盘价成交，<strong>只用场内基金</strong>。</span></li>
-<li><b class="fl-t">挑基金</b><span class="fl-k">选溢价偏离最小的</span><span class="fl-d">同一指数多只基金时，<strong>选溢价偏离最小的</strong>。</span></li>
-<li><b class="fl-t">溢价冲高</b><span class="fl-k">高 5 点以上换一只</span><span class="fl-d"><strong>高 5 点以上换一只</strong>；都不行时给下一名候选，再不行给母指数。</span></li>
-<li><b class="fl-t">仓位上限</b><span class="fl-k">每只最多占名额的 1/3</span><span class="fl-d">已持有的不受影响；常年溢价品种不另设上限，<strong>每只最多占名额的 1/3</strong>。</span></li>
-</ol>
+<div class="comp f-rts" data-lint="ref"><div class="f-rt"><div class="f-rt-k"><span>1</span>成交</div><b class="f-rt-f">只用场内基金</b><span class="f-rt-b">信号日的下一个交易日收盘价成交，只用场内基金。</span></div><div class="f-rt"><div class="f-rt-k"><span>2</span>挑基金</div><b class="f-rt-f">选溢价偏离最小的</b><span class="f-rt-b">同一指数多只基金时，选溢价偏离最小的。</span></div><div class="f-rt"><div class="f-rt-k"><span>3</span>溢价冲高</div><b class="f-rt-f">高 5 点以上换一只</b><span class="f-rt-b">高 5 点以上换一只；都不行时给下一名候选，再不行给母指数。</span></div><div class="f-rt"><div class="f-rt-k"><span>4</span>仓位上限</div><b class="f-rt-f">每只最多占名额的 1/3</b><span class="f-rt-b">已持有的不受影响；常年溢价品种不另设上限，每只最多占名额的 1/3。</span></div></div>
 </div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>执行规则明细（条款原文）</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><div class="comp f-rules-wrap" data-lint="ref"><div class="f-rules"><div class="f-ru"><div class="f-ru-k">成交</div><div class="f-ru-v"><div class="f-ru-lead">信号日的下一个交易日收盘价成交</div></div><div class="f-ru-s"><span class="sl-src">与预演一致</span></div></div><div class="f-ru"><div class="f-ru-k">载体</div><div class="f-ru-v"><div class="f-ru-lead">只用场内基金（ETF、LOF）</div><div class="f-ru-rest">同一指数多只基金时，选溢价偏离最小的</div></div><div class="f-ru-s"><span class="sl-src">D35</span><span class="sl-src">D40-5</span></div></div><div class="f-ru"><div class="f-ru-k">溢价偏离</div><div class="f-ru-v"><div class="f-ru-lead">当日溢价比自身过去 60 个交易日溢价中位数高 5 个点以上不买，换同指数偏离最小的一只</div><div class="f-ru-rest">都不行时给下一名候选，再不行给母指数；已持有的不受影响</div></div><div class="f-ru-s"><span class="sl-src">D40-5</span><span class="sl-src">D38 第 30 行</span></div></div><div class="f-ru"><div class="f-ru-k">常年溢价品种的单只上限</div><div class="f-ru-v"><div class="f-ru-lead"><strong>不另设上限</strong>：和其他品种一样，每只最多占名额的 1/3（美股 20 万）</div><div class="f-ru-cost">代价：按纳指科技常态溢价约 9% 估，额度放开时一次性损失约 1.8 万，约为组合的 1.8%，写进疼痛表</div></div><div class="f-ru-s"><span class="sl-src">Owner 2026-11-23（D40-14）</span></div></div><div class="f-ru"><div class="f-ru-k">成本</div><div class="f-ru-v"><div class="f-ru-lead">单边 0.2%（上限口径），按换手计</div></div><div class="f-ru-s"><span class="sl-src">预测表打折规则</span></div></div></div></div></div>

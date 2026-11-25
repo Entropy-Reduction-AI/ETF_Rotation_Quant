@@ -717,6 +717,29 @@ VERDICT_TERMS = ('一级行业的回填点位', 'DJIA、DWRTF 检验段补数', 
 STAGES = {'检验': 'gate', '模拟盘': 'run', '影子': 'shadow', '暂停': 'stop'}
 
 
+def rule_tiles(ol):
+    """A folded list of short rules '**成交**：…**只用场内基金**。' → numbered tiles, the second bold as headline."""
+    items = []
+    for li in ol.find_all('li', recursive=False):
+        ss = li.find_all('strong')
+        if len(ss) < 2:
+            return None
+        lab = ss[0].get_text('', strip=True)
+        if len(lab) > 4 or not li.decode_contents().strip().startswith('<strong>'):
+            return None
+        focus = ss[1].get_text('', strip=True)
+        ss[0].extract()
+        for x in li.find_all('strong'):
+            x.unwrap()
+        body = re.sub(r'^[：:]\s*', '', li.decode_contents().strip())
+        items.append((lab, focus, body))
+    if len(items) < 3:
+        return None
+    tiles = ''.join(f'<div class="f-rt"><div class="f-rt-k"><span>{i}</span>{l}</div><b class="f-rt-f">{f}</b><span class="f-rt-b">{b}</span></div>'
+                    for i, (l, f, b) in enumerate(items, 1))
+    return f'<div class="comp f-rts" data-lint="ref">{tiles}</div>'
+
+
 def stage_cards(ol):
     items = []
     for li in ol.find_all('li', recursive=False):
@@ -725,7 +748,7 @@ def stage_cards(ol):
             return None
         lab = ss[0].get_text('', strip=True)
         if lab not in STAGES:
-            return None
+            return rule_tiles(ol)
         focus = ss[1].get_text('', strip=True) if len(ss) > 1 else ''
         ss[0].extract()
         body = re.sub(r'^[：:]\s*', '', li.decode_contents().strip())
@@ -1014,4 +1037,14 @@ CSS += r"""
 .f-ap-h b { display: block; font-size: 15px; color: var(--ink); } .f-ap-h span { font-size: 13.5px; color: var(--ink); line-height: 1.5; }
 .f-ap-b { font-size: 12.5px; color: var(--muted); line-height: 1.6; } .f-ap-b code { font-size: 11.5px; }
 @media (max-width: 760px) { .f-years-wrap, .f-aps { grid-template-columns: minmax(0, 1fr); } }
+"""
+
+CSS += r"""
+.f-rts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.f-rt { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px 14px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); }
+.f-rt-k { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; color: var(--muted); letter-spacing: .02em; }
+.f-rt-k span { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); font-size: 11.5px; }
+.f-rt-f { font-size: 16px; line-height: 1.35; color: var(--ink); }
+.f-rt-b { padding-top: 8px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+@media (max-width: 760px) { .f-rts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 """
