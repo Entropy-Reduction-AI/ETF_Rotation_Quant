@@ -307,8 +307,8 @@ ol.route li.rt-todo .rt-st { border: 0; background: none; padding: 0; font-weigh
 ol.route li .rt-gate { display: block !important; }
 
 .pain2 { display: grid; gap: 8px; }
-.pain2 .pn-hd { display: grid; grid-template-columns: 6.5em minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1fr); gap: 14px; padding: 0 14px; font-size: 11.5px; font-weight: 700; color: var(--muted); }
-.pain2 .pn-g { display: grid !important; grid-template-columns: 6.5em minmax(0, 1fr) !important; border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.pain2 .pn-hd { display: grid; grid-template-columns: 108px minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1fr); gap: 14px; padding: 0 14px 0 4px; } .pain2 .pn-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.pain2 .pn-g { display: grid !important; grid-template-columns: 104px minmax(0, 1fr) !important; border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; background: var(--surface); overflow: hidden; }
 .pain2 .pn-g.t-accent { border-left-color: var(--accent); } .pain2 .pn-g.t-warn { border-left-color: var(--warn); } .pain2 .pn-g.t-good { border-left-color: var(--good); }
 .pain2 .pn-gk { display: flex !important; flex-direction: column; gap: 2px; padding: 12px; background: var(--bg); border-right: 1px solid var(--line); }
 .pain2 .pn-gk span { font-size: 13.5px; font-weight: 700; color: var(--ink); } .pain2 .pn-gk em { font-style: normal; font-size: 11.5px; color: var(--muted); }
@@ -477,7 +477,8 @@ ol.route li.rt-todo .rt-s { color: var(--muted); }
 .risks { display: grid; gap: 6px; }
 .risks { display: grid; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
 .risks > .rk { display: grid; grid-template-columns: 2.6em 11em minmax(0, 1fr) 14em; gap: 14px; align-items: center; padding: 11px 14px; border-top: 1px solid var(--line); border-left: 4px solid var(--line); }
-.risks > .rk.rk-hd { border-top: 0; border-left-color: transparent; padding: 6px 14px; font-size: 11.5px; font-weight: 700; color: var(--muted); background: var(--bg); }
+.risks > .rk.rk-hd { border-top: 0; border-left-color: transparent; padding: 6px 14px; background: var(--bg); }
+.risks > .rk.rk-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
 .risks > .rk.sev1 { border-left-color: var(--bad); background: var(--bad-soft); } .risks > .rk.sev2 { border-left-color: var(--warn); }
 .rk-n { font-size: 24px; font-weight: 800; color: var(--muted); font-family: var(--font-mono); text-align: center; }
 .rk.sev1 .rk-n { color: var(--bad); } .rk.sev2 .rk-n { color: var(--warn); }

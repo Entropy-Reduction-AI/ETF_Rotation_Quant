@@ -994,8 +994,8 @@ ol.route li.rt-todo .rt-st { border: 0; background: none; padding: 0; font-weigh
 ol.route li .rt-gate { display: block !important; }
 
 .pain2 { display: grid; gap: 8px; }
-.pain2 .pn-hd { display: grid; grid-template-columns: 6.5em minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1fr); gap: 14px; padding: 0 14px; font-size: 11.5px; font-weight: 700; color: var(--muted); }
-.pain2 .pn-g { display: grid !important; grid-template-columns: 6.5em minmax(0, 1fr) !important; border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.pain2 .pn-hd { display: grid; grid-template-columns: 108px minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1fr); gap: 14px; padding: 0 14px 0 4px; } .pain2 .pn-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.pain2 .pn-g { display: grid !important; grid-template-columns: 104px minmax(0, 1fr) !important; border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; background: var(--surface); overflow: hidden; }
 .pain2 .pn-g.t-accent { border-left-color: var(--accent); } .pain2 .pn-g.t-warn { border-left-color: var(--warn); } .pain2 .pn-g.t-good { border-left-color: var(--good); }
 .pain2 .pn-gk { display: flex !important; flex-direction: column; gap: 2px; padding: 12px; background: var(--bg); border-right: 1px solid var(--line); }
 .pain2 .pn-gk span { font-size: 13.5px; font-weight: 700; color: var(--ink); } .pain2 .pn-gk em { font-style: normal; font-size: 11.5px; color: var(--muted); }
@@ -1164,7 +1164,8 @@ ol.route li.rt-todo .rt-s { color: var(--muted); }
 .risks { display: grid; gap: 6px; }
 .risks { display: grid; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
 .risks > .rk { display: grid; grid-template-columns: 2.6em 11em minmax(0, 1fr) 14em; gap: 14px; align-items: center; padding: 11px 14px; border-top: 1px solid var(--line); border-left: 4px solid var(--line); }
-.risks > .rk.rk-hd { border-top: 0; border-left-color: transparent; padding: 6px 14px; font-size: 11.5px; font-weight: 700; color: var(--muted); background: var(--bg); }
+.risks > .rk.rk-hd { border-top: 0; border-left-color: transparent; padding: 6px 14px; background: var(--bg); }
+.risks > .rk.rk-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
 .risks > .rk.sev1 { border-left-color: var(--bad); background: var(--bad-soft); } .risks > .rk.sev2 { border-left-color: var(--warn); }
 .rk-n { font-size: 24px; font-weight: 800; color: var(--muted); font-family: var(--font-mono); text-align: center; }
 .rk.sev1 .rk-n { color: var(--bad); } .rk.sev2 .rk-n { color: var(--warn); }
@@ -1368,7 +1369,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 
 .f-pns { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
 .f-pn { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.3fr) minmax(0, 1fr); gap: 14px; padding: 10px 14px; border-top: 1px solid var(--line); align-items: start; }
-.f-pn.f-pn-hd { border-top: 0; padding: 6px 14px; background: var(--bg); font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.f-pn.f-pn-hd { border-top: 0; padding: 6px 14px; background: var(--bg); } .f-pn.f-pn-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
 .f-pn > div { display: flex; flex-direction: column; gap: 2px; } .f-pn b { font-size: 14px; color: var(--ink); }
 .f-pn-w { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 .f-pn-big { font-size: 15px !important; }
@@ -1396,7 +1397,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 .f-nvs { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
 .f-nv { display: grid; grid-template-columns: minmax(0, 1.6fr) 5em 5em minmax(0, 1.6fr); gap: 10px; padding: 7px 12px; border-top: 1px solid var(--line); align-items: center; font-size: 13px; font-family: var(--font-mono); color: var(--ink); }
 .f-nv-k { font-family: var(--font-body); }
-.f-nv.f-nv-hd { border-top: 0; background: var(--bg); font-size: 11.5px; font-weight: 700; color: var(--muted); font-family: var(--font-body); }
+.f-nv.f-nv-hd { border-top: 0; background: var(--bg); font-family: var(--font-body); } .f-nv.f-nv-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
 .f-nv.bm { color: var(--muted); } .f-nv.v6 { font-weight: 700; background: var(--accent-soft); } .f-nv.ref { color: var(--muted); font-style: italic; }
 .f-nv-b { position: relative; display: flex; align-items: center; gap: 6px; }
 .f-nv-b i { display: block; height: 10px; border-radius: 3px; background: var(--accent); flex: 0 0 auto; max-width: 60%; }
@@ -1412,7 +1413,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 .f-ys-h { padding: 7px 12px; font-size: 13.5px; font-weight: 700; color: var(--ink); background: var(--bg); border-bottom: 1px solid var(--line); }
 .f-ys-r { display: grid; grid-template-columns: 3em minmax(0, 1.7fr) minmax(0, 1.2fr) 4em 3.6em; gap: 8px; align-items: center; padding: 4px 12px; font-size: 12.5px; color: var(--ink); }
 .f-ys-t.n6 .f-ys-r { grid-template-columns: 3em minmax(0, 1.7fr) minmax(0, 1.2fr) 4em 3.6em 3.4em; }
-.f-ys-r.hd { font-size: 11px; font-weight: 700; color: var(--muted); padding-top: 7px; }
+.f-ys-r.hd { padding-top: 7px; } .f-ys-r.hd > span { font-size: 11px; font-weight: 700; color: var(--muted); font-family: var(--font-body); }
 .f-ys-r .y { font-family: var(--font-mono); color: var(--muted); }
 .f-ys-r .sq { display: flex; gap: 2px; align-items: center; } .f-ys-r .sq i { width: 7px; height: 12px; border-radius: 2px; background: var(--bg); border: 1px solid var(--line); }
 .f-ys-r .sq i.on { background: var(--bad); border-color: var(--bad); } .f-ys-r .sq b { margin-left: 5px; font-family: var(--font-mono); font-size: 12px; }
@@ -1443,7 +1444,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 
 .f-rules { border-radius: 12px; }
 .f-ru { grid-template-columns: 10em minmax(0, 1fr) 12em; padding: 12px 16px; align-items: start; }
-.f-ru.f-ru-hd { padding: 7px 16px; background: var(--bg); font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.f-ru.f-ru-hd { padding: 7px 16px; background: var(--bg); } .f-ru.f-ru-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
 .f-ru-k span { display: inline-block; padding: 3px 10px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-size: 13.5px; font-weight: 700; line-height: 1.4; }
 .f-ru-lead { font-size: 14.5px; line-height: 1.6; }
 .f-ru-hl { font-style: normal; font-weight: 700; color: var(--ink); background: linear-gradient(transparent 60%, color-mix(in srgb, var(--accent) 22%, transparent) 60%); padding: 0 1px; }
@@ -1511,6 +1512,26 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 .f-td-when { font-size: 11px; font-weight: 700; padding: 0 7px; border-radius: 999px; color: var(--good); background: var(--good-soft); }
 .f-td-r { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
 @media (max-width: 760px) { .f-tds { grid-template-columns: minmax(0, 1fr); } }
+
+.f-uspool-wrap { display: grid; gap: 10px; }
+.f-us-note { font-size: 12.5px; color: var(--muted); }
+.f-us-g { border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.f-us-g.t-good { border-left-color: var(--good); } .f-us-g.t-warn { border-left-color: var(--warn); } .f-us-g.t-bad { border-left-color: var(--bad); }
+.f-us-gh { display: flex; gap: 8px; align-items: baseline; padding: 8px 14px; background: var(--bg); border-bottom: 1px solid var(--line); }
+.f-us-gh b { font-size: 14px; color: var(--ink); } .f-us-gh span { font-size: 12px; color: var(--muted); }
+.f-us-g.t-good .f-us-gh b { color: var(--good); } .f-us-g.t-warn .f-us-gh b { color: var(--warn); } .f-us-g.t-bad .f-us-gh b { color: var(--bad); }
+.f-us-hd, .f-us-r { display: grid; grid-template-columns: 92px 86px 170px minmax(0, 1fr); gap: 10px; padding: 6px 14px; align-items: center; }
+.f-us-hd { font-size: 11px; font-weight: 700; color: var(--muted); }
+.f-us-r { border-top: 1px solid var(--line); font-size: 13px; }
+.f-us-r > span, .f-us-hd > span { margin: 0 !important; padding: 0 !important; text-indent: 0 !important; }
+.f-us-n { font-family: var(--font-mono); font-weight: 700; color: var(--ink); }
+.f-us-t { font-size: 12px; color: var(--muted); }
+.f-us-d { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); } .f-us-d em { display: block; font-style: normal; font-family: var(--font-body); font-size: 11px; color: var(--accent); }
+.f-us-cs { display: flex; flex-wrap: wrap; gap: 5px; }
+.f-us-c { display: inline-flex; gap: 5px; align-items: baseline; padding: 2px 7px; border-radius: 5px; border: 1px solid var(--line); background: var(--bg); font-size: 12px; }
+.f-us-c b { font-family: var(--font-mono); color: var(--ink); } .f-us-c em { font-style: normal; font-size: 11px; color: var(--muted); }
+.f-us-none { color: var(--muted); }
+@media (max-width: 760px) { .f-us-hd { display: none; } .f-us-r { grid-template-columns: 1fr 1fr; } }
 
 </style>
 </head>
@@ -1851,140 +1872,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <figure><img alt="A 股候选随主题发布逐步增加：设计期末 33 个，检验段末 40 个" src="../../assets/v6-prereg/p2-a-pool.png"/></figure>
 <div class="table-wrap"><div class="comp comp-载体" data-lint="ref"><div class="comp-h">美股名额 15 个（SPX 为母指数），按实盘能不能买到同一指数的基金分</div><div class="carriers"><div class="cr-r t-good"><div class="cr-k"><b class="num">7</b> 同一指数</div><div class="cr-cs"><span class="cr-c">SPX</span><span class="cr-c">NDX</span><span class="cr-c">DJIA</span><span class="cr-c">SOX</span><span class="cr-c">NBI</span><span class="cr-c">XLY</span><span class="cr-c">DWRTF</span></div></div><div class="cr-r t-warn"><div class="cr-k"><b class="num">3</b> 相近指数</div><div class="cr-cs"><span class="cr-c">XLK</span><span class="cr-c">XLV</span><span class="cr-c">XLE</span></div></div><div class="cr-r t-bad"><div class="cr-k"><b class="num">5</b> 无场内基金</div><div class="cr-cs"><span class="cr-c">XLP</span><span class="cr-c">XLF</span><span class="cr-c">XLI</span><span class="cr-c">XLB</span><span class="cr-c">XLU</span></div></div></div></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>美股 15 个明细：口径、库内起止、实盘载体</span></button><div class="fold-b" hidden="">
-<div class="table-wrap"><table data-lint="ref">
-<thead>
-<tr>
-<th>候选</th>
-<th>行业标签</th>
-<th>序列（口径）</th>
-<th>库内起止</th>
-<th>实盘载体（上市日）</th>
-<th>载体与候选</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="k">SPX（母）</td>
-<td>—</td>
-<td>价格，美元按人民币中间价换算</td>
-<td>2000-01-03 → 2026-09-30</td>
-<td>513500（2014-01-15）；161125（2016-12-14）；159612（2022-05-20）</td>
-<td><span class="cat c0">同一指数</span></td>
-</tr>
-<tr>
-<td class="k">NDX</td>
-<td>—</td>
-<td>同上</td>
-<td>2000-01-03 → 2026-09-30</td>
-<td>513100（2013-05-15）；159941（2015-07-13）；513300（2020-11-05）</td>
-<td><span class="cat c0">同一指数</span></td>
-</tr>
-<tr>
-<td class="k">DJIA</td>
-<td>—</td>
-<td>同上</td>
-<td>1990-04-25 → 2026-09-30（2024-02 起由 #359 补入）</td>
-<td>513400（2024-02-02）</td>
-<td><span class="cat c0">同一指数</span></td>
-</tr>
-<tr>
-<td class="k">SOX</td>
-<td>信息技术</td>
-<td>同上</td>
-<td>2000-01-03 → 2026-09-30</td>
-<td>501225（2023-04-14）</td>
-<td><span class="cat c0">同一指数</span></td>
-</tr>
-<tr>
-<td class="k">NBI</td>
-<td>医疗保健</td>
-<td>同上</td>
-<td>2006-05-10 → 2026-09-30</td>
-<td>513290（2022-08-29）</td>
-<td><span class="cat c0">同一指数</span></td>
-</tr>
-<tr>
-<td class="k">XLY</td>
-<td>可选消费</td>
-<td>同上</td>
-<td>1998-12-22 → 2026-09-30</td>
-<td>159529（2024-02-02）</td>
-<td><span class="cat c0">同一指数</span></td>
-</tr>
-<tr>
-<td class="k">DWRTF</td>
-<td>房地产</td>
-<td>同上</td>
-<td>1998-12-31 → 2026-09-30（2017-11 起由 #359 补入）</td>
-<td>160140（2017-11-24）</td>
-<td><span class="cat c0">同一指数</span></td>
-</tr>
-<tr>
-<td class="k">XLK</td>
-<td>信息技术</td>
-<td>同上</td>
-<td>1998-12-22 → 2026-09-30</td>
-<td>161128（2016-12-27）</td>
-<td><span class="cat c1">相近指数</span></td>
-</tr>
-<tr>
-<td class="k">XLV</td>
-<td>医疗保健</td>
-<td>同上</td>
-<td>1998-12-22 → 2026-09-30</td>
-<td>161126（2016-12-14）</td>
-<td><span class="cat c1">相近指数</span></td>
-</tr>
-<tr>
-<td class="k">XLE</td>
-<td>能源</td>
-<td>同上</td>
-<td>1998-12-22 → 2026-09-30</td>
-<td>163208（2015-02-17）</td>
-<td><span class="cat c1">相近指数</span></td>
-</tr>
-<tr>
-<td class="k">XLP</td>
-<td>必需消费</td>
-<td>同上</td>
-<td>1998-12-22 → 2026-09-30</td>
-<td>—</td>
-<td><span class="cat c2">无场内基金</span></td>
-</tr>
-<tr>
-<td class="k">XLF</td>
-<td>金融</td>
-<td>同上</td>
-<td>1998-12-22 → 2026-09-30</td>
-<td>—</td>
-<td><span class="cat c2">无场内基金</span></td>
-</tr>
-<tr>
-<td class="k">XLI</td>
-<td>工业</td>
-<td>同上</td>
-<td>1998-12-22 → 2026-09-30</td>
-<td>—</td>
-<td><span class="cat c2">无场内基金</span></td>
-</tr>
-<tr>
-<td class="k">XLB</td>
-<td>材料</td>
-<td>同上</td>
-<td>1998-12-22 → 2026-09-30</td>
-<td>—</td>
-<td><span class="cat c2">无场内基金</span></td>
-</tr>
-<tr>
-<td class="k">XLU</td>
-<td>公用事业</td>
-<td>同上</td>
-<td>1998-12-22 → 2026-09-30</td>
-<td>—</td>
-<td><span class="cat c2">无场内基金</span></td>
-</tr>
-</tbody>
-</table></div>
+<div class="table-wrap"><div class="comp f-uspool-wrap" data-lint="ref"><div class="f-us-note">序列口径：价格，美元按人民币中间价换算（15 个相同）；库内都到 2026-09-30</div><div class="f-us-g t-good"><div class="f-us-gh"><b>同一指数</b><span>7 个</span></div><div class="f-us-hd"><span>候选</span><span>行业</span><span>库内起点</span><span>实盘载体（上市日）</span></div><div class="f-us-r"><span class="f-us-n">SPX（母）</span><span class="f-us-t"></span><span class="f-us-d">2000-01-03 起</span><span class="f-us-cs"><span class="f-us-c"><b class="num">513500</b><em>2014-01-15</em></span><span class="f-us-c"><b class="num">161125</b><em>2016-12-14</em></span><span class="f-us-c"><b class="num">159612</b><em>2022-05-20</em></span></span></div><div class="f-us-r"><span class="f-us-n">NDX</span><span class="f-us-t"></span><span class="f-us-d">2000-01-03 起</span><span class="f-us-cs"><span class="f-us-c"><b class="num">513100</b><em>2013-05-15</em></span><span class="f-us-c"><b class="num">159941</b><em>2015-07-13</em></span><span class="f-us-c"><b class="num">513300</b><em>2020-11-05</em></span></span></div><div class="f-us-r"><span class="f-us-n">DJIA</span><span class="f-us-t"></span><span class="f-us-d">1990-04-25 起<em>2024-02 起由 #359 补入</em></span><span class="f-us-cs"><span class="f-us-c"><b class="num">513400</b><em>2024-02-02</em></span></span></div><div class="f-us-r"><span class="f-us-n">SOX</span><span class="f-us-t">信息技术</span><span class="f-us-d">2000-01-03 起</span><span class="f-us-cs"><span class="f-us-c"><b class="num">501225</b><em>2023-04-14</em></span></span></div><div class="f-us-r"><span class="f-us-n">NBI</span><span class="f-us-t">医疗保健</span><span class="f-us-d">2006-05-10 起</span><span class="f-us-cs"><span class="f-us-c"><b class="num">513290</b><em>2022-08-29</em></span></span></div><div class="f-us-r"><span class="f-us-n">XLY</span><span class="f-us-t">可选消费</span><span class="f-us-d">1998-12-22 起</span><span class="f-us-cs"><span class="f-us-c"><b class="num">159529</b><em>2024-02-02</em></span></span></div><div class="f-us-r"><span class="f-us-n">DWRTF</span><span class="f-us-t">房地产</span><span class="f-us-d">1998-12-31 起<em>2017-11 起由 #359 补入</em></span><span class="f-us-cs"><span class="f-us-c"><b class="num">160140</b><em>2017-11-24</em></span></span></div></div><div class="f-us-g t-warn"><div class="f-us-gh"><b>相近指数</b><span>3 个</span></div><div class="f-us-hd"><span>候选</span><span>行业</span><span>库内起点</span><span>实盘载体（上市日）</span></div><div class="f-us-r"><span class="f-us-n">XLK</span><span class="f-us-t">信息技术</span><span class="f-us-d">1998-12-22 起</span><span class="f-us-cs"><span class="f-us-c"><b class="num">161128</b><em>2016-12-27</em></span></span></div><div class="f-us-r"><span class="f-us-n">XLV</span><span class="f-us-t">医疗保健</span><span class="f-us-d">1998-12-22 起</span><span class="f-us-cs"><span class="f-us-c"><b class="num">161126</b><em>2016-12-14</em></span></span></div><div class="f-us-r"><span class="f-us-n">XLE</span><span class="f-us-t">能源</span><span class="f-us-d">1998-12-22 起</span><span class="f-us-cs"><span class="f-us-c"><b class="num">163208</b><em>2015-02-17</em></span></span></div></div><div class="f-us-g t-bad"><div class="f-us-gh"><b>无场内基金</b><span>5 个</span></div><div class="f-us-hd"><span>候选</span><span>行业</span><span>库内起点</span><span>实盘载体（上市日）</span></div><div class="f-us-r"><span class="f-us-n">XLP</span><span class="f-us-t">必需消费</span><span class="f-us-d">1998-12-22 起</span><span class="f-us-cs"><span class="f-us-none">—</span></span></div><div class="f-us-r"><span class="f-us-n">XLF</span><span class="f-us-t">金融</span><span class="f-us-d">1998-12-22 起</span><span class="f-us-cs"><span class="f-us-none">—</span></span></div><div class="f-us-r"><span class="f-us-n">XLI</span><span class="f-us-t">工业</span><span class="f-us-d">1998-12-22 起</span><span class="f-us-cs"><span class="f-us-none">—</span></span></div><div class="f-us-r"><span class="f-us-n">XLB</span><span class="f-us-t">材料</span><span class="f-us-d">1998-12-22 起</span><span class="f-us-cs"><span class="f-us-none">—</span></span></div><div class="f-us-r"><span class="f-us-n">XLU</span><span class="f-us-t">公用事业</span><span class="f-us-d">1998-12-22 起</span><span class="f-us-cs"><span class="f-us-none">—</span></span></div></div></div></div>
 </div></div>
 <div class="table-wrap"><div class="comp comp-载体" data-lint="ref"><div class="comp-h">A 股名额 40 个参选（另有细分化工不参选），按组分</div><div class="carriers"><div class="cr-r t-mute"><div class="cr-k"><b class="num">5</b> 宽基</div><div class="cr-cs"><span class="cr-c">沪深300</span><span class="cr-c">中证500</span><span class="cr-c">中证1000</span><span class="cr-c">创业板指</span><span class="cr-c">科创50</span></div></div><div class="cr-r t-mute"><div class="cr-k"><b class="num">3</b> 红利</div><div class="cr-cs"><span class="cr-c">中证红利</span><span class="cr-c">上证红利</span><span class="cr-c">红利低波动</span></div></div><div class="cr-r t-mute"><div class="cr-k"><b class="num">10</b> 一级行业</div><div class="cr-cs"><span class="cr-c">能源</span><span class="cr-c">原材料</span><span class="cr-c">工业</span><span class="cr-c">可选消费</span><span class="cr-c">主要消费</span><span class="cr-c">医药卫生</span><span class="cr-c">金融地产</span><span class="cr-c">信息技术</span><span class="cr-c">通信服务</span><span class="cr-c">公用事业</span></div></div><div class="cr-r t-mute"><div class="cr-k"><b class="num">22</b> 主题</div><div class="cr-cs"><span class="cr-c">300医药</span><span class="cr-c">主要消费</span><span class="cr-c">农业</span><span class="cr-c">酒</span><span class="cr-c">创新药</span><span class="cr-c">半导体材料设备</span><span class="cr-c">全指半导体</span><span class="cr-c">全指软件</span><span class="cr-c">通信设备</span><span class="cr-c">人工智能</span><span class="cr-c">消费电子</span><span class="cr-c">有色金属</span><span class="cr-c">煤炭</span><span class="cr-c">钢铁</span><span class="cr-c">银行</span><span class="cr-c">证券公司</span><span class="cr-c">房地产</span><span class="cr-c">军工</span><span class="cr-c">机器人</span><span class="cr-c">新能源汽车</span><span class="cr-c">光伏</span><span class="cr-c">教育</span></div></div><div class="cr-r t-bad"><div class="cr-k"><b class="num">7</b> 其中无场内基金</div><div class="cr-cs"><span class="cr-c">通信服务</span><span class="cr-c">能源</span><span class="cr-c">医药卫生</span><span class="cr-c">工业</span><span class="cr-c">信息技术</span><span class="cr-c">主要消费</span><span class="cr-c">公用事业</span></div></div></div></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>A 股按组：候选和发布日</span></button><div class="fold-b" hidden="">

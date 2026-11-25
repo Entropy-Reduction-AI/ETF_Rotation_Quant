@@ -899,7 +899,7 @@ CSS += r"""
 
 .f-pns { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
 .f-pn { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.3fr) minmax(0, 1fr); gap: 14px; padding: 10px 14px; border-top: 1px solid var(--line); align-items: start; }
-.f-pn.f-pn-hd { border-top: 0; padding: 6px 14px; background: var(--bg); font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.f-pn.f-pn-hd { border-top: 0; padding: 6px 14px; background: var(--bg); } .f-pn.f-pn-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
 .f-pn > div { display: flex; flex-direction: column; gap: 2px; } .f-pn b { font-size: 14px; color: var(--ink); }
 .f-pn-w { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 .f-pn-big { font-size: 15px !important; }
@@ -927,7 +927,7 @@ CSS += r"""
 .f-nvs { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
 .f-nv { display: grid; grid-template-columns: minmax(0, 1.6fr) 5em 5em minmax(0, 1.6fr); gap: 10px; padding: 7px 12px; border-top: 1px solid var(--line); align-items: center; font-size: 13px; font-family: var(--font-mono); color: var(--ink); }
 .f-nv-k { font-family: var(--font-body); }
-.f-nv.f-nv-hd { border-top: 0; background: var(--bg); font-size: 11.5px; font-weight: 700; color: var(--muted); font-family: var(--font-body); }
+.f-nv.f-nv-hd { border-top: 0; background: var(--bg); font-family: var(--font-body); } .f-nv.f-nv-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
 .f-nv.bm { color: var(--muted); } .f-nv.v6 { font-weight: 700; background: var(--accent-soft); } .f-nv.ref { color: var(--muted); font-style: italic; }
 .f-nv-b { position: relative; display: flex; align-items: center; gap: 6px; }
 .f-nv-b i { display: block; height: 10px; border-radius: 3px; background: var(--accent); flex: 0 0 auto; max-width: 60%; }
@@ -1018,7 +1018,7 @@ CSS += r"""
 .f-ys-h { padding: 7px 12px; font-size: 13.5px; font-weight: 700; color: var(--ink); background: var(--bg); border-bottom: 1px solid var(--line); }
 .f-ys-r { display: grid; grid-template-columns: 3em minmax(0, 1.7fr) minmax(0, 1.2fr) 4em 3.6em; gap: 8px; align-items: center; padding: 4px 12px; font-size: 12.5px; color: var(--ink); }
 .f-ys-t.n6 .f-ys-r { grid-template-columns: 3em minmax(0, 1.7fr) minmax(0, 1.2fr) 4em 3.6em 3.4em; }
-.f-ys-r.hd { font-size: 11px; font-weight: 700; color: var(--muted); padding-top: 7px; }
+.f-ys-r.hd { padding-top: 7px; } .f-ys-r.hd > span { font-size: 11px; font-weight: 700; color: var(--muted); font-family: var(--font-body); }
 .f-ys-r .y { font-family: var(--font-mono); color: var(--muted); }
 .f-ys-r .sq { display: flex; gap: 2px; align-items: center; } .f-ys-r .sq i { width: 7px; height: 12px; border-radius: 2px; background: var(--bg); border: 1px solid var(--line); }
 .f-ys-r .sq i.on { background: var(--bad); border-color: var(--bad); } .f-ys-r .sq b { margin-left: 5px; font-family: var(--font-mono); font-size: 12px; }
@@ -1053,7 +1053,7 @@ CSS += r"""
 CSS += r"""
 .f-rules { border-radius: 12px; }
 .f-ru { grid-template-columns: 10em minmax(0, 1fr) 12em; padding: 12px 16px; align-items: start; }
-.f-ru.f-ru-hd { padding: 7px 16px; background: var(--bg); font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.f-ru.f-ru-hd { padding: 7px 16px; background: var(--bg); } .f-ru.f-ru-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
 .f-ru-k span { display: inline-block; padding: 3px 10px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-size: 13.5px; font-weight: 700; line-height: 1.4; }
 .f-ru-lead { font-size: 14.5px; line-height: 1.6; }
 .f-ru-hl { font-style: normal; font-weight: 700; color: var(--ink); background: linear-gradient(transparent 60%, color-mix(in srgb, var(--accent) 22%, transparent) 60%); padding: 0 1px; }
@@ -1288,4 +1288,62 @@ CSS += r"""
 .f-td-when { font-size: 11px; font-weight: 700; padding: 0 7px; border-radius: 999px; color: var(--good); background: var(--good-soft); }
 .f-td-r { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
 @media (max-width: 760px) { .f-tds { grid-template-columns: minmax(0, 1fr); } }
+"""
+
+
+def us_pool(rows):
+    groups = {}
+    order = []
+    basis = ''
+    for r in rows:
+        g = _txt(r[5])
+        if g not in groups:
+            groups[g] = []
+            order.append(g)
+        groups[g].append(r)
+        if _txt(r[2]) != '同上' and not basis:
+            basis = _txt(r[2])
+    tone = {'同一指数': 'good', '相近指数': 'warn', '无场内基金': 'bad'}
+    out = f'<div class="f-us-note">序列口径：{basis}（15 个相同）；库内都到 2026-09-30</div>' if basis else ''
+    for g in order:
+        rows_ = ''
+        for r in groups[g]:
+            name = _txt(r[0])
+            tag = _txt(r[1])
+            span = _txt(r[3])
+            m = re.match(r'^(\S+)\s*→\s*(\S+)(?:（(.+)）)?$', span)
+            start, end, fill = (m.group(1), m.group(2), m.group(3)) if m else (span, '', None)
+            carriers = [x.strip() for x in _txt(r[4]).split('；') if x.strip() and x.strip() != '—']
+            cs = ''.join(
+                (lambda mm: f'<span class="f-us-c"><b>{mm.group(1)}</b><em>{mm.group(2)}</em></span>' if mm else f'<span class="f-us-c">{x}</span>')(re.match(r'^(\d+)（(.+)）$', x))
+                for x in carriers) or '<span class="f-us-none">—</span>'
+            rows_ += (f'<div class="f-us-r"><span class="f-us-n">{name}</span><span class="f-us-t">{"" if tag in ("—", "") else tag}</span>'
+                      f'<span class="f-us-d">{start} 起' + (f'<em>{fill}</em>' if fill else '') + f'</span><span class="f-us-cs">{cs}</span></div>')
+        out += (f'<div class="f-us-g t-{tone.get(g, "mute")}"><div class="f-us-gh"><b>{g}</b><span>{len(groups[g])} 个</span></div>'
+                f'<div class="f-us-hd"><span>候选</span><span>行业</span><span>库内起点</span><span>实盘载体（上市日）</span></div>{rows_}</div>')
+    return out
+
+
+TABLES += [(lambda h: h == ['候选', '行业标签', '序列（口径）', '库内起止', '实盘载体（上市日）', '载体与候选'], lambda h, r: us_pool(r), 'uspool')]
+
+CSS += r"""
+.f-uspool-wrap { display: grid; gap: 10px; }
+.f-us-note { font-size: 12.5px; color: var(--muted); }
+.f-us-g { border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.f-us-g.t-good { border-left-color: var(--good); } .f-us-g.t-warn { border-left-color: var(--warn); } .f-us-g.t-bad { border-left-color: var(--bad); }
+.f-us-gh { display: flex; gap: 8px; align-items: baseline; padding: 8px 14px; background: var(--bg); border-bottom: 1px solid var(--line); }
+.f-us-gh b { font-size: 14px; color: var(--ink); } .f-us-gh span { font-size: 12px; color: var(--muted); }
+.f-us-g.t-good .f-us-gh b { color: var(--good); } .f-us-g.t-warn .f-us-gh b { color: var(--warn); } .f-us-g.t-bad .f-us-gh b { color: var(--bad); }
+.f-us-hd, .f-us-r { display: grid; grid-template-columns: 92px 86px 170px minmax(0, 1fr); gap: 10px; padding: 6px 14px; align-items: center; }
+.f-us-hd { font-size: 11px; font-weight: 700; color: var(--muted); }
+.f-us-r { border-top: 1px solid var(--line); font-size: 13px; }
+.f-us-r > span, .f-us-hd > span { margin: 0 !important; padding: 0 !important; text-indent: 0 !important; }
+.f-us-n { font-family: var(--font-mono); font-weight: 700; color: var(--ink); }
+.f-us-t { font-size: 12px; color: var(--muted); }
+.f-us-d { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); } .f-us-d em { display: block; font-style: normal; font-family: var(--font-body); font-size: 11px; color: var(--accent); }
+.f-us-cs { display: flex; flex-wrap: wrap; gap: 5px; }
+.f-us-c { display: inline-flex; gap: 5px; align-items: baseline; padding: 2px 7px; border-radius: 5px; border: 1px solid var(--line); background: var(--bg); font-size: 12px; }
+.f-us-c b { font-family: var(--font-mono); color: var(--ink); } .f-us-c em { font-style: normal; font-size: 11px; color: var(--muted); }
+.f-us-none { color: var(--muted); }
+@media (max-width: 760px) { .f-us-hd { display: none; } .f-us-r { grid-template-columns: 1fr 1fr; } }
 """
