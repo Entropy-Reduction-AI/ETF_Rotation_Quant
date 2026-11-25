@@ -117,9 +117,39 @@ def chain(rows):
     return f'<div class="stair">{out}</div>'
 
 
+NUMU = re.compile(r'([±+−\-]?\d+(?:\.\d+)?)(?:\s*[–-]\s*(\d+(?:\.\d+)?))?\s*(点|万)')
+
+
+def _cost_html(cost):
+    t = _txt(cost)
+    m = NUMU.search(t)
+    if not m:
+        return f'<span class="pn-big">{cost}</span>'
+    return (f'<span class="pn-pre">{t[:m.start()].strip()}</span><span class="pn-big">{m.group(0).strip()}</span>'
+            f'<span class="pn-pre">{t[m.end():].strip()}</span>')
+
+
+def _gauge(cost, trip):
+    c, tr = NUMU.search(_txt(cost)), NUMU.search(_txt(trip))
+    if not c or not tr or c.group(3) != tr.group(3) or '±' in c.group(1):
+        return ''
+    lo_c = float(c.group(1).replace('−', '-')); hi_c = float(c.group(2)) if c.group(2) else lo_c
+    lim = float(tr.group(1).replace('−', '-'))
+    floor = '低于' in _txt(trip)
+    if floor:
+        a, b = lim * 0.8, max(hi_c, lim) * 1.12
+    else:
+        a, b = 0.0, lim * 1.25
+    pos = lambda v: f'{(v - a) / (b - a) * 100:.1f}%'
+    band = (f'<i class="pg-band" style="left:{pos(lo_c)};width:calc({pos(hi_c)} - {pos(lo_c)})"></i>' if hi_c != lo_c
+            else f'<i class="pg-pt" style="left:{pos(lo_c)}"></i>')
+    zone = (f'<i class="pg-zone" style="left:0;width:{pos(lim)}"></i>' if floor else f'<i class="pg-zone" style="left:{pos(lim)};right:0"></i>')
+    return (f'<div class="pg"><div class="pg-t">{zone}{band}<i class="pg-lim" style="left:{pos(lim)}"></i></div>'
+            f'<div class="pg-l"><span style="left:{pos((lo_c + hi_c) / 2)}">代价</span><span class="r" style="left:{pos(lim)}">警戒线</span></div></div>')
+
+
 def pain(rows):
-    # grouped rows: a coloured group rail, the scenario, the accepted cost as a big value, the tripwire in red
-    out, last = '', None
+    # grouped rows: a coloured group rail; the scenario; the accepted cost as a number; a gauge to the tripwire when both share a unit
     tones = {'结构': 'accent', '防守': 'warn', '挑选': 'good', '执行': 'mute'}
     groups = []
     for r in rows:
@@ -127,14 +157,16 @@ def pain(rows):
         if not groups or groups[-1][0] != g:
             groups.append((g, []))
         groups[-1][1].append(r)
+    out = '<div class="pn-hd"><span></span><span>情形</span><span>事先认下的代价</span><span>越过就要查</span></div>'
     for g, rs in groups:
         items = ''
         for r in rs:
-            items += (f'<div class="pn-r"><div class="pn-s"><b>{_inner(r["情形"])}</b><span>{_inner(r["会发生什么"])}</span></div>'
-                      f'<div class="pn-v"><b>{_inner(r["代价"])}</b><span>{_inner(r["代价说明"])}</span></div>'
-                      f'<div class="pn-t"><span class="pn-tl">越过就查</span>{_inner(r["警戒线"])}</div></div>')
-        out += f'<div class="pn-g t-{tones.get(g, "mute")}"><div class="pn-gk">{g}<em>{len(rs)}</em></div><div class="pn-gb">{items}</div></div>'
-    return f'<div class="pain">{out}</div>'
+            gz = _gauge(r['代价'], r['警戒线'])
+            items += (f'<div class="pn-r"><div class="pn-s"><span class="pn-name">{_inner(r["情形"])}</span><span class="pn-what">{_inner(r["会发生什么"])}</span></div>'
+                      f'<div class="pn-v"><div class="pn-cost">{_cost_html(r["代价"])}</div><span class="pn-note">{_inner(r["代价说明"])}</span>{gz}</div>'
+                      f'<div class="pn-t"><span class="pn-trip">{_inner(r["警戒线"])}</span></div></div>')
+        out += f'<div class="pn-g t-{tones.get(g, "mute")}"><div class="pn-gk"><span>{g}</span><em>{len(rs)}</em></div><div class="pn-gb">{items}</div></div>'
+    return f'<div class="pain pain2">{out}</div>'
 
 
 def risks(rows):
@@ -251,6 +283,31 @@ def apply(soup):
 
 
 CSS = r"""
+.pain2 { display: grid; gap: 8px; }
+.pain2 .pn-hd { display: grid; grid-template-columns: 6.5em minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1fr); gap: 14px; padding: 0 14px; font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.pain2 .pn-g { display: grid !important; grid-template-columns: 6.5em minmax(0, 1fr) !important; border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; background: var(--surface); overflow: hidden; }
+.pain2 .pn-g.t-accent { border-left-color: var(--accent); } .pain2 .pn-g.t-warn { border-left-color: var(--warn); } .pain2 .pn-g.t-good { border-left-color: var(--good); }
+.pain2 .pn-gk { display: flex !important; flex-direction: column; gap: 2px; padding: 12px; background: var(--bg); border-right: 1px solid var(--line); }
+.pain2 .pn-gk span { font-size: 13.5px; font-weight: 700; color: var(--ink); } .pain2 .pn-gk em { font-style: normal; font-size: 11.5px; color: var(--muted); }
+.pain2 .pn-r { display: grid !important; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1fr) !important; gap: 14px; padding: 11px 14px; border-top: 1px solid var(--line); align-items: start; }
+.pain2 .pn-r:first-child { border-top: 0; }
+.pn-name { display: block; font-size: 14px; font-weight: 600; color: var(--ink); } .pn-what { display: block; font-size: 12.5px; color: var(--muted); line-height: 1.5; margin-top: 2px; }
+.pn-cost { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px; }
+.pain2 .pn-v .pn-pre { display: inline; font-size: 12.5px; color: var(--muted); }
+.pain2 .pn-v .pn-big { display: inline; font-family: var(--font-mono); font-size: 19px; font-weight: 800; color: var(--ink); line-height: 1.2; }
+.pain2 .pn-g.t-warn .pn-big { color: var(--warn); } .pain2 .pn-g.t-accent .pn-big { color: var(--accent); }
+.pain2 .pn-v .pn-note { display: block; font-size: 12px; color: var(--muted); line-height: 1.45; margin-top: 2px; }
+.pn-trip { display: inline-block; font-size: 12.5px; font-weight: 600; color: var(--bad); background: var(--bad-soft); border-radius: 6px; padding: 4px 9px; line-height: 1.45; }
+.pg { margin-top: 8px; max-width: 260px; }
+.pg-t { position: relative; height: 8px; border-radius: 4px; background: var(--bg); border: 1px solid var(--line); }
+.pg-t i { position: absolute; top: -1px; bottom: -1px; }
+.pg-zone { background: var(--bad-soft); } .pg-band { background: var(--accent); border-radius: 3px; }
+.pg-pt { width: 10px; margin-left: -5px; border-radius: 3px; background: var(--accent); top: -3px !important; bottom: -3px !important; }
+.pn-g.t-warn .pg-pt, .pn-g.t-warn .pg-band { background: var(--warn); }
+.pg-lim { width: 2px; background: var(--bad); top: -5px !important; bottom: -5px !important; }
+.pg-l { position: relative; height: 15px; font-size: 11px; color: var(--muted); } .pg-l span { position: absolute; top: 2px; transform: translateX(-50%); white-space: nowrap; } .pg-l span.r { color: var(--bad); }
+@media (max-width: 760px) { .pain2 .pn-hd { display: none; } .pain2 .pn-g { grid-template-columns: minmax(0, 1fr) !important; } .pain2 .pn-r { grid-template-columns: minmax(0, 1fr) !important; gap: 6px; } }
+
 .stair { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; align-items: start; padding-bottom: 6px; }
 .st-s { margin-top: calc(var(--i) * 22px); display: flex; flex-direction: column; gap: 6px; }
 .st-if { min-height: 2.6em; display: flex; align-items: flex-end; gap: 4px; font-size: 12.5px; font-weight: 700; color: var(--warn); line-height: 1.35; }
