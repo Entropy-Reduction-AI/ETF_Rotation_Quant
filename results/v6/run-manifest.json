@@ -1,0 +1,37 @@
+{
+ "freeze": "f066da8e46f202e105a65c7abf43e4d4cf82eff9",
+ "d45": "4851ff157be5ced92338833aa66af903072c2ca4",
+ "pr376_merged": false,
+ "french": {
+  "path": null,
+  "sha256": null,
+  "expected": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
+  "used": false,
+  "status": "仓库里没有 49_Industry_Portfolios.csv，美股起点经验暂停"
+ },
+ "dtb3": {
+  "path": "results/v5/other-market/raw/DTB3.csv",
+  "sha256": "29fe11e20522b4d293cdbbbfd37f2862264692519a251e712747a8532ee95a00",
+  "source": "仓库里已有的 FRED DTB3，本轮没有重新下载，也没有把 1998-12 之后的利率读进计算"
+ },
+ "loader_sha256": "6eb629a8fbdd89e2de0af3d7fba939ca1d10bfe7fcf40edc6c3df803f1b59d5a",
+ "a_sleeve_net_cagr_pct": {
+  "2006–10": 45.6,
+  "2011–15": 8.15,
+  "2006–15": 25.49
+ },
+ "a_turnover_full_sample_over_10": 6.63,
+ "us_turnover": "暂停",
+ "publish_date_truncation_a_net_cagr_pct": {
+  "2006–10": 32.79,
+  "2011–15": 8.42,
+  "2006–15": 20.0
+ },
+ "trin_vote_changed_rows": 0,
+ "blocked": [
+  "v6 毛（不计成本）",
+  "v6 净（单边 0.2%，每日固定 60/40）",
+  "v6 净（每月再平衡 60/40）"
+ ],
+ "db_lfs_oid": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8"
+}
