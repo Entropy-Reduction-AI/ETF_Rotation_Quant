@@ -12,6 +12,16 @@ CLOSE_SQL = (
     "WHERE code = ? AND adj = ? AND date <= ? "
     "ORDER BY date"
 )
+FIELD_SQL = (
+    "SELECT date, close, volume, amount FROM bars "
+    "WHERE code = ? AND adj = ? AND date <= ? "
+    "ORDER BY date"
+)
+FX_SQL = (
+    "SELECT date, close FROM v4_series "
+    "WHERE code = ? AND kind = 'fx' AND close > 0 AND date <= ? "
+    "ORDER BY date"
+)
 PROVENANCE_SQL = (
     "SELECT source, COUNT(*), MIN(date), MAX(date), "
     "SUM(CASE WHEN close IS NULL THEN 1 ELSE 0 END), "
@@ -50,6 +60,32 @@ def load_closes(con: sqlite3.Connection, code: str, adj: str = "raw", cutoff: st
             raise CutoffBreach(f"{code} {date} 晚于 {cutoff}")
         if close is None:
             continue
+        rows.append((date, float(close)))
+    return rows
+
+
+def load_fields(con: sqlite3.Connection, code: str, adj: str = "raw", cutoff: str = CUTOFF) -> list[tuple[str, float | None, float | None, float | None]]:
+    if "date <= ?" not in FIELD_SQL:
+        raise CutoffBreach("字段查询缺少日期过滤")
+    rows = []
+    for date, close, volume, amount in con.execute(FIELD_SQL, (code, adj, cutoff)):
+        date = str(date)
+        if date > cutoff:
+            raise CutoffBreach(f"{code} {date} 晚于 {cutoff}")
+        rows.append((date, None if close is None else float(close),
+                     None if volume is None else float(volume),
+                     None if amount is None else float(amount)))
+    return rows
+
+
+def load_fx(con: sqlite3.Connection, code: str = "USDCNY", cutoff: str = CUTOFF) -> list[tuple[str, float]]:
+    if "date <= ?" not in FX_SQL:
+        raise CutoffBreach("汇率查询缺少日期过滤")
+    rows = []
+    for date, close in con.execute(FX_SQL, (code, cutoff)):
+        date = str(date)
+        if date > cutoff:
+            raise CutoffBreach(f"{code} {date} 晚于 {cutoff}")
         rows.append((date, float(close)))
     return rows
 
