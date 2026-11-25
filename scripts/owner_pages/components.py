@@ -97,8 +97,8 @@ def route(rows):
     for r in rows:
         st = _txt(r['状态'])
         k = {'已完成': 'done', '现在': 'now', '你批准': 'you'}.get(st, 'todo')
-        out += (f'<li class="rt-{k}"><span class="rt-dot">{"✓" if k == "done" else ""}</span><span class="rt-s">{_inner(r["步"])}</span>'
-                f'<span class="rt-w">{_inner(r["谁"])}</span><span class="rt-st">{st}</span></li>')
+        out += (f'<li class="rt-{k}"><b class="rt-b"><span class="rt-dot">{"✓" if k == "done" else len(out.split("<li")) }</span><span class="rt-s">{_inner(r["步"])}</span>'
+                f'<span class="rt-w">{_inner(r["谁"])}</span><span class="rt-st">{st}</span></b></li>')
     return f'<ol class="route">{out}</ol>'
 
 
@@ -283,6 +283,16 @@ def apply(soup):
 
 
 CSS = r"""
+.rt-dot { font-family: var(--font-mono); font-size: 11.5px; font-weight: 700; color: var(--muted); }
+ol.route li.rt-now .rt-dot, ol.route li.rt-done .rt-dot { color: #fff; } ol.route li.rt-you .rt-dot { color: var(--accent); }
+ol.route li.rt-todo .rt-dot { color: var(--muted) !important; }
+ol.route li.rt-todo .rt-st { border: 0; background: none; padding: 0; font-weight: 600; }
+.rt-b { display: flex; flex-direction: column; gap: 2px; font-weight: inherit; }
+.rt-gate { display: block; margin-top: 6px; padding: 6px 8px; border-radius: 6px; background: var(--bg); font-size: 12px; line-height: 1.5; color: var(--ink); margin-right: 10px; }
+.rt-gate em { display: block; font-style: normal; font-size: 11px; font-weight: 700; color: var(--muted); }
+.rt-gate.stop em { color: var(--bad); } .rt-gate.pass em { color: var(--good); }
+ol.route li .rt-gate { display: block !important; }
+
 .pain2 { display: grid; gap: 8px; }
 .pain2 .pn-hd { display: grid; grid-template-columns: 6.5em minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1fr); gap: 14px; padding: 0 14px; font-size: 11.5px; font-weight: 700; color: var(--muted); }
 .pain2 .pn-g { display: grid !important; grid-template-columns: 6.5em minmax(0, 1fr) !important; border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; background: var(--surface); overflow: hidden; }

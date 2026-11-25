@@ -1062,3 +1062,24 @@ CSS += r"""
 .f-ru-s { flex-direction: column; align-items: flex-end; }
 @media (max-width: 760px) { .f-ru.f-ru-hd { display: none; } .f-ru-s { flex-direction: row; align-items: flex-start; } }
 """
+
+
+# §7 timeline: one line per step on what decides it, quoted from this section's own clauses
+GATES = {'一次性检验通过': ('pass', '过关', '四条判据全部满足'),
+         '模拟盘至少 6 个月': ('stop', '暂停线', '跌破 60 万，或 6 个月对同仓位基准累计落后超过 6 点'),
+         '别的市场检验': ('pass', '判法', '挑选（前 3 对同结构等权）为正且防守保费不超过 4 点，记为“支持”'),
+         '小资金上线': ('', '上线', 'Owner 看着 v6 和现行配置在模拟盘、检验段、设计期的逐项比较拍板；不设“6 个月不差于现行配置”的门槛')}
+_apply3 = apply
+
+
+def apply(html):
+    html = _apply3(html)
+    soup = BeautifulSoup(html, 'html.parser')
+    for li in soup.select('ol.route li'):
+        st = li.find(class_='rt-s')
+        g = GATES.get(st.get_text('', strip=True)) if st else None
+        if g:
+            tone, lab, text = g
+            st_ = li.find(class_='rt-st')
+            st_.insert_after(_frag(f'<span class="rt-gate {tone}"><em>{lab}</em>{text}</span>'))
+    return str(soup)
