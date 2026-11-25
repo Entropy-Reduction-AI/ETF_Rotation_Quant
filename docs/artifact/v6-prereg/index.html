@@ -1497,6 +1497,21 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 .f-od-d { font-size: 13px; color: var(--muted); line-height: 1.55; margin-top: 2px; }
 .f-od.now .f-od-d { color: var(--ink); }
 
+.f-tds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.f-td-pg { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12.5px; color: var(--muted); }
+.f-td-pg b { font-family: var(--font-mono); font-size: 18px; color: var(--good); }
+.f-td-bar { display: flex; gap: 3px; flex: 1; max-width: 320px; } .f-td-bar i { flex: 1; height: 8px; border-radius: 3px; background: var(--line); } .f-td-bar i.on { background: var(--good); }
+.f-td { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-td-n { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #fff; background: var(--muted); }
+.f-td.done .f-td-n { background: var(--good); }
+.f-td-h b { font-size: 14px; color: var(--ink); line-height: 1.4; }
+.f-td-m { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; margin: 5px 0 6px; }
+.f-td-no { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.f-td-w { font-size: 11px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.f-td-when { font-size: 11px; font-weight: 700; padding: 0 7px; border-radius: 999px; color: var(--good); background: var(--good-soft); }
+.f-td-r { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+@media (max-width: 760px) { .f-tds { grid-template-columns: minmax(0, 1fr); } }
+
 </style>
 </head>
 <body>
@@ -1827,75 +1842,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <p class="kv"><span class="kv-k"><strong>目录</strong></span><span class="kv-v"><code>src/v6/</code>、<code>config/v6/</code>、<code>results/v6/</code>，账本 <code>results/v6/trial-ledger.csv</code>。冻结后不改任何规则（程序错误除外）。</span></p>
 </div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>9.2 冻结前待办：8 件全部完成</span></button><div class="fold-b" hidden="">
-<div class="score"><div class="seg"><span class="s-good" style="flex:8"></span></div><div class="sl"><b class="t-good num">8</b> 已完成<span class="of"> / 共 8 项</span></div></div><div class="table-wrap"><table>
-<thead>
-<tr>
-<th class="n">#</th>
-<th>事项</th>
-<th>谁</th>
-<th class="rh-status">状态</th>
-<th class="h-note">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-good">
-<td class="n">1</td>
-<td>行业标签补齐检验段全部 A 股候选</td>
-<td>Orchestrator</td>
-<td class="r-status"><span class="pill good">已完成</span></td>
-<td class="c-note detail"><strong>已完成（2026-11-23，看收益之前）</strong>：新能源汽车、光伏 → 工业；创新药 → 医药卫生；通信设备、半导体材料设备、消费电子 → 信息技术；教育 → 可选消费；细分化工 → 原材料；科创50 不标（宽基）。见 <code>config/v6-preflight/sector-tags.toml</code>，Reviewer 核</td>
-</tr>
-<tr class="row-good">
-<td class="n">2</td>
-<td>附表 A：每条候选序列的代码、来源、价格 / 全收益口径、发布日、实盘载体</td>
-<td>Orchestrator、Dev</td>
-<td class="r-status"><span class="pill good">已完成</span></td>
-<td class="c-note detail"><strong>已完成（2026-11-24）</strong>：美股 QDII 清单按 Grok 第六轮入库结果定；细分化工（数据状态 frozen）是否参选在此核实（R1 J-3）：不参选；DJIA、DWRTF 检验段补数（#359）</td>
-</tr>
-<tr class="row-good">
-<td class="n">3</td>
-<td>附表 B：设计期信号画像（紧张月份、入选次数、去重次数、可参选个数逐年、A 股 p 轨迹）与收益拆分（仓位差 / 挑选 / 防守 / 成本，两段；60/40 按月再平衡与每日固定的差异）</td>
-<td>Orchestrator</td>
-<td class="r-status"><span class="pill good">已完成</span></td>
-<td class="c-note detail"><strong>已完成（2026-11-24）</strong>：设计评审第 4、6、8 问，只用 ≤ 2015（R1 SF-1）；v6 净每年 15.5%，比 BM-主多 0.4 点</td>
-</tr>
-<tr class="row-good">
-<td class="n">4</td>
-<td>沪深300 十个行业（第 45 行）</td>
-<td>Grok、Orchestrator</td>
-<td class="r-status"><span class="pill good">已完成</span></td>
-<td class="c-note detail"><strong>已完成（2026-11-23，D38 第 45 行）</strong>：上月涨幅不满足判据，不进 v6；结果写进 §4 第 7 条</td>
-</tr>
-<tr class="row-good">
-<td class="n">5</td>
-<td>申万一级（含开盘价、成交额）</td>
-<td>Grok、Orchestrator</td>
-<td class="r-status"><span class="pill good">已完成</span></td>
-<td class="c-note detail"><strong>已完成（2026-11-23，D38 第 56 行）</strong>：先登记再检验 12−1、连续性版、隔夜版；可能回填，只作参考，结果写进 §4 第 7 条，不改主规则；隔夜版在全指一级上正式判据不过，关闭</td>
-</tr>
-<tr class="row-good">
-<td class="n">6</td>
-<td>Owner 确认：单只上限、判据 ② 的算法、判据 ③ ④ 的门槛</td>
-<td>Owner</td>
-<td class="r-status"><span class="pill good">已完成</span></td>
-<td class="c-note detail"><strong>已完成（2026-11-23，D40-14）</strong>：不另设单只上限；② 只量防守成本；③ 比年化 ÷ 最大回撤；④ 不低于 0</td>
-</tr>
-<tr class="row-good">
-<td class="n">7</td>
-<td>Owner 确认：D27-5 两项怎么写进预注册；补回 A1、A2</td>
-<td>Owner</td>
-<td class="r-status"><span class="pill good">已完成</span></td>
-<td class="c-note detail"><strong>已完成（2026-11-24，D42-4 至 D42-7）</strong>：现行配置作为对照、豁免 6 个月“不差于”门槛；上线前别的市场检验；A1、A2 写回 §5.2；报告四张图</td>
-</tr>
-<tr class="row-good">
-<td class="n">8</td>
-<td>R1b 对 D42 增量的两项：别的市场写定前的接触；A1、A2、现行配置的执行口径</td>
-<td>Owner、Orchestrator</td>
-<td class="r-status"><span class="pill good">已完成</span></td>
-<td class="c-note detail"><strong>已完成（2026-11-25，D42-8、D42-9）</strong>：§4 第 8 条照实写明、Owner 书面确认；§5.2 写死口径并引用已签收账本</td>
-</tr>
-</tbody>
-</table></div>
+<div class="table-wrap"><div class="comp f-todos-wrap" data-lint="ref"><div class="f-td-pg"><b>8 / 8</b><span>已完成</span><span class="f-td-bar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></div><div class="f-tds"><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>行业标签补齐检验段全部 A 股候选</b></div><div class="f-td-m"><span class="f-td-no">#1</span><span class="f-td-w">Orchestrator</span><span class="f-td-when">2026-11-23，看收益之前</span></div><div class="f-td-r">新能源汽车、光伏 → 工业；创新药 → 医药卫生；通信设备、半导体材料设备、消费电子 → 信息技术；教育 → 可选消费；细分化工 → 原材料；科创50 不标（宽基）。见 <code>config/v6-preflight/sector-tags.toml</code>，Reviewer 核</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>附表 A：每条候选序列的代码、来源、价格 / 全收益口径、发布日、实盘载体</b></div><div class="f-td-m"><span class="f-td-no">#2</span><span class="f-td-w">Orchestrator</span><span class="f-td-w">Dev</span><span class="f-td-when">2026-11-24</span></div><div class="f-td-r">美股 QDII 清单按 Grok 第六轮入库结果定；细分化工（数据状态 frozen）是否参选在此核实（R1 J-3）：不参选；DJIA、DWRTF 检验段补数（#359）</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>附表 B：设计期信号画像（紧张月份、入选次数、去重次数、可参选个数逐年、A 股 p 轨迹）与收益拆分（仓位差 / 挑选 / 防守 / 成本，两段；60/40 按月再平衡与每日固定的差异）</b></div><div class="f-td-m"><span class="f-td-no">#3</span><span class="f-td-w">Orchestrator</span><span class="f-td-when">2026-11-24</span></div><div class="f-td-r">设计评审第 4、6、8 问，只用 ≤ 2015（R1 SF-1）；v6 净每年 15.5%，比 BM-主多 0.4 点</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>沪深300 十个行业（第 45 行）</b></div><div class="f-td-m"><span class="f-td-no">#4</span><span class="f-td-w">Grok</span><span class="f-td-w">Orchestrator</span><span class="f-td-when">2026-11-23，D38 第 45 行</span></div><div class="f-td-r">上月涨幅不满足判据，不进 v6；结果写进 §4 第 7 条</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>申万一级（含开盘价、成交额）</b></div><div class="f-td-m"><span class="f-td-no">#5</span><span class="f-td-w">Grok</span><span class="f-td-w">Orchestrator</span><span class="f-td-when">2026-11-23，D38 第 56 行</span></div><div class="f-td-r">先登记再检验 12−1、连续性版、隔夜版；可能回填，只作参考，结果写进 §4 第 7 条，不改主规则；隔夜版在全指一级上正式判据不过，关闭</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>Owner 确认：单只上限、判据 ② 的算法、判据 ③ ④ 的门槛</b></div><div class="f-td-m"><span class="f-td-no">#6</span><span class="f-td-w">Owner</span><span class="f-td-when">2026-11-23，D40-14</span></div><div class="f-td-r">不另设单只上限；② 只量防守成本；③ 比年化 ÷ 最大回撤；④ 不低于 0</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>Owner 确认：D27-5 两项怎么写进预注册；补回 A1、A2</b></div><div class="f-td-m"><span class="f-td-no">#7</span><span class="f-td-w">Owner</span><span class="f-td-when">2026-11-24，D42-4 至 D42-7</span></div><div class="f-td-r">现行配置作为对照、豁免 6 个月“不差于”门槛；上线前别的市场检验；A1、A2 写回 §5.2；报告四张图</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>R1b 对 D42 增量的两项：别的市场写定前的接触；A1、A2、现行配置的执行口径</b></div><div class="f-td-m"><span class="f-td-no">#8</span><span class="f-td-w">Owner</span><span class="f-td-w">Orchestrator</span><span class="f-td-when">2026-11-25，D42-8、D42-9</span></div><div class="f-td-r">§4 第 8 条照实写明、Owner 书面确认；§5.2 写死口径并引用已签收账本</div></div></div></div></div></div>
 </div></div>
 <a class="sl-next" href="#sec-附表-a-候选清单-美股-15-个-a-股-40-个-各自从参选起点算-5-个美"><span class="sl-nl">所以</span><span class="sl-nt">规则部分到此为止；最后两张附表是冻结要带走的底稿：候选清单和设计期画像</span><span class="sl-ng">附表 A →</span></a>
 </section>

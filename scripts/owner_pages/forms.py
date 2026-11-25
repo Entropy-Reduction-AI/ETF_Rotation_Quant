@@ -1244,3 +1244,48 @@ CSS += r"""
 .f-od-d { font-size: 13px; color: var(--muted); line-height: 1.55; margin-top: 2px; }
 .f-od.now .f-od-d { color: var(--ink); }
 """
+
+
+def todos(rows):
+    out = ''
+    for r in rows:
+        n, item, who, st, note = _txt(r[0]), _inner(r[1]), _txt(r[2]), _txt(r[3]), _inner(r[4])
+        f = _frag(note)
+        b = f.find('strong')
+        when = ''
+        if b is not None:
+            m = re.match(r'^已完成（(.+?)）', b.get_text('', strip=True))
+            if m:
+                when = m.group(1)
+                b.extract()
+        rest = re.sub(r'^[：:]\s*', '', f.decode_contents().strip())
+        whos = ''.join(f'<span class="f-td-w">{x.strip()}</span>' for x in re.split(r'[、，,]', who) if x.strip())
+        done = st == '已完成'
+        out += (f'<div class="f-td{" done" if done else ""}"><span class="f-td-n">{"✓" if done else n}</span>'
+                f'<div class="f-td-b"><div class="f-td-h"><b>{item}</b></div>'
+                f'<div class="f-td-m"><span class="f-td-no">#{n}</span>{whos}' + (f'<span class="f-td-when">{when}</span>' if when else '') + '</div>'
+                f'<div class="f-td-r">{rest}</div></div></div>')
+    nd = sum(1 for r in rows if _txt(r[3]) == '已完成')
+    bar = ''.join(f'<i class="{"on" if _txt(r[3]) == "已完成" else ""}"></i>' for r in rows)
+    return (f'<div class="f-td-pg"><b>{nd} / {len(rows)}</b><span>已完成</span><span class="f-td-bar">{bar}</span></div>'
+            f'<div class="f-tds">{out}</div>')
+
+
+TABLES += [(lambda h: h == ['#', '事项', '谁', '状态', '说明'], lambda h, r: todos(r), 'todos')]
+
+CSS += r"""
+.f-tds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.f-td-pg { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12.5px; color: var(--muted); }
+.f-td-pg b { font-family: var(--font-mono); font-size: 18px; color: var(--good); }
+.f-td-bar { display: flex; gap: 3px; flex: 1; max-width: 320px; } .f-td-bar i { flex: 1; height: 8px; border-radius: 3px; background: var(--line); } .f-td-bar i.on { background: var(--good); }
+.f-td { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.f-td-n { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; color: #fff; background: var(--muted); }
+.f-td.done .f-td-n { background: var(--good); }
+.f-td-h b { font-size: 14px; color: var(--ink); line-height: 1.4; }
+.f-td-m { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; margin: 5px 0 6px; }
+.f-td-no { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.f-td-w { font-size: 11px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.f-td-when { font-size: 11px; font-weight: 700; padding: 0 7px; border-radius: 999px; color: var(--good); background: var(--good-soft); }
+.f-td-r { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+@media (max-width: 760px) { .f-tds { grid-template-columns: minmax(0, 1fr); } }
+"""
