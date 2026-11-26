@@ -1,0 +1,695 @@
+{
+ "character": {
+  "v6": {
+   "annual_pct": 15.284965,
+   "maxdd_pct": -28.729655,
+   "vol_pct": 15.688396,
+   "up_capture": 0.58,
+   "down_capture": 0.41,
+   "up_months": 74,
+   "down_months": 46,
+   "days": 2429
+  },
+  "连续性版": {
+   "annual_pct": 15.791718,
+   "maxdd_pct": -27.522836,
+   "vol_pct": 15.596546,
+   "up_capture": 0.58,
+   "down_capture": 0.39,
+   "up_months": 74,
+   "down_months": 46,
+   "days": 2429
+  },
+  "A1": {
+   "annual_pct": 26.958462,
+   "maxdd_pct": -42.860838,
+   "vol_pct": 21.65702,
+   "up_capture": 0.77,
+   "down_capture": 0.31,
+   "up_months": 74,
+   "down_months": 46,
+   "days": 2429
+  },
+  "A2": {
+   "annual_pct": 8.88451,
+   "maxdd_pct": -13.067508,
+   "vol_pct": 7.725786,
+   "up_capture": 0.29,
+   "down_capture": 0.17,
+   "up_months": 74,
+   "down_months": 46,
+   "days": 2429
+  },
+  "K2A真实月末": {
+   "annual_pct": 16.162814,
+   "maxdd_pct": -36.139093,
+   "vol_pct": 14.761847,
+   "up_capture": 0.61,
+   "down_capture": 0.42,
+   "up_months": 74,
+   "down_months": 46,
+   "days": 2429
+  },
+  "BM-主": {
+   "annual_pct": 15.649582,
+   "maxdd_pct": -65.462415,
+   "vol_pct": 23.230696,
+   "up_capture": 1.0,
+   "down_capture": 1.0,
+   "up_months": 74,
+   "down_months": 46,
+   "days": 2429
+  },
+  "BM-同仓位": {
+   "annual_pct": 12.819991,
+   "maxdd_pct": -59.07789,
+   "vol_pct": 18.933721,
+   "up_capture": 0.74,
+   "down_capture": 0.72,
+   "up_months": 74,
+   "down_months": 46,
+   "days": 2429
+  },
+  "现行配置": {
+   "annual_pct": 21.021362,
+   "maxdd_pct": -60.081001,
+   "vol_pct": 23.842111,
+   "up_capture": 1.06,
+   "down_capture": 0.94,
+   "up_months": 74,
+   "down_months": 46,
+   "days": 2429
+  }
+ },
+ "crash": {
+  "v6": [
+   {
+    "window": [
+     "2007-10-01",
+     "2009-06-30"
+    ],
+    "h00300_peak": "2007-10-16",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -24.88076,
+    "trough": "2008-09-17"
+   },
+   {
+    "window": [
+     "2015-05-01",
+     "2015-12-31"
+    ],
+    "h00300_peak": "2015-06-08",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -28.138958,
+    "trough": "2015-09-29"
+   }
+  ],
+  "连续性版": [
+   {
+    "window": [
+     "2007-10-01",
+     "2009-06-30"
+    ],
+    "h00300_peak": "2007-10-16",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -27.193774,
+    "trough": "2008-09-17"
+   },
+   {
+    "window": [
+     "2015-05-01",
+     "2015-12-31"
+    ],
+    "h00300_peak": "2015-06-08",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -23.975925,
+    "trough": "2015-09-29"
+   }
+  ],
+  "A1": [
+   {
+    "window": [
+     "2007-10-01",
+     "2009-06-30"
+    ],
+    "h00300_peak": "2007-10-16",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -20.897847,
+    "trough": "2007-11-28"
+   },
+   {
+    "window": [
+     "2015-05-01",
+     "2015-12-31"
+    ],
+    "h00300_peak": "2015-06-08",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -42.860838,
+    "trough": "2015-08-26"
+   }
+  ],
+  "A2": [
+   {
+    "window": [
+     "2007-10-01",
+     "2009-06-30"
+    ],
+    "h00300_peak": "2007-10-16",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -10.173239,
+    "trough": "2008-01-22"
+   },
+   {
+    "window": [
+     "2015-05-01",
+     "2015-12-31"
+    ],
+    "h00300_peak": "2015-06-08",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -12.768143,
+    "trough": "2015-08-26"
+   }
+  ],
+  "K2A真实月末": [
+   {
+    "window": [
+     "2007-10-01",
+     "2009-06-30"
+    ],
+    "h00300_peak": "2007-10-16",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -36.139093,
+    "trough": "2009-03-10"
+   },
+   {
+    "window": [
+     "2015-05-01",
+     "2015-12-31"
+    ],
+    "h00300_peak": "2015-06-08",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -19.465985,
+    "trough": "2015-08-26"
+   }
+  ],
+  "BM-主": [
+   {
+    "window": [
+     "2007-10-01",
+     "2009-06-30"
+    ],
+    "h00300_peak": "2007-10-16",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -65.462415,
+    "trough": "2008-10-27"
+   },
+   {
+    "window": [
+     "2015-05-01",
+     "2015-12-31"
+    ],
+    "h00300_peak": "2015-06-08",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -33.320363,
+    "trough": "2015-08-26"
+   }
+  ],
+  "BM-同仓位": [
+   {
+    "window": [
+     "2007-10-01",
+     "2009-06-30"
+    ],
+    "h00300_peak": "2007-10-16",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -59.020989,
+    "trough": "2008-11-21"
+   },
+   {
+    "window": [
+     "2015-05-01",
+     "2015-12-31"
+    ],
+    "h00300_peak": "2015-06-08",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -22.55191,
+    "trough": "2015-08-26"
+   }
+  ],
+  "现行配置": [
+   {
+    "window": [
+     "2007-10-01",
+     "2009-06-30"
+    ],
+    "h00300_peak": "2007-10-16",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -60.081001,
+    "trough": "2008-11-07"
+   },
+   {
+    "window": [
+     "2015-05-01",
+     "2015-12-31"
+    ],
+    "h00300_peak": "2015-06-08",
+    "h00300_peak_close_is_window_max": true,
+    "lowest_pct": -34.409286,
+    "trough": "2015-08-26"
+   }
+  ]
+ },
+ "regimes": {
+  "v6": [
+   {
+    "state": "牛市",
+    "months": 53,
+    "win_months": 16,
+    "excess_sum_pp": -130.888967
+   },
+   {
+    "state": "回调",
+    "months": 21,
+    "win_months": 16,
+    "excess_sum_pp": 49.505472
+   },
+   {
+    "state": "熊市",
+    "months": 27,
+    "win_months": 21,
+    "excess_sum_pp": 120.506854
+   },
+   {
+    "state": "反弹",
+    "months": 19,
+    "win_months": 5,
+    "excess_sum_pp": -56.386199
+   }
+  ],
+  "连续性版": [
+   {
+    "state": "牛市",
+    "months": 53,
+    "win_months": 14,
+    "excess_sum_pp": -135.185666
+   },
+   {
+    "state": "回调",
+    "months": 21,
+    "win_months": 18,
+    "excess_sum_pp": 57.193529
+   },
+   {
+    "state": "熊市",
+    "months": 27,
+    "win_months": 21,
+    "excess_sum_pp": 119.625599
+   },
+   {
+    "state": "反弹",
+    "months": 19,
+    "win_months": 5,
+    "excess_sum_pp": -54.802282
+   }
+  ],
+  "A1": [
+   {
+    "state": "牛市",
+    "months": 53,
+    "win_months": 25,
+    "excess_sum_pp": -62.159941
+   },
+   {
+    "state": "回调",
+    "months": 21,
+    "win_months": 12,
+    "excess_sum_pp": 59.317837
+   },
+   {
+    "state": "熊市",
+    "months": 27,
+    "win_months": 25,
+    "excess_sum_pp": 147.153948
+   },
+   {
+    "state": "反弹",
+    "months": 19,
+    "win_months": 6,
+    "excess_sum_pp": -57.672846
+   }
+  ],
+  "A2": [
+   {
+    "state": "牛市",
+    "months": 53,
+    "win_months": 2,
+    "excess_sum_pp": -231.246439
+   },
+   {
+    "state": "回调",
+    "months": 21,
+    "win_months": 19,
+    "excess_sum_pp": 96.021688
+   },
+   {
+    "state": "熊市",
+    "months": 27,
+    "win_months": 25,
+    "excess_sum_pp": 132.693185
+   },
+   {
+    "state": "反弹",
+    "months": 19,
+    "win_months": 1,
+    "excess_sum_pp": -78.831294
+   }
+  ],
+  "K2A真实月末": [
+   {
+    "state": "牛市",
+    "months": 53,
+    "win_months": 3,
+    "excess_sum_pp": -126.860078
+   },
+   {
+    "state": "回调",
+    "months": 21,
+    "win_months": 21,
+    "excess_sum_pp": 55.569987
+   },
+   {
+    "state": "熊市",
+    "months": 27,
+    "win_months": 27,
+    "excess_sum_pp": 114.092933
+   },
+   {
+    "state": "反弹",
+    "months": 19,
+    "win_months": 6,
+    "excess_sum_pp": -54.127016
+   }
+  ],
+  "BM-主": [
+   {
+    "state": "牛市",
+    "months": 53,
+    "win_months": 0,
+    "excess_sum_pp": 0.0
+   },
+   {
+    "state": "回调",
+    "months": 21,
+    "win_months": 0,
+    "excess_sum_pp": 0.0
+   },
+   {
+    "state": "熊市",
+    "months": 27,
+    "win_months": 0,
+    "excess_sum_pp": 0.0
+   },
+   {
+    "state": "反弹",
+    "months": 19,
+    "win_months": 0,
+    "excess_sum_pp": 0.0
+   }
+  ],
+  "BM-同仓位": [
+   {
+    "state": "牛市",
+    "months": 53,
+    "win_months": 8,
+    "excess_sum_pp": -103.056801
+   },
+   {
+    "state": "回调",
+    "months": 21,
+    "win_months": 20,
+    "excess_sum_pp": 42.397978
+   },
+   {
+    "state": "熊市",
+    "months": 27,
+    "win_months": 23,
+    "excess_sum_pp": 44.450365
+   },
+   {
+    "state": "反弹",
+    "months": 19,
+    "win_months": 7,
+    "excess_sum_pp": -16.457016
+   }
+  ],
+  "现行配置": [
+   {
+    "state": "牛市",
+    "months": 53,
+    "win_months": 30,
+    "excess_sum_pp": 20.984852
+   },
+   {
+    "state": "回调",
+    "months": 21,
+    "win_months": 15,
+    "excess_sum_pp": 16.069589
+   },
+   {
+    "state": "熊市",
+    "months": 27,
+    "win_months": 15,
+    "excess_sum_pp": -3.716475
+   },
+   {
+    "state": "反弹",
+    "months": 19,
+    "win_months": 13,
+    "excess_sum_pp": 11.871902
+   }
+  ]
+ },
+ "anystart": {
+  "v6": [
+   {
+    "years": 1,
+    "n": 108,
+    "win_pct": 56,
+    "median_excess_pp": 4.6,
+    "worst_excess_pp": -108.9,
+    "worst_start": "2006-09-01"
+   },
+   {
+    "years": 3,
+    "n": 84,
+    "win_pct": 79,
+    "median_excess_pp": 5.2,
+    "worst_excess_pp": -11.8,
+    "worst_start": "2008-11-03"
+   },
+   {
+    "years": 5,
+    "n": 60,
+    "win_pct": 82,
+    "median_excess_pp": 5.0,
+    "worst_excess_pp": -4.0,
+    "worst_start": "2006-04-03"
+   }
+  ],
+  "连续性版": [
+   {
+    "years": 1,
+    "n": 108,
+    "win_pct": 55,
+    "median_excess_pp": 2.7,
+    "worst_excess_pp": -115.1,
+    "worst_start": "2006-09-01"
+   },
+   {
+    "years": 3,
+    "n": 84,
+    "win_pct": 79,
+    "median_excess_pp": 5.8,
+    "worst_excess_pp": -12.1,
+    "worst_start": "2006-08-01"
+   },
+   {
+    "years": 5,
+    "n": 60,
+    "win_pct": 80,
+    "median_excess_pp": 5.0,
+    "worst_excess_pp": -4.3,
+    "worst_start": "2006-01-04"
+   }
+  ],
+  "A1": [
+   {
+    "years": 1,
+    "n": 108,
+    "win_pct": 69,
+    "median_excess_pp": 7.4,
+    "worst_excess_pp": -80.3,
+    "worst_start": "2008-11-03"
+   },
+   {
+    "years": 3,
+    "n": 84,
+    "win_pct": 87,
+    "median_excess_pp": 8.8,
+    "worst_excess_pp": -21.2,
+    "worst_start": "2008-11-03"
+   },
+   {
+    "years": 5,
+    "n": 60,
+    "win_pct": 90,
+    "median_excess_pp": 7.3,
+    "worst_excess_pp": -7.8,
+    "worst_start": "2008-11-03"
+   }
+  ],
+  "A2": [
+   {
+    "years": 1,
+    "n": 108,
+    "win_pct": 39,
+    "median_excess_pp": -4.1,
+    "worst_excess_pp": -136.5,
+    "worst_start": "2006-09-01"
+   },
+   {
+    "years": 3,
+    "n": 84,
+    "win_pct": 54,
+    "median_excess_pp": 0.5,
+    "worst_excess_pp": -18.0,
+    "worst_start": "2012-12-03"
+   },
+   {
+    "years": 5,
+    "n": 60,
+    "win_pct": 43,
+    "median_excess_pp": -0.8,
+    "worst_excess_pp": -10.9,
+    "worst_start": "2010-06-01"
+   }
+  ],
+  "K2A真实月末": [
+   {
+    "years": 1,
+    "n": 108,
+    "win_pct": 49,
+    "median_excess_pp": -0.1,
+    "worst_excess_pp": -82.1,
+    "worst_start": "2006-09-01"
+   },
+   {
+    "years": 3,
+    "n": 84,
+    "win_pct": 77,
+    "median_excess_pp": 3.6,
+    "worst_excess_pp": -9.3,
+    "worst_start": "2008-11-03"
+   },
+   {
+    "years": 5,
+    "n": 60,
+    "win_pct": 80,
+    "median_excess_pp": 2.7,
+    "worst_excess_pp": -4.3,
+    "worst_start": "2008-11-03"
+   }
+  ],
+  "BM-主": [
+   {
+    "years": 1,
+    "n": 108,
+    "win_pct": 0,
+    "median_excess_pp": 0.0,
+    "worst_excess_pp": 0.0,
+    "worst_start": "2006-01-04"
+   },
+   {
+    "years": 3,
+    "n": 84,
+    "win_pct": 0,
+    "median_excess_pp": 0.0,
+    "worst_excess_pp": 0.0,
+    "worst_start": "2006-01-04"
+   },
+   {
+    "years": 5,
+    "n": 60,
+    "win_pct": 0,
+    "median_excess_pp": 0.0,
+    "worst_excess_pp": 0.0,
+    "worst_start": "2006-01-04"
+   }
+  ],
+  "BM-同仓位": [
+   {
+    "years": 1,
+    "n": 108,
+    "win_pct": 61,
+    "median_excess_pp": 3.3,
+    "worst_excess_pp": -88.8,
+    "worst_start": "2006-09-01"
+   },
+   {
+    "years": 3,
+    "n": 84,
+    "win_pct": 67,
+    "median_excess_pp": 2.5,
+    "worst_excess_pp": -15.4,
+    "worst_start": "2006-08-01"
+   },
+   {
+    "years": 5,
+    "n": 60,
+    "win_pct": 75,
+    "median_excess_pp": 3.3,
+    "worst_excess_pp": -8.6,
+    "worst_start": "2006-01-04"
+   }
+  ],
+  "现行配置": [
+   {
+    "years": 1,
+    "n": 108,
+    "win_pct": 79,
+    "median_excess_pp": 3.9,
+    "worst_excess_pp": -11.6,
+    "worst_start": "2014-01-02"
+   },
+   {
+    "years": 3,
+    "n": 84,
+    "win_pct": 99,
+    "median_excess_pp": 3.5,
+    "worst_excess_pp": -0.5,
+    "worst_start": "2012-01-04"
+   },
+   {
+    "years": 5,
+    "n": 60,
+    "win_pct": 100,
+    "median_excess_pp": 3.8,
+    "worst_excess_pp": 0.4,
+    "worst_start": "2010-01-04"
+   }
+  ]
+ },
+ "current_allocation": {
+  "package": "/tmp/v6-d47-pkg/research-package-2015-12-31.sqlite",
+  "bar_max": "2015-12-31",
+  "bars_after_cutoff": 0,
+  "calendar_max": "2026-12-31",
+  "calendar_dates_after_cutoff": 2672,
+  "calendar_note": "calendar 复制的是日期。晚于截止日的行只在这里计数，不读价格。",
+  "panel_max": "2015-12-31",
+  "panel_rows_after_cutoff": 0,
+  "status": "ok",
+  "valve": "off",
+  "cost_one_way": 0.0005
+ }
+}
