@@ -275,6 +275,29 @@ def pool(rows, summary=''):
     return f'<div class="pool">{cards}</div>'
 
 
+def gate_grid(rows):
+    """| 编号 | 门槛 | 事先机会 | 段1 | 段2 | … | — one row per criterion, one cell per period; cell 'value｜过/不过'. Last column is the whole period (framed)."""
+    keys = list(rows[0].keys())
+    segs = keys[3:]
+    hd = ('<div class="gg-r gg-hd"><span>判据</span>' + ''.join(
+        f'<span class="{"gg-main" if i == len(segs) - 1 else ""}">{k}</span>' for i, k in enumerate(segs)) + '</div>')
+    out = ''
+    for r in rows:
+        code = _txt(r['编号'])
+        tot = code.startswith('合计') or code.startswith('四条')
+        name = (f'<div class="gg-k"><b>{_inner(r["编号"])}</b><span>门槛 {_inner(r["门槛"])}'
+                + (f' · 事先机会 {_inner(r["事先机会"])}' if _txt(r['事先机会']) else '') + '</span></div>')
+        cells = ''
+        for i, k in enumerate(segs):
+            t = _txt(r[k]); v, _, lab = t.partition('｜'); lab = lab.strip() or v.strip()
+            cls = {'过': 'ok', '不过': 'no'}.get(lab, '')
+            val = '' if lab == v.strip() else f'<b>{v.strip()}</b>'
+            cells += (f'<div class="gg-c {cls}{" gg-main" if i == len(segs) - 1 else ""}">{val}'
+                      f'<em>{"✓ 过" if cls == "ok" else ("✗ 不过" if cls == "no" else lab)}</em></div>')
+        out += f'<div class="gg-r{" gg-tot" if tot else ""}">{name}{cells}</div>'
+    return f'<div class="gg" style="--gg-n:{len(segs)}">{hd}{out}</div>'
+
+
 def peers(rows):
     """| 序列 | 年化 | 最大回撤 | 是什么 | → series with numbers as bars (v6 highlighted); series still without numbers as one chip strip."""
     def num(x):
@@ -312,7 +335,7 @@ def _arrow(html):
 
 def reconcile(rows):
     """| 结果 | 条目 | 说明 | with 结果 in {差 0, 勘误, 在查}: score strip, exception cards first, then the matched items as ticks."""
-    tone = {'差 0': 'ok', '勘误': 'fix', '在查': 'open'}
+    tone = {'差 0': 'ok', '勘误': 'fix', '在查': 'open', '小差': 'open'}
     ok = [r for r in rows if _txt(r['结果']) == '差 0']
     ex = [r for r in rows if _txt(r['结果']) != '差 0']
     seg = ''.join(f'<i class="{tone.get(_txt(r["结果"]), "open")}"></i>' for r in ok + ex)
@@ -320,7 +343,7 @@ def reconcile(rows):
     for r in ex:
         counts[_txt(r['结果'])] = counts.get(_txt(r['结果']), 0) + 1
     legend = ''.join(f'<span class="rc-lg {tone.get(k, "open")}"><i></i>{k} {v}</span>' for k, v in counts.items())
-    head = (f'<div class="rc-top"><div class="rc-score"><b>{len(ok)}</b><span>/ {len(rows)}</span><em>和冻结稿差 0</em></div>'
+    head = (f'<div class="rc-top"><div class="rc-score"><b>{len(ok)}</b><span>/ {len(rows)}</span><em>项差 0</em></div>'
             f'<div class="rc-bar">{seg}</div><div class="rc-lgs"><span class="rc-lg ok"><i></i>差 0 {len(ok)}</span>{legend}</div></div>')
     cards = ''.join(f'<div class="rc-ex {tone.get(_txt(r["结果"]), "open")}"><span class="rc-tag">{_txt(r["结果"])}</span>'
                     f'<b class="rc-ex-h">{_inner(r["条目"])}</b><div class="rc-ex-b">{_arrow(_inner(r["说明"]))}</div></div>' for r in ex)
@@ -328,7 +351,7 @@ def reconcile(rows):
     return f'<div class="rc">{head}<div class="rc-exs">{cards}</div><div class="rc-oks">{ticks}</div></div>'
 
 
-RENDER = {'对账': reconcile, '同行': peers, '代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers}
+RENDER = {'闸门格': gate_grid, '对账': reconcile, '同行': peers, '代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers}
 
 
 def apply(soup):
@@ -494,6 +517,22 @@ ol.route li .rt-gate { display: block !important; }
 .gt-d.no { background: var(--bad-soft); border-color: var(--bad); } .gt-d.no em { color: #fff; background: var(--bad); }
 .gt-d.pend { background: none; border-style: dashed; } .gt-d.pend b { font-family: var(--font-body); font-size: 13px; color: var(--muted); font-weight: 600; }
 .gt-all .gt-d { background: color-mix(in srgb, var(--surface) 12%, var(--ink)); border-color: color-mix(in srgb, var(--surface) 30%, var(--ink)); } .gt-all .gt-d span, .gt-all .gt-d.pend b { color: color-mix(in srgb, var(--surface) 78%, var(--ink)); }
+.gg { display: grid; gap: 6px; }
+.gg-r { display: grid; grid-template-columns: minmax(170px, 1.3fr) repeat(var(--gg-n), minmax(0, 1fr)); gap: 8px; align-items: stretch; }
+.gg-hd span { font-size: 12px; font-weight: 700; color: var(--muted); padding: 0 4px; align-self: end; }
+.gg-hd span.gg-main { color: var(--ink); }
+.gg-k { display: grid; gap: 2px; align-content: center; padding: 8px 10px; border-radius: 9px; background: var(--surface); border: 1px solid var(--line); }
+.gg-k b { font-size: 14px; color: var(--ink); } .gg-k span { font-size: 11.5px; color: var(--muted); }
+.gg-c { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 8px 10px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); }
+.gg-c b { font-family: var(--font-mono); font-size: 15px; font-weight: 800; color: var(--ink); white-space: nowrap; }
+.gg-c em { font-style: normal; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+.gg-c.ok { background: var(--good-soft); border-color: color-mix(in srgb, var(--good) 40%, var(--line)); } .gg-c.ok em { color: var(--good); }
+.gg-c.no { background: var(--bad-soft); border-color: var(--bad); } .gg-c.no em { color: var(--bad); }
+.gg-c.gg-main { box-shadow: inset 0 0 0 1.5px var(--ink); }
+.gg-tot .gg-k { background: var(--bg); } .gg-tot .gg-c { justify-content: center; } .gg-tot .gg-c em { font-size: 13.5px; }
+.gg .num { background: none !important; padding: 0 !important; border: 0 !important; }
+.gg-c b.num, .gg-c b .num { font-family: var(--font-mono) !important; font-size: 15px !important; font-weight: 800 !important; color: var(--ink) !important; }
+@media (max-width: 760px) { .gg-r { grid-template-columns: 1fr repeat(var(--gg-n), minmax(0, 1fr)); } .gg-c { flex-direction: column; align-items: flex-start; } }
 .rc { display: grid; gap: 12px; }
 .rc-top { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "s b" "s l"; gap: 4px 18px; align-items: center; }
 .rc-score { grid-area: s; display: flex; align-items: baseline; gap: 6px; } .rc-score b { font-family: var(--font-mono); font-size: 38px; font-weight: 800; color: var(--good); line-height: 1; }
