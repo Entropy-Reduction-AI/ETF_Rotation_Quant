@@ -22,13 +22,16 @@
  },
  "行情库sha256": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8",
  "代码sha256": {
-  "src/v6/oneshot_exam.py": "3dda772486b23573bd7925df94390c0060de43e507928fc23e114a67ab8a0a64",
+  "src/v6/oneshot_exam.py": "29c146de6b5558f0b64a4ed4fa530e33947902880abc0a18451aed187531521e",
   "src/v6/oneshot_prep.py": "8b0da5960f7492c64f7bac88d06d8ff4bfae753708b031d17f9dd0170ea4c726",
   "src/v6/engine.py": "85940c513654ae600d32516ef2d26124f4981e250a0a6e65ccb16cf69467d320"
  },
+ "D51": "判据②用单边 0.2% 的前 3；S1–S7 对照跟着改；S8 对照不变；S6 的 BM-同仓位是 50/25/25。",
  "对照": {
-  "实质差异": 1,
-  "可以签收": false
+  "实质差异": 0,
+  "可以签收": true,
+  "D51验收": true,
+  "保费": 1.383910856278514
  },
  "投票": "expanding99，与体检同一段替换"
 }
