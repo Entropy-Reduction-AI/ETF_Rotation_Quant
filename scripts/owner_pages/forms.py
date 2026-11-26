@@ -1392,3 +1392,132 @@ CSS += r"""
 .f-pd-c.neg b { color: var(--bad); } .f-pd-c.pos b { color: var(--good); }
 @media (max-width: 760px) { .f-pd-r { grid-template-columns: 1fr; } }
 """
+
+
+# ---------- v6 体检报告：三段最大回撤（条长 = 全段回撤深度，和 BM-主比浅多少） ----------
+def drawdowns(head, rows):
+    vals = [[abs(float(_txt(x).replace('−', '-') or 0)) for x in r[1:4]] for r in rows]
+    mx = max(v[2] for v in vals) or 1
+    bm = next((v[2] for r, v in zip(rows, vals) if _txt(r[0]).startswith('BM-主')), None)
+    out = '<div class="f-nv f-nv-hd"><span>序列</span><span>2006–10</span><span>2011–15</span><span>2006–15（条长 = 回撤深度）</span></div>'
+    for r, v in zip(rows, vals):
+        name = _txt(r[0])
+        kind = 'bm' if name.startswith('BM') else ('v6' if name.startswith('v6') else '')
+        diff = (f'<em class="up">比 BM-主浅 {bm - v[2]:.1f}</em>' if bm is not None and kind != 'bm' and v[2] < bm else '')
+        out += (f'<div class="f-nv f-dd {kind}"><span class="f-nv-k">{_inner(r[0])}</span><span>{_inner(r[1])}</span><span>{_inner(r[2])}</span>'
+                f'<span class="f-nv-b"><i style="width:{v[2] / mx * 60:.0f}%"></i><b>{_inner(r[3])}</b>{diff}</span></div>')
+    return f'<div class="f-nvs">{out}</div>'
+
+
+TABLES += [(lambda h: len(h) == 4 and h[0] == '回撤' and h[1] == '2006–10', drawdowns, 'drawdowns')]
+
+CSS += r"""
+.f-dd .f-nv-b i { background: color-mix(in srgb, var(--bad) 70%, var(--surface)); }
+.f-dd.bm .f-nv-b i { background: var(--muted); } .f-dd.v6 .f-nv-b i { background: var(--bad); }
+"""
+
+
+# ---------- v6 体检报告：预测表 + 设计期实际（按是否落在范围里上色，不按正负号） ----------
+def fc_actual(head, rows):
+    def f(x):
+        try:
+            return float(x.replace('−', '-').replace('+', '').strip())
+        except ValueError:
+            return None
+    out = '<div class="f-fa f-fa-hd"><span>来源</span><span>中间值</span><span>事先范围</span><span>设计期</span></div>'
+    for r in rows:
+        name, mid, rng, act = (_txt(c) for c in r[:4])
+        m = re.findall(r'[−\-+]?\d+(?:\.\d+)?', rng)
+        lo, hi = (sorted(f(x) for x in m[:2]) if len(m) >= 2 else (None, None))
+        a = f(act)
+        cls, tag = '', ''
+        if a is not None and lo is not None:
+            if a > hi:
+                cls, tag = 'hi', '高于范围'
+            elif a < lo:
+                cls, tag = 'lo', '低于范围'
+            else:
+                cls, tag = 'in', '在范围里'
+        tot = name.startswith('合计')
+        out += (f'<div class="f-fa{" tot" if tot else ""}"><span class="f-fa-k">{_inner(r[0])}</span><span class="f-fa-m">{_inner(r[1])}</span>'
+                f'<span class="f-fa-r">{_inner(r[2])}</span><span class="f-fa-a {cls}"><b>{_inner(r[3])}</b>'
+                + (f'<em>{tag}</em>' if tag else '') + '</span></div>')
+    return f'<div class="f-fas">{out}</div>'
+
+
+TABLES += [(lambda h: h == ['来源', '中间值', '范围', '设计期'], fc_actual, 'fc_actual')]
+
+CSS += r"""
+.f-fas { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.f-fa { display: grid; grid-template-columns: minmax(0, 1.5fr) 5em minmax(0, 1.2fr) minmax(0, 1fr); gap: 10px; padding: 8px 12px; border-top: 1px solid var(--line); align-items: center; font-size: 13px; }
+.f-fa.f-fa-hd { border-top: 0; background: var(--bg); } .f-fa.f-fa-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.f-fa.tot { background: var(--bg); } .f-fa.tot .f-fa-k { font-weight: 800; }
+.f-fa-k { color: var(--ink); } .f-fa-m, .f-fa-r { font-family: var(--font-mono); color: var(--muted); }
+.f-fa-a { display: flex; align-items: center; gap: 8px; } .f-fa-a b { font-family: var(--font-mono); font-size: 14px; color: var(--ink); }
+.f-fa-a em { font-style: normal; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 999px; background: var(--bg); color: var(--muted); }
+.f-fa-a.hi b { color: var(--good); } .f-fa-a.hi em { background: var(--good-soft); color: var(--good); }
+.f-fa-a.lo b { color: var(--bad); } .f-fa-a.lo em { background: var(--bad-soft); color: var(--bad); }
+.f-fas .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+.f-fa-m .pos, .f-fa-m .neg, .f-fa-r .pos, .f-fa-r .neg { color: var(--muted) !important; font-weight: inherit !important; }
+.f-fa-a .pos, .f-fa-a .neg { color: inherit !important; }
+"""
+
+
+# ---------- v6 体检报告：八条线是什么（做法三行 + 年化条 + 回撤条；按有没有防守分两组） ----------
+def lineup(head, rows):
+    def f(x):
+        try:
+            return float(_txt(x).replace('−', '-').replace('%', '').strip())
+        except ValueError:
+            return None
+    items = [dict(r=r, name=_txt(r[0]), ann=f(r[4]), dd=f(r[5]), guard=not _txt(r[3]).startswith('没有')) for r in rows]
+    mx_a = max(abs(i['ann']) for i in items) or 1
+    mx_d = max(abs(i['dd']) for i in items) or 1
+    out = ('<div class="f-lu hd"><span>线</span><span>放哪</span><span>怎么选</span><span>防守</span>'
+           '<span><i class="ka"></i>年化 <i class="kd"></i>最大回撤</span><span>为什么是这个结果</span></div>')
+    for guard in (True, False):
+        grp = [i for i in items if i['guard'] == guard]
+        if not grp:
+            continue
+        lo = min(abs(i['dd']) for i in grp)
+        hi = max(abs(i['dd']) for i in grp)
+        lab = '设了防守' if guard else '没设防守'
+        out += (f'<div class="f-lu-g {"on" if guard else "off"}"><b>{lab}的 {len(grp)} 条</b>'
+                f'<span>最大回撤 −{lo:.1f}% 到 −{hi:.1f}%</span></div>')
+        for i in grp:
+            r = i['r']
+            kind = 'v6' if i['name'] == 'v6' else ('bm' if i['name'].startswith('BM') else '')
+            bars = (f'<div class="f-lu-b a"><span><i style="width:{abs(i["ann"]) / mx_a * 100:.0f}%"></i></span><b>{_inner(r[4])}</b></div>'
+                    f'<div class="f-lu-b d"><span><i style="width:{abs(i["dd"]) / mx_d * 100:.0f}%"></i></span><b>{_inner(r[5])}</b></div>')
+            out += (f'<div class="f-lu {kind}"><div class="f-lu-k">{_inner(r[0])}</div><div class="f-lu-c">{_inner(r[1])}</div>'
+                    f'<div class="f-lu-c">{_inner(r[2])}</div><div class="f-lu-c g">{_inner(r[3])}</div>'
+                    f'<div class="f-lu-bars">{bars}</div><div class="f-lu-why">{_inner(r[6])}</div></div>')
+    return f'<div class="f-lus">{out}</div>'
+
+
+TABLES += [(lambda h: h == ['线', '放哪', '怎么选', '防守', '年化', '最大回撤', '为什么是这个结果'], lineup, 'lineup')]
+
+CSS += r"""
+.f-lus { display: grid; gap: 5px; }
+.f-lu { display: grid; grid-template-columns: 74px minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1.2fr); gap: 12px; align-items: center; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-size: 12.5px; line-height: 1.45; color: var(--ink); }
+.f-lu.hd { background: none; border: 0; padding: 0 12px; } .f-lu.hd span { font-size: 11px; font-weight: 700; color: var(--muted); }
+.f-lu.hd i { display: inline-block; width: 10px; height: 8px; border-radius: 2px; margin: 0 3px 0 4px; } .f-lu.hd i.ka { background: var(--accent); margin-left: 0; } .f-lu.hd i.kd { background: var(--bad); }
+.f-lu-g { display: flex; align-items: baseline; gap: 10px; margin: 6px 0 0; padding: 6px 12px; border-radius: 8px; font-size: 13px; }
+.f-lu-g b { font-size: 14px; } .f-lu-g span { color: var(--muted); font-family: var(--font-mono); }
+.f-lu-g.on { background: var(--good-soft); } .f-lu-g.on b { color: var(--good); }
+.f-lu-g.off { background: var(--bad-soft); } .f-lu-g.off b { color: var(--bad); }
+.f-lu.v6 { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.f-lu-k { font-size: 15px; font-weight: 800; color: var(--ink); } .f-lu.v6 .f-lu-k { color: var(--accent); } .f-lu.bm .f-lu-k { color: var(--muted); }
+.f-lu-c.g { color: var(--good); } .f-lus .f-lu-g.off ~ .f-lu .f-lu-c.g { color: var(--muted); }
+.f-lu-bars { display: grid; gap: 5px; }
+.f-lu-b { display: grid; grid-template-columns: minmax(0, 1fr) 4.2em; gap: 6px; align-items: center; }
+.f-lu-b span { height: 10px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+.f-lu-b i { display: block; height: 10px; border-radius: 3px; }
+.f-lu-b.a i { background: var(--accent); } .f-lu-b.d i { background: var(--bad); }
+.f-lu.bm .f-lu-b.a i { background: var(--muted); }
+.f-lu-b b { font-family: var(--font-mono); font-size: 13px; text-align: right; color: var(--ink); }
+.f-lu-b.d b { color: var(--bad); }
+.f-lu-why { font-weight: 600; }
+.f-lus .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+@media (max-width: 760px) { .f-lu { grid-template-columns: 1fr 1fr; gap: 6px 10px; } .f-lu-k, .f-lu-bars, .f-lu-why { grid-column: 1 / -1; } .f-lu.hd { display: none; } }
+"""

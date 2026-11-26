@@ -275,6 +275,29 @@ def pool(rows, summary=''):
     return f'<div class="pool">{cards}</div>'
 
 
+def gate_grid(rows):
+    """| 编号 | 门槛 | 事先机会 | 段1 | 段2 | … | — one row per criterion, one cell per period; cell 'value｜过/不过'. Last column is the whole period (framed)."""
+    keys = list(rows[0].keys())
+    segs = keys[3:]
+    hd = ('<div class="gg-r gg-hd"><span>判据</span>' + ''.join(
+        f'<span class="{"gg-main" if i == len(segs) - 1 else ""}">{k}</span>' for i, k in enumerate(segs)) + '</div>')
+    out = ''
+    for r in rows:
+        code = _txt(r['编号'])
+        tot = code.startswith('合计') or code.startswith('四条')
+        name = (f'<div class="gg-k"><b>{_inner(r["编号"])}</b><span>门槛 {_inner(r["门槛"])}'
+                + (f' · 事先机会 {_inner(r["事先机会"])}' if _txt(r['事先机会']) else '') + '</span></div>')
+        cells = ''
+        for i, k in enumerate(segs):
+            t = _txt(r[k]); v, _, lab = t.partition('｜'); lab = lab.strip() or v.strip()
+            cls = {'过': 'ok', '不过': 'no'}.get(lab, '')
+            val = '' if lab == v.strip() else f'<b>{v.strip()}</b>'
+            cells += (f'<div class="gg-c {cls}{" gg-main" if i == len(segs) - 1 else ""}">{val}'
+                      f'<em>{"✓ 过" if cls == "ok" else ("✗ 不过" if cls == "no" else lab)}</em></div>')
+        out += f'<div class="gg-r{" gg-tot" if tot else ""}">{name}{cells}</div>'
+    return f'<div class="gg" style="--gg-n:{len(segs)}">{hd}{out}</div>'
+
+
 def peers(rows):
     """| 序列 | 年化 | 最大回撤 | 是什么 | → series with numbers as bars (v6 highlighted); series still without numbers as one chip strip."""
     def num(x):
@@ -312,7 +335,7 @@ def _arrow(html):
 
 def reconcile(rows):
     """| 结果 | 条目 | 说明 | with 结果 in {差 0, 勘误, 在查}: score strip, exception cards first, then the matched items as ticks."""
-    tone = {'差 0': 'ok', '勘误': 'fix', '在查': 'open'}
+    tone = {'差 0': 'ok', '勘误': 'fix', '在查': 'open', '小差': 'open'}
     ok = [r for r in rows if _txt(r['结果']) == '差 0']
     ex = [r for r in rows if _txt(r['结果']) != '差 0']
     seg = ''.join(f'<i class="{tone.get(_txt(r["结果"]), "open")}"></i>' for r in ok + ex)
@@ -320,7 +343,7 @@ def reconcile(rows):
     for r in ex:
         counts[_txt(r['结果'])] = counts.get(_txt(r['结果']), 0) + 1
     legend = ''.join(f'<span class="rc-lg {tone.get(k, "open")}"><i></i>{k} {v}</span>' for k, v in counts.items())
-    head = (f'<div class="rc-top"><div class="rc-score"><b>{len(ok)}</b><span>/ {len(rows)}</span><em>和冻结稿差 0</em></div>'
+    head = (f'<div class="rc-top"><div class="rc-score"><b>{len(ok)}</b><span>/ {len(rows)}</span><em>项差 0</em></div>'
             f'<div class="rc-bar">{seg}</div><div class="rc-lgs"><span class="rc-lg ok"><i></i>差 0 {len(ok)}</span>{legend}</div></div>')
     cards = ''.join(f'<div class="rc-ex {tone.get(_txt(r["结果"]), "open")}"><span class="rc-tag">{_txt(r["结果"])}</span>'
                     f'<b class="rc-ex-h">{_inner(r["条目"])}</b><div class="rc-ex-b">{_arrow(_inner(r["说明"]))}</div></div>' for r in ex)
@@ -328,7 +351,36 @@ def reconcile(rows):
     return f'<div class="rc">{head}<div class="rc-exs">{cards}</div><div class="rc-oks">{ticks}</div></div>'
 
 
-RENDER = {'对账': reconcile, '同行': peers, '代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers}
+
+def random_grid(rows):
+    """| 账 | 段1 | 段2 | 全段 | — cell '百分位｜每月跑赢中位数｜年化'. Tone by percentile: ≥95 good, <50 bad, else mid. Last column framed."""
+    keys = list(rows[0].keys()); segs = keys[1:]
+    def tone(p):
+        return ('good', '前 5%') if p >= 95 else (('bad', '低于随机的中间') if p < 50 else ('mid', '高于中间，不在前 5%'))
+    hd = '<div class="rg-r rg-hd"><span></span>' + ''.join(f'<span class="{"rg-main" if i == len(segs) - 1 else ""}">{k}</span>' for i, k in enumerate(segs)) + '</div>'
+    out = ''
+    for r in rows:
+        cells = ''
+        for i, k in enumerate(segs):
+            parts = [x.strip() for x in _txt(r[k]).split('｜')]
+            p = float(parts[0]); t, lab = tone(p)
+            cells += (f'<div class="rg-c t-{t}{" rg-main" if i == len(segs) - 1 else ""}"><div class="rg-top"><b>第 {p:.1f}</b><em>{lab}</em></div>'
+                      f'<div class="rg-bar"><i style="width:{p:.0f}%"></i><s></s></div>'
+                      f'<div class="rg-sub"><span>每月赢 {parts[1]}</span><span>年化 {parts[2]}</span></div></div>')
+        out += f'<div class="rg-r"><div class="rg-k">{_inner(r[keys[0]])}</div>{cells}</div>'
+    return f'<div class="rg" style="--rg-n:{len(segs)}">{hd}{out}</div>'
+
+
+def readout(rows):
+    """| 读法 | 焦点 | 说明 | 色 | — one card per reading: small label, big focus phrase, one-line explanation; 色 = 好 / 中 / 差."""
+    out = ''
+    for r in rows:
+        t = {'好': 'good', '差': 'bad'}.get(_txt(r.get('色', '')), 'mid')
+        out += (f'<div class="ro t-{t}"><div class="ro-k">{_inner(r["读法"])}</div><div class="ro-f">{_inner(r["焦点"])}</div>'
+                f'<div class="ro-b">{_inner(r["说明"])}</div></div>')
+    return f'<div class="ros">{out}</div>'
+
+RENDER = {'闸门格': gate_grid, '对账': reconcile, '同行': peers, '代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers, '随机格': random_grid, '读数': readout}
 
 
 def apply(soup):
@@ -355,6 +407,32 @@ def apply(soup):
 
 
 CSS = r"""
+.rg { display: grid; gap: 8px; }
+.rg-r { display: grid; grid-template-columns: 96px repeat(var(--rg-n), minmax(0, 1fr)); gap: 8px; align-items: stretch; }
+.rg-hd span { font-size: 12px; font-weight: 700; color: var(--muted); padding: 0 4px; } .rg-hd span.rg-main { color: var(--ink); }
+.rg-k { display: flex; align-items: center; font-size: 14px; font-weight: 800; color: var(--ink); }
+.rg-c { border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; background: var(--surface); display: grid; gap: 6px; }
+.rg-c.rg-main { border-width: 2px; border-color: var(--ink); }
+.rg-top { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; }
+.rg-top b { font-size: 22px; font-weight: 800; font-family: var(--font-mono); }
+.rg-top em { font-style: normal; font-size: 11px; font-weight: 700; }
+.rg-bar { position: relative; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.rg-bar i { display: block; height: 8px; border-radius: 4px; }
+.rg-bar s { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--muted); }
+.rg-sub { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--muted); font-family: var(--font-mono); }
+.rg-c.t-good { background: var(--good-soft); } .rg-c.t-good b, .rg-c.t-good em { color: var(--good); } .rg-c.t-good .rg-bar i { background: var(--good); }
+.rg-c.t-bad { background: var(--bad-soft); } .rg-c.t-bad b, .rg-c.t-bad em { color: var(--bad); } .rg-c.t-bad .rg-bar i { background: var(--bad); }
+.rg-c.t-mid b, .rg-c.t-mid em { color: var(--muted); } .rg-c.t-mid .rg-bar i { background: var(--muted); }
+.ros { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.ro { border: 1px solid var(--line); border-top: 4px solid var(--muted); border-radius: 10px; padding: 11px 13px; background: var(--surface); display: grid; gap: 5px; align-content: start; }
+.ro.t-good { border-top-color: var(--good); } .ro.t-bad { border-top-color: var(--bad); }
+.ro-k { font-size: 12px; font-weight: 700; color: var(--muted); }
+.ro-f { font-size: 20px; font-weight: 800; color: var(--ink); line-height: 1.25; }
+.ro.t-good .ro-f { color: var(--good); } .ro.t-bad .ro-f { color: var(--bad); }
+.ro-b { font-size: 13px; line-height: 1.55; color: var(--ink); }
+.comp-随机格 .num, .comp-读数 .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+@media (max-width: 760px) { .rg-r { grid-template-columns: 1fr; } .rg-hd { display: none; } }
+
 .cbx-c { gap: 10px; padding: 12px 14px; min-width: 210px; }
 .cbx-top span { font-size: 13px; }
 .cbx-is { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -494,6 +572,22 @@ ol.route li .rt-gate { display: block !important; }
 .gt-d.no { background: var(--bad-soft); border-color: var(--bad); } .gt-d.no em { color: #fff; background: var(--bad); }
 .gt-d.pend { background: none; border-style: dashed; } .gt-d.pend b { font-family: var(--font-body); font-size: 13px; color: var(--muted); font-weight: 600; }
 .gt-all .gt-d { background: color-mix(in srgb, var(--surface) 12%, var(--ink)); border-color: color-mix(in srgb, var(--surface) 30%, var(--ink)); } .gt-all .gt-d span, .gt-all .gt-d.pend b { color: color-mix(in srgb, var(--surface) 78%, var(--ink)); }
+.gg { display: grid; gap: 6px; }
+.gg-r { display: grid; grid-template-columns: minmax(170px, 1.3fr) repeat(var(--gg-n), minmax(0, 1fr)); gap: 8px; align-items: stretch; }
+.gg-hd span { font-size: 12px; font-weight: 700; color: var(--muted); padding: 0 4px; align-self: end; }
+.gg-hd span.gg-main { color: var(--ink); }
+.gg-k { display: grid; gap: 2px; align-content: center; padding: 8px 10px; border-radius: 9px; background: var(--surface); border: 1px solid var(--line); }
+.gg-k b { font-size: 14px; color: var(--ink); } .gg-k span { font-size: 11.5px; color: var(--muted); }
+.gg-c { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 8px 10px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); }
+.gg-c b { font-family: var(--font-mono); font-size: 15px; font-weight: 800; color: var(--ink); white-space: nowrap; }
+.gg-c em { font-style: normal; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+.gg-c.ok { background: var(--good-soft); border-color: color-mix(in srgb, var(--good) 40%, var(--line)); } .gg-c.ok em { color: var(--good); }
+.gg-c.no { background: var(--bad-soft); border-color: var(--bad); } .gg-c.no em { color: var(--bad); }
+.gg-c.gg-main { box-shadow: inset 0 0 0 1.5px var(--ink); }
+.gg-tot .gg-k { background: var(--bg); } .gg-tot .gg-c { justify-content: center; } .gg-tot .gg-c em { font-size: 13.5px; }
+.gg .num { background: none !important; padding: 0 !important; border: 0 !important; }
+.gg-c b.num, .gg-c b .num { font-family: var(--font-mono) !important; font-size: 15px !important; font-weight: 800 !important; color: var(--ink) !important; }
+@media (max-width: 760px) { .gg-r { grid-template-columns: 1fr repeat(var(--gg-n), minmax(0, 1fr)); } .gg-c { flex-direction: column; align-items: flex-start; } }
 .rc { display: grid; gap: 12px; }
 .rc-top { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "s b" "s l"; gap: 4px 18px; align-items: center; }
 .rc-score { grid-area: s; display: flex; align-items: baseline; gap: 6px; } .rc-score b { font-family: var(--font-mono); font-size: 38px; font-weight: 800; color: var(--good); line-height: 1; }
