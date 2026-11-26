@@ -37,6 +37,7 @@
 
 | 页面 | 回答什么 |
 | --- | --- |
+| [**v6 一次性检验报告（骨架）**](https://claude.ai/artifact/GQKvS1KvRmWiPBkHKd7JRp) | 开考前定下的结构和三版结论句；跑完只填数 |
 | [**v6 体检报告（设计期）**](https://claude.ai/artifact/NRgYVyimeFrzdhRetr48Fq) | 复算对没对上、判据过不过、八条线做法、性格、急跌、行情、任意起点、钱从哪来 |
 | [**v6 预注册（已冻结）**](https://claude.ai/artifact/VASWvP9wCzDvXmsQqzLFBh) | v6 的规则、判据、疼痛表、候选清单（附表 A）和设计期画像（附表 B）；冻结后一次性检验照它跑 |
 | [**v6 预演预测表**](https://claude.ai/artifact/4uzHh1NzeLVAEovbyLqqby) | 起草之前算出的账：每年比基准多几个点、从哪来、把握多大、低于哪条线不做 |
