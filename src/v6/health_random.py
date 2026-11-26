@@ -79,8 +79,8 @@ def _plans(levels, parent, prior, tags, votes_fn, bond, cash):
         held_bond = bool(bond_above.loc[day]) if day in bond_above.index else False
         if not ok.any():
             plans.append({
-                "t": t, "pool": np.array([parent_at], dtype=int),
-                "v6": np.array([parent_at], dtype=int), "frac": 1.0,
+                "t": t, "day": day, "pool": np.array([parent_at], dtype=int),
+                "v6": np.array([parent_at], dtype=int), "frac": 1.0, "p": p_value,
                 "bond": held_bond, "fallback": True,
             })
             continue
@@ -94,7 +94,7 @@ def _plans(levels, parent, prior, tags, votes_fn, bond, cash):
         if stress and raw and np.isfinite(nxt[raw]).all():
             pending_leader = float(np.mean(nxt[raw]))
         plans.append({
-            "t": t, "pool": pool, "v6": v6, "frac": float(frac),
+            "t": t, "day": day, "pool": pool, "v6": v6, "frac": float(frac), "p": p_value,
             "bond": held_bond, "fallback": False,
         })
     return plans
@@ -302,6 +302,69 @@ def run() -> dict:
     (OUT / "health-random-summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
     return {"rows": len(rows), "last": summary["last"]}
+
+
+def export_paths() -> dict:
+    """只写每条路径的年化。不覆盖已签收的 health-random.csv。"""
+    books = _books()
+    rows = []
+    for label, rule, paths in (
+        ("组合", books["rule"], books["mixed"]),
+        ("A股", books["a"], books["a_paths"]),
+        ("美股", books["u"], books["u_paths"]),
+    ):
+        for name, start, end in SEGMENTS:
+            day = (rule.index >= start) & (rule.index <= end)
+            annual = annualize(paths[:, day]) * 100.0
+            if annual.shape != (TRIALS,):
+                raise IsolationError("路径条数不是 1000")
+            for trial, value in enumerate(annual):
+                rows.append({
+                    "book": label,
+                    "segment": name,
+                    "trial": trial,
+                    "annual_pct": float(value),
+                })
+    path = OUT / "health-random-paths.csv"
+    pd.DataFrame(rows).to_csv(path, index=False)
+    if pd.Timestamp(books["rule"].index.max()) > pd.Timestamp("2015-12-31"):
+        raise IsolationError("路径年化晚于 2015-12-31")
+    return {"rows": len(rows), "last": books["rule"].index.max().date().isoformat(), "path": path.name}
+
+
+def _books() -> dict:
+    panels = load_panels()
+    opaque = Path("/opt/cursor/artifacts/french-49/49_Industry_Portfolios.csv")
+    if not opaque.exists() or _sha_file(opaque) != FRENCH_SHA or not PANEL.exists():
+        raise IsolationError("美股起点经验不在已登记的面板上，随机停")
+    prior = us_prior(PANEL)
+    bond, cash = panels["bond"], panels["cash"]
+    votes = panels["votes"]
+    saved = {key: panels["trin"][key].copy() for key in ("csi300", "SPX")}
+    panels["trin"]["csi300"] = month_end_mean(clip_expanding(_a_daily(panels)))
+    panels["trin"]["SPX"] = month_end_mean(clip_expanding(_us_daily(panels)))
+    try:
+        a_plans = _plans(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash)
+        u_plans = _plans(panels["US"], "SPX", prior, TAGS["us"], votes, bond, cash)
+        rng = np.random.default_rng(SEED)
+        a_paths = _simulate(panels["A"], bond, cash, a_plans, _draw(a_plans, rng, TRIALS), COST)
+        u_paths = _simulate(panels["US"], bond, cash, u_plans, _draw(u_plans, rng, TRIALS), COST)
+        mixed = np.empty_like(a_paths)
+        for i in range(TRIALS):
+            mixed[i] = mix_monthly(
+                pd.Series(a_paths[i], index=panels["A"].index),
+                pd.Series(u_paths[i], index=panels["US"].index),
+                COST,
+            ).to_numpy()
+        a_slot, _, _ = slot(panels["A"], "csi300", N, None, TAGS["a"], "v6", COST, votes, bond, cash)
+        u_slot, _, _ = slot(panels["US"], "SPX", N, prior, TAGS["us"], "v6", COST, votes, bond, cash)
+        rule = mix_monthly(a_slot, u_slot, COST)
+        assert_not_after(rule.index, "路径年化")
+        return {"rule": rule, "mixed": mixed, "a": a_slot, "a_paths": a_paths, "u": u_slot, "u_paths": u_paths,
+                "a_plans": a_plans, "u_plans": u_plans, "panels": panels, "votes": votes}
+    finally:
+        panels["trin"]["csi300"] = saved["csi300"]
+        panels["trin"]["SPX"] = saved["SPX"]
 
 
 def main() -> None:
