@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import subprocess
+import sys
 import unittest
 
 import numpy as np
@@ -206,6 +208,24 @@ class OneshotPrepTests(unittest.TestCase):
         self.assertNotAlmostEqual(whole, only_2014)
         self.assertAlmostEqual(cut, only_2014)
 
+    def test_premium_drops_2026_when_series_and_window_both_end_in_september(self):
+        index = pd.bdate_range("2025-01-02", "2026-09-30")
+        v6 = pd.Series(0.0004, index=index)
+        plain = pd.Series(0.0008, index=index)
+        plain.loc["2026-01-01":] = 0.004
+        bm = pd.Series(0.0002, index=index)
+        both = premium_pp(v6, plain, bm, "2025-01-01", "2026-09-30")
+        only_2025 = premium_pp(v6, plain, bm, "2025-01-01", "2025-12-31")
+        self.assertAlmostEqual(both, only_2025)
+        book = SpanBook(
+            v6=v6, gross=v6, undefended=plain, equal_weight=plain,
+            bm_main_total=bm, bm_main_price=bm, bm_same_total=bm, bm_same_price=bm, k2a=bm,
+        )
+        judged = evaluate(book, "2025-01-01", "2026-09-30")
+        full_year = evaluate(book, "2025-01-01", "2025-12-31")
+        self.assertAlmostEqual(judged.premium_pp, full_year.premium_pp)
+        self.assertAlmostEqual(judged.premium_pp, only_2025)
+
     def test_full_span_reports_blocks_without_a_verdict(self):
         index = pd.bdate_range("2006-01-02", "2026-09-30")
         book = _book(index)
@@ -322,11 +342,22 @@ class OneshotPrepTests(unittest.TestCase):
         self.assertIn("牛市", set(labels.dropna()))
         table = regime_table(strategy, {"BM-主": bench}, labels)
         self.assertEqual({row["行情"] for row in table}, {"牛市", "回调", "熊市", "反弹"})
-        navs = {"v6": (1.0 + strategy).cumprod(), "BM-主": (1.0 + bench).cumprod()}
-        one_year = any_start(navs, "v6", 1)
-        self.assertGreater(one_year["起点数"], 0)
-        self.assertEqual(one_year["跑赢占比"]["BM-主"], 1.0)
-        self.assertEqual(any_start(navs, "v6", 5)["起点数"], 0)
+        held = any_start({"v6": strategy, "BM-主": bench}, "v6", 1)
+        self.assertEqual(held["交易日"], 252)
+        self.assertGreater(held["起点数"], 0)
+        self.assertEqual(held["跑赢占比"]["BM-主"], 1.0)
+        self.assertGreater(held["中位"]["BM-主"], 0.0)
+        five = any_start({"v6": strategy, "BM-主": bench}, "v6", 5)
+        self.assertEqual(five["交易日"], 1260)
+        self.assertEqual(five["起点数"], 0)
+        short = pd.bdate_range("2015-01-02", periods=252)
+        exact = any_start(
+            {"v6": pd.Series(0.001, index=short), "BM-主": pd.Series(0.0, index=short)},
+            "v6",
+            1,
+        )
+        self.assertEqual(exact["起点数"], 1)
+        self.assertEqual(exact["交易日"], 252)
 
     def test_random_windows_do_not_become_a_live_exam(self):
         early = pd.bdate_range("2015-01-05", "2015-03-31")
@@ -392,6 +423,14 @@ class OneshotPrepTests(unittest.TestCase):
             run_exam()
         with self.assertRaises(IsolationError):
             main()
+        proc = subprocess.run(
+            [sys.executable, "-m", "src.v6.oneshot_prep"],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertNotEqual(proc.returncode, 0)
+        self.assertIn("一次性检验未授权", proc.stderr)
         with self.assertRaises(IsolationError):
             current_configuration("2026-09-30")
         with self.assertRaises(IsolationError):

@@ -279,19 +279,33 @@ def _window(series: pd.Series, start: str, end: str) -> pd.Series:
     return window
 
 
+def _full_natural_year(index: pd.DatetimeIndex, year: int) -> bool:
+    """这一年在序列里要有 1 月也有 12 月。只到 9 月的 2026 不是完整自然年。"""
+    block = index[index.year == year]
+    if len(block) == 0:
+        return False
+    return block.min().month == 1 and block.max().month == 12
+
+
 def _complete_years(calendar: pd.DatetimeIndex, start: str, end: str) -> list[int]:
+    """自然年。窗口没有盖住该年 1 月 1 日到 12 月 31 日，或序列本身停在 12 月之前，都不计。"""
     years = []
     start_ts, end_ts = pd.Timestamp(start), pd.Timestamp(end)
     for year, block in pd.Series(1, index=calendar).groupby(calendar.year):
+        year = int(year)
+        if start_ts > pd.Timestamp(f"{year}-01-01") or end_ts < pd.Timestamp(f"{year}-12-31"):
+            continue
+        if not _full_natural_year(block.index, year):
+            continue
         if block.index.min() >= start_ts and block.index.max() <= end_ts:
-            years.append(int(year))
+            years.append(year)
     return years
 
 
 def _covers(series: pd.Series, year: int, calendar: pd.DatetimeIndex) -> bool:
     block = calendar[calendar.year == year]
     have = series.index[series.index.year == year]
-    if len(block) == 0 or len(have) == 0:
+    if not _full_natural_year(block, year) or not _full_natural_year(have, year):
         return False
     return have.min() <= block.min() and have.max() >= block.max()
 
@@ -726,29 +740,50 @@ def regime_table(strategy: pd.Series, benchmarks: dict[str, pd.Series], labels: 
     return rows
 
 
-def any_start(navs: dict[str, pd.Series], strategy: str, years: int) -> dict:
-    """月初买进，持有整年。终点超过最后一天就停止。跑赢是严格大于。"""
-    index = pd.DatetimeIndex(navs[strategy].index).sort_values().unique()
-    starts = pd.Series(index, index=index).groupby([index.year, index.month]).first().to_numpy()
-    wins = {name: 0 for name in navs if name != strategy}
-    n = 0
-    for origin in starts:
-        stop = pd.Timestamp(origin) + pd.DateOffset(years=int(years))
-        if stop > index[-1]:
-            break
-        end = index[index <= stop][-1]
-        growth = {
-            name: (float(nav.loc[end]) / float(nav.loc[origin])) ** (1 / years) - 1
-            for name, nav in navs.items()
+HOLD_DAYS = {1: 252, 3: 756, 5: 1260}
+
+
+def any_start(returns: dict[str, pd.Series], strategy: str, years: int) -> dict:
+    """每个月第一个交易日买入，持满 252、756 或 1260 个交易日。
+
+    与体检第 5 节、`scripts/v6_report/health_extra.py` 相同：年化是这段日收益连乘再按 252 日，
+    跑赢是严格大于，中位和最差是年化超额的百分点。
+    """
+    if years not in HOLD_DAYS:
+        raise IsolationError(f"任意起点只持有 1、3、5 年，没有 {years}")
+    length = HOLD_DAYS[years]
+    frame = pd.concat(
+        {name: pd.Series(series, dtype=float) for name, series in returns.items()},
+        axis=1,
+    ).dropna().sort_index()
+    if strategy not in frame.columns:
+        raise IsolationError(f"任意起点没有 {strategy}")
+    firsts = frame.groupby(frame.index.to_period("M")).head(1).index
+    starts = [day for day in firsts if int(frame.index.get_loc(day)) + length <= len(frame)]
+    compared = {}
+    for name in frame.columns:
+        if name == strategy:
+            continue
+        diffs = []
+        for day in starts:
+            position = int(frame.index.get_loc(day))
+            segment = frame.iloc[position:position + length]
+            left = float((1.0 + segment[strategy]).prod() ** (252.0 / length) - 1.0)
+            right = float((1.0 + segment[name]).prod() ** (252.0 / length) - 1.0)
+            diffs.append((left - right) * 100.0)
+        values = np.asarray(diffs, dtype=float)
+        compared[name] = {
+            "跑赢占比": float((values > 0).mean()) if len(values) else None,
+            "中位": float(np.median(values)) if len(values) else None,
+            "最差": float(values.min()) if len(values) else None,
         }
-        n += 1
-        for name in wins:
-            if growth[strategy] > growth[name]:
-                wins[name] += 1
     return {
         "年数": years,
-        "起点数": n,
-        "跑赢占比": {name: (count / n if n else None) for name, count in wins.items()},
+        "交易日": length,
+        "起点数": len(starts),
+        "跑赢占比": {name: row["跑赢占比"] for name, row in compared.items()},
+        "中位": {name: row["中位"] for name, row in compared.items()},
+        "最差": {name: row["最差"] for name, row in compared.items()},
     }
 
 
@@ -837,3 +872,7 @@ def _path_months(paths: np.ndarray, index: pd.DatetimeIndex) -> np.ndarray:
         block = paths[:, periods == period]
         matrix[:, i] = np.prod(1.0 + block, axis=1) - 1.0
     return matrix
+
+
+if __name__ == "__main__":
+    main()
