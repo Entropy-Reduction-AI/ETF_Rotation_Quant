@@ -160,7 +160,7 @@ def run_slot(levels: pd.DataFrame, parent: str, vote: pd.Series, bond: pd.Series
     asset = returns.to_numpy(dtype=float)
     bond_ret = bond.fillna(0.0).to_numpy(dtype=float)
     cash_ret = cash.to_numpy(dtype=float)
-    continuity = mode in ("cont", "cont_ref")
+    continuity = mode in ("cont", "cont_ref", "cont_plain")
     balance_at, days_at = continuity_balance(levels) if continuity else (None, None)
 
     def choose(score: np.ndarray, ok: np.ndarray) -> list[int]:
@@ -237,7 +237,7 @@ def run_slot(levels: pd.DataFrame, parent: str, vote: pd.Series, bond: pd.Series
                 ident = sign * balance_at.loc[stamp].to_numpy(dtype=float)
                 eligible = ok & (days_at.loc[stamp].to_numpy(dtype=float) >= 200) & np.isfinite(ident)
                 raw = continuity_pick(score, eligible, ident, tag, names)
-                tradable = eligible & (score > 0) if (mode == "cont" and gate) else eligible
+                tradable = eligible & (score > 0) if (mode in ("cont", "cont_plain") and gate) else eligible
                 picked = continuity_pick(score, tradable, ident, tag, names)
                 record["去重改了名单"] = False
                 record["领头者"] = [columns[pos] for pos in raw]
