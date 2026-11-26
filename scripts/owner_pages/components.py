@@ -380,7 +380,130 @@ def readout(rows):
                 f'<div class="ro-b">{_inner(r["说明"])}</div></div>')
     return f'<div class="ros">{out}</div>'
 
-RENDER = {'闸门格': gate_grid, '对账': reconcile, '同行': peers, '代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers, '随机格': random_grid, '读数': readout}
+
+def kpi(rows):
+    """| 指标 | v6 | 对照 | 对照值 | 读法 | 色 | — one tile per row: label, big v6 value, a two-line comparison
+    (bars when both values are numbers; dots when they are 'k/n'), and a short reading. 色 = 好 / 中 / 差."""
+    def num(t):
+        m = re.search(r'[+\-−]?\d+(?:\.\d+)?', t)
+        return float(m.group(0).replace('−', '-')) if m else None
+    out = ''
+    for r in rows:
+        tone = {'好': 'good', '差': 'bad'}.get(_txt(r.get('色', '')), 'mid')
+        a, b = _txt(r['v6']), _txt(r['对照值'])
+        fa, fb = num(a), num(b)
+        frac = re.fullmatch(r'\s*(\d+)\s*/\s*(\d+)\s*', a), re.fullmatch(r'\s*(\d+)\s*/\s*(\d+)\s*', b)
+        if frac[0] and frac[1]:
+            def dots(m, cls):
+                k, n = int(m.group(1)), int(m.group(2))
+                return ''.join(f'<i class="{cls if j < k else ""}"></i>' for j in range(n))
+            cmp_ = (f'<div class="kp-row"><span class="kp-k">全段</span><span class="kp-dots">{dots(frac[0], "on")}</span><b>{a}</b></div>'
+                    f'<div class="kp-row"><span class="kp-k">{_inner(r["对照"])}</span><span class="kp-dots">{dots(frac[1], "on b")}</span><b>{b}</b></div>')
+        elif fa is not None and fb is not None:
+            mx = max(abs(fa), abs(fb)) or 1
+            cmp_ = (f'<div class="kp-row"><span class="kp-k">v6</span><span class="kp-bar"><i class="v" style="width:{abs(fa) / mx * 100:.0f}%"></i></span><b>{a}</b></div>'
+                    f'<div class="kp-row"><span class="kp-k">{_inner(r["对照"])}</span><span class="kp-bar"><i style="width:{abs(fb) / mx * 100:.0f}%"></i></span><b>{b}</b></div>')
+        else:
+            cmp_ = ''
+        out += (f'<div class="kp t-{tone}"><div class="kp-l">{_inner(r["指标"])}</div><div class="kp-v">{a}</div>'
+                f'<div class="kp-cmp">{cmp_}</div><div class="kp-r">{_inner(r["读法"])}</div></div>')
+    return f'<div class="kps">{out}</div>'
+
+
+def glossary(rows):
+    """| 组 | 名字 | 一句话 | 图 | 细节 | — grouped term cards. 图: '仓位：沪深300 70｜纳指100 15' → stacked bar;
+    '式：X − Y' → formula chips; '门槛：a｜b' → numbered chips; empty → none."""
+    def seg_cls(n):
+        for k, c in (('沪深300', 'a'), ('A 股', 'a'), ('纳指', 'u'), ('美股', 'u'), ('标普', 'u2'), ('恒生', 'h'), ('国债', 'b'), ('黄金', 'g')):
+            if k in n:
+                return c
+        return 'o'
+    def pic(cell):
+        h = _inner(cell)
+        h = re.sub(r'<strong>(.+?)</strong>', r'<span class="gl-kw">\1</span>', h)
+        parts = h.split('‖') if '‖' in h else [h]
+        return ''.join(pic1(x.strip()) for x in parts)
+    def pic1(t):
+        if not t.startswith('步骤：'):
+            t = re.sub(r'<[^>]+>', '', t)
+        if t.startswith('大字：'):
+            big, _, cap = t[3:].partition('｜')
+            return f'<div class="gl-big"><b>{big.strip()}</b>' + (f'<span>{cap.strip()}</span>' if cap.strip() else '') + '</div>'
+        if t.startswith('两套：'):
+            rows_ = []
+            for part in t[3:].split('；'):
+                if '=' not in part:
+                    continue
+                k, v = part.split('=', 1)
+                chips = ''.join(f'<span>{x.strip()}</span>' for x in v.split('｜') if x.strip())
+                rows_.append(f'<div class="gl-two-r"><em>{k.strip()}</em><div>{chips}</div></div>')
+            return '<div class="gl-two">' + ''.join(rows_) + '</div>'
+        if t.startswith('值：'):
+            v = t[2:].strip(); m = re.match(r'^([+\-−]?\d+(?:\.\d+)?)\s*(.*)$', v)
+            if m:
+                sign = 'pos' if not m.group(1).startswith(('-', '−')) else 'neg'
+                return f'<div class="gl-val {sign}"><b>{m.group(1)}</b><span>{m.group(2)}</span></div>'
+        if t.startswith('链：'):
+            items = [x.strip() for x in t[2:].split('｜') if x.strip()]
+            out = ''
+            for j, x in enumerate(items):
+                if j % 2 == 0:
+                    out += f'<span class="gl-node">{x}</span>'
+                else:
+                    m = re.match(r'^(.*?)\s*([+\-−]\d+(?:\.\d+)?)$', x)
+                    lab, v = (m.group(1), m.group(2)) if m else (x, '')
+                    sign = 'neg' if v.startswith(('-', '−')) else 'pos'
+                    out += f'<span class="gl-edge {sign}"><em>{lab}</em><b>{v}</b><i>→</i></span>'
+            return f'<div class="gl-chain">{out}</div>'
+        if t.startswith('步骤：'):
+            items = [x.strip() for x in t[3:].split('｜') if x.strip()]
+            return '<ol class="gl-st">' + ''.join(f'<li><span class="gl-sn">{j}</span><span>{x}</span></li>' for j, x in enumerate(items, 1)) + '</ol>'
+        if t.startswith('刻度：'):
+            items = [x.strip() for x in t[3:].split('｜') if x.strip()]
+            mk = ''
+            for j, x in enumerate(items):
+                lab, v = x.rsplit('@', 1); v = float(v)
+                mk += f'<span class="gl-mk{" up" if j % 2 else ""}{" r" if v > .85 else (" l" if v < .15 else "")}" style="left:{v * 100:.1f}%"><i></i><em>{lab}<b>p {v:g}</b></em></span>'
+            return f'<div class="gl-sc"><div class="gl-sc-ax"><span>p = 0：不拿股票</span><span>0.5</span><span>1：满仓</span></div><div class="gl-sc-bar">{mk}</div></div>'
+        if t.startswith('仓位：'):
+            segs = [x.strip() for x in t[3:].split('｜') if x.strip()]
+            bar, leg = '', ''
+            for x in segs:
+                m = re.match(r'^(.*?)\s*(\d+(?:\.\d+)?)$', x)
+                if not m:
+                    continue
+                n, v = m.group(1), float(m.group(2)); c = seg_cls(n)
+                bar += f'<i class="c-{c}" style="flex:{v}"></i>'
+                leg += f'<span><b class="c-{c}"></b>{n} {m.group(2)}%</span>'
+            return f'<div class="gl-bar">{bar}</div><div class="gl-leg">{leg}</div>'
+        if t.startswith('式：'):
+            body = t[2:]
+            parts = re.split(r'\s+([−+=]|或)\s+', body)
+            out = ''.join(f'<span class="gl-op">{x}</span>' if x in ('−', '+', '=', '或') else f'<span class="gl-tm">{x}</span>' for x in parts)
+            return f'<div class="gl-f">{out}</div>'
+        if t.startswith('门槛：'):
+            items = [x.strip() for x in t[3:].split('｜') if x.strip()]
+            out = ''
+            for j, x in enumerate(items, 1):
+                k, _, v = x.partition('=')
+                out += f'<div class="gl-th-r"><span class="gl-sn">{j}</span><span class="gl-th-k">{k.strip()}</span><b>{v.strip()}</b></div>'
+            return f'<div class="gl-th2">{out}</div>'
+        return ''
+    groups, order = {}, []
+    for r in rows:
+        g = _txt(r['组'])
+        if g not in groups:
+            groups[g] = []; order.append(g)
+        groups[g].append(r)
+    out = ''
+    for g in order:
+        cards = ''.join(f'<div class="gl-c{" wide" if "步骤：" in _txt(r["图"]) else ""}{" full" if _txt(r["图"]).startswith("链：") else ""}"><div class="gl-n">{_inner(r["名字"])}</div><div class="gl-s">{_inner(r["一句话"])}</div>'
+                        f'{pic(r["图"])}' + (f'<div class="gl-d">{_inner(r["细节"])}</div>' if _txt(r['细节']) else '') + '</div>' for r in groups[g])
+        n = len(groups[g]); m_ = n - sum(1 for r in groups[g] if _txt(r['图']).startswith('链：')); cols = 4 if m_ % 4 in (0, 3) else 3
+        out += f'<div class="gl-g"><div class="gl-gh">{g}<span>{m_}</span></div><div class="gl-grid" style="--gl-c:{cols}">{cards}</div></div>'
+    return f'<div class="gl">{out}</div>'
+
+RENDER = {'闸门格': gate_grid, '对账': reconcile, '同行': peers, '代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers, '随机格': random_grid, '读数': readout, '指标': kpi, '名词': glossary}
 
 
 def apply(soup):
@@ -407,6 +530,85 @@ def apply(soup):
 
 
 CSS = r"""
+.gl-big { display: grid; gap: 2px; } .gl-big b { font-family: var(--font-mono); font-size: 24px; font-weight: 800; color: var(--ink); line-height: 1.15; } .gl-big span { font-size: 12px; color: var(--muted); font-weight: 600; }
+.gl-two { display: grid; gap: 6px; }
+.gl-two-r { display: grid; gap: 4px; }
+.gl-two-r em { font-style: normal; font-size: 11px; font-weight: 800; color: var(--muted); }
+.gl-two-r div { display: flex; flex-wrap: wrap; gap: 4px; } .gl-two-r span { font-size: 12px; padding: 3px 8px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); }
+.gl-two-r:first-child span { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+.gl-th2 { display: grid; gap: 6px; }
+.gl-th-r { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 5px 8px; border-radius: 8px; background: var(--bg); }
+.gl-th-k { font-size: 13px; font-weight: 600; color: var(--ink); } .gl-th-r b { font-size: 13px; font-weight: 800; color: var(--accent); white-space: nowrap; }
+.gl-st { position: relative; } .gl-st::before { content: ""; position: absolute; left: 10px; top: 10px; bottom: 10px; width: 2px; background: var(--line); }
+.gl-st li { position: relative; } .gl-st .gl-sn { position: relative; z-index: 1; }
+.gl-kw { color: var(--accent); font-weight: 800; }
+.gl-c.wide .gl-d { background: var(--bg); border-radius: 8px; padding: 8px 10px; }
+.gl-c .gl-s:only-of-type { }
+
+.gl-c.full { grid-column: 1 / -1; background: var(--bg); }
+.gl-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; }
+.gl-node { font-size: 12.5px; font-weight: 800; padding: 6px 10px; border-radius: 8px; background: var(--surface); border: 1.5px solid var(--ink); color: var(--ink); }
+.gl-edge { display: inline-grid; grid-template-areas: 'l l' 'v a'; align-items: center; justify-items: center; padding: 0 4px; }
+.gl-edge em { grid-area: l; font-style: normal; font-size: 11px; font-weight: 700; color: var(--muted); }
+.gl-edge b { grid-area: v; font-family: var(--font-mono); font-size: 14px; font-weight: 800; }
+.gl-edge i { grid-area: a; font-style: normal; color: var(--muted); margin-left: 2px; }
+.gl-edge.pos b, .gl-edge.pos b * { color: var(--good) !important; } .gl-edge.neg b, .gl-edge.neg b * { color: var(--bad) !important; }
+.gl-val { display: flex; align-items: baseline; gap: 8px; } .gl-val b { font-family: var(--font-mono); font-size: 24px; font-weight: 800; } .gl-val span { font-size: 11.5px; color: var(--muted); }
+.gl-val.pos b, .gl-val.pos b * { color: var(--good) !important; } .gl-val.neg b, .gl-val.neg b * { color: var(--bad) !important; }
+
+.gl-c.wide { grid-column: span 2; }
+.gl-st { list-style: none !important; margin: 0 !important; padding: 0 !important; display: grid; gap: 5px; counter-reset: none; }
+.gl-st li::before, .gl-st li::marker { content: none !important; display: none !important; }
+.gl-st li { padding-left: 0 !important; margin: 0 !important; }
+.gl-st li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: start; font-size: 13px; line-height: 1.5; color: var(--ink); }
+.gl-sn { width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; display: grid; place-items: center; margin-top: 1px; }
+.gl-sc { margin-top: 4px; }
+.gl-sc-ax { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+.gl-sc-bar { position: relative; height: 10px; border-radius: 5px; background: linear-gradient(90deg, #fde68a, #e5e7eb 50%, #bfdbfe); margin: 4px 0 64px; }
+.gl-mk { position: absolute; top: -3px; transform: translateX(-50%); }
+.gl-mk i { display: block; width: 4px; height: 16px; border-radius: 2px; background: var(--ink); margin: 0 auto; }
+.gl-mk em { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 11px; line-height: 1.35; color: var(--ink); white-space: nowrap; text-align: center; }
+.gl-mk.up em { top: 38px; }
+.gl-mk.r em { left: auto; right: -2px; transform: none; text-align: right; } .gl-mk.l em { left: -2px; transform: none; text-align: left; }
+.gl-mk em b { display: block; font-family: var(--font-mono); color: var(--accent); }
+@media (max-width: 760px) { .gl-c.wide { grid-column: auto; } }
+
+.gl { display: grid; gap: 16px; }
+.gl-gh { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: var(--ink); margin-bottom: 8px; padding-left: 10px; border-left: 3px solid var(--accent); }
+.gl-gh span { font-size: 11px; font-weight: 700; color: var(--muted); background: var(--bg); border-radius: 999px; padding: 1px 8px; }
+.gl-grid { display: grid; grid-template-columns: repeat(var(--gl-c, 3), minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 760px) { .gl-grid { grid-template-columns: 1fr; } }
+.gl-c { border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; background: var(--surface); display: grid; gap: 7px; align-content: start; }
+.gl-n { font-size: 15px; font-weight: 800; color: var(--accent); }
+.gl-s { font-size: 13.5px; line-height: 1.5; color: var(--ink); font-weight: 500; }
+.gl-d { font-size: 12px; line-height: 1.55; color: var(--muted); }
+.gl-bar { display: flex; height: 12px; border-radius: 4px; overflow: hidden; gap: 2px; }
+.gl-bar i { display: block; height: 12px; }
+.gl-leg { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 11px; color: var(--muted); }
+.gl-leg b { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; vertical-align: 0; }
+.c-a { background: #d97706; } .c-u { background: #2563eb; } .c-u2 { background: #60a5fa; } .c-h { background: #0d9488; } .c-b { background: #94a3b8; } .c-g { background: #ca8a04; } .c-o { background: #a3a3a3; }
+.gl-f { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.gl-tm { font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); }
+.gl-op { font-size: 14px; font-weight: 800; color: var(--accent); }
+.gl-th { display: grid; gap: 4px; } .gl-th span { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: var(--bg); color: var(--ink); }
+.comp-名词 .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+
+.kps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.kp { border: 1px solid var(--line); border-top: 4px solid var(--muted); border-radius: 10px; padding: 10px 12px; background: var(--surface); display: grid; gap: 6px; align-content: start; }
+.kp.t-good { border-top-color: var(--good); } .kp.t-bad { border-top-color: var(--bad); }
+.kp-l { font-size: 12px; font-weight: 700; color: var(--muted); }
+.kp-v { font-size: 26px; font-weight: 800; font-family: var(--font-mono); line-height: 1.1; color: var(--ink); }
+.kp.t-good .kp-v { color: var(--good); } .kp.t-bad .kp-v { color: var(--bad); }
+.kp-cmp { display: grid; gap: 4px; }
+.kp-row { display: grid; grid-template-columns: 4.6em minmax(0, 1fr) 4.2em; gap: 6px; align-items: center; font-size: 11.5px; }
+.kp-k { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kp-row b { font-family: var(--font-mono); font-weight: 600; text-align: right; color: var(--ink); }
+.kp-bar { height: 7px; background: var(--bg); border-radius: 4px; overflow: hidden; } .kp-bar i { display: block; height: 7px; border-radius: 4px; background: var(--muted); } .kp-bar i.v { background: var(--accent); }
+.kp-dots { display: flex; gap: 4px; } .kp-dots i { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid var(--muted); } .kp-dots i.on { background: var(--good); border-color: var(--good); } .kp-dots i.on.b { background: var(--muted); border-color: var(--muted); }
+.kp-r { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.comp-指标 .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+@media (max-width: 900px) { .kps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 .rg { display: grid; gap: 8px; }
 .rg-r { display: grid; grid-template-columns: 96px repeat(var(--rg-n), minmax(0, 1fr)); gap: 8px; align-items: stretch; }
 .rg-hd span { font-size: 12px; font-weight: 700; color: var(--muted); padding: 0 4px; } .rg-hd span.rg-main { color: var(--ink); }

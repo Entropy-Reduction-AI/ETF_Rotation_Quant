@@ -1584,7 +1584,14 @@ def generic_hero(soup, sec, cards):
     html = (f'<div class="hero"><div class="hero-g n{len(others)}">'
             f'<div class="hz verdict2 t-{tone}"><div class="hz-l">{ck}</div><div class="hz-hd">{head}</div>' + (f'<div class="hz-rest">{rest}</div>' if rest else '') + '</div>'
             + ask + eng + '</div></div>')
-    sec.select_one('.cards.status').replace_with(BeautifulSoup(html, 'html.parser'))
+    node = BeautifulSoup(html, 'html.parser')
+    kp = sec.select_one('.comp-指标')
+    if kp is not None:                       # KPI tiles go full width under the verdict / ask cards; the long rest of the conclusion goes
+        r = node.select_one('.hz.verdict2 .hz-rest')
+        if r is not None:
+            r.extract()
+        node.select_one('.hero').append(kp.extract())
+    sec.select_one('.cards.status').replace_with(node)
 
 
 
