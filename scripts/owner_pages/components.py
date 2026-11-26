@@ -403,6 +403,9 @@ def kpi(rows):
             mx = max(abs(fa), abs(fb)) or 1
             cmp_ = (f'<div class="kp-row"><span class="kp-k">v6</span><span class="kp-bar"><i class="v" style="width:{abs(fa) / mx * 100:.0f}%"></i></span><b>{a}</b></div>'
                     f'<div class="kp-row"><span class="kp-k">{_inner(r["对照"])}</span><span class="kp-bar"><i style="width:{abs(fb) / mx * 100:.0f}%"></i></span><b>{b}</b></div>')
+        elif fb is not None:  # 骨架：v6 还没有数，只把参照画出来，v6 一行留虚线空位
+            cmp_ = (f'<div class="kp-row"><span class="kp-k">检验段</span><span class="kp-bar kp-pend"></span><b>{a}</b></div>'
+                    f'<div class="kp-row"><span class="kp-k">{_inner(r["对照"])}</span><span class="kp-bar"><i style="width:100%"></i></span><b>{b}</b></div>')
         else:
             cmp_ = ''
         out += (f'<div class="kp t-{tone}"><div class="kp-l">{_inner(r["指标"])}</div><div class="kp-v">{a}</div>'
@@ -603,7 +606,7 @@ CSS = r"""
 .kp-row { display: grid; grid-template-columns: 4.6em minmax(0, 1fr) 4.2em; gap: 6px; align-items: center; font-size: 11.5px; }
 .kp-k { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .kp-row b { font-family: var(--font-mono); font-weight: 600; text-align: right; color: var(--ink); }
-.kp-bar { height: 7px; background: var(--bg); border-radius: 4px; overflow: hidden; } .kp-bar i { display: block; height: 7px; border-radius: 4px; background: var(--muted); } .kp-bar i.v { background: var(--accent); }
+.kp-bar { height: 7px; background: var(--bg); border-radius: 4px; overflow: hidden; } .kp-bar i { display: block; height: 7px; border-radius: 4px; background: var(--muted); } .kp-bar i.v { background: var(--accent); } .kp-bar.kp-pend { background: transparent; border: 1.5px dashed var(--line, #cbd5e1); height: 4px; }
 .kp-dots { display: flex; gap: 4px; } .kp-dots i { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid var(--muted); } .kp-dots i.on { background: var(--good); border-color: var(--good); } .kp-dots i.on.b { background: var(--muted); border-color: var(--muted); }
 .kp-r { font-size: 12.5px; font-weight: 600; color: var(--ink); }
 .comp-指标 .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }

@@ -24,7 +24,19 @@ mm = lambda v: f'{v:+.1f}'.replace('-', '−')
 pc = lambda v: f'{100 * v:.1f}%'.replace('-', '−')
 
 
+NAME = {'NBI': '纳指生物科技', 'NDX': '纳指100', 'SPX': '标普500', 'DJIA': '道琼斯', 'SOX': '费城半导体', 'DWRTF': '美国 REIT',
+        'XLY': '美股可选消费', 'XLF': '美股金融', 'XLE': '美股能源', 'XLK': '美股科技', 'XLI': '美股工业', 'XLB': '美股原材料',
+        'XLV': '美股医疗', 'XLP': '美股必需消费', 'XLU': '美股公用事业', 'chinext': '创业板', 'csi1000': '中证1000', 'csi300': '沪深300',
+        'csi500': '中证500', 'allshare-financials-re': '全指金融地产', 'allshare-communication': '全指通信', 'allshare-healthcare': '全指医药',
+        'allshare-staples': '全指主要消费', 'allshare-energy': '全指能源', 'allshare-it': '全指信息', 'allshare-discretionary': '全指可选消费',
+        'allshare-materials': '全指原材料', 'allshare-industrials': '全指工业', 'allshare-utilities': '全指公用事业'}
+cn = lambda k: NAME.get(k, k.replace('theme-', ''))
+
+
 def save(fig, name):
+    if REH:  # 预演样张：右下角盖章，免得和检验结果混淆
+        fig.text(.995, -.01, f'预演样张｜{EX} 当检验段｜只用 ≤ 2015 数据｜不是检验结果', ha='right', va='top', fontsize=10, color='#9a3412',
+                 bbox=dict(boxstyle='round,pad=.35', fc='#fff7ed', ec='#fdba74'))
     fig.savefig(OUT / name, dpi=130, bbox_inches='tight'); plt.close(fig)
 
 
@@ -161,7 +173,7 @@ for ax, slot, c in zip(axes, ['美股', 'A股'], [BLUE, AMBER]):
         ax.barh(-i, x['对挑选的贡献'], color=c if i < 3 else '#cbd5e1')
         ax.text(max(x['对挑选的贡献'], 0) + .3, -i, f"{x['入选月数']} 个月", va='center', fontsize=9.5, color=MUTED)
     ax.axvline(0, color=GREY, lw=.8); ax.set_xlabel('对挑选的贡献（点）', color=MUTED)
-    ax.set_yticks([-i for i in range(len(top))]); ax.set_yticklabels([x['候选'] for x in top], fontsize=10)
+    ax.set_yticks([-i for i in range(len(top))]); ax.set_yticklabels([cn(x['候选']) for x in top], fontsize=10.5)
     share = sum(x['对挑选的贡献'] for x in top[:3]) / tot if tot else 0
     ax.set_title(f'{slot}名额：前 3 名占前 10 名贡献的 {100 * share:.0f}%', fontsize=12, loc='left', color=INK)
     facts[f'挑选前3占比_{slot}'] = share
@@ -221,6 +233,46 @@ if (SRC / 'returns-daily.csv').exists():
     save(fig, 'o6-nav.png')
 facts['性格'] = J('character.json')
 
+# ---------- 几次急跌：从 BM-主 当年最高日起 250 个交易日 ----------
+CRASH_YEARS = [2007, 2011, 2015] if REH else [2015, 2018, 2020, 2022]  # 正式：骨架 0.5 写定；预演：设计期里同法取三次
+if (SRC / 'returns-daily.csv').exists():
+    R2 = pd.read_csv(SRC / 'returns-daily.csv', parse_dates=['date']).set_index('date').loc[man['full_start']:man['full_end']].fillna(0)
+    navs = (1 + R2).cumprod()
+    POS = pd.read_csv(SRC / 'positions-monthly.csv', parse_dates=['月']).set_index('月') if (SRC / 'positions-monthly.csv').exists() else None
+    fig, axs = plt.subplots(1, len(CRASH_YEARS), figsize=(3.3 * len(CRASH_YEARS), 3.8), sharey=True)
+    crash = []
+    for ax, yr in zip(axs, CRASH_YEARS):
+        bm = navs['BM-主'][str(yr)]; pk = bm.idxmax(); i0 = navs.index.get_loc(pk); win = navs.iloc[i0:i0 + 250]
+        rec = {'年': yr, '见顶日': str(pk.date())}
+        for k, (c, lw) in {'BM-主': (GREY, 1.4), 'BM-同仓位': ('#94a3b8', 1.1), 'K2A': (INK, 1.1), 'v6': (BLUE, 2.4)}.items():
+            dd = 100 * (win[k] / win[k].iloc[0] - 1)
+            ax.plot(range(len(dd)), dd, color=c, lw=lw, label=k); rec[k] = float(dd.min())
+        if POS is not None:
+            m = POS.loc[pk.to_period('M').to_timestamp():].head(12)['股票仓位']
+            rec['最低股票仓位'] = float(m.min())
+        ax.axhline(0, color=GREY, lw=.6); ax.set_xticks([0, 125, 250]); ax.set_xticklabels(['见顶', '半年', '一年'])
+        ax.set_title(f'{yr}：v6 {mm(rec["v6"])}% 对 BM-主 {mm(rec["BM-主"])}%' + (f'\n最低股票仓位 {100 * rec["最低股票仓位"]:.0f}%' if '最低股票仓位' in rec else ''), fontsize=11, loc='left', color=INK)
+        ax.grid(alpha=.2); crash.append(rec)
+    axs[0].set_ylabel('从见顶日算的跌幅 %', color=MUTED); axs[0].legend(frameon=False, fontsize=9, loc='lower left')
+    save(fig, 'o6b-crash.png'); facts['急跌'] = crash
+
+# ---------- 任意起点 ----------
+AS = J('anystart.json'); facts['任意起点'] = AS
+fig, ax = plt.subplots(figsize=(11, 3.6))
+refs3 = ['BM-主', 'BM-同仓位', 'K2A']
+for i, y in enumerate(['1', '3', '5']):
+    if y not in AS or not AS[y]['起点数']:
+        continue
+    for j, ref in enumerate(refs3):
+        v = 100 * AS[y]['跑赢占比'][ref]; yy = -(i * 4 + j)
+        ax.barh(yy, v, color=TEAL if v >= 50 else AMBER, height=.7)
+        ax.text(v + 1, yy, f'{v:.0f}%', va='center', fontsize=10, color=INK)
+        ax.text(-1, yy, f'持有 {y} 年 · 对 {ref}' if j == 0 else f'对 {ref}', ha='right', va='center', fontsize=10.5)
+ax.axvline(50, color=GREY, ls='--', lw=1); ax.set_xlim(0, 110); ax.set_yticks([]); ax.spines['left'].set_visible(False)
+ax.set_xlabel('任意一天买进，持有期满时跑赢对照的起点占比 %', color=MUTED)
+ax.set_title('什么时候买进来会输：跑赢占比（绿 ≥ 50%，橙 < 50%）', fontsize=12.5, loc='left', color=INK)
+save(fig, 'o7b-anystart.png')
+
 # ---------- 四种行情 ----------
 rg = [x for x in J('regimes.json') if x.get('窗口', '全段') == '全段']
 fig, ax = plt.subplots(figsize=(11.5, 4.4))
@@ -235,7 +287,7 @@ ax.axhline(0, color=GREY, lw=.8); ax.set_xticks(range(4)); ax.set_xticklabels([f
 ax.set_ylabel('每月差相加（点）', color=MUTED)
 ax.set_title('四种行情里 v6 对三个对照每月多或少的合计', fontsize=12.5, loc='left', color=INK)
 save(fig, 'o7-regime.png')
-facts['行情'] = rg; facts['任意起点'] = J('anystart.json')
+facts['行情'] = rg
 
 # ---------- 预测对账 ----------
 fc = C('forecast.csv')

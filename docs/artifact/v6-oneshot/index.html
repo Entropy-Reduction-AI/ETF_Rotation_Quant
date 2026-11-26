@@ -975,6 +975,85 @@ a.sl-sp-i.t-todo .sl-sp-st { color: var(--muted); font-weight: 700; } a.sl-sp-i.
 @media (max-width: 760px) { .sl-dr { grid-template-columns: minmax(0, 1fr); gap: 3px; } .sl-ds { justify-content: flex-start; } .sl-look, a.sl-next { flex-direction: column; gap: 4px; align-items: flex-start; } }
 
 
+.gl-big { display: grid; gap: 2px; } .gl-big b { font-family: var(--font-mono); font-size: 24px; font-weight: 800; color: var(--ink); line-height: 1.15; } .gl-big span { font-size: 12px; color: var(--muted); font-weight: 600; }
+.gl-two { display: grid; gap: 6px; }
+.gl-two-r { display: grid; gap: 4px; }
+.gl-two-r em { font-style: normal; font-size: 11px; font-weight: 800; color: var(--muted); }
+.gl-two-r div { display: flex; flex-wrap: wrap; gap: 4px; } .gl-two-r span { font-size: 12px; padding: 3px 8px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); }
+.gl-two-r:first-child span { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+.gl-th2 { display: grid; gap: 6px; }
+.gl-th-r { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 5px 8px; border-radius: 8px; background: var(--bg); }
+.gl-th-k { font-size: 13px; font-weight: 600; color: var(--ink); } .gl-th-r b { font-size: 13px; font-weight: 800; color: var(--accent); white-space: nowrap; }
+.gl-st { position: relative; } .gl-st::before { content: ""; position: absolute; left: 10px; top: 10px; bottom: 10px; width: 2px; background: var(--line); }
+.gl-st li { position: relative; } .gl-st .gl-sn { position: relative; z-index: 1; }
+.gl-kw { color: var(--accent); font-weight: 800; }
+.gl-c.wide .gl-d { background: var(--bg); border-radius: 8px; padding: 8px 10px; }
+.gl-c .gl-s:only-of-type { }
+
+.gl-c.full { grid-column: 1 / -1; background: var(--bg); }
+.gl-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; }
+.gl-node { font-size: 12.5px; font-weight: 800; padding: 6px 10px; border-radius: 8px; background: var(--surface); border: 1.5px solid var(--ink); color: var(--ink); }
+.gl-edge { display: inline-grid; grid-template-areas: 'l l' 'v a'; align-items: center; justify-items: center; padding: 0 4px; }
+.gl-edge em { grid-area: l; font-style: normal; font-size: 11px; font-weight: 700; color: var(--muted); }
+.gl-edge b { grid-area: v; font-family: var(--font-mono); font-size: 14px; font-weight: 800; }
+.gl-edge i { grid-area: a; font-style: normal; color: var(--muted); margin-left: 2px; }
+.gl-edge.pos b, .gl-edge.pos b * { color: var(--good) !important; } .gl-edge.neg b, .gl-edge.neg b * { color: var(--bad) !important; }
+.gl-val { display: flex; align-items: baseline; gap: 8px; } .gl-val b { font-family: var(--font-mono); font-size: 24px; font-weight: 800; } .gl-val span { font-size: 11.5px; color: var(--muted); }
+.gl-val.pos b, .gl-val.pos b * { color: var(--good) !important; } .gl-val.neg b, .gl-val.neg b * { color: var(--bad) !important; }
+
+.gl-c.wide { grid-column: span 2; }
+.gl-st { list-style: none !important; margin: 0 !important; padding: 0 !important; display: grid; gap: 5px; counter-reset: none; }
+.gl-st li::before, .gl-st li::marker { content: none !important; display: none !important; }
+.gl-st li { padding-left: 0 !important; margin: 0 !important; }
+.gl-st li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: start; font-size: 13px; line-height: 1.5; color: var(--ink); }
+.gl-sn { width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; display: grid; place-items: center; margin-top: 1px; }
+.gl-sc { margin-top: 4px; }
+.gl-sc-ax { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+.gl-sc-bar { position: relative; height: 10px; border-radius: 5px; background: linear-gradient(90deg, #fde68a, #e5e7eb 50%, #bfdbfe); margin: 4px 0 64px; }
+.gl-mk { position: absolute; top: -3px; transform: translateX(-50%); }
+.gl-mk i { display: block; width: 4px; height: 16px; border-radius: 2px; background: var(--ink); margin: 0 auto; }
+.gl-mk em { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 11px; line-height: 1.35; color: var(--ink); white-space: nowrap; text-align: center; }
+.gl-mk.up em { top: 38px; }
+.gl-mk.r em { left: auto; right: -2px; transform: none; text-align: right; } .gl-mk.l em { left: -2px; transform: none; text-align: left; }
+.gl-mk em b { display: block; font-family: var(--font-mono); color: var(--accent); }
+@media (max-width: 760px) { .gl-c.wide { grid-column: auto; } }
+
+.gl { display: grid; gap: 16px; }
+.gl-gh { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: var(--ink); margin-bottom: 8px; padding-left: 10px; border-left: 3px solid var(--accent); }
+.gl-gh span { font-size: 11px; font-weight: 700; color: var(--muted); background: var(--bg); border-radius: 999px; padding: 1px 8px; }
+.gl-grid { display: grid; grid-template-columns: repeat(var(--gl-c, 3), minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 760px) { .gl-grid { grid-template-columns: 1fr; } }
+.gl-c { border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; background: var(--surface); display: grid; gap: 7px; align-content: start; }
+.gl-n { font-size: 15px; font-weight: 800; color: var(--accent); }
+.gl-s { font-size: 13.5px; line-height: 1.5; color: var(--ink); font-weight: 500; }
+.gl-d { font-size: 12px; line-height: 1.55; color: var(--muted); }
+.gl-bar { display: flex; height: 12px; border-radius: 4px; overflow: hidden; gap: 2px; }
+.gl-bar i { display: block; height: 12px; }
+.gl-leg { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 11px; color: var(--muted); }
+.gl-leg b { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; vertical-align: 0; }
+.c-a { background: #d97706; } .c-u { background: #2563eb; } .c-u2 { background: #60a5fa; } .c-h { background: #0d9488; } .c-b { background: #94a3b8; } .c-g { background: #ca8a04; } .c-o { background: #a3a3a3; }
+.gl-f { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.gl-tm { font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); }
+.gl-op { font-size: 14px; font-weight: 800; color: var(--accent); }
+.gl-th { display: grid; gap: 4px; } .gl-th span { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: var(--bg); color: var(--ink); }
+.comp-名词 .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+
+.kps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.kp { border: 1px solid var(--line); border-top: 4px solid var(--muted); border-radius: 10px; padding: 10px 12px; background: var(--surface); display: grid; gap: 6px; align-content: start; }
+.kp.t-good { border-top-color: var(--good); } .kp.t-bad { border-top-color: var(--bad); }
+.kp-l { font-size: 12px; font-weight: 700; color: var(--muted); }
+.kp-v { font-size: 26px; font-weight: 800; font-family: var(--font-mono); line-height: 1.1; color: var(--ink); }
+.kp.t-good .kp-v { color: var(--good); } .kp.t-bad .kp-v { color: var(--bad); }
+.kp-cmp { display: grid; gap: 4px; }
+.kp-row { display: grid; grid-template-columns: 4.6em minmax(0, 1fr) 4.2em; gap: 6px; align-items: center; font-size: 11.5px; }
+.kp-k { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kp-row b { font-family: var(--font-mono); font-weight: 600; text-align: right; color: var(--ink); }
+.kp-bar { height: 7px; background: var(--bg); border-radius: 4px; overflow: hidden; } .kp-bar i { display: block; height: 7px; border-radius: 4px; background: var(--muted); } .kp-bar i.v { background: var(--accent); } .kp-bar.kp-pend { background: transparent; border: 1.5px dashed var(--line, #cbd5e1); height: 4px; }
+.kp-dots { display: flex; gap: 4px; } .kp-dots i { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid var(--muted); } .kp-dots i.on { background: var(--good); border-color: var(--good); } .kp-dots i.on.b { background: var(--muted); border-color: var(--muted); }
+.kp-r { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.comp-指标 .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+@media (max-width: 900px) { .kps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 .rg { display: grid; gap: 8px; }
 .rg-r { display: grid; grid-template-columns: 96px repeat(var(--rg-n), minmax(0, 1fr)); gap: 8px; align-items: stretch; }
 .rg-hd span { font-size: 12px; font-weight: 700; color: var(--muted); padding: 0 4px; } .rg-hd span.rg-main { color: var(--ink); }
@@ -1686,25 +1765,29 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <nav class="toc" aria-label="目录">
   <a class="back" href="https://claude.ai/artifact/17bW2rKeeBheRFfhnjsrSU">← Owner 看板</a>
   <div class="toc-title">目录</div>
-  <ol><li class="l2"><a href="#0-开考前要齐的六件事-五件已齐-只差-dev-把计算接上">0. 开考前要齐的六件事</a></li><li class="l2"><a href="#1-过不过-只看检验段四条判据-结论句三版已预写">1. 过不过</a></li><li class="l2"><a href="#2-结论稳不稳-稳健性-8-项-同结构随机-能买到的池子-都只报告">2. 结论稳不稳</a></li><li class="l2"><a href="#3-钱从哪来-六块拆账按四个五年段看-每块贴-稳定-设计期才有-不稳定">3. 钱从哪来</a></li><li class="l2"><a href="#4-挑选赚的是谁-防守赚的是哪几次-看前-10-名占多少-逐次列紧张段">4. 挑选赚的是谁、防守赚的是哪几次</a></li><li class="l2"><a href="#5-和别人比-八条线-检验段为主-全段并列">5. 和别人比</a></li><li class="l2"><a href="#6-性格-2006-2026-一条线走下来-几次急跌各怎样">6. 性格</a></li><li class="l2"><a href="#7-四种行情-任意起点-全段-2006-2026">7. 四种行情、任意起点</a></li><li class="l2"><a href="#8-预测准不准-检验段逐项对账-不判过不过">8. 预测准不准</a></li><li class="l2"><a href="#9-连续性版换不换-两个条件都满足才换">9. 连续性版换不换</a></li><li class="l2"><a href="#10-接下来-按结论三级走-三条路事先写好">10. 接下来</a></li></ol>
+  <ol><li class="l2"><a href="#0-开考前提-七件事六件已齐-只差-manager-合并-dev-正式跑一次">0. 开考前提</a></li><li class="l2"><a href="#1-过不过-只看检验段四条判据-结论句三版已预写">1. 过不过</a></li><li class="l2"><a href="#2-结论稳不稳-稳健性-8-项-同结构随机-能买到的池子-都只报告">2. 结论稳不稳</a></li><li class="l2"><a href="#3-钱从哪来-六块拆账按四个五年段看-每块贴-稳定-设计期才有-不稳定">3. 钱从哪来</a></li><li class="l2"><a href="#4-挑选赚的是谁-防守赚的是哪几次-看前-3-名占多少-逐次列紧张段">4. 挑选赚的是谁、防守赚的是哪几次</a></li><li class="l2"><a href="#5-和别人比-八条线-检验段为主-全段并列">5. 和别人比</a></li><li class="l2"><a href="#6-性格-2006-2026-一条线走下来-几次急跌各怎样">6. 性格</a></li><li class="l2"><a href="#7-四种行情-任意起点-全段-2006-2026">7. 四种行情、任意起点</a></li><li class="l2"><a href="#8-预测准不准-检验段逐项对账-不判过不过">8. 预测准不准</a></li><li class="l2"><a href="#9-连续性版换不换-两个条件都满足才换">9. 连续性版换不换</a></li><li class="l2"><a href="#10-接下来-按结论三级走-三条路事先写好">10. 接下来</a></li></ol>
 </nav>
 <main>
 <header class="top">
   <div class="kicker">ETF_Rotation_Quant · 2026-11-26</div>
   <h1>v6 一次性检验报告</h1>
-  <p class="headline">结构和结论句在开考前定下，跑完只填数</p>
+  <p class="headline">结构、图和结论句开考前定下，跑完只填数</p>
 </header>
 <section class="intro status"><p class="kv"><span class="kv-k"><strong>项目愿景</strong></span><span class="kv-v">　在动态周期内，从多类资产里选出 Top N 强势 ETF 轮动持有，获得超额收益、稳定跑赢被动基准，同时把回撤控制住。</span></p>
-<div class="hero"><div class="hero-g n1"><div class="hz verdict2 t-bad"><div class="hz-l">结论</div><div class="hz-hd">跑完从三版预写结论句里选一版，只填数：通过、通过（有条件）、不通过。</div></div><div class="hz ask calm"><div class="hz-l">需要你</div><div class="hq-h calm">✓ 不用操作</div><div class="hq-ref">你已批准开考；D50 合入、Dev 接线经 Reviewer 签收后就跑。</div></div><div class="hz eng"><span class="eng-ok">✓</span><span class="hz-l">进度</span><span class="eng-d">骨架：11 节的结构、图和读法已定；还没开考，页面上没有任何 2016 年以后的数字。</span></div></div></div>
+<div class="hero"><div class="hero-g n1"><div class="hz verdict2 t-info"><div class="hz-l">结论</div><div class="hz-hd">还没开考，图都是预演样张（2011–15 当检验段，只用 ≤ 2015 数据）。</div></div><div class="hz ask calm"><div class="hz-l">需要你</div><div class="hq-h calm">✓ 不用操作</div><div class="hq-ref">对图和版式有意见现在提，开考后只填数。</div></div><div class="hz eng"><span class="eng-ok">✓</span><span class="hz-l">进度</span><span class="eng-d">开考前提都齐了：D49–D52 已定，预演两边独立算对上；Manager 合并后 Dev 开考。</span></div></div><div class="comp comp-指标" data-lint="ref"><div class="kps"><div class="kp t-mid"><div class="kp-l">年化（检验段）</div><div class="kp-v">待填</div><div class="kp-cmp"><div class="kp-row"><span class="kp-k">检验段</span><span class="kp-bar kp-pend"></span><b>待填</b></div><div class="kp-row"><span class="kp-k">设计期 v6</span><span class="kp-bar"><i style="width:100%"></i></span><b class="num">15.3%</b></div></div><div class="kp-r">和同仓位基准差几点看判据 ④</div></div><div class="kp t-mid"><div class="kp-l">最大回撤</div><div class="kp-v">待填</div><div class="kp-cmp"><div class="kp-row"><span class="kp-k">检验段</span><span class="kp-bar kp-pend"></span><b>待填</b></div><div class="kp-row"><span class="kp-k">设计期 v6</span><span class="kp-bar"><i style="width:100%"></i></span><b class="num">−28.7%</b></div></div><div class="kp-r">门槛 ≤ 40%</div></div><div class="kp t-mid"><div class="kp-l">跑赢随机</div><div class="kp-v">待填</div><div class="kp-cmp"><div class="kp-row"><span class="kp-k">检验段</span><span class="kp-bar kp-pend"></span><b>待填</b></div><div class="kp-row"><span class="kp-k">设计期 v6</span><span class="kp-bar"><i style="width:100%"></i></span><b>第 96.4</b></div></div><div class="kp-r">同结构随机 1000 次里排第几</div></div><div class="kp t-mid"><div class="kp-l">四条判据</div><div class="kp-v">待填</div><div class="kp-cmp"><div class="kp-row"><span class="kp-k">检验段</span><span class="kp-bar kp-pend"></span><b>待填</b></div><div class="kp-row"><span class="kp-k">后五年</span><span class="kp-bar"><i style="width:100%"></i></span><b>2/4</b></div></div><div class="kp-r">全部满足才通过</div></div></div></div></div>
+<div class="table-wrap"></div>
 
-<nav aria-label="故事主线" class="sl-spine"><div class="sl-sp-h">这份报告的故事主线：从“过没过”读到“钱从哪来、在检验段还在不在”</div><div class="sl-sp-r"><a class="sl-sp-i t-ok" href="#sec-0-开考前要齐的六件事-五件已齐-只差-dev-把计算接上" title="什么都齐了才能跑？"><span class="sl-sp-k"></span><span class="sl-sp-s">开考前提</span><span class="sl-sp-st">在做</span></a><a class="sl-sp-i t-ok" href="#sec-1-过不过-只看检验段四条判据-结论句三版已预写" title="一次性检验过没过？"><span class="sl-sp-k"></span><span class="sl-sp-s">过不过</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-2-结论稳不稳-稳健性-8-项-同结构随机-能买到的池子-都只报告" title="换个成本、晚一天下单、去掉最赚钱的几只，结论还在不在？"><span class="sl-sp-k"></span><span class="sl-sp-s">稳不稳</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-3-钱从哪来-六块拆账按四个五年段看-每块贴-稳定-设计期才有-不稳定" title="v6 赚的是挑选、防守，还是美股放 60%、人民币贬值？"><span class="sl-sp-k"></span><span class="sl-sp-s">钱从哪来</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-4-挑选赚的是谁-防守赚的是哪几次-看前-10-名占多少-逐次列紧张段" title="挑选的钱是不是集中在几只上？防守在哪几次真帮上了忙？"><span class="sl-sp-k"></span><span class="sl-sp-s">挑选与防守</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-5-和别人比-八条线-检验段为主-全段并列" title="检验段里 v6 和 A1、A2、K2A、现行配置、基准比，站在哪？"><span class="sl-sp-k"></span><span class="sl-sp-s">和别人比</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-6-性格-2006-2026-一条线走下来-几次急跌各怎样" title="一直拿着的人，20 年里会经历什么？"><span class="sl-sp-k"></span><span class="sl-sp-s">性格</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-7-四种行情-任意起点-全段-2006-2026" title="牛熊里各赚亏多少？什么时候买进来会输？"><span class="sl-sp-k"></span><span class="sl-sp-s">行情与起点</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-8-预测准不准-检验段逐项对账-不判过不过" title="事先估的每一项，检验段落在范围里吗？"><span class="sl-sp-k"></span><span class="sl-sp-s">预测</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-9-连续性版换不换-两个条件都满足才换" title="挑战者在检验段赢了吗？"><span class="sl-sp-k"></span><span class="sl-sp-s">连续性版</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-10-接下来-按结论三级走-三条路事先写好" title="结论出来以后做什么？"><span class="sl-sp-k"></span><span class="sl-sp-s">接下来</span><span class="sl-sp-st">待填</span></a></div></nav></section>
-<section id="sec-0-开考前要齐的六件事-五件已齐-只差-dev-把计算接上"><h2 id="0-开考前要齐的六件事-五件已齐-只差-dev-把计算接上"><span class="num">00</span>开考前要齐的六件事：五件已齐，只差 Dev 把计算接上</h2>
-<p class="memo"><strong>你 11-26 已批准开考，D50-4 选 B；D49 已合入、代码已冻结。只差 D50 合入、Dev 把一次性检验的计算接上并经 Reviewer 签收。</strong></p>
-<div class="table-wrap"><div class="comp f-todos-wrap" data-lint="ref"><div class="f-td-pg"><b>5 / 6</b><span>已完成</span><span class="f-td-bar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class="on"></i></span></div><div class="f-tds"><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>D49 全段窗口只报告、拆账口径写死</b></div><div class="f-td-m"><span class="f-td-no">#1</span><span class="f-td-w">Reviewer</span><span class="f-td-w">Manager</span></div><div class="f-td-r">11-26 合入 main</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>D50 “很敏感”和“降一级”的定义</b></div><div class="f-td-m"><span class="f-td-no">#2</span><span class="f-td-w">Owner</span></div><div class="f-td-r">你 11-26 同意两项都选 A；第 2 稿 Reviewer 无意见，等 D50-4</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>批准一次性检验</b></div><div class="f-td-m"><span class="f-td-no">#3</span><span class="f-td-w">Owner</span></div><div class="f-td-r">2016-01 → 2026-09，只跑一次，判定只看检验段</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>#375、#377 签收合入，代码冻结</b></div><div class="f-td-m"><span class="f-td-no">#4</span><span class="f-td-w">Reviewer</span><span class="f-td-w">Manager</span></div><div class="f-td-r">11-26 合入 main（21dbb269）；随机对照和急跌仓位也已交</div></div></div><div class="f-td"><span class="f-td-n">5</span><div class="f-td-b"><div class="f-td-h"><b>Dev 按 D49 备好代码</b></div><div class="f-td-m"><span class="f-td-no">#5</span><span class="f-td-w">Dev</span></div><div class="f-td-r">判定函数已写（#389）；S1–S8、全段、现行配置面板、A1 / A2 衔接还没接上</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>D50-4：有条件再遇欧洲“不支持”怎么办</b></div><div class="f-td-m"><span class="f-td-no">#6</span><span class="f-td-w">Owner</span></div><div class="f-td-r">11-26 选 B：再降一级 = 不通过</div></div></div></div></div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>名词解释：23 个词，分三组——怎么读这份检验报告、拿来比的七条线、收益拆成哪六块</span></button><div class="fold-b" hidden="">
+<div class="table-wrap"><div class="comp comp-名词" data-lint="ref"><div class="gl"><div class="gl-g"><div class="gl-gh">怎么读这份检验报告<span>9</span></div><div class="gl-grid" style="--gl-c:3"><div class="gl-c"><div class="gl-n">检验段</div><div class="gl-s">过不过只看这一段</div><div class="gl-big"><b>2016-01 → 2026-09</b><span>只用一次</span></div><div class="gl-d">规则定的时候没看过，但市场走势大家都见过，所以不叫“样本外”（D9-1）。</div></div><div class="gl-c"><div class="gl-n">全段</div><div class="gl-s">用来看钱从哪来，不当第二个计分板</div><div class="gl-big"><b class="num">2006–2026</b><span>只报告</span></div><div class="gl-d">全段四条判据也算，但不参与判定（D49）。</div></div><div class="gl-c"><div class="gl-n">判定口径</div><div class="gl-s">从 2006 年一路跑下来，再截出检验段</div><div class="gl-two"><div class="gl-two-r"><em>判定</em><div><span>连续运行截出</span><span>把握 p 和仓位从 2006 年累积</span></div></div><div class="gl-two-r"><em>只报告</em><div><span>2016-01 重新起步</span><span>另列差多少</span></div></div></div><div class="gl-d">冻结代码没有在 2016-01 清零，所以判定用连续运行截出（D49-1）。</div></div><div class="gl-c"><div class="gl-n">成本</div><div class="gl-s">判定按单边 0.2%，万分之一只报告</div><div class="gl-two"><div class="gl-two-r"><em>判定</em><div><span>单边 0.2%</span><span>佣金、价差、冲击和指数与 ETF 的差都算进去</span></div></div><div class="gl-two-r"><em>实盘</em><div><span>单边 0.01%</span><span>只是佣金，不含价差和 QDII 溢价</span></div></div></div><div class="gl-d">你 11-26 定（D52）。</div></div><div class="gl-c"><div class="gl-n">判据</div><div class="gl-s">四条门槛，全部满足才通过</div><div class="gl-th2"><div class="gl-th-r"><span class="gl-sn">1</span><span class="gl-th-k">最大回撤</span><b>≤ 40%</b></div><div class="gl-th-r"><span class="gl-sn">2</span><span class="gl-th-k">防守保费</span><b>≤ 4 点</b></div><div class="gl-th-r"><span class="gl-sn">3</span><span class="gl-th-k">年化 ÷ 回撤</span><b>高于 K2A</b></div><div class="gl-th-r"><span class="gl-sn">4</span><span class="gl-th-k">对 BM-同仓位</span><b>不落后</b></div></div></div><div class="gl-c"><div class="gl-n">跑赢随机</div><div class="gl-s">同样结构、随机挑 1000 次，v6 排第几</div><div class="gl-big"><b>第 96.4</b><span>设计期 2006–15</span></div><div class="gl-d">种子 20261122；每月跑赢随机中位数的比例一起报。</div></div><div class="gl-c wide"><div class="gl-n">三级结论</div><div class="gl-s">主判加稳健性 8 项，三选一</div><ol class="gl-st f-compact steps-n"><li><span class="gl-sn">1</span><span>四条没全过 <span class="arr">→</span> <span class="gl-kw">不通过</span>，改完能过也不升档</span></li><li><span class="gl-sn">2</span><span>四条全过，S1–S8 有一项让总结论翻转 <span class="arr">→</span> <span class="gl-kw">通过（有条件）</span></span></li><li><span class="gl-sn">3</span><span>四条全过、没有一项翻转 <span class="arr">→</span> <span class="gl-kw">通过</span></span></li><li><span class="gl-sn">4</span><span>上线前欧洲检验“不支持”，再降一级</span></li></ol><div class="gl-d">D50；欧洲检验见第 10 节。</div></div><div class="gl-c"><div class="gl-n">很敏感</div><div class="gl-s">改一处设定，总结论就翻</div><div class="gl-f"><span class="gl-tm">改动后的总结论 ≠ 主判</span></div><div class="gl-d">只在检验段、指数池的主判上判（D50-1）；对照跟着同样改（D51）。</div></div><div class="gl-c wide"><div class="gl-n">读法标签</div><div class="gl-s">六块各贴一个，按顺序判，先符合哪条记哪条</div><ol class="gl-st f-compact steps-n"><li><span class="gl-sn">1</span><span>设计期为正，检验段为负或不到 0.5 点 <span class="arr">→</span> <span class="gl-kw">设计期才有</span></span></li><li><span class="gl-sn">2</span><span>否则四段至少三段同号，且检验段和设计期同号 <span class="arr">→</span> <span class="gl-kw">稳定</span></span></li><li><span class="gl-sn">3</span><span>其余 <span class="arr">→</span> <span class="gl-kw">不稳定</span></span></li></ol><div class="gl-d">D49-8；不另造说法。</div></div></div></div><div class="gl-g"><div class="gl-gh">拿来比的七条线<span>7</span></div><div class="gl-grid" style="--gl-c:4"><div class="gl-c"><div class="gl-n">BM-主</div><div class="gl-s">AGENTS.md 规定的并列基准</div><div class="gl-bar"><i class="c-a" style="flex:70.0"></i><i class="c-u" style="flex:15.0"></i><i class="c-u2" style="flex:15.0"></i></div><div class="gl-leg"><span><b class="c-a"></b>沪深300 70%</span><span><b class="c-u"></b>纳指100 15%</span><span><b class="c-u2"></b>标普500 15%</span></div><div class="gl-d">全收益、人民币、每月再平衡。</div></div><div class="gl-c"><div class="gl-n">BM-同仓位</div><div class="gl-s">和 v6 同仓位的基准，判据 ④ 和它比</div><div class="gl-bar"><i class="c-a" style="flex:40.0"></i><i class="c-u" style="flex:30.0"></i><i class="c-u2" style="flex:30.0"></i></div><div class="gl-leg"><span><b class="c-a"></b>沪深300 40%</span><span><b class="c-u"></b>纳指100 30%</span><span><b class="c-u2"></b>标普500 30%</span></div><div class="gl-d">和 v6 的 A 股 40%、美股 60% 同仓位，用来把“美股多放 20 点”的影响拆出去。</div></div><div class="gl-c"><div class="gl-n">K2A</div><div class="gl-s">增强基准，判据 ③ 和它比</div><div class="gl-bar"><i class="c-a" style="flex:50.0"></i><i class="c-u" style="flex:50.0"></i></div><div class="gl-leg"><span><b class="c-a"></b>A 股 50%</span><span><b class="c-u"></b>美股 50%</span></div><div class="gl-d">只给 A 股那一半上保险（月末低于 10 个月均线就换国债，仓位按波动调，每 5 个交易日看），美股那一半一直持有（你 11-17 定，D39-3）；“月末”用真实月末（你 11-26 定，D48-4）。</div></div><div class="gl-c"><div class="gl-n">现行配置</div><div class="gl-s">现在实际在跑的组合，不防守，只报告</div><div class="gl-bar"><i class="c-a" style="flex:70.0"></i><i class="c-u" style="flex:30.0"></i></div><div class="gl-leg"><span><b class="c-a"></b>A 股 70%</span><span><b class="c-u"></b>美股 30%</span></div><div class="gl-d">A 股是 16 个指数等权；海外 30% 是纳指100、标普500 各半。</div></div><div class="gl-c"><div class="gl-n">连续性版</div><div class="gl-s">v6 的挑战者，只换 A 股名额的选法</div><div class="gl-bar"><i class="c-a" style="flex:40.0"></i><i class="c-u" style="flex:60.0"></i></div><div class="gl-leg"><span><b class="c-a"></b>A 股 40%</span><span><b class="c-u"></b>美股 60%</span></div><div class="gl-d">先取涨幅前一半，再挑上涨天数占比最高的 3 只；其余同 v6。</div></div><div class="gl-c"><div class="gl-n">A1</div><div class="gl-s">同行做法：每月全仓二选一，只报告</div><div class="gl-f"><span class="gl-tm">沪深300</span><span class="gl-op">或</span><span class="gl-tm">标普500</span></div><div class="gl-d">每月末全仓拿过去一年涨得多的那个；标普500 跑输现金就全仓国债。v4 已签收的账本。</div></div><div class="gl-c"><div class="gl-n">A2</div><div class="gl-s">同行做法：五类资产各 1/5，只报告</div><div class="gl-bar"><i class="c-a" style="flex:20.0"></i><i class="c-u2" style="flex:20.0"></i><i class="c-h" style="flex:20.0"></i><i class="c-b" style="flex:20.0"></i><i class="c-g" style="flex:20.0"></i></div><div class="gl-leg"><span><b class="c-a"></b>沪深300 20%</span><span><b class="c-u2"></b>标普500 20%</span><span><b class="c-h"></b>恒生 20%</span><span><b class="c-b"></b>国债 20%</span><span><b class="c-g"></b>黄金 20%</span></div><div class="gl-d">每份低于 10 个月均价就拿现金。v4 已签收的账本。</div></div></div></div><div class="gl-g"><div class="gl-gh">收益拆成哪六块<span>6</span></div><div class="gl-grid" style="--gl-c:3"><div class="gl-c full"><div class="gl-n">六块怎么接起来</div><div class="gl-s">从 BM-主一步一步走到 v6：每走一步换一样东西，两条线之差就是一块；六块加起来正好是 v6 比 BM-主多出的部分</div><div class="gl-chain"><span class="gl-node">BM-主</span><span class="gl-edge neg"><em>分红</em><b class="num">−0.6</b><i>→</i></span><span class="gl-node">价格版</span><span class="gl-edge neg"><em>仓位差</em><b class="num">−3.4</b><i>→</i></span><span class="gl-node">BM-同仓位</span><span class="gl-edge pos"><em>等权倾斜</em><b class="num">+0.8</b><i>→</i></span><span class="gl-node">同结构等权</span><span class="gl-edge pos"><em>挑选</em><b class="num">+4.3</b><i>→</i></span><span class="gl-node">前 3 不防守</span><span class="gl-edge neg"><em>防守</em><b class="num">−0.02</b><i>→</i></span><span class="gl-node">v6 毛</span><span class="gl-edge neg"><em>成本</em><b class="num">−1.5</b><i>→</i></span><span class="gl-node">v6 净</span></div><div class="gl-d">BM-主是全收益，价格版是它去掉分红；数字是预演全段 2006–15（每年几点），开考后换成检验段。汇率单独报，不进合计。</div></div><div class="gl-c"><div class="gl-n">分红</div><div class="gl-s">候选用价格指数、基准用全收益，差出来的分红</div><div class="gl-f"><span class="gl-tm">BM-主价格</span><span class="gl-op">−</span><span class="gl-tm">BM-主全收益</span></div><div class="gl-val neg"><b class="num">−0.6</b><span>点/年</span></div><div class="gl-d">一直为负：不是规则的问题，是口径。</div></div><div class="gl-c"><div class="gl-n">仓位差</div><div class="gl-s">只因为美股 60%、A 股 40% 而多或少的部分</div><div class="gl-f"><span class="gl-tm">BM-同仓位</span><span class="gl-op">−</span><span class="gl-tm">BM-主</span></div><div class="gl-val neg"><b class="num">−3.4</b><span>点/年</span></div><div class="gl-d">A 股大牛市里只放 40%，这一块吃亏最多。</div></div><div class="gl-c"><div class="gl-n">等权倾斜</div><div class="gl-s">不挑、全拿带来的部分</div><div class="gl-f"><span class="gl-tm">同结构等权</span><span class="gl-op">−</span><span class="gl-tm">BM-同仓位</span></div><div class="gl-val pos"><b class="num">+0.8</b><span>点/年</span></div><div class="gl-d">同结构等权 = 每个名额按行业标签等权持有全部候选。</div></div><div class="gl-c"><div class="gl-n">挑选</div><div class="gl-s">每月选最强的 3 只值多少</div><div class="gl-f"><span class="gl-tm">前 3、不设防守</span><span class="gl-op">−</span><span class="gl-tm">同结构等权</span></div><div class="gl-val pos"><b class="num">+4.3</b><span>点/年</span></div><div class="gl-d">设计期最大的加分；检验段还在不在，是这份报告最想回答的。</div></div><div class="gl-c"><div class="gl-n">防守</div><div class="gl-s">确认紧张时按把握减仓值多少</div><div class="gl-f"><span class="gl-tm">v6 毛</span><span class="gl-op">−</span><span class="gl-tm">前 3、不设防守</span></div><div class="gl-val neg"><b class="num">−0.02</b><span>点/年</span></div><div class="gl-d">平时交保费，急跌时赚回来；价值在回撤，不在收益。</div></div><div class="gl-c"><div class="gl-n">成本</div><div class="gl-s">换手扣掉的部分</div><div class="gl-f"><span class="gl-tm">v6 净</span><span class="gl-op">−</span><span class="gl-tm">v6 毛</span></div><div class="gl-val neg"><b class="num">−1.5</b><span>点/年</span></div><div class="gl-d">按判定口径单边 0.2%；万分之一下约 −0.08 点（D52）。</div></div></div></div></div></div></div>
+</div></div>
+<nav aria-label="故事主线" class="sl-spine"><div class="sl-sp-h">这份报告的故事主线：从“过没过”读到“钱从哪来、在检验段还在不在”</div><div class="sl-sp-r"><a class="sl-sp-i t-ok" href="#sec-0-开考前提-七件事六件已齐-只差-manager-合并-dev-正式跑一次" title="什么都齐了才能跑？"><span class="sl-sp-k"></span><span class="sl-sp-s">开考前提</span><span class="sl-sp-st">在做</span></a><a class="sl-sp-i t-ok" href="#sec-1-过不过-只看检验段四条判据-结论句三版已预写" title="一次性检验过没过？"><span class="sl-sp-k"></span><span class="sl-sp-s">过不过</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-2-结论稳不稳-稳健性-8-项-同结构随机-能买到的池子-都只报告" title="换个成本、晚一天下单、去掉最赚钱的几只，结论还在不在？"><span class="sl-sp-k"></span><span class="sl-sp-s">稳不稳</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-3-钱从哪来-六块拆账按四个五年段看-每块贴-稳定-设计期才有-不稳定" title="v6 赚的是挑选、防守，还是美股放 60%、人民币贬值？"><span class="sl-sp-k"></span><span class="sl-sp-s">钱从哪来</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-4-挑选赚的是谁-防守赚的是哪几次-看前-3-名占多少-逐次列紧张段" title="挑选的钱是不是集中在几只上？防守在哪几次真帮上了忙？"><span class="sl-sp-k"></span><span class="sl-sp-s">挑选与防守</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-5-和别人比-八条线-检验段为主-全段并列" title="检验段里 v6 和 A1、A2、K2A、现行配置、基准比，站在哪？"><span class="sl-sp-k"></span><span class="sl-sp-s">和别人比</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-6-性格-2006-2026-一条线走下来-几次急跌各怎样" title="一直拿着的人，20 年里会经历什么？"><span class="sl-sp-k"></span><span class="sl-sp-s">性格</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-7-四种行情-任意起点-全段-2006-2026" title="牛熊里各赚亏多少？什么时候买进来会输？"><span class="sl-sp-k"></span><span class="sl-sp-s">行情与起点</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-8-预测准不准-检验段逐项对账-不判过不过" title="事先估的每一项，检验段落在范围里吗？"><span class="sl-sp-k"></span><span class="sl-sp-s">预测</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-9-连续性版换不换-两个条件都满足才换" title="挑战者在检验段赢了吗？"><span class="sl-sp-k"></span><span class="sl-sp-s">连续性版</span><span class="sl-sp-st">待填</span></a><a class="sl-sp-i t-ok" href="#sec-10-接下来-按结论三级走-三条路事先写好" title="结论出来以后做什么？"><span class="sl-sp-k"></span><span class="sl-sp-s">接下来</span><span class="sl-sp-st">待填</span></a></div></nav></section>
+<section id="sec-0-开考前提-七件事六件已齐-只差-manager-合并-dev-正式跑一次"><h2 id="0-开考前提-七件事六件已齐-只差-manager-合并-dev-正式跑一次"><span class="num">00</span>开考前提：七件事六件已齐，只差 Manager 合并、Dev 正式跑一次</h2>
+<p class="memo"><strong>D49–D52 都已定，预演保费 1.3839 两边差约 1e-7；Reviewer 已签 #391、#394、#395、#396，等 Manager 合并后 Dev 开考。</strong></p>
+<div class="table-wrap"><div class="comp f-todos-wrap" data-lint="ref"><div class="f-td-pg"><b>6 / 7</b><span>已完成</span><span class="f-td-bar"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></div><div class="f-tds"><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>批准一次性检验</b></div><div class="f-td-m"><span class="f-td-no">#1</span><span class="f-td-w">Owner</span></div><div class="f-td-r">2016-01 → 2026-09，只跑一次，判定只看检验段</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>D49 全段只报告、六块拆账</b></div><div class="f-td-m"><span class="f-td-no">#2</span><span class="f-td-w">Reviewer</span><span class="f-td-w">Manager</span></div><div class="f-td-r">11-26 合入</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>D50 很敏感与三级结论</b></div><div class="f-td-m"><span class="f-td-no">#3</span><span class="f-td-w">Owner</span></div><div class="f-td-r">D50-4 选 B：有条件再遇欧洲“不支持”= 不通过</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>D51 判据 ② 的对照、S 项怎么跟着改</b></div><div class="f-td-m"><span class="f-td-no">#4</span><span class="f-td-w">Orchestrator</span><span class="f-td-w">Reviewer</span></div><div class="f-td-r">预演里判据 ② 从 2.83 回到签收的 1.38</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>D52 成本两个口径</b></div><div class="f-td-m"><span class="f-td-no">#5</span><span class="f-td-w">Owner</span></div><div class="f-td-r">判定 0.2%；万分之一只报告（#396）</div></div></div><div class="f-td done"><span class="f-td-n">✓</span><div class="f-td-b"><div class="f-td-h"><b>预演对上</b></div><div class="f-td-m"><span class="f-td-no">#6</span><span class="f-td-w">Dev</span><span class="f-td-w">Reviewer</span></div><div class="f-td-r">Reviewer 先锁定再对账（#397）：①–④、S1、S3 一致</div></div></div><div class="f-td"><span class="f-td-n">7</span><div class="f-td-b"><div class="f-td-h"><b>合并后正式跑一次</b></div><div class="f-td-m"><span class="f-td-no">#7</span><span class="f-td-w">Manager</span><span class="f-td-w">Dev</span><span class="f-td-w">Reviewer</span></div><div class="f-td-r">跑完 Reviewer 独立复算 ①–④、S1、S3 和连续性版</div></div></div></div></div></div>
 <ul class="points">
-<li><strong>D50 定了什么</strong>：稳健性 8 项里任何一项改动后四条判据的总结论翻转，记“很敏感”；主判通过而有一项很敏感，结论是“通过（有条件）”，照常进 6 个月模拟盘，页首写明条件。</li>
-<li><strong>判定口径与连续运行</strong>：若冻结代码的检验段是 2016-01 重新起步，报告另列一行：连续运行截出的 2016 年以后那段和判定口径差多少、为什么（D49-1）。</li>
-<li><strong>成本加倍最可能触发降级</strong>：设计期成本每年约 1.5 点，判据 ④ 的余量不到这个数时，成本加倍就会让它翻转。</li>
+<li><strong>D50 定了什么</strong>：稳健性 8 项里任何一项改动后总结论翻转，记“很敏感”；主判通过而有一项很敏感，结论是“通过（有条件）”，照常进 6 个月模拟盘，页首写明条件。</li>
+<li><strong>判定口径</strong>：冻结代码从 2006 年连续跑下来，截出检验段判定；2016-01 重新起步只另列差多少（D49-1）。预演里两者结论相同，保费差 0.63 点。</li>
+<li><strong>成本加倍最可能触发降级</strong>：成本每年约 1.5 点，判据 ④ 的余量不到这个数时，成本加倍就会让它翻转。</li>
 </ul>
 <a class="sl-next" href="#sec-1-过不过-只看检验段四条判据-结论句三版已预写"><span class="sl-nl">所以</span><span class="sl-nt">前提齐了才跑；跑完先看的，是过没过</span><span class="sl-ng">01 过不过 →</span></a>
 </section>
@@ -1739,13 +1822,18 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 </table></div>
 <ul class="points">
 <li><strong>读这块</strong>：框住的是检验段一列，只有它决定结论；左边两列是设计期参照，后五年 ③④ 已经不过。</li>
-<li><strong>不加形容词</strong>：通过版本不写“稳定跑赢”，不通过版本不写“接近通过”；差多少直接写数字。翻转只在检验段、指数池的主判上判（D50-1）。</li>
+<li><strong>结论句由脚本选</strong>：填数脚本按 <code>verdict.json</code> 的总结论选一版、只填【】，不改字；预演选出的是“不通过”那一版，和左边 2011–15 一列一致。</li>
+<li><strong>不加形容词</strong>：通过版本不写“稳定跑赢”，不通过版本不写“接近通过”；差多少直接写数字。</li>
 </ul>
 <a class="sl-next" href="#sec-2-结论稳不稳-稳健性-8-项-同结构随机-能买到的池子-都只报告"><span class="sl-nl">所以</span><span class="sl-nt">过没过只是一个字；下一节看这个字稳不稳</span><span class="sl-ng">02 结论稳不稳 →</span></a>
 </section>
 <section id="sec-2-结论稳不稳-稳健性-8-项-同结构随机-能买到的池子-都只报告"><h2 id="2-结论稳不稳-稳健性-8-项-同结构随机-能买到的池子-都只报告"><span class="num">02</span>结论稳不稳：稳健性 8 项、同结构随机、能买到的池子，都只报告</h2>
 <p class="memo"><strong>8 项里有一项让总结论翻转，就记“很敏感”，通过降为“通过（有条件）”（D50）；随机对照和能买到的池子只报告。</strong></p>
-<figure><img alt="稳健性 8 项 × 四条判据的格子和 1000 次随机的分布，检验段开考后填" src="../../assets/v6-oneshot/o2-robust.png"/></figure>
+<figure><img alt="预演样张：左边 8 项 × 四条判据，翻转的一格加框；右边 1000 次随机年化的分布，竖线是 v6" src="../../assets/v6-oneshot/o2-robust.png"/></figure>
+<ul class="points">
+<li><strong>先看左边最右一列</strong>：8 行的总结论有没有哪一格和主判不一样；有就加框，并写进页首。</li>
+<li><strong>再看右边竖线</strong>：v6 落在随机分布的哪里；检验段、全段各一条。</li>
+</ul>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>8 项各看什么，以及随机对照、能买到的池子</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><table>
 <thead>
@@ -1801,24 +1889,26 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 </tr>
 <tr>
 <td class="k">可交易池</td>
-<td>只买当年真有的场内基金</td>
+<td>只买当年真有的场内基金，计 QDII 溢价</td>
 <td>和指数池差多少</td>
-<td class="r-status"><span class="pill warn">待填</span></td>
+<td class="r-status"><span class="pill warn">未实现，不挡开考（D52-3）</span></td>
 </tr>
 </tbody>
 </table></div>
 </div></div>
-<ul class="points">
-<li><strong>图</strong>：8 行 × 四条判据的小闸门格，翻转的格子框出；1000 次随机年化的分布条，v6 一条竖线。</li>
-<li><strong>为什么成本加倍排第一</strong>：设计期成本每年约 1.5 点，比预测合计的中间值 +1.2 还大；超额薄的时候，最先被成本吃掉。</li>
-</ul>
 <a class="sl-next" href="#sec-3-钱从哪来-六块拆账按四个五年段看-每块贴-稳定-设计期才有-不稳定"><span class="sl-nl">所以</span><span class="sl-nt">结论稳不稳看完，最想知道的是钱从哪来</span><span class="sl-ng">03 钱从哪来 →</span></a>
 </section>
 <section id="sec-3-钱从哪来-六块拆账按四个五年段看-每块贴-稳定-设计期才有-不稳定"><h2 id="3-钱从哪来-六块拆账按四个五年段看-每块贴-稳定-设计期才有-不稳定"><span class="num">03</span>钱从哪来：六块拆账按四个五年段看，每块贴“稳定 / 设计期才有 / 不稳定”</h2>
-<p class="memo"><strong>六块相加 = v6 比 BM-主多出的部分；全段只放在分段旁边，不单独引用（D49）。</strong></p>
-<figure><img alt="检验段瀑布图的空位：从 BM-主走到 v6 净，六块各加减多少" src="../../assets/v6-oneshot/o3w-waterfall.png"/></figure>
-<figure><img alt="六块 × 四个五年段 + 全段：读法按 D49-8 顺序贴标签" src="../../assets/v6-oneshot/o3-sources.png"/></figure>
-<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>六块 × 四段的空表（跑完填数）</span></button><div class="fold-b" hidden="">
+<p class="memo"><strong>六块相加 = v6 比 BM-主多出的部分；全段只放在分段旁边，不单独引用（D49）；成本另列万分之一的实盘口径（D52）。</strong></p>
+<figure><img alt="预演样张：检验段从 BM-主走到 v6 净，六块各加减多少" src="../../assets/v6-oneshot/o3w-waterfall.png"/></figure>
+<figure><img alt="预演样张：六块 × 各段，每年多或少几个点；开考后多出 2016–20、2021–26 两列和读法标签" src="../../assets/v6-oneshot/o3-sources.png"/></figure>
+<figure><img alt="预演样张：成本两个口径下的判据 ③ ④；判定只看蓝色的 0.2%" src="../../assets/v6-oneshot/o3c-cost.png"/></figure>
+<ul class="points">
+<li><strong>先看瀑布最右</strong>：v6 净比 BM-主多还是少；再看哪一块最高。</li>
+<li><strong>再看格子的标签列</strong>：挑选、防守是“稳定”，才说明每月四步的规则本身有用；钱主要来自仓位差或汇率，说明赚的是“美股放 <span class="num">60%</span>”。</li>
+<li><strong>成本两个口径</strong>：灰条只说明佣金有多便宜，不改判定；实盘还要付价差和 QDII 溢价（D52）。</li>
+</ul>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>六块 × 四段的空表（跑完填）</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -1889,17 +1979,22 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 </tbody>
 </table></div>
 <p class="table-note note">逐年（20 个完整自然年 + 2026 年前 9 个月）另附一张同样的表；A 股名额、美股名额各一张；美股另报“前 3 − SPX”（D48-3）和汇率层。</p>
-</div></div>
 <ul class="points">
 <li><strong>读法标签按顺序判</strong>（D49-8）：设计期为正、检验段为负或不到 0.5 点 <span class="arr">→</span> 设计期才有；否则四段至少三段同号且检验段与设计期同号 <span class="arr">→</span> 稳定；其余 <span class="arr">→</span> 不稳定。</li>
 <li><strong>六块首尾相接</strong>：相加 = v6 净 − BM-主全收益；第 ③ 块减去的，就是第 ② 块终点的价格 BM-同仓位（D49-3）。</li>
 <li><strong>汇率单独看</strong>：美股名额的人民币收益减美元收益，另报，不进合计，也不进瀑布图。</li>
 </ul>
-<a class="sl-next" href="#sec-4-挑选赚的是谁-防守赚的是哪几次-看前-10-名占多少-逐次列紧张段"><span class="sl-nl">所以</span><span class="sl-nt">挑选和防守各自是哪几笔赚的？</span><span class="sl-ng">04 挑选赚的是谁、防守赚的是哪几次 →</span></a>
+</div></div>
+<a class="sl-next" href="#sec-4-挑选赚的是谁-防守赚的是哪几次-看前-3-名占多少-逐次列紧张段"><span class="sl-nl">所以</span><span class="sl-nt">挑选和防守各自是哪几笔赚的？</span><span class="sl-ng">04 挑选赚的是谁、防守赚的是哪几次 →</span></a>
 </section>
-<section id="sec-4-挑选赚的是谁-防守赚的是哪几次-看前-10-名占多少-逐次列紧张段"><h2 id="4-挑选赚的是谁-防守赚的是哪几次-看前-10-名占多少-逐次列紧张段"><span class="num">04</span>挑选赚的是谁、防守赚的是哪几次：看前 10 名占多少，逐次列紧张段</h2>
-<p class="memo"><strong>挑选看贡献最大的 10 个候选占多少；防守逐次列出紧张段，2008、2011、2015–16、2018、2020、2022 年都要如实写（D49-5、D49-6）。</strong></p>
-<figure><img alt="挑选的前 10 个候选开考后画；设计期每年紧张月数已对上，2008 年两个名额都紧张了 12 个月" src="../../assets/v6-oneshot/o4-picks-defense.png"/></figure>
+<section id="sec-4-挑选赚的是谁-防守赚的是哪几次-看前-3-名占多少-逐次列紧张段"><h2 id="4-挑选赚的是谁-防守赚的是哪几次-看前-3-名占多少-逐次列紧张段"><span class="num">04</span>挑选赚的是谁、防守赚的是哪几次：看前 3 名占多少，逐次列紧张段</h2>
+<p class="memo"><strong>挑选看贡献最大的 10 个候选、前 3 名占多少，和 S3–S5 并排看；防守逐次列出紧张段，2015–16、2018、2020、2022 年都要如实写（D49-5、D49-6）。</strong></p>
+<figure><img alt="预演样张：两个名额各自贡献最大的 10 个候选，彩色是前 3 名，右边是入选月数" src="../../assets/v6-oneshot/o4-picks-defense.png"/></figure>
+<figure><img alt="预演样张：每一次紧张段，绿 = 防守比不设防守多赚，橙 = 少赚" src="../../assets/v6-oneshot/o4b-stress.png"/></figure>
+<ul class="points">
+<li><strong>前 3 名占比高</strong>：钱集中在少数几只，S3–S5 去掉它们以后最容易翻转。</li>
+<li><strong>紧张段的颜色</strong>：绿的几次是防守真帮上忙；橙的是交了保费。平时（不紧张月份）的保费另报。</li>
+</ul>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>这一节跑完要填的四样</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><table>
 <thead>
@@ -1912,17 +2007,17 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <tbody>
 <tr>
 <td>挑选贡献最大的 10 个候选</td>
-<td>每段一张横条图，加从未入选名单</td>
+<td>每个名额一张横条图，加从未入选名单</td>
 <td class="r-status"><span class="pill warn">待填</span></td>
 </tr>
 <tr>
-<td>前 3 名占挑选合计的比例</td>
+<td>前 3 名占前 10 名贡献的比例</td>
 <td>和 S3–S5 并排看</td>
 <td class="r-status"><span class="pill warn">待填</span></td>
 </tr>
 <tr>
 <td class="k">每一次紧张段</td>
-<td>两个名额的时间线：平均股票仓位、该段比不设防守多或少</td>
+<td>两个名额的时间线：段内累计比不设防守多或少</td>
 <td class="r-status"><span class="pill warn">待填</span></td>
 </tr>
 <tr>
@@ -1936,79 +2031,94 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <a class="sl-next" href="#sec-5-和别人比-八条线-检验段为主-全段并列"><span class="sl-nl">所以</span><span class="sl-nt">钱的来源看清了，再把 v6 放回八条线里</span><span class="sl-ng">05 和别人比 →</span></a>
 </section>
 <section id="sec-5-和别人比-八条线-检验段为主-全段并列"><h2 id="5-和别人比-八条线-检验段为主-全段并列"><span class="num">05</span>和别人比：八条线，检验段为主、全段并列</h2>
-<p class="memo"><strong>沿用体检第 2 节的八条线做法表，年化和回撤换成检验段；散点用实心画检验段、空心画全段。</strong></p>
-<figure><img alt="八条线设计期的位置已画（空心），检验段的实心点开考后画" src="../../assets/v6-oneshot/o5-peers.png"/></figure>
+<p class="memo"><strong>散点实心画检验段、空心画全段，细线连同一条线；下面的阵列先放设计期 2006–15 的年化和回撤，开考后换成检验段。</strong></p>
+<figure><img alt="预演样张：八条线的年化和最大回撤，实心 = 检验段，空心 = 全段" src="../../assets/v6-oneshot/o5-peers.png"/></figure>
+<div class="table-wrap"><div class="comp f-lineup-wrap" data-lint="ref"><div class="f-lus"><div class="f-lu hd"><span>线</span><span>放哪</span><span>怎么选</span><span>防守</span><span><i class="ka"></i>年化 <i class="kd"></i>最大回撤</span><span>为什么是这个结果</span></div><div class="f-lu-g on"><b>设了防守的 5 条</b><span>最大回撤 −13.1% 到 −42.9%</span></div><div class="f-lu v6"><div class="f-lu-k">v6</div><div class="f-lu-c">A 股 40%、美股 60%</div><div class="f-lu-c">每月每个名额取涨幅前 3</div><div class="f-lu-c g">紧张时股票只拿 p</div><div class="f-lu-bars"><div class="f-lu-b a"><span><i style="width:57%"></i></span><b class="num">15.3%</b></div><div class="f-lu-b d"><span><i style="width:44%"></i></span><b class="num">−28.7%</b></div></div><div class="f-lu-why">减仓躲大跌；A 股少，牛市少赚</div></div><div class="f-lu"><div class="f-lu-k">连续性版</div><div class="f-lu-c">同 v6</div><div class="f-lu-c">A 股改挑上涨天数最多的 3 只</div><div class="f-lu-c g">同 v6</div><div class="f-lu-bars"><div class="f-lu-b a"><span><i style="width:59%"></i></span><b class="num">15.8%</b></div><div class="f-lu-b d"><span><i style="width:42%"></i></span><b class="num">−27.5%</b></div></div><div class="f-lu-why">和 v6 几乎一样</div></div><div class="f-lu"><div class="f-lu-k">K2A</div><div class="f-lu-c">A 股 50%、美股 50%</div><div class="f-lu-c">不挑：沪深300、纳指、标普</div><div class="f-lu-c g">只管 A 股：破均线换国债</div><div class="f-lu-bars"><div class="f-lu-b a"><span><i style="width:60%"></i></span><b class="num">16.2%</b></div><div class="f-lu-b d"><span><i style="width:55%"></i></span><b class="num">−36.1%</b></div></div><div class="f-lu-why">美股不防，2008 年跌得深</div></div><div class="f-lu"><div class="f-lu-k">A1</div><div class="f-lu-c">沪深300 或标普500，全仓</div><div class="f-lu-c">每月拿过去一年涨得多的那个</div><div class="f-lu-c g">标普跑输现金就全换国债</div><div class="f-lu-bars"><div class="f-lu-b a"><span><i style="width:100%"></i></span><b class="num">27.0%</b></div><div class="f-lu-b d"><span><i style="width:65%"></i></span><b class="num">−42.9%</b></div></div><div class="f-lu-why">全仓吃到牛市；太集中，回撤深</div></div><div class="f-lu"><div class="f-lu-k">A2</div><div class="f-lu-c">五类各 1/5</div><div class="f-lu-c">不挑：A、美、港股，国债，黄金</div><div class="f-lu-c g">每份破均线就拿现金</div><div class="f-lu-bars"><div class="f-lu-b a"><span><i style="width:33%"></i></span><b class="num">8.9%</b></div><div class="f-lu-b d"><span><i style="width:20%"></i></span><b class="num">−13.1%</b></div></div><div class="f-lu-why">股票少又分散：最稳、最低</div></div><div class="f-lu-g off"><b>没设防守的 3 条</b><span>最大回撤 −59.1% 到 −65.5%</span></div><div class="f-lu"><div class="f-lu-k">现行配置</div><div class="f-lu-c">A 股 70%、海外 30%</div><div class="f-lu-c">不挑：16 个 A 股指数等权</div><div class="f-lu-c g">没有</div><div class="f-lu-bars"><div class="f-lu-b a"><span><i style="width:78%"></i></span><b class="num">21.0%</b></div><div class="f-lu-b d"><span><i style="width:92%"></i></span><b class="num">−60.1%</b></div></div><div class="f-lu-why">A 股多，牛市赚得多，跌得也深</div></div><div class="f-lu bm"><div class="f-lu-k">BM-主</div><div class="f-lu-c">A 股 70%、美股 30%</div><div class="f-lu-c">不挑：沪深300、纳指、标普</div><div class="f-lu-c g">没有</div><div class="f-lu-bars"><div class="f-lu-b a"><span><i style="width:58%"></i></span><b class="num">15.6%</b></div><div class="f-lu-b d"><span><i style="width:100%"></i></span><b class="num">−65.5%</b></div></div><div class="f-lu-why">A 股多，2008 年跟着跌</div></div><div class="f-lu bm"><div class="f-lu-k">BM-同仓位</div><div class="f-lu-c">A 股 40%、美股 60%</div><div class="f-lu-c">不挑：沪深300、纳指、标普</div><div class="f-lu-c g">没有</div><div class="f-lu-bars"><div class="f-lu-b a"><span><i style="width:47%"></i></span><b class="num">12.8%</b></div><div class="f-lu-b d"><span><i style="width:90%"></i></span><b class="num">−59.1%</b></div></div><div class="f-lu-why">v6 去掉挑选和防守：差一截</div></div></div></div></div>
+<ul class="points">
+<li><strong>阵列分两组</strong>：同组比回撤，跨组看少跌要少赚多少。</li>
+<li><strong>BM-主逐年并列</strong>放折叠（冻结稿 §5.1）；A1、A2 检验段接 v5 账本（D49）。</li>
+</ul>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>八条线检验段的年化和回撤（跑完填）</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><table data-lint="ref">
 <thead>
 <tr>
 <th>线</th>
-<th>做法（同体检第 2 节）</th>
 <th>检验段年化</th>
 <th>检验段回撤</th>
+<th>全段年化</th>
+<th>全段回撤</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="k">v6</td>
-<td>两个名额各选前 3，紧张时只拿把握 p</td>
+<td>待填</td>
+<td>待填</td>
 <td>待填</td>
 <td>待填</td>
 </tr>
 <tr>
 <td class="k">连续性版</td>
-<td>A 股改挑上涨天数最多的 3 只</td>
+<td>待填</td>
+<td>待填</td>
 <td>待填</td>
 <td>待填</td>
 </tr>
 <tr>
 <td class="k">K2A</td>
-<td>A 股、美股各半，只给 A 股上保险</td>
+<td>待填</td>
+<td>待填</td>
 <td>待填</td>
 <td>待填</td>
 </tr>
 <tr>
 <td class="k">A1</td>
-<td>沪深300、标普500 二选一全仓</td>
+<td>待填</td>
+<td>待填</td>
 <td>待填</td>
 <td>待填</td>
 </tr>
 <tr>
 <td class="k">A2</td>
-<td>五类资产各 1/5，各自破均线拿现金</td>
+<td>待填</td>
+<td>待填</td>
 <td>待填</td>
 <td>待填</td>
 </tr>
 <tr>
 <td class="k">现行配置</td>
-<td>A 股 70%、海外 30%，不防守</td>
+<td>待填</td>
+<td>待填</td>
 <td>待填</td>
 <td>待填</td>
 </tr>
 <tr>
 <td class="k">BM-主</td>
-<td>70/15/15，不挑不防</td>
+<td>待填</td>
+<td>待填</td>
 <td>待填</td>
 <td>待填</td>
 </tr>
 <tr>
 <td class="k">BM-同仓位</td>
-<td>40/30/30，不挑不防</td>
+<td>待填</td>
+<td>待填</td>
 <td>待填</td>
 <td>待填</td>
 </tr>
 </tbody>
 </table></div>
 </div></div>
-<ul class="points">
-<li><strong>BM-主逐年并列</strong>：冻结稿 §5.1 规定，放折叠。</li>
-<li><strong>A1、A2</strong>：设计期 v4 账本接检验段 v5 账本，接口处逐日核对（D49）。</li>
-</ul>
 <a class="sl-next" href="#sec-6-性格-2006-2026-一条线走下来-几次急跌各怎样"><span class="sl-nl">所以</span><span class="sl-nt">比完位置，看这 <b class="sl-n">20 </b>年一条线怎么走</span><span class="sl-ng">06 性格 →</span></a>
 </section>
 <section id="sec-6-性格-2006-2026-一条线走下来-几次急跌各怎样"><h2 id="6-性格-2006-2026-一条线走下来-几次急跌各怎样"><span class="num">06</span>性格：2006–2026 一条线走下来，几次急跌各怎样</h2>
-<p class="memo"><strong>净值用普通刻度、单位万元，2016-01 一条竖线分开设计期和检验段；必须写全段最深一跌在哪，是否跨 2015-12 / 2016-01。</strong></p>
-<figure><img alt="设计期十年的净值和回撤已画，2016-01 以后留白，开考后接着画" src="../../assets/v6-oneshot/o6-nav.png"/></figure>
+<p class="memo"><strong>净值用普通刻度、单位万元，竖线分开设计期和检验段；必须写全段最深一跌在哪、是否跨 2015-12 / 2016-01，以及 2015、2018、2020、2022 四次急跌各跌多少。</strong></p>
+<figure><img alt="预演样张：100 万变成多少万，下面是回撤；竖线是检验段起点" src="../../assets/v6-oneshot/o6-nav.png"/></figure>
+<figure><img alt="预演样张：从 BM-主当年最高那天起 250 个交易日，几条线各跌多少；开考后换成 2015、2018、2020、2022 四次" src="../../assets/v6-oneshot/o6b-crash.png"/></figure>
+<ul class="points">
+<li><strong>急跌怎么取</strong>：每次从 BM-主该年最高那一天起算 250 个交易日，不挑日子；正式四次是 2015、2018、2020、2022 年。</li>
+<li><strong>当时股票仓位</strong>：每次标出 v6 一年内的最低股票仓位，需要 Dev 导出每月仓位；没导出时只画跌幅。</li>
+</ul>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>这一节跑完要填的四样</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><table>
 <thead>
@@ -2021,22 +2131,22 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <tbody>
 <tr>
 <td>100 万变成多少 + 回撤</td>
-<td>八条线逐周（同体检第 3 节）</td>
+<td>六条线加沪深300、标普500 全收益，逐周</td>
+<td class="r-status"><span class="pill warn">待填</span></td>
+</tr>
+<tr>
+<td class="k">全段最深一跌</td>
+<td>从哪天到哪天，是否跨 2015-12 / 2016-01</td>
+<td class="r-status"><span class="pill warn">待填</span></td>
+</tr>
+<tr>
+<td class="k">四次急跌</td>
+<td>从见顶日算 250 个交易日，标出当时股票仓位</td>
 <td class="r-status"><span class="pill warn">待填</span></td>
 </tr>
 <tr>
 <td>上涨月份跟到、下跌月份只跟</td>
 <td>检验段和设计期并列</td>
-<td class="r-status"><span class="pill warn">待填</span></td>
-</tr>
-<tr>
-<td>2015–16 跨两段那一跌</td>
-<td>从 2015-06 高点算</td>
-<td class="r-status"><span class="pill warn">待填</span></td>
-</tr>
-<tr>
-<td>2018、2020、2022 三次急跌</td>
-<td>从见顶日算 250 个交易日，标出当时股票仓位</td>
 <td class="r-status"><span class="pill warn">待填</span></td>
 </tr>
 </tbody>
@@ -2045,36 +2155,18 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <a class="sl-next" href="#sec-7-四种行情-任意起点-全段-2006-2026"><span class="sl-nl">所以</span><span class="sl-nt">一条线看完，再按行情和起点切开看</span><span class="sl-ng">07 四种行情、任意起点 →</span></a>
 </section>
 <section id="sec-7-四种行情-任意起点-全段-2006-2026"><h2 id="7-四种行情-任意起点-全段-2006-2026"><span class="num">07</span>四种行情、任意起点：全段 2006–2026</h2>
-<p class="memo"><strong>四种行情和任意起点同体检第 4、5 节，检验段和设计期并列；<span class="num">2011–2021 年</span>买入、跨两段的起点单独标出。</strong></p>
-<figure><img alt="设计期对 BM-主：熊市、回调多赚，牛市、反弹少赚；检验段的柱开考后画" src="../../assets/v6-oneshot/o7-regime.png"/></figure>
-<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>这一节跑完要填的两样</span></button><div class="fold-b" hidden="">
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>看什么</th>
-<th>图</th>
-<th class="rh-status">状态</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>牛市、回调、熊市、反弹</td>
-<td>对 BM-主、BM-同仓位、K2A 的合计和跑赢月份</td>
-<td class="r-status"><span class="pill warn">待填</span></td>
-</tr>
-<tr>
-<td>持有 1 / 3 / 5 年</td>
-<td>跑赢的起点占比，约 190 个起点</td>
-<td class="r-status"><span class="pill warn">待填</span></td>
-</tr>
-</tbody>
-</table></div>
-</div></div>
+<p class="memo"><strong>四种行情和任意起点同体检第 4、5 节，对 BM-主、BM-同仓位、K2A 三个对照；<span class="num">2011–2021 年</span>买入、跨两段的起点单独标出。</strong></p>
+<figure><img alt="预演样张：牛市、回调、熊市、反弹里 v6 对三个对照每月多或少的合计" src="../../assets/v6-oneshot/o7-regime.png"/></figure>
+<figure><img alt="预演样张：任意一天买进、持有 1 / 3 / 5 年，跑赢对照的起点占比" src="../../assets/v6-oneshot/o7b-anystart.png"/></figure>
+<ul class="points">
+<li><strong>行情柱</strong>：v6 设计成熊市、回调多赚，牛市、反弹少赚；方向反了要先查原因。</li>
+<li><strong>起点占比</strong>：橙条（不到一半）说明什么时候买进来大概率会输；持有越久，占比应当越高。</li>
+</ul>
 <a class="sl-next" href="#sec-8-预测准不准-检验段逐项对账-不判过不过"><span class="sl-nl">所以</span><span class="sl-nt">结果和事先估的对得上吗？</span><span class="sl-ng">08 预测准不准 →</span></a>
 </section>
 <section id="sec-8-预测准不准-检验段逐项对账-不判过不过"><h2 id="8-预测准不准-检验段逐项对账-不判过不过"><span class="num">08</span>预测准不准：检验段逐项对账，不判过不过</h2>
 <p class="memo"><strong>预测范围横条 + 检验段实际点，设计期的点灰色并列（D38-6）；超出范围的项，先查原因再做下一版。</strong></p>
-<figure><img alt="设计期挑选三项都高于范围；检验段的点开考后画在右侧" src="../../assets/v6-oneshot/o8-forecast.png"/></figure>
+<figure><img alt="预演样张：横条是事先范围，竖线是中间值，彩点是检验段，灰点是设计期" src="../../assets/v6-oneshot/o8-forecast.png"/></figure>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>预测表原文、设计期实际和检验段（跑完填）</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><table>
 <thead>
@@ -2138,7 +2230,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <p class="memo"><strong>连续性版整套也过四条判据，且检验段 A 股名额里它比 12−1 的月度差均值为正，才在模拟盘换上；要给 A 股挑选“报钱”还需 t ≥ 2.24（冻结稿 §5.3）。</strong></p>
 <div class="table-wrap"><div class="comp comp-闸门格" data-lint="ref"><div class="comp-h">连续性版：设计期后五年 ③ 不过；检验段一列开考后填</div><div class="gg" style="--gg-n:3"><div class="gg-r gg-hd"><span>判据</span><span class="">2006–10</span><span class="">2011–15</span><span class="gg-main">2016-01 → 2026-09</span></div><div class="gg-r"><div class="gg-k"><b>① 回撤</b><span>门槛 ≤ 40%</span></div><div class="gg-c ok"><b class="num">−27.5%</b><em>✓ 过</em></div><div class="gg-c ok"><b class="num">−24.9%</b><em>✓ 过</em></div><div class="gg-c gg-main"><em>待填</em></div></div><div class="gg-r"><div class="gg-k"><b>② 防守保费</b><span>门槛 ≤ 4 点</span></div><div class="gg-c ok"><b>0.0 点</b><em>✓ 过</em></div><div class="gg-c ok"><b>1.2 点</b><em>✓ 过</em></div><div class="gg-c gg-main"><em>待填</em></div></div><div class="gg-r"><div class="gg-k"><b>③ 对 K2A</b><span>门槛 高于 K2A</span></div><div class="gg-c ok"><b>0.65 对 0.59</b><em>✓ 过</em></div><div class="gg-c no"><b>0.55 对 0.57</b><em>✗ 不过</em></div><div class="gg-c gg-main"><em>待填</em></div></div><div class="gg-r"><div class="gg-k"><b>④ 对同仓位基准</b><span>门槛 ≥ 0</span></div><div class="gg-c ok"><b>+4.6 点</b><em>✓ 过</em></div><div class="gg-c ok"><b>+1.4 点</b><em>✓ 过</em></div><div class="gg-c gg-main"><em>待填</em></div></div><div class="gg-r gg-tot"><div class="gg-k"><b>四条全过</b><span>门槛 全部满足才通过</span></div><div class="gg-c ok"><em>✓ 过</em></div><div class="gg-c no"><em>✗ 不过</em></div><div class="gg-c gg-main"><em>待填</em></div></div></div></div></div>
 <ul class="points">
-<li><strong>第二个条件</strong>：检验段 A 股名额里，连续性版比 12−1 的月度差均值要 &gt; 0；给 A 股挑选“报钱”还要 t ≥ 2.24。两个数开考后填。</li>
+<li><strong>第二个条件</strong>：检验段 A 股名额里，连续性版比 12−1 的月度差均值要 &gt; 0；给 A 股挑选“报钱”还要 t ≥ 2.24。两个数来自 Dev 的 <code>continuity.json</code>，开考后填。</li>
 <li><strong>设计期参照</strong>：后五年 ③ 差一点（0.55 对 0.57），比 v6（0.42）好；设计期好一点不构成换上的理由。</li>
 </ul>
 <a class="sl-next" href="#sec-10-接下来-按结论三级走-三条路事先写好"><span class="sl-nl">所以</span><span class="sl-nt">最后看结论出来以后怎么走</span><span class="sl-ng">10 接下来 →</span></a>
@@ -2150,14 +2242,15 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <li><strong>模拟盘里同时只记录、不交易的三个影子</strong>（冻结稿 §7）：结构市才挑选、12−1 与连续性版各一半、连续性版（检验后没换上时）。</li>
 <li><strong>两条暂停线</strong>：模拟盘跌破 60 万；或 6 个月对同仓位基准累计落后超过 6 点。碰到就暂停并报告你。</li>
 <li><strong>欧洲检验怎么记</strong>：挑选（前 3 对同结构等权）为正、且防守保费不超过 4 点，记“支持”；否则降一级（D50-4）：通过 <span class="arr">→</span> 通过（有条件），上线前你另批；通过（有条件）<span class="arr">→</span> 不通过，模拟盘结束后关闭。</li>
-<li><strong>三种结论都要写</strong>：第 3 节哪几块“稳定”。钱若主要来自仓位差或汇率，说明赚的是“美股放 <span class="num">60%</span>”，更简单的配置也能拿到；挑选和防守“稳定”，才说明每月四步的规则本身有用。</li>
+<li><strong>三种结论都要写</strong>：第 3 节哪几块“稳定”。钱若主要来自仓位差或汇率，更简单的配置也能拿到；挑选和防守“稳定”，才说明每月四步的规则本身有用。</li>
 </ul>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>工程用：输入文件和 PR（跑完填）</span></button><div class="fold-b" hidden="">
 <ul>
-<li>冻结稿：tag <code>milestone/v6-prereg-freeze</code> <span class="arr">→</span> <code>f066da8e</code>；D45–D50（D49 #385、D50 #388）</li>
-<li>Dev：待填（PR、结果目录、复算命令）</li>
-<li>Reviewer：待填（PR、锁定文件与 SHA256）</li>
-<li>图：<code>scripts/v6_report/</code>（沿用体检报告的画法）</li>
+<li>冻结稿：tag <code>milestone/v6-prereg-freeze</code> <span class="arr">→</span> <code>f066da8e</code>；D45–D52（D49 #385、D50 #388、D51 #393、D52 #396）</li>
+<li>预演：Dev #391 @ b2698663（<code>results/v6/rehearsal/</code>）；Reviewer 独立锁定 #397 @ 558a6928</li>
+<li>图：<code>python -I scripts/v6_report/oneshot_fill.py &lt;结果目录&gt; docs/assets/v6-oneshot &lt;填数 JSON&gt;</code>（#395）；样张用预演结果，开考后换 <code>results/v6/oneshot/</code></li>
+<li>Dev 正式：待填（PR、结果目录、manifest 哈希、运行次数 = 1）</li>
+<li>Reviewer 复算：待填（PR、锁定文件与 SHA256）</li>
 </ul>
 </div></div></section>
 <footer>内容取自仓库 <a href="https://github.com/Entropy-Reduction-AI/ETF_Rotation_Quant/blob/main/docs/owner/v6-oneshot-report.md">docs/owner/v6-oneshot-report.md</a>。图表为原文配图。</footer>
