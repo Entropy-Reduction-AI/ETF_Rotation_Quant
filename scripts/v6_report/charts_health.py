@@ -12,6 +12,7 @@ h2：和别人比——八条线 2006–15 的年化 × 最大回撤（左上更
 """
 import sys, json, csv, pathlib
 import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt, matplotlib.ticker
+from matplotlib.patches import FancyBboxPatch, Rectangle
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 OUT = pathlib.Path(sys.argv[1]); OUT.mkdir(parents=True, exist_ok=True)
@@ -208,25 +209,30 @@ if EX.exists():
 # ---------- h7 跑赢随机吗：同结构随机 1000 次里的百分位（冻结稿 §5.2；Dev #377 @ 9935a314，Reviewer #375 对账在容差内） ----------
 RS = json.load(open(SRC / 'health-random-summary.json', encoding='utf-8'))['segments']
 P = {(r['book'], r['segment']): r for r in RS}
-books = [('组合', '组合（v6 整体）'), ('美股', '美股名额'), ('A股', 'A 股名额')]
-segs = [('2006-2010', '2006–10', 'o', 'none'), ('2011-2015', '2011–15', 's', 'none'), ('2006-2015', '2006–15', 'o', 'full')]
-fig, ax = plt.subplots(figsize=(11, 3.9))
-ax.axvspan(95, 100.5, color='#e6f4f1'); ax.axvline(50, color=GREY, ls='--', lw=1)
-ax.text(50, .62, '随机的中间', ha='center', color=MUTED, fontsize=10.5); ax.text(97.7, .62, '前 5%', ha='center', color=TEAL, fontsize=10.5)
+books = [('组合', 'v6 整体'), ('美股', '美股名额'), ('A股', 'A 股名额')]
+segs = [('2006-2010', '2006–10'), ('2011-2015', '2011–15')]
+tone = lambda x: (TEAL, '强于随机') if x >= 95 else ((AMBER, '不如随机的中间') if x < 50 else ('#64748b', '和随机分不开'))
+fig = plt.figure(figsize=(12, 4.6))
 for i, (b, lab) in enumerate(books):
-    y = -i
-    ax.plot([0, 100], [y, y], color='#eef1f5', lw=1, zorder=0)
-    xs = [P[(b, s)]['percentile'] for s, *_ in segs]
-    ax.plot([min(xs), max(xs)], [y, y], color=GREY, lw=1.2, zorder=1)
-    for (s, sl, m, fill), x in zip(segs, xs):
-        full = fill == 'full'
-        c = BLUE if full else MUTED
-        ax.scatter(x, y, s=150 if full else 70, marker=m, facecolors=c if full else 'white', edgecolors=c, lw=1.6, zorder=3)
-        ax.annotate(f'{sl} 第 {x:.0f}' if full else f'{sl}\n{x:.0f}', (x, y), xytext=(0, 13 if full else -24), textcoords='offset points',
-                    ha='center', fontsize=10.5 if full else 9.5, color=c, weight='bold' if full else 'normal')
-    ax.text(-2, y, lab, ha='right', va='center', fontsize=11.5, color=INK, weight='bold' if b == '组合' else 'normal')
-ax.set_xlim(-1, 101); ax.set_ylim(-2.7, .9); ax.set_yticks([]); ax.spines['left'].set_visible(False)
-ax.set_xlabel('在 1000 次同结构随机里的百分位（100 = 比每一次随机都好）', color=MUTED)
-ax.set_title('v6 整体排第 96：比 96% 的随机挑法好；美股名额第 98，A 股名额第 68，还算不上比随机强', fontsize=12.5, loc='left', color=INK)
-fig.subplots_adjust(left=.14)
+    full = P[(b, '2006-2015')]; x = full['percentile']; c, verdict = tone(x)
+    ax = fig.add_axes([0.035 + i * 0.325, 0.08, 0.29, 0.78]); ax.axis('off'); ax.set_xlim(0, 100); ax.set_ylim(0, 10)
+    ax.add_patch(Rectangle((0, 0), 100, 10, fc='white', ec=c, lw=2.4 if b != 'A股' else 1.4)); ax.add_patch(Rectangle((0, 9.55), 100, .45, fc=c, ec=c))
+    ax.text(5, 8.7, lab, fontsize=14, weight='bold', color=INK, va='center')
+    ax.text(95, 8.7, verdict, fontsize=11.5, weight='bold', color=c, va='center', ha='right')
+    ax.text(5, 6.2, f'第 {x:.0f}', fontsize=40, weight='bold', color=c, va='center')
+    ax.text(5, 4.25, f'2006–15 比 {x:.0f}% 的随机挑法好', fontsize=11, color=MUTED, va='center')
+    # 刻度条 0–100：前 5% 着色，三个点
+    y0 = 2.4
+    ax.add_patch(Rectangle((5, y0 - .18), 90, .36, color='#e5e7eb'))
+    ax.add_patch(Rectangle((5 + .95 * 90, y0 - .18), .05 * 90, .36, color='#99d5cb'))
+    ax.plot([5 + .5 * 90] * 2, [y0 - .45, y0 + .45], color=GREY, lw=1)
+    ax.scatter(5 + .9 * x, y0, s=220, color=c, zorder=4, edgecolors='white', lw=1.5)
+    for k, (sg, sl) in enumerate(segs):
+        v = P[(b, sg)]['percentile']; xx = 5 + .9 * v
+        ax.scatter(xx, y0, s=60, facecolors='white', edgecolors=tone(v)[0], lw=1.6, zorder=3)
+        ax.text(5 + 47 * k, y0 - 1.1, f'○ {sl}：第 {v:.0f}', ha='left', va='center', fontsize=10, color=tone(v)[0])
+    ax.text(5, y0 + .75, '0', fontsize=9, color=GREY, ha='center'); ax.text(95, y0 + .75, '100', fontsize=9, color=GREY, ha='center'); ax.text(95, y0 - 1.9, '浅绿 = 前 5%', fontsize=8.5, color=TEAL, ha='right')
+    ax.text(50, y0 + .75, '随机的中间', fontsize=9, color=GREY, ha='center')
+    ax.text(95, 4.25, f'每月赢 {100 * full["beat_random_median_share"]:.0f}%', fontsize=11, color=MUTED, va='center', ha='right')
+fig.suptitle('把“选最强 3 只”换成随机抽 3 只、其余不变，跑 1000 次：v6 整体和美股名额都进了前 5%，A 股名额没有', x=.035, ha='left', fontsize=13, color=INK, y=.98)
 fig.savefig(OUT / 'h7-random.png', dpi=130, bbox_inches='tight'); plt.close(fig)
