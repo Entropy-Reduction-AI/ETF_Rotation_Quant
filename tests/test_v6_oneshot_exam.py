@@ -9,10 +9,16 @@ import pandas as pd
 
 from src.v6.engine import mix_monthly, slot
 from src.v6.guard import IsolationError
+from src.v6.health import COST
 from src.v6.oneshot_exam import (
     ACTIVE,
     OFFICIAL,
+    PREMIUM_TOLERANCE,
     REHEARSAL,
+    S6_SAME_WEIGHTS,
+    SIGNED_PREMIUM,
+    control_spec,
+    d51_accept,
     extend_plan,
     official,
     refuse_market_after_design,
@@ -79,6 +85,31 @@ class OneshotExamTests(unittest.TestCase):
         right = mix_monthly(base, base * 0.5, 0.002, 0.5)
         self.assertFalse(left.equals(right))
         self.assertEqual(len(levels), len(base))
+
+    def test_d51_controls_follow_except_s8_and_s6_benchmark(self):
+        doubled = {"n": 3, "cost": COST * 2, "lag": 0, "stress": 2, "exclude": None, "weight_a": 0.4}
+        self.assertEqual(control_spec("S1", doubled)["cost"], COST * 2)
+        delayed = {"n": 3, "cost": COST, "lag": 1, "stress": 2, "exclude": None, "weight_a": 0.4}
+        self.assertEqual(control_spec("S2", delayed)["lag"], 1)
+        self.assertEqual(control_spec("S6", {"n": 3, "cost": COST, "lag": 0, "stress": 2, "exclude": None, "weight_a": 0.5})["weight_a"], 0.5)
+        self.assertEqual(control_spec("S7", {"n": 2, "cost": COST, "lag": 0, "stress": 2, "exclude": None, "weight_a": 0.4})["n"], 2)
+        held = control_spec("S8", {"n": 3, "cost": COST, "lag": 0, "stress": 3, "exclude": None, "weight_a": 0.4})
+        self.assertEqual(held["stress"], 2)
+        self.assertEqual(held["cost"], COST)
+        self.assertEqual(S6_SAME_WEIGHTS, {"H00300": 0.50, "XNDX": 0.25, "SP500TR": 0.25})
+
+    def test_d51_acceptance_uses_the_signed_premium(self):
+        ok = d51_accept({"明细": [{
+            "类": "判据", "段": "检验段", "项": "防守平时保费",
+            "签收": SIGNED_PREMIUM, "预演": SIGNED_PREMIUM, "差": 0.0, "实质差异": False,
+        }]})
+        self.assertTrue(ok["通过"])
+        self.assertLessEqual(abs(ok["保费差"]), PREMIUM_TOLERANCE)
+        bad = d51_accept({"明细": [{
+            "类": "判据", "段": "检验段", "项": "防守平时保费",
+            "签收": SIGNED_PREMIUM, "预演": 2.829, "差": 1.445, "实质差异": True,
+        }]})
+        self.assertFalse(bad["通过"])
 
 
 if __name__ == "__main__":

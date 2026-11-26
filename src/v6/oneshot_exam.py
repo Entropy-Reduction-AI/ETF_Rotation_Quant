@@ -15,7 +15,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from src.report.blend import monthly_rebalance
 from src.report.metrics import cagr, max_drawdown, monthly_returns
+from src.v4.r5.design import reference_frame
 from src.v6.engine import benchmark, mix_monthly, slot
 from src.v6.guard import DESIGN_END_TEXT, IsolationError, assert_not_after
 from src.v6.health import (
@@ -82,6 +84,10 @@ REHEARSAL = Windows("预演", "2011-01-01", "2015-12-31", "2006-01-01", "2015-12
 OFFICIAL = Windows("正式", "2016-01-01", "2026-09-30", "2006-01-01", "2026-09-30")
 ACTIVE = REHEARSAL
 OFFICIAL_AUTHORIZED = False
+# D51-3：S6 的同仓位基准跟着改成 50/25/25。BM-主和 K2A 不改。
+S6_SAME_WEIGHTS = {"H00300": 0.50, "XNDX": 0.25, "SP500TR": 0.25}
+SIGNED_PREMIUM = 1.383910856278514
+PREMIUM_TOLERANCE = 0.01
 
 
 def extend_plan(end: str) -> dict:
@@ -126,14 +132,31 @@ def _sleeve(levels, parent, prior, tags, votes, bond, cash, mode, cost, n, lag, 
     return series, log
 
 
-def _variant(panels, prior, votes, bond, cash, *, n, cost, lag, stress, exclude, weight_a):
+def control_spec(code: str, spec: dict) -> dict:
+    """D51-2。改 v6 自身设定时，不设防守做同样的改动。S8 只改防守门槛，对照保持主规则。"""
+    if code == "S8":
+        return {"n": 3, "cost": COST, "lag": 0, "stress": 2, "exclude": None, "weight_a": 0.4}
+    return {
+        "n": spec["n"], "cost": spec["cost"], "lag": spec["lag"], "stress": spec["stress"],
+        "exclude": spec["exclude"], "weight_a": spec["weight_a"],
+    }
+
+
+def _variant(panels, prior, votes, bond, cash, *, n, cost, lag, stress, exclude, weight_a, plain=None):
+    plain = plain or {"n": n, "cost": cost, "lag": lag, "stress": stress, "exclude": exclude, "weight_a": weight_a}
     a, log_a = _sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "v6", cost, n, lag, stress, exclude)
     u, log_u = _sleeve(panels["US"], "SPX", prior, TAGS["us"], votes, bond, cash, "v6", cost, n, lag, stress, exclude)
-    a_top, _ = _sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "top", cost, n, lag, stress, exclude)
-    u_top, _ = _sleeve(panels["US"], "SPX", prior, TAGS["us"], votes, bond, cash, "top", cost, n, lag, stress, exclude)
+    a_top, _ = _sleeve(
+        panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "top",
+        plain["cost"], plain["n"], plain["lag"], plain["stress"], plain["exclude"],
+    )
+    u_top, _ = _sleeve(
+        panels["US"], "SPX", prior, TAGS["us"], votes, bond, cash, "top",
+        plain["cost"], plain["n"], plain["lag"], plain["stress"], plain["exclude"],
+    )
     net = _mix(a, u, cost, weight_a)
-    plain = _mix(a_top, u_top, cost, weight_a)
-    return {"净": net, "不设防守": plain, "A": a, "美": u, "A记录": log_a, "美记录": log_u}
+    undefended = _mix(a_top, u_top, plain["cost"], plain["weight_a"])
+    return {"净": net, "不设防守": undefended, "A": a, "美": u, "A记录": log_a, "美记录": log_u}
 
 
 def _zero_cost_blocks(panels, prior, votes, bond, cash):
@@ -158,12 +181,30 @@ def _price_benchmark(panels, weights) -> pd.Series:
     return benchmark(panels["A"], panels["US"], weights)
 
 
-def _book(net, plain, gross, equal_weight, top, bm_main, bm_same, price_main, price_same, k2a) -> SpanBook:
+def _criteria_book(net, plain, bm_main, bm_same, k2a) -> SpanBook:
+    """判据账。不设防守与 v6 净同口径（D51-1），不是拆账用的零成本前 3。"""
+    return SpanBook(
+        v6=net, gross=net, undefended=plain, equal_weight=plain,
+        bm_main_total=bm_main, bm_main_price=bm_main,
+        bm_same_total=bm_same, bm_same_price=bm_same, k2a=k2a,
+    )
+
+
+def _attribution_book(net, gross, equal_weight, top, bm_main, bm_same, price_main, price_same, k2a) -> SpanBook:
+    """D49 拆账。第⑤块用两条不计成本的序列，不进判据。"""
     return SpanBook(
         v6=net, gross=gross, undefended=top, equal_weight=equal_weight,
         bm_main_total=bm_main, bm_main_price=price_main,
         bm_same_total=bm_same, bm_same_price=price_same, k2a=k2a,
     )
+
+
+def _same_benchmark(weights: dict[str, float]) -> pd.Series:
+    parts = reference_frame(end=DESIGN_END_TEXT).dropna()
+    assert_not_after(parts.index, "BM")
+    series, _weights = monthly_rebalance(parts, weights)
+    _cap(series, "BM-同仓位", DESIGN_END_TEXT)
+    return series
 
 
 def _criteria_row(label: str, role: str, item) -> dict:
@@ -355,7 +396,8 @@ def _compare(out_dir: Path) -> dict:
             diffs.append({"类": kind, "段": segment, "项": item, "签收": signed, "预演": got, "差": None, "实质差异": True})
             return
         delta = float(got) - float(signed)
-        material = abs(delta) > 1e-4
+        limit = PREMIUM_TOLERANCE if kind == "判据" and item == "防守平时保费" else 1e-4
+        material = abs(delta) > limit
         diffs.append({"类": kind, "段": segment, "项": item, "签收": float(signed), "预演": float(got), "差": delta, "实质差异": material})
 
     segment_map = {"2011-2015": "检验段", "2006-2015": "全段"}
@@ -417,6 +459,7 @@ def execute(windows: Windows, out: Path) -> dict:
         a_id, _ = _sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "id", COST, 3, 0, 2, None)
         continuity = _mix(a_id, base["美"], COST, 0.4)
         bm_main, bm_same = _benchmarks()
+        bm_same_s6 = _same_benchmark(S6_SAME_WEIGHTS)
         k2a = _k2a(panels, True)
         price_main = _price_benchmark(panels, (0.70, 0.15, 0.15))
         price_same = _price_benchmark(panels, (0.40, 0.30, 0.30))
@@ -431,12 +474,13 @@ def execute(windows: Windows, out: Path) -> dict:
         ):
             _cap(series, name, windows.full_end)
 
-        book = _book(
-            base["净"], base["不设防守"], blocks["毛"], blocks["等权"], blocks["前3"],
+        attr = _attribution_book(
+            base["净"], blocks["毛"], blocks["等权"], blocks["前3"],
             bm_main, bm_same, price_main, price_same, k2a,
         )
-        exam = evaluate(book, windows.exam_start, windows.exam_end)
-        full = evaluate(book, windows.full_start, windows.full_end)
+        judged = _criteria_book(base["净"], base["不设防守"], bm_main, bm_same, k2a)
+        exam = evaluate(judged, windows.exam_start, windows.exam_end)
+        full = evaluate(judged, windows.full_start, windows.full_end)
         restart = _variant(
             {
                 "A": _restart_levels(panels["A"], windows.exam_start),
@@ -444,11 +488,10 @@ def execute(windows: Windows, out: Path) -> dict:
             },
             prior, votes, bond, cash, n=3, cost=COST, lag=0, stress=2, exclude=None, weight_a=0.4,
         )
-        restart_book = _book(
-            restart["净"], restart["不设防守"], blocks["毛"], blocks["等权"], blocks["前3"],
-            bm_main, bm_same, price_main, price_same, k2a,
+        restart_exam = evaluate(
+            _criteria_book(restart["净"], restart["不设防守"], bm_main, bm_same, k2a),
+            windows.exam_start, windows.exam_end,
         )
-        restart_exam = evaluate(restart_book, windows.exam_start, windows.exam_end)
 
         pick_rows = _pick_rows(base["A记录"], panels["A"], blocks["A等权"], "A股", windows.exam_start, windows.exam_end)
         pick_rows += _pick_rows(base["美记录"], panels["US"], blocks["美等权"], "美股", windows.exam_start, windows.exam_end)
@@ -476,11 +519,10 @@ def execute(windows: Windows, out: Path) -> dict:
         variant_criteria = {}
         robustness_rows = []
         for code, spec in scenarios.items():
-            ran = _variant(panels, prior, votes, bond, cash, **spec)
-            variant_book = _book(
-                ran["净"], ran["不设防守"], blocks["毛"], blocks["等权"], blocks["前3"],
-                bm_main, bm_same, price_main, price_same, k2a,
-            )
+            plain = control_spec(code, spec)
+            ran = _variant(panels, prior, votes, bond, cash, plain=plain, **spec)
+            same = bm_same_s6 if code == "S6" else bm_same
+            variant_book = _criteria_book(ran["净"], ran["不设防守"], bm_main, same, k2a)
             _cap(ran["净"], code, windows.full_end)
             item = evaluate(variant_book, windows.exam_start, windows.exam_end)
             variant_criteria[code] = item
@@ -533,7 +575,7 @@ def execute(windows: Windows, out: Path) -> dict:
         forecast_rows = _forecast(_forecast_values(
             base, blocks, csi, spx, bm_main, bm_same, windows.exam_start, windows.exam_end,
         ))
-        block_rows = _available_blocks(book, windows)
+        block_rows = _available_blocks(attr, windows)
         random_rows = _random_rows(panels, prior, votes, bond, cash)
         line_rows = []
         for label, start, end in (("检验段", windows.exam_start, windows.exam_end), ("全段", windows.full_start, windows.full_end)):
@@ -557,7 +599,7 @@ def execute(windows: Windows, out: Path) -> dict:
     pd.DataFrame(random_rows).to_csv(out / "random.csv", index=False)
     pd.DataFrame(forecast_rows).to_csv(out / "forecast.csv", index=False)
     pd.DataFrame(block_rows).to_csv(out / "blocks.csv", index=False)
-    pd.DataFrame(_yearly_blocks(book, windows)).to_csv(out / "blocks-yearly.csv", index=False)
+    pd.DataFrame(_yearly_blocks(attr, windows)).to_csv(out / "blocks-yearly.csv", index=False)
     pd.DataFrame(sleeve_rows).to_csv(out / "sleeves.csv", index=False)
     pd.DataFrame(verdict["重新起步"]["差异"]).to_csv(out / "restart-diff.csv", index=False)
     (out / "verdict.json").write_text(json.dumps(verdict, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
@@ -570,7 +612,11 @@ def execute(windows: Windows, out: Path) -> dict:
     (out / "panel.json").write_text(json.dumps(current_evidence, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
     (out / "extend-2026-09.json").write_text(json.dumps(extend_plan("2026-09-30"), ensure_ascii=False, indent=1), encoding="utf-8")
     comparison = _compare(out)
+    acceptance = d51_accept(comparison)
+    comparison["D51验收"] = acceptance
     (out / "comparison.json").write_text(json.dumps(comparison, ensure_ascii=False, indent=1), encoding="utf-8")
+    (out / "acceptance.json").write_text(json.dumps(acceptance, ensure_ascii=False, indent=1), encoding="utf-8")
+    _write_mismatch_note(out, acceptance)
     manifest = {
         "窗口": asdict(windows),
         "命令": ".venv/bin/python -I -c \"import sys; sys.path.insert(0,'.'); from src.v6.oneshot_exam import main; main()\"",
@@ -579,12 +625,25 @@ def execute(windows: Windows, out: Path) -> dict:
         "french": french,
         "行情库sha256": _sha_file(ROOT / "data/market.sqlite"),
         "代码sha256": _tree_sha((ROOT / "src/v6/oneshot_exam.py", ROOT / "src/v6/oneshot_prep.py", ROOT / "src/v6/engine.py")),
-        "对照": {"实质差异": comparison["实质差异"], "可以签收": comparison["可以签收"]},
+        "D51": "判据②用单边 0.2% 的前 3；S1–S7 对照跟着改；S8 对照不变；S6 的 BM-同仓位是 50/25/25。",
+        "对照": {
+            "实质差异": comparison["实质差异"],
+            "可以签收": comparison["可以签收"],
+            "D51验收": acceptance["通过"],
+            "保费": acceptance["保费"],
+        },
         "投票": "expanding99，与体检同一段替换",
     }
     (out / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
     _write_comparison_md(out, comparison)
-    return {"窗口": windows.name, "实质差异": comparison["实质差异"], "目录": str(out.relative_to(ROOT))}
+    if not acceptance["通过"]:
+        raise IsolationError(acceptance["说明"] + f" 保费差 {acceptance['保费差']}。")
+    return {
+        "窗口": windows.name,
+        "实质差异": comparison["实质差异"],
+        "D51验收": True,
+        "目录": str(out.relative_to(ROOT)),
+    }
 
 
 def _available_blocks(book: SpanBook, windows: Windows) -> list[dict]:
@@ -632,6 +691,58 @@ def _forecast_values(base, blocks, csi, spx, bm_main, bm_same, start, end) -> di
 
 def _tree_sha(paths: tuple[Path, ...]) -> dict[str, str]:
     return {str(path.relative_to(ROOT)): _sha_file(path) for path in paths}
+
+
+def d51_accept(comparison: dict) -> dict:
+    """D51-4。保费对签收值容差 0.01 点，其余已对上的项不容许再偏。"""
+    premium = None
+    others = []
+    for row in comparison["明细"]:
+        if row["差"] is None:
+            others.append(row)
+            continue
+        if row["类"] == "判据" and row["段"] == "检验段" and row["项"] == "防守平时保费":
+            premium = row
+            continue
+        if abs(row["差"]) > 1e-4:
+            others.append(row)
+    premium_ok = premium is not None and abs(premium["预演"] - SIGNED_PREMIUM) <= PREMIUM_TOLERANCE
+    passed = premium_ok and not others
+    return {
+        "通过": passed,
+        "保费": None if premium is None else premium["预演"],
+        "签收保费": SIGNED_PREMIUM,
+        "容差": PREMIUM_TOLERANCE,
+        "保费差": None if premium is None else premium["预演"] - SIGNED_PREMIUM,
+        "其余越界": others,
+        "说明": (
+            "判据②已按 D51 用单边 0.2% 的前 3、不设防守。上一轮 2.83 点是把不计成本的前 3 送进了判据。"
+            if passed else
+            "D51 验收没过。不改参数，不重跑。"
+        ),
+    }
+
+
+def _write_mismatch_note(out: Path, acceptance: dict) -> None:
+    if acceptance["通过"]:
+        text = (
+            "# 预演对照\n\n"
+            "差异已按 D51 消除。判据②的不设防守是前 3、单边 0.2%、每月末 60/40，"
+            f"检验段保费 {acceptance['保费']}，签收 {acceptance['签收保费']}，"
+            f"差 {acceptance['保费差']}，容差 {acceptance['容差']} 点。\n\n"
+            "上一轮 2.829 点是把 D49 拆账用的零成本前 3 送进了判据。"
+            "第⑤块仍只用两条不计成本的序列，不进判据。\n"
+            "S1–S7 的不设防守跟着同一改动；S8 只改紧张门槛，对照仍是主规则。"
+            "BM-主和 K2A 在各 S 项下不变；S6 的 BM-同仓位改为沪深300 50%、纳指100 25%、标普500 25%。\n"
+        )
+    else:
+        lines = ["# 预演对照", "", acceptance["说明"], ""]
+        for row in acceptance["其余越界"]:
+            lines.append(f"- {row['类']} {row['段']} {row['项']}：签收 {row['签收']}，预演 {row['预演']}，差 {row['差']}")
+        if acceptance["保费差"] is not None and abs(acceptance["保费差"]) > PREMIUM_TOLERANCE:
+            lines.append(f"- 保费差 {acceptance['保费差']} 超出 {PREMIUM_TOLERANCE}")
+        text = "\n".join(lines) + "\n"
+    (out / "mismatch-note.md").write_text(text, encoding="utf-8")
 
 
 def _write_comparison_md(out: Path, comparison: dict) -> None:
