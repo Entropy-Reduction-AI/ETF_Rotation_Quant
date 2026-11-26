@@ -661,12 +661,12 @@ class Markets:
         self._cache: dict[tuple, object] = {}
 
     def get(self, pool: str, *, t4: bool, allow_substitute: bool = True,
-            listed_only: bool = False):
-        key = (pool, bool(t4), bool(allow_substitute), bool(listed_only))
+            listed_only: bool = False, end: str = DESIGN_END, allow_after: bool = False):
+        key = (pool, bool(t4), bool(allow_substitute), bool(listed_only), end, bool(allow_after))
         if key not in self._cache:
             self._cache[key] = prepare_market(
                 pool, t4=t4, allow_substitute=allow_substitute, spec=self.spec,
-                listed_only=listed_only)
+                listed_only=listed_only, end=end, allow_after=allow_after)
         return self._cache[key]
 
 

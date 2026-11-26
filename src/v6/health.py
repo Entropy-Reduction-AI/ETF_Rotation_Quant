@@ -19,7 +19,7 @@ from src.report.blend import monthly_rebalance
 from src.report.metrics import cagr, max_drawdown, yearly_returns
 from src.v4.r5.design import reference_frame, series_sha256
 from src.v6.engine import mix_monthly, slot
-from src.v6.guard import IsolationError, assert_not_after
+from src.v6.guard import DESIGN_END_TEXT, IsolationError, assert_not_after, load_end_text
 from src.indicators.build import BuildError
 from src.v6.k2a import k2a_returns
 from src.v6.load import load_panels
@@ -180,7 +180,8 @@ def _sleeve(levels, parent, prior, tags, votes, bond, cash, mode, cost):
 
 
 def _benchmarks() -> tuple[pd.Series, pd.Series]:
-    parts = reference_frame(end="2015-12-31").dropna()
+    end = load_end_text()
+    parts = reference_frame(end=end, allow_after=end > DESIGN_END_TEXT).dropna()
     assert_not_after(parts.index, "BM")
     main, _w = monthly_rebalance(parts, {"H00300": 0.70, "XNDX": 0.15, "SP500TR": 0.15})
     same, _w = monthly_rebalance(parts, {"H00300": 0.40, "XNDX": 0.30, "SP500TR": 0.30})

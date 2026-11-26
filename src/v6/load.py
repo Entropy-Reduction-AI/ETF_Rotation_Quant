@@ -18,11 +18,10 @@ import pandas as pd
 
 from src.v4.engine.pool import load_mid
 from src.v6.guard import (
-    DESIGN_END,
-    DESIGN_END_TEXT,
     IsolationError,
     assert_not_after,
     install_readers,
+    load_end_text,
     restore_readers,
 )
 
@@ -82,8 +81,8 @@ def _assert_panels(namespace) -> None:
         # PeriodIndex 或 DatetimeIndex 都不应晚于 2015-12
         last = series.index.max()
         stamp = last.to_timestamp(how="end") if hasattr(last, "to_timestamp") else pd.Timestamp(last)
-        if pd.Timestamp(stamp) > DESIGN_END + pd.Timedelta(days=31):
-            raise IsolationError(f"TRIN 晚于设计期：{last}")
+        if pd.Timestamp(stamp) > pd.Timestamp(load_end_text()) + pd.Timedelta(days=31):
+            raise IsolationError(f"TRIN 晚于隔离窗口：{last}")
 
 
 def _assemble(namespace) -> dict:
@@ -116,15 +115,16 @@ def _assemble(namespace) -> dict:
 
 
 def _us_level(code: str, index: pd.DatetimeIndex, namespace) -> pd.Series:
-    """与 topn_dedupe.py 的 lvl 相同：原始收盘 × 补齐中间价，封在 2015-12-31。"""
+    """与 topn_dedupe.py 的 lvl 相同：原始收盘 × 补齐中间价。日期上限是当前隔离窗口。"""
+    end = load_end_text()
     con = sqlite3.connect(ROOT / "data/market.sqlite")
     try:
-        usd = load_mid(con, "USDCNY", DESIGN_END_TEXT, filled=True)
+        usd = load_mid(con, "USDCNY", end, filled=True)
         frame = pd.read_sql_query(
             "select date, close from bars where code=? and adj='raw' and close>0 "
             "and date<=? order by date",
             con,
-            params=(code, DESIGN_END_TEXT),
+            params=(code, end),
         )
     finally:
         con.close()

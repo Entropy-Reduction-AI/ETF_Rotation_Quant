@@ -3,7 +3,10 @@
 """
 import sys, json, sqlite3, pathlib
 import numpy as np, pandas as pd
-ROOT = pathlib.Path(__file__).resolve().parents[2]; OUT = pathlib.Path(sys.argv[1]); END = '2015-12-31'
+ROOT = pathlib.Path(__file__).resolve().parents[2]; OUT = pathlib.Path(sys.argv[1])
+if str(ROOT) not in sys.path: sys.path.insert(0, str(ROOT))
+from src.v6.guard import load_end_text
+END = load_end_text()
 c = sqlite3.connect(ROOT / 'data/market.sqlite')
 def load(code, amt):
     d = pd.read_sql_query("select date, close, volume, amount from bars where code=? and adj='raw' and close>0 and date<=? order by date", c, params=(code, END))
