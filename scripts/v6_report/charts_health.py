@@ -96,3 +96,109 @@ fig.text(.04, 1 + .12 / h, '设计期 2006–15，扣成本，基准为全收益
          fontsize=10.5, color=MUTED)
 fig.savefig(OUT / 'h2-peers.png', dpi=150, bbox_inches='tight'); plt.close(fig)
 print('ok', round(total, 2), {k: tuple(round(x, 1) for x in v) for k, v in S.items()})
+
+# ---------- h3–h6：读 health_extra.py 的输出（同目录 health-extra.json） ----------
+EX = SRC / 'health-extra.json'
+if EX.exists():
+    import matplotlib.dates as mdates, numpy as np, pandas as pd
+    X = json.load(open(EX, encoding='utf-8'))
+    wk = pd.to_datetime(X['weeks'])
+    LINE = {'v6': (BLUE, 2.6, '-'), 'K2A': (INK, 1.4, '-'), '现行配置': ('#7c3aed', 1.4, '-'), 'BM-主': (GREY, 1.6, '-'),
+            'BM-同仓位': ('#cbd5e1', 1.6, '-'), 'A1': (INK, 1.0, ':')}
+    ch = X['character']
+    # h3 净值 + 回撤
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(11, 6.4), sharex=True, gridspec_kw={'height_ratios': [2.2, 1], 'hspace': .08})
+    ends = sorted(((X['nav_weekly'][k][-1], k) for k in LINE), key=lambda t: t[0])
+    ly, last = {}, -1e9
+    for y, k in ends:                       # 终点标签在对数刻度上至少隔开 0.2（对数）
+        v = np.log(y); v = max(v, last + .2); ly[k] = np.exp(v); last = v
+    for k, (c, lw, ls) in LINE.items():
+        a1.plot(wk, X['nav_weekly'][k], color=c, lw=lw, ls=ls)
+        a1.annotate(f'{k}  {100 * ch[k]["年化"]:.1f}%', (wk[-1], X['nav_weekly'][k][-1]), xytext=(wk[-1] + pd.Timedelta(days=40), ly[k]),
+                    textcoords='data', va='center', fontsize=10.5, color=c if k != 'BM-同仓位' else MUTED, weight='bold' if k == 'v6' else 'normal',
+                    arrowprops=dict(arrowstyle='-', color=GREY, lw=.6))
+    a1.set_yscale('log'); a1.set_ylabel('净值（2006 年初 = 1，对数）', color=MUTED); a1.grid(alpha=.2); a1.spines['left'].set_visible(True)
+    a1.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f'{v:g}')); a1.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+    for k in ('BM-主', 'K2A', 'v6'):
+        c = LINE[k][0]
+        a2.fill_between(wk, np.array(X['dd_weekly'][k]) * 100, 0, color=c, alpha=.35 if k == 'v6' else .18, lw=0)
+        a2.plot(wk, np.array(X['dd_weekly'][k]) * 100, color=c, lw=1.2 if k != 'v6' else 1.8)
+    a2.set_ylabel('回撤（%）', color=MUTED); a2.grid(alpha=.2); a2.spines['left'].set_visible(True); a2.set_ylim(-70, 2)
+    a2.text(wk[len(wk) // 9], -66, f'BM-主 最深 {100 * ch["BM-主"]["最大回撤"]:.1f}%'.replace('-', '−'), color=MUTED, fontsize=10)
+    a2.text(wk[len(wk) // 9], -30, f'v6 最深 {100 * ch["v6"]["最大回撤"]:.1f}%'.replace('-', '−'), color=BLUE, fontsize=10, weight='bold')
+    a2.xaxis.set_major_locator(mdates.YearLocator()); a2.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    fig.subplots_adjust(top=.97, right=.86)
+    h = fig.get_figheight()
+    fig.text(.04, 1 + .42 / h, f'v6 一路的回撤都比基准浅一半以上；终点和 BM-主、K2A 差不多，比现行配置和 A1 低', fontsize=14, weight='bold', color=INK)
+    fig.text(.04, 1 + .12 / h, '设计期 2006–15，扣成本，基准为全收益。上：净值（对数刻度）；下：从此前最高点算的回撤，蓝 = v6，黑 = K2A，灰 = BM-主', fontsize=10.5, color=MUTED)
+    fig.savefig(OUT / 'h3-nav.png', dpi=150, bbox_inches='tight'); plt.close(fig)
+
+    # h4 两次急跌
+    fig, axs = plt.subplots(1, 2, figsize=(11, 4.4), sharey=True)
+    for ax, tag in zip(axs, ('2008', '2015')):
+        C = X['crash'][tag]; n = len(C['csi300']); t = np.arange(n)
+        ax.plot(t, (np.array(C['csi300']) - 1) * 100, color=AMBER, lw=1.4, label='沪深300（全收益）')
+        for k in ('BM-主', 'K2A', 'v6'):
+            c, lw, _ = LINE[k]
+            ax.plot(t, (np.array(C['path'][k]) - 1) * 100, color=c, lw=lw, label=k)
+        for k, c in (('v6', BLUE), ('K2A', INK), ('沪深300', AMBER)):
+            v = C['low'][k] * 100
+            ax.annotate(f'{k} 最低 {v:.0f}%'.replace('-', '−'), (n - 1, (C['end'][k]) * 100), xytext=(4, 0), textcoords='offset points',
+                        fontsize=9.5, color=c, va='center', weight='bold' if k == 'v6' else 'normal')
+        ax.axhline(0, color=GREY, lw=.8); ax.grid(alpha=.2); ax.spines['left'].set_visible(True)
+        ax.set_title(f'{tag}：从沪深300 见顶（{C["peak"]}）算起 {n - 1} 个交易日', fontsize=11.5, color=INK, loc='left')
+        ax.set_xlabel('见顶后第几个交易日', color=MUTED)
+    axs[0].set_ylabel('相对见顶日的涨跌（%）', color=MUTED); axs[0].legend(frameon=False, fontsize=9.5, loc='lower left')
+    fig.subplots_adjust(top=.86, wspace=.32, right=.92)
+    h = fig.get_figheight(); L8, L15 = X['crash']['2008']['low'], X['crash']['2015']['low']
+    fig.text(.04, 1 + .3 / h, f'2008 年 v6 最多亏 {-100 * L8["v6"]:.0f}%（沪深300 亏 {-100 * L8["沪深300"]:.0f}%），比 K2A 少亏；2015 年亏 {-100 * L15["v6"]:.0f}%，比 K2A（{-100 * L15["K2A"]:.0f}%）多亏',
+             fontsize=14, weight='bold', color=INK)
+    fig.text(.04, 1 + .04 / h, '净值从沪深300 全收益见顶当天算起；蓝 = v6，黑 = K2A，灰 = BM-主，橙 = 沪深300', fontsize=10.5, color=MUTED)
+    fig.savefig(OUT / 'h4-crash.png', dpi=150, bbox_inches='tight'); plt.close(fig)
+
+    # h5 四种行情
+    names = ['牛市', '回调', '熊市', '反弹']; Rg = X['regimes']
+    fig, ax = plt.subplots(figsize=(11, 4.2))
+    refs = [('BM-主', GREY), ('BM-同仓位', '#94a3b8'), ('K2A', INK)]
+    x = np.arange(4); wdt = .26
+    for j, (ref, c) in enumerate(refs):
+        vals = [Rg[nm][ref]['合计'] for nm in names]
+        bars = ax.bar(x + (j - 1) * wdt, vals, wdt * .92, color=[TEAL if v > 0 else AMBER for v in vals], alpha=1 - .28 * j, edgecolor='none')
+        for xi, v in zip(x + (j - 1) * wdt, vals):
+            ax.text(xi, v + (4 if v >= 0 else -4), f'{v:+.0f}'.replace('-', '−'), ha='center', va='bottom' if v >= 0 else 'top', fontsize=9.5, color=INK)
+        for xi in x + (j - 1) * wdt:
+            ax.text(xi, -175, ref, ha='center', fontsize=8.5, color=MUTED, rotation=0)
+    ax.axhline(0, color=GREY, lw=.8)
+    ax.set_xticks(x, [f'{nm}（{Rg[nm]["月数"]} 个月）' for nm in names]); ax.tick_params(axis='x', length=0, pad=22)
+    ax.set_ylabel('v6 月超额相加（百分点）', color=MUTED); ax.set_ylim(-190, 150); ax.grid(axis='y', alpha=.2); ax.spines['left'].set_visible(True)
+    fig.subplots_adjust(top=.97)
+    h = fig.get_figheight()
+    fig.text(.04, 1 + .42 / h, f'熊市和回调对 BM-主多赚 {Rg["熊市"]["BM-主"]["合计"] + Rg["回调"]["BM-主"]["合计"]:.0f} 点，牛市和反弹少赚 {-(Rg["牛市"]["BM-主"]["合计"] + Rg["反弹"]["BM-主"]["合计"]):.0f} 点；对 K2A 四种行情都差不多',
+             fontsize=14, weight='bold', color=INK)
+    fig.text(.04, 1 + .12 / h, '按沪深300 全收益在每个月末划分：12 个月涨且当月涨 = 牛市，12 个月涨当月跌 = 回调，12 个月跌当月跌 = 熊市，12 个月跌当月涨 = 反弹。每组三根柱依次对 BM-主、BM-同仓位、K2A',
+             fontsize=10, color=MUTED)
+    fig.savefig(OUT / 'h5-regime.png', dpi=150, bbox_inches='tight'); plt.close(fig)
+
+    # h6 任意起点
+    A = X['anystart']; refs = ['BM-主', 'BM-同仓位', 'K2A', '现行配置', 'A1']
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(11, 4.4), gridspec_kw={'width_ratios': [1, 1.35], 'wspace': .28})
+    for j, y in enumerate(('1', '3', '5')):
+        vals = [100 * A[y][r]['跑赢占比'] for r in refs]
+        a1.barh(np.arange(5) + (j - 1) * .26, vals, .24, color=BLUE, alpha=.35 + .3 * j, label=f'持有 {y} 年')
+        if y == '5':
+            for i, v in enumerate(vals):
+                a1.text(v + 1.5, i + .26, f'{v:.0f}%', va='center', fontsize=10, color=INK, weight='bold')
+    a1.axvline(50, color=GREY, lw=.8, ls='--'); a1.set_yticks(np.arange(5), [f'对 {r}' for r in refs]); a1.invert_yaxis()
+    a1.set_xlim(0, 110); a1.set_xlabel('v6 跑赢的起点占比（%）', color=MUTED); a1.legend(frameon=False, fontsize=9, loc='lower right'); a1.tick_params(axis='y', length=0)
+    st = pd.to_datetime(A['3']['起点']); ex = np.array(A['3']['BM-主']['逐个'])
+    a2.bar(st, ex, width=25, color=[TEAL if v > 0 else AMBER for v in ex], edgecolor='none')
+    a2.axhline(0, color=GREY, lw=.8); a2.grid(axis='y', alpha=.2); a2.spines['left'].set_visible(True)
+    a2.set_ylabel('持有 3 年，每年比 BM-主多（点）', color=MUTED); a2.xaxis.set_major_locator(mdates.YearLocator()); a2.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+    a2.set_title('每个月初买入、持有 3 年的超额（对 BM-主）', fontsize=11, color=INK, loc='left')
+    fig.subplots_adjust(top=.86)
+    h = fig.get_figheight(); f5 = A['5']
+    fig.text(.04, 1 + .3 / h, f'持有 5 年，{100 * f5["BM-主"]["跑赢占比"]:.0f}% 的起点跑赢 BM-主、{100 * f5["BM-同仓位"]["跑赢占比"]:.0f}% 跑赢同仓位基准；对 K2A 和现行配置只有六成左右',
+             fontsize=14, weight='bold', color=INK)
+    fig.text(.04, 1 + .04 / h, '2006–15 每个月第一个交易日买入，持满 1 / 3 / 5 年（252 / 756 / 1260 个交易日），比较年化；虚线 = 一半起点', fontsize=10.5, color=MUTED)
+    fig.savefig(OUT / 'h6-anystart.png', dpi=150, bbox_inches='tight'); plt.close(fig)
+    print('extra charts ok')
