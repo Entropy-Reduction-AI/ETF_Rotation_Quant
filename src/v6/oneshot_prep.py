@@ -237,7 +237,15 @@ def official_verdict(
     return result
 
 
+def _official_authorized() -> bool:
+    from src.v6.oneshot_exam import OFFICIAL_AUTHORIZED
+    return bool(OFFICIAL_AUTHORIZED)
+
+
 def run_exam() -> None:
+    """未授权时拒绝。授权后的正式考试由 oneshot_exam.official 装载并写入结果，本函数不打开行情库。"""
+    if _official_authorized():
+        return
     raise IsolationError(
         "一次性检验未授权。接线可以在授权后使用，"
         "本次不读、不算 2016 年以后的行情、收益、信号、排名或检验结果。"
@@ -264,11 +272,20 @@ def open_ledger(path: str) -> None:
 
 
 def current_configuration(end: str) -> dict:
-    """现行配置面板的终点可以写到 2026-09，但本 PR 不调用 package。"""
+    """现行配置的行情由 portfolio_design.design_book 读取。本函数不打开行情库。"""
+    from src.v6.guard import OFFICIAL_WINDOW_END_TEXT
+    if end > OFFICIAL_WINDOW_END_TEXT:
+        raise IsolationError(f"现行配置不能晚于 {OFFICIAL_WINDOW_END_TEXT}")
     if end > DESIGN_END_TEXT:
-        raise IsolationError(
-            f"现行配置面板接到 {end} 要读 2016 年以后的行情。本 PR 不调用 package，不开考。"
-        )
+        if not _official_authorized():
+            raise IsolationError(
+                f"现行配置面板接到 {end} 要读 2016 年以后的行情。未授权时不调用 package，不开考。"
+            )
+        return {
+            "end": end,
+            "打开行情库": False,
+            "说明": "授权后的 package 终点由 portfolio_design.design_book 使用隔离窗口终点",
+        }
     raise IsolationError("设计期现行配置用 portfolio_design.design_book，这里不重跑。")
 
 
@@ -808,13 +825,16 @@ def join_ledgers(design: pd.Series, exam: pd.Series, *, name: str) -> dict:
 
 
 def run_random_exam() -> None:
+    """未授权时拒绝。授权后的同结构随机在 oneshot_exam 里随正式考试一起跑，本函数不读行情。"""
+    if _official_authorized():
+        return
     raise IsolationError("不在真实 2016 年以后的行情上跑同结构随机。")
 
 
 def random_report(rule: pd.Series, paths: np.ndarray) -> dict:
     """同结构随机的百分位和每月跑赢中位数的比例。正式口径仍是种子 20261122、1000 次。
 
-    这里只吃调用方已经放在内存里的路径。正式开考走 run_random_exam，本 PR 里它拒绝。
+    这里只吃调用方已经放在内存里的路径。正式开考的路径在 oneshot_exam 里计算。
     """
     rule = pd.Series(rule, dtype=float).sort_index().dropna()
     values = np.atleast_2d(np.asarray(paths, dtype=float))

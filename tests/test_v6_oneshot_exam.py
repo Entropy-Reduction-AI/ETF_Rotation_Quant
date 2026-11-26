@@ -14,6 +14,7 @@ from src.v6.oneshot_exam import (
     BLOCK_LABEL,
     COST,
     OFFICIAL,
+    OFFICIAL_AUTHORIZED,
     PREMIUM_TOLERANCE,
     REAL_COST,
     REHEARSAL,
@@ -23,7 +24,6 @@ from src.v6.oneshot_exam import (
     d51_accept,
     extend_plan,
     insert_window_field,
-    official,
     refuse_market_after_design,
 )
 
@@ -59,16 +59,15 @@ def _run(**kwargs):
 
 
 class OneshotExamTests(unittest.TestCase):
-    def test_window_constant_is_the_rehearsal_and_official_refuses(self):
-        self.assertIs(ACTIVE, REHEARSAL)
+    def test_window_constant_is_the_official_exam(self):
+        self.assertIs(ACTIVE, OFFICIAL)
+        self.assertTrue(OFFICIAL_AUTHORIZED)
+        self.assertEqual((OFFICIAL.exam_start, OFFICIAL.exam_end), ("2016-01-01", "2026-09-30"))
+        self.assertEqual((OFFICIAL.full_start, OFFICIAL.full_end), ("2006-01-01", "2026-09-30"))
         self.assertEqual((REHEARSAL.exam_start, REHEARSAL.exam_end), ("2011-01-01", "2015-12-31"))
         self.assertEqual((REHEARSAL.full_start, REHEARSAL.full_end), ("2006-01-01", "2015-12-31"))
-        self.assertEqual(OFFICIAL.exam_end, "2026-09-30")
-        self.assertEqual(OFFICIAL.full_end, "2026-09-30")
         with self.assertRaises(IsolationError):
-            official()
-        with self.assertRaises(IsolationError):
-            refuse_market_after_design("2026-09-30")
+            refuse_market_after_design("2026-10-01")
 
     def test_extend_plan_does_not_read_market_data(self):
         plan = extend_plan("2026-09-30")

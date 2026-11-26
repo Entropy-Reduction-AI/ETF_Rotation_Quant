@@ -1,8 +1,7 @@
 """一次性检验脚本。窗口只有一对常数。
 
-现在这对常数是预演：检验段 2011-01→2015-12，全段 2006-01→2015-12。
-正式考试把 ACTIVE 改成 OFFICIAL（2016-01→2026-09，全段到 2026-09）并另行授权。
-本文件的正式入口在未授权时拒绝。预演不读 2015-12-31 之后的行情，不计试验。
+ACTIVE 指向 OFFICIAL，且 OFFICIAL_AUTHORIZED 已打开：检验段 2016-01→2026-09，全段 2006-01→2026-09。
+这次授权只放宽装载日期和导出，不改判据、成本或 D51。隔离停在 2026-09-30，SQL 仍须自带 date<=。
 """
 
 from __future__ import annotations
@@ -17,9 +16,15 @@ import pandas as pd
 
 from src.report.blend import monthly_rebalance
 from src.report.metrics import cagr, max_drawdown, monthly_returns
-from src.v4.r5.design import reference_frame
+from src.v4.r5.design import reference_frame, series_sha256
 from src.v6.engine import benchmark, mix_monthly, slot
-from src.v6.guard import DESIGN_END_TEXT, IsolationError, assert_not_after
+from src.v6.guard import (
+    DESIGN_END_TEXT,
+    IsolationError,
+    assert_not_after,
+    load_end_text,
+    open_official_isolation,
+)
 from src.v6.health import (
     A1_SHA,
     A2_SHA,
@@ -32,21 +37,28 @@ from src.v6.health_random import (
     SEED,
     TRIALS,
     _draw,
+    _month_matrix,
     _plans,
     _simulate,
     _v6_picks,
     _window_rows,
     annualize,
+    beat_median_share,
+    rank_percentile,
 )
 from src.v6.load import load_panels
 from src.v6.oneshot_prep import (
     BLOCKS,
     EIGHT_LINES,
     HOLD_DAYS,
+    LEDGERS,
+    SPANS,
     SpanBook,
     any_start,
+    attribution,
     eight_line_table,
     evaluate,
+    join_ledgers,
     month_regime,
     official_verdict,
     pick_detail,
@@ -83,8 +95,9 @@ class Windows:
 
 REHEARSAL = Windows("预演", "2011-01-01", "2015-12-31", "2006-01-01", "2015-12-31")
 OFFICIAL = Windows("正式", "2016-01-01", "2026-09-30", "2006-01-01", "2026-09-30")
-ACTIVE = REHEARSAL
-OFFICIAL_AUTHORIZED = False
+ACTIVE = OFFICIAL
+OFFICIAL_AUTHORIZED = True
+ONESHOT_OUT = ROOT / "results" / "v6" / "oneshot"
 # D51-3：S6 的同仓位基准跟着改成 50/25/25。BM-主和 K2A 不改。
 S6_SAME_WEIGHTS = {"H00300": 0.50, "XNDX": 0.25, "SP500TR": 0.25}
 SIGNED_PREMIUM = 1.383910856278514
@@ -110,8 +123,23 @@ def extend_plan(end: str) -> dict:
 
 
 def refuse_market_after_design(end: str) -> None:
+    if end > "2026-09-30":
+        raise IsolationError(f"不读 {end}。隔离封顶是 2026-09-30。")
+    if OFFICIAL_AUTHORIZED and end <= "2026-09-30" and end > DESIGN_END_TEXT:
+        return
     if end > DESIGN_END_TEXT:
         raise IsolationError(f"不读 {end}。本预演的行情封顶是 {DESIGN_END_TEXT}。")
+
+
+def _official_window(windows: Windows) -> bool:
+    return bool(
+        OFFICIAL_AUTHORIZED
+        and windows is OFFICIAL
+        and windows.exam_start == "2016-01-01"
+        and windows.exam_end == "2026-09-30"
+        and windows.full_start == "2006-01-01"
+        and windows.full_end == "2026-09-30"
+    )
 
 
 def _cap(series: pd.Series, what: str, end: str) -> pd.Series:
@@ -204,10 +232,11 @@ def _attribution_book(net, gross, equal_weight, top, bm_main, bm_same, price_mai
 
 
 def _same_benchmark(weights: dict[str, float]) -> pd.Series:
-    parts = reference_frame(end=DESIGN_END_TEXT).dropna()
+    end = load_end_text()
+    parts = reference_frame(end=end, allow_after=end > DESIGN_END_TEXT).dropna()
     assert_not_after(parts.index, "BM")
     series, _weights = monthly_rebalance(parts, weights)
-    _cap(series, "BM-同仓位", DESIGN_END_TEXT)
+    _cap(series, "BM-同仓位", end)
     return series
 
 
@@ -331,13 +360,13 @@ def _random_rows(panels, prior, votes, bond, cash) -> list[dict]:
             COST,
         ).to_numpy()
     rule = mix_monthly(a_slot, u_slot, COST)
-    _cap(rule, "随机规则", DESIGN_END_TEXT)
+    _cap(rule, "随机规则", load_end_text())
     rows = (
         _window_rows("组合", rule, mixed)
         + _window_rows("A股", a_slot, a_paths)
         + _window_rows("美股", u_slot, u_paths)
     )
-    return rows
+    return {"rows": rows, "mixed": mixed, "a_paths": a_paths, "u_paths": u_paths, "rule": rule, "a": a_slot, "u": u_slot}
 
 
 def _line_table(series: dict[str, pd.Series], start: str, end: str) -> list[dict]:
@@ -443,10 +472,86 @@ def _compare(out_dir: Path) -> dict:
     return {"条数": len(diffs), "实质差异": len(material), "明细": diffs, "可以签收": len(material) == 0}
 
 
+def _read_exam_ledger(name: str) -> pd.Series:
+    spec = LEDGERS[name]
+    path = ROOT / spec["检验段"]
+    frame = pd.read_csv(path, parse_dates=["date"]).set_index("date")["net"].astype(float)
+    digest = series_sha256(frame)
+    prefix = spec["检验段sha256前缀"]
+    if not digest.startswith(prefix):
+        raise IsolationError(f"{name} 检验段账本哈希前缀不是 {prefix}：{digest}")
+    return frame
+
+
+def _splice_peer(name: str, design: pd.Series | None, note: dict) -> tuple[pd.Series, dict]:
+    if design is None:
+        raise IsolationError(f"{name} 设计期账本不可用，不衔接")
+    joined = join_ledgers(design, _read_exam_ledger(name), name=name)
+    noted = dict(note)
+    noted["衔接"] = {"重叠日": joined["重叠日"], "续跑": joined["续跑"]}
+    return joined["序列"], noted
+
+
+def _month_gap(left: pd.Series, right: pd.Series, start: str, end: str) -> dict:
+    """A 股名额月收益差：连续性版 − 12−1。t 值用样本标准差。"""
+    diff = (monthly_returns(left.loc[start:end]) - monthly_returns(right.loc[start:end])).dropna()
+    count = int(len(diff))
+    mean = float(diff.mean()) if count else float("nan")
+    if count < 2:
+        t_value = float("nan")
+    else:
+        scale = float(diff.std(ddof=1))
+        t_value = float(mean / (scale / np.sqrt(count))) if scale > 0 else float("nan")
+    return {"月数": count, "均值": mean, "t值": t_value}
+
+
+def _span_random(book: str, rule: pd.Series, paths: np.ndarray, spans) -> list[dict]:
+    labels, matrix = _month_matrix(paths, rule.index)
+    rule_months = monthly_returns(rule).reindex(labels)
+    if rule_months.isna().any():
+        raise IsolationError("规则的月收益没有盖住随机路径")
+    rows = []
+    for name, start, end in spans:
+        start_p, end_p = pd.Period(start, "M"), pd.Period(end, "M")
+        keep = np.array([(start_p <= period <= end_p) for period in labels])
+        day = (rule.index >= pd.Timestamp(start)) & (rule.index <= pd.Timestamp(end))
+        if not day.any() or not keep.any():
+            raise IsolationError(f"{name} 没有随机日")
+        rule_cagr = float(annualize(rule.to_numpy()[day])[0])
+        path_cagr = annualize(paths[:, day])
+        rows.append({
+            "book": book,
+            "segment": name,
+            "seed": SEED,
+            "trials": TRIALS,
+            "n_months": int(keep.sum()),
+            "n_days": int(day.sum()),
+            "rule_annual": rule_cagr,
+            "percentile": rank_percentile(rule_cagr, path_cagr),
+            "beat_random_median_share": beat_median_share(rule_months.to_numpy()[keep], matrix[:, keep]),
+        })
+    return rows
+
+
+def _with_window(payload, window: str):
+    if isinstance(payload, list):
+        return [{"窗口": window, **row} for row in payload]
+    return {
+        key: ({"窗口": window, **value} if isinstance(value, dict) else value)
+        for key, value in payload.items()
+    }
+
+
 def execute(windows: Windows, out: Path) -> dict:
-    if windows.exam_end > DESIGN_END_TEXT or windows.full_end > DESIGN_END_TEXT:
+    official_run = _official_window(windows)
+    if not official_run and (windows.exam_end > DESIGN_END_TEXT or windows.full_end > DESIGN_END_TEXT):
         raise IsolationError("这个窗口晚于 2015-12-31。正式考试未授权，不装载。")
-    refuse_market_after_design(windows.full_end)
+    if official_run and ((out / "verdict.json").exists() or (out / "criteria.csv").exists()):
+        raise IsolationError("正式考试已经写过判定文件，不重跑")
+    if official_run:
+        open_official_isolation(windows.full_end, authorized=True)
+    else:
+        refuse_market_after_design(windows.full_end)
     panels = load_panels()
     french = _french_note()
     if not PANEL.exists():
@@ -469,9 +574,12 @@ def execute(windows: Windows, out: Path) -> dict:
         price_same = _price_benchmark(panels, (0.40, 0.30, 0.30))
         a1, a1_note = _read_peer("A1", A1_SHA)
         a2, a2_note = _read_peer("A2", A2_SHA)
+        if official_run:
+            a1, a1_note = _splice_peer("A1", a1, a1_note)
+            a2, a2_note = _splice_peer("A2", a2, a2_note)
         try:
             current, current_evidence = design_book()
-        except (IsolationError, OSError, ValueError) as exc:
+        except (IsolationError, OSError, ValueError, SystemExit) as exc:
             current, current_evidence = None, {"status": "未完成", "reason": str(exc)}
         for series, name in (
             (base["净"], "v6"), (bm_main, "BM-主"), (bm_same, "BM-同仓位"), (k2a, "K2A"),
@@ -580,7 +688,36 @@ def execute(windows: Windows, out: Path) -> dict:
             base, blocks, csi, spx, bm_main, bm_same, windows.exam_start, windows.exam_end,
         ))
         block_rows = _available_blocks(attr, windows)
-        random_rows = _random_rows(panels, prior, votes, bond, cash)
+        bundle = _random_rows(panels, prior, votes, bond, cash)
+        random_rows = bundle["rows"]
+        official_hold = None
+        if official_run:
+            spans = (
+                ("检验段", windows.exam_start, windows.exam_end),
+                ("全段", windows.full_start, windows.full_end),
+            )
+            random_rows = (
+                _span_random("组合", bundle["rule"], bundle["mixed"], spans)
+                + _span_random("A股", bundle["a"], bundle["a_paths"], spans)
+                + _span_random("美股", bundle["u"], bundle["u_paths"], spans)
+            )
+            a_open, _ = _sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "id_open", COST, 3, 0, 2, None)
+            a_full, _ = _sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "id_full", COST, 3, 0, 2, None)
+            u_plain, _ = _sleeve(panels["US"], "SPX", prior, TAGS["us"], votes, bond, cash, "top", COST, 3, 0, 2, None)
+            real = _variant(
+                panels, prior, votes, bond, cash,
+                n=3, cost=REAL_COST, lag=0, stress=2, exclude=None, weight_a=0.4,
+            )
+            official_hold = {
+                "continuity_open": _mix(a_open, base["美"], COST, 0.4),
+                "plain": _mix(a_full, u_plain, COST, 0.4),
+                "real": real,
+                "k2a_ref": _k2a(panels, False),
+                "parts": reference_frame(end=windows.full_end, allow_after=True).dropna(),
+                "mixed": bundle["mixed"],
+                "index": bundle["rule"].index,
+            }
+            assert_not_after(official_hold["parts"].index, "全收益指数")
         line_rows = []
         for label, start, end in (("检验段", windows.exam_start, windows.exam_end), ("全段", windows.full_start, windows.full_end)):
             for row in _line_table(lines, start, end):
@@ -595,6 +732,78 @@ def execute(windows: Windows, out: Path) -> dict:
     finally:
         panels["trin"]["csi300"] = saved["csi300"]
         panels["trin"]["SPX"] = saved["SPX"]
+
+    official_files = None
+    if official_hold is not None:
+        judged_c = _criteria_book(continuity, official_hold["plain"], bm_main, bm_same, k2a)
+        continuity_rows = [
+            _criteria_row("检验段", "连续性版", evaluate(judged_c, windows.exam_start, windows.exam_end)),
+            _criteria_row("全段", "连续性版", evaluate(judged_c, windows.full_start, windows.full_end)),
+        ]
+        for row in continuity_rows:
+            row["进入判定"] = False
+        gaps = []
+        for label, start, end in (
+            ("检验段", windows.exam_start, windows.exam_end),
+            ("全段", windows.full_start, windows.full_end),
+        ):
+            gaps.append({
+                "窗口": label,
+                "对比": "连续性版 − 12−1",
+                **_month_gap(a_id, base["A"], start, end),
+            })
+        continuity_doc = {
+            "角色": "只导出，不进入判定",
+            "判据②对照": "连续性版前 3、不设防守、单边 0.2%",
+            "四条判据": continuity_rows,
+            "A股月度差": gaps,
+        }
+        basis = (
+            "D49-8：设计期 2006–2015 为正，且检验段 2016-01→2026-09 为负或绝对值小于 0.5 点，记设计期才有；"
+            "否则四段至少三段同号且检验段与设计期同号，记稳定；其余记不稳定。"
+        )
+        label_rows = [
+            {"块": row["块"], "标签": row["读法"], "依据": basis}
+            for row in attribution(attr)["六块"]
+        ]
+        parts = official_hold["parts"]
+        columns = {
+            "v6": base["净"],
+            "连续性版": continuity,
+            "A1": a1,
+            "A2": a2,
+            "K2A": k2a,
+            "现行配置": current,
+            "BM-主": bm_main,
+            "BM-同仓位": bm_same,
+            "连续性版-参照": official_hold["continuity_open"],
+            "K2A-参照": official_hold["k2a_ref"],
+            "不设防守": base["不设防守"],
+            "沪深300全收益": parts["H00300"],
+            "标普500全收益": parts["SP500TR"],
+        }
+        daily = _daily_returns(
+            {name: series for name, series in columns.items() if series is not None},
+            windows.full_start,
+            windows.full_end,
+        )
+        _cap(daily["v6"], "逐日收益", windows.full_end)
+        report = _cost_real_report(
+            official_hold["real"]["净"], official_hold["real"]["不设防守"], blocks["毛"],
+            bm_main, bm_same, k2a, windows,
+        )
+        verdict_text = json.dumps(verdict, ensure_ascii=False, default=str)
+        if "cost-real" in verdict_text or "实盘成本" in verdict_text:
+            raise IsolationError("实盘成本写进了判定文件")
+        character = _with_window(character, "全段")
+        regimes = _with_window(regimes, "全段")
+        starts = _with_window(starts, "全段")
+        official_files = {
+            "daily": daily,
+            "labels": label_rows,
+            "report": report,
+            "continuity": continuity_doc,
+        }
 
     out.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(criteria_rows).to_csv(out / "criteria.csv", index=False)
@@ -615,20 +824,47 @@ def execute(windows: Windows, out: Path) -> dict:
     (out / "peers.json").write_text(json.dumps({"A1": a1_note, "A2": a2_note}, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "panel.json").write_text(json.dumps(current_evidence, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
     (out / "extend-2026-09.json").write_text(json.dumps(extend_plan("2026-09-30"), ensure_ascii=False, indent=1), encoding="utf-8")
+    if official_files is not None:
+        official_files["daily"].to_csv(out / "returns-daily.csv", float_format="%.12g")
+        _write_random_paths(out, official_hold["index"], official_hold["mixed"], windows)
+        pd.DataFrame(official_files["labels"]).to_csv(out / "block-labels.csv", index=False)
+        (out / "cost-real.json").write_text(
+            json.dumps(official_files["report"], ensure_ascii=False, indent=1), encoding="utf-8")
+        (out / "continuity.json").write_text(
+            json.dumps(official_files["continuity"], ensure_ascii=False, indent=1, default=str), encoding="utf-8")
+        if "cost-real" in (out / "verdict.json").read_text(encoding="utf-8"):
+            raise IsolationError("实盘成本写进了判定文件")
     comparison = _compare(out)
     acceptance = d51_accept(comparison)
+    if official_run:
+        comparison["说明"] = "这张对照把正式窗口的检验段和设计期签收的 2011–2015 放在同一列，不决定总结论。"
     comparison["D51验收"] = acceptance
     (out / "comparison.json").write_text(json.dumps(comparison, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "acceptance.json").write_text(json.dumps(acceptance, ensure_ascii=False, indent=1), encoding="utf-8")
-    _write_mismatch_note(out, acceptance)
+    if official_run:
+        (out / "mismatch-note.md").write_text(
+            "# 正式窗口\n\n"
+            "设计期签收保费的对照不决定这次总结论。总结论在 verdict.json。\n"
+            f"签收对照通过：{acceptance['通过']}。保费差 {acceptance['保费差']}。\n",
+            encoding="utf-8",
+        )
+    else:
+        _write_mismatch_note(out, acceptance)
     manifest = {
         "窗口": asdict(windows),
         "命令": ".venv/bin/python -I -c \"import sys; sys.path.insert(0,'.'); from src.v6.oneshot_exam import main; main()\"",
-        "正式考试": "未跑。ACTIVE 是预演。run_exam 与本模块的 official() 都拒绝。",
-        "封顶": DESIGN_END_TEXT,
+        "正式考试": "已跑一次。" if official_run else "未跑。ACTIVE 是预演。",
+        "运行次数": 1 if official_run else 0,
+        "封顶": windows.full_end if official_run else DESIGN_END_TEXT,
         "french": french,
         "行情库sha256": _sha_file(ROOT / "data/market.sqlite"),
-        "代码sha256": _tree_sha((ROOT / "src/v6/oneshot_exam.py", ROOT / "src/v6/oneshot_prep.py", ROOT / "src/v6/engine.py")),
+        "代码sha256": _tree_sha((
+            ROOT / "src/v6/oneshot_exam.py",
+            ROOT / "src/v6/oneshot_prep.py",
+            ROOT / "src/v6/engine.py",
+            ROOT / "src/v6/guard.py",
+            ROOT / "src/v6/load.py",
+        )),
         "D51": "判据②用单边 0.2% 的前 3；S1–S7 对照跟着改；S8 对照不变；S6 的 BM-同仓位是 50/25/25。",
         "对照": {
             "实质差异": comparison["实质差异"],
@@ -640,41 +876,54 @@ def execute(windows: Windows, out: Path) -> dict:
     }
     (out / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
     _write_comparison_md(out, comparison)
-    if not acceptance["通过"]:
+    if windows is REHEARSAL and not acceptance["通过"]:
         raise IsolationError(acceptance["说明"] + f" 保费差 {acceptance['保费差']}。")
     return {
         "窗口": windows.name,
         "实质差异": comparison["实质差异"],
-        "D51验收": True,
+        "D51验收": acceptance["通过"] if windows is REHEARSAL else None,
+        "总结论": verdict["总结论"],
         "目录": str(out.relative_to(ROOT)),
     }
 
 
 def _available_blocks(book: SpanBook, windows: Windows) -> list[dict]:
-    """预演只算封顶以内的段。2016 年以后不贴 D49-8 的标签，也不编数。"""
-    spans = (
-        ("2006–10", "2006-01-01", "2010-12-31"),
-        ("2011–15", windows.exam_start, windows.exam_end),
-        ("全段", windows.full_start, windows.full_end),
-    )
+    """预演只算封顶以内的段。正式窗口按 D49 的四段，并另写检验段。"""
+    if windows.full_end <= DESIGN_END_TEXT:
+        spans = (
+            ("2006–10", "2006-01-01", "2010-12-31"),
+            ("2011–15", windows.exam_start, windows.exam_end),
+            ("全段", windows.full_start, windows.full_end),
+        )
+        note = "预演没有2016年以后，不贴标签"
+    else:
+        spans = [item for item in SPANS if item[0] != "全段"]
+        spans.append(("检验段", windows.exam_start, windows.exam_end))
+        spans.append(("全段", windows.full_start, windows.full_end))
+        note = "D49-8 见 block-labels.csv"
     rows = []
     for label, start, end in spans:
         parts = six_blocks(book, start, end)
-        rows.append({"段": label, **{name: parts[name] for name in BLOCKS}, "和": parts["和"], "读法": "预演没有2016年以后，不贴标签"})
+        rows.append({"段": label, **{name: parts[name] for name in BLOCKS}, "和": parts["和"], "读法": note})
     return rows
 
 
 def _yearly_blocks(book: SpanBook, windows: Windows) -> list[dict]:
     rows = []
-    for year in range(2006, 2016):
+    last = 2016 if windows.full_end <= DESIGN_END_TEXT else pd.Timestamp(windows.full_end).year + 1
+    for year in range(2006, last):
         start, end = f"{year}-01-01", f"{year}-12-31"
+        label = str(year)
         if end > windows.full_end:
+            end = windows.full_end
+            label = "2026年前9个月"
+        if pd.Timestamp(end) < pd.Timestamp(start):
             continue
         try:
             parts = six_blocks(book, start, end)
         except IsolationError:
             continue
-        rows.append({"年": str(year), **{name: parts[name] for name in BLOCKS}})
+        rows.append({"年": label, **{name: parts[name] for name in BLOCKS}})
     return rows
 
 
@@ -767,8 +1016,13 @@ def _write_comparison_md(out: Path, comparison: dict) -> None:
 
 
 def official() -> None:
-    """正式考试入口。未授权。"""
-    run_exam()
+    """正式考试入口。未授权时仍拒绝；授权后只跑 ACTIVE 指向的官方窗口一次。"""
+    if not OFFICIAL_AUTHORIZED:
+        run_exam()
+        return
+    if ACTIVE is not OFFICIAL:
+        raise IsolationError("正式考试要求 ACTIVE 是 OFFICIAL")
+    print(json.dumps(execute(ACTIVE, ONESHOT_OUT), ensure_ascii=False))
 
 
 def insert_window_field(text: str, key: str, window: str) -> str:
@@ -950,8 +1204,11 @@ def _mixed_paths(panels, prior, votes, bond, cash) -> np.ndarray:
 
 
 def main() -> None:
+    if ACTIVE is OFFICIAL:
+        official()
+        return
     past_design = ACTIVE.exam_end > DESIGN_END_TEXT or ACTIVE.full_end > DESIGN_END_TEXT
-    if ACTIVE is OFFICIAL or (past_design and not OFFICIAL_AUTHORIZED):
+    if past_design and not OFFICIAL_AUTHORIZED:
         official()
     if ACTIVE is not REHEARSAL:
         raise IsolationError("ACTIVE 不是预演窗口。正式考试未授权。")

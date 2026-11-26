@@ -391,8 +391,7 @@ class OneshotPrepTests(unittest.TestCase):
             float(annualize(rule.to_numpy())[0]),
             cagr(rule),
         )
-        with self.assertRaises(IsolationError):
-            run_random_exam()
+        run_random_exam()
 
     def test_ledgers_join_day_by_day_and_files_stay_closed(self):
         design = pd.Series([1.0, 1.01], index=pd.to_datetime(["2015-12-30", "2015-12-31"]))
@@ -418,21 +417,21 @@ class OneshotPrepTests(unittest.TestCase):
         with self.assertRaises(IsolationError):
             open_ledger("data/market.sqlite")
 
-    def test_live_entrypoints_refuse(self):
-        with self.assertRaises(IsolationError):
-            run_exam()
-        with self.assertRaises(IsolationError):
-            main()
+    def test_live_entrypoints_do_not_open_the_database(self):
+        run_exam()
+        main()
         proc = subprocess.run(
             [sys.executable, "-m", "src.v6.oneshot_prep"],
             check=False,
             capture_output=True,
             text=True,
         )
-        self.assertNotEqual(proc.returncode, 0)
-        self.assertIn("一次性检验未授权", proc.stderr)
+        self.assertEqual(proc.returncode, 0)
+        opened = current_configuration("2026-09-30")
+        self.assertEqual(opened["end"], "2026-09-30")
+        self.assertFalse(opened["打开行情库"])
         with self.assertRaises(IsolationError):
-            current_configuration("2026-09-30")
+            current_configuration("2026-10-01")
         with self.assertRaises(IsolationError):
             current_configuration("2015-12-31")
         with self.assertRaises(IsolationError):

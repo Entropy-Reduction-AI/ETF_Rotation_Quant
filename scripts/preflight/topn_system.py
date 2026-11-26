@@ -8,9 +8,10 @@ import numpy as np, pandas as pd, sim
 from src.v3.engine.spec import load_spec
 from src.v4.r5.design import Markets
 from src.v4.engine.pool import load_mid
-END = '2015-12-31'
+from src.v6.guard import DESIGN_END_TEXT, load_end_text
+END = load_end_text()
 
-m = Markets(load_spec()).get('index', t4=False, allow_substitute=True)
+m = Markets(load_spec()).get('index', t4=False, allow_substitute=True, end=END, allow_after=END > DESIGN_END_TEXT)
 P = m.signal.loc[:END]; P = P[P[['csi300', 'spx', 'ndx100']].notna().all(axis=1)]; idx = P.index
 cash = P['cash'].fillna(0); bond = P['cgb-10y']
 A_C = ['csi300'] + [c for c in P.columns if c.startswith('allshare-')] + ['csi500', 'csi1000', 'csi-dividend', 'chinext']
