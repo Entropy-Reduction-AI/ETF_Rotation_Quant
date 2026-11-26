@@ -104,33 +104,35 @@ if EX.exists():
     X = json.load(open(EX, encoding='utf-8'))
     wk = pd.to_datetime(X['weeks'])
     LINE = {'v6': (BLUE, 2.6, '-'), 'K2A': (INK, 1.4, '-'), '现行配置': ('#7c3aed', 1.4, '-'), 'BM-主': (GREY, 1.6, '-'),
-            'BM-同仓位': ('#cbd5e1', 1.6, '-'), 'A1': (INK, 1.0, ':')}
+            'BM-同仓位': (GREY, 1.4, '--'), 'A1': (INK, 1.0, ':')}
     ch = X['character']
     # h3 净值 + 回撤
-    fig, (a1, a2) = plt.subplots(2, 1, figsize=(11, 6.4), sharex=True, gridspec_kw={'height_ratios': [2.2, 1], 'hspace': .08})
-    ends = sorted(((X['nav_weekly'][k][-1], k) for k in LINE), key=lambda t: t[0])
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(11, 7.4), sharex=True, gridspec_kw={'height_ratios': [2.6, 1], 'hspace': .08})
+    ends = sorted(((100 * X['nav_weekly'][k][-1], k) for k in LINE), key=lambda t: t[0])
     ly, last = {}, -1e9
-    for y, k in ends:                       # 终点标签在对数刻度上至少隔开 0.2（对数）
-        v = np.log(y); v = max(v, last + .2); ly[k] = np.exp(v); last = v
+    for y, k in ends:                       # 终点标签至少隔开 55 万（普通刻度）
+        v = max(y, last + 75); ly[k] = v; last = v
     for k, (c, lw, ls) in LINE.items():
-        a1.plot(wk, X['nav_weekly'][k], color=c, lw=lw, ls=ls)
-        a1.annotate(f'{k}  {100 * ch[k]["年化"]:.1f}%', (wk[-1], X['nav_weekly'][k][-1]), xytext=(wk[-1] + pd.Timedelta(days=40), ly[k]),
+        yy = 100 * np.array(X['nav_weekly'][k])
+        a1.plot(wk, yy, color=c, lw=lw, ls=ls)
+        a1.annotate(f'{k}  {yy[-1]:.0f} 万 · 年化 {100 * ch[k]["年化"]:.1f}%', (wk[-1], yy[-1]), xytext=(wk[-1] + pd.Timedelta(days=90), ly[k]),
                     textcoords='data', va='center', fontsize=10.5, color=c if k != 'BM-同仓位' else MUTED, weight='bold' if k == 'v6' else 'normal',
-                    arrowprops=dict(arrowstyle='-', color=GREY, lw=.6))
-    a1.set_yscale('log'); a1.set_ylabel('净值（2006 年初 = 1，对数）', color=MUTED); a1.grid(alpha=.2); a1.spines['left'].set_visible(True)
-    a1.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f'{v:g}')); a1.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+                    arrowprops=dict(arrowstyle='-', color=GREY, lw=.6, relpos=(0, .5), shrinkA=0, shrinkB=0))
+    a1.axhline(100, color=GREY, lw=.8, ls='--'); a1.set_ylim(0, None)
+    a1.set_ylabel('100 万本金变成多少万', color=MUTED); a1.grid(alpha=.2); a1.spines['left'].set_visible(True)
     for k in ('BM-主', 'K2A', 'v6'):
         c = LINE[k][0]
         a2.fill_between(wk, np.array(X['dd_weekly'][k]) * 100, 0, color=c, alpha=.35 if k == 'v6' else .18, lw=0)
         a2.plot(wk, np.array(X['dd_weekly'][k]) * 100, color=c, lw=1.2 if k != 'v6' else 1.8)
     a2.set_ylabel('回撤（%）', color=MUTED); a2.grid(alpha=.2); a2.spines['left'].set_visible(True); a2.set_ylim(-70, 2)
     a2.text(wk[len(wk) // 9], -66, f'BM-主 最深 {100 * ch["BM-主"]["最大回撤"]:.1f}%'.replace('-', '−'), color=MUTED, fontsize=10)
-    a2.text(wk[len(wk) // 9], -30, f'v6 最深 {100 * ch["v6"]["最大回撤"]:.1f}%'.replace('-', '−'), color=BLUE, fontsize=10, weight='bold')
+    i6 = int(np.argmin(X['dd_weekly']['v6']))
+    a2.annotate(f'v6 最深 {100 * ch["v6"]["最大回撤"]:.1f}%（{wk[i6].year} 年）'.replace('-', '−'), (wk[i6], 100 * X['dd_weekly']['v6'][i6]), xytext=(wk[i6] - pd.Timedelta(days=900), -52), color=BLUE, fontsize=10, weight='bold', arrowprops=dict(arrowstyle='-', color=BLUE, lw=.8))
     a2.xaxis.set_major_locator(mdates.YearLocator()); a2.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
-    fig.subplots_adjust(top=.97, right=.86)
+    fig.subplots_adjust(top=.97, right=.82)
     h = fig.get_figheight()
-    fig.text(.04, 1 + .42 / h, f'v6 一路的回撤都比基准浅一半以上；终点和 BM-主、K2A 差不多，比现行配置和 A1 低', fontsize=14, weight='bold', color=INK)
-    fig.text(.04, 1 + .12 / h, '设计期 2006–15，扣成本，基准为全收益。上：净值（对数刻度）；下：从此前最高点算的回撤，蓝 = v6，黑 = K2A，灰 = BM-主', fontsize=10.5, color=MUTED)
+    fig.text(.04, 1 + .42 / h, f'v6 最深回撤 −28.7%，不到 BM-主的一半；100 万变成 394 万，和 BM-主、K2A 差不多，比现行配置和 A1 少', fontsize=14, weight='bold', color=INK)
+    fig.text(.04, 1 + .12 / h, '设计期 2006–15，扣成本，基准为全收益。上：100 万本金逐周变成多少万（普通刻度）；下：从此前最高点算的回撤，蓝 = v6，黑 = K2A，灰 = BM-主，灰虚线 = BM-同仓位', fontsize=10.5, color=MUTED)
     fig.savefig(OUT / 'h3-nav.png', dpi=150, bbox_inches='tight'); plt.close(fig)
 
     # h4 两次急跌
