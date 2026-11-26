@@ -435,6 +435,6 @@
 - Dev：#377 @ `a9a1e9e9`，`src/v6/`、`results/v6/health-gates.csv`、`health-scatter.csv`、`health-forecast.csv`、`health-continuity.csv`、`health-meta.json`；复算命令 `.venv/bin/python -m src.v6.health`
 - Reviewer：#375 @ `7f1da3ff`，`operations/reviews/v6-independent-design/output/d48-health.json`（SHA256 `f7b4d929…`）、`2026-11-26-v6-d48-health.md`
 - 附表 B：`results/v6-preflight/v6-appendix-b.json`；图 `docs/assets/v6-prereg/p3-decompose.png`、`p4-signals.png`（冻结稿原图）
-- 本页的新图：`scripts/v6_report/charts_health.py` → `docs/assets/v6-health/h1-forecast.png`、`h2-peers.png`（读 `results/v6/health-*.csv`）
+- 本页的新图：`scripts/v6_report/charts_health.py` → `docs/assets/v6-health/h1-forecast.png`、`h2-peers.png`（读 `results/v6/health-*.csv`），`h3-nav.png`、`h4-crash.png`、`h5-regime.png`、`h6-anystart.png`（读 `scripts/v6_report/health_extra.py` 的输出）
 
 </details>
