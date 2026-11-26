@@ -1,0 +1,28 @@
+# v6 设计期参数。取值全部来自冻结预注册与 D45，不是新的搜索结果。
+# 规范：milestone/v6-prereg-freeze → f066da8e46f202e105a65c7abf43e4d4cf82eff9
+# D45：4851ff157be5ced92338833aa66af903072c2ca4（PR #376，读取时未合入）
+
+end = "2015-12-31"
+design_start = "2006-01-01"
+segment_early = ["2006-01-01", "2010-12-31"]
+segment_late = ["2011-01-01", "2015-12-31"]
+
+n = 3
+a_weight = 0.4
+us_weight = 0.6
+stress_votes = 2
+cost_one_way = 0.002
+ma_months = 10
+breadth_quantile = 0.3333333333333333
+trin_quantile = 0.6666666666666666
+min_history_months = 24
+min_stress_months = 12
+trin_span = 10
+trin_min_periods = 7
+trin_min_movers = 4
+premium_points = 5.0
+premium_lookback = 60
+trading_days = 252
+
+# D45-1：信号月 T 的 12−1 = T−1 月末 ÷ T−12 月末 − 1
+momentum = "T-1 / T-12 - 1"
