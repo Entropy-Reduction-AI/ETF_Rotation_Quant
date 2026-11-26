@@ -28,10 +28,17 @@ TRIALS = 1000
 N = 3
 
 
-def rank_percentile(rule_months: np.ndarray, random_months: np.ndarray) -> float:
-    """1000 条路径的月均收益里，严格低于规则月均的比例，单位是百分位。"""
-    path_means = random_months.mean(axis=1)
-    return float((path_means < float(rule_months.mean())).mean() * 100.0)
+def rank_percentile(rule_cagr: float, path_cagr: np.ndarray) -> float:
+    """各路径年化里，小于等于规则年化的比例，单位是百分位。"""
+    return float((path_cagr <= rule_cagr).mean() * 100.0)
+
+
+def annualize(daily: np.ndarray) -> np.ndarray:
+    """日收益连乘后再按 252 个交易日年化。daily 形状 (路径数, 日数) 或 (日数,)。"""
+    values = np.atleast_2d(np.asarray(daily, dtype=float))
+    nav = np.prod(1.0 + values, axis=1)
+    years = values.shape[1] / 252.0
+    return nav ** (1.0 / years) - 1.0
 
 
 def beat_median_share(rule_months: np.ndarray, random_months: np.ndarray) -> float:
@@ -78,9 +85,9 @@ def _plans(levels, parent, prior, tags, votes_fn, bond, cash):
             })
             continue
         raw = _pick(scores, ok, tag_of, N, True)
-        pool = np.array(_pick(scores, ok, tag_of, int(ok.sum()), True), dtype=int)
         gate = not bool(above.loc[day].to_numpy()[columns.index(parent)])
         allowed = ok & (scores > 0) if gate else ok
+        pool = np.array(_pick(scores, allowed, tag_of, int(allowed.sum()), True), dtype=int)
         v6 = np.array(_pick(scores, allowed, tag_of, N, True), dtype=int)
         frac = p_value if stress else 1.0
         nxt = forward.loc[day].to_numpy(dtype=float)
@@ -191,7 +198,7 @@ def _month_matrix(daily: np.ndarray, index: pd.DatetimeIndex) -> tuple[pd.Period
     return labels, matrix
 
 
-def _rows(rule: pd.Series, random_daily: np.ndarray) -> list[dict]:
+def _window_rows(label: str, rule: pd.Series, random_daily: np.ndarray) -> list[dict]:
     labels, matrix = _month_matrix(random_daily, rule.index)
     rule_months = monthly_returns(rule).reindex(labels)
     if rule_months.isna().any():
@@ -202,15 +209,19 @@ def _rows(rule: pd.Series, random_daily: np.ndarray) -> list[dict]:
         keep = np.array([(start_p <= period <= end_p) for period in labels])
         if not keep.any():
             raise IsolationError(f"{name} 没有月份")
-        rule_block = rule_months.to_numpy()[keep]
-        random_block = matrix[:, keep]
+        day = (rule.index >= start) & (rule.index <= end)
+        rule_cagr = float(annualize(rule.to_numpy()[day])[0])
+        path_cagr = annualize(random_daily[:, day])
         rows.append({
+            "book": label,
             "segment": name,
             "seed": SEED,
             "trials": TRIALS,
             "n_months": int(keep.sum()),
-            "percentile": rank_percentile(rule_block, random_block),
-            "beat_random_median_share": beat_median_share(rule_block, random_block),
+            "n_days": int(day.sum()),
+            "rule_annual": rule_cagr,
+            "percentile": rank_percentile(rule_cagr, path_cagr),
+            "beat_random_median_share": beat_median_share(rule_months.to_numpy()[keep], matrix[:, keep]),
         })
     return rows
 
@@ -254,7 +265,11 @@ def run() -> dict:
         assert_not_after(rule.index, "随机规则")
         if rule.index.max() > pd.Timestamp("2015-12-31"):
             raise IsolationError("随机结果晚于 2015-12-31")
-        rows = _rows(rule, mixed)
+        rows = (
+            _window_rows("组合", rule, mixed)
+            + _window_rows("A股", a_slot, a_paths)
+            + _window_rows("美股", u_slot, u_paths)
+        )
     finally:
         panels["trin"]["csi300"] = saved["csi300"]
         panels["trin"]["SPX"] = saved["SPX"]
@@ -268,13 +283,13 @@ def run() -> dict:
         "last": rule.index.max().date().isoformat(),
         "engine_gap": {"A": gap_a, "US": gap_u},
         "formula": {
-            "percentile": "100 ×（1000 条路径的月均收益严格低于规则月均收益的比例）。月收益是该自然月日收益连乘减 1，函数 src/report/metrics.py monthly_returns。",
-            "beat_random_median_share": "规则月收益严格高于当月 1000 条中位数的月份比例。",
-            "source": "比较式与 scripts/preflight/a_decompose.py 对种子 20261122 的写法相同。结构按冻结 §5.2，不是那份只看挑选层的脚本。",
+            "percentile": "100 ×（路径年化 ≤ 规则年化的比例）。年化是窗口内日收益连乘后按 252 个交易日开方，与 src/report/metrics.py cagr 相同。",
+            "beat_random_median_share": "规则月收益严格高于当月 1000 条中位数的月份比例。月收益是该自然月日收益连乘减 1。",
+            "source": "百分位按锁定对账的年化定义。每月胜率仍是严格高于当月中位数。",
         },
         "structure": "两个名额都把第①步换成去重后的随机 3 只。准入是 12−1 有限。去重沿用 _pick：非空标签只留 12−1 最高的一个。把握 p 仍用 12−1 领头者，与主规则同一条。每月末 60/40，单边 0.2%。",
         "draw_order": "一个 Generator(20261122)。按月末先后，先抽 A 股池，再抽美股池。池子不超过 3 只时全持有，不消耗随机数。",
-        "positive_filter": "§5.2 写的是同样受准入限制。正收益过滤写在第①步的排序里，本随机不套用。母指数跌破均线时，随机池仍是全部已准入且去重后的候选。",
+        "positive_filter": "母指数跌破均线时，随机池与 v6 相同，只用 12−1 为正的去重候选。未跌破时用全部已准入且去重后的候选。",
         "inputs": {
             "french_sha256": csv_sha,
             "french_panel": str(PANEL.relative_to(OUT.parents[1])),

@@ -3,28 +3,103 @@
  "trials": 1000,
  "segments": [
   {
+   "book": "组合",
    "segment": "2006-2010",
    "seed": 20261122,
    "trials": 1000,
    "n_months": 60,
-   "percentile": 99.9,
-   "beat_random_median_share": 0.5333333333333333
+   "n_days": 1215,
+   "rule_annual": 0.18514770460327967,
+   "percentile": 68.7,
+   "beat_random_median_share": 0.4666666666666667
   },
   {
+   "book": "组合",
    "segment": "2011-2015",
    "seed": 20261122,
    "trials": 1000,
    "n_months": 60,
-   "percentile": 99.5,
-   "beat_random_median_share": 0.5666666666666667
+   "n_days": 1214,
+   "rule_annual": 0.12140626588178627,
+   "percentile": 97.2,
+   "beat_random_median_share": 0.6166666666666667
   },
   {
+   "book": "组合",
    "segment": "2006-2015",
    "seed": 20261122,
    "trials": 1000,
    "n_months": 120,
+   "n_days": 2429,
+   "rule_annual": 0.15284964803990508,
+   "percentile": 96.39999999999999,
+   "beat_random_median_share": 0.5416666666666666
+  },
+  {
+   "book": "A股",
+   "segment": "2006-2010",
+   "seed": 20261122,
+   "trials": 1000,
+   "n_months": 60,
+   "n_days": 1215,
+   "rule_annual": 0.4559624593886942,
+   "percentile": 88.9,
+   "beat_random_median_share": 0.48333333333333334
+  },
+  {
+   "book": "A股",
+   "segment": "2011-2015",
+   "seed": 20261122,
+   "trials": 1000,
+   "n_months": 60,
+   "n_days": 1214,
+   "rule_annual": 0.081470698740719,
+   "percentile": 26.400000000000002,
+   "beat_random_median_share": 0.45
+  },
+  {
+   "book": "A股",
+   "segment": "2006-2015",
+   "seed": 20261122,
+   "trials": 1000,
+   "n_months": 120,
+   "n_days": 2429,
+   "rule_annual": 0.25489979755909276,
+   "percentile": 67.5,
+   "beat_random_median_share": 0.4666666666666667
+  },
+  {
+   "book": "美股",
+   "segment": "2006-2010",
+   "seed": 20261122,
+   "trials": 1000,
+   "n_months": 60,
+   "n_days": 1215,
+   "rule_annual": 0.013128195944068777,
+   "percentile": 26.200000000000003,
+   "beat_random_median_share": 0.36666666666666664
+  },
+  {
+   "book": "美股",
+   "segment": "2011-2015",
+   "seed": 20261122,
+   "trials": 1000,
+   "n_months": 60,
+   "n_days": 1214,
+   "rule_annual": 0.13583999885237752,
    "percentile": 100.0,
-   "beat_random_median_share": 0.55
+   "beat_random_median_share": 0.7166666666666667
+  },
+  {
+   "book": "美股",
+   "segment": "2006-2015",
+   "seed": 20261122,
+   "trials": 1000,
+   "n_months": 120,
+   "n_days": 2429,
+   "rule_annual": 0.07270562872487729,
+   "percentile": 97.6,
+   "beat_random_median_share": 0.5416666666666666
   }
  ],
  "first": "2005-01-06",
@@ -34,13 +109,13 @@
   "US": 0.0
  },
  "formula": {
-  "percentile": "100 ×（1000 条路径的月均收益严格低于规则月均收益的比例）。月收益是该自然月日收益连乘减 1，函数 src/report/metrics.py monthly_returns。",
-  "beat_random_median_share": "规则月收益严格高于当月 1000 条中位数的月份比例。",
-  "source": "比较式与 scripts/preflight/a_decompose.py 对种子 20261122 的写法相同。结构按冻结 §5.2，不是那份只看挑选层的脚本。"
+  "percentile": "100 ×（路径年化 ≤ 规则年化的比例）。年化是窗口内日收益连乘后按 252 个交易日开方，与 src/report/metrics.py cagr 相同。",
+  "beat_random_median_share": "规则月收益严格高于当月 1000 条中位数的月份比例。月收益是该自然月日收益连乘减 1。",
+  "source": "百分位按锁定对账的年化定义。每月胜率仍是严格高于当月中位数。"
  },
  "structure": "两个名额都把第①步换成去重后的随机 3 只。准入是 12−1 有限。去重沿用 _pick：非空标签只留 12−1 最高的一个。把握 p 仍用 12−1 领头者，与主规则同一条。每月末 60/40，单边 0.2%。",
  "draw_order": "一个 Generator(20261122)。按月末先后，先抽 A 股池，再抽美股池。池子不超过 3 只时全持有，不消耗随机数。",
- "positive_filter": "§5.2 写的是同样受准入限制。正收益过滤写在第①步的排序里，本随机不套用。母指数跌破均线时，随机池仍是全部已准入且去重后的候选。",
+ "positive_filter": "母指数跌破均线时，随机池与 v6 相同，只用 12−1 为正的去重候选。未跌破时用全部已准入且去重后的候选。",
  "inputs": {
   "french_sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
   "french_panel": "results/v6/french-49-192607-199812",
