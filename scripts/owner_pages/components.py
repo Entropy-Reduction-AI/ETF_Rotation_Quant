@@ -420,6 +420,20 @@ def glossary(rows):
         return 'o'
     def pic(t):
         t = _txt(t)
+        if '‖' in t:
+            return ''.join(pic1(x.strip()) for x in t.split('‖'))
+        return pic1(t)
+    def pic1(t):
+        if t.startswith('步骤：'):
+            items = [x.strip() for x in t[3:].split('｜') if x.strip()]
+            return '<ol class="gl-st">' + ''.join(f'<li><span class="gl-sn">{j}</span><span>{x}</span></li>' for j, x in enumerate(items, 1)) + '</ol>'
+        if t.startswith('刻度：'):
+            items = [x.strip() for x in t[3:].split('｜') if x.strip()]
+            mk = ''
+            for j, x in enumerate(items):
+                lab, v = x.rsplit('@', 1); v = float(v)
+                mk += f'<span class="gl-mk{" up" if j % 2 else ""}{" r" if v > .85 else (" l" if v < .15 else "")}" style="left:{v * 100:.1f}%"><i></i><em>{lab}<b>p {v:g}</b></em></span>'
+            return f'<div class="gl-sc"><div class="gl-sc-ax"><span>p = 0：不拿股票</span><span>0.5</span><span>1：满仓</span></div><div class="gl-sc-bar">{mk}</div></div>'
         if t.startswith('仓位：'):
             segs = [x.strip() for x in t[3:].split('｜') if x.strip()]
             bar, leg = '', ''
@@ -448,7 +462,7 @@ def glossary(rows):
         groups[g].append(r)
     out = ''
     for g in order:
-        cards = ''.join(f'<div class="gl-c"><div class="gl-n">{_inner(r["名字"])}</div><div class="gl-s">{_inner(r["一句话"])}</div>'
+        cards = ''.join(f'<div class="gl-c{" wide" if "步骤：" in _txt(r["图"]) else ""}"><div class="gl-n">{_inner(r["名字"])}</div><div class="gl-s">{_inner(r["一句话"])}</div>'
                         f'{pic(r["图"])}' + (f'<div class="gl-d">{_inner(r["细节"])}</div>' if _txt(r['细节']) else '') + '</div>' for r in groups[g])
         n = len(groups[g]); cols = 4 if n % 4 in (0, 3) else 3
         out += f'<div class="gl-g"><div class="gl-gh">{g}<span>{n}</span></div><div class="gl-grid" style="--gl-c:{cols}">{cards}</div></div>'
@@ -481,6 +495,23 @@ def apply(soup):
 
 
 CSS = r"""
+.gl-c.wide { grid-column: span 2; }
+.gl-st { list-style: none !important; margin: 0 !important; padding: 0 !important; display: grid; gap: 5px; counter-reset: none; }
+.gl-st li::before, .gl-st li::marker { content: none !important; display: none !important; }
+.gl-st li { padding-left: 0 !important; margin: 0 !important; }
+.gl-st li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: start; font-size: 13px; line-height: 1.5; color: var(--ink); }
+.gl-sn { width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; display: grid; place-items: center; margin-top: 1px; }
+.gl-sc { margin-top: 4px; }
+.gl-sc-ax { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+.gl-sc-bar { position: relative; height: 10px; border-radius: 5px; background: linear-gradient(90deg, #fde68a, #e5e7eb 50%, #bfdbfe); margin: 4px 0 64px; }
+.gl-mk { position: absolute; top: -3px; transform: translateX(-50%); }
+.gl-mk i { display: block; width: 4px; height: 16px; border-radius: 2px; background: var(--ink); margin: 0 auto; }
+.gl-mk em { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 11px; line-height: 1.35; color: var(--ink); white-space: nowrap; text-align: center; }
+.gl-mk.up em { top: 38px; }
+.gl-mk.r em { left: auto; right: -2px; transform: none; text-align: right; } .gl-mk.l em { left: -2px; transform: none; text-align: left; }
+.gl-mk em b { display: block; font-family: var(--font-mono); color: var(--accent); }
+@media (max-width: 760px) { .gl-c.wide { grid-column: auto; } }
+
 .gl { display: grid; gap: 16px; }
 .gl-gh { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: var(--ink); margin-bottom: 8px; padding-left: 10px; border-left: 3px solid var(--accent); }
 .gl-gh span { font-size: 11px; font-weight: 700; color: var(--muted); background: var(--bg); border-radius: 999px; padding: 1px 8px; }
