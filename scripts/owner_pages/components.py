@@ -47,7 +47,7 @@ def sort_board(rows):
     tones = ['bad', 'mute', 'good']
     cols = ''
     for i, (g, v, items) in enumerate(groups):
-        chips = ''.join(f'<li><span class="sb-n">{n}</span><span class="sb-x">{x}</span></li>' for n, x in items)
+        chips = ''.join(f'<li><b class="sb-b"><span class="sb-n">{n}</span><span class="sb-x">{x}</span></b></li>' for n, x in items)
         cols += (f'<div class="sb-col t-{tones[i % 3]}"><div class="sb-h"><span class="sb-k">{len(items)}</span>'
                  f'<span class="sb-g">{g}</span></div><div class="sb-v">{v}</div><ul class="sb-l">{chips}</ul></div>')
     return f'<div class="sortboard n{len(groups)}">{cols}</div>'
@@ -61,8 +61,22 @@ def gate_row(rows):
         w = int(pct.group(1)) if pct else 0
         tot = code == '合计'
         out += (f'<div class="gt{" gt-all" if tot else ""}"><div class="gt-c">{"" if tot else code}</div><div class="gt-n">{name}</div>'
-                f'<div class="gt-t">{th}</div><div class="gt-b"><i style="width:{w}%"></i></div><div class="gt-p">事先估计通过 <b>{ch}</b></div></div>')
+                f'<div class="gt-t">{th}</div><div class="gt-b"><i style="width:{w}%"></i></div><div class="gt-p">事先估计通过 <b>{ch}</b></div>'
+                f'{_gate_actual(r.get("设计期"))}</div>')
     return f'<div class="gaterow">{out}</div>'
+
+
+def _gate_actual(cell):
+    """Optional 设计期 column: '待补' → dashed pending cell; 'value｜过/不过' → value big with a verdict tag."""
+    t = _txt(cell)
+    if not t:
+        return ''
+    if t == '待补':
+        return '<div class="gt-d pend"><span>设计期</span><b>待补</b></div>'
+    v, _, lab = t.partition('｜')
+    lab = lab.strip()
+    cls = {'过': 'ok', '不过': 'no'}.get(lab, '')
+    return (f'<div class="gt-d {cls}"><span>设计期</span><b>{v.strip()}</b>' + (f'<em>{lab}</em>' if lab else '') + '</div>')
 
 
 def composition(rows):
@@ -261,7 +275,60 @@ def pool(rows, summary=''):
     return f'<div class="pool">{cards}</div>'
 
 
-RENDER = {'代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers}
+def peers(rows):
+    """| 序列 | 年化 | 最大回撤 | 是什么 | → series with numbers as bars (v6 highlighted); series still without numbers as one chip strip."""
+    def num(x):
+        m = re.search(r'[−\-]?\d+(?:\.\d+)?', _txt(x).replace('−', '-'))
+        return float(m.group(0)) if m else None
+    known = [(r, num(r['年化'])) for r in rows if num(r['年化']) is not None]
+    pend = [r for r in rows if num(r['年化']) is None]
+    mx = max([v for _, v in known] or [1])
+    out = ''
+    for r, v in known:
+        name = _txt(r['序列'])
+        kind = ' v6' if name.startswith('v6') else ''
+        dd = _txt(r['最大回撤'])
+        ddh = f'<span class="pe-dd{" pend" if dd == "待补" else ""}">回撤 {_inner(r["最大回撤"])}</span>'
+        out += (f'<div class="pe-r{kind}"><span class="pe-k">{_inner(r["序列"])}</span>'
+                f'<span class="pe-bar"><i style="width:{v / mx * 100:.0f}%"></i><b>{_inner(r["年化"])}</b></span>{ddh}'
+                f'<span class="pe-w">{_inner(r["是什么"])}</span></div>')
+    chips = ''.join(f'<span class="pe-c"><b>{_inner(r["序列"])}</b><em>{_inner(r["是什么"])}</em></span>' for r in pend)
+    tail = (f'<div class="pe-p"><div class="pe-ph"><b>{len(pend)}</b> 条待补：年化和最大回撤都还没有</div><div class="pe-cs">{chips}</div></div>'
+            if pend else '')
+    return f'<div class="peers"><div class="pe-h">设计期 2006–15 年化（条长）</div>{out}{tail}</div>'
+
+
+def _arrow(html):
+    """'甲 → 乙' inside a phrase: old value muted and struck, new value emphasised."""
+    parts = []
+    for seg in re.split(r'；', html):
+        m = re.match(r'^(.*?)([\d.]+\s*[万点%]?)\s*→\s*(.+)$', seg.strip())
+        if m:
+            parts.append(f'{m.group(1)}<s class="rc-old">{m.group(2)}</s><span class="rc-ar">→</span><b class="rc-new">{m.group(3)}</b>')
+        else:
+            parts.append(seg.strip())
+    return '<span class="rc-sep">；</span>'.join(parts)
+
+
+def reconcile(rows):
+    """| 结果 | 条目 | 说明 | with 结果 in {差 0, 勘误, 在查}: score strip, exception cards first, then the matched items as ticks."""
+    tone = {'差 0': 'ok', '勘误': 'fix', '在查': 'open'}
+    ok = [r for r in rows if _txt(r['结果']) == '差 0']
+    ex = [r for r in rows if _txt(r['结果']) != '差 0']
+    seg = ''.join(f'<i class="{tone.get(_txt(r["结果"]), "open")}"></i>' for r in ok + ex)
+    counts = {}
+    for r in ex:
+        counts[_txt(r['结果'])] = counts.get(_txt(r['结果']), 0) + 1
+    legend = ''.join(f'<span class="rc-lg {tone.get(k, "open")}"><i></i>{k} {v}</span>' for k, v in counts.items())
+    head = (f'<div class="rc-top"><div class="rc-score"><b>{len(ok)}</b><span>/ {len(rows)}</span><em>和冻结稿差 0</em></div>'
+            f'<div class="rc-bar">{seg}</div><div class="rc-lgs"><span class="rc-lg ok"><i></i>差 0 {len(ok)}</span>{legend}</div></div>')
+    cards = ''.join(f'<div class="rc-ex {tone.get(_txt(r["结果"]), "open")}"><span class="rc-tag">{_txt(r["结果"])}</span>'
+                    f'<b class="rc-ex-h">{_inner(r["条目"])}</b><div class="rc-ex-b">{_arrow(_inner(r["说明"]))}</div></div>' for r in ex)
+    ticks = ''.join(f'<div class="rc-ok"><span class="rc-ck">✓</span><div><b>{_inner(r["条目"])}</b><span>{_inner(r["说明"])}</span></div></div>' for r in ok)
+    return f'<div class="rc">{head}<div class="rc-exs">{cards}</div><div class="rc-oks">{ticks}</div></div>'
+
+
+RENDER = {'对账': reconcile, '同行': peers, '代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers}
 
 
 def apply(soup):
@@ -407,6 +474,7 @@ ol.route li .rt-gate { display: block !important; }
 .sb-col { background: var(--bg) !important; }
 .sb-col.t-bad .sb-n { background: var(--bad); color: #fff; } .sb-col.t-good .sb-n { background: var(--good); color: #fff; } .sb-col.t-mute .sb-n { background: var(--muted); color: #fff; }
 .sb-l li::before { display: none; }
+.sb-b { display: contents; font-weight: inherit; }
 .sb-n { display: inline-grid; place-items: center; min-width: 20px; height: 20px; border-radius: 50%; background: var(--line); color: var(--ink); font-size: 11.5px; font-family: var(--font-mono); margin: 1px 6px 0 0; }
 .gaterow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
 .gt { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px 10px; display: grid; gap: 4px; align-content: start; }
@@ -417,7 +485,57 @@ ol.route li .rt-gate { display: block !important; }
 .gt-b i { display: block; height: 100%; background: var(--good); border-radius: 3px; }
 .gt-p { font-size: 12.5px; color: var(--muted); } .gt-p b { color: var(--ink); font-family: var(--font-mono); }
 .gt-all { background: var(--ink); border-color: var(--ink); }
-.gt-all .gt-n, .gt-all .gt-p { color: #cbd2dc; } .gt-all .gt-t, .gt-all .gt-p b { color: #fff; } .gt-all .gt-b { background: #3a4352; } .gt-all .gt-b i { background: #fff; }
+.gt-d { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "l l" "v t"; align-items: center; gap: 2px 6px; margin-top: 6px; padding: 7px 9px; border-radius: 7px; background: var(--bg); border: 1px solid var(--line); }
+.gt-d > span { grid-area: l; } .gt-d > b { grid-area: v; white-space: nowrap; } .gt-d > em { grid-area: t; }
+.gt-d span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.gt-d b { font-family: var(--font-mono); font-size: 17px; font-weight: 800; color: var(--ink); }
+.gt-d em { font-style: normal; font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 999px; }
+.gt-d.ok { background: var(--good-soft); border-color: var(--good); } .gt-d.ok em { color: #fff; background: var(--good); }
+.gt-d.no { background: var(--bad-soft); border-color: var(--bad); } .gt-d.no em { color: #fff; background: var(--bad); }
+.gt-d.pend { background: none; border-style: dashed; } .gt-d.pend b { font-family: var(--font-body); font-size: 13px; color: var(--muted); font-weight: 600; }
+.gt-all .gt-d { background: color-mix(in srgb, var(--surface) 12%, var(--ink)); border-color: color-mix(in srgb, var(--surface) 30%, var(--ink)); } .gt-all .gt-d span, .gt-all .gt-d.pend b { color: color-mix(in srgb, var(--surface) 78%, var(--ink)); }
+.rc { display: grid; gap: 12px; }
+.rc-top { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "s b" "s l"; gap: 4px 18px; align-items: center; }
+.rc-score { grid-area: s; display: flex; align-items: baseline; gap: 6px; } .rc-score b { font-family: var(--font-mono); font-size: 38px; font-weight: 800; color: var(--good); line-height: 1; }
+.rc-score span { font-family: var(--font-mono); font-size: 18px; color: var(--muted); } .rc-score em { font-style: normal; font-size: 13px; font-weight: 700; color: var(--ink); margin-left: 4px; }
+.rc-bar { grid-area: b; display: flex; gap: 3px; } .rc-bar i { flex: 1; height: 12px; border-radius: 3px; background: var(--good); }
+.rc-bar i.fix { background: var(--bad); } .rc-bar i.open { background: var(--muted); }
+.rc-lgs { grid-area: l; display: flex; gap: 14px; } .rc-lg { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); font-weight: 600; }
+.rc-lg i { width: 10px; height: 10px; border-radius: 2px; background: var(--good); } .rc-lg.fix i { background: var(--bad); } .rc-lg.open i { background: var(--muted); }
+.rc-exs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+.rc-ex { display: grid; gap: 6px; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line); border-top: 3px solid var(--muted); background: var(--surface); }
+.rc-ex.fix { border-top-color: var(--bad); } .rc-tag { justify-self: start; font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 999px; color: #fff; background: var(--muted); }
+.rc-ex.fix .rc-tag { background: var(--bad); }
+.rc-ex-h { font-size: 14.5px; color: var(--ink); } .rc-ex-b { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.rc-old { color: var(--muted); font-family: var(--font-mono); } .rc-ar { margin: 0 6px; color: var(--muted); } .rc-new { font-family: var(--font-mono); font-size: 16px; color: var(--ink); }
+.rc-sep { color: var(--line); }
+.rc-oks { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 6px; }
+.rc-ok { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; align-items: start; padding: 8px 10px; border-radius: 8px; background: var(--good-soft); }
+.rc-ck { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 800; color: #fff; background: var(--good); }
+.rc-ok > div > b { display: block; font-size: 13px; color: var(--ink); } .rc-ok > div > span { display: block; font-size: 12px; color: var(--muted); line-height: 1.45; margin-top: 1px; }
+.rc .num, .peers .num, .gt-d .num { background: none !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; }
+.rc .rc-score b.num { font-family: var(--font-mono) !important; font-size: 38px !important; font-weight: 800 !important; color: var(--good) !important; line-height: 1 !important; }
+.peers .pe-bar b.num, .peers .pe-bar b .num { font-family: var(--font-mono) !important; font-size: 15px !important; font-weight: 800 !important; color: var(--ink) !important; }
+.gt-d b.num, .gt-d b .num { font-family: var(--font-mono) !important; font-size: 17px !important; font-weight: 800 !important; color: var(--ink) !important; }
+.gt-all .gt-d b, .gt-all .gt-d b.num, .gt-all .gt-d b .num { color: var(--surface) !important; }
+.peers { display: grid; gap: 6px; }
+.pe-h { font-size: 11.5px; font-weight: 700; color: var(--muted); padding: 0 12px; }
+.pe-r { display: grid; grid-template-columns: 104px minmax(0, 1.6fr) 96px minmax(0, 1fr); gap: 14px; align-items: center; padding: 8px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
+.pe-r.v6 { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.pe-k { font-size: 14px; font-weight: 700; color: var(--ink); }
+.pe-bar { display: flex; align-items: center; gap: 8px; height: 24px; }
+.pe-bar i { display: block; height: 14px; border-radius: 4px; background: var(--muted); }
+.pe-r.v6 .pe-bar i { background: var(--accent); }
+.pe-bar b { font-family: var(--font-mono); font-size: 15px; font-weight: 800; color: var(--ink); white-space: nowrap; }
+.pe-dd { font-size: 12px; color: var(--ink); font-family: var(--font-mono); } .pe-dd.pend { font-family: var(--font-body); color: var(--muted); border: 1px dashed var(--line); border-radius: 6px; padding: 2px 8px; justify-self: start; }
+.pe-w { font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+.pe-p { margin-top: 4px; padding: 10px 12px; border: 1px dashed var(--line); border-radius: 9px; }
+.pe-ph { font-size: 12.5px; color: var(--muted); margin-bottom: 8px; } .pe-ph b { font-family: var(--font-mono); font-size: 16px; color: var(--ink); }
+.pe-cs { display: flex; flex-wrap: wrap; gap: 6px; }
+.pe-c { display: inline-flex; flex-direction: column; gap: 1px; padding: 6px 10px; border-radius: 8px; background: var(--bg); border: 1px solid var(--line); }
+.pe-c b { font-size: 13px; color: var(--ink); } .pe-c em { font-style: normal; font-size: 11.5px; color: var(--muted); }
+@media (max-width: 760px) { .pe-r { grid-template-columns: 1fr 1fr; } .pe-r.pe-hd { display: none; } }
+.gt-all .gt-n, .gt-all .gt-p { color: color-mix(in srgb, var(--surface) 78%, var(--ink)); } .gt-all .gt-t, .gt-all .gt-p b { color: var(--surface); } .gt-all .gt-b { background: color-mix(in srgb, var(--surface) 25%, var(--ink)); } .gt-all .gt-b i { background: var(--surface); }
 .compo { display: grid; gap: 8px; }
 .cp-r { display: grid; grid-template-columns: 7.5em minmax(0, 1fr) 13em; gap: 12px; align-items: center; }
 .cp-k { font-weight: 700; font-size: 14px; color: var(--ink); }
