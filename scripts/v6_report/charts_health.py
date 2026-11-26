@@ -204,3 +204,29 @@ if EX.exists():
     fig.text(.04, 1 + .04 / h, '2006–15 每个月第一个交易日买入，持满 1 / 3 / 5 年（252 / 756 / 1260 个交易日），比较年化；虚线 = 一半起点', fontsize=10.5, color=MUTED)
     fig.savefig(OUT / 'h6-anystart.png', dpi=150, bbox_inches='tight'); plt.close(fig)
     print('extra charts ok')
+
+# ---------- h7 跑赢随机吗：同结构随机 1000 次里的百分位（冻结稿 §5.2；Dev #377 @ 9935a314，Reviewer #375 对账在容差内） ----------
+RS = json.load(open(SRC / 'health-random-summary.json', encoding='utf-8'))['segments']
+P = {(r['book'], r['segment']): r for r in RS}
+books = [('组合', '组合（v6 整体）'), ('美股', '美股名额'), ('A股', 'A 股名额')]
+segs = [('2006-2010', '2006–10', 'o', 'none'), ('2011-2015', '2011–15', 's', 'none'), ('2006-2015', '2006–15', 'o', 'full')]
+fig, ax = plt.subplots(figsize=(11, 3.9))
+ax.axvspan(95, 100.5, color='#e6f4f1'); ax.axvline(50, color=GREY, ls='--', lw=1)
+ax.text(50, .62, '随机的中间', ha='center', color=MUTED, fontsize=10.5); ax.text(97.7, .62, '前 5%', ha='center', color=TEAL, fontsize=10.5)
+for i, (b, lab) in enumerate(books):
+    y = -i
+    ax.plot([0, 100], [y, y], color='#eef1f5', lw=1, zorder=0)
+    xs = [P[(b, s)]['percentile'] for s, *_ in segs]
+    ax.plot([min(xs), max(xs)], [y, y], color=GREY, lw=1.2, zorder=1)
+    for (s, sl, m, fill), x in zip(segs, xs):
+        full = fill == 'full'
+        c = BLUE if full else MUTED
+        ax.scatter(x, y, s=150 if full else 70, marker=m, facecolors=c if full else 'white', edgecolors=c, lw=1.6, zorder=3)
+        ax.annotate(f'{sl} 第 {x:.0f}' if full else f'{sl}\n{x:.0f}', (x, y), xytext=(0, 13 if full else -24), textcoords='offset points',
+                    ha='center', fontsize=10.5 if full else 9.5, color=c, weight='bold' if full else 'normal')
+    ax.text(-2, y, lab, ha='right', va='center', fontsize=11.5, color=INK, weight='bold' if b == '组合' else 'normal')
+ax.set_xlim(-1, 101); ax.set_ylim(-2.7, .9); ax.set_yticks([]); ax.spines['left'].set_visible(False)
+ax.set_xlabel('在 1000 次同结构随机里的百分位（100 = 比每一次随机都好）', color=MUTED)
+ax.set_title('v6 整体排第 96：比 96% 的随机挑法好；美股名额第 98，A 股名额第 68，还算不上比随机强', fontsize=12.5, loc='left', color=INK)
+fig.subplots_adjust(left=.14)
+fig.savefig(OUT / 'h7-random.png', dpi=130, bbox_inches='tight'); plt.close(fig)
