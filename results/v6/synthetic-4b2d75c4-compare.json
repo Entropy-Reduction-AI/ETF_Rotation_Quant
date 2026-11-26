@@ -1,0 +1,37 @@
+{
+ "d46": "036748908c16050159d83b0bd251a541e4a50cda",
+ "historical_commit": "4b2d75c4538a0682417833ce2fd9822737dcb0d3",
+ "historical_sqlite_lfs_oid": "c07297f8372c2b4dd8f79417306f4dda3b2b49db3cb2523a6ad306c13523588b",
+ "historical_sqlite_sha256": "c07297f8372c2b4dd8f79417306f4dda3b2b49db3cb2523a6ad306c13523588b",
+ "current_sqlite_lfs_oid": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8",
+ "current_sqlite_sha256": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8",
+ "scripts": {
+  "msim_v6_n3_blob_4b2d75c4_and_HEAD": "7545bd2e9e937d6de1b57ff497abdf5148c5329e",
+  "msim_v6_n3_sha256_committed": "19b09ce767f662e9b8ef90c63a140dcd0a15d97e1aca6a02b3411f31fee1d7bd",
+  "a_official_sha256_4b2d75c4": "17c0a6050532e58423d21e146b6eb2a3703dd38cbe99e6472e6c0f2ef30cf451",
+  "a_official_sha256_HEAD": "6eb629a8fbdd89e2de0af3d7fba939ca1d10bfe7fcf40edc6c3df803f1b59d5a",
+  "sim_sha256": "7cd6d6661189639ca341accc4cdf51462aee5da943d340de39c491071f727050"
+ },
+ "later_commits": {
+  "3dd525ecd8ed15637fa63dc6c3860d60f9dffcf8": {
+   "subject": "D37 第六轮：追加 25 条指数窗口并重跑 S1",
+   "sqlite_lfs_oid": "79ba7780f7f5304d189bc49bd7dda9ff1e6325c88888165d71a0c9fae7c26a52"
+  },
+  "ce058680fabec19b12982bffce37e891808d4641": {
+   "subject": "追加 DJIA 与 DWRTF 的授权 raw 价格日线",
+   "sqlite_lfs_oid": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8"
+  },
+  "e5538d23d5847d62cda130b6bb37ebb4bdb92483": {
+   "subject": "a_official 成交额转数值",
+   "a_official_change": "AM = pd.DataFrame(AMT).astype(float)"
+  }
+ },
+ "isolation": [
+  "历史脚本在独立 worktree /tmp/etf-4b2d75c4，没有覆盖当前 data/market.sqlite",
+  "GSPC 与 HSI 在该 worktree 内截到 2003-06-30，避免 sim.py 导入时读入 2016 年以后的行；sim 实际使用窗口就是到这一天",
+  "French 与 DTB3 传给脚本的是截到 1998-12 的副本，脚本读不到更晚的行",
+  "msim 循环在 worktree 副本里改成只跑不帮忙，输出改到 isolated-out。补丁见 results/v6/msim-4b2d75c4-patch.diff。git 提交里的脚本没有改"
+ ],
+ "cell_compare_nohelp_vs_frozen_csv": "18 行 0 格差异",
+ "conclusion": "4b2d75c4 的脚本和当时的行情库重跑「不帮忙」六种情形，与冻结 results/v6-preflight/msim-v6-n3.csv 逐格相同。当前库与当前 a_official 的重跑不同。中间三次提交分别动了库或 a_official 的一行；没有逐个重跑，不把其中某一次单独写成原因。"
+}

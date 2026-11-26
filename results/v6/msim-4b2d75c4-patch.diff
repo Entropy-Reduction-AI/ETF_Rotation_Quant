@@ -1,0 +1,6 @@
+--- msim_v6_n3.py
++++ msim_v6_n3.py (worktree only)
+-for helps in (False, True):
++for helps in (False,):
+-d.to_csv(ROOT / 'results/v6-preflight/msim-v6-n3.csv', index=False)
++d.to_csv(ROOT / 'isolated-out/msim-v6-n3-nohelp.csv', index=False)

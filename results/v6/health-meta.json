@@ -1,0 +1,118 @@
+{
+ "freeze": "f066da8e46f202e105a65c7abf43e4d4cf82eff9",
+ "d45": "2fbcecfaeda83d4529b54789208986787acc77af",
+ "d46_merge": "7f2f1a16c529ab3c10eed87c617b4442cf3946c7",
+ "d47": "8333f2749bbd88654d41ac6ec366267d8ac595c2",
+ "d47_status": "PR #380 打开、未合入。Owner 已裁定 D47-3。",
+ "d48": "d5f1552cd0775ae841818bea45ca2bcc4208c7ca",
+ "d48_merge": "3e07d9d71387d0ef5b68baff905345fe4884c991",
+ "main_tip": "95a951ffb91a6b899f5fdce6a0d1c7baa3a83f34",
+ "primary_trin": "expanding99",
+ "old_trin_retained": true,
+ "vote_diff_2006_2015": "0个月",
+ "owner_rule": "一次性检验用改后口径；设计期改前改后都报。票差为 0 时两套净值相同，不另存一份重复序列。",
+ "functions": {
+  "cagr": "src/report/metrics.py cagr",
+  "max_drawdown": "src/report/metrics.py max_drawdown",
+  "yearly_returns": "src/report/metrics.py yearly_returns",
+  "v6": "src/v6/engine.py slot mode=v6；mix_monthly 单边 0.002",
+  "continuity": "src/v6/engine.py slot mode=id（D47-3 先限为正）。参照是 mode=id_open。美股仍是 mode=v6",
+  "continuity_premium": "不设防守是 mode=id_full 与美股 mode=top，都扣单边 0.002。判据符号是不设防守 − 连续性版",
+  "forecast_contribution": "src/v6/health.py contribution。美股×0.6，A 股两块×0.4",
+  "current_portfolio": "src/v6/portfolio_design.py design_book",
+  "k2a": "src/v6/k2a.py k2a_returns(calendar_month=True)。参照 calendar_month=False，每 21 个交易日。波动都是每 5 个交易日。",
+  "bm": "src/v4/r5/design.py reference_frame + src/report/blend.py monthly_rebalance",
+  "a1_a2": "results/v4/r5/design/A1/index 与 A2/index，不重跑"
+ },
+ "formulas": {
+  "年化": "metrics.cagr：(1+r).prod() ** (252/n) − 1。窗口内收益，不含 2016。",
+  "最大回撤": "metrics.max_drawdown：窗口内净值从窗口内高点算，峰值不取窗口之前。",
+  "年度收益": "该自然年日收益连乘 − 1，等于这一年首尾净值之比。首尾不满一年的年份不进保费。",
+  "保费": "判据② = 不设防守 − v6，正数是保费。预测行 = v6 − 不设防守。年份是 BM-主为正的完整自然年。两边都是每月 60/40、单边 0.2%。上一版美股不设防守成本是 0，那组保费是 0.954 / 2.102 / 1.610。减数的左右没有为了符号对调。",
+  "判据③": "年化 ÷ 最大回撤的绝对值。v6、真实月末 K2A、每 21 日 K2A 分开报，不写高低。",
+  "判据④": "v6 年化百分点 − BM-同仓位年化百分点。v6 是每月再平衡。",
+  "美股挑选": "主值：前 3（不设防守、成本 0）− SPX 人民币价格。组合贡献再乘 0.6。拆分是前 3 − 等权、等权 − SPX，不进主值。",
+  "A股挑选": "名额内：mode=top 成本 0 − mode=ew 成本 0。组合贡献再乘 0.4。",
+  "A股等权倾斜": "名额内：mode=ew 成本 0 − 沪深300。组合贡献再乘 0.4。",
+  "仓位差": "BM-同仓位年化 − BM-主年化，百分点。§5.1，不是预测表中点。"
+ },
+ "readings": {
+  "连续性正收益过滤": "D47-3：母指数跌破均线时，先把范围限到 12−1 为正，再去重、取前一半、按 ID 取 3 个。不过滤的 id_open 只作参照。",
+  "连续性领头者": "D48-5：只改 A 股名额。把握 p 的领头者是未过滤的连续性名单，过滤只改持仓。美股仍是 12−1。",
+  "D48-1": "判据、散点、预测对账用每月末 60/40。每日固定 60/40 只在附表 B。v6 这一列原本就是每月再平衡，没有改成附表 B 的 15.54。",
+  "D48-4": "K2A 主值用真实月末。每 21 个交易日的旧算法留在 K2A-参照。没有去凑文稿里的 16.16 或 13.76。",
+  "基准": "§5.1 的全收益、每月第一个交易日再平衡。附表 B 的价格指数基准只用于那张表的对账，不进体检。",
+  "D40-12": "挑选是 12−1 相对同名额等权，等权倾斜是同名额等权相对沪深300。同名额等权按 §5.2 是行业标签等权，不是把附录 B 的组合分解再拆一次。"
+ },
+ "peers": {
+  "A1": {
+   "path": "results/v4/r5/design/A1/index/net.csv",
+   "summary_sha256": "3c371162360d276d6418b5d57a17b037abd5a99ac17e5b1933fd66854478634e",
+   "recomputed_sha256": "3c371162360d276d6418b5d57a17b037abd5a99ac17e5b1933fd66854478634e",
+   "start": "2005-01-04",
+   "end": "2015-12-31",
+   "matches_prereg": true,
+   "status": "ok"
+  },
+  "A2": {
+   "path": "results/v4/r5/design/A2/index/net.csv",
+   "summary_sha256": "cf3091d5dfdae739a0f175c1d96c7910bd5ee1bbdb22c1f9fce7eecaa1b7685a",
+   "recomputed_sha256": "cf3091d5dfdae739a0f175c1d96c7910bd5ee1bbdb22c1f9fce7eecaa1b7685a",
+   "start": "2005-01-04",
+   "end": "2015-12-31",
+   "matches_prereg": true,
+   "status": "ok"
+  }
+ },
+ "gaps": {},
+ "series_sha256": {
+  "v6": "0002b6f34f305c3a41a58a217ece7961e35084b401adffb17b3290e0296ff229",
+  "连续性版": "ee90845c5fbc7dae2c71425bec83ae9a8892e791eaa6acd07b8fc7db65f15733",
+  "A1": "3c371162360d276d6418b5d57a17b037abd5a99ac17e5b1933fd66854478634e",
+  "A2": "cf3091d5dfdae739a0f175c1d96c7910bd5ee1bbdb22c1f9fce7eecaa1b7685a",
+  "K2A": "1d2d058930c2f852f42b7accbba551c3151a5fb41f1014594be9a3154ac0e2b2",
+  "现行配置": "afa165ee8d520b12689a7011e05a34635e5c6b02562e7468440c546049c6af2a",
+  "BM-主": "6cdcb7c6ed7981b8848d0f856c1a7ec555c51c354bbbe44344e19c230f8f3c4b",
+  "BM-同仓位": "eaf48b9af29a4d737acac72ad2e07e9ca01f946a2dfec3c21c0711aa35b1a55e",
+  "连续性版-参照": "a688ef7942e0edbe6f77a9ea1eaf8558356b9f20bd2a2fa0530be8799395a3d1",
+  "K2A-参照": "b4e6963deb153ae647cfa81af547a431e7c4034ebefbf296c073ebf11eab6056",
+  "不设防守": "d56c5c4508b8a9f8b6bc361b4b46da5babc82c47ee81f86add7d221a436fb7ec"
+ },
+ "continuity_p_months": 132,
+ "continuity_last_p": 0.537,
+ "continuity_held_diff_months": 98,
+ "continuity_p_equals_main_a_p": false,
+ "continuity_leaders_are_unfiltered": true,
+ "portfolio": {
+  "status": "ok",
+  "end": "2015-12-31",
+  "commands": [
+   "python -m src.data package --end 2015-12-31",
+   "python -m src.indicators build --package research-package-2015-12-31.sqlite",
+   "src.portfolio.replicate.daily_book，状态恒为 1（阀门关闭）"
+  ],
+  "code_sha256": {
+   "src/data/runner.py": "d538d12d8ff5efcf6d1a5b1c2eb9e13afea7adc7a4d985e9a69d426d24a33556",
+   "src/indicators/build.py": "5ebe933e5ecdf08fc8fa9942d5f8562cbc872583ae52e70ffa83a5fc4cb96c7e",
+   "src/portfolio/replicate.py": "c2e0d5876cd022140ba74efbaeb7da11cd96ad163f28674be17cfe2ecc8eccde"
+  },
+  "market_sqlite_sha256": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8",
+  "package_sha256": "f810d84d7f7c7b7f31b4760802ac48bd53f2b6cd44fda1c6fc1907b66d0ef047",
+  "package_bars_last": "2015-12-31",
+  "panel_sha256": "794ddd5d7a97f7a958479b13ebfd1aa83fe4a9eede48ff83ddf25de999ecd22a",
+  "panel_last": "2015-12-31",
+  "book_first": "2005-02-01",
+  "book_last": "2015-12-31",
+  "valve": "关闭。replicate() 会跑慢阀，这里不调用它，只把 daily_book 的状态设为在场。",
+  "absent": "7.5% 偏离带、溢价上限、主备基金、净值滞后 2 天、一手 100 份不在这套日频回测里。",
+  "calendar_note": "package() 复制整张 calendar。bars 与 build 的窗口停在 2015-12-31，上面已核对两张表的最大日期。"
+ },
+ "inputs": {
+  "market_sqlite": "data/market.sqlite",
+  "french_sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
+  "french_panel": "results/v6/french-49-192607-199812",
+  "loader_sha256": "6eb629a8fbdd89e2de0af3d7fba939ca1d10bfe7fcf40edc6c3df803f1b59d5a",
+  "date_cap": "2015-12-31"
+ },
+ "rerun": ".venv/bin/python -m src.v6.health"
+}
