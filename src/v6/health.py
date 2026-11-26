@@ -187,10 +187,10 @@ def _benchmarks() -> tuple[pd.Series, pd.Series]:
     return main, same
 
 
-def _k2a(panels) -> pd.Series:
+def _k2a(panels, calendar_month: bool) -> pd.Series:
     prices = panels["ns"]["P"]
     us = (prices["ndx100"] + prices["spx"]) / 2
-    return k2a_returns(prices["csi300"], us, panels["bond"], panels["cash"])
+    return k2a_returns(prices["csi300"], us, panels["bond"], panels["cash"], calendar_month=calendar_month)
 
 
 def _code_sha() -> str:
@@ -252,14 +252,16 @@ def run() -> dict:
     panels["trin"]["SPX"] = saved["SPX"]
 
     v6 = mix_monthly(a_v6, u_v6, COST)
-    plain = mix_monthly(a_top, u_top, COST)
+    plain = mix_monthly(a_top, u_top_net, COST)
     continuity = mix_monthly(a_id, u_v6, COST)
     continuity_open = mix_monthly(a_id_open, u_v6, COST)
     continuity_plain = mix_monthly(a_id_full, u_top_net, COST)
     continuity_open_plain = mix_monthly(a_open_full, u_top_net, COST)
     csi = panels["A"]["csi300"].pct_change().fillna(0.0)
+    spx = panels["US"]["SPX"].pct_change().fillna(0.0)
     bm_main, bm_same = _benchmarks()
-    k2a = _k2a(panels)
+    k2a = _k2a(panels, True)
+    k2a_ref = _k2a(panels, False)
     a1, a1_note = _read_peer("A1", A1_SHA)
     a2, a2_note = _read_peer("A2", A2_SHA)
 
@@ -298,7 +300,8 @@ def run() -> dict:
             {"segment": name, "item": "v6净最大回撤", "value": v6_stats["max_drawdown"], "unit": "净值回撤", "years": "", "trin": caliber},
             {"segment": name, "item": "防守平时保费", "value": premium["premium_pp"], "unit": "百分点", "years": ",".join(str(y) for y in premium["years"]), "trin": caliber},
             {"segment": name, "item": "v6年化/最大回撤绝对值", "value": _ratio(v6_stats), "unit": "比值", "years": "", "trin": caliber},
-            {"segment": name, "item": "K2A年化/最大回撤绝对值", "value": _ratio(k2a_stats), "unit": "比值", "years": "", "trin": caliber},
+            {"segment": name, "item": "K2A年化/最大回撤绝对值", "value": _ratio(k2a_stats), "unit": "比值", "years": "真实月末", "trin": caliber},
+            {"segment": name, "item": "K2A参照年化/最大回撤绝对值", "value": _ratio(_pair(k2a_ref, start, end)), "unit": "比值", "years": "每21个交易日", "trin": caliber},
             {"segment": name, "item": "v6净减BM-同仓位年化", "value": v6_stats["cagr_pct"] - same_stats["cagr_pct"], "unit": "百分点", "years": "", "trin": caliber},
         ])
         for label, book in series.items():
@@ -319,23 +322,34 @@ def run() -> dict:
         a_parent = _pair(csi, start, end)
         u_pick = _pair(u_top, start, end)
         u_eq = _pair(u_ew, start, end)
-        sleeve_items = {
-            "美股挑选": u_pick["cagr_pct"] - u_eq["cagr_pct"],
-            "A股挑选": a_pick["cagr_pct"] - a_eq["cagr_pct"],
-            "A股等权倾斜": a_eq["cagr_pct"] - a_parent["cagr_pct"],
-            "防守保费": None if premium["premium_pp"] is None else -premium["premium_pp"],
-            "美股60%仓位差": same_stats["cagr_pct"] - main_stats["cagr_pct"],
-        }
-        for item, sleeve in sleeve_items.items():
-            contrib, weight = contribution(item, sleeve)
+        spx_stats = _pair(spx, start, end)
+        us_vs_spx = u_pick["cagr_pct"] - spx_stats["cagr_pct"]
+        us_vs_ew = u_pick["cagr_pct"] - u_eq["cagr_pct"]
+        ew_vs_spx = u_eq["cagr_pct"] - spx_stats["cagr_pct"]
+        sleeve_items = [
+            ("美股挑选", us_vs_spx, "主值", "前3成本0 − SPX人民币价格；组合贡献再乘 0.6"),
+            ("A股挑选", a_pick["cagr_pct"] - a_eq["cagr_pct"], "主值", "名额内×0.4"),
+            ("A股等权倾斜", a_eq["cagr_pct"] - a_parent["cagr_pct"], "主值", "名额内×0.4"),
+            ("防守保费", None if premium["premium_pp"] is None else -premium["premium_pp"], "主值", "预测行 = −判据②。两边单边 0.2%"),
+            ("美股60%仓位差", same_stats["cagr_pct"] - main_stats["cagr_pct"], "主值", "已是组合数，不乘"),
+            ("美股挑选拆分-前3减等权", us_vs_ew, "拆分", "不替代主值"),
+            ("美股挑选拆分-等权减SPX", ew_vs_spx, "拆分", "不替代主值"),
+        ]
+        for item, sleeve, role, note in sleeve_items:
+            if role == "拆分":
+                weight, contrib = "", ""
+            else:
+                contrib, weight = contribution(item, sleeve)
+                weight = "" if weight is None else weight
             forecast_rows.append({
                 "segment": name,
                 "item": item,
+                "role": role,
                 "sleeve_pp": sleeve,
-                "weight": "" if weight is None else weight,
+                "weight": weight,
                 "contribution_pp": contrib,
                 "unit": "百分点",
-                "note": "名额内×权重" if weight is not None else "已是组合数，不乘",
+                "note": note,
             })
 
     continuity_rows = []
@@ -346,6 +360,7 @@ def run() -> dict:
         for name, start, end in SEGMENTS:
             stats = _pair(book, start, end)
             kstats = _pair(k2a, start, end)
+            kref = _pair(k2a_ref, start, end)
             same = _pair(bm_same, start, end)
             prem = _premium(book, plain_book, bm_main, start, end)
             last_p = next((rec.get("p") for day, rec in reversed(log.items()) if rec.get("p") is not None), None)
@@ -357,6 +372,7 @@ def run() -> dict:
                 "premium_pp": prem["premium_pp"],
                 "ratio": _ratio(stats),
                 "k2a_ratio": _ratio(kstats),
+                "k2a_ref_ratio": _ratio(kref),
                 "excess_vs_bm_same_pp": stats["cagr_pct"] - same["cagr_pct"],
                 "years": ",".join(str(year) for year in prem["years"]),
                 "last_p": last_p,
@@ -364,6 +380,7 @@ def run() -> dict:
             })
     kept = {name: book for name, book in series.items() if book is not None}
     kept["连续性版-参照"] = continuity_open
+    kept["K2A-参照"] = k2a_ref
     kept["不设防守"] = plain
     frame = pd.concat([book.rename(name) for name, book in kept.items()], axis=1).sort_index()
     frame.index.name = "date"
@@ -384,6 +401,9 @@ def run() -> dict:
         "d46_merge": D46_MERGE,
         "d47": "8333f2749bbd88654d41ac6ec366267d8ac595c2",
         "d47_status": "PR #380 打开、未合入。Owner 已裁定 D47-3。",
+        "d48": "d5f1552cd0775ae841818bea45ca2bcc4208c7ca",
+        "d48_merge": "3e07d9d71387d0ef5b68baff905345fe4884c991",
+        "main_tip": "95a951ffb91a6b899f5fdce6a0d1c7baa3a83f34",
         "primary_trin": "expanding99",
         "old_trin_retained": identical,
         "vote_diff_2006_2015": "0个月" if identical else "有差异，闸门只用扩展分位",
@@ -397,7 +417,7 @@ def run() -> dict:
             "continuity_premium": "不设防守是 mode=id_full 与美股 mode=top，都扣单边 0.002。判据符号是不设防守 − 连续性版",
             "forecast_contribution": "src/v6/health.py contribution。美股×0.6，A 股两块×0.4",
             "current_portfolio": "src/v6/portfolio_design.py design_book",
-            "k2a": "src/v6/k2a.py k2a_returns；sim.py run kind=K2A s_us=0.50 cost=0.001",
+            "k2a": "src/v6/k2a.py k2a_returns(calendar_month=True)。参照 calendar_month=False，每 21 个交易日。波动都是每 5 个交易日。",
             "bm": "src/v4/r5/design.py reference_frame + src/report/blend.py monthly_rebalance",
             "a1_a2": "results/v4/r5/design/A1/index 与 A2/index，不重跑",
         },
@@ -405,17 +425,19 @@ def run() -> dict:
             "年化": "metrics.cagr：(1+r).prod() ** (252/n) − 1。窗口内收益，不含 2016。",
             "最大回撤": "metrics.max_drawdown：窗口内净值从窗口内高点算，峰值不取窗口之前。",
             "年度收益": "该自然年日收益连乘 − 1，等于这一年首尾净值之比。首尾不满一年的年份不进保费。",
-            "保费": "闸门按 §5：BM-主全年收益 > 0 的完整自然年，算术平均(不设防守年收益 − v6 年收益)，再乘 100。预测表这一项用相反符号（v6 − 不设防守），因为表里中间值是 −0.4。两边用同一组年份。不设防守与 v6 都是每月 60/40 再平衡、单边 0.2%。",
-            "判据③": "年化 ÷ 最大回撤的绝对值。v6 与 K2A 分开报，不写高低。",
-            "判据④": "v6 年化百分点 − BM-同仓位年化百分点。",
-            "美股挑选": "名额内：mode=top 成本 0 − mode=ew 成本 0。组合贡献再乘 0.6。",
+            "保费": "判据② = 不设防守 − v6，正数是保费。预测行 = v6 − 不设防守。年份是 BM-主为正的完整自然年。两边都是每月 60/40、单边 0.2%。上一版美股不设防守成本是 0，那组保费是 0.954 / 2.102 / 1.610。减数的左右没有为了符号对调。",
+            "判据③": "年化 ÷ 最大回撤的绝对值。v6、真实月末 K2A、每 21 日 K2A 分开报，不写高低。",
+            "判据④": "v6 年化百分点 − BM-同仓位年化百分点。v6 是每月再平衡。",
+            "美股挑选": "主值：前 3（不设防守、成本 0）− SPX 人民币价格。组合贡献再乘 0.6。拆分是前 3 − 等权、等权 − SPX，不进主值。",
             "A股挑选": "名额内：mode=top 成本 0 − mode=ew 成本 0。组合贡献再乘 0.4。",
             "A股等权倾斜": "名额内：mode=ew 成本 0 − 沪深300。组合贡献再乘 0.4。",
             "仓位差": "BM-同仓位年化 − BM-主年化，百分点。§5.1，不是预测表中点。",
         },
         "readings": {
             "连续性正收益过滤": "D47-3：母指数跌破均线时，先把范围限到 12−1 为正，再去重、取前一半、按 ID 取 3 个。不过滤的 id_open 只作参照。",
-            "连续性领头者": "把握 p 记的是不过滤的连续性选法。持仓才用过滤。hist 与主规则 v6 分开，不抄它的 p。",
+            "连续性领头者": "D48-5：只改 A 股名额。把握 p 的领头者是未过滤的连续性名单，过滤只改持仓。美股仍是 12−1。",
+            "D48-1": "判据、散点、预测对账用每月末 60/40。每日固定 60/40 只在附表 B。v6 这一列原本就是每月再平衡，没有改成附表 B 的 15.54。",
+            "D48-4": "K2A 主值用真实月末。每 21 个交易日的旧算法留在 K2A-参照。没有去凑文稿里的 16.16 或 13.76。",
             "基准": "§5.1 的全收益、每月第一个交易日再平衡。附表 B 的价格指数基准只用于那张表的对账，不进体检。",
             "D40-12": "挑选是 12−1 相对同名额等权，等权倾斜是同名额等权相对沪深300。同名额等权按 §5.2 是行业标签等权，不是把附录 B 的组合分解再拆一次。",
         },
@@ -454,7 +476,7 @@ def run() -> dict:
         "input_sha256": json.dumps(meta["inputs"], ensure_ascii=False),
         "period": "2006-01-01至2015-12-31",
         "params": "segments=2006-2010,2011-2015,2006-2015; cost=0.002; trin=expanding99; continuity=id",
-        "purpose": "D47：连续性版先限为正；预测表加组合贡献；现行配置用≤2015面板。不跑一次性检验。",
+        "purpose": "D48：美股挑选减 SPX；K2A 主值改真实月末；保费符号按判据②。不跑一次性检验。",
         "result": json.dumps({"gates": len(gate_rows), "scatter": len(scatter_rows), "forecast": len(forecast_rows), "gaps": sorted(gaps)}, ensure_ascii=False),
     })
     return {"gates": len(gate_rows), "scatter": len(scatter_rows), "forecast": len(forecast_rows), "gaps": sorted(gaps)}

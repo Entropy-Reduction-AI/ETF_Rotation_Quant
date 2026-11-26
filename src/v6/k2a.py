@@ -15,8 +15,17 @@ D, M, W = 252, 21, 5
 COST = 0.001
 
 
-def k2a_returns(a_ret: pd.Series, us_ret: pd.Series, bond: pd.Series, cash: pd.Series) -> pd.Series:
-    """返回与 topn_system 相同的日收益：净值逐日变化，第一天记 0。"""
+def month_end_positions(index: pd.DatetimeIndex, calendar: bool) -> np.ndarray:
+    """calendar 为真时用真实月末；否则每 21 个交易日的最后一根。"""
+    if calendar:
+        months = index.month.to_numpy()
+        return np.flatnonzero(np.r_[months[1:] != months[:-1], True])
+    return np.arange(M - 1, len(index), M)
+
+
+def k2a_returns(a_ret: pd.Series, us_ret: pd.Series, bond: pd.Series, cash: pd.Series,
+                calendar_month: bool = False) -> pd.Series:
+    """日收益。第一天记 0。calendar_month 为真时均线和再平衡用真实月末，波动仍每 5 个交易日。"""
     if not a_ret.index.equals(us_ret.index):
         raise IsolationError("K2A 的两条腿不是同一个日历")
     assert_not_after(a_ret.index, "K2A")
@@ -29,14 +38,15 @@ def k2a_returns(a_ret: pd.Series, us_ret: pd.Series, bond: pd.Series, cash: pd.S
         raise IsolationError("K2A 的现金收益没有盖住日历")
     daily_bond = np.where(bond_on.notna().to_numpy(), bond_on.fillna(0).to_numpy(), cash_on.to_numpy())
     lr = np.log1p(frame.to_numpy())[None, :, :]
-    nav = _run_k2a(lr, daily_bond[None, :])[0]
+    ends = month_end_positions(frame.index, calendar_month)
+    nav = _run_k2a(lr, daily_bond[None, :], ends, calendar_month)[0]
     out = pd.Series(nav, index=frame.index).pct_change().fillna(0.0)
-    out.name = "K2A"
+    out.name = "K2A" if calendar_month else "K2A-参照"
     assert_not_after(out.index, "K2A")
     return out
 
 
-def _run_k2a(lr: np.ndarray, bond: np.ndarray) -> np.ndarray:
+def _run_k2a(lr: np.ndarray, bond: np.ndarray, month_ends: np.ndarray, calendar_month: bool) -> np.ndarray:
     """n=1 的 K2A。美股腿始终持有、不调波动；A 股腿用 10 个月均线和 20 日波动带。"""
     n, length, _ = lr.shape
     simple = np.expm1(lr)
@@ -48,6 +58,7 @@ def _run_k2a(lr: np.ndarray, bond: np.ndarray) -> np.ndarray:
     held[:, :2] = base
     nav = np.ones(n)
     navs = np.empty((n, length))
+    month_set = set(int(i) for i in month_ends)
     for t in range(length):
         gain = 1 + held[:, 0] * simple[:, t, 0] + held[:, 1] * simple[:, t, 1] + held[:, 2] * bond[:, t]
         held = np.column_stack([
@@ -57,12 +68,17 @@ def _run_k2a(lr: np.ndarray, bond: np.ndarray) -> np.ndarray:
         ]) / gain[:, None]
         nav = nav * gain
         navs[:, t] = nav
-        month_end = (t + 1) % M == 0
+        month_end = t in month_set
         week_end = (t + 1) % W == 0
         new_on, new_frac = on, frac
-        if month_end and t >= 10 * M:
+        if month_end and not calendar_month and t >= 10 * M:
             closes = level[:, t - 9 * M:t + 1:M, :]
             new_on = (level[:, t, :] >= closes.mean(axis=1)).astype(float)
+        if month_end and calendar_month:
+            prior = month_ends[month_ends <= t]
+            if len(prior) >= 10:
+                closes = level[:, prior[-10:], :]
+                new_on = (level[:, t, :] >= closes.mean(axis=1)).astype(float)
         if week_end and t >= D:
             long = lr[:, t - D + 1:t + 1, :]
             long_vol = long.std(axis=1)

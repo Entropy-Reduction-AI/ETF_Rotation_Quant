@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 
 from src.v6.engine import continuity_pick, continuity_state, slot
+from src.v6.k2a import month_end_positions
 from src.v6.guard import IsolationError
 from src.v6.health import _clip, _premium, contribution
 
@@ -81,6 +82,15 @@ class ContinuityTests(unittest.TestCase):
         held = continuity_pick(scores, ident, eligible & (scores > 0), tags, 3)
         self.assertEqual(opened[0], 1)
         self.assertEqual(held, [0])
+
+
+class K2ATests(unittest.TestCase):
+    def test_calendar_month_is_not_every_21_bars(self):
+        index = pd.bdate_range("2014-01-02", "2014-03-31")
+        calendar = month_end_positions(index, True)
+        bars = month_end_positions(index, False)
+        self.assertEqual(pd.Timestamp(index[calendar[-1]]).month, 3)
+        self.assertNotEqual(list(calendar), list(bars))
 
 
 class CapTests(unittest.TestCase):
