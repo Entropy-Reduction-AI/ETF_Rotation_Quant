@@ -1939,7 +1939,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <ul>
 <li><strong>读法</strong>：月末算信号，下一个交易日起按这个仓位持有。≥ 2 票算紧张；紧张时股票 = 把握 p × 入选只数 ÷ 3，空出来的放国债或现金。</li>
 <li><strong>2008 年</strong>（2007-10 <span class="arr">→</span> 2009-06，21 个月）：A 股 2008-01 到 2009-02 连续紧张，前 6 个月留 <span class="num">50%</span>，2008-07 起 <span class="num">0%</span>，2009-03 起恢复满仓；美股 2007-11 到 2009-04 紧张，2008-02 起 <span class="num">33%</span>（6 月一度 <span class="num">67%</span>），2008-09 到 2009-05 为 <span class="num">0%</span>，2009-06 恢复满仓。</li>
-<li><strong>现金还是国债</strong>：文件里 2008-09 及以前空出来的部分记在现金，2008-10 起记在国债；这一点请 Dev 说明来由（下一轮命令）。</li>
+<li><strong>现金还是国债</strong>：规则本身没变。冻结稿 §1.2 第 ③ 步：空出来的钱放国债，国债跌破自己的 10 个月均线时放现金。A 股用的中债 10 年期国债财富指数 2008-01 才有数据，要满 10 个月末才有均线；2008-09 及以前算不出均线，只能放现金，2008-10 起才放国债（Dev #391 说明，冻结代码 <code>scripts/preflight/v6_appendix_b.py</code> 第 28、69–70 行）。</li>
 <li>数据：Dev #389 @ 907d9530 <code>results/v6/health-crash-positions.csv</code>（58 行，Reviewer 已复核哈希和 2015-08 一行）。</li>
 </ul>
 </div></div>
