@@ -409,7 +409,52 @@ def kpi(rows):
                 f'<div class="kp-cmp">{cmp_}</div><div class="kp-r">{_inner(r["读法"])}</div></div>')
     return f'<div class="kps">{out}</div>'
 
-RENDER = {'闸门格': gate_grid, '对账': reconcile, '同行': peers, '代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers, '随机格': random_grid, '读数': readout, '指标': kpi}
+
+def glossary(rows):
+    """| 组 | 名字 | 一句话 | 图 | 细节 | — grouped term cards. 图: '仓位：沪深300 70｜纳指100 15' → stacked bar;
+    '式：X − Y' → formula chips; '门槛：a｜b' → numbered chips; empty → none."""
+    def seg_cls(n):
+        for k, c in (('沪深300', 'a'), ('A 股', 'a'), ('纳指', 'u'), ('美股', 'u'), ('标普', 'u2'), ('恒生', 'h'), ('国债', 'b'), ('黄金', 'g')):
+            if k in n:
+                return c
+        return 'o'
+    def pic(t):
+        t = _txt(t)
+        if t.startswith('仓位：'):
+            segs = [x.strip() for x in t[3:].split('｜') if x.strip()]
+            bar, leg = '', ''
+            for x in segs:
+                m = re.match(r'^(.*?)\s*(\d+(?:\.\d+)?)$', x)
+                if not m:
+                    continue
+                n, v = m.group(1), float(m.group(2)); c = seg_cls(n)
+                bar += f'<i class="c-{c}" style="flex:{v}"></i>'
+                leg += f'<span><b class="c-{c}"></b>{n} {m.group(2)}%</span>'
+            return f'<div class="gl-bar">{bar}</div><div class="gl-leg">{leg}</div>'
+        if t.startswith('式：'):
+            body = t[2:]
+            parts = re.split(r'\s+([−+=]|或)\s+', body)
+            out = ''.join(f'<span class="gl-op">{x}</span>' if x in ('−', '+', '=', '或') else f'<span class="gl-tm">{x}</span>' for x in parts)
+            return f'<div class="gl-f">{out}</div>'
+        if t.startswith('门槛：'):
+            items = [x.strip() for x in t[3:].split('｜') if x.strip()]
+            return '<div class="gl-th">' + ''.join(f'<span>{x}</span>' for x in items) + '</div>'
+        return ''
+    groups, order = {}, []
+    for r in rows:
+        g = _txt(r['组'])
+        if g not in groups:
+            groups[g] = []; order.append(g)
+        groups[g].append(r)
+    out = ''
+    for g in order:
+        cards = ''.join(f'<div class="gl-c"><div class="gl-n">{_inner(r["名字"])}</div><div class="gl-s">{_inner(r["一句话"])}</div>'
+                        f'{pic(r["图"])}' + (f'<div class="gl-d">{_inner(r["细节"])}</div>' if _txt(r['细节']) else '') + '</div>' for r in groups[g])
+        n = len(groups[g]); cols = 4 if n % 4 in (0, 3) else 3
+        out += f'<div class="gl-g"><div class="gl-gh">{g}<span>{n}</span></div><div class="gl-grid" style="--gl-c:{cols}">{cards}</div></div>'
+    return f'<div class="gl">{out}</div>'
+
+RENDER = {'闸门格': gate_grid, '对账': reconcile, '同行': peers, '代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers, '随机格': random_grid, '读数': readout, '指标': kpi, '名词': glossary}
 
 
 def apply(soup):
@@ -436,6 +481,26 @@ def apply(soup):
 
 
 CSS = r"""
+.gl { display: grid; gap: 16px; }
+.gl-gh { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: var(--ink); margin-bottom: 8px; padding-left: 10px; border-left: 3px solid var(--accent); }
+.gl-gh span { font-size: 11px; font-weight: 700; color: var(--muted); background: var(--bg); border-radius: 999px; padding: 1px 8px; }
+.gl-grid { display: grid; grid-template-columns: repeat(var(--gl-c, 3), minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 760px) { .gl-grid { grid-template-columns: 1fr; } }
+.gl-c { border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; background: var(--surface); display: grid; gap: 7px; align-content: start; }
+.gl-n { font-size: 15px; font-weight: 800; color: var(--accent); }
+.gl-s { font-size: 13.5px; line-height: 1.5; color: var(--ink); font-weight: 500; }
+.gl-d { font-size: 12px; line-height: 1.55; color: var(--muted); }
+.gl-bar { display: flex; height: 12px; border-radius: 4px; overflow: hidden; gap: 2px; }
+.gl-bar i { display: block; height: 12px; }
+.gl-leg { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 11px; color: var(--muted); }
+.gl-leg b { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; vertical-align: 0; }
+.c-a { background: #d97706; } .c-u { background: #2563eb; } .c-u2 { background: #60a5fa; } .c-h { background: #0d9488; } .c-b { background: #94a3b8; } .c-g { background: #ca8a04; } .c-o { background: #a3a3a3; }
+.gl-f { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.gl-tm { font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); }
+.gl-op { font-size: 14px; font-weight: 800; color: var(--accent); }
+.gl-th { display: grid; gap: 4px; } .gl-th span { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: var(--bg); color: var(--ink); }
+.comp-名词 .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+
 .kps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .kp { border: 1px solid var(--line); border-top: 4px solid var(--muted); border-radius: 10px; padding: 10px 12px; background: var(--surface); display: grid; gap: 6px; align-content: start; }
 .kp.t-good { border-top-color: var(--good); } .kp.t-bad { border-top-color: var(--bad); }
