@@ -975,6 +975,32 @@ a.sl-sp-i.t-todo .sl-sp-st { color: var(--muted); font-weight: 700; } a.sl-sp-i.
 @media (max-width: 760px) { .sl-dr { grid-template-columns: minmax(0, 1fr); gap: 3px; } .sl-ds { justify-content: flex-start; } .sl-look, a.sl-next { flex-direction: column; gap: 4px; align-items: flex-start; } }
 
 
+.rg { display: grid; gap: 8px; }
+.rg-r { display: grid; grid-template-columns: 96px repeat(var(--rg-n), minmax(0, 1fr)); gap: 8px; align-items: stretch; }
+.rg-hd span { font-size: 12px; font-weight: 700; color: var(--muted); padding: 0 4px; } .rg-hd span.rg-main { color: var(--ink); }
+.rg-k { display: flex; align-items: center; font-size: 14px; font-weight: 800; color: var(--ink); }
+.rg-c { border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; background: var(--surface); display: grid; gap: 6px; }
+.rg-c.rg-main { border-width: 2px; border-color: var(--ink); }
+.rg-top { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; }
+.rg-top b { font-size: 22px; font-weight: 800; font-family: var(--font-mono); }
+.rg-top em { font-style: normal; font-size: 11px; font-weight: 700; }
+.rg-bar { position: relative; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.rg-bar i { display: block; height: 8px; border-radius: 4px; }
+.rg-bar s { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--muted); }
+.rg-sub { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--muted); font-family: var(--font-mono); }
+.rg-c.t-good { background: var(--good-soft); } .rg-c.t-good b, .rg-c.t-good em { color: var(--good); } .rg-c.t-good .rg-bar i { background: var(--good); }
+.rg-c.t-bad { background: var(--bad-soft); } .rg-c.t-bad b, .rg-c.t-bad em { color: var(--bad); } .rg-c.t-bad .rg-bar i { background: var(--bad); }
+.rg-c.t-mid b, .rg-c.t-mid em { color: var(--muted); } .rg-c.t-mid .rg-bar i { background: var(--muted); }
+.ros { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.ro { border: 1px solid var(--line); border-top: 4px solid var(--muted); border-radius: 10px; padding: 11px 13px; background: var(--surface); display: grid; gap: 5px; align-content: start; }
+.ro.t-good { border-top-color: var(--good); } .ro.t-bad { border-top-color: var(--bad); }
+.ro-k { font-size: 12px; font-weight: 700; color: var(--muted); }
+.ro-f { font-size: 20px; font-weight: 800; color: var(--ink); line-height: 1.25; }
+.ro.t-good .ro-f { color: var(--good); } .ro.t-bad .ro-f { color: var(--bad); }
+.ro-b { font-size: 13px; line-height: 1.55; color: var(--ink); }
+.comp-随机格 .num, .comp-读数 .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+@media (max-width: 760px) { .rg-r { grid-template-columns: 1fr; } .rg-hd { display: none; } }
+
 .cbx-c { gap: 10px; padding: 12px 14px; min-width: 210px; }
 .cbx-top span { font-size: 13px; }
 .cbx-is { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -1963,12 +1989,14 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <section id="sec-7-和别人比-v6-回撤-28-7-不到-bm-主的一半-收益低于-a1-现行配"><h2 id="7-和别人比-v6-回撤-28-7-不到-bm-主的一半-收益低于-a1-现行配"><span class="num">07</span>和别人比：v6 回撤 −28.7%，不到 BM-主的一半；收益低于 A1、现行配置、K2A 和 BM-主</h2>
 <p class="memo"><strong><span class="num">2006–15 年</span> v6 每年 <span class="num">15.3%</span>、回撤 <span class="num">−28.7%</span>：回撤比它浅的只有 A2 和连续性版；收益在八条线里排第 6，比现行配置每年少 5.7 点。</strong></p>
 <figure><img alt="v6 回撤 −28.7%，不到 BM-主（−65.5%）的一半；年化 15.28%，比 BM-主少 0.37 点，也低于 A1、现行配置、K2A" src="../../assets/v6-health/h2-peers.png"/></figure>
+<ul>
+<li><strong>读这张图</strong>：越靠右上越好。v6 在右侧中间，回撤比它浅的只有 A2 和连续性版；左边的基准和现行配置，回撤都在 <span class="num">−59%</span> 到 <span class="num">−66%</span>。</li>
+</ul>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>八条线三段的年化和最大回撤</span></button><div class="fold-b" hidden="">
 <ul class="points">
-<li><strong>读这张图</strong>：越靠右上越好。v6 在右侧中间：回撤比它浅的只有 A2（<span class="num">−13.1%</span>）和连续性版（<span class="num">−27.5%</span>，年化 <span class="num">15.8%</span>，略好于 v6）；左边两个灰点是基准、一个黑点是现行配置，收益不低但回撤在 <span class="num">−59%</span> 到 <span class="num">−66%</span>。</li>
 <li><strong>A1 的高收益来自前五年</strong>：<span class="num">2006–10 年</span>每年 <span class="num">42.1%</span>，<span class="num">2011–15 年</span> <span class="num">13.4%</span>，回撤 <span class="num">−42.9%</span>。</li>
 <li><strong>和现行配置比</strong>：v6 每年少 5.7 点，最大回撤从 <span class="num">−60.1%</span> 降到 <span class="num">−28.7%</span>；这是 v6 用收益换回撤的账。</li>
 </ul>
-<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>八条线三段的年化和最大回撤</span></button><div class="fold-b" hidden="">
 <div class="table-wrap"><div class="comp f-navs-wrap" data-lint="ref"><div class="f-nvs"><div class="f-nv f-nv-hd"><span>序列</span><span>2006–10</span><span>2011–15</span><span>2006–15（条长 = 年化）</span></div><div class="f-nv v6"><span class="f-nv-k">v6 净</span><span>18.51</span><span>12.14</span><span class="f-nv-b"><i style="width:27%"></i><b class="num">15.28</b><em class="dn">-0.37</em></span></div><div class="f-nv"><span class="f-nv-k">连续性版</span><span>17.92</span><span>13.70</span><span class="f-nv-b"><i style="width:28%"></i><b class="num">15.79</b><em class="up">+0.14</em></span></div><div class="f-nv"><span class="f-nv-k">A1</span><span>42.07</span><span>13.44</span><span class="f-nv-b"><i style="width:60%"></i><b class="num">26.96</b><em class="up">+11.31</em></span></div><div class="f-nv"><span class="f-nv-k">A2</span><span>14.52</span><span>3.52</span><span class="f-nv-b"><i style="width:9%"></i><b class="num">8.88</b><em class="dn">-6.77</em></span></div><div class="f-nv"><span class="f-nv-k">K2A</span><span>21.38</span><span>11.15</span><span class="f-nv-b"><i style="width:29%"></i><b class="num">16.15</b><em class="up">+0.50</em></span></div><div class="f-nv"><span class="f-nv-k">现行配置</span><span>31.79</span><span>11.13</span><span class="f-nv-b"><i style="width:43%"></i><b class="num">21.02</b><em class="up">+5.37</em></span></div><div class="f-nv bm"><span class="f-nv-k">BM-主</span><span>22.29</span><span>9.37</span><span class="f-nv-b"><i style="width:28%"></i><b class="num">15.65</b></span></div><div class="f-nv bm"><span class="f-nv-k">BM-同仓位</span><span>13.36</span><span>12.28</span><span class="f-nv-b"><i style="width:20%"></i><b class="num">12.82</b></span></div></div></div></div>
 <p class="table-note note">单位：年化，每年 %。扣成本；基准为全收益（§5.1）；K2A 为真实月末，Reviewer 独立结果差 ≤ 0.03 点。</p>
 <div class="table-wrap"><div class="comp f-drawdowns-wrap" data-lint="ref"><div class="f-nvs"><div class="f-nv f-nv-hd"><span>序列</span><span>2006–10</span><span>2011–15</span><span>2006–15（条长 = 回撤深度）</span></div><div class="f-nv f-dd v6"><span class="f-nv-k">v6</span><span>−25.0</span><span>−28.7</span><span class="f-nv-b"><i style="width:26%"></i><b class="num">−28.7</b><em class="up">比 BM-主浅 36.8</em></span></div><div class="f-nv f-dd"><span class="f-nv-k">连续性版</span><span>−27.5</span><span>−24.9</span><span class="f-nv-b"><i style="width:25%"></i><b class="num">−27.5</b><em class="up">比 BM-主浅 38.0</em></span></div><div class="f-nv f-dd"><span class="f-nv-k">A1</span><span>−21.6</span><span>−42.9</span><span class="f-nv-b"><i style="width:39%"></i><b class="num">−42.9</b><em class="up">比 BM-主浅 22.6</em></span></div><div class="f-nv f-dd"><span class="f-nv-k">A2</span><span>−10.7</span><span>−13.1</span><span class="f-nv-b"><i style="width:12%"></i><b class="num">−13.1</b><em class="up">比 BM-主浅 52.4</em></span></div><div class="f-nv f-dd"><span class="f-nv-k">K2A</span><span>−36.1</span><span>−19.6</span><span class="f-nv-b"><i style="width:33%"></i><b class="num">−36.1</b><em class="up">比 BM-主浅 29.4</em></span></div><div class="f-nv f-dd"><span class="f-nv-k">现行配置</span><span>−60.1</span><span>−35.9</span><span class="f-nv-b"><i style="width:55%"></i><b class="num">−60.1</b><em class="up">比 BM-主浅 5.4</em></span></div><div class="f-nv f-dd bm"><span class="f-nv-k">BM-主</span><span>−65.5</span><span>−33.3</span><span class="f-nv-b"><i style="width:60%"></i><b class="num">−65.5</b></span></div><div class="f-nv f-dd bm"><span class="f-nv-k">BM-同仓位</span><span>−59.1</span><span>−22.7</span><span class="f-nv-b"><i style="width:54%"></i><b class="num">−59.1</b></span></div></div></div></div>
@@ -1983,89 +2011,20 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <p><strong>同结构随机 1000 次里，v6 整体比 <span class="num">96%</span> 的随机挑法好；美股名额排第 98，A 股名额只排第 68；但每月跑赢随机中位数的月份只有 <span class="num">54%</span>。</strong></p>
 </div>
 <figure><img alt="v6 整体排第 96：比 96% 的随机挑法好；美股名额第 98，A 股名额第 68，还算不上比随机强" src="../../assets/v6-health/h7-random.png"/></figure>
-<ul class="points">
-<li><strong>随机只换掉挑选</strong>：名额、准入、防守、成本都不变，只把“选最强 3 只”换成随机抽 3 只，所以排名量的是挑选本身。</li>
-<li><strong>不是每段都灵</strong>：美股名额后五年第 100、前五年只第 26；A 股名额反过来，前五年第 89、后五年第 26。</li>
-<li><strong>靠的不是月月赢</strong>：每月只赢 <span class="num">54%</span>，赢的月份赢得多；和第 8 节一致，美股挑选强，A 股挑选证据一正一反。</li>
+<div class="table-wrap"><div class="comp comp-读数" data-lint="ref"><div class="comp-h">三条读法</div><div class="ros"><div class="ro t-mid"><div class="ro-k">量的是什么</div><div class="ro-f">只换掉了挑选</div><div class="ro-b">其余全不变，只把“选最强 3 只”换成随机抽</div></div><div class="ro t-bad"><div class="ro-k">不是每段都灵</div><div class="ro-f">美股 26 → 100；A 股 89 → 26</div><div class="ro-b">前五年到后五年，两个名额正好反过来</div></div><div class="ro t-mid"><div class="ro-k">不靠月月赢</div><div class="ro-f">每月只赢 54%</div><div class="ro-b">排第 96，靠的是赢的月份赢得多</div></div></div></div></div>
+<div class="table-wrap"><div class="comp comp-随机格" data-lint="ref"><div class="comp-h">三本账 × 三段：大数是百分位，框住的是全段</div><div class="rg" style="--rg-n:3"><div class="rg-r rg-hd"><span></span><span class="">2006–10</span><span class="">2011–15</span><span class="rg-main">2006–15</span></div><div class="rg-r"><div class="rg-k">v6 整体</div><div class="rg-c t-mid"><div class="rg-top"><b>第 69</b><em>和随机分不开</em></div><div class="rg-bar"><i style="width:69%"></i><s></s></div><div class="rg-sub"><span>每月赢 47%</span><span>年化 18.5%</span></div></div><div class="rg-c t-good"><div class="rg-top"><b>第 97</b><em>强于随机</em></div><div class="rg-bar"><i style="width:97%"></i><s></s></div><div class="rg-sub"><span>每月赢 62%</span><span>年化 12.1%</span></div></div><div class="rg-c t-good rg-main"><div class="rg-top"><b>第 96</b><em>强于随机</em></div><div class="rg-bar"><i style="width:96%"></i><s></s></div><div class="rg-sub"><span>每月赢 54%</span><span>年化 15.3%</span></div></div></div><div class="rg-r"><div class="rg-k">美股名额</div><div class="rg-c t-bad"><div class="rg-top"><b>第 26</b><em>不如随机的中间</em></div><div class="rg-bar"><i style="width:26%"></i><s></s></div><div class="rg-sub"><span>每月赢 37%</span><span>年化 1.3%</span></div></div><div class="rg-c t-good"><div class="rg-top"><b>第 100</b><em>强于随机</em></div><div class="rg-bar"><i style="width:100%"></i><s></s></div><div class="rg-sub"><span>每月赢 72%</span><span>年化 13.6%</span></div></div><div class="rg-c t-good rg-main"><div class="rg-top"><b>第 98</b><em>强于随机</em></div><div class="rg-bar"><i style="width:98%"></i><s></s></div><div class="rg-sub"><span>每月赢 54%</span><span>年化 7.3%</span></div></div></div><div class="rg-r"><div class="rg-k">A 股名额</div><div class="rg-c t-mid"><div class="rg-top"><b>第 89</b><em>和随机分不开</em></div><div class="rg-bar"><i style="width:89%"></i><s></s></div><div class="rg-sub"><span>每月赢 48%</span><span>年化 45.6%</span></div></div><div class="rg-c t-bad"><div class="rg-top"><b>第 26</b><em>不如随机的中间</em></div><div class="rg-bar"><i style="width:26%"></i><s></s></div><div class="rg-sub"><span>每月赢 45%</span><span>年化 8.1%</span></div></div><div class="rg-c t-mid rg-main"><div class="rg-top"><b>第 68</b><em>和随机分不开</em></div><div class="rg-bar"><i style="width:68%"></i><s></s></div><div class="rg-sub"><span>每月赢 47%</span><span>年化 25.5%</span></div></div></div></div></div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>口径：百分位、每月赢、年化怎么算，两边怎么对上</span></button><div class="fold-b" hidden="">
+<ul>
+<li>
+<p><strong>和前面对得上</strong>：第 8 节里美股挑选（+3.4）远高于事先范围，第 6 节里 A 股挑选的证据一正一反；这里也是美股强、A 股说不清。</p>
+</li>
+<li>
+<p><strong>百分位</strong>：1000 条随机路径的年化里，不高于 v6 年化的比例。种子 20261122、1000 次，只用 ≤ 2015。</p>
+</li>
+<li><strong>每月赢</strong>：v6 月收益严格高于当月 1000 条中位数的月份比例。</li>
+<li><strong>年化</strong>：名额的年化是名额自己的人民币收益；美股名额 <span class="num">2006–10 年</span>只有 <span class="num">1.3%</span>，A 股名额 <span class="num">45.6%</span>。</li>
+<li><strong>对账</strong>：Dev #377 @ 9935a314 与 Reviewer 锁定的 <code>d48-random.json</code> 九格都在事先约定的容差内（百分位差 ≤ 3、每月差 ≤ <span class="num">2 个百分点</span>），例如 v6 整体 2006–15 是 96.4 对 95.5。</li>
 </ul>
-<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>三本账 × 三段：百分位和每月跑赢随机中位数的比例</span></button><div class="fold-b" hidden="">
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>账</th>
-<th>段</th>
-<th class="n numcol" style="text-align: right;">规则年化</th>
-<th class="n numcol" style="text-align: right;">百分位</th>
-<th class="n numcol" style="text-align: right;">每月跑赢中位数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="k">组合</td>
-<td>2006–10</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:26px"></i></span><span class="mg-v">18.51%</span></span></td>
-<td class="n numcol" style="text-align: right;">68.7</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:42px"></i></span><span class="mg-v">46.7%</span></span></td>
-</tr>
-<tr>
-<td class="k">组合</td>
-<td>2011–15</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:17px"></i></span><span class="mg-v">12.14%</span></span></td>
-<td class="n numcol" style="text-align: right;">97.2</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:55px"></i></span><span class="mg-v">61.7%</span></span></td>
-</tr>
-<tr>
-<td class="k">组合</td>
-<td>2006–15</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:21px"></i></span><span class="mg-v">15.28%</span></span></td>
-<td class="n numcol" style="text-align: right;">96.4</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:48px"></i></span><span class="mg-v">54.2%</span></span></td>
-</tr>
-<tr>
-<td class="k">美股名额</td>
-<td>2006–10</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:2px"></i></span><span class="mg-v">1.31%</span></span></td>
-<td class="n numcol" style="text-align: right;">26.2</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:33px"></i></span><span class="mg-v">36.7%</span></span></td>
-</tr>
-<tr>
-<td class="k">美股名额</td>
-<td>2011–15</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:19px"></i></span><span class="mg-v">13.58%</span></span></td>
-<td class="n numcol" style="text-align: right;">100.0</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:64px"></i></span><span class="mg-v">71.7%</span></span></td>
-</tr>
-<tr>
-<td class="k">美股名额</td>
-<td>2006–15</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:10px"></i></span><span class="mg-v">7.27%</span></span></td>
-<td class="n numcol" style="text-align: right;">97.6</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:48px"></i></span><span class="mg-v">54.2%</span></span></td>
-</tr>
-<tr>
-<td class="k">A 股名额</td>
-<td>2006–10</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:64px"></i></span><span class="mg-v">45.60%</span></span></td>
-<td class="n numcol" style="text-align: right;">88.9</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:43px"></i></span><span class="mg-v">48.3%</span></span></td>
-</tr>
-<tr>
-<td class="k">A 股名额</td>
-<td>2011–15</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:11px"></i></span><span class="mg-v">8.15%</span></span></td>
-<td class="n numcol" style="text-align: right;">26.4</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:40px"></i></span><span class="mg-v">45.0%</span></span></td>
-</tr>
-<tr>
-<td class="k">A 股名额</td>
-<td>2006–15</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:36px"></i></span><span class="mg-v">25.49%</span></span></td>
-<td class="n numcol" style="text-align: right;">67.5</td>
-<td class="n numcol mgc" style="text-align: right;"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:42px"></i></span><span class="mg-v">46.7%</span></span></td>
-</tr>
-</tbody>
-</table></div>
-<div class="readnote"><div class="rn-h">怎么读这张表</div><div class="rn-i">种子 20261122、1000 次，只用 ≤ 2015。</div><div class="rn-i">百分位 = 1000 条随机路径的年化里不高于规则年化的比例；每月跑赢 = 规则月收益严格高于当月 1000 条中位数的月份比例。</div><div class="rn-i">Dev #377 @ 9935a314 与 Reviewer 锁定的 <code>d48-random.json</code> 九格都在事先约定的容差内（百分位差 ≤ 3、每月差 ≤ 2 个百分点），例如组合 2006–15 是 96.4 对 95.5。</div><div class="rn-i">名额的年化是名额自己的人民币收益，美股名额 2006–10 年只有 1.3%，A 股名额 45.6%。</div></div>
 </div></div>
 <a class="sl-next" href="#sec-8-预测准不准-挑选三项都高于范围-防守保费和仓位差在范围里-合计-2-5-刚过"><span class="sl-nl">所以</span><span class="sl-nt">回撤浅、收益偏低；事先估的每一项，设计期落在哪里？</span><span class="sl-ng">08 预测准不准 →</span></a>
 </section>
