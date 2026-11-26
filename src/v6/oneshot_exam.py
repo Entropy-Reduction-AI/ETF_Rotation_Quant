@@ -452,22 +452,16 @@ def execute(windows: Windows, out: Path) -> dict:
 
         pick_rows = _pick_rows(base["A记录"], panels["A"], blocks["A等权"], "A股", windows.exam_start, windows.exam_end)
         pick_rows += _pick_rows(base["美记录"], panels["US"], blocks["美等权"], "美股", windows.exam_start, windows.exam_end)
-        dropped = {}
-        for count, code in ((1, "S3"), (2, "S4"), (3, "S5")):
-            names = []
-            for sleeve in ("A股", "美股"):
-                names.extend(largest_contributors(pick_rows, sleeve, windows.exam_start, windows.exam_end, count))
-            # 两个名额各自的前 count 个会重复计数。按合并后的贡献再取前 count 个。
-            table = pick_detail(pick_rows, {"A股": [], "美股": []}, windows.exam_start, windows.exam_end)
-            pooled = []
-            for sleeve, body in table.items():
-                pooled.extend(body["前10"])
-            pooled.sort(key=lambda row: (-row["对挑选的贡献"], row["候选"]))
-            seen = []
-            for row in pooled:
-                if row["候选"] not in seen:
-                    seen.append(row["候选"])
-            dropped[code] = seen[:count]
+        table = pick_detail(pick_rows, {"A股": [], "美股": []}, windows.exam_start, windows.exam_end)
+        pooled = []
+        for body in table.values():
+            pooled.extend(body["前10"])
+        pooled.sort(key=lambda row: (-row["对挑选的贡献"], row["候选"]))
+        seen = []
+        for row in pooled:
+            if row["候选"] not in seen:
+                seen.append(row["候选"])
+        dropped = {"S3": seen[:1], "S4": seen[:2], "S5": seen[:3]}
 
         scenarios = {
             "S1": dict(n=3, cost=COST * 2, lag=0, stress=2, exclude=None, weight_a=0.4),
