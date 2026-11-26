@@ -380,7 +380,36 @@ def readout(rows):
                 f'<div class="ro-b">{_inner(r["说明"])}</div></div>')
     return f'<div class="ros">{out}</div>'
 
-RENDER = {'闸门格': gate_grid, '对账': reconcile, '同行': peers, '代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers, '随机格': random_grid, '读数': readout}
+
+def kpi(rows):
+    """| 指标 | v6 | 对照 | 对照值 | 读法 | 色 | — one tile per row: label, big v6 value, a two-line comparison
+    (bars when both values are numbers; dots when they are 'k/n'), and a short reading. 色 = 好 / 中 / 差."""
+    def num(t):
+        m = re.search(r'[+\-−]?\d+(?:\.\d+)?', t)
+        return float(m.group(0).replace('−', '-')) if m else None
+    out = ''
+    for r in rows:
+        tone = {'好': 'good', '差': 'bad'}.get(_txt(r.get('色', '')), 'mid')
+        a, b = _txt(r['v6']), _txt(r['对照值'])
+        fa, fb = num(a), num(b)
+        frac = re.fullmatch(r'\s*(\d+)\s*/\s*(\d+)\s*', a), re.fullmatch(r'\s*(\d+)\s*/\s*(\d+)\s*', b)
+        if frac[0] and frac[1]:
+            def dots(m, cls):
+                k, n = int(m.group(1)), int(m.group(2))
+                return ''.join(f'<i class="{cls if j < k else ""}"></i>' for j in range(n))
+            cmp_ = (f'<div class="kp-row"><span class="kp-k">全段</span><span class="kp-dots">{dots(frac[0], "on")}</span><b>{a}</b></div>'
+                    f'<div class="kp-row"><span class="kp-k">{_inner(r["对照"])}</span><span class="kp-dots">{dots(frac[1], "on b")}</span><b>{b}</b></div>')
+        elif fa is not None and fb is not None:
+            mx = max(abs(fa), abs(fb)) or 1
+            cmp_ = (f'<div class="kp-row"><span class="kp-k">v6</span><span class="kp-bar"><i class="v" style="width:{abs(fa) / mx * 100:.0f}%"></i></span><b>{a}</b></div>'
+                    f'<div class="kp-row"><span class="kp-k">{_inner(r["对照"])}</span><span class="kp-bar"><i style="width:{abs(fb) / mx * 100:.0f}%"></i></span><b>{b}</b></div>')
+        else:
+            cmp_ = ''
+        out += (f'<div class="kp t-{tone}"><div class="kp-l">{_inner(r["指标"])}</div><div class="kp-v">{a}</div>'
+                f'<div class="kp-cmp">{cmp_}</div><div class="kp-r">{_inner(r["读法"])}</div></div>')
+    return f'<div class="kps">{out}</div>'
+
+RENDER = {'闸门格': gate_grid, '对账': reconcile, '同行': peers, '代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers, '随机格': random_grid, '读数': readout, '指标': kpi}
 
 
 def apply(soup):
@@ -407,6 +436,22 @@ def apply(soup):
 
 
 CSS = r"""
+.kps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.kp { border: 1px solid var(--line); border-top: 4px solid var(--muted); border-radius: 10px; padding: 10px 12px; background: var(--surface); display: grid; gap: 6px; align-content: start; }
+.kp.t-good { border-top-color: var(--good); } .kp.t-bad { border-top-color: var(--bad); }
+.kp-l { font-size: 12px; font-weight: 700; color: var(--muted); }
+.kp-v { font-size: 26px; font-weight: 800; font-family: var(--font-mono); line-height: 1.1; color: var(--ink); }
+.kp.t-good .kp-v { color: var(--good); } .kp.t-bad .kp-v { color: var(--bad); }
+.kp-cmp { display: grid; gap: 4px; }
+.kp-row { display: grid; grid-template-columns: 4.6em minmax(0, 1fr) 4.2em; gap: 6px; align-items: center; font-size: 11.5px; }
+.kp-k { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kp-row b { font-family: var(--font-mono); font-weight: 600; text-align: right; color: var(--ink); }
+.kp-bar { height: 7px; background: var(--bg); border-radius: 4px; overflow: hidden; } .kp-bar i { display: block; height: 7px; border-radius: 4px; background: var(--muted); } .kp-bar i.v { background: var(--accent); }
+.kp-dots { display: flex; gap: 4px; } .kp-dots i { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid var(--muted); } .kp-dots i.on { background: var(--good); border-color: var(--good); } .kp-dots i.on.b { background: var(--muted); border-color: var(--muted); }
+.kp-r { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.comp-指标 .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+@media (max-width: 900px) { .kps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 .rg { display: grid; gap: 8px; }
 .rg-r { display: grid; grid-template-columns: 96px repeat(var(--rg-n), minmax(0, 1fr)); gap: 8px; align-items: stretch; }
 .rg-hd span { font-size: 12px; font-weight: 700; color: var(--muted); padding: 0 4px; } .rg-hd span.rg-main { color: var(--ink); }
