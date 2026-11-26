@@ -424,6 +424,23 @@ def glossary(rows):
             return ''.join(pic1(x.strip()) for x in t.split('‖'))
         return pic1(t)
     def pic1(t):
+        if t.startswith('值：'):
+            v = t[2:].strip(); m = re.match(r'^([+\-−]?\d+(?:\.\d+)?)\s*(.*)$', v)
+            if m:
+                sign = 'pos' if not m.group(1).startswith(('-', '−')) else 'neg'
+                return f'<div class="gl-val {sign}"><b>{m.group(1)}</b><span>{m.group(2)}</span></div>'
+        if t.startswith('链：'):
+            items = [x.strip() for x in t[2:].split('｜') if x.strip()]
+            out = ''
+            for j, x in enumerate(items):
+                if j % 2 == 0:
+                    out += f'<span class="gl-node">{x}</span>'
+                else:
+                    m = re.match(r'^(.*?)\s*([+\-−]\d+(?:\.\d+)?)$', x)
+                    lab, v = (m.group(1), m.group(2)) if m else (x, '')
+                    sign = 'neg' if v.startswith(('-', '−')) else 'pos'
+                    out += f'<span class="gl-edge {sign}"><em>{lab}</em><b>{v}</b><i>→</i></span>'
+            return f'<div class="gl-chain">{out}</div>'
         if t.startswith('步骤：'):
             items = [x.strip() for x in t[3:].split('｜') if x.strip()]
             return '<ol class="gl-st">' + ''.join(f'<li><span class="gl-sn">{j}</span><span>{x}</span></li>' for j, x in enumerate(items, 1)) + '</ol>'
@@ -462,10 +479,10 @@ def glossary(rows):
         groups[g].append(r)
     out = ''
     for g in order:
-        cards = ''.join(f'<div class="gl-c{" wide" if "步骤：" in _txt(r["图"]) else ""}"><div class="gl-n">{_inner(r["名字"])}</div><div class="gl-s">{_inner(r["一句话"])}</div>'
+        cards = ''.join(f'<div class="gl-c{" wide" if "步骤：" in _txt(r["图"]) else ""}{" full" if _txt(r["图"]).startswith("链：") else ""}"><div class="gl-n">{_inner(r["名字"])}</div><div class="gl-s">{_inner(r["一句话"])}</div>'
                         f'{pic(r["图"])}' + (f'<div class="gl-d">{_inner(r["细节"])}</div>' if _txt(r['细节']) else '') + '</div>' for r in groups[g])
-        n = len(groups[g]); cols = 4 if n % 4 in (0, 3) else 3
-        out += f'<div class="gl-g"><div class="gl-gh">{g}<span>{n}</span></div><div class="gl-grid" style="--gl-c:{cols}">{cards}</div></div>'
+        n = len(groups[g]); m_ = n - sum(1 for r in groups[g] if _txt(r['图']).startswith('链：')); cols = 4 if m_ % 4 in (0, 3) else 3
+        out += f'<div class="gl-g"><div class="gl-gh">{g}<span>{m_}</span></div><div class="gl-grid" style="--gl-c:{cols}">{cards}</div></div>'
     return f'<div class="gl">{out}</div>'
 
 RENDER = {'闸门格': gate_grid, '对账': reconcile, '同行': peers, '代价': pain, '风险': risks, '退路': chain, '分拣': sort_board, '闸门': gate_row, '构成': composition, '计数': count_bar, '路线': route, '载体': carriers, '随机格': random_grid, '读数': readout, '指标': kpi, '名词': glossary}
@@ -495,6 +512,17 @@ def apply(soup):
 
 
 CSS = r"""
+.gl-c.full { grid-column: 1 / -1; background: var(--bg); }
+.gl-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; }
+.gl-node { font-size: 12.5px; font-weight: 800; padding: 6px 10px; border-radius: 8px; background: var(--surface); border: 1.5px solid var(--ink); color: var(--ink); }
+.gl-edge { display: inline-grid; grid-template-areas: 'l l' 'v a'; align-items: center; justify-items: center; padding: 0 4px; }
+.gl-edge em { grid-area: l; font-style: normal; font-size: 11px; font-weight: 700; color: var(--muted); }
+.gl-edge b { grid-area: v; font-family: var(--font-mono); font-size: 14px; font-weight: 800; }
+.gl-edge i { grid-area: a; font-style: normal; color: var(--muted); margin-left: 2px; }
+.gl-edge.pos b, .gl-edge.pos b * { color: var(--good) !important; } .gl-edge.neg b, .gl-edge.neg b * { color: var(--bad) !important; }
+.gl-val { display: flex; align-items: baseline; gap: 8px; } .gl-val b { font-family: var(--font-mono); font-size: 24px; font-weight: 800; } .gl-val span { font-size: 11.5px; color: var(--muted); }
+.gl-val.pos b, .gl-val.pos b * { color: var(--good) !important; } .gl-val.neg b, .gl-val.neg b * { color: var(--bad) !important; }
+
 .gl-c.wide { grid-column: span 2; }
 .gl-st { list-style: none !important; margin: 0 !important; padding: 0 !important; display: grid; gap: 5px; counter-reset: none; }
 .gl-st li::before, .gl-st li::marker { content: none !important; display: none !important; }
