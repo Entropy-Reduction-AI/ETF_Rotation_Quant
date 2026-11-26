@@ -52,12 +52,23 @@ save(fig, 'o2-robust.png')
 
 # ---------- o3 六块 × 四段 ----------
 fig, ax = plt.subplots(figsize=(11.5, 4.4))
-pending_grid(ax, ['分红', '仓位差', '等权倾斜', '挑选', '防守', '成本'], ['2006–10', '2011–15', '2016–20', '2021–26.09', '读法标签'])
-ax.add_patch(Rectangle((2 - .06, -5.55), 2.04, 6.1, fc='none', ec=BLUE, lw=1.6))
-ax.text(3, -6.05, '检验段两段：决定“稳定 / 设计期才有 / 不稳定”', ha='center', color=BLUE, fontsize=11)
+pending_grid(ax, ['分红', '仓位差', '等权倾斜', '挑选', '防守', '成本'], ['2006–10', '2011–15', '2016–20', '2021–26.09', '全段', '读法标签'])
+ax.text(3, -6.05, '读法按 D49-8 的顺序：先判“设计期才有”，否则判“稳定”，其余“不稳定”；全段只并列，不参与', ha='center', color=MUTED, fontsize=11)
 ax.set_ylim(-6.4, 1.2)
 ax.set_title('钱从哪来：六块 × 四个五年段，正绿负橙；同一块在检验段还在不在', fontsize=12.5, loc='left', color=INK)
 save(fig, 'o3-sources.png')
+
+# ---------- o3w 检验段瀑布图（空位） ----------
+fig, ax = plt.subplots(figsize=(11.5, 3.8))
+labs = ['BM-主\n（全收益）', '分红', '仓位差', '等权倾斜', '挑选', '防守', '成本', 'v6 净']
+for i, l in enumerate(labs):
+    ax.bar(i, 1, bottom=0, color=PEND, ec=GREY, ls='--', lw=.8)
+    ax.text(i, .5, '?', ha='center', va='center', color=GREY, fontsize=12)
+ax.set_xticks(range(len(labs))); ax.set_xticklabels(labs, fontsize=11); ax.set_yticks([]); ax.spines['left'].set_visible(False)
+ax.text(len(labs) - .5, 1.12, '汇率另报，不进瀑布图', ha='right', color=MUTED, fontsize=10.5)
+ax.set_title('检验段瀑布图：从 BM-主 走到 v6 净，六块各加减多少（开考后画）', fontsize=12.5, loc='left', color=INK)
+ax.set_ylim(0, 1.25)
+save(fig, 'o3w-waterfall.png')
 
 # ---------- o4 挑选与防守 ----------
 fig, (a, b) = plt.subplots(1, 2, figsize=(12, 4.6), gridspec_kw={'width_ratios': [1, 1.3]})
@@ -72,9 +83,8 @@ yrs = list(range(2006, 2027))
 for y in yrs:
     if y in A:
         b.bar(y - .2, A[y], .4, color=AMBER); b.bar(y + .2, U[y], .4, color=BLUE)
-    else:
-        b.bar(y, 12, .8, color=PEND, ec=GREY, ls='--', lw=.6)
-b.axvline(2015.5, color=INK, lw=1); b.text(2015.7, 12.6, TODO, color=MUTED, fontsize=10.5)
+b.axvspan(2015.5, 2026.5, color=PEND)
+b.axvline(2015.5, color=INK, lw=1); b.text(2021, 6, TODO, ha='center', color=MUTED, fontsize=11)
 b.text(2006, 12.6, '■ A 股', color=AMBER, fontsize=10.5); b.text(2008.4, 12.6, '■ 美股', color=BLUE, fontsize=10.5)
 b.set_ylim(0, 13.5); b.set_ylabel('一年里紧张的月份', color=MUTED)
 b.set_title('防守：每年紧张几个月，每一段帮了多少', fontsize=12.5, loc='left', color=INK)
