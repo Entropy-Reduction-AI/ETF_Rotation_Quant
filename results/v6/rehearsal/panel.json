@@ -1,0 +1,24 @@
+{
+ "status": "ok",
+ "end": "2015-12-31",
+ "commands": [
+  "python -m src.data package --end 2015-12-31",
+  "python -m src.indicators build --package research-package-2015-12-31.sqlite",
+  "src.portfolio.replicate.daily_book，状态恒为 1（阀门关闭）"
+ ],
+ "code_sha256": {
+  "src/data/runner.py": "d538d12d8ff5efcf6d1a5b1c2eb9e13afea7adc7a4d985e9a69d426d24a33556",
+  "src/indicators/build.py": "5ebe933e5ecdf08fc8fa9942d5f8562cbc872583ae52e70ffa83a5fc4cb96c7e",
+  "src/portfolio/replicate.py": "c2e0d5876cd022140ba74efbaeb7da11cd96ad163f28674be17cfe2ecc8eccde"
+ },
+ "market_sqlite_sha256": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8",
+ "package_sha256": "562643328868447a9ffd1160be00859a2d93a0f0c173181f004e3746d1090da8",
+ "package_bars_last": "2015-12-31",
+ "panel_sha256": "dff4c5b8b42ba6195b97f14c07814acc5ca0599ce8bc735a6369073d4711bae9",
+ "panel_last": "2015-12-31",
+ "book_first": "2005-02-01",
+ "book_last": "2015-12-31",
+ "valve": "关闭。replicate() 会跑慢阀，这里不调用它，只把 daily_book 的状态设为在场。",
+ "absent": "7.5% 偏离带、溢价上限、主备基金、净值滞后 2 天、一手 100 份不在这套日频回测里。",
+ "calendar_note": "package() 复制整张 calendar。bars 与 build 的窗口停在 2015-12-31，上面已核对两张表的最大日期。"
+}

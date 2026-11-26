@@ -68,7 +68,8 @@ def continuity_state(levels, day, month_index, scores, min_days: int = 200):
     return ident, eligible
 
 
-def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash, dedupe: bool = True):
+def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash, dedupe: bool = True,
+         signal_lag: int = 0, stress_votes: int = 2, exclude=None):
     """一个名额。mode：v6 四步全开；id 是加过滤的连续性版；id_open 是不过滤的参照；top 前 n 不设防守；ew 按标签等权、不设防守。
 
     prior 为 None 表示没有起点经验（A 股）。美股必须传入 French 列表；
@@ -97,6 +98,8 @@ def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash, dedup
     out = np.zeros(len(calendar))
     turnover = 0.0
     pending_target = None
+    pending_delay = 0
+    banned = {name for name in (exclude or ()) if name != parent}
     bond_ret = bond.reindex(calendar).fillna(0).values
     cash_ret = cash.reindex(calendar).values
     if np.isnan(cash_ret).any():
@@ -105,7 +108,10 @@ def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash, dedup
     pending_leader = None
     log = {}
     for t, day in enumerate(calendar):
-        if pending_target is not None:
+        if pending_target is not None and pending_delay > 0:
+            pending_delay -= 1
+            fee = 0.0
+        elif pending_target is not None:
             target, target_bond, target_cash = pending_target
             traded = float(np.abs(target - weight).sum() + abs(target_bond - bond_w))
             turnover += traded
@@ -127,10 +133,12 @@ def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash, dedup
             pending_leader = None
         scores = score_frame.loc[day].to_numpy(dtype=float)
         ok = np.isfinite(scores)
+        if banned:
+            ok = ok & np.array([name not in banned for name in columns])
         target = np.zeros(width)
         p_value = confidence(history, prior=prior)
         votes = int(vote_sum.get(day.to_period("M"), 0))
-        stress = votes >= 2
+        stress = votes >= stress_votes
         record = {
             "票数": votes,
             "紧张": stress,
@@ -194,6 +202,7 @@ def slot(levels, parent, n, prior, tags, mode, cost, votes_fn, bond, cash, dedup
         log[day] = record
         left = 1.0 - float(target.sum())
         pending_target = (target, left if held_bond else 0.0, 0.0 if held_bond else left)
+        pending_delay = signal_lag
     series = pd.Series(out, index=calendar, name=parent)
     assert_not_after(series.index, "slot")
     return series, turnover, log
@@ -203,18 +212,19 @@ def mix_daily(a: pd.Series, u: pd.Series) -> pd.Series:
     return 0.4 * a + 0.6 * u
 
 
-def mix_monthly(a: pd.Series, u: pd.Series, cost: float) -> pd.Series:
-    """月末把两个名额再平衡到 40/60，调拨金额按单边成本计一次。"""
+def mix_monthly(a: pd.Series, u: pd.Series, cost: float, weight_a: float = 0.4) -> pd.Series:
+    """月末把两个名额再平衡到目标权重，调拨金额按单边成本计一次。默认 A 股 40%、美股 60%。"""
     calendar = a.index
     mask = np.r_[calendar.month[1:] != calendar.month[:-1], True]
-    wa, wu = 0.4, 0.6
+    weight_u = 1.0 - weight_a
+    wa, wu = weight_a, weight_u
     out = np.zeros(len(calendar))
     rebalance = False
     for t in range(len(calendar)):
         fee = 0.0
         if rebalance:
-            fee = cost * abs(wa - 0.4)
-            wa, wu = 0.4, 0.6
+            fee = cost * abs(wa - weight_a)
+            wa, wu = weight_a, weight_u
             rebalance = False
         gross = wa * float(a.iloc[t]) + wu * float(u.iloc[t])
         out[t] = (1.0 + gross) * (1.0 - fee) - 1.0
