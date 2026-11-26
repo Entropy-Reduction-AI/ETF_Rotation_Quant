@@ -418,12 +418,26 @@ def glossary(rows):
             if k in n:
                 return c
         return 'o'
-    def pic(t):
-        t = _txt(t)
-        if '‖' in t:
-            return ''.join(pic1(x.strip()) for x in t.split('‖'))
-        return pic1(t)
+    def pic(cell):
+        h = _inner(cell)
+        h = re.sub(r'<strong>(.+?)</strong>', r'<span class="gl-kw">\1</span>', h)
+        parts = h.split('‖') if '‖' in h else [h]
+        return ''.join(pic1(x.strip()) for x in parts)
     def pic1(t):
+        if not t.startswith('步骤：'):
+            t = re.sub(r'<[^>]+>', '', t)
+        if t.startswith('大字：'):
+            big, _, cap = t[3:].partition('｜')
+            return f'<div class="gl-big"><b>{big.strip()}</b>' + (f'<span>{cap.strip()}</span>' if cap.strip() else '') + '</div>'
+        if t.startswith('两套：'):
+            rows_ = []
+            for part in t[3:].split('；'):
+                if '=' not in part:
+                    continue
+                k, v = part.split('=', 1)
+                chips = ''.join(f'<span>{x.strip()}</span>' for x in v.split('｜') if x.strip())
+                rows_.append(f'<div class="gl-two-r"><em>{k.strip()}</em><div>{chips}</div></div>')
+            return '<div class="gl-two">' + ''.join(rows_) + '</div>'
         if t.startswith('值：'):
             v = t[2:].strip(); m = re.match(r'^([+\-−]?\d+(?:\.\d+)?)\s*(.*)$', v)
             if m:
@@ -469,7 +483,11 @@ def glossary(rows):
             return f'<div class="gl-f">{out}</div>'
         if t.startswith('门槛：'):
             items = [x.strip() for x in t[3:].split('｜') if x.strip()]
-            return '<div class="gl-th">' + ''.join(f'<span>{x}</span>' for x in items) + '</div>'
+            out = ''
+            for j, x in enumerate(items, 1):
+                k, _, v = x.partition('=')
+                out += f'<div class="gl-th-r"><span class="gl-sn">{j}</span><span class="gl-th-k">{k.strip()}</span><b>{v.strip()}</b></div>'
+            return f'<div class="gl-th2">{out}</div>'
         return ''
     groups, order = {}, []
     for r in rows:
@@ -512,6 +530,21 @@ def apply(soup):
 
 
 CSS = r"""
+.gl-big { display: grid; gap: 2px; } .gl-big b { font-family: var(--font-mono); font-size: 24px; font-weight: 800; color: var(--ink); line-height: 1.15; } .gl-big span { font-size: 12px; color: var(--muted); font-weight: 600; }
+.gl-two { display: grid; gap: 6px; }
+.gl-two-r { display: grid; gap: 4px; }
+.gl-two-r em { font-style: normal; font-size: 11px; font-weight: 800; color: var(--muted); }
+.gl-two-r div { display: flex; flex-wrap: wrap; gap: 4px; } .gl-two-r span { font-size: 12px; padding: 3px 8px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); }
+.gl-two-r:first-child span { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+.gl-th2 { display: grid; gap: 6px; }
+.gl-th-r { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 5px 8px; border-radius: 8px; background: var(--bg); }
+.gl-th-k { font-size: 13px; font-weight: 600; color: var(--ink); } .gl-th-r b { font-size: 13px; font-weight: 800; color: var(--accent); white-space: nowrap; }
+.gl-st { position: relative; } .gl-st::before { content: ""; position: absolute; left: 10px; top: 10px; bottom: 10px; width: 2px; background: var(--line); }
+.gl-st li { position: relative; } .gl-st .gl-sn { position: relative; z-index: 1; }
+.gl-kw { color: var(--accent); font-weight: 800; }
+.gl-c.wide .gl-d { background: var(--bg); border-radius: 8px; padding: 8px 10px; }
+.gl-c .gl-s:only-of-type { }
+
 .gl-c.full { grid-column: 1 / -1; background: var(--bg); }
 .gl-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; }
 .gl-node { font-size: 12.5px; font-weight: 800; padding: 6px 10px; border-radius: 8px; background: var(--surface); border: 1.5px solid var(--ink); color: var(--ink); }
