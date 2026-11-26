@@ -1,0 +1,40 @@
+{
+ "窗口": {
+  "name": "正式",
+  "exam_start": "2016-01-01",
+  "exam_end": "2026-09-30",
+  "full_start": "2006-01-01",
+  "full_end": "2026-09-30"
+ },
+ "命令": ".venv/bin/python -I -c \"import sys; sys.path.insert(0,'.'); from src.v6.oneshot_exam import main; main()\"",
+ "正式考试": "已跑一次。",
+ "运行次数": 1,
+ "封顶": "2026-09-30",
+ "french": {
+  "登记sha256": "633958bf36d25da6d95876bfc468536029db600c32c65b7a3e0f7fba59a04609",
+  "面板": "results/v6/french-49-192607-199812",
+  "面板sha256": {
+   "avg-firm-size.csv": "c7ad2067f4a32580b1dfd63cb6265c1f11d1a914e99966f43b039969ed3a3723",
+   "n-firms.csv": "75272c8f8dff9c70fb2f27a58ee82211e0fe261950a6e9d09c47fb3c36ed19bc",
+   "vw-monthly.csv": "74b8a75b952064f9346c86a01b0162c64cf406a8426013333ac15f56678a29b1"
+  },
+  "文件": null,
+  "说明": "仓库里没有 49_Industry_Portfolios.csv。起点经验用已入库的 1926-07 至 1998-12 面板，不打开官网全表。"
+ },
+ "行情库sha256": "0245876256527dda58145c770d75f342e7514b74a8c2cf1213fecfb713bf72f8",
+ "代码sha256": {
+  "src/v6/oneshot_exam.py": "b3c296477bc50b9c9dbc76f318b173fde717431e86ef834859b51a712a3a640a",
+  "src/v6/oneshot_prep.py": "a92a271c6f9efef39945ae05ef7d0aa55adb8a5e51a19ed94b96c674433dcf6c",
+  "src/v6/engine.py": "85940c513654ae600d32516ef2d26124f4981e250a0a6e65ccb16cf69467d320",
+  "src/v6/guard.py": "47c9c120ca835187dab35f50ceaedb53bad04e1a736cecc9ca302a309030d9e5",
+  "src/v6/load.py": "ffa3aba5f39f8d3667d16bc97f7266511a56cad7a6d26190ad259b00080767da"
+ },
+ "D51": "判据②用单边 0.2% 的前 3；S1–S7 对照跟着改；S8 对照不变；S6 的 BM-同仓位是 50/25/25。",
+ "对照": {
+  "实质差异": 26,
+  "可以签收": false,
+  "D51验收": false,
+  "保费": 0.9470009676151493
+ },
+ "投票": "expanding99，与体检同一段替换"
+}
