@@ -11,6 +11,7 @@ h2：和别人比——八条线 2006–15 的年化 × 最大回撤（左上更
 样式与 scripts/preflight/charts_appendix_b.py 相同。
 """
 import sys, json, csv, pathlib
+import numpy as np, pandas as pd
 import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt, matplotlib.ticker
 from matplotlib.patches import FancyBboxPatch, Rectangle
 
@@ -211,28 +212,59 @@ RS = json.load(open(SRC / 'health-random-summary.json', encoding='utf-8'))['segm
 P = {(r['book'], r['segment']): r for r in RS}
 books = [('组合', 'v6 整体'), ('美股', '美股名额'), ('A股', 'A 股名额')]
 segs = [('2006-2010', '2006–10'), ('2011-2015', '2011–15')]
-tone = lambda x: (TEAL, '强于随机') if x >= 95 else ((AMBER, '不如随机的中间') if x < 50 else ('#64748b', '和随机分不开'))
-fig = plt.figure(figsize=(12, 4.6))
+tone = lambda x: (TEAL, '前 5%') if x >= 95 else ((AMBER, '低于随机的中间') if x < 50 else ('#64748b', '高于中间，不在前 5%'))
+PATHS = pd.read_csv(SRC / 'health-random-paths.csv')
+fig = plt.figure(figsize=(12, 4.9))
 for i, (b, lab) in enumerate(books):
     full = P[(b, '2006-2015')]; x = full['percentile']; c, verdict = tone(x)
-    ax = fig.add_axes([0.035 + i * 0.325, 0.08, 0.29, 0.78]); ax.axis('off'); ax.set_xlim(0, 100); ax.set_ylim(0, 10)
-    ax.add_patch(Rectangle((0, 0), 100, 10, fc='white', ec=c, lw=2.4 if b != 'A股' else 1.4)); ax.add_patch(Rectangle((0, 9.55), 100, .45, fc=c, ec=c))
-    ax.text(5, 8.7, lab, fontsize=14, weight='bold', color=INK, va='center')
-    ax.text(95, 8.7, verdict, fontsize=11.5, weight='bold', color=c, va='center', ha='right')
-    ax.text(5, 6.2, f'第 {x:.0f}', fontsize=40, weight='bold', color=c, va='center')
-    ax.text(5, 4.25, f'2006–15 比 {x:.0f}% 的随机挑法好', fontsize=11, color=MUTED, va='center')
-    # 刻度条 0–100：前 5% 着色，三个点
-    y0 = 2.4
-    ax.add_patch(Rectangle((5, y0 - .18), 90, .36, color='#e5e7eb'))
-    ax.add_patch(Rectangle((5 + .95 * 90, y0 - .18), .05 * 90, .36, color='#99d5cb'))
-    ax.plot([5 + .5 * 90] * 2, [y0 - .45, y0 + .45], color=GREY, lw=1)
-    ax.scatter(5 + .9 * x, y0, s=220, color=c, zorder=4, edgecolors='white', lw=1.5)
-    for k, (sg, sl) in enumerate(segs):
-        v = P[(b, sg)]['percentile']; xx = 5 + .9 * v
-        ax.scatter(xx, y0, s=60, facecolors='white', edgecolors=tone(v)[0], lw=1.6, zorder=3)
-        ax.text(5 + 47 * k, y0 - 1.1, f'○ {sl}：第 {v:.0f}', ha='left', va='center', fontsize=10, color=tone(v)[0])
-    ax.text(5, y0 + .75, '0', fontsize=9, color=GREY, ha='center'); ax.text(95, y0 + .75, '100', fontsize=9, color=GREY, ha='center'); ax.text(95, y0 - 1.9, '浅绿 = 前 5%', fontsize=8.5, color=TEAL, ha='right')
-    ax.text(50, y0 + .75, '随机的中间', fontsize=9, color=GREY, ha='center')
-    ax.text(95, 4.25, f'每月赢 {100 * full["beat_random_median_share"]:.0f}%', fontsize=11, color=MUTED, va='center', ha='right')
-fig.suptitle('把“选最强 3 只”换成随机抽 3 只、其余不变，跑 1000 次：v6 整体和美股名额都进了前 5%，A 股名额没有', x=.035, ha='left', fontsize=13, color=INK, y=.98)
+    L, W = 0.035 + i * 0.325, 0.29
+    ax = fig.add_axes([L, 0.06, W, 0.80]); ax.axis('off'); ax.set_xlim(0, 100); ax.set_ylim(0, 10)
+    ax.add_patch(Rectangle((0, 0), 100, 10, fc='white', ec=c, lw=2.4 if x >= 95 else 1.4)); ax.add_patch(Rectangle((0, 9.55), 100, .45, fc=c, ec=c))
+    ax.text(5, 8.75, lab, fontsize=14, weight='bold', color=INK, va='center')
+    ax.text(95, 8.75, verdict, fontsize=11, weight='bold', color=c, va='center', ha='right')
+    ax.text(5, 6.65, f'第 {x:.1f}', fontsize=34, weight='bold', color=c, va='center')
+    ax.text(95, 6.95, f'每月赢 {100 * full["beat_random_median_share"]:.1f}%', fontsize=11, color=MUTED, va='center', ha='right')
+    ax.text(95, 6.2, f'年化 {100 * full["rule_annual"]:.1f}%', fontsize=11, color=MUTED, va='center', ha='right')
+    # 1000 条随机路径 2006–15 年化的分布，v6 一条竖线
+    h = fig.add_axes([L + .02, 0.15, W - .04, 0.30])
+    v = PATHS[(PATHS['book'] == b) & (PATHS['segment'] == '2006-2015')]['annual_pct'].values
+    r = 100 * full['rule_annual']
+    lo, hi = min(v.min(), r), max(v.max(), r); pad = (hi - lo) * .06
+    bins = np.linspace(lo - pad, hi + pad, 34)
+    n_, e_, pt = h.hist(v, bins=bins, color='#d1d5db', ec='white', lw=.5)
+    for patch, left in zip(pt, e_[:-1]):
+        if left >= np.percentile(v, 95):
+            patch.set_facecolor('#99d5cb')
+    h.axvline(r, color=c, lw=3); h.axvline(np.median(v), color=GREY, lw=1, ls='--')
+    top = n_.max()
+    up = r >= np.median(v)
+    h.text(r + (hi - lo) * (.02 if up else -.02), top * 1.12, f'v6 {r:.1f}%', color=c, fontsize=10.5, weight='bold', ha='left' if up else 'right')
+    h.text(np.median(v) - (hi - lo) * (.02 if up else -.02), top * 1.12, f'随机中位 {np.median(v):.1f}%', color=MUTED, fontsize=9, ha='right' if up else 'left')
+    h.set_ylim(0, top * 1.3); h.set_yticks([]); h.spines['left'].set_visible(False); h.spines['top'].set_visible(False); h.spines['right'].set_visible(False)
+    h.tick_params(axis='x', labelsize=9, colors=MUTED); h.set_xlabel('1000 条随机路径的 2006–15 年化 %（浅绿 = 前 5%）', fontsize=9, color=MUTED)
+    ax.text(5, 5.2, '　'.join(f'{sl}：第 {P[(b, sg)]["percentile"]:.1f}' for sg, sl in segs), fontsize=10, color=MUTED, va='center')
+fig.suptitle('把“选最强 3 只”换成随机抽 3 只、其余不变，跑 1000 次：v6 整体（第 96.4）和美股名额（第 97.6）进了前 5%，A 股名额（第 67.5）没有', x=.035, ha='left', fontsize=12.5, color=INK, y=.985)
 fig.savefig(OUT / 'h7-random.png', dpi=130, bbox_inches='tight'); plt.close(fig)
+
+
+# ---------- h8 两次急跌里每个月留多少股票（Dev #389 health-crash-positions.csv；月末信号，下一个交易日起生效） ----------
+CP = pd.read_csv(SRC / 'health-crash-positions.csv', parse_dates=['月份'])
+fig, axes = plt.subplots(1, 2, figsize=(12, 4.4), gridspec_kw={'width_ratios': [21, 8], 'wspace': .12}, sharey=True)
+for ax, (w, title) in zip(axes, [('2007-10_2009-06', '2008 年：2007-10 → 2009-06'), ('2015-05_2015-12', '2015 年：2015-05 → 2015-12')]):
+    g = CP[CP['窗口'] == w]
+    for slot, c, off in [('A股', AMBER, -.19), ('美股', BLUE, .19)]:
+        q = g[g['名额'] == slot].reset_index(drop=True)
+        xs = np.arange(len(q)); eq = 100 * q['股票仓位'].values
+        ax.bar(xs + off, eq, .36, color=c)
+        ax.bar(xs + off, 100 - eq, .36, bottom=eq, color='white', ec=c, lw=.7, hatch='///' if slot == 'A股' else '...', alpha=.55)
+        for x_, t in zip(xs, q['紧张']):
+            if t:
+                ax.scatter(x_ + off, 105, marker='v', s=22, color=c)
+    q = g[g['名额'] == 'A股'].reset_index(drop=True)
+    ax.set_xticks(range(len(q))); ax.set_xticklabels([d.strftime('%y-%m') for d in q['月份']], rotation=90, fontsize=8.5)
+    ax.set_title(title, fontsize=11.5, loc='left', color=INK); ax.set_ylim(0, 110); ax.grid(axis='y', alpha=.2)
+axes[0].set_ylabel('下个月股票仓位 %', color=MUTED)
+fig.text(.06, -.04, '■ A 股名额', color=AMBER, fontsize=10.5); fig.text(.145, -.04, '■ 美股名额', color=BLUE, fontsize=10.5)
+fig.text(.235, -.04, '实色 = 股票，斜线 / 点 = 国债或现金；▼ = 当月末确认紧张（≥ 2 票）；横轴是月末信号日，仓位从下一个交易日起生效', color=MUTED, fontsize=10.5)
+fig.suptitle('2008 年两个名额先减到一半以下、再清零 8–9 个月；2015 年 5–7 月底三票都没响，股灾那几个月 A 股满仓', x=.06, ha='left', fontsize=12.5, color=INK, y=1.0)
+fig.savefig(OUT / 'h8-crash-pos.png', dpi=130, bbox_inches='tight'); plt.close(fig)

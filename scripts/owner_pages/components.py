@@ -356,7 +356,7 @@ def random_grid(rows):
     """| 账 | 段1 | 段2 | 全段 | — cell '百分位｜每月跑赢中位数｜年化'. Tone by percentile: ≥95 good, <50 bad, else mid. Last column framed."""
     keys = list(rows[0].keys()); segs = keys[1:]
     def tone(p):
-        return ('good', '强于随机') if p >= 95 else (('bad', '不如随机的中间') if p < 50 else ('mid', '和随机分不开'))
+        return ('good', '前 5%') if p >= 95 else (('bad', '低于随机的中间') if p < 50 else ('mid', '高于中间，不在前 5%'))
     hd = '<div class="rg-r rg-hd"><span></span>' + ''.join(f'<span class="{"rg-main" if i == len(segs) - 1 else ""}">{k}</span>' for i, k in enumerate(segs)) + '</div>'
     out = ''
     for r in rows:
@@ -364,7 +364,7 @@ def random_grid(rows):
         for i, k in enumerate(segs):
             parts = [x.strip() for x in _txt(r[k]).split('｜')]
             p = float(parts[0]); t, lab = tone(p)
-            cells += (f'<div class="rg-c t-{t}{" rg-main" if i == len(segs) - 1 else ""}"><div class="rg-top"><b>第 {p:.0f}</b><em>{lab}</em></div>'
+            cells += (f'<div class="rg-c t-{t}{" rg-main" if i == len(segs) - 1 else ""}"><div class="rg-top"><b>第 {p:.1f}</b><em>{lab}</em></div>'
                       f'<div class="rg-bar"><i style="width:{p:.0f}%"></i><s></s></div>'
                       f'<div class="rg-sub"><span>每月赢 {parts[1]}</span><span>年化 {parts[2]}</span></div></div>')
         out += f'<div class="rg-r"><div class="rg-k">{_inner(r[keys[0]])}</div>{cells}</div>'
