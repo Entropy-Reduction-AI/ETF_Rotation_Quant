@@ -9,17 +9,20 @@ import pandas as pd
 
 from src.v6.engine import mix_monthly, slot
 from src.v6.guard import IsolationError
-from src.v6.health import COST
 from src.v6.oneshot_exam import (
     ACTIVE,
+    BLOCK_LABEL,
+    COST,
     OFFICIAL,
     PREMIUM_TOLERANCE,
+    REAL_COST,
     REHEARSAL,
     S6_SAME_WEIGHTS,
     SIGNED_PREMIUM,
     control_spec,
     d51_accept,
     extend_plan,
+    insert_window_field,
     official,
     refuse_market_after_design,
 )
@@ -110,6 +113,17 @@ class OneshotExamTests(unittest.TestCase):
             "签收": SIGNED_PREMIUM, "预演": 2.829, "差": 1.445, "实质差异": True,
         }]})
         self.assertFalse(bad["通过"])
+
+    def test_real_cost_is_not_the_judgment_cost_and_labels_stay_unofficial(self):
+        self.assertEqual(COST, 0.002)
+        self.assertEqual(REAL_COST, 0.0001)
+        self.assertNotEqual(REAL_COST, COST)
+        self.assertEqual(BLOCK_LABEL, "预演不贴")
+        original = ' {\n  "年化": 0.15284964803990508,\n  "线": "v6"\n }\n'
+        tagged = insert_window_field(original, "年化", "全段")
+        self.assertIn("0.15284964803990508", tagged)
+        self.assertIn('"窗口": "全段"', tagged)
+        self.assertEqual(tagged.count("0.15284964803990508"), 1)
 
 
 if __name__ == "__main__":

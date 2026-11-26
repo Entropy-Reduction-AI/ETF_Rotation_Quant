@@ -36,6 +36,7 @@ from src.v6.health_random import (
     _simulate,
     _v6_picks,
     _window_rows,
+    annualize,
 )
 from src.v6.load import load_panels
 from src.v6.oneshot_prep import (
@@ -88,6 +89,9 @@ OFFICIAL_AUTHORIZED = False
 S6_SAME_WEIGHTS = {"H00300": 0.50, "XNDX": 0.25, "SP500TR": 0.25}
 SIGNED_PREMIUM = 1.383910856278514
 PREMIUM_TOLERANCE = 0.01
+REAL_COST = 0.0001
+BLOCK_LABEL = "预演不贴"
+BLOCK_LABEL_BASIS = "D49-8 的正式标签要有检验段 2016-01→2026-09。本次是预演，不贴。"
 
 
 def extend_plan(end: str) -> dict:
@@ -767,13 +771,191 @@ def official() -> None:
     run_exam()
 
 
+def insert_window_field(text: str, key: str, window: str) -> str:
+    """在已有记录里加上窗口。不改原来的数字文本。"""
+    token = f'  "{key}":'
+    addition = f'  "窗口": "{window}",\n{token}'
+    if token not in text:
+        raise IsolationError(f"找不到字段 {key}，不加窗口")
+    if f'"窗口": "{window}"' in text:
+        return text
+    return text.replace(token, addition)
+
+
+def _snapshot(directory: Path) -> dict[str, bytes]:
+    return {path.name: path.read_bytes() for path in directory.iterdir() if path.is_file()}
+
+
+def _append_exam_block(path: Path, book: SpanBook, windows: Windows) -> None:
+    original = path.read_text(encoding="utf-8")
+    if "\n检验段," in original or original.startswith("检验段,"):
+        return
+    parts = six_blocks(book, windows.exam_start, windows.exam_end)
+    row = {"段": "检验段", **{name: parts[name] for name in BLOCKS}, "和": parts["和"], "读法": "预演没有2016年以后，不贴标签"}
+    line = pd.DataFrame([row]).to_csv(index=False, header=False)
+    path.write_text(original if original.endswith("\n") else original + "\n", encoding="utf-8")
+    path.write_text(path.read_text(encoding="utf-8") + line, encoding="utf-8")
+    if not path.read_text(encoding="utf-8").startswith(original if original.endswith("\n") else original + "\n"):
+        raise IsolationError("blocks.csv 原有行被改动")
+
+
+def _daily_returns(columns: dict[str, pd.Series], start: str, end: str) -> pd.DataFrame:
+    frame = pd.concat(columns, axis=1).sort_index()
+    frame = frame.loc[start:end]
+    frame.index.name = "date"
+    return frame
+
+
+def _write_random_paths(out: Path, index: pd.DatetimeIndex, mixed: np.ndarray, windows: Windows) -> None:
+    rows = []
+    for label, start, end in (("检验段", windows.exam_start, windows.exam_end), ("全段", windows.full_start, windows.full_end)):
+        day = (index >= start) & (index <= end)
+        annual = annualize(mixed[:, day])
+        if len(annual) != TRIALS:
+            raise IsolationError("随机路径不是 1000 条")
+        for path, value in enumerate(annual):
+            rows.append({"segment": label, "path": path, "annual": float(value)})
+    pd.DataFrame(rows).to_csv(out / "random-paths.csv", index=False)
+
+
+def _cost_real_report(net, plain, gross, bm_main, bm_same, k2a, windows: Windows) -> dict:
+    """单边 0.01% 只报告。不写进 verdict，不参与翻转。"""
+    def one(start: str, end: str) -> dict:
+        item = evaluate(_criteria_book(net, plain, bm_main, bm_same, k2a), start, end)
+        window_net = net.loc[start:end].dropna()
+        window_gross = gross.loc[start:end].dropna()
+        return {
+            "年化": cagr(window_net),
+            "最大回撤": max_drawdown(window_net)["max_drawdown"],
+            "最大回撤判据": item.max_drawdown,
+            "保费": item.premium_pp,
+            "年化除以回撤": item.ratio,
+            "增强基准年化除以回撤": item.benchmark_ratio,
+            "对同仓位基准": item.excess_vs_same_pp,
+            "成本块": (cagr(window_net) - cagr(window_gross)) * 100.0,
+        }
+    return {
+        "角色": "只报告，不进入判定",
+        "单边成本": REAL_COST,
+        "说明": "持仓不变，只把单边成本改成 0.01%。不进入四条判据，也不算 S1–S8 的翻转。",
+        "指数池": {
+            "检验段": one(windows.exam_start, windows.exam_end),
+            "全段": one(windows.full_start, windows.full_end),
+        },
+        "可交易池": {
+            "状态": "未实现",
+            "不阻塞": True,
+            "说明": "预注册 §5.1 的可交易池和 QDII 溢价还没有接到这条预演，不阻塞后续步骤。",
+        },
+    }
+
+
+def export_extra(windows: Windows, out: Path) -> dict:
+    """补第 1 步的 6 样。不改写判定文件。"""
+    if windows is not REHEARSAL or windows.full_end > DESIGN_END_TEXT:
+        raise IsolationError("这批导出只在预演窗口、2015-12-31 封顶下运行")
+    before = _snapshot(out)
+    panels = load_panels()
+    if not PANEL.exists():
+        raise IsolationError("美股起点经验面板不在")
+    prior = us_prior(PANEL)
+    bond, cash = panels["bond"], panels["cash"]
+    votes = panels["votes"]
+    saved = {key: panels["trin"][key].copy() for key in ("csi300", "SPX")}
+    panels["trin"]["csi300"] = month_end_mean(clip_expanding(_a_daily(panels)))
+    panels["trin"]["SPX"] = month_end_mean(clip_expanding(_us_daily(panels)))
+    try:
+        base = _variant(panels, prior, votes, bond, cash, n=3, cost=COST, lag=0, stress=2, exclude=None, weight_a=0.4)
+        blocks = _zero_cost_blocks(panels, prior, votes, bond, cash)
+        a_id, _ = _sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "id", COST, 3, 0, 2, None)
+        a_open, _ = _sleeve(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash, "id_open", COST, 3, 0, 2, None)
+        continuity = _mix(a_id, base["美"], COST, 0.4)
+        continuity_open = _mix(a_open, base["美"], COST, 0.4)
+        bm_main, bm_same = _benchmarks()
+        k2a = _k2a(panels, True)
+        k2a_ref = _k2a(panels, False)
+        parts = reference_frame(end=DESIGN_END_TEXT).dropna()
+        assert_not_after(parts.index, "全收益指数")
+        a1, _a1_note = _read_peer("A1", A1_SHA)
+        a2, _a2_note = _read_peer("A2", A2_SHA)
+        try:
+            current, _evidence = design_book()
+        except (IsolationError, OSError, ValueError):
+            current = None
+        price_main = _price_benchmark(panels, (0.70, 0.15, 0.15))
+        price_same = _price_benchmark(panels, (0.40, 0.30, 0.30))
+        attr = _attribution_book(
+            base["净"], blocks["毛"], blocks["等权"], blocks["前3"],
+            bm_main, bm_same, price_main, price_same, k2a,
+        )
+        real = _variant(
+            panels, prior, votes, bond, cash,
+            n=3, cost=REAL_COST, lag=0, stress=2, exclude=None, weight_a=0.4,
+        )
+        _write_random_paths(out, base["净"].index, _mixed_paths(panels, prior, votes, bond, cash), windows)
+    finally:
+        panels["trin"]["csi300"] = saved["csi300"]
+        panels["trin"]["SPX"] = saved["SPX"]
+    columns = {
+        "v6": base["净"],
+        "连续性版": continuity,
+        "A1": a1,
+        "A2": a2,
+        "K2A": k2a,
+        "现行配置": current,
+        "BM-主": bm_main,
+        "BM-同仓位": bm_same,
+        "连续性版-参照": continuity_open,
+        "K2A-参照": k2a_ref,
+        "不设防守": base["不设防守"],
+        "沪深300全收益": parts["H00300"],
+        "标普500全收益": parts["SP500TR"],
+    }
+    daily = _daily_returns({name: series for name, series in columns.items() if series is not None}, windows.full_start, windows.full_end)
+    _cap(daily["v6"], "逐日收益", windows.full_end)
+    daily.to_csv(out / "returns-daily.csv", float_format="%.12g")
+    _append_exam_block(out / "blocks.csv", attr, windows)
+    labels = pd.DataFrame([
+        {"块": name, "标签": BLOCK_LABEL, "依据": BLOCK_LABEL_BASIS} for name in BLOCKS
+    ])
+    labels.to_csv(out / "block-labels.csv", index=False)
+    for name, key in (("character.json", "年化"), ("regimes.json", "对照"), ("anystart.json", "年数")):
+        path = out / name
+        path.write_text(insert_window_field(path.read_text(encoding="utf-8"), key, "全段"), encoding="utf-8")
+    report = _cost_real_report(real["净"], real["不设防守"], blocks["毛"], bm_main, bm_same, k2a, windows)
+    (out / "cost-real.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
+    if "cost-real" in (out / "verdict.json").read_text(encoding="utf-8"):
+        raise IsolationError("实盘成本写进了判定文件")
+    drifted = [name for name, blob in before.items() if name not in {"blocks.csv", "character.json", "regimes.json", "anystart.json"} and (out / name).read_bytes() != blob]
+    if drifted:
+        for name, blob in before.items():
+            if name in drifted:
+                (out / name).write_bytes(blob)
+        raise IsolationError(f"重跑改了判定文件：{drifted}")
+    return {"保费仍用": COST, "实盘成本": REAL_COST, "逐日": int(len(daily))}
+
+
+def _mixed_paths(panels, prior, votes, bond, cash) -> np.ndarray:
+    a_plans = _plans(panels["A"], "csi300", None, TAGS["a"], votes, bond, cash)
+    u_plans = _plans(panels["US"], "SPX", prior, TAGS["us"], votes, bond, cash)
+    rng = np.random.default_rng(SEED)
+    a_paths = _simulate(panels["A"], bond, cash, a_plans, _draw(a_plans, rng, TRIALS), COST)
+    u_paths = _simulate(panels["US"], bond, cash, u_plans, _draw(u_plans, rng, TRIALS), COST)
+    mixed = np.empty_like(a_paths)
+    index = panels["A"].index
+    for i in range(TRIALS):
+        mixed[i] = mix_monthly(pd.Series(a_paths[i], index=index), pd.Series(u_paths[i], index=index), COST).to_numpy()
+    _cap(pd.Series(mixed[0], index=index), "随机路径", DESIGN_END_TEXT)
+    return mixed
+
+
 def main() -> None:
     past_design = ACTIVE.exam_end > DESIGN_END_TEXT or ACTIVE.full_end > DESIGN_END_TEXT
     if ACTIVE is OFFICIAL or (past_design and not OFFICIAL_AUTHORIZED):
         official()
     if ACTIVE is not REHEARSAL:
         raise IsolationError("ACTIVE 不是预演窗口。正式考试未授权。")
-    print(json.dumps(execute(ACTIVE, REHEARSAL_OUT), ensure_ascii=False))
+    print(json.dumps(export_extra(ACTIVE, REHEARSAL_OUT), ensure_ascii=False))
 
 
 if __name__ == "__main__":
