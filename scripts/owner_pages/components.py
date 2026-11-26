@@ -199,14 +199,14 @@ def risks(rows):
 
 
 def carriers(rows):
-    tone = {'同一指数': 'good', '相近指数': 'warn', '无场内基金': 'bad', '通过': 'good', '不通过': 'bad', '暂停线': 'bad'}
+    tone = {'同一指数': 'good', '相近指数': 'warn', '无场内基金': 'bad', '通过': 'good', '通过（有条件）': 'warn', '不通过': 'bad', '暂停线': 'bad'}
     out = ''
     for r in rows:
         k = _txt(r['类型'])
         t = tone.get(k) or ('bad' if '无场内基金' in k else 'mute')
         items = [x.strip() for x in re.split(r'[、，,]', _txt(r['候选'])) if x.strip()]
         chips = ''.join(f'<span class="cr-c">{x}</span>' for x in items)
-        cnt = '' if k in ('通过', '不通过') else f'<b>{len(items)}</b> '
+        cnt = '' if k in ('通过', '通过（有条件）', '不通过') else f'<b>{len(items)}</b> '
         out += f'<div class="cr-r t-{t}"><div class="cr-k">{cnt}{k}</div><div class="cr-cs">{chips}</div></div>'
     return f'<div class="carriers">{out}</div>'
 
