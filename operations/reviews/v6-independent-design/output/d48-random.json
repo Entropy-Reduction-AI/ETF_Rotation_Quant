@@ -1,0 +1,100 @@
+{
+ "seed": 20261122,
+ "runs": 1000,
+ "code_sha256": {
+  "run_d48_random.py": "524b74275a5a2db239288afdeb9534614e7b4b148c0581f2fe2fe3b0c63e1825",
+  "d45_engine.py": "49f6b72c5b31f628dd851f1c8298928883b19467e5a785aa96c42ec5a05893d1"
+ },
+ "rule": "去重后随机取 3；准入与 v6 相同；p 用 12−1 去重前 3；每月末 60/40；单边 0.2%",
+ "vote_note": "full 与 expanding 在已锁定的 d48 闸门上相同；随机沿用 full 这一套票。",
+ "top3_matches_v6": true,
+ "random": {
+  "2006–10": {
+   "组合": {
+    "v6_annual_pct": 18.51477,
+    "percentile": 67.9,
+    "monthly": {
+     "months": 60,
+     "win_share": 0.466667
+    },
+    "random_annual_median_pct": 17.560712
+   },
+   "A股": {
+    "v6_annual_pct": 45.596246,
+    "percentile": 89.9,
+    "monthly": {
+     "months": 60,
+     "win_share": 0.5
+    },
+    "random_annual_median_pct": 40.020535
+   },
+   "美股": {
+    "v6_annual_pct": 1.31282,
+    "percentile": 25.3,
+    "monthly": {
+     "months": 60,
+     "win_share": 0.366667
+    },
+    "random_annual_median_pct": 2.493291
+   }
+  },
+  "2011–15": {
+   "组合": {
+    "v6_annual_pct": 12.140627,
+    "percentile": 97.4,
+    "monthly": {
+     "months": 60,
+     "win_share": 0.6
+    },
+    "random_annual_median_pct": 8.266204
+   },
+   "A股": {
+    "v6_annual_pct": 8.14707,
+    "percentile": 24.3,
+    "monthly": {
+     "months": 60,
+     "win_share": 0.45
+    },
+    "random_annual_median_pct": 10.263357
+   },
+   "美股": {
+    "v6_annual_pct": 13.584,
+    "percentile": 99.9,
+    "monthly": {
+     "months": 60,
+     "win_share": 0.716667
+    },
+    "random_annual_median_pct": 5.751503
+   }
+  },
+  "2006–15": {
+   "组合": {
+    "v6_annual_pct": 15.284965,
+    "percentile": 95.5,
+    "monthly": {
+     "months": 120,
+     "win_share": 0.533333
+    },
+    "random_annual_median_pct": 12.808287
+   },
+   "A股": {
+    "v6_annual_pct": 25.48998,
+    "percentile": 66.8,
+    "monthly": {
+     "months": 120,
+     "win_share": 0.475
+    },
+    "random_annual_median_pct": 24.315202
+   },
+   "美股": {
+    "v6_annual_pct": 7.270563,
+    "percentile": 97.7,
+    "monthly": {
+     "months": 120,
+     "win_share": 0.541667
+    },
+    "random_annual_median_pct": 4.120016
+   }
+  }
+ }
+}
