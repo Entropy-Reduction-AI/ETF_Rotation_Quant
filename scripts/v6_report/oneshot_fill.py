@@ -67,16 +67,29 @@ for j, t in enumerate(['①', '②', '③', '④']):
 a.text(4.7, .8, '总结论', ha='center', fontsize=11, color=MUTED, weight='bold')
 a.set_xlim(-2.4, 5.4); a.set_ylim(-len(rows) + .3, 1.3); a.axis('off')
 a.set_title(f'稳健性 8 项：{"没有一项让总结论翻转" if not flips else "、".join(flips) + " 让总结论翻转"}', fontsize=12.5, loc='left', color=INK)
-seg_ex = rnd['segment'].iloc[-1]
-rk = rnd[(rnd['book'] == '组合')]
-for i, (_, r) in enumerate(rk.iterrows()):
-    c = TEAL if r['percentile'] >= 95 else (AMBER if r['percentile'] < 50 else '#64748b')
-    b.barh(-i, r['percentile'], color=c, height=.55)
-    b.text(r['percentile'] + 1, -i, f"第 {r['percentile']:.1f}　每月赢 {100 * r['beat_random_median_share']:.1f}%", va='center', fontsize=10.5, color=c, weight='bold')
-    b.text(-2, -i, str(r['segment']).replace('-', '–'), ha='right', va='center', fontsize=11)
-b.axvspan(95, 100, color='#e6f4f1'); b.axvline(50, color=GREY, ls='--', lw=1)
-b.set_xlim(0, 130); b.set_yticks([]); b.spines['left'].set_visible(False); b.set_xticks([0, 50, 95])
-b.set_title('同结构随机 1000 次：v6 整体排第几百分位', fontsize=12.5, loc='left', color=INK)
+ln0 = C('lines.csv')
+if paths is not None:
+    for i, w in enumerate(['检验段', '全段']):
+        x = 100 * paths[paths['segment'] == w]['annual'].to_numpy()
+        me = 100 * float(ln0[(ln0['窗口'] == w) & (ln0['线'] == 'v6')]['年化'].iloc[0])
+        pct = 100 * (x < me).mean(); y0 = -1.25 * i
+        h, e = np.histogram(x, bins=30); h = h / h.max()
+        b.bar(e[:-1], h, width=np.diff(e), bottom=y0, align='edge', color='#cbd5e1', ec='white', lw=.4)
+        c = TEAL if pct >= 95 else (AMBER if pct < 50 else '#64748b')
+        b.plot([me, me], [y0, y0 + 1.05], color=c, lw=2.4)
+        b.text(me, y0 + 1.08, f'v6 {me:.1f}%　第 {pct:.1f}', ha='center', fontsize=10.5, color=c, weight='bold')
+        b.text(x.min(), y0 + .55, w, ha='right', fontsize=11.5, color=INK); facts[f'随机分位_{w}'] = pct
+    b.set_yticks([]); b.spines['left'].set_visible(False); b.set_xlabel('随机 1000 次的年化 %', color=MUTED)
+    b.set_title('同结构随机 1000 次：v6 年化落在哪', fontsize=12.5, loc='left', color=INK)
+else:
+    rk = rnd[(rnd['book'] == '组合')]
+    for i, (_, r) in enumerate(rk.iterrows()):
+        c = TEAL if r['percentile'] >= 95 else (AMBER if r['percentile'] < 50 else '#64748b')
+        b.barh(-i, r['percentile'], color=c, height=.55)
+        b.text(r['percentile'] + 1, -i, f"第 {r['percentile']:.1f}", va='center', fontsize=10.5, color=c, weight='bold')
+        b.text(-2, -i, str(r['segment']), ha='right', va='center', fontsize=11)
+    b.set_xlim(0, 130); b.set_yticks([]); b.spines['left'].set_visible(False)
+    b.set_title('同结构随机 1000 次：v6 排第几百分位', fontsize=12.5, loc='left', color=INK)
 facts['随机'] = rnd.to_dict('records')
 save(fig, 'o2-robust.png')
 
@@ -102,6 +115,19 @@ big = max(BK, key=lambda k: abs(float(wrow[k])))
 ax.text(0, 0, '起点 0', ha='center', va='bottom', fontsize=10, color=MUTED)
 ax.set_title(f'{wrow["段"]}：v6 比 BM-主每年{"多" if cum >= 0 else "少"} {abs(cum):.1f} 点，最大的一块是{big}（{mm(float(wrow[big]))}）', fontsize=12.5, loc='left', color=INK)
 save(fig, 'o3w-waterfall.png')
+if (SRC / 'cost-real.json').exists():
+    CR = J('cost-real.json'); facts['实盘成本'] = CR
+    q = CR['指数池']['检验段']; m = main
+    fig, (c1, c2) = plt.subplots(1, 2, figsize=(12, 3.4))
+    for ax_, lab, v2, v1, thr, fmt in [(c1, '④ 对同仓位基准（点）', q['对同仓位基准'], float(m['对同仓位基准']), 0, '{:+.2f}'),
+                                      (c2, '③ 年化 ÷ 回撤', q['年化除以回撤'], float(m['年化除以回撤']), float(m['增强基准年化除以回撤']), '{:.3f}')]:
+        for j, (nm, v, c) in enumerate([('单边 0.2%（判定）', v1, BLUE), ('单边 0.01%（只报告）', v2, '#94a3b8')]):
+            ax_.barh(-j, v, color=c, height=.55); ax_.text(max(v, 0) if thr == 0 else v, -j, '  ' + fmt.format(v).replace('-', '−'), va='center', fontsize=11, color=INK, weight='bold')
+        ax_.axvline(thr, color=RED, ls='--', lw=1.2); ax_.text(thr, .5, ' 门槛 ' + ('0' if thr == 0 else fmt.format(thr)), color=RED, fontsize=10, ha='left')
+        ax_.set_yticks([0, -1]); ax_.set_yticklabels(['单边 0.2%（判定）', '单边 0.01%（只报告）']); ax_.tick_params(axis='y', length=0); ax_.spines['left'].set_visible(False); ax_.set_title(lab, fontsize=12, loc='left', color=INK); ax_.set_ylim(-1.6, .9)
+        ax_.margins(x=.25)
+    fig.suptitle(f'成本两个口径（检验段）：判定只看 0.2%；0.01% 下成本块 {mm(q["成本块"])} 点', x=.01, ha='left', fontsize=12.5, color=INK)
+    fig.tight_layout(); save(fig, 'o3c-cost.png')
 fig, ax = plt.subplots(figsize=(12, 4.6))
 segs = list(bl['段'])
 for j, sg in enumerate(segs):
@@ -178,7 +204,7 @@ facts['八条线'] = ln.to_dict('records')
 # ---------- 性格：净值与回撤（需要 returns-daily.csv） ----------
 if (SRC / 'returns-daily.csv').exists():
     R = pd.read_csv(SRC / 'returns-daily.csv', parse_dates=['date']).set_index('date')
-    LINE = {'v6': (BLUE, 2.6, '-'), 'K2A': (INK, 1.5, '-'), '现行配置': (AMBER, 1.3, '-'), 'A1': (TEAL, 1.3, '-'), 'BM-主': (GREY, 1.6, '-'), 'BM-同仓位': (GREY, 1.3, '--')}
+    LINE = {'沪深300全收益': ('#fca5a5', 1.0, '-'), '标普500全收益': ('#93c5fd', 1.0, '-'), 'v6': (BLUE, 2.6, '-'), 'K2A': (INK, 1.5, '-'), '现行配置': (AMBER, 1.3, '-'), 'A1': (TEAL, 1.3, '-'), 'BM-主': (GREY, 1.6, '-'), 'BM-同仓位': (GREY, 1.3, '--')}
     fig, (a1, a2) = plt.subplots(2, 1, figsize=(12, 6.8), sharex=True, gridspec_kw={'height_ratios': [2.4, 1], 'hspace': .08})
     for k, (c, lw, ls) in LINE.items():
         if k not in R:
@@ -196,7 +222,7 @@ if (SRC / 'returns-daily.csv').exists():
 facts['性格'] = J('character.json')
 
 # ---------- 四种行情 ----------
-rg = J('regimes.json')
+rg = [x for x in J('regimes.json') if x.get('窗口', '全段') == '全段']
 fig, ax = plt.subplots(figsize=(11.5, 4.4))
 names = ['牛市', '回调', '熊市', '反弹']; refs = ['BM-主', 'BM-同仓位', 'K2A']; cc = [GREY, '#94a3b8', INK]
 for j, ref in enumerate(refs):
