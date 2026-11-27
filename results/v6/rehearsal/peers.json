@@ -1,0 +1,20 @@
+{
+ "A1": {
+  "path": "results/v4/r5/design/A1/index/net.csv",
+  "summary_sha256": "3c371162360d276d6418b5d57a17b037abd5a99ac17e5b1933fd66854478634e",
+  "recomputed_sha256": "3c371162360d276d6418b5d57a17b037abd5a99ac17e5b1933fd66854478634e",
+  "start": "2005-01-04",
+  "end": "2015-12-31",
+  "matches_prereg": true,
+  "status": "ok"
+ },
+ "A2": {
+  "path": "results/v4/r5/design/A2/index/net.csv",
+  "summary_sha256": "cf3091d5dfdae739a0f175c1d96c7910bd5ee1bbdb22c1f9fce7eecaa1b7685a",
+  "recomputed_sha256": "cf3091d5dfdae739a0f175c1d96c7910bd5ee1bbdb22c1f9fce7eecaa1b7685a",
+  "start": "2005-01-04",
+  "end": "2015-12-31",
+  "matches_prereg": true,
+  "status": "ok"
+ }
+}

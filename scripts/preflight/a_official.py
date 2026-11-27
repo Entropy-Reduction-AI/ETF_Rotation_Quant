@@ -24,8 +24,10 @@ pub.setdefault('chinext', '2010-06-01')                     # 创业板指 2010-
 ro = pd.read_csv(ROOT / 'results/v51-diag/d37/s1-splice-roster.csv')
 th = ro[(ro['class'] == 'A股') & (ro['status'] == 'spliced') & ro['publish_date'].notna()]
 con = sqlite3.connect(ROOT / 'data/market.sqlite')
+from src.v6.guard import load_end_text
+_LOAD_END = load_end_text()
 def bars(code):
-    d = pd.read_sql_query("select date, close, amount from bars where code=? and adj='raw' and close>0 and date<='2015-12-31' order by date", con, params=(code,))
+    d = pd.read_sql_query("select date, close, amount from bars where code=? and adj='raw' and close>0 and date<=? order by date", con, params=(code, _LOAD_END))
     d = d.drop_duplicates('date', keep='last'); d.index = pd.to_datetime(d['date']); return d
 A = A_OLD.copy(); AMT = {}
 for c in A.columns:

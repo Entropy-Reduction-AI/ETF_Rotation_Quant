@@ -1,0 +1,11 @@
+{
+ "end": "2026-09-30",
+ "读行情": false,
+ "步骤": [
+  "把 ACTIVE 从 REHEARSAL 改成 OFFICIAL",
+  "OFFICIAL_AUTHORIZED 由另行授权的那一次运行打开",
+  "装载日期放宽到该次窗口终点，SQL 仍必须自带 date<=",
+  "A1、A2 用设计期账本接检验段账本，重叠日逐日一致才衔接",
+  "现行配置的 package 终点改成该次窗口终点"
+ ]
+}

@@ -133,7 +133,7 @@ def continuity_pick(score: np.ndarray, ok: np.ndarray, identity: np.ndarray, tag
 
 def run_slot(levels: pd.DataFrame, parent: str, vote: pd.Series, bond: pd.Series, cash: pd.Series,
              tags: dict[str, str], prior: list[float] | None, *, mode: str, cost: float, names: int = 3,
-             dedupe: bool = True):
+             dedupe: bool = True, exclude: frozenset[str] | None = None):
     calendar = levels.index
     returns = levels.pct_change().fillna(0.0)
     mask = month_end_mask(calendar)
@@ -147,6 +147,7 @@ def run_slot(levels: pd.DataFrame, parent: str, vote: pd.Series, bond: pd.Series
     columns = list(levels.columns)
     tag = np.array([tags.get(column, "") for column in columns], dtype=object)
     parent_at = columns.index(parent)
+    banned = set(exclude or ())
     held = np.zeros(len(columns))
     bond_weight = 0.0
     cash_weight = 1.0
@@ -169,6 +170,8 @@ def run_slot(levels: pd.DataFrame, parent: str, vote: pd.Series, bond: pd.Series
         for pos in order:
             if not ok[pos] or len(picked) == names:
                 break
+            if columns[pos] in banned:
+                continue
             label = tag[pos]
             if dedupe and label and label in used:
                 continue
@@ -200,6 +203,10 @@ def run_slot(levels: pd.DataFrame, parent: str, vote: pd.Series, bond: pd.Series
             queued = None
         score = momentum.loc[stamp].to_numpy(dtype=float)
         ok = np.isfinite(score)
+        if banned:
+            for pos, name in enumerate(columns):
+                if name in banned:
+                    ok[pos] = False
         target = np.zeros(len(columns))
         belief = confidence(history, prior)
         votes_now = int(vote.get(stamp.to_period("M"), 0))
@@ -250,6 +257,7 @@ def run_slot(levels: pd.DataFrame, parent: str, vote: pd.Series, bond: pd.Series
         left = 1.0 - float(target.sum())
         bond_ok = bool(bond_above.loc[stamp]) if stamp in bond_above.index else False
         record["持有"] = [columns[pos] for pos in picked] if mode != "ew" else []
+        record["权重"] = {columns[pos]: float(target[pos]) for pos in picked}
         record["分数"] = {columns[pos]: float(score[pos]) for pos in range(len(columns)) if np.isfinite(score[pos])}
         record["国债"] = round(left if bond_ok else 0.0, 6)
         record["现金"] = round(0.0 if bond_ok else left, 6)
