@@ -1,0 +1,827 @@
+{
+ "dev_matches_submitted_daily": {
+  "v6_max_abs": 4.986983048738125e-14,
+  "v6_days": 5040,
+  "undefended_max_abs": 4.9992995854175604e-14,
+  "matches_official_v6": true,
+  "matches_official_undefended": true
+ },
+ "dev_summary": {
+  "最大回撤": -0.2580921211221614,
+  "年化": 0.10631326862632862,
+  "保费_百分点": 0.9470009676151493,
+  "年化除以回撤": 0.4119198531287513,
+  "对同仓位超额_百分点": -2.5435857430669238,
+  "不设防守年化": 0.10701225797553393,
+  "K2A": {
+   "days": 2611,
+   "first": "2016-01-04",
+   "last": "2026-09-30",
+   "cagr": 0.11666165834377762,
+   "max_drawdown": -0.2046028723339225,
+   "ratio": 0.5701858288351873
+  },
+  "BM同仓位": {
+   "days": 2611,
+   "first": "2016-01-04",
+   "last": "2026-09-30",
+   "cagr": 0.13174912605699785,
+   "max_drawdown": -0.23489260280631719,
+   "ratio": 0.5608909113482504
+  },
+  "日数": 2611,
+  "起": "2016-01-04",
+  "止": "2026-09-30",
+  "列_A": [
+   "csi300",
+   "allshare-energy",
+   "allshare-materials",
+   "allshare-industrials",
+   "allshare-discretionary",
+   "allshare-staples",
+   "allshare-healthcare",
+   "allshare-financials-re",
+   "allshare-it",
+   "allshare-communication",
+   "allshare-utilities",
+   "csi500",
+   "csi1000",
+   "csi-dividend",
+   "chinext",
+   "theme-中证全球中国教育主题人民币指数",
+   "theme-中证全指半导体产品与设备",
+   "theme-中证半导体材料设备主题",
+   "theme-中证人工智能主题",
+   "theme-中证全指通信设备",
+   "theme-中证全指软件",
+   "theme-中证机器人",
+   "theme-中证消费电子主题",
+   "theme-中证有色金属",
+   "theme-中证煤炭",
+   "theme-中证钢铁",
+   "theme-中证新能源汽车",
+   "theme-中证光伏产业",
+   "theme-中证军工",
+   "theme-沪深300医药卫生",
+   "theme-中证创新药产业",
+   "theme-中证主要消费",
+   "theme-中证酒",
+   "theme-中证农业",
+   "theme-中证银行",
+   "theme-中证全指证券公司",
+   "theme-中证全指房地产",
+   "theme-上证红利",
+   "theme-中证红利低波动"
+  ],
+  "列_美": [
+   "SPX",
+   "NDX",
+   "DJIA",
+   "SOX",
+   "NBI",
+   "XLK",
+   "XLV",
+   "XLE",
+   "XLY",
+   "XLP",
+   "XLF",
+   "XLI",
+   "XLB",
+   "XLU",
+   "DWRTF"
+  ],
+  "起点经验条数": 129,
+  "交卷保费公式_重放": 0.9470009676151493,
+  "Reviewer保费公式_打在Dev序列上": {
+   "premium_pp": 0.947000967615181,
+   "years": [
+    2017,
+    2019,
+    2020,
+    2021,
+    2023,
+    2024,
+    2025
+   ],
+   "detail": [
+    {
+     "year": 2017,
+     "bm_main": 0.23001768105575415,
+     "undefended": 0.15952443270343952,
+     "strategy": 0.15665345030962907,
+     "gap_pp": 0.28709823938104506
+    },
+    {
+     "year": 2019,
+     "bm_main": 0.39190681248640624,
+     "undefended": 0.26365344774242594,
+     "strategy": 0.2635319198258743,
+     "gap_pp": 0.012152791655162254
+    },
+    {
+     "year": 2020,
+     "bm_main": 0.284798059295148,
+     "undefended": 0.34644111848743786,
+     "strategy": 0.2973212797122653,
+     "gap_pp": 4.911983877517256
+    },
+    {
+     "year": 2021,
+     "bm_main": 0.05072078681357062,
+     "undefended": 0.18746202465780737,
+     "strategy": 0.1874620246578067,
+     "gap_pp": 6.661338147750939e-14
+    },
+    {
+     "year": 2023,
+     "bm_main": 0.04589230363703822,
+     "undefended": 0.00631428025134162,
+     "strategy": 0.006297680986757426,
+     "gap_pp": 0.0016599264584193918
+    },
+    {
+     "year": 2024,
+     "bm_main": 0.218447468981106,
+     "undefended": 0.07025357444129332,
+     "strategy": 0.05610344102068909,
+     "gap_pp": 1.4150133420604227
+    },
+    {
+     "year": 2025,
+     "bm_main": 0.20073970910207795,
+     "undefended": 0.1831426209339826,
+     "strategy": 0.18313163497164364,
+     "gap_pp": 0.0010985962338949662
+    }
+   ]
+  }
+ },
+ "rev_summary": {
+  "最大回撤": -0.2644275567597466,
+  "年化": 0.09699667936068201,
+  "保费_百分点": 1.2772444499580689,
+  "保费年份": [
+   2017,
+   2019,
+   2020,
+   2021,
+   2023,
+   2024,
+   2025
+  ],
+  "保费明细": [
+   {
+    "year": 2017,
+    "bm_main": 0.23001768105575415,
+    "undefended": 0.15952443270343908,
+    "strategy": 0.15665345030962863,
+    "gap_pp": 0.28709823938104506
+   },
+   {
+    "year": 2019,
+    "bm_main": 0.39190681248640624,
+    "undefended": 0.26365344774242483,
+    "strategy": 0.2635319198258739,
+    "gap_pp": 0.01215279165509564
+   },
+   {
+    "year": 2020,
+    "bm_main": 0.284798059295148,
+    "undefended": 0.30777768989319654,
+    "strategy": 0.24350499104281909,
+    "gap_pp": 6.427269885037745
+   },
+   {
+    "year": 2021,
+    "bm_main": 0.05072078681357062,
+    "undefended": 0.14831323011823327,
+    "strategy": 0.14831323011823283,
+    "gap_pp": 4.440892098500626e-14
+   },
+   {
+    "year": 2023,
+    "bm_main": 0.04589230363703822,
+    "undefended": -0.03382493525129071,
+    "strategy": -0.02005749505010168,
+    "gap_pp": -1.376744020118903
+   },
+   {
+    "year": 2024,
+    "bm_main": 0.218447468981106,
+    "undefended": 0.10442378923675855,
+    "strategy": 0.0685254771539141,
+    "gap_pp": 3.589831208284444
+   },
+   {
+    "year": 2025,
+    "bm_main": 0.20073970910207795,
+    "undefended": 0.1879342604618015,
+    "strategy": 0.1879232300071314,
+    "gap_pp": 0.001103045467010233
+   }
+  ],
+  "年化除以回撤": 0.36681759098508476,
+  "对同仓位超额_百分点": -3.475244669631582,
+  "不设防守年化": 0.09825862939085006,
+  "K2A": {
+   "days": 2611,
+   "first": "2016-01-04",
+   "last": "2026-09-30",
+   "cagr": 0.11666214568211553,
+   "max_drawdown": -0.20460287233392305,
+   "ratio": 0.570188210709557
+  },
+  "BM同仓位": {
+   "days": 2611,
+   "first": "2016-01-04",
+   "last": "2026-09-30",
+   "cagr": 0.13174912605699785,
+   "max_drawdown": -0.23489260280631719,
+   "ratio": 0.5608909113482504
+  },
+  "日数": 2611,
+  "起": "2016-01-04",
+  "止": "2026-09-30",
+  "列_A": [
+   "csi300",
+   "csi500",
+   "csi1000",
+   "chinext",
+   "csi-dividend",
+   "theme-上证红利",
+   "theme-中证红利低波动",
+   "allshare-communication",
+   "allshare-discretionary",
+   "allshare-energy",
+   "allshare-financials-re",
+   "allshare-healthcare",
+   "allshare-industrials",
+   "allshare-it",
+   "allshare-materials",
+   "allshare-staples",
+   "allshare-utilities",
+   "theme-沪深300医药卫生",
+   "theme-中证主要消费",
+   "theme-中证农业",
+   "theme-中证酒",
+   "theme-中证全指半导体产品与设备",
+   "theme-中证全指软件",
+   "theme-中证人工智能主题",
+   "theme-中证有色金属",
+   "theme-中证煤炭",
+   "theme-中证钢铁",
+   "theme-中证银行",
+   "theme-中证全指证券公司",
+   "theme-中证全指房地产",
+   "theme-中证军工",
+   "theme-中证机器人",
+   "theme-中证全指通信设备"
+  ],
+  "列_美": [
+   "SPX",
+   "NDX",
+   "DJIA",
+   "SOX",
+   "NBI",
+   "XLY",
+   "DWRTF",
+   "XLK",
+   "XLV",
+   "XLE",
+   "XLP",
+   "XLF",
+   "XLI",
+   "XLB",
+   "XLU"
+  ],
+  "起点经验条数": 129
+ },
+ "first_diff": {
+  "v6": {
+   "only_dev_days": 0,
+   "only_rev_days": 0,
+   "first_only_dev": null,
+   "first_only_rev": null,
+   "overlap_days": 5280,
+   "first_diff_day": "2020-01-02",
+   "first_diff_abs": 0.0008077287234258268,
+   "dev": 0.012094172420709537,
+   "rev": 0.012901901144135364,
+   "book": "v6"
+  },
+  "不设防守": {
+   "only_dev_days": 0,
+   "only_rev_days": 0,
+   "first_only_dev": null,
+   "first_only_rev": null,
+   "overlap_days": 5280,
+   "first_diff_day": "2020-01-02",
+   "first_diff_abs": 0.0008077287234258268,
+   "dev": 0.012094172420709537,
+   "rev": 0.012901901144135364,
+   "book": "不设防守"
+  },
+  "A": {
+   "only_dev_days": 0,
+   "only_rev_days": 0,
+   "first_only_dev": null,
+   "first_only_rev": null,
+   "overlap_days": 5280,
+   "first_diff_day": "2020-01-02",
+   "first_diff_abs": 0.0020193702532655955,
+   "dev": 0.007816506623754771,
+   "rev": 0.009835876877020366,
+   "book": "A"
+  },
+  "美": {
+   "only_dev_days": 0,
+   "only_rev_days": 0,
+   "first_only_dev": null,
+   "first_only_rev": null,
+   "overlap_days": 5280,
+   "first_diff_day": null,
+   "first_diff_abs": null,
+   "dev": null,
+   "rev": null,
+   "book": "美"
+  },
+  "BM主": {
+   "only_dev_days": 0,
+   "only_rev_days": 0,
+   "first_only_dev": null,
+   "first_only_rev": null,
+   "overlap_days": 5280,
+   "first_diff_day": null,
+   "first_diff_abs": null,
+   "dev": null,
+   "rev": null,
+   "book": "BM主"
+  },
+  "BM同仓位": {
+   "only_dev_days": 0,
+   "only_rev_days": 0,
+   "first_only_dev": null,
+   "first_only_rev": null,
+   "overlap_days": 5280,
+   "first_diff_day": null,
+   "first_diff_abs": null,
+   "dev": null,
+   "rev": null,
+   "book": "BM同仓位"
+  },
+  "K2A": {
+   "only_dev_days": 0,
+   "only_rev_days": 0,
+   "first_only_dev": null,
+   "first_only_rev": null,
+   "overlap_days": 5280,
+   "first_diff_day": "2005-01-06",
+   "first_diff_abs": 0.0068946724489368505,
+   "dev": 0.0,
+   "rev": -0.0068946724489368505,
+   "book": "K2A"
+  },
+  "bond": {
+   "only_dev_days": 724,
+   "only_rev_days": 724,
+   "first_only_dev": "2005-01-06",
+   "first_only_rev": "2005-01-06",
+   "overlap_days": 4556,
+   "first_diff_day": null,
+   "first_diff_abs": null,
+   "dev": null,
+   "rev": null,
+   "book": "bond"
+  },
+  "cash": {
+   "only_dev_days": 0,
+   "only_rev_days": 0,
+   "first_only_dev": null,
+   "first_only_rev": null,
+   "overlap_days": 5280,
+   "first_diff_day": null,
+   "first_diff_abs": null,
+   "dev": null,
+   "rev": null,
+   "book": "cash"
+  }
+ },
+ "columns_only_dev_A": [
+  "theme-中证光伏产业",
+  "theme-中证全球中国教育主题人民币指数",
+  "theme-中证创新药产业",
+  "theme-中证半导体材料设备主题",
+  "theme-中证新能源汽车",
+  "theme-中证消费电子主题"
+ ],
+ "columns_only_rev_A": [],
+ "columns_only_dev_US": [],
+ "columns_only_rev_US": [],
+ "prior_len_dev": 129,
+ "prior_len_rev": 129,
+ "prior_max_abs": 0.0,
+ "explain": {
+  "day": "2020-01-02",
+  "A": {
+   "sleeve": "A",
+   "signal_dev": {
+    "month": "2019-12",
+    "date": "2019-12-31",
+    "sleeve": "A",
+    "side": "dev",
+    "held": "theme-中证半导体材料设备主题|theme-中证酒|theme-沪深300医药卫生",
+    "n_held": 3,
+    "position": 1.0,
+    "votes": 0,
+    "stress": false,
+    "p": 0.443,
+    "gate": false,
+    "eligible_n": 35,
+    "eligible": "allshare-communication|allshare-discretionary|allshare-energy|allshare-financials-re|allshare-healthcare|allshare-industrials|allshare-it|allshare-materials|allshare-staples|allshare-utilities|chinext|csi-dividend|csi1000|csi300|csi500|theme-上证红利|theme-中证主要消费|theme-中证人工智能主题|theme-中证全指半导体产品与设备|theme-中证全指房地产|theme-中证全指证券公司|theme-中证全指软件|theme-中证全指通信设备|theme-中证军工|theme-中证农业|theme-中证半导体材料设备主题|theme-中证新能源汽车|theme-中证有色金属|theme-中证机器人|theme-中证煤炭|theme-中证红利低波动|theme-中证酒|theme-中证钢铁|theme-中证银行|theme-沪深300医药卫生",
+    "bond": true,
+    "weights": "{}",
+    "scores": "{\"theme-中证半导体材料设备主题\": 0.8369599999999999, \"theme-中证酒\": 0.7317359908130097, \"theme-沪深300医药卫生\": 0.34965367696225425}"
+   },
+   "signal_rev": {
+    "month": "2019-12",
+    "date": "2019-12-31",
+    "sleeve": "A",
+    "side": "rev",
+    "held": "theme-中证全指半导体产品与设备|theme-中证酒|theme-沪深300医药卫生",
+    "n_held": 3,
+    "position": 1.0,
+    "votes": 0,
+    "stress": false,
+    "p": 0.443,
+    "gate": false,
+    "eligible_n": 33,
+    "eligible": "allshare-communication|allshare-discretionary|allshare-energy|allshare-financials-re|allshare-healthcare|allshare-industrials|allshare-it|allshare-materials|allshare-staples|allshare-utilities|chinext|csi-dividend|csi1000|csi300|csi500|theme-上证红利|theme-中证主要消费|theme-中证人工智能主题|theme-中证全指半导体产品与设备|theme-中证全指房地产|theme-中证全指证券公司|theme-中证全指软件|theme-中证全指通信设备|theme-中证军工|theme-中证农业|theme-中证有色金属|theme-中证机器人|theme-中证煤炭|theme-中证红利低波动|theme-中证酒|theme-中证钢铁|theme-中证银行|theme-沪深300医药卫生",
+    "bond": 0.0,
+    "weights": "{\"theme-中证全指半导体产品与设备\": 0.3333333333333333, \"theme-中证酒\": 0.3333333333333333, \"theme-沪深300医药卫生\": 0.3333333333333333}",
+    "scores": "{\"theme-中证全指半导体产品与设备\": 0.789929030388608, \"theme-中证酒\": 0.7317359908130097, \"theme-沪深300医药卫生\": 0.34965367696225425}"
+   },
+   "held_only_dev": [
+    "theme-中证半导体材料设备主题"
+   ],
+   "held_only_rev": [
+    "theme-中证全指半导体产品与设备"
+   ],
+   "eligible_only_dev": [
+    "theme-中证半导体材料设备主题",
+    "theme-中证新能源汽车"
+   ],
+   "eligible_only_rev": [],
+   "eligible_count_diff": 2,
+   "prices": [
+    {
+     "name": "theme-中证全指半导体产品与设备",
+     "dev": 0.04113668686274252,
+     "rev": 0.04113668686274252,
+     "held_dev": false,
+     "held_rev": true
+    },
+    {
+     "name": "theme-中证半导体材料设备主题",
+     "missing": true
+    },
+    {
+     "name": "theme-中证酒",
+     "dev": -0.007246531894584907,
+     "rev": -0.007246531894584907,
+     "held_dev": true,
+     "held_rev": true
+    },
+    {
+     "name": "theme-沪深300医药卫生",
+     "dev": -0.00018795182932129784,
+     "rev": -0.00018795182932129784,
+     "held_dev": true,
+     "held_rev": true
+    }
+   ]
+  },
+  "美": {
+   "sleeve": "美",
+   "signal_dev": {
+    "month": "2019-12",
+    "date": "2019-12-31",
+    "sleeve": "美",
+    "side": "dev",
+    "held": "SOX|NDX|XLI",
+    "n_held": 3,
+    "position": 1.0,
+    "votes": 0,
+    "stress": false,
+    "p": 0.998,
+    "gate": false,
+    "eligible_n": 15,
+    "eligible": "DJIA|DWRTF|NBI|NDX|SOX|SPX|XLB|XLE|XLF|XLI|XLK|XLP|XLU|XLV|XLY",
+    "bond": true,
+    "weights": "{}",
+    "scores": "{\"SOX\": 0.5326487927752974, \"NDX\": 0.3694994593619758, \"XLI\": 0.3177273226981896}"
+   },
+   "signal_rev": {
+    "month": "2019-12",
+    "date": "2019-12-31",
+    "sleeve": "美",
+    "side": "rev",
+    "held": "SOX|NDX|XLI",
+    "n_held": 3,
+    "position": 1.0,
+    "votes": 0,
+    "stress": false,
+    "p": 0.998,
+    "gate": false,
+    "eligible_n": 15,
+    "eligible": "DJIA|DWRTF|NBI|NDX|SOX|SPX|XLB|XLE|XLF|XLI|XLK|XLP|XLU|XLV|XLY",
+    "bond": 0.0,
+    "weights": "{\"SOX\": 0.3333333333333333, \"NDX\": 0.3333333333333333, \"XLI\": 0.3333333333333333}",
+    "scores": "{\"SOX\": 0.5326487927752974, \"NDX\": 0.3694994593619758, \"XLI\": 0.3177273226981896}"
+   },
+   "held_only_dev": [],
+   "held_only_rev": [],
+   "eligible_only_dev": [],
+   "eligible_only_rev": [],
+   "eligible_count_diff": 0,
+   "prices": [
+    {
+     "name": "NDX",
+     "dev": 0.01377831692207665,
+     "rev": 0.01377831692207665,
+     "held_dev": true,
+     "held_rev": true
+    },
+    {
+     "name": "SOX",
+     "dev": 0.018536132384575854,
+     "rev": 0.018536132384575854,
+     "held_dev": true,
+     "held_rev": true
+    },
+    {
+     "name": "XLI",
+     "dev": 0.016741073699783726,
+     "rev": 0.016741073699783726,
+     "held_dev": true,
+     "held_rev": true
+    }
+   ]
+  },
+  "sleeve_first": {
+   "A": {
+    "only_dev_days": 0,
+    "only_rev_days": 0,
+    "first_only_dev": null,
+    "first_only_rev": null,
+    "overlap_days": 5280,
+    "first_diff_day": "2020-01-02",
+    "first_diff_abs": 0.0020193702532655955,
+    "dev": 0.007816506623754771,
+    "rev": 0.009835876877020366,
+    "book": "A"
+   },
+   "美": {
+    "only_dev_days": 0,
+    "only_rev_days": 0,
+    "first_only_dev": null,
+    "first_only_rev": null,
+    "overlap_days": 5280,
+    "first_diff_day": null,
+    "first_diff_abs": null,
+    "dev": null,
+    "rev": null,
+    "book": "美"
+   },
+   "不设防守": {
+    "only_dev_days": 0,
+    "only_rev_days": 0,
+    "first_only_dev": null,
+    "first_only_rev": null,
+    "overlap_days": 5280,
+    "first_diff_day": "2020-01-02",
+    "first_diff_abs": 0.0008077287234258268,
+    "dev": 0.012094172420709537,
+    "rev": 0.012901901144135364,
+    "book": "不设防守"
+   },
+   "BM主": {
+    "only_dev_days": 0,
+    "only_rev_days": 0,
+    "first_only_dev": null,
+    "first_only_rev": null,
+    "overlap_days": 5280,
+    "first_diff_day": null,
+    "first_diff_abs": null,
+    "dev": null,
+    "rev": null,
+    "book": "BM主"
+   },
+   "BM同仓位": {
+    "only_dev_days": 0,
+    "only_rev_days": 0,
+    "first_only_dev": null,
+    "first_only_rev": null,
+    "overlap_days": 5280,
+    "first_diff_day": null,
+    "first_diff_abs": null,
+    "dev": null,
+    "rev": null,
+    "book": "BM同仓位"
+   },
+   "K2A": {
+    "only_dev_days": 0,
+    "only_rev_days": 0,
+    "first_only_dev": null,
+    "first_only_rev": null,
+    "overlap_days": 5280,
+    "first_diff_day": "2005-01-06",
+    "first_diff_abs": 0.0068946724489368505,
+    "dev": 0.0,
+    "rev": -0.0068946724489368505,
+    "book": "K2A"
+   }
+  }
+ },
+ "held_mismatch_months": [
+  {
+   "month": "2019-12",
+   "sleeve": "A",
+   "dev_held": "theme-中证半导体材料设备主题|theme-中证酒|theme-沪深300医药卫生",
+   "rev_held": "theme-中证全指半导体产品与设备|theme-中证酒|theme-沪深300医药卫生"
+  },
+  {
+   "month": "2020-01",
+   "sleeve": "A",
+   "dev_held": "theme-中证半导体材料设备主题|theme-中证酒|chinext",
+   "rev_held": "theme-中证全指半导体产品与设备|theme-中证酒|chinext"
+  },
+  {
+   "month": "2020-02",
+   "sleeve": "A",
+   "dev_held": "theme-中证半导体材料设备主题|theme-中证酒|chinext",
+   "rev_held": "theme-中证全指半导体产品与设备|theme-中证酒|chinext"
+  },
+  {
+   "month": "2020-03",
+   "sleeve": "A",
+   "dev_held": "theme-中证半导体材料设备主题|chinext|theme-中证新能源汽车",
+   "rev_held": "theme-中证全指半导体产品与设备|chinext|allshare-communication"
+  },
+  {
+   "month": "2020-04",
+   "sleeve": "A",
+   "dev_held": "theme-中证半导体材料设备主题|theme-中证创新药产业|theme-中证农业",
+   "rev_held": "theme-中证全指半导体产品与设备|theme-中证农业|chinext"
+  },
+  {
+   "month": "2020-05",
+   "sleeve": "A",
+   "dev_held": "theme-中证半导体材料设备主题|theme-中证创新药产业|chinext",
+   "rev_held": "theme-中证全指半导体产品与设备|chinext|allshare-healthcare"
+  },
+  {
+   "month": "2020-06",
+   "sleeve": "A",
+   "dev_held": "theme-中证半导体材料设备主题|theme-中证创新药产业|chinext",
+   "rev_held": "theme-中证全指半导体产品与设备|chinext|allshare-healthcare"
+  },
+  {
+   "month": "2020-07",
+   "sleeve": "A",
+   "dev_held": "theme-中证半导体材料设备主题|theme-中证创新药产业|chinext",
+   "rev_held": "theme-中证全指半导体产品与设备|allshare-healthcare|chinext"
+  },
+  {
+   "month": "2020-08",
+   "sleeve": "A",
+   "dev_held": "theme-中证半导体材料设备主题|theme-中证创新药产业|chinext",
+   "rev_held": "theme-中证全指半导体产品与设备|chinext|allshare-healthcare"
+  },
+  {
+   "month": "2020-09",
+   "sleeve": "A",
+   "dev_held": "theme-中证半导体材料设备主题|theme-中证创新药产业|allshare-staples",
+   "rev_held": "theme-中证全指半导体产品与设备|allshare-staples|chinext"
+  },
+  {
+   "month": "2020-10",
+   "sleeve": "A",
+   "dev_held": "theme-中证半导体材料设备主题|theme-中证光伏产业|chinext",
+   "rev_held": "theme-中证全指半导体产品与设备|chinext|theme-中证酒"
+  },
+  {
+   "month": "2020-11",
+   "sleeve": "A",
+   "dev_held": "theme-中证光伏产业|theme-中证半导体材料设备主题|theme-中证酒",
+   "rev_held": "theme-中证酒|theme-中证全指半导体产品与设备|chinext"
+  },
+  {
+   "month": "2020-12",
+   "sleeve": "A",
+   "dev_held": "theme-中证酒|theme-中证光伏产业|theme-中证半导体材料设备主题",
+   "rev_held": "theme-中证酒|theme-中证全指半导体产品与设备|theme-中证军工"
+  },
+  {
+   "month": "2021-01",
+   "sleeve": "A",
+   "dev_held": "theme-中证酒|theme-中证光伏产业|chinext",
+   "rev_held": "theme-中证酒|theme-中证军工|chinext"
+  },
+  {
+   "month": "2021-02",
+   "sleeve": "A",
+   "dev_held": "theme-中证酒|theme-中证光伏产业|theme-沪深300医药卫生",
+   "rev_held": "theme-中证酒|theme-沪深300医药卫生|chinext"
+  },
+  {
+   "month": "2021-03",
+   "sleeve": "A",
+   "dev_held": "theme-中证酒|theme-中证光伏产业|theme-中证有色金属",
+   "rev_held": "theme-中证酒|theme-中证有色金属|chinext"
+  },
+  {
+   "month": "2021-04",
+   "sleeve": "A",
+   "dev_held": "theme-中证酒|theme-中证新能源汽车|theme-中证有色金属",
+   "rev_held": "theme-中证酒|theme-中证有色金属|allshare-discretionary"
+  },
+  {
+   "month": "2021-05",
+   "sleeve": "A",
+   "dev_held": "theme-中证新能源汽车|theme-中证酒|theme-中证有色金属",
+   "rev_held": "theme-中证酒|theme-中证有色金属|chinext"
+  },
+  {
+   "month": "2021-06",
+   "sleeve": "A",
+   "dev_held": "theme-中证新能源汽车|theme-中证酒|theme-中证有色金属",
+   "rev_held": "theme-中证酒|theme-中证有色金属|theme-中证煤炭"
+  },
+  {
+   "month": "2021-07",
+   "sleeve": "A",
+   "dev_held": "theme-中证新能源汽车|theme-中证酒|theme-中证煤炭",
+   "rev_held": "theme-中证酒|theme-中证煤炭|theme-中证有色金属"
+  },
+  {
+   "month": "2021-08",
+   "sleeve": "A",
+   "dev_held": "theme-中证新能源汽车|theme-中证有色金属|theme-中证半导体材料设备主题",
+   "rev_held": "theme-中证有色金属|theme-中证煤炭|theme-中证全指半导体产品与设备"
+  },
+  {
+   "month": "2021-09",
+   "sleeve": "A",
+   "dev_held": "theme-中证新能源汽车|theme-中证有色金属|theme-中证煤炭",
+   "rev_held": "theme-中证有色金属|theme-中证煤炭|allshare-industrials"
+  },
+  {
+   "month": "2021-10",
+   "sleeve": "A",
+   "dev_held": "theme-中证煤炭|theme-中证新能源汽车|theme-中证有色金属",
+   "rev_held": "theme-中证煤炭|theme-中证有色金属|allshare-utilities"
+  },
+  {
+   "month": "2021-11",
+   "sleeve": "A",
+   "dev_held": "theme-中证光伏产业|theme-中证有色金属|theme-中证煤炭",
+   "rev_held": "theme-中证有色金属|theme-中证煤炭|allshare-industrials"
+  },
+  {
+   "month": "2021-12",
+   "sleeve": "A",
+   "dev_held": "theme-中证新能源汽车|theme-中证半导体材料设备主题|theme-中证有色金属",
+   "rev_held": "theme-中证有色金属|theme-中证煤炭|theme-中证全指半导体产品与设备"
+  },
+  {
+   "month": "2022-01",
+   "sleeve": "A",
+   "dev_held": "theme-中证煤炭|allshare-utilities|theme-中证光伏产业",
+   "rev_held": "theme-中证煤炭|allshare-utilities|theme-中证钢铁"
+  },
+  {
+   "month": "2022-02",
+   "sleeve": "A",
+   "dev_held": "theme-中证煤炭|theme-中证新能源汽车|allshare-utilities",
+   "rev_held": "theme-中证煤炭|allshare-utilities|theme-中证钢铁"
+  },
+  {
+   "month": "2022-03",
+   "sleeve": "A",
+   "dev_held": "theme-中证新能源汽车|theme-中证煤炭|theme-中证半导体材料设备主题",
+   "rev_held": "theme-中证煤炭|theme-中证有色金属|theme-中证全指半导体产品与设备"
+  },
+  {
+   "month": "2022-04",
+   "sleeve": "A",
+   "dev_held": "theme-中证煤炭|theme-中证光伏产业|allshare-utilities",
+   "rev_held": "theme-中证煤炭|allshare-utilities|theme-中证军工"
+  },
+  {
+   "month": "2022-05",
+   "sleeve": "A",
+   "dev_held": "theme-中证煤炭|allshare-utilities|theme-中证光伏产业",
+   "rev_held": "theme-中证煤炭|allshare-utilities|theme-中证红利低波动"
+  }
+ ]
+}
