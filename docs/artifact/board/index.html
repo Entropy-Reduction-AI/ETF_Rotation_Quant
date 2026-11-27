@@ -975,6 +975,111 @@ a.sl-sp-i.t-todo .sl-sp-st { color: var(--muted); font-weight: 700; } a.sl-sp-i.
 @media (max-width: 760px) { .sl-dr { grid-template-columns: minmax(0, 1fr); gap: 3px; } .sl-ds { justify-content: flex-start; } .sl-look, a.sl-next { flex-direction: column; gap: 4px; align-items: flex-start; } }
 
 
+.gl-big { display: grid; gap: 2px; } .gl-big b { font-family: var(--font-mono); font-size: 24px; font-weight: 800; color: var(--ink); line-height: 1.15; } .gl-big span { font-size: 12px; color: var(--muted); font-weight: 600; }
+.gl-two { display: grid; gap: 6px; }
+.gl-two-r { display: grid; gap: 4px; }
+.gl-two-r em { font-style: normal; font-size: 11px; font-weight: 800; color: var(--muted); }
+.gl-two-r div { display: flex; flex-wrap: wrap; gap: 4px; } .gl-two-r span { font-size: 12px; padding: 3px 8px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); }
+.gl-two-r:first-child span { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+.gl-th2 { display: grid; gap: 6px; }
+.gl-th-r { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 5px 8px; border-radius: 8px; background: var(--bg); }
+.gl-th-k { font-size: 13px; font-weight: 600; color: var(--ink); } .gl-th-r b { font-size: 13px; font-weight: 800; color: var(--accent); white-space: nowrap; }
+.gl-st { position: relative; } .gl-st::before { content: ""; position: absolute; left: 10px; top: 10px; bottom: 10px; width: 2px; background: var(--line); }
+.gl-st li { position: relative; } .gl-st .gl-sn { position: relative; z-index: 1; }
+.gl-kw { color: var(--accent); font-weight: 800; }
+.gl-c.wide .gl-d { background: var(--bg); border-radius: 8px; padding: 8px 10px; }
+.gl-c .gl-s:only-of-type { }
+
+.gl-c.full { grid-column: 1 / -1; background: var(--bg); }
+.gl-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; }
+.gl-node { font-size: 12.5px; font-weight: 800; padding: 6px 10px; border-radius: 8px; background: var(--surface); border: 1.5px solid var(--ink); color: var(--ink); }
+.gl-edge { display: inline-grid; grid-template-areas: 'l l' 'v a'; align-items: center; justify-items: center; padding: 0 4px; }
+.gl-edge em { grid-area: l; font-style: normal; font-size: 11px; font-weight: 700; color: var(--muted); }
+.gl-edge b { grid-area: v; font-family: var(--font-mono); font-size: 14px; font-weight: 800; }
+.gl-edge i { grid-area: a; font-style: normal; color: var(--muted); margin-left: 2px; }
+.gl-edge.pos b, .gl-edge.pos b * { color: var(--good) !important; } .gl-edge.neg b, .gl-edge.neg b * { color: var(--bad) !important; }
+.gl-val { display: flex; align-items: baseline; gap: 8px; } .gl-val b { font-family: var(--font-mono); font-size: 24px; font-weight: 800; } .gl-val span { font-size: 11.5px; color: var(--muted); }
+.gl-val.pos b, .gl-val.pos b * { color: var(--good) !important; } .gl-val.neg b, .gl-val.neg b * { color: var(--bad) !important; }
+
+.gl-c.wide { grid-column: span 2; }
+.gl-st { list-style: none !important; margin: 0 !important; padding: 0 !important; display: grid; gap: 5px; counter-reset: none; }
+.gl-st li::before, .gl-st li::marker { content: none !important; display: none !important; }
+.gl-st li { padding-left: 0 !important; margin: 0 !important; }
+.gl-st li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: start; font-size: 13px; line-height: 1.5; color: var(--ink); }
+.gl-sn { width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; display: grid; place-items: center; margin-top: 1px; }
+.gl-sc { margin-top: 4px; }
+.gl-sc-ax { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+.gl-sc-bar { position: relative; height: 10px; border-radius: 5px; background: linear-gradient(90deg, #fde68a, #e5e7eb 50%, #bfdbfe); margin: 4px 0 64px; }
+.gl-mk { position: absolute; top: -3px; transform: translateX(-50%); }
+.gl-mk i { display: block; width: 4px; height: 16px; border-radius: 2px; background: var(--ink); margin: 0 auto; }
+.gl-mk em { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 11px; line-height: 1.35; color: var(--ink); white-space: nowrap; text-align: center; }
+.gl-mk.up em { top: 38px; }
+.gl-mk.r em { left: auto; right: -2px; transform: none; text-align: right; } .gl-mk.l em { left: -2px; transform: none; text-align: left; }
+.gl-mk em b { display: block; font-family: var(--font-mono); color: var(--accent); }
+@media (max-width: 760px) { .gl-c.wide { grid-column: auto; } }
+
+.gl { display: grid; gap: 16px; }
+.gl-gh { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: var(--ink); margin-bottom: 8px; padding-left: 10px; border-left: 3px solid var(--accent); }
+.gl-gh span { font-size: 11px; font-weight: 700; color: var(--muted); background: var(--bg); border-radius: 999px; padding: 1px 8px; }
+.gl-grid { display: grid; grid-template-columns: repeat(var(--gl-c, 3), minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 760px) { .gl-grid { grid-template-columns: 1fr; } }
+.gl-c { border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; background: var(--surface); display: grid; gap: 7px; align-content: start; }
+.gl-n { font-size: 15px; font-weight: 800; color: var(--accent); }
+.gl-s { font-size: 13.5px; line-height: 1.5; color: var(--ink); font-weight: 500; }
+.gl-d { font-size: 12px; line-height: 1.55; color: var(--muted); }
+.gl-bar { display: flex; height: 12px; border-radius: 4px; overflow: hidden; gap: 2px; }
+.gl-bar i { display: block; height: 12px; }
+.gl-leg { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 11px; color: var(--muted); }
+.gl-leg b { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; vertical-align: 0; }
+.c-a { background: #d97706; } .c-u { background: #2563eb; } .c-u2 { background: #60a5fa; } .c-h { background: #0d9488; } .c-b { background: #94a3b8; } .c-g { background: #ca8a04; } .c-o { background: #a3a3a3; }
+.gl-f { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.gl-tm { font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); color: var(--ink); }
+.gl-op { font-size: 14px; font-weight: 800; color: var(--accent); }
+.gl-th { display: grid; gap: 4px; } .gl-th span { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: var(--bg); color: var(--ink); }
+.comp-名词 .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+
+.kps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.kp { border: 1px solid var(--line); border-top: 4px solid var(--muted); border-radius: 10px; padding: 10px 12px; background: var(--surface); display: grid; gap: 6px; align-content: start; }
+.kp.t-good { border-top-color: var(--good); } .kp.t-bad { border-top-color: var(--bad); }
+.kp-l { font-size: 12px; font-weight: 700; color: var(--muted); }
+.kp-v { font-size: 26px; font-weight: 800; font-family: var(--font-mono); line-height: 1.1; color: var(--ink); }
+.kp.t-good .kp-v { color: var(--good); } .kp.t-bad .kp-v { color: var(--bad); }
+.kp-cmp { display: grid; gap: 4px; }
+.kp-row { display: grid; grid-template-columns: 4.6em minmax(0, 1fr) 4.2em; gap: 6px; align-items: center; font-size: 11.5px; }
+.kp-k { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kp-row b { font-family: var(--font-mono); font-weight: 600; text-align: right; color: var(--ink); }
+.kp-bar { height: 7px; background: var(--bg); border-radius: 4px; overflow: hidden; } .kp-bar i { display: block; height: 7px; border-radius: 4px; background: var(--muted); } .kp-bar i.v { background: var(--accent); } .kp-bar.kp-pend { background: transparent; border: 1.5px dashed var(--line, #cbd5e1); height: 4px; }
+.kp-dots { display: flex; gap: 4px; } .kp-dots i { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid var(--muted); } .kp-dots i.on { background: var(--good); border-color: var(--good); } .kp-dots i.on.b { background: var(--muted); border-color: var(--muted); }
+.kp-r { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.comp-指标 .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+@media (max-width: 900px) { .kps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.rg { display: grid; gap: 8px; }
+.rg-r { display: grid; grid-template-columns: 96px repeat(var(--rg-n), minmax(0, 1fr)); gap: 8px; align-items: stretch; }
+.rg-hd span { font-size: 12px; font-weight: 700; color: var(--muted); padding: 0 4px; } .rg-hd span.rg-main { color: var(--ink); }
+.rg-k { display: flex; align-items: center; font-size: 14px; font-weight: 800; color: var(--ink); }
+.rg-c { border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; background: var(--surface); display: grid; gap: 6px; }
+.rg-c.rg-main { border-width: 2px; border-color: var(--ink); }
+.rg-top { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; }
+.rg-top b { font-size: 22px; font-weight: 800; font-family: var(--font-mono); }
+.rg-top em { font-style: normal; font-size: 11px; font-weight: 700; }
+.rg-bar { position: relative; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.rg-bar i { display: block; height: 8px; border-radius: 4px; }
+.rg-bar s { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--muted); }
+.rg-sub { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--muted); font-family: var(--font-mono); }
+.rg-c.t-good { background: var(--good-soft); } .rg-c.t-good b, .rg-c.t-good em { color: var(--good); } .rg-c.t-good .rg-bar i { background: var(--good); }
+.rg-c.t-bad { background: var(--bad-soft); } .rg-c.t-bad b, .rg-c.t-bad em { color: var(--bad); } .rg-c.t-bad .rg-bar i { background: var(--bad); }
+.rg-c.t-mid b, .rg-c.t-mid em { color: var(--muted); } .rg-c.t-mid .rg-bar i { background: var(--muted); }
+.ros { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.ro { border: 1px solid var(--line); border-top: 4px solid var(--muted); border-radius: 10px; padding: 11px 13px; background: var(--surface); display: grid; gap: 5px; align-content: start; }
+.ro.t-good { border-top-color: var(--good); } .ro.t-bad { border-top-color: var(--bad); }
+.ro-k { font-size: 12px; font-weight: 700; color: var(--muted); }
+.ro-f { font-size: 20px; font-weight: 800; color: var(--ink); line-height: 1.25; }
+.ro.t-good .ro-f { color: var(--good); } .ro.t-bad .ro-f { color: var(--bad); }
+.ro-b { font-size: 13px; line-height: 1.55; color: var(--ink); }
+.comp-随机格 .num, .comp-读数 .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+@media (max-width: 760px) { .rg-r { grid-template-columns: 1fr; } .rg-hd { display: none; } }
+
 .cbx-c { gap: 10px; padding: 12px 14px; min-width: 210px; }
 .cbx-top span { font-size: 13px; }
 .cbx-is { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -1114,6 +1219,22 @@ ol.route li .rt-gate { display: block !important; }
 .gt-d.no { background: var(--bad-soft); border-color: var(--bad); } .gt-d.no em { color: #fff; background: var(--bad); }
 .gt-d.pend { background: none; border-style: dashed; } .gt-d.pend b { font-family: var(--font-body); font-size: 13px; color: var(--muted); font-weight: 600; }
 .gt-all .gt-d { background: color-mix(in srgb, var(--surface) 12%, var(--ink)); border-color: color-mix(in srgb, var(--surface) 30%, var(--ink)); } .gt-all .gt-d span, .gt-all .gt-d.pend b { color: color-mix(in srgb, var(--surface) 78%, var(--ink)); }
+.gg { display: grid; gap: 6px; }
+.gg-r { display: grid; grid-template-columns: minmax(170px, 1.3fr) repeat(var(--gg-n), minmax(0, 1fr)); gap: 8px; align-items: stretch; }
+.gg-hd span { font-size: 12px; font-weight: 700; color: var(--muted); padding: 0 4px; align-self: end; }
+.gg-hd span.gg-main { color: var(--ink); }
+.gg-k { display: grid; gap: 2px; align-content: center; padding: 8px 10px; border-radius: 9px; background: var(--surface); border: 1px solid var(--line); }
+.gg-k b { font-size: 14px; color: var(--ink); } .gg-k span { font-size: 11.5px; color: var(--muted); }
+.gg-c { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 8px 10px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); }
+.gg-c b { font-family: var(--font-mono); font-size: 15px; font-weight: 800; color: var(--ink); white-space: nowrap; }
+.gg-c em { font-style: normal; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+.gg-c.ok { background: var(--good-soft); border-color: color-mix(in srgb, var(--good) 40%, var(--line)); } .gg-c.ok em { color: var(--good); }
+.gg-c.no { background: var(--bad-soft); border-color: var(--bad); } .gg-c.no em { color: var(--bad); }
+.gg-c.gg-main { box-shadow: inset 0 0 0 1.5px var(--ink); }
+.gg-tot .gg-k { background: var(--bg); } .gg-tot .gg-c { justify-content: center; } .gg-tot .gg-c em { font-size: 13.5px; }
+.gg .num { background: none !important; padding: 0 !important; border: 0 !important; }
+.gg-c b.num, .gg-c b .num { font-family: var(--font-mono) !important; font-size: 15px !important; font-weight: 800 !important; color: var(--ink) !important; }
+@media (max-width: 760px) { .gg-r { grid-template-columns: 1fr repeat(var(--gg-n), minmax(0, 1fr)); } .gg-c { flex-direction: column; align-items: flex-start; } }
 .rc { display: grid; gap: 12px; }
 .rc-top { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "s b" "s l"; gap: 4px 18px; align-items: center; }
 .rc-score { grid-area: s; display: flex; align-items: baseline; gap: 6px; } .rc-score b { font-family: var(--font-mono); font-size: 38px; font-weight: 800; color: var(--good); line-height: 1; }
@@ -1598,6 +1719,45 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 .f-pd-c.neg b { color: var(--bad); } .f-pd-c.pos b { color: var(--good); }
 @media (max-width: 760px) { .f-pd-r { grid-template-columns: 1fr; } }
 
+.f-dd .f-nv-b i { background: color-mix(in srgb, var(--bad) 70%, var(--surface)); }
+.f-dd.bm .f-nv-b i { background: var(--muted); } .f-dd.v6 .f-nv-b i { background: var(--bad); }
+
+.f-fas { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.f-fa { display: grid; grid-template-columns: minmax(0, 1.5fr) 5em minmax(0, 1.2fr) minmax(0, 1fr); gap: 10px; padding: 8px 12px; border-top: 1px solid var(--line); align-items: center; font-size: 13px; }
+.f-fa.f-fa-hd { border-top: 0; background: var(--bg); } .f-fa.f-fa-hd > span { font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.f-fa.tot { background: var(--bg); } .f-fa.tot .f-fa-k { font-weight: 800; }
+.f-fa-k { color: var(--ink); } .f-fa-m, .f-fa-r { font-family: var(--font-mono); color: var(--muted); }
+.f-fa-a { display: flex; align-items: center; gap: 8px; } .f-fa-a b { font-family: var(--font-mono); font-size: 14px; color: var(--ink); }
+.f-fa-a em { font-style: normal; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 999px; background: var(--bg); color: var(--muted); }
+.f-fa-a.hi b { color: var(--good); } .f-fa-a.hi em { background: var(--good-soft); color: var(--good); }
+.f-fa-a.lo b { color: var(--bad); } .f-fa-a.lo em { background: var(--bad-soft); color: var(--bad); }
+.f-fas .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+.f-fa-m .pos, .f-fa-m .neg, .f-fa-r .pos, .f-fa-r .neg { color: var(--muted) !important; font-weight: inherit !important; }
+.f-fa-a .pos, .f-fa-a .neg { color: inherit !important; }
+
+.f-lus { display: grid; gap: 5px; }
+.f-lu { display: grid; grid-template-columns: 74px minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 1.2fr); gap: 12px; align-items: center; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-size: 12.5px; line-height: 1.45; color: var(--ink); }
+.f-lu.hd { background: none; border: 0; padding: 0 12px; } .f-lu.hd span { font-size: 11px; font-weight: 700; color: var(--muted); }
+.f-lu.hd i { display: inline-block; width: 10px; height: 8px; border-radius: 2px; margin: 0 3px 0 4px; } .f-lu.hd i.ka { background: var(--accent); margin-left: 0; } .f-lu.hd i.kd { background: var(--bad); }
+.f-lu-g { display: flex; align-items: baseline; gap: 10px; margin: 6px 0 0; padding: 6px 12px; border-radius: 8px; font-size: 13px; }
+.f-lu-g b { font-size: 14px; } .f-lu-g span { color: var(--muted); font-family: var(--font-mono); }
+.f-lu-g.on { background: var(--good-soft); } .f-lu-g.on b { color: var(--good); }
+.f-lu-g.off { background: var(--bad-soft); } .f-lu-g.off b { color: var(--bad); }
+.f-lu.v6 { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.f-lu-k { font-size: 15px; font-weight: 800; color: var(--ink); } .f-lu.v6 .f-lu-k { color: var(--accent); } .f-lu.bm .f-lu-k { color: var(--muted); }
+.f-lu-c.g { color: var(--good); } .f-lus .f-lu-g.off ~ .f-lu .f-lu-c.g { color: var(--muted); }
+.f-lu-bars { display: grid; gap: 5px; }
+.f-lu-b { display: grid; grid-template-columns: minmax(0, 1fr) 4.2em; gap: 6px; align-items: center; }
+.f-lu-b span { height: 10px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+.f-lu-b i { display: block; height: 10px; border-radius: 3px; }
+.f-lu-b.a i { background: var(--accent); } .f-lu-b.d i { background: var(--bad); }
+.f-lu.bm .f-lu-b.a i { background: var(--muted); }
+.f-lu-b b { font-family: var(--font-mono); font-size: 13px; text-align: right; color: var(--ink); }
+.f-lu-b.d b { color: var(--bad); }
+.f-lu-why { font-weight: 600; }
+.f-lus .num { background: none !important; padding: 0 !important; border: 0 !important; color: inherit !important; }
+@media (max-width: 760px) { .f-lu { grid-template-columns: 1fr 1fr; gap: 6px 10px; } .f-lu-k, .f-lu-bars, .f-lu-why { grid-column: 1 / -1; } .f-lu.hd { display: none; } }
+
 </style>
 </head>
 <body>
@@ -1605,24 +1765,25 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <nav class="toc" aria-label="目录">
   
   <div class="toc-title">目录</div>
-  <ol><li class="l2"><a href="#1-现在在哪-设计期做完-你已批准一次性检验-dev-正在接线">1. 现在在哪</a></li><li class="l2"><a href="#2-第二阶段每一版的结论-留档-选强势-跑赢现金才买-2016-年以后没站住">2. 第二阶段每一版的结论（留档）</a></li><li class="l3"><a href="#每一版的摘要-留档-最新的在上">每一版的摘要（留档，最新的在上）</a></li><li class="l3"><a href="#e2-的规则-4-步">E2 的规则（4 步）</a></li><li class="l3"><a href="#当时的体检-已被-v4-体检报告-取代-留档">当时的体检（已被《v4 体检报告》取代，留档）</a></li><li class="l3"><a href="#3-1病根-能选的太少-牛市里拿着现金">3.1病根</a></li><li class="l3"><a href="#3-2补池子-加离场-从跑输变成跑赢">3.2补池子、加离场</a></li><li class="l3"><a href="#3-3为什么是-10">3.3为什么是 10%</a></li><li class="l3"><a href="#3-4正式引擎复现了-e2-超额集中在前三年">3.4正式引擎复现了 E2，超额集中在前三年</a></li><li class="l3"><a href="#3-52009-年的失手-钱回来得太慢">3.52009 年的失手</a></li><li class="l3"><a href="#3-6可交易池-同一套规则-只能买当年真有的-etf">3.6可交易池</a></li><li class="l3"><a href="#3-7换两个角度再看-e2-是顺应了市场-还是被市场选中">3.7换两个角度再看</a></li><li class="l2"><a href="#3-已定的大事">3. 已定的大事</a></li><li class="l2"><a href="#4-风险-v6-的超额只有一个来源">4. 风险</a></li><li class="l2"><a href="#5-接下来">5. 接下来</a></li><li class="l2"><a href="#更新记录">更新记录</a></li></ol>
+  <ol><li class="l2"><a href="#1-现在在哪-v6-一次性检验不通过-按冻结稿关闭">1. 现在在哪</a></li><li class="l2"><a href="#2-第二阶段每一版的结论-留档-选强势-跑赢现金才买-2016-年以后没站住">2. 第二阶段每一版的结论（留档）</a></li><li class="l3"><a href="#每一版的摘要-留档-最新的在上">每一版的摘要（留档，最新的在上）</a></li><li class="l3"><a href="#e2-的规则-4-步">E2 的规则（4 步）</a></li><li class="l3"><a href="#当时的体检-已被-v4-体检报告-取代-留档">当时的体检（已被《v4 体检报告》取代，留档）</a></li><li class="l3"><a href="#3-1病根-能选的太少-牛市里拿着现金">3.1病根</a></li><li class="l3"><a href="#3-2补池子-加离场-从跑输变成跑赢">3.2补池子、加离场</a></li><li class="l3"><a href="#3-3为什么是-10">3.3为什么是 10%</a></li><li class="l3"><a href="#3-4正式引擎复现了-e2-超额集中在前三年">3.4正式引擎复现了 E2，超额集中在前三年</a></li><li class="l3"><a href="#3-52009-年的失手-钱回来得太慢">3.52009 年的失手</a></li><li class="l3"><a href="#3-6可交易池-同一套规则-只能买当年真有的-etf">3.6可交易池</a></li><li class="l3"><a href="#3-7换两个角度再看-e2-是顺应了市场-还是被市场选中">3.7换两个角度再看</a></li><li class="l2"><a href="#3-已定的大事">3. 已定的大事</a></li><li class="l2"><a href="#4-风险-v6-的超额只有一个来源">4. 风险</a></li><li class="l2"><a href="#5-接下来">5. 接下来</a></li><li class="l2"><a href="#更新记录">更新记录</a></li></ol>
 </nav>
 <main>
 <header class="top">
-  <div class="kicker">ETF_Rotation_Quant · 2026-11-26 晚</div>
+  <div class="kicker">ETF_Rotation_Quant · 2026-11-27</div>
   <h1>ETF 轮动 · Owner 看板</h1>
   
 </header>
 <section class="intro status"><p class="kv"><span class="kv-k"><strong>项目愿景</strong></span><span class="kv-v">　在动态周期内，从多类资产里选出 Top N 强势 ETF 轮动持有，获得超额收益、稳定跑赢被动基准，同时把回撤控制住。</span></p>
-<div class="cards from-table status"><div class="card tone-0"><div class="ct">工程进度</div><div class="cb"><strong>设计期全部做完、代码已冻结</strong>（#375、#377 合入）；《v6 体检报告》第 1.4 版；你已批准一次性检验。Dev 正把检验代码接上，D50 合入、Reviewer 签收后就跑。</div></div><div class="card tone-1"><div class="ct">业务结论</div><div class="cb">设计期 2006–15：v6 每年 <strong class="num"><span class="num">15.3%</span></strong>、最大回撤 <strong class="num"><span class="num">−28.7%</span></strong>；四条判据全段都过，后五年 ③④ 不过。同结构随机 1000 次里 v6 排第 <strong class="num">96.4</strong> 百分位，美股名额 97.6、A 股名额 67.5。</div></div><div class="card tone-2"><div class="ct">需要你</div><div class="cb"><strong>现在不用操作。</strong>下一次需要你的是看一次性检验报告。</div></div></div>
+<div class="cards from-table status"><div class="card tone-0"><div class="ct">工程进度</div><div class="cb"><strong>一次性检验跑了一次</strong>（#399），Reviewer 独立复算（#400）过与不过逐条一致；《v6 一次性检验报告》第 1.0.1 版已发布。</div></div><div class="card tone-1"><div class="ct">业务结论</div><div class="cb"><strong>v6 不通过</strong>：检验段每年 <strong class="num"><span class="num">10.6%</span></strong>、回撤 <strong class="num"><span class="num">−25.8%</span></strong>；③ 0.41 低于 K2A 0.57，④ 比同仓位基准每年少 <strong class="num">2.5</strong> 点。挑选是真的（随机 1000 次排第 100），但候选池整体每年落后宽基 3.6 点。</div></div><div class="card tone-2"><div class="ct">需要你</div><div class="cb"><strong>定下一步</strong>：v6 按冻结稿关闭；第 5 次尝试从哪里入手，等你定。</div></div></div>
 </section>
-<section id="sec-1-现在在哪-设计期做完-你已批准一次性检验-dev-正在接线"><h2 id="1-现在在哪-设计期做完-你已批准一次性检验-dev-正在接线"><span class="num">01</span>现在在哪：设计期做完，你已批准一次性检验，Dev 正在接线</h2>
-<p class="memo"><strong>两条线独立算出的设计期数字逐项对上：v6 每年 <span class="num">15.3%</span>、回撤 <span class="num">−28.7%</span>，四条判据全段都过、后五年 ③④ 不过。一次性检验加全段窗口只报告（D49），等你批准开考。</strong></p>
-<figure><img alt="进度总览：①–⑦ 完成，⑧ 一次性检验已批准、Dev 接线中" src="../../assets/owner-board/b10-v6-roadmap.png"/></figure>
+<section id="sec-1-现在在哪-v6-一次性检验不通过-按冻结稿关闭"><h2 id="1-现在在哪-v6-一次性检验不通过-按冻结稿关闭"><span class="num">01</span>现在在哪：v6 一次性检验不通过，按冻结稿关闭</h2>
+<p class="memo"><strong>检验段 2016-01 <span class="arr">→</span> 2026-09：v6 每年 <span class="num">10.6%</span>，比同仓位基准少 2.5 点；挑选每年 +3.6 点，被候选池落后宽基的 −3.6 点和 1.6 点成本吃掉。</strong></p>
+<figure><img alt="进度总览：⑧ 一次性检验跑了一次，⑨ 结论不通过，⑩ 模拟盘不进" src="../../assets/owner-board/b10-v6-roadmap.png"/></figure>
 <figure><img alt="预计每年比基准多约 1.2 个点，美股挑选为主、A 股挑选为辅" src="../../assets/v6-preflight/f7-forecast.png"/></figure>
 <ul class="points">
-<li><strong>读进度总览</strong>：③ 两条线独立实现，设计期 14 项里 12 项差 0；⑥ 体检报告第 1.4 版，随机对照和急跌仓位都已补齐；⑦ #375、#377 已合入，代码冻结；⑧ 你已批准，Dev 接线、Reviewer 签收后只跑一次。</li>
-<li><strong>接下来的顺序</strong>：D50 合入 <span class="arr">→</span> Dev 接线、Reviewer 签收 <span class="arr">→</span> ⑧ 一次性检验 <span class="arr">→</span> ⑨ 结论（通过 / 通过（有条件）/ 不通过） <span class="arr">→</span> ⑩ 至少 6 个月模拟盘（通过才进）。</li>
+<li><strong>读进度总览</strong>：⑧ 只跑了一次，Reviewer 用自己的程序复算，四条判据、S1、S3、连续性版的过与不过全部一致；⑨ 不通过，8 项稳健性也都不通过；⑩ 按冻结稿不进模拟盘。</li>
+<li><strong>钱从哪来</strong>：比 BM-主多 1.9 点，全靠美股放 <span class="num">60%</span>（+4.0）；挑选 +3.6 四个五年段都为正，但候选池等权拿着每年比同仓位宽基少 3.6 点，再扣成本 1.6 点。</li>
+<li><strong>还在对账</strong>：两边水平差（④ −2.5 对 −3.5 点）的来源；汇率层、每月仓位等四样补导出。都不改结论。</li>
 <li><strong>体检里最要紧的三件事</strong>：同仓位下 v6 比不挑不防的 BM-同仓位每年多 2.5 点、回撤浅一半；和增强基准 K2A 几乎是一种性格（后五年判据 ③ 输给它）；2008 年躲开大半，2015 年防守帮得不多。</li>
 <li><strong>全段窗口为什么只报告</strong>（D49）：全段一半是设计期，检验段一分钱不赚、全段年化也有约 <span class="num">7%</span>；所以全段只用来拆“钱从哪来”，每一块按四个五年段看是否稳定，拆法和读法开考前写死。</li>
 <li><strong>读预测图</strong>：来自历史的超额先打五折、再按候选个数打六折，成本按上限；合计低于 0 就不起草，现在 +1.2。</li>
@@ -1638,8 +1799,8 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 </thead>
 <tbody>
 <tr>
-<td><a href="https://claude.ai/artifact/GQKvS1KvRmWiPBkHKd7JRp"><strong>v6 一次性检验报告（骨架）</strong></a></td>
-<td>开考前定下的结构和三版结论句；跑完只填数</td>
+<td><a href="https://claude.ai/artifact/GQKvS1KvRmWiPBkHKd7JRp"><strong>v6 一次性检验报告</strong></a></td>
+<td>v6 不通过：过不过、稳不稳、钱从哪来、挑选与防守、八条线、性格、预测对账、连续性版、接下来</td>
 </tr>
 <tr>
 <td><a href="https://claude.ai/artifact/NRgYVyimeFrzdhRetr48Fq"><strong>v6 体检报告（设计期）</strong></a></td>
@@ -1942,7 +2103,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 </div></div>
 </section>
 <section class="status actions" id="sec-5-接下来"><h2 id="5-接下来"><span class="num">05</span>接下来</h2>
-<div class="actboard"><div class="ab-strip"><span class="ab-s s-me"><b class="num">1</b>待你拍板</span><span class="ab-s s-todo"><b class="num">6</b>待做</span><span class="ab-s s-ongoing"><b class="num">1</b>持续</span></div><div class="ab-mine"><div class="ab-mh"><span class="ab-av">你</span><b>需要你拍板</b></div><div class="ab-decs"><div class="ab-dec"><div class="ab-dn">1</div><div class="ab-obj">已批准一次性检验（11-26），<span class="ab-id">D50</span>-4 选 B。下一次需要你的是看一次性检验报告</div></div></div></div><div class="ab-grid"><div class="ab-card"><div class="ab-who"><span class="ab-av">O</span><b>Orchestrator</b><span class="ab-n">3</span></div><ul class="ab-items"><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx"><span class="ab-id">D50</span> 第 3 稿</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">体检报告 1.4（跑赢随机、急跌仓位）</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">一次性检验报告骨架 0.4.1 已发布，跑完只填数</span></li></ul></div><div class="ab-card"><div class="ab-who"><span class="ab-av">团</span><b>团队</b><span class="ab-n">3</span></div><ul class="ab-items"><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">Dev 按 <span class="ab-id">D49</span>、<span class="ab-id">D50</span> 把一次性检验接上（S1–S8、全段、拆账、现行配置面板、A1 / A2 衔接），并说明 2008 年现金和国债的记法</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">Reviewer 复核体检 1.4、骨架 0.4.1、<span class="ab-id">D50</span> 第 3 稿和接线代码</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">Manager 合入 #389、#384、#387、#388。签收后开考</span></li></ul></div><div class="ab-card"><div class="ab-who"><span class="ab-av">核</span><b>核心配置</b><span class="ab-n">1</span></div><ul class="ab-items"><li class="st-ongoing"><span class="ab-st">持续</span><span class="ab-tx">照常执行（<span class="ab-id">D8</span>），不受 v6 影响</span></li></ul></div></div></div>
+<div class="actboard"><div class="ab-strip"><span class="ab-s s-me"><b class="num">2</b>待你拍板</span><span class="ab-s s-todo"><b class="num">5</b>待做</span><span class="ab-s s-ongoing"><b class="num">1</b>持续</span></div><div class="ab-mine"><div class="ab-mh"><span class="ab-av">你</span><b>需要你拍板</b></div><div class="ab-decs"><div class="ab-dec"><div class="ab-dn">1</div><div class="ab-obj">看《v6 一次性检验报告》</div></div><div class="ab-dec"><div class="ab-dn">2</div><div class="ab-verb">定</div><div class="ab-obj">第 5 次尝试的方向</div></div></div></div><div class="ab-grid"><div class="ab-card"><div class="ab-who"><span class="ab-av">O</span><b>Orchestrator</b><span class="ab-n">2</span></div><ul class="ab-items"><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">报告 1.0.1 已发布</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">你定方向后先写一页方向备忘</span></li></ul></div><div class="ab-card"><div class="ab-who"><span class="ab-av">团</span><b>团队</b><span class="ab-n">3</span></div><ul class="ab-items"><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">Reviewer 审 #401（报告、看板）</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">Manager 合入 #400、#401</span></li><li class="st-todo"><span class="ab-st">待做</span><span class="ab-tx">Dev 和 Reviewer 对账两边水平差，Dev 补四样导出（汇率层、每月仓位、跨两段起点、BM-主逐年）</span></li></ul></div><div class="ab-card"><div class="ab-who"><span class="ab-av">核</span><b>核心配置</b><span class="ab-n">1</span></div><ul class="ab-items"><li class="st-ongoing"><span class="ab-st">持续</span><span class="ab-tx">照常执行（<span class="ab-id">D8</span>），不受 v6 影响</span></li></ul></div></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>第二阶段收尾时的接下来（留档）</span></button><div class="fold-b" hidden="">
 <ol class="f-compact steps-n flow" style="counter-reset: fl 0">
 <li><b class="fl-t">你</b><span class="fl-k">或先做期权）</span><span class="fl-d">确认第二阶段轮动研究按“不成立”关闭（第 3 次尝试）；批准补齐 57 只场外基金 2016 年以后的净值；定下一步（复盘后再决定 v6，或先做期权）。</span></li>
@@ -1954,7 +2115,7 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 </div></div>
 </section>
 <section class="appendix" id="sec-更新记录"><h3 class="appx" id="更新记录">更新记录</h3>
-<div class="log"><div><span class="d">11-26 晚</span><span>你批准一次性检验；D50-4 选 B（降级可累积）。同结构随机对上：v6 第 96.4 百分位，美股名额 97.6、A 股名额 67.5。急跌仓位：2015 年 5–7 月底三票都没响，股灾期间 A 股满仓，这是后五年输给 K2A 的主因。</span></div><div><span class="d">11-26</span><span>v6 设计期实现与复算对上（Dev #377、Reviewer #375）：14 项里 12 项差 0，2015-08 示例勘误（A 股约留一半股票），K2A 记账差 ≤ 0.03 点。《v6 体检报告》第 1.2 版：十年四条判据都过、后五年 ③④ 不过；新增八条线做法、净值与回撤、两次急跌、四种行情、任意起点。你定 D48-4（K2A 用真实月末）；同意 D49：一次性检验加全段窗口，只报告，用来认清钱从哪来。</span></div><div><span class="d">11-25</span><span>D43–D47：别的市场用欧洲，国债用德国 10 年期、TRIN 缺席（D44）；冻结代码是规范的一部分、TRIN 截尾按程序错误修正（D45，你确认）；设计期对账收尾（D46）；体检输入口径（D47）。</span></div><div><span class="d">11-25</span><span>v6 预注册冻结：R1b 签收第 2.4 版，#339 合并，<code>milestone/v6-prereg-freeze</code> 打在 f066da8e，冻结文本和签收版本逐字节相同。别的市场普查：两地都没有免费的交易所日行情；能免费拿到的是每日净值（欧洲 iShares 行业基金 2001–02 年起，要用分红记录还原；日本 TOPIX-17 基金 2008-03 起，自带分红再投资净值）。</span></div><div><span class="d">11-25</span><span>你批准冻结 v6 预注册。R1b 在 D42 增量上提了两项：别的市场写定前看过什么（你书面确认没看过两地行业层）；A1、A2、现行配置怎么跑（原样继承 v4 附表 A、引用已签收账本；现行配置走 D5 签收的复现）。第 2.4 版写入 D42-8、D42-9，送 R1b 签收。</span></div><div><span class="d">11-24</span><span>你定了 D42：现行配置作为对照、豁免 6 个月“不差于”门槛（1A）；上线前在一个没看过的市场检验一次（2A）；A1、A2 写回对照；体检报告和一次性检验报告按四张图出。预注册第 2.3 版。设计期 v6 每年比现行配置少约 4 点（2006–10 年 A 股大牛市），2011–15 年多约 2 点。</span></div><div><span class="d">11-24</span><span>v6 预注册第 2.2 版（待冻结）：附表 A（美股 15 个、A 股 40 个参选，5 个美股、7 个一级行业没有场内基金）、附表 B（设计期 v6 净每年 15.5%，挑选 +4.3 抵掉仓位差 −3.4 和成本 −1.5）；你确认一级行业保留回填、931743 从 2023-07-27 起、细分化工不参选；DJIA、DWRTF 检验段补数入库（#359、#361）。预注册页面改成每节一个按内容选的视觉。R1b 复核中。</span></div><div><span class="d">11-23</span><span>v6 预注册初稿第 2.1 版：三份行业数据的检验写进 §4——沪深300 十个行业里上月涨幅不进 v6，隔夜版关闭，申万一级上 12−1 比等权每年少 5.9 个点（可能回填，只作参考）；规则不变。预注册页面按讲故事模式重排；数据看板同步。看板改为 v6 现状，第二阶段内容收进留档。</span></div><div><span class="d">11-23</span><span>你确认预注册三项（D40-14）：不另设单只上限；保费只量防守成本；判据 ③ 比年化 ÷ 最大回撤；判据 ④ 不低于同仓位基准。</span></div><div><span class="d">11-22</span><span>v6 预注册初稿第 1 版；A 股 12−1 主规则、连续性版挑战者（D40-13）；D38 第 55 行触发停止规则，A 股不再加新选法。</span></div><div><span class="d">11-19～11-20</span><span>你定了 v6 结构（D40）：美股 60%、A 股 40%，每个名额选前 3，按把握 p 防守；美股候选只加 REIT。</span></div><div><span class="d">11-17</span><span>底线 60 万、保费上限 4 点（D39）；发布《v6 预演预测表》。</span></div><div><span class="d">11-16</span><span>项目整体诊断（D38）：起草前先算预测表；合同加“先算后做”。</span></div><div><span class="d">11-05</span><span>第二阶段按“不成立”关闭（D36）；v6 方向：只用场内基金，新基金上市当天就能打分，提高每一笔交易的期望。</span></div><div><span class="d">11-05</span><span>发布《第二阶段复盘》：设计期 E2 新口径“挑哪一只”每年只比等权多 1.1 个点，超额几乎全来自 2006–10 年 A 股和 2008 年躲开下跌；检验段池子从 26 个变成 102 个、七成海外主题，基准六成收益来自美股。场外净值补齐 63 只；你定了能买到的池子只用场内基金（D35）。两份报告的任意起点改用逐月柱状图。</span></div><div><span class="d">11-04</span><span>一次性检验跑完，Reviewer 签收：E2 新口径年化 3.0%，基准 8.7%，持有 5 年 70 个起点 0 个跑赢，判据 ① ⑥ 不通过。A1 8.6%、A2 7.2%（回撤 −10%）、v5.1 −3.3%。复查发现 57 只场外基金净值只到 2015 年底，能买到的池子的结果不可用，过关结论不受影响。发布《一次性检验报告》。</span></div><div><span class="d">11-04</span><span>你批准封板（D34）；一次性检验同次跑 E2 新口径、A1、基准、v5.1，v5.1 只作对照。发布《v5.1 体检报告》；《v5 研究备忘》第 23 版新增第 7 节“任意时点买入”：能排名的池子持有 5 年每个起点都赢基准，能买到的池子只有 34%。</span></div><div><span class="d">11-04</span><span>v5.1 设计期跑完，不入围：中国十年年化 30.1%、回撤 −26%，四个对照都赢；美国 ETF 上只有 1.3%，栽在换手和成本。入围只有 E2 新口径。</span></div><div><span class="d">11-04</span><span>v5.1 定稿（设计稿第 3.2 版），预注册送审，进入设计期检验（D33）。离场改为按前沿和回撤面、空仓默认国债；预期疼痛表写进预注册；进度总览加 v5.1 一行。</span></div><div><span class="d">11-01</span><span>主看板不再列 v5：原版有结构硬伤，不够格上设计期数据。v5 策略先讨论清楚，再写预注册。</span></div><div><span class="d">11-01</span><span>你选了 A：v5 做一次设计缺陷修正（D30-2）。v5.1 = E2 + 每类上限，预注册含设计评审和事前画像；《v5 研究备忘》第 11 版第 1 节改写为 v5.1 的策略核心、事前评估、为什么能跟随市场。</span></div><div><span class="d">11-01</span><span>v5 归因：四处结构硬伤，根子是按类别分钱、不按强弱分钱；扣掉“押得少”和随机挑选没有区别。第 2 节版本表加“策略详情”，行与图一一对应；v4 摘要换成能看出四个微调没过的图。</span></div><div><span class="d">11-01</span><span>《v5 研究备忘》第 10 版重写成完整故事（结论、过程、过关、哪里赢输、为什么输、学到什么），五张图；看板新增版本进化图和每一版的摘要。</span></div><div><span class="d">11-01</span><span>v5 设计期跑完：按波动调仓没过关，10% 离场过关；最终版指数池 12.7%，没有入围。</span></div><div><span class="d">11-01</span><span>你批准了 v5 预注册的 4 处选择（D29）；核心价值写进 AGENTS.md（D28）。</span></div><div><span class="d">11-01</span><span>看板改成索引：只留现状、每一版的结论、已定的大事、风险和接下来；v3 阶段的体检收进折叠区。</span></div><div><span class="d">10-31</span><span>v5 预注册草案第 1 版：起点 = 跑赢现金的大类等分、都不跑赢时放国债或黄金；之后逐个加按波动调仓、10% 离场；小仓试错不进 v5。</span></div><div><span class="d">10-31（六）</span><span>你同意封板条件（D27）：v5 是最后一个研究版本，做完就封板，不论结果；一次性检验只跑一次；封板后的新想法记作 v6，可用全部历史设计、和在跑的策略逐项比，上线前过别的市场和 6 个月并行模拟，小资金起步。见《v5 研究备忘》第 8 节。</span></div><div><span class="d">10-31</span><span>你同意 v5 换架构（D26）：先判断该不该持有，再在少数大类里挑，空位放防守资产；部件逐个加。依据见《v5 研究备忘》第 5 版。红利 ETF 错价已修，可交易池 8.7%。</span></div><div><span class="d">10-31</span><span>R5c 完成：U-指数池能买国债、黄金、创业板后，E2 新口径年化 24.9%，过关结果不变；代码第二次冻结。发布《v4 体检报告》第 3 版（含两个池子的介绍、2008 与 2015 两次大跌的拆解）。</span></div></div>
+<div class="log"><div><span class="d">11-27</span><span>v6 一次性检验不通过（#399，运行次数 = 1）：检验段每年 10.6%、回撤 −25.8%；③ 0.41 对 K2A 0.57、④ 对同仓位基准 −2.5 点。Reviewer 独立复算（#400）结论一致，水平差待对账。挑选 +3.6 稳定、随机第 100；候选池等权 −3.6、成本 −1.6。连续性版也不通过（t = −0.84）。按冻结稿关闭 v6。</span></div><div><span class="d">11-26 夜</span><span>开考前登记 D51（判据 ② 对照）、D52（判定成本仍单边 0.2%，万分之一只报告）；预演两边对上；体检报告 1.5.1；一次性检验报告骨架 0.5。</span></div><div><span class="d">11-26 晚</span><span>你批准一次性检验；D50-4 选 B（降级可累积）。同结构随机对上：v6 第 96.4 百分位，美股名额 97.6、A 股名额 67.5。急跌仓位：2015 年 5–7 月底三票都没响，股灾期间 A 股满仓，这是后五年输给 K2A 的主因。</span></div><div><span class="d">11-26</span><span>v6 设计期实现与复算对上（Dev #377、Reviewer #375）：14 项里 12 项差 0，2015-08 示例勘误（A 股约留一半股票），K2A 记账差 ≤ 0.03 点。《v6 体检报告》第 1.2 版：十年四条判据都过、后五年 ③④ 不过；新增八条线做法、净值与回撤、两次急跌、四种行情、任意起点。你定 D48-4（K2A 用真实月末）；同意 D49：一次性检验加全段窗口，只报告，用来认清钱从哪来。</span></div><div><span class="d">11-25</span><span>D43–D47：别的市场用欧洲，国债用德国 10 年期、TRIN 缺席（D44）；冻结代码是规范的一部分、TRIN 截尾按程序错误修正（D45，你确认）；设计期对账收尾（D46）；体检输入口径（D47）。</span></div><div><span class="d">11-25</span><span>v6 预注册冻结：R1b 签收第 2.4 版，#339 合并，<code>milestone/v6-prereg-freeze</code> 打在 f066da8e，冻结文本和签收版本逐字节相同。别的市场普查：两地都没有免费的交易所日行情；能免费拿到的是每日净值（欧洲 iShares 行业基金 2001–02 年起，要用分红记录还原；日本 TOPIX-17 基金 2008-03 起，自带分红再投资净值）。</span></div><div><span class="d">11-25</span><span>你批准冻结 v6 预注册。R1b 在 D42 增量上提了两项：别的市场写定前看过什么（你书面确认没看过两地行业层）；A1、A2、现行配置怎么跑（原样继承 v4 附表 A、引用已签收账本；现行配置走 D5 签收的复现）。第 2.4 版写入 D42-8、D42-9，送 R1b 签收。</span></div><div><span class="d">11-24</span><span>你定了 D42：现行配置作为对照、豁免 6 个月“不差于”门槛（1A）；上线前在一个没看过的市场检验一次（2A）；A1、A2 写回对照；体检报告和一次性检验报告按四张图出。预注册第 2.3 版。设计期 v6 每年比现行配置少约 4 点（2006–10 年 A 股大牛市），2011–15 年多约 2 点。</span></div><div><span class="d">11-24</span><span>v6 预注册第 2.2 版（待冻结）：附表 A（美股 15 个、A 股 40 个参选，5 个美股、7 个一级行业没有场内基金）、附表 B（设计期 v6 净每年 15.5%，挑选 +4.3 抵掉仓位差 −3.4 和成本 −1.5）；你确认一级行业保留回填、931743 从 2023-07-27 起、细分化工不参选；DJIA、DWRTF 检验段补数入库（#359、#361）。预注册页面改成每节一个按内容选的视觉。R1b 复核中。</span></div><div><span class="d">11-23</span><span>v6 预注册初稿第 2.1 版：三份行业数据的检验写进 §4——沪深300 十个行业里上月涨幅不进 v6，隔夜版关闭，申万一级上 12−1 比等权每年少 5.9 个点（可能回填，只作参考）；规则不变。预注册页面按讲故事模式重排；数据看板同步。看板改为 v6 现状，第二阶段内容收进留档。</span></div><div><span class="d">11-23</span><span>你确认预注册三项（D40-14）：不另设单只上限；保费只量防守成本；判据 ③ 比年化 ÷ 最大回撤；判据 ④ 不低于同仓位基准。</span></div><div><span class="d">11-22</span><span>v6 预注册初稿第 1 版；A 股 12−1 主规则、连续性版挑战者（D40-13）；D38 第 55 行触发停止规则，A 股不再加新选法。</span></div><div><span class="d">11-19～11-20</span><span>你定了 v6 结构（D40）：美股 60%、A 股 40%，每个名额选前 3，按把握 p 防守；美股候选只加 REIT。</span></div><div><span class="d">11-17</span><span>底线 60 万、保费上限 4 点（D39）；发布《v6 预演预测表》。</span></div><div><span class="d">11-16</span><span>项目整体诊断（D38）：起草前先算预测表；合同加“先算后做”。</span></div><div><span class="d">11-05</span><span>第二阶段按“不成立”关闭（D36）；v6 方向：只用场内基金，新基金上市当天就能打分，提高每一笔交易的期望。</span></div><div><span class="d">11-05</span><span>发布《第二阶段复盘》：设计期 E2 新口径“挑哪一只”每年只比等权多 1.1 个点，超额几乎全来自 2006–10 年 A 股和 2008 年躲开下跌；检验段池子从 26 个变成 102 个、七成海外主题，基准六成收益来自美股。场外净值补齐 63 只；你定了能买到的池子只用场内基金（D35）。两份报告的任意起点改用逐月柱状图。</span></div><div><span class="d">11-04</span><span>一次性检验跑完，Reviewer 签收：E2 新口径年化 3.0%，基准 8.7%，持有 5 年 70 个起点 0 个跑赢，判据 ① ⑥ 不通过。A1 8.6%、A2 7.2%（回撤 −10%）、v5.1 −3.3%。复查发现 57 只场外基金净值只到 2015 年底，能买到的池子的结果不可用，过关结论不受影响。发布《一次性检验报告》。</span></div><div><span class="d">11-04</span><span>你批准封板（D34）；一次性检验同次跑 E2 新口径、A1、基准、v5.1，v5.1 只作对照。发布《v5.1 体检报告》；《v5 研究备忘》第 23 版新增第 7 节“任意时点买入”：能排名的池子持有 5 年每个起点都赢基准，能买到的池子只有 34%。</span></div><div><span class="d">11-04</span><span>v5.1 设计期跑完，不入围：中国十年年化 30.1%、回撤 −26%，四个对照都赢；美国 ETF 上只有 1.3%，栽在换手和成本。入围只有 E2 新口径。</span></div><div><span class="d">11-04</span><span>v5.1 定稿（设计稿第 3.2 版），预注册送审，进入设计期检验（D33）。离场改为按前沿和回撤面、空仓默认国债；预期疼痛表写进预注册；进度总览加 v5.1 一行。</span></div><div><span class="d">11-01</span><span>主看板不再列 v5：原版有结构硬伤，不够格上设计期数据。v5 策略先讨论清楚，再写预注册。</span></div><div><span class="d">11-01</span><span>你选了 A：v5 做一次设计缺陷修正（D30-2）。v5.1 = E2 + 每类上限，预注册含设计评审和事前画像；《v5 研究备忘》第 11 版第 1 节改写为 v5.1 的策略核心、事前评估、为什么能跟随市场。</span></div><div><span class="d">11-01</span><span>v5 归因：四处结构硬伤，根子是按类别分钱、不按强弱分钱；扣掉“押得少”和随机挑选没有区别。第 2 节版本表加“策略详情”，行与图一一对应；v4 摘要换成能看出四个微调没过的图。</span></div><div><span class="d">11-01</span><span>《v5 研究备忘》第 10 版重写成完整故事（结论、过程、过关、哪里赢输、为什么输、学到什么），五张图；看板新增版本进化图和每一版的摘要。</span></div><div><span class="d">11-01</span><span>v5 设计期跑完：按波动调仓没过关，10% 离场过关；最终版指数池 12.7%，没有入围。</span></div><div><span class="d">11-01</span><span>你批准了 v5 预注册的 4 处选择（D29）；核心价值写进 AGENTS.md（D28）。</span></div><div><span class="d">11-01</span><span>看板改成索引：只留现状、每一版的结论、已定的大事、风险和接下来；v3 阶段的体检收进折叠区。</span></div><div><span class="d">10-31</span><span>v5 预注册草案第 1 版：起点 = 跑赢现金的大类等分、都不跑赢时放国债或黄金；之后逐个加按波动调仓、10% 离场；小仓试错不进 v5。</span></div><div><span class="d">10-31（六）</span><span>你同意封板条件（D27）：v5 是最后一个研究版本，做完就封板，不论结果；一次性检验只跑一次；封板后的新想法记作 v6，可用全部历史设计、和在跑的策略逐项比，上线前过别的市场和 6 个月并行模拟，小资金起步。见《v5 研究备忘》第 8 节。</span></div><div><span class="d">10-31</span><span>你同意 v5 换架构（D26）：先判断该不该持有，再在少数大类里挑，空位放防守资产；部件逐个加。依据见《v5 研究备忘》第 5 版。红利 ETF 错价已修，可交易池 8.7%。</span></div><div><span class="d">10-31</span><span>R5c 完成：U-指数池能买国债、黄金、创业板后，E2 新口径年化 24.9%，过关结果不变；代码第二次冻结。发布《v4 体检报告》第 3 版（含两个池子的介绍、2008 与 2015 两次大跌的拆解）。</span></div></div>
 <div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>更早的记录</span></button><div class="fold-b" hidden="">
 <div class="log"><div><span class="d">10-30</span><span>可交易池修好（10.5%，十年没跑过基准）；v4 代码冻结。复查又发现 U-指数池买不进国债、黄金、创业板，同行的可交易池判断口径不对，安排 R5c（D25）。《v4 体检报告》第 2 版改了版式、加上可交易池。</span></div><div><span class="d">10-29（四）</span><span>v4 设计期跑完。T1–T4 都没过关，最终版 = E2 新口径；公开的 A1 双动量跑得更好；可交易池发现程序问题，修复重跑（D24）。发布《v4 体检报告》第 1 版。</span></div><div><span class="d">10-29（三）</span><span>你批准了 v4 预注册；新建《数据与容器看板》（docs/owner/data-board.md），池子、数据来源和缺口都在那里。</span></div><div><span class="d">10-29（二）</span><span>准备全部完成：198 只场内 QDII、LOF 收录，8 只缺的后复权按分红记录还原（D21）；预注册第 2.3 版签收，待你批准；一次性检验推迟到研究封板（D20）。</span></div><div><span class="d">10-29</span><span>场内 QDII、LOF 一律纳入（含全球芯片这类主动基金），同一指数只取一个、同类商品选流动性最好的（D19）；对照基线命名为“E2 新口径”。</span></div><div><span class="d">10-28（六）</span><span>预注册第 1 版有条件通过，第 2 版已改完交复审；引擎和 2016 年以后的数据检查完成；载体和数据的 9 个口径定了（D16）。</span></div><div><span class="d">10-28（五）</span><span>v4-R1b 完成；8 个口径问题定了（D15）；v4 预注册草案已写，交 Reviewer 复核；新增 2016 年以后的数据完整性检查。</span></div><div><span class="d">10-28（四）</span><span>3 条数据口径按你的选择定了，加上你的数据原则；第 4 节说明怎么只用当时的数据判断市场状态（备忘 4.5c）。</span></div><div><span class="d">10-28（三）</span><span>v4-R1–R3 完成；新增“需要你：3 条数据口径”；第 4 节说明 IC 检验和 T1、T2 怎么组合（详见备忘 4.2、4.6）。</span></div><div><span class="d">10-28（二）</span><span>3.5、3.6 重写；《v4 研究备忘》的结论并入看板：新增 3.7（任意起点、四种市场状态）和第 4 节（v4 四个候选各补哪一块）。证据和文献仍在备忘里。</span></div><div><span class="d">10-28</span><span>v3.1 已代码冻结；v4 进入开发，按轮次推进；进度总览改成“版本 × 阶段”，和开发轮次一一对应（D13）。</span></div><div><span class="d">10-27（四）</span><span>你的 3 个选择都按建议定了（D11）；v3.1 进入代码冻结，一次性检验暂不跑；v4 研究方向见《v4 研究备忘》。</span></div><div><span class="d">10-27（三）</span><span>第 1 节每件事讲清来龙去脉，休市日卖法列为你的选择；第 2 节先讲选法、再讲版本，每个版本标明改了哪一处和好坏；关键数字按好坏上色。</span></div><div><span class="d">10-27（二）</span><span>查明 2009 年跑输的原因，测试了两个改进方案；决定点改为先定失手怎么处理，再定冻结。</span></div><div><span class="d">10-27</span><span>看板重写，改在仓库维护；正式引擎复现了 E2；查明可交易池的 5% 是因为当年没有 ETF 可买。</span></div><div><span class="d">10-25</span><span>你批准 v3.1 = E2，规则冻结；查明病根是可选池太小；E3 不采用。</span></div></div>
 </div></div></section>

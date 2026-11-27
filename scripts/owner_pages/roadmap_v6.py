@@ -10,7 +10,8 @@ plt.rcParams.update({'font.family': ['Noto Sans CJK SC'], 'axes.unicode_minus': 
 INK, MUTED = '#151b26', '#5d6676'
 STY = {  # 边框、底色、标题色
     'done': ('#16a34a', '#effaf2', '#15803d'), 'doing': ('#d97706', '#fff7ed', '#b45309'),
-    'you': ('#7c3aed', '#f5f3ff', '#6d28d9'), 'todo': ('#d6d9df', '#f3f4f6', MUTED)}
+    'you': ('#7c3aed', '#f5f3ff', '#6d28d9'), 'todo': ('#d6d9df', '#f3f4f6', MUTED),
+    'fail': ('#c2410c', '#fff1e8', '#c2410c')}
 COLS = ['预演（D38）', '① 规则定稿', '② 标的池', '③ 交易引擎', '④ 溢价控制', '⑤ 打分卡', '⑥ 业务体检', '⑦ 代码冻结', '⑧ 一次性检验', '⑨ 结论', '⑩ 模拟盘']
 CELLS = [
     ('done', '✓ 跑完', '登记 56 行；预测表\n3.22 版，每年 +1.2'),
@@ -19,11 +20,11 @@ CELLS = [
     ('done', '✓ 对上', '两条线独立实现，\n14 项里 12 项差 0'),
     ('done', '规则已定', '溢价比常态高 5 点\n换一只（§2）'),
     ('done', '判据已定', '四条判据 + 同仓位\n基准（§5）'),
-    ('done', '第 1.4 版', '随机对照、急跌\n仓位都已补齐'),
+    ('done', '第 1.5 版', '随机对照、急跌\n仓位都已补齐'),
     ('done', '✓ 已合入', '#375、#377\n11-26 合入'),
-    ('doing', '已批准', 'Dev 接线中；全段\n只报告（D49）'),
-    ('todo', '—', '事前预判：全部\n通过约三成'),
-    ('todo', '—', '通过后至少\n6 个月'),
+    ('done', '✓ 跑了一次', '#399；Reviewer\n独立复算一致'),
+    ('fail', '不通过', '③④ 不过；比同仓\n位每年少 2.5 点'),
+    ('todo', '不进', '按冻结稿关闭\nv6'),
 ]
 out = sys.argv[1]
 # 两行排：预演 + ①–⑤ 一行，⑥–⑩ 一行；页面主栏约 920px，单行 11 格字太小
@@ -31,7 +32,7 @@ W, H = 14.3, 7.1
 fig = plt.figure(figsize=(W, H)); ax = fig.add_axes([0, 0, 1, 1]); ax.set_xlim(0, W); ax.set_ylim(0, H); ax.axis('off')
 ax.text(0.25, H - 0.42, '进度总览：v6 × 阶段', fontsize=21, weight='bold', color=INK, va='center')
 lx = W - 6.3
-for k, lab in [('done', '完成'), ('doing', '进行中'), ('you', '需要你'), ('todo', '未开始')]:
+for k, lab in [('done', '完成'), ('fail', '不通过'), ('you', '需要你'), ('todo', '未开始')]:
     e, f, _ = STY[k]
     ax.add_patch(FancyBboxPatch((lx, H - 0.53), 0.22, 0.22, boxstyle='round,pad=0,rounding_size=0.03', ec=e, fc=f, lw=1.6))
     ax.text(lx + 0.32, H - 0.42, lab, fontsize=13.5, color=MUTED, va='center'); lx += 1.55

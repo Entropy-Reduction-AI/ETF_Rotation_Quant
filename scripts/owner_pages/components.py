@@ -397,7 +397,7 @@ def kpi(rows):
             def dots(m, cls):
                 k, n = int(m.group(1)), int(m.group(2))
                 return ''.join(f'<i class="{cls if j < k else ""}"></i>' for j in range(n))
-            cmp_ = (f'<div class="kp-row"><span class="kp-k">{_inner(r.get("本段") or "全段")}</span><span class="kp-dots">{dots(frac[0], "on")}</span><b>{a}</b></div>'
+            cmp_ = (f'<div class="kp-row"><span class="kp-k">{(_inner(r["本段"]) if r.get("本段") is not None and _inner(r["本段"]) else "全段")}</span><span class="kp-dots">{dots(frac[0], "on")}</span><b>{a}</b></div>'
                     f'<div class="kp-row"><span class="kp-k">{_inner(r["对照"])}</span><span class="kp-dots">{dots(frac[1], "on b")}</span><b>{b}</b></div>')
         elif fa is not None and fb is not None:
             mx = max(abs(fa), abs(fb)) or 1
