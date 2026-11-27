@@ -2048,6 +2048,64 @@ ol.flow.f-compact .fl-d strong { color: var(--muted); font-weight: 600; }
 <li><strong>怎么算的</strong>：<code>scripts/v6_report/tradable_us.py</code>，按冻结稿 §2：信号日下一个交易日收盘成交；同一候选选溢价偏离最小的基金，偏离超 5 点不买，已持有的照旧；都买不了递补下一名，再不够给标普500；单边 <span class="num">0.2%</span>。逐月持有和跳过原因在 <code>results/v6/oneshot/supplement/tradable/</code>。A 股名额没有换，仍用指数。</li>
 </ul>
 </div></div>
+<div class="fold"><button aria-expanded="false" class="fold-h" type="button"><span aria-hidden="true" class="chev">▸</span><span>事后假设：把所有能在 A 股场内买到的 ETF、LOF 一起轮动（含黄金、原油、商品、港股、日德印等），10 年怎样</span></button><div class="fold-b" hidden="">
+<figure><img alt="事后假设：234 只场内基金一起按 12−1 轮动，前 3 每年 12.2%、前 6 每年 7.4%，都不如一直拿着同仓位基准（13.2%）或标普500（15.9%）" src="../../assets/v6-oneshot/o2c-tradable-all.png"/></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>检验段 2016-01 → 2026-09</th>
+<th class="n numcol">年化</th>
+<th class="n numcol">最大回撤</th>
+<th>100 万变成</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全部可交易，前 3</td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:49px"></i></span><span class="mg-v">12.2%</span></span></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:61px"></i></span><span class="mg-v">−39.2%</span></span></td>
+<td>330 万</td>
+</tr>
+<tr>
+<td>全部可交易，前 6</td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:30px"></i></span><span class="mg-v">7.4%</span></span></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:64px"></i></span><span class="mg-v">−41.2%</span></span></td>
+<td>209 万</td>
+</tr>
+<tr>
+<td>全部可交易，等权全拿</td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:30px"></i></span><span class="mg-v">7.5%</span></span></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:34px"></i></span><span class="mg-v">−22.2%</span></span></td>
+<td>211 万</td>
+</tr>
+<tr>
+<td>v6（判定用）</td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:43px"></i></span><span class="mg-v">10.6%</span></span></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:40px"></i></span><span class="mg-v">−25.8%</span></span></td>
+<td>285 万</td>
+</tr>
+<tr>
+<td class="k">BM-同仓位</td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:53px"></i></span><span class="mg-v">13.2%</span></span></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:37px"></i></span><span class="mg-v">−23.5%</span></span></td>
+<td>361 万</td>
+</tr>
+<tr>
+<td>标普500 全收益</td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b m" style="width:64px"></i></span><span class="mg-v">15.9%</span></span></td>
+<td class="n numcol mgc"><span class="mg"><span class="mg-t"><i class="mg-b o" style="width:51px"></i></span><span class="mg-v">−32.9%</span></span></td>
+<td>462 万</td>
+</tr>
+</tbody>
+</table></div>
+<ul class="points">
+<li><strong>池子越大没有越好</strong>：前 6 每年只有 <span class="num">7.4%</span>、回撤 <span class="num">−41%</span>；前 3 每年 <span class="num">12.2%</span>，但回撤 <span class="num">−39%</span>，年化 ÷ 回撤 0.31，比 v6 的 0.41 还低。都没跑过一直拿着的同仓位基准和标普500。</li>
+<li><strong>钱去了哪</strong>：前 6 十年平均 <span class="num">35%</span> 在 A 股行业，美股 <span class="num">19%</span>，原油油气 <span class="num">16%</span>，港股与中概 <span class="num">13%</span>，黄金 <span class="num">8%</span>；拿得最多的是 A 股消费、标普信息科技 LOF、两只美国油气 LOF。不设防守，2018 年跌 <span class="num">25%</span>。</li>
+<li><strong>你问的几只</strong>：都在池里，但上市晚，满一年才能参选。中韩半导体（513310）拿了 10 个月、溢价挡下 1 次；纳指科技（159509）5 个月；全球芯片（501225）5 个月；标普信息科技 LOF（161128）27 个月，是拿得最多的美股基金之一。</li>
+<li><strong>为什么只能当参考</strong>：这是看过结果后提出的；池子是 2026 年库里有的 234 只（不含货币基金），已经退市的基金不在里面，有幸存者偏差；2016 年初能参选的只有 29 只，后面一大半是 2021 年以后上市的港股基金。</li>
+<li><strong>怎么算的</strong>：<code>scripts/v6_report/tradable_all.py</code>：上市满 12 个月才参选，按基金自身价格的 12−1 排名，和已选中的基金过去一年日收益相关超过 0.95 视为同一指数跳过，等权，不设防守；有净值的基金溢价比常态高 5 点不买（挡下 12 次）；下一个交易日收盘成交，单边 <span class="num">0.2%</span>。结果在 <code>results/v6/oneshot/supplement/tradable-all/</code>。</li>
+</ul>
+</div></div>
 <a class="sl-next" href="#sec-3-钱从哪来-挑选每年-3-6-点-正好被候选池的-3-6-点抵掉-比-bm-主"><span class="sl-nl">所以</span><span class="sl-nt">挑选是真的，那钱输在哪？</span><span class="sl-ng">03 钱从哪来 →</span></a>
 </section>
 <section id="sec-3-钱从哪来-挑选每年-3-6-点-正好被候选池的-3-6-点抵掉-比-bm-主"><h2 id="3-钱从哪来-挑选每年-3-6-点-正好被候选池的-3-6-点抵掉-比-bm-主"><span class="num">03</span>钱从哪来：挑选每年 +3.6 点，正好被候选池的 −3.6 点抵掉；比 BM-主多的 1.9 点来自美股放 60%</h2>
