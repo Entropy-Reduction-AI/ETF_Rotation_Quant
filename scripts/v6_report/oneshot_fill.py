@@ -78,7 +78,7 @@ for j, t in enumerate(['①', '②', '③', '④']):
     a.text(j + .46, .8, t, ha='center', fontsize=12, color=MUTED, weight='bold')
 a.text(4.7, .8, '总结论', ha='center', fontsize=11, color=MUTED, weight='bold')
 a.set_xlim(-2.4, 5.4); a.set_ylim(-len(rows) + .3, 1.3); a.axis('off')
-a.set_title(f'稳健性 8 项：{"没有一项让总结论翻转" if not flips else "、".join(flips) + " 让总结论翻转"}', fontsize=12.5, loc='left', color=INK)
+a.set_title(('主判不通过；8 项也都不通过' if facts['主判'] == '不通过' and not flips else f'稳健性 8 项：{"没有一项让总结论翻转" if not flips else "、".join(flips) + " 让总结论翻转"}'), fontsize=12.5, loc='left', color=INK)
 ln0 = C('lines.csv')
 if paths is not None:
     for i, w in enumerate(['检验段', '全段']):
@@ -143,7 +143,7 @@ if (SRC / 'cost-real.json').exists():
 fig, ax = plt.subplots(figsize=(12, 4.6))
 segs = list(bl['段'])
 for j, sg in enumerate(segs):
-    ax.text(j + .46, .8, str(sg), ha='center', fontsize=11, color=MUTED, weight='bold')
+    ax.text(j + .46, .8, str(sg).replace('2021-01→2026-09', '2021–26.9'), ha='center', fontsize=11, color=MUTED, weight='bold')
 for i, k in enumerate(BK):
     ax.text(-.15, -i, k, ha='right', va='center', fontsize=12)
     for j, sg in enumerate(segs):
@@ -233,7 +233,7 @@ if (SRC / 'returns-daily.csv').exists():
     save(fig, 'o6-nav.png')
 facts['性格'] = J('character.json')
 
-# ---------- 几次急跌：从 BM-主 当年最高日起 250 个交易日 ----------
+# ---------- 几次急跌：BM-主 当年最低点之前 250 个交易日里的最高日起，看 250 个交易日 ----------
 CRASH_YEARS = [2007, 2011, 2015] if REH else [2015, 2018, 2020, 2022]  # 正式：骨架 0.5 写定；预演：设计期里同法取三次
 if (SRC / 'returns-daily.csv').exists():
     R2 = pd.read_csv(SRC / 'returns-daily.csv', parse_dates=['date']).set_index('date').loc[man['full_start']:man['full_end']].fillna(0)
@@ -242,7 +242,8 @@ if (SRC / 'returns-daily.csv').exists():
     fig, axs = plt.subplots(1, len(CRASH_YEARS), figsize=(3.3 * len(CRASH_YEARS), 3.8), sharey=True)
     crash = []
     for ax, yr in zip(axs, CRASH_YEARS):
-        bm = navs['BM-主'][str(yr)]; pk = bm.idxmax(); i0 = navs.index.get_loc(pk); win = navs.iloc[i0:i0 + 250]
+        tr = navs['BM-主'][str(yr)].idxmin(); j = navs.index.get_loc(tr)  # 当年最低点
+        pk = navs['BM-主'].iloc[max(0, j - 250):j + 1].idxmax(); i0 = navs.index.get_loc(pk); win = navs.iloc[i0:i0 + 250]
         rec = {'年': yr, '见顶日': str(pk.date())}
         for k, (c, lw) in {'BM-主': (GREY, 1.4), 'BM-同仓位': ('#94a3b8', 1.1), 'K2A': (INK, 1.1), 'v6': (BLUE, 2.4)}.items():
             dd = 100 * (win[k] / win[k].iloc[0] - 1)
@@ -253,7 +254,7 @@ if (SRC / 'returns-daily.csv').exists():
         ax.axhline(0, color=GREY, lw=.6); ax.set_xticks([0, 125, 250]); ax.set_xticklabels(['见顶', '半年', '一年'])
         ax.set_title(f'{yr}：v6 {mm(rec["v6"])}% 对 BM-主 {mm(rec["BM-主"])}%' + (f'\n最低股票仓位 {100 * rec["最低股票仓位"]:.0f}%' if '最低股票仓位' in rec else ''), fontsize=11, loc='left', color=INK)
         ax.grid(alpha=.2); crash.append(rec)
-    axs[0].set_ylabel('从见顶日算的跌幅 %', color=MUTED); axs[0].legend(frameon=False, fontsize=9, loc='lower left')
+    axs[0].set_ylabel('从见顶日算的跌幅 %', color=MUTED); axs[-1].legend(frameon=False, fontsize=9, loc='lower left')
     save(fig, 'o6b-crash.png'); facts['急跌'] = crash
 
 # ---------- 任意起点 ----------
