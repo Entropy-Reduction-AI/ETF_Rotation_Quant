@@ -1,9 +1,0 @@
-{
-  "source": "SZSE 指数列表 CATALOGID=1812_zs",
-  "zsdm": "399006",
-  "zsmc": "创业板指数",
-  "jrnew": "2010-05-31",
-  "jrzs": "1000",
-  "qsrnew": "2010-06-01",
-  "url": "https://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1812_zs&TABKEY=tab1&txtDMorMC=399006"
-}

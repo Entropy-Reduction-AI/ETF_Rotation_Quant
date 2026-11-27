@@ -1,1 +1,0 @@
-东财行情页脚本 quote_history_api:"//push2his.eastmoney.com/",quote_history_push_api:"//"+r+".pu

@@ -7,7 +7,7 @@
 - Status: active
 - Owner: L. Loric
 - Maintainer: Manager
-- Last updated: 2026-11-23（Asia/Taipei；登记 `milestone/phase2-archive`，标签对象 `48b63a84274b9d8349049630971095f82c9da7b9`，指向 `8875fe576496e9dacfb0681ac93df4f42cd894ca`）
+- Last updated: 2026-11-27（Asia/Taipei；登记 `milestone/v6-archive`，标签对象 `4644ba6ec5e613913af836311937fda32e134dae`，指向 `52005ec2449cc37e5e2696cc065c0140ad477615`）
 - Source of truth: `operations/planning/2026-10-28-d14-owner-decisions.md`（D14-2）；清理前 `git ls-remote --tags origin`；D23-1 新增见 `operations/work_logs/2026-10-29-v4-prereg-freeze-tag.md`；D26-5 见 `operations/planning/2026-10-31-d26-v5-direction.md`；2026-11-01 新增见 `operations/work_logs/2026-11-01-v5-prereg-freeze-tag.md`；2026-11-04 新增见 `operations/work_logs/2026-11-04-v5.1-prereg-freeze-tag.md`；2026-11-04 代码冻结见 `operations/work_logs/2026-11-04-v5-code-freeze-tag.md`
 
 ## Purpose
@@ -154,6 +154,16 @@ D26-5 / v5-R1（决定 `operations/planning/2026-10-31-d26-v5-direction.md`；�
 本索引提交只补上表。没有移动、删除或改写任何既有标签。
 
 核对见 `operations/work_logs/2026-11-23-branch-cleanup.md`。
+
+## `milestone/v6-archive`
+
+2026-11-27（Asia/Taipei）。附注标签打在 incoming 原件移出 `main` 之前的 `origin/main` `52005ec2449cc37e5e2696cc065c0140ad477615`。标签对象 `4644ba6ec5e613913af836311937fda32e134dae`，指向该提交。新建时 origin 上还没有这个名字。没有移动、删除或改写任何既有标签。`milestone/v6-prereg-freeze` 仍指向 `f066da8e46f202e105a65c7abf43e4d4cf82eff9`。
+
+| 标签 | 标签对象 SHA | 指向提交 SHA | 说明 | 处置 | 理由 |
+| --- | --- | --- | --- | --- | --- |
+| `milestone/v6-archive` | `4644ba6ec5e613913af836311937fda32e134dae` | `52005ec2449cc37e5e2696cc065c0140ad477615` | v6 关闭（D36 后第 4 次尝试，一次性检验不通过）；incoming 原件移出 main 前的快照 | 保留 | v6 收尾；incoming 原件从这里取回 |
+
+本索引提交只补上表。没有移动、删除或改写任何既有标签。
 
 ## Related Files
 
