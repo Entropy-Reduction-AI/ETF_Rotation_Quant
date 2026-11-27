@@ -5,8 +5,10 @@ Owner 2026-11-27 要求：“所有可交易的 ETF、LOF 都放进来，原油�
 
 规则（尽量沿用 v6，Orchestrator 定，写在这里）：
 - 池子：库里有复权价的全部 6 位代码场内基金（A 股 ETF 用项目统一的后复权序列 v4_series/backward，其余用 bars/hfq）；去掉货币基金。
-- 参选：上市满 12 个月（12−1 要用到 T−12 月末的价格）。
-- 排名：12−1（T−1 月末 ÷ T−12 月末 − 1），只看基金本身的价格。
+- 参选：上市当天起就能参选（D36：新基金上市当天就能打分）。打分用跟踪指数的人民币走势还原：
+  某天指数有数就用指数当天的涨跌，没有就用基金自己的涨跌，接成一条线；库里没有跟踪指数的基金只能用自己的价格，要上市满 12 个月。
+  指数对应关系：A 股基金按 data/universe.csv（执行基金与替代基金 → 研究指数，优先全收益），场内 QDII、LOF 按 config/v4/universe.toml 的 maps_to。
+- 排名：12−1（T−1 月末 ÷ T−12 月末 − 1），用上面这条打分线。
 - 去重：和已选中的基金过去 250 个交易日日收益相关系数超过 0.95，视为同一指数，跳过。
 - 选前 N（N = 6，和 v6 两个名额合计持有数相同；另报 N = 3），等权；不设防守。
 - 溢价：库里有净值的基金（QDII、LOF），信号日溢价比之前 60 个交易日中位数高 5 点以上不买，已持有的照旧（冻结稿 §2）。
@@ -96,9 +98,61 @@ for c in codes:
         prem[c] = (100 * (rs / ns.reindex(rs.index.union(ns.index)).ffill().reindex(rs.index) - 1)).reindex(cal)
 P = pd.DataFrame(px)
 RET = P.pct_change(fill_method=None)
+
+# ---------- 跟踪指数：给每只基金一条打分线（D36：上市当天就能打分） ----------
+import tomllib
+FXC = {}
+for cur in ['USD', 'HKD', 'JPY', 'EUR']:
+    f = q("select date, close from bars where code=? and adj='raw' and close>0 order by date", (cur + 'CNY',))
+    x = pd.Series(f['close'].values, pd.to_datetime(f['date'])); FXC[cur] = x[~x.index.duplicated(keep='last')]
+MAP = {'csi300': ('H00300', 'CNY'), 'csi500': ('H00905', 'CNY'), 'hsi': ('HSI', 'HKD'), 'hstech': ('HSTECH', 'HKD'),
+       'ndx100': ('NDX', 'USD'), 'spx': ('SPX', 'USD'), 'gold': ('Au99.99', 'CNY'), 'crude-oil': ('BRENT', 'USD'),
+       'theme-PHLX Semiconductor Sector Index': ('SOX', 'USD'), 'theme-纳斯达克科技市值加权指数': ('NDXTMC', 'USD'),
+       'theme-东京日经225指数': ('N225', 'JPY'), 'theme-纳斯达克生物科技指数': ('NBI', 'USD'), 'theme-道琼斯工业平均指数': ('DJIA', 'USD'),
+       'theme-道琼斯美国精选REIT指数': ('DWRTF', 'USD'), 'theme-标普500信息科技指数': ('S5INFT', 'USD'),
+       'theme-中证韩交所中韩半导体指数': ('931790', 'CNY'), 'theme-中证海外中国互联网指数': ('H11136', 'CNY'),
+       'theme-中证海外中国互联网50人民币指数': ('H30533', 'CNY'), 'theme-中证全球中国教育主题人民币指数': ('931456', 'CNY'),
+       'theme-法国CAC40指数': ('FCHI', 'EUR'), 'theme-H11146': ('H11146', 'CNY'), 'theme-H50069': ('H50069', 'CNY'),
+       'theme-HSFML25': ('HSFML25', 'HKD'), 'theme-HSSCT': ('HSSCT', 'HKD'), 'theme-SPAHLVCP': ('SPAHLVCP', 'USD')}
+fund_index = {}
+cfg = tomllib.load(open(ROOT / 'config/v4/universe.toml', 'rb'))
+for row in cfg.get('container', []):
+    if isinstance(row, dict) and row.get('code') in P.columns and row.get('maps_to') in MAP:
+        fund_index[row['code']] = MAP[row['maps_to']]
+have = set(q("select distinct code from bars where adj='raw'")['code'])
+with open(ROOT / 'data/universe.csv', encoding='utf-8') as f:
+    for r in csv.DictReader(f):
+        cands = [x.strip().split(' ')[0] for x in (r['tr_code_candidates'] or '').split(';')] + [r['research_index_code']]
+        idx = next((x for x in cands if x and x in have), None)
+        if r['theme'] == '黄金':
+            idx = 'Au99.99'
+        for code in [r['execution_fund_code']] + [x.strip() for x in (r['execution_alternatives'] or '').split(';')]:
+            if idx and code in P.columns and code not in fund_index:
+                fund_index[code] = (idx, 'CNY')
+for code in ['518880', '518800', '159934']:
+    if code in P.columns:
+        fund_index[code] = ('Au99.99', 'CNY')
+ilv = {}
+for code, (ix, cur) in fund_index.items():
+    if (ix, cur) not in ilv:
+        f = q("select date, close from bars where code=? and adj='raw' and close>0 and date<=? order by date", (ix, END))
+        x = pd.Series(f['close'].astype(float).values, pd.to_datetime(f['date'])); x = x[~x.index.duplicated(keep='last')]
+        if cur != 'CNY':
+            x = x * FXC[cur].reindex(x.index.union(FXC[cur].index)).ffill().reindex(x.index)
+        ilv[(ix, cur)] = x.reindex(cal.union(x.index)).ffill().reindex(cal).where(lambda v: v.index >= x.index[0]).where(lambda v: v.index <= x.index[-1])
+SRET = RET.copy()
+for code, key in fund_index.items():
+    ir = ilv[key].pct_change(fill_method=None)
+    SRET[code] = ir.where(ir.notna(), RET[code])  # 指数有数用指数，没有用基金
+SL = (1 + SRET.fillna(0)).cumprod().where(SRET.notna().cumsum() > 0)
+listed = {c: P[c].first_valid_index() for c in P.columns}
+for c in P.columns:
+    meta[c]['打分用'] = f'{fund_index[c][0]}（{fund_index[c][1]}）' if c in fund_index else '基金自己的价格'
+
 ends = pd.DatetimeIndex([d for i, d in enumerate(cal) if i == len(cal) - 1 or cal[i + 1].month != d.month])
-M = P.loc[ends]
+M = SL.loc[ends]
 SC = M.shift(1) / M.shift(12) - 1
+SC = SC.where(pd.DataFrame({c: ends >= listed[c] for c in P.columns}, index=ends))  # 基金上市了才能买
 
 
 def deviation(c, day):
@@ -113,7 +167,7 @@ def deviation(c, day):
 def choose(day, n, held):
     s = SC.loc[day].dropna().sort_values(ascending=False)
     i = cal.get_loc(day)
-    win = RET.iloc[max(0, i - 249):i + 1]
+    win = SRET.iloc[max(0, i - 249):i + 1]
     out, skipped = [], []
     for c in s.index:
         if len(out) == n:
@@ -180,7 +234,8 @@ for k, c in [('标普500全收益', '标普500全收益'), ('沪深300全收益'
     if c in R:
         lines[k] = R[c]
 D = pd.DataFrame({k: v.reindex(R.index).fillna(0) for k, v in lines.items()})
-summ = {'说明': '事后假设，只报告，不进任何判定；池子按 2026 年库里有的基金，已退市的不在，有幸存者偏差。',
+summ_index = {'有跟踪指数的基金': len(fund_index), '只能用自己价格的基金': len(P.columns) - len(fund_index)}
+summ = {'打分': summ_index, '说明': '事后假设，只报告，不进任何判定；池子按 2026 年库里有的基金，已退市的不在，有幸存者偏差。',
         '池子': {'基金数': len(P.columns), '按类别': pd.Series([m['类别'] for m in meta.values()]).value_counts().to_dict(),
                '2016-01 可参选': int(SC.loc[ends[ends >= '2015-12-31'][0]].notna().sum()), '2026-08 可参选': int(SC.loc[ends[ends <= '2026-08-31'][-1]].notna().sum())},
         '检验段': {k: {'年化': round(cagr(D[k]), 2), '最大回撤': round(mdd(D[k]), 2), '100 万变成': round(100 * float((1 + D[k]).prod()), 0)} for k in D}}
