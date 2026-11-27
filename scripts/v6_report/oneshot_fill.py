@@ -231,6 +231,27 @@ if (SRC / 'returns-daily.csv').exists():
     a1.set_ylim(0, None); a1.grid(alpha=.2); a2.grid(alpha=.2)
     a1.set_title(f'{FULL} 一条线走下来；竖线是检验段起点 {man["exam_start"][:7]}', fontsize=12.5, loc='left', color=INK)
     save(fig, 'o6-nav.png')
+    # 检验段单独一张：所有线 2016-01 第一个交易日同为 100 万
+    T = R.loc[man['exam_start']:man['exam_end']].fillna(0)
+    LT = dict(LINE); LT.update({'A2': ('#7c3aed', 1.2, '-'), '连续性版': ('#0ea5e9', 1.3, '-')})
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(12, 6.8), sharex=True, gridspec_kw={'height_ratios': [2.4, 1], 'hspace': .08})
+    ends = {}
+    for k, (c, lw, ls) in LT.items():
+        if k not in T:
+            continue
+        nav = 100 * (1 + T[k]).cumprod(); w = nav.resample('W').last().dropna(); dd = 100 * (w / w.cummax() - 1)
+        a1.plot(w.index, w, color=c, lw=lw, ls=ls); a2.plot(dd.index, dd, color=c, lw=lw * .7, ls=ls); ends[k] = (w.iloc[-1], c)
+    ys = sorted(ends.items(), key=lambda x: x[1][0]); last = -1e9
+    for k, (v, c) in ys:  # 右端直接标名字和终值，按高低错开
+        y = max(v, last + .038 * max(x[0] for x in ends.values())); last = y
+        a1.text(T.index[-1] + pd.Timedelta(days=40), y, f'{k} {v:.0f} 万', color=c, va='center', fontsize=10.5, weight='bold' if k == 'v6' else 'normal')
+    a1.axhline(100, color=GREY, lw=.8); a1.set_ylabel('100 万变成多少万', color=MUTED); a2.set_ylabel('回撤 %', color=MUTED)
+    a1.grid(alpha=.2); a2.grid(alpha=.2); a1.set_xlim(T.index[0], T.index[-1] + pd.Timedelta(days=700))
+    order = [k for k, _ in sorted(ends.items(), key=lambda x: -x[1][0]) if not k.endswith('全收益')]
+    a2.set_xticks([pd.Timestamp(f'{y}-01-01') for y in range(2016, 2027, 2)]); a2.set_xticklabels([str(y) for y in range(2016, 2027, 2)])
+    a1.set_title(f'检验段 {EX}，同一天都从 100 万起：v6 {ends["v6"][0]:.0f} 万，{len(order)} 条线里排第 {order.index("v6") + 1}', fontsize=12.5, loc='left', color=INK)
+    facts['检验段终值'] = {k: float(v) for k, (v, _) in ends.items()}
+    save(fig, 'o6c-nav-exam.png')
 facts['性格'] = J('character.json')
 
 # ---------- 几次急跌：BM-主 当年最低点之前 250 个交易日里的最高日起，看 250 个交易日 ----------
